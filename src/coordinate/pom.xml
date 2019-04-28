@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>cyan_potion</artifactId>
+        <groupId>com.xenoamess.cyan_potion</groupId>
+        <version>0.128.4</version>
+    </parent>
+    <groupId>com.xenoamess.cyan_potion</groupId>
+    <artifactId>cyan_potion_coordinate</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>the coordinate part of cyan_potion game engine, including a simple 2D physics engine.
+    </description>
+    <url>https://github.com/cyanpotion/cyan_potion_coordinate</url>
+    <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>cyan_potion_base</artifactId>       <!--加上childA的依赖-->
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+</project>

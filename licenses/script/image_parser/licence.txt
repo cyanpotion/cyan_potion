@@ -1,0 +1,4 @@
+URL:http://discourse.glfw.org/t/set-window-icon-in-lwjgl-3-1/863/4
+
+ArtemisHD Feb '172 
+Its done and its working, thanks for helping me out, I am posting my full code for others to freely use. This work is licensed under MIT.
