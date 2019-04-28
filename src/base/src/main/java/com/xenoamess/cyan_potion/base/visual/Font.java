@@ -25,7 +25,7 @@ public class Font implements AutoCloseable {
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
     public static final int MAX_NUM = 40960;
-    public static final int MAX_SIZE = 32 * 1024;
+    public static final int MAX_SIZE = 16 * 1024;
     public static final int BITMAP_W = MAX_SIZE;
     public static final int BITMAP_H = MAX_SIZE;
     public static final float SCALE = 36.0f;
