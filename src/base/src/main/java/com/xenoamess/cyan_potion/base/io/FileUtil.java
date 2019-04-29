@@ -1,6 +1,8 @@
 package com.xenoamess.cyan_potion.base.io;
 
 import org.lwjgl.BufferUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URI;
@@ -20,6 +22,8 @@ import static org.lwjgl.BufferUtils.createByteBuffer;
  * @author XenoAmess
  */
 public class FileUtil {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
+
     /**
      * Don't let anyone instantiate this class.
      */
@@ -90,6 +94,7 @@ public class FileUtil {
             buffer.flip();
             return buffer.slice();
         } else {
+            LOGGER.error("loadFileBuffer fail : {}", resourceFile);
             return null;
         }
     }
@@ -98,6 +103,7 @@ public class FileUtil {
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
         if (resUrl == null) {
+            LOGGER.error("getFile fail : {}", resourceFilePath);
             return null;
         }
         return new File(resUrl.getFile().replaceAll("%20", " "));
@@ -143,6 +149,7 @@ public class FileUtil {
 
     public static String loadFile(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
+            LOGGER.error("loadFile fail : {}", file);
             return "";
         }
         String res = "";
@@ -173,6 +180,7 @@ public class FileUtil {
 
     public static void saveFile(File file, String contentString) {
         if (file == null) {
+            LOGGER.error("saveFile fail : file=null");
             return;
         }
         //if is not a file.

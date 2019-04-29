@@ -5,8 +5,8 @@
 
 A lightweight 2d game engine in java.
 
+Introduction
 ----------
-
 After a long period of hesitation, I managed to convince myself to open source most parts of it, yes, even MIT instead of GNU.
 
 This engine is built on the several principles:
@@ -16,8 +16,8 @@ This engine is built on the several principles:
     3. high freedom + high expandability.
     4. be crazy.
 
+Current state
 ----------
-
 It is still in the process of development, and many places are incomplete.
 
 Many codes related to animation/display have not been completed yet.
@@ -28,12 +28,27 @@ Design of the scripting system has only just begun. (not in this branch)
 
 And no books/documents for the inner logic for now.
 
+Demo
+----------
+Here is the [demo](https://github.com/cyanpotion/cyan_potion_demo).
+(The demo is actually for cyan_potion_rpg_module, but I guess this counts.)
+
+You can also take a look at [this](https://store.steampowered.com/app/999030/).
+
+Contribute
 ----------
 
-If you are still interested in it, you can take a look at [this](https://store.steampowered.com/app/999030/).
+Also, if there be people who want to contribute codes/ideas/suggestions, feel free to do so.
 
-I will put an open source demo soon, so no need to buy it, it is put here just for an introduction about what the engine can do.
+Please also notice that if I receive your pull request, you will be put in the authors list.
 
+If you want to be put in the licenses folder also, please notice that we accept only MIT license for your pull request.
+
+Add the MIT license to your code piece and put it into into license folder, and write description about it.
+
+
+
+Purchase/Donate
 ----------
 
 Notice that this version on github is granted MIT license, mean you can use it free of charge and yes even for commercial use.
@@ -56,16 +71,6 @@ I can only promise that will be very cheap, so buy it if you want.
 
 Really thankful if you do that.
 
+Thanks for reading this
 ----------
-
-Also, if there be people who want to contribute codes/ideas/suggestions, feel free to do so.
-
-Please also notice that if I receive your pull request, you will be put in the authors list.
-
-If you want to be put in the licenses folder also, please notice that we accept only MIT license for your pull request.
-
-Add the MIT license to your code piece and put it into into license folder, and write description about it.
-
-And thanks for reading this.
-
 -----XenoAmess
