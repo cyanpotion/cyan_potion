@@ -15,7 +15,7 @@ public class GameManagerConfig {
      *
      * @see com.xenoamess.cyan_potion.base.console.ConsoleThread
      */
-    public static final String NO_CONSOLE_THREAD = "noConsoleThread";
+    public static final String STRING_NO_CONSOLE_THREAD = "noConsoleThread";
 
     /**
      * The title text's ID.
@@ -23,14 +23,14 @@ public class GameManagerConfig {
      * @see com.xenoamess.multi_language
      * @see GameManager
      */
-    public static final String TITLE_TEXT_ID = "titleTextID";
+    public static final String STRING_TITLE_TEXT_ID = "titleTextID";
 
     /**
      * The text file's path
      *
      * @see GameManager
      */
-    public static final String TEXT_FILE_PATH = "textFilePath";
+    public static final String STRING_TEXT_FILE_PATH = "textFilePath";
 
     /**
      * The icon file's path
@@ -38,12 +38,21 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String ICON_FILE_PATH = "iconFilePath";
+    public static final String STRING_ICON_FILE_PATH = "iconFilePath";
+
+    /**
+     * The default font's path
+     *
+     * @see GameWindow
+     * @see GameManager
+     */
+    public static final String STRING_DEFAULT_FONT_FILE_PATH = "defaultFontFilePath";
+
 
     /**
      * Language.
      */
-    public static final String LANGUAGE = "language";
+    public static final String STRING_LANGUAGE = "language";
 
     /**
      * The class that start as game window.
@@ -52,7 +61,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String GAME_WINDOW_CLASS_NAME = "gameWindowClassName";
+    public static final String STRING_GAME_WINDOW_CLASS_NAME = "gameWindowClassName";
 
     /**
      * The game window width when startup.
@@ -60,7 +69,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String WINDOW_WIDTH = "windowWidth";
+    public static final String STRING_WINDOW_WIDTH = "windowWidth";
 
     /**
      * The game window height when startup.
@@ -68,7 +77,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String WINDOW_HEIGHT = "windowHeight";
+    public static final String STRING_WINDOW_HEIGHT = "windowHeight";
 
     /**
      * The force game window width when startup.
@@ -76,7 +85,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String FORCE_WINDOW_WIDTH = "forceWindowWidth";
+    public static final String STRING_FORCE_WINDOW_WIDTH = "forceWindowWidth";
 
     /**
      * The force game window height when startup.
@@ -84,7 +93,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String FORCE_WINDOW_HEIGHT = "forceWindowHeight";
+    public static final String STRING_FORCE_WINDOW_HEIGHT = "forceWindowHeight";
 
 
     /**
@@ -93,7 +102,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String FULL_SCREEN = "fullScreen";
+    public static final String STRING_FULL_SCREEN = "fullScreen";
 
 
     /**
@@ -102,7 +111,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String AUTO_SHOW_GAME_WINDOW_AFTER_INIT = "autoShowGameWindowAfterInit";
+    public static final String STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT = "autoShowGameWindowAfterInit";
 
     /**
      * The logo class(show when start up).
@@ -110,6 +119,6 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String LOGO_CLASS_NAME = "logoClassName";
+    public static final String STRING_LOGO_CLASS_NAME = "logoClassName";
 
 }
