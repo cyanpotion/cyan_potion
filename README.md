@@ -30,10 +30,10 @@ And no books/documents for the inner logic for now.
 
 Demo
 ----------
+Here is the [demo](https://github.com/cyanpotion/cyan_potion_demo).
+(The demo is actually for cyan_potion_rpg_module, but I guess this counts.)
 
-If you are still interested in it, you can take a look at [this](https://store.steampowered.com/app/999030/).
-
-I will put an open source demo soon, so no need to buy it, it is put here just for an introduction about what the engine can do.
+You can also take a look at [this](https://store.steampowered.com/app/999030/).
 
 Contribute
 ----------
