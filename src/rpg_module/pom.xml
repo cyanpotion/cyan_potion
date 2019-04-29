@@ -15,7 +15,7 @@
     <name>${project.artifactId}</name>
     <description>the rpg module of cyan_potion game engine.
     </description>
-    <url>https://github.com/cyanpotion/cyan_potion_rpg_module</url>
+    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/rpg_module</url>
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
