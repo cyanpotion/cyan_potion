@@ -7,6 +7,7 @@ import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,17 +35,19 @@ public class GamepadInput {
             e.printStackTrace();
         }
 
-        SteamControllerHandle[] steamControllerHandles = new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
-        SteamController steamController = new SteamController();
-        int steamControllerNum = steamController.getConnectedControllers(steamControllerHandles);
+        if (DataCenter.RUN_WITH_STEAM == true) {
+            SteamControllerHandle[] steamControllerHandles = new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
+            SteamController steamController = new SteamController();
+            int steamControllerNum = steamController.getConnectedControllers(steamControllerHandles);
 //        System.out.println("steamControllerNum : " + steamControllerNum);
-        LOGGER.debug("steamControllerNum : {}", steamControllerNum);
+            LOGGER.debug("steamControllerNum : {}", steamControllerNum);
 
 //        for (int i = 0; i < steamControllerNum; i++) {
 ////            steamControllerHandles[i];
 //        }
 
 //        SteamController steamController = ;
+        }
 
     }
 
