@@ -15,5 +15,5 @@
     <name>${project.artifactId}</name>
     <description>the low-level part of cyan_potion game engine.
     </description>
-    <url>https://github.com/cyanpotion/cyan_potion_base</url>
+    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/base</url>
 </project>
