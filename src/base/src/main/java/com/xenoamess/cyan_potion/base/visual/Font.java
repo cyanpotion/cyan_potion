@@ -49,7 +49,7 @@ public class Font implements AutoCloseable {
      * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
      * file.
      *
-     * @See GameManager.startup
+     * @see com.xenoamess.cyan_potion.base.GameManager
      */
     public static final String DEFAULT_DEFAULT_FONT_FILE_PATH = "/www/fonts" +
             "/SourceHanSans-Normal.ttc";
