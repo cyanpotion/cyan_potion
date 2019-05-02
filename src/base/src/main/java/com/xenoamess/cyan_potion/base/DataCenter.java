@@ -15,7 +15,8 @@ import java.util.Map;
  * @author XenoAmess
  */
 public class DataCenter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataCenter.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(DataCenter.class);
 
     public static boolean DEBUG = false;
     public static boolean ALLOW_RUN_WITHOUT_STEAM = true;
@@ -28,7 +29,8 @@ public class DataCenter {
 
 //    public String openglVersion = "3.2";
 
-//    private static final ArrayList<GameManager> GAME_MANAGERS = new ArrayList<>();
+//    private static final ArrayList<GameManager> GAME_MANAGERS = new
+//    ArrayList<>();
 
     private X8lTree globalSettingsTree;
     private final Map<String, String> commonSettings = new HashMap<>();
@@ -36,13 +38,13 @@ public class DataCenter {
     private final Map<String, String> views = new HashMap<>();
 
 
-    private String textFilePath = "/text/text.x8l";
-    private String iconFilePath = "/www/icon/icon.png";
+    private String textFilePath = null;
+    private String iconFilePath = null;
 
     private MultiLanguageStructure textStructure;
 
     private GameManager gameManager;
-    private String titleTextID = "";
+    private String titleTextID;
 
     public DataCenter(GameManager gameManager) {
         this.setGameManager(gameManager);
@@ -57,10 +59,12 @@ public class DataCenter {
         AbstractGameWindowComponent gameWindowComponent = null;
         String gameWindowComponentClassName = backupClassName;
         if (this.getCommonSettings().containsKey(classNameKey)) {
-            gameWindowComponentClassName = this.getCommonSettings().get(classNameKey);
+            gameWindowComponentClassName =
+                    this.getCommonSettings().get(classNameKey);
         }
         try {
-            gameWindowComponent = (AbstractGameWindowComponent) this.getClass().getClassLoader().loadClass(gameWindowComponentClassName).getConstructor(GameWindow.class).newInstance(gameWindow);
+            gameWindowComponent =
+                    (AbstractGameWindowComponent) this.getClass().getClassLoader().loadClass(gameWindowComponentClassName).getConstructor(GameWindow.class).newInstance(gameWindow);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -83,7 +87,8 @@ public class DataCenter {
     }
 
 
-    private static final Map<Long, GameWindow> GAME_WINDOW_MAP = new HashMap<Long, GameWindow>();
+    private static final Map<Long, GameWindow> GAME_WINDOW_MAP =
+            new HashMap<Long, GameWindow>();
 
     public static GameWindow getGameWindow(long window) {
         return GAME_WINDOW_MAP.get(window);

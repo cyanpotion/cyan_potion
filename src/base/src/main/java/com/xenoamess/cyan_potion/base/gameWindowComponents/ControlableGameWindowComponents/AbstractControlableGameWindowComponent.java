@@ -1,5 +1,6 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
 
+
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
@@ -22,7 +23,8 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
 
     @Override
     public void initProcessors() {
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(), event -> {
+        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
+                event -> {
             MouseButtonEvent mouseButtonEvent = (MouseButtonEvent) event;
             return processMouseButtonEvents(mouseButtonEvent);
         });
@@ -32,7 +34,8 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
 //            return processKeyEvents(keyEvent);
 //        });
 //
-//        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(), event -> {
+//        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
+//        event -> {
 //            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
 //            return processMouseScrollEvents(mouseScrollEvent);
 //        });
@@ -257,8 +260,12 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
     public Event processMouseEnterAreaAndLeaveArea() {
-        boolean ifPosInAreaNow = this.ifPosInArea(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY());
-        boolean ifPosInAreaLast = this.ifPosInArea(this.getGameWindow().getLastMousePosX(), this.getGameWindow().getLastMousePosY());
+        boolean ifPosInAreaNow =
+                this.ifPosInArea(this.getGameWindow().getMousePosX(),
+                        this.getGameWindow().getMousePosY());
+        boolean ifPosInAreaLast =
+                this.ifPosInArea(this.getGameWindow().getLastMousePosX(),
+                        this.getGameWindow().getLastMousePosY());
         if (ifPosInAreaNow && !ifPosInAreaLast) {
             return this.onMouseEnterArea();
         } else if (!ifPosInAreaNow && ifPosInAreaLast) {
@@ -290,7 +297,8 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
     public boolean ifMouseInArea() {
-        return this.ifPosInArea(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY());
+        return this.ifPosInArea(this.getGameWindow().getMousePosX(),
+                this.getGameWindow().getMousePosY());
     }
 
     public Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
@@ -392,11 +400,13 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
 
     @Override
     public void update() {
-        Event processMouseEnterAreaAndLeaveAreaEvent = this.processMouseEnterAreaAndLeaveArea();
+        Event processMouseEnterAreaAndLeaveAreaEvent =
+                this.processMouseEnterAreaAndLeaveArea();
         if (processMouseEnterAreaAndLeaveAreaEvent != null) {
             this.getGameWindow().getGameManager().eventListAdd(processMouseEnterAreaAndLeaveAreaEvent);
         }
-        Event processGainFocusAndLoseFocusEvent = this.processGainFocusAndLoseFocus();
+        Event processGainFocusAndLoseFocusEvent =
+                this.processGainFocusAndLoseFocus();
         if (processGainFocusAndLoseFocusEvent != null) {
             this.getGameWindow().getGameManager().eventListAdd(processGainFocusAndLoseFocusEvent);
         }

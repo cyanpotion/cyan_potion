@@ -29,7 +29,8 @@ public abstract class AbstractShape {
 
     private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> ShapeRelationJudgers = new HashMap<>();
 
-    public AbstractShape(AbstractEntity entity, Vector3f centerPos, Vector3f size) {
+    public AbstractShape(AbstractEntity entity, Vector3f centerPos,
+                         Vector3f size) {
         this.setEntity(entity);
         this.setCenterPos(new Vector3f(centerPos));
         this.setSize(new Vector3f(size));
@@ -44,13 +45,15 @@ public abstract class AbstractShape {
         Method method = null;
         Method excludeMethod = null;
         try {
-            excludeMethod = AbstractShape.class.getMethod("relation", AbstractShape.class, boolean.class);
+            excludeMethod = AbstractShape.class.getMethod("relation",
+                    AbstractShape.class, boolean.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
         try {
-            method = k.getClass().getMethod("relation", v.getClass(), boolean.class);
+            method = k.getClass().getMethod("relation", v.getClass(),
+                    boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }
@@ -71,7 +74,8 @@ public abstract class AbstractShape {
         }
 
         try {
-            method = v.getClass().getMethod("relation", k.getClass(), boolean.class);
+            method = v.getClass().getMethod("relation", k.getClass(),
+                    boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }
@@ -98,9 +102,12 @@ public abstract class AbstractShape {
 
         //if cannot find the relation function in it,then goto
 
-        ShapeRelationJudger shapeComparator = getShapeRelationJudgers().get(new ImmutablePair(k.getClass(), v.getClass()));
+        ShapeRelationJudger shapeComparator =
+                getShapeRelationJudgers().get(new ImmutablePair(k.getClass(),
+                        v.getClass()));
         if (shapeComparator == null) {
-            shapeComparator = getShapeRelationJudgers().get(new ImmutablePair(v.getClass(), k.getClass()));
+            shapeComparator =
+                    getShapeRelationJudgers().get(new ImmutablePair(v.getClass(), k.getClass()));
             if (shapeComparator == null) {
                 return RELATION_UNDEFINED;
             } else {
@@ -119,7 +126,8 @@ public abstract class AbstractShape {
 
     /**
      * @param shape: the other shape
-     * @param rough: if true, then only return RELATION_UNDEFINED = -1,RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
+     * @param rough: if true, then only return RELATION_UNDEFINED = -1,
+     *             RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
      *               if false, then can return all the 6 status.
      * @return return the relationship between the two shapes.
      */
@@ -172,7 +180,8 @@ public abstract class AbstractShape {
     public static <T extends AbstractShape> T copy(T source) {
         T res = null;
         try {
-            Constructor<? extends AbstractShape> constructor = source.getClass().getDeclaredConstructor(source.getClass());
+            Constructor<? extends AbstractShape> constructor =
+                    source.getClass().getDeclaredConstructor(source.getClass());
             res = (T) constructor.newInstance(source);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -194,13 +203,15 @@ public abstract class AbstractShape {
      * register the shape into the scene;
      *
      * @return if succeed with no collisions then return true;
-     * else (it collide with exist shape then) return false, but it will still register.
+     * else (it collide with exist shape then) return false, but it will
+     * still register.
      */
     public boolean register() {
         boolean res = true;
         Set<ImmutablePair<Integer, Integer>> newBoxes = this.getBoxes();
         for (ImmutablePair<Integer, Integer> au : newBoxes) {
-            Set<AbstractShape> shapes = this.getEntity().getScene().getBoxToShapeMap().get(au);
+            Set<AbstractShape> shapes =
+                    this.getEntity().getScene().getBoxToShapeMap().get(au);
             if (shapes != null) {
                 for (AbstractShape au2 : shapes) {
                     if (au2 == this) {
@@ -228,7 +239,8 @@ public abstract class AbstractShape {
         tmpCopy.forceMove(direction);
 
         Set<AbstractShape> newCollisionSet = new HashSet<>();
-        Set<AbstractShape> oldCollisionSet = this.getEntity().getScene().getShapeCollisionSet().get(this);
+        Set<AbstractShape> oldCollisionSet =
+                this.getEntity().getScene().getShapeCollisionSet().get(this);
         if (oldCollisionSet == null) {
             oldCollisionSet = new HashSet<>();
         }
@@ -236,7 +248,8 @@ public abstract class AbstractShape {
         Set<ImmutablePair<Integer, Integer>> newBoxes = tmpCopy.getBoxes();
 
         for (ImmutablePair<Integer, Integer> au : newBoxes) {
-            Collection<AbstractShape> shapes = this.getEntity().getScene().getBoxToShapeMap().get(au);
+            Collection<AbstractShape> shapes =
+                    this.getEntity().getScene().getBoxToShapeMap().get(au);
             if (shapes != null) {
                 for (AbstractShape au2 : shapes) {
                     if (au2 == this) {
@@ -253,9 +266,11 @@ public abstract class AbstractShape {
             }
         }
 
-        this.getEntity().getScene().getShapeCollisionSet().put(this, newCollisionSet);
+        this.getEntity().getScene().getShapeCollisionSet().put(this,
+                newCollisionSet);
         for (AbstractShape shape : oldCollisionSet) {
-            Set<AbstractShape> shapes = this.getEntity().getScene().getShapeCollisionSet().get(shape);
+            Set<AbstractShape> shapes =
+                    this.getEntity().getScene().getShapeCollisionSet().get(shape);
             if (shapes != null) {
                 shapes.remove(this);
             }
@@ -266,17 +281,20 @@ public abstract class AbstractShape {
             if (oldBoxes.contains(au)) {
                 oldBoxes.remove(au);
             } else {
-                Set<AbstractShape> shapes = this.getEntity().getScene().getBoxToShapeMap().get(au);
+                Set<AbstractShape> shapes =
+                        this.getEntity().getScene().getBoxToShapeMap().get(au);
                 if (shapes == null) {
                     shapes = new HashSet<>();
-                    this.getEntity().getScene().getBoxToShapeMap().put(au, shapes);
+                    this.getEntity().getScene().getBoxToShapeMap().put(au,
+                            shapes);
                 }
                 shapes.add(this);
             }
         }
 
         for (ImmutablePair<Integer, Integer> au : oldBoxes) {
-            Set<AbstractShape> shapes = this.getEntity().getScene().getBoxToShapeMap().get(au);
+            Set<AbstractShape> shapes =
+                    this.getEntity().getScene().getBoxToShapeMap().get(au);
             if (shapes != null) {
                 shapes.remove(this);
                 if (shapes.isEmpty()) {
@@ -338,7 +356,8 @@ public abstract class AbstractShape {
         return ShapeRelationJudgers;
     }
 
-    public static void setShapeRelationJudgers(Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers) {
+    public static void setShapeRelationJudgers(Map<ImmutablePair<Class,
+            Class>, ShapeRelationJudger> shapeRelationJudgers) {
         ShapeRelationJudgers = shapeRelationJudgers;
     }
 }

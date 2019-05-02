@@ -10,9 +10,12 @@ public class Grammar {
     //Coding is so hard that I do hard coding
     //;)
 
-    //408 (which is a green color "undefined") might have some special usage and we just didn't find it yet.
-    //605 (which is a blue color ":") might have some special usage and we just didn't find it yet.
-    //655 (which is a gray color "undefined") might have some special usage and we just didn't find it yet.
+    //408 (which is a green color "undefined") might have some special usage
+    // and we just didn't find it yet.
+    //605 (which is a blue color ":") might have some special usage and we
+    // just didn't find it yet.
+    //655 (which is a gray color "undefined") might have some special usage
+    // and we just didn't find it yet.
 
 
     //Part : Pass begin

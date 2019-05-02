@@ -22,7 +22,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture = this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/madewith.png:picture");
+        this.logoTexture =
+                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/madewith.png:picture");
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));
@@ -68,18 +69,25 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             this.getGameWindowComponentTreeNode().close();
             {
                 Font.getDefaultFont().init(this.getGameWindow());
-                AbstractGameWindowComponent title = this.getGameWindow().getGameManager().getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(), "titleClassName", "com.xenoamess.cyan_potion.base.gameWindowComponents.TitleExample");
+                AbstractGameWindowComponent title =
+                        this.getGameWindow().getGameManager().getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(), "titleClassName", "com.xenoamess.cyan_potion.base.gameWindowComponents.TitleExample");
                 title.addToGameWindowComponentTree(null);
                 title.enlargeAsFullWindow();
 
                 //                TitleExample title = null;
 //                String titleClassName = ;
-//                if (this.getGameWindow().getGameManager().dataCenter.commonSettings.containsKey("titleClassName")) {
-//                    titleClassName = this.getGameWindow().getGameManager().dataCenter.commonSettings.get();
+//                if (this.getGameWindow().getGameManager().dataCenter
+//                .commonSettings.containsKey("titleClassName")) {
+//                    titleClassName = this.getGameWindow().getGameManager()
+//                    .dataCenter.commonSettings.get();
 //                }
 //                try {
-//                    title = (TitleExample) this.getClass().getClassLoader().loadClass(titleClassName).getConstructor(GameWindow.class).newInstance(this.getGameWindow());
-//                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+//                    title = (TitleExample) this.getClass().getClassLoader()
+//                    .loadClass(titleClassName).getConstructor(GameWindow
+//                    .class).newInstance(this.getGameWindow());
+//                } catch (ClassNotFoundException | IllegalAccessException |
+//                InstantiationException | NoSuchMethodException |
+//                InvocationTargetException e) {
 //                    e.printStackTrace();
 //                    System.exit(-1);
 //                }
@@ -98,7 +106,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 //        glClearColor(1, 1, 1, 1);
 //        glClear(GL_COLOR_BUFFER_BIT);
 
-        long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
+        long t =
+                this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
         float cscale;
 
         long stayTime = 5000L;
@@ -111,7 +120,10 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 //        cscale = 1.1f;
 
 
-        this.getGameWindow().drawBindableRelativeCenter(this.getLogoTexture(), this.getGameWindow().getLogicWindowWidth(), this.getGameWindow().getLogicWindowHeight(), new Vector4f(1, cscale, cscale, 1));
+        this.getGameWindow().drawBindableRelativeCenter(this.getLogoTexture()
+                , this.getGameWindow().getLogicWindowWidth(),
+                this.getGameWindow().getLogicWindowHeight(), new Vector4f(1,
+                        cscale, cscale, 1));
     }
 
     @Override

@@ -14,7 +14,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class GamepadButtonEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GamepadButtonEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GamepadButtonEvent.class);
 
     private final long window;
     private final int key;
@@ -26,16 +27,19 @@ public class GamepadButtonEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * <p>
      * Notice that this is not included in original GLFW.
-     * I just use JXInput to deal with it, and I manage to force it to follow such rules.
+     * I just use JXInput to deal with it, and I manage to force it to follow
+     * such rules.
      *
      * @see com.xenoamess.cyan_potion.base.io.input.key.Keymap
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     private final int action;
     private final AbstractGamepadDevice gamepadDevice;
 
-    public GamepadButtonEvent(long window, int key, int action, AbstractGamepadDevice gamepadDevice) {
+    public GamepadButtonEvent(long window, int key, int action,
+                              AbstractGamepadDevice gamepadDevice) {
         super();
         this.window = window;
         this.key = key;
@@ -46,7 +50,8 @@ public class GamepadButtonEvent implements Event {
     @Override
     public Set<Event> apply(Object object) {
         if (getAction() != GLFW.GLFW_REPEAT) {
-            LOGGER.debug("GamepadButtonEvent : {} {} {}", getKey(), getAction(), getGamepadDevice());
+            LOGGER.debug("GamepadButtonEvent : {} {} {}", getKey(),
+                    getAction(), getGamepadDevice());
         }
         GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
         switch (getAction()) {
@@ -79,10 +84,12 @@ public class GamepadButtonEvent implements Event {
      * {@link GLFW#GLFW_RELEASE}
      * <p>
      * Notice that this is not included in original GLFW.
-     * I just use JXInput to deal with it, and I manage to force it to follow such rules.
+     * I just use JXInput to deal with it, and I manage to force it to follow
+     * such rules.
      * @see com.xenoamess.cyan_potion.base.io.input.key.Keymap
      * @see GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     public int getAction() {
         return action;

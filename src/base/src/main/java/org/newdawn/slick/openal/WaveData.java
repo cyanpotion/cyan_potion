@@ -57,7 +57,8 @@ import java.nio.ShortBuffer;
  * modified by XenoAmess
  */
 public class WaveData {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CharEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(CharEvent.class);
 
     /**
      * actual wave data
@@ -229,14 +230,16 @@ public class WaveData {
         }
 
         //insert data into bytebuffer
-        ByteBuffer buffer = convertAudioBytes(buf, audioformat.getSampleSizeInBits() == 16);
+        ByteBuffer buffer = convertAudioBytes(buf,
+                audioformat.getSampleSizeInBits() == 16);
 /*		ByteBuffer buffer = ByteBuffer.allocateDirect(buf.length);
 		buffer.put(buf);
 		buffer.rewind();*/
 
         //create our result
         WaveData wavedata =
-                new WaveData(buffer, channels, (int) audioformat.getSampleRate());
+                new WaveData(buffer, channels,
+                        (int) audioformat.getSampleRate());
 
         //close stream
         try {
@@ -254,7 +257,8 @@ public class WaveData {
      * @param two_bytes_data True if we using double byte data
      * @return The byte bufer of data
      */
-    private static ByteBuffer convertAudioBytes(byte[] audio_bytes, boolean two_bytes_data) {
+    private static ByteBuffer convertAudioBytes(byte[] audio_bytes,
+                                                boolean two_bytes_data) {
         ByteBuffer dest = ByteBuffer.allocateDirect(audio_bytes.length);
         dest.order(ByteOrder.nativeOrder());
         ByteBuffer src = ByteBuffer.wrap(audio_bytes);

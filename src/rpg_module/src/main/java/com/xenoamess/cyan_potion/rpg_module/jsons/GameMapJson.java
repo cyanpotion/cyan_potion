@@ -13,7 +13,8 @@ import java.util.ArrayList;
  * @author XenoAmess
  */
 public class GameMapJson implements Serializable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameMapJson.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GameMapJson.class);
 
     /*
      * basic
@@ -70,7 +71,8 @@ public class GameMapJson implements Serializable {
     public ArrayList<EventUnitJson> events;
 
 
-    public static GameMapJson getGameMapJson(ObjectMapper objectMapper, File gameMapFile) {
+    public static GameMapJson getGameMapJson(ObjectMapper objectMapper,
+                                             File gameMapFile) {
         GameMapJson res = null;
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
@@ -91,7 +93,9 @@ public class GameMapJson implements Serializable {
     //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
     //
     //        //        try {
-    //        //            System.out.println(new String(new FileInputStream("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes()));
+    //        //            System.out.println(new String(new FileInputStream
+    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
+    //        ()));
     //        //        } catch (IOException e) {
     //        //            e.printStackTrace();
     //        //        }
@@ -101,7 +105,9 @@ public class GameMapJson implements Serializable {
     //
     //
     //        try {
-    //            gameMap = JSON.parseObject(new String(new FileInputStream("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes()), GameMapJson.class);
+    //            gameMap = JSON.parseObject(new String(new FileInputStream
+    //            ("D:\\workspace\\Gearbar\\www\\data\\Map003.json")
+    //            .readAllBytes()), GameMapJson.class);
     //        } catch (FileNotFoundException e) {
     //            e.printStackTrace();
     //        } catch (IOException e) {

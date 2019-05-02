@@ -13,7 +13,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class MouseButtonEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MouseButtonEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(MouseButtonEvent.class);
 
     private final long window;
     private final int key;
@@ -23,15 +24,18 @@ public class MouseButtonEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * <p>
-     * notice that mouseButtonEvent's action can NEVER be {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
+     * notice that mouseButtonEvent's action can NEVER be
+     * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
      */
     private final int action;
     /**
      * mods of the KeyEvent.
-     * notice that this shall be checked for the bit you use, and not the whole value.
+     * notice that this shall be checked for the bit you use, and not the
+     * whole value.
      * <p>
      * #define 	GLFW_MOD_SHIFT   0x0001
      * If this bit is set one or more Shift keys were held down.
@@ -52,7 +56,8 @@ public class MouseButtonEvent implements Event {
      * If this bit is set the Num Lock key is enabled.
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see
+     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     private final int mods;
 
@@ -66,7 +71,8 @@ public class MouseButtonEvent implements Event {
 
     @Override
     public Set<Event> apply(Object object) {
-        LOGGER.debug("MouseButtonEvent : {} {} {}", getKey(), getAction(), getMods());
+        LOGGER.debug("MouseButtonEvent : {} {} {}", getKey(), getAction(),
+                getMods());
 
         //        GameManager gameManager = DataCenter.currentGameManager;
         GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
@@ -106,9 +112,11 @@ public class MouseButtonEvent implements Event {
      * {@link GLFW#GLFW_PRESS},
      * {@link GLFW#GLFW_RELEASE}
      * <p>
-     * notice that mouseButtonEvent's action can NEVER be {@link GLFW#GLFW_REPEAT},
+     * notice that mouseButtonEvent's action can NEVER be
+     * {@link GLFW#GLFW_REPEAT},
      * @see GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
      */
     public int getAction() {
         return action;
@@ -116,7 +124,8 @@ public class MouseButtonEvent implements Event {
 
     /**
      * @return mods of the KeyEvent.
-     * notice that this shall be checked for the bit you use, and not the whole value.
+     * notice that this shall be checked for the bit you use, and not the
+     * whole value.
      * <p>
      * #define 	GLFW_MOD_SHIFT   0x0001
      * If this bit is set one or more Shift keys were held down.
@@ -136,7 +145,8 @@ public class MouseButtonEvent implements Event {
      * #define 	GLFW_MOD_NUM_LOCK   0x0020
      * If this bit is set the Num Lock key is enabled.
      * @see GLFW
-     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see
+     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     public int getMods() {
         return mods;

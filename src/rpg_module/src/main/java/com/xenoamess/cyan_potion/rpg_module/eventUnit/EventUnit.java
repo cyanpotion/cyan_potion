@@ -20,7 +20,12 @@ public class EventUnit extends Unit {
 
     public EventUnit(AbstractScene scene, EventUnitJson eventUnitJson) {
         //todo
-        super(scene, new Vector3f(eventUnitJson.x * RpgModuleDataCenter.TILE_SIZE, eventUnitJson.y * RpgModuleDataCenter.TILE_SIZE, Unit.DEFAULT_UNIT_LAYER), new Vector3f(RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter.TILE_SIZE, 0), null);
+        super(scene,
+                new Vector3f(eventUnitJson.x * RpgModuleDataCenter.TILE_SIZE,
+                        eventUnitJson.y * RpgModuleDataCenter.TILE_SIZE,
+                        Unit.DEFAULT_UNIT_LAYER),
+                new Vector3f(RpgModuleDataCenter.TILE_SIZE,
+                        RpgModuleDataCenter.TILE_SIZE, 0), null);
         this.setEventUnitJson(eventUnitJson);
         for (PageJson pageJson : eventUnitJson.pages) {
             getEventPages().add(new EventPage(pageJson, this));
@@ -32,7 +37,8 @@ public class EventUnit extends Unit {
     }
 
 
-    //    public EventUnit(Transform transform, String walkingFileURI, EventUnitJson eventUnitJson) {
+    //    public EventUnit(Transform transform, String walkingFileURI,
+    //    EventUnitJson eventUnitJson) {
     //        super(transform, walkingFileURI);
     //        this.eventUnitJson = eventUnitJson;
     //    }

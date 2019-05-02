@@ -1,4 +1,4 @@
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
@@ -6,6 +6,8 @@ import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
+
+ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess
@@ -23,17 +25,24 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 
     @Override
     public void ifVisibleThenDraw() {
-//        this.getGameWindow()drawBindableRelativeLeftTop(this.backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width, this.height);
+//        this.getGameWindow()drawBindableRelativeLeftTop(this
+//        .backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width,
+//        this.height);
         this.drawText();
     }
 
 
     public void drawText() {
-        float realLeftTopPosX = this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
-        float realLeftTopPosY = this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
-        float realWidth = this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
-        float realHeight = this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
-        float realCharHeight = this.getCharHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        float realLeftTopPosX =
+                this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        float realLeftTopPosY =
+                this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        float realWidth =
+                this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        float realHeight =
+                this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        float realCharHeight =
+                this.getCharHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
         Font font = Font.getCurrentFont();
 
@@ -62,7 +71,8 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 
         for (int i = 0; i < this.getContentString().length(); i++) {
             if (this.getTextColor() != null) {
-                glColor4f(this.getTextColor().x, this.getTextColor().y, this.getTextColor().z, this.getTextColor().w);
+                glColor4f(this.getTextColor().x, this.getTextColor().y,
+                        this.getTextColor().z, this.getTextColor().w);
             }
 
             if (this.getContentString().charAt(i) == '\n') {
@@ -85,7 +95,8 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 
             if (Character.isWhitespace(this.getContentString().charAt(i))) {
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, this.getContentString().charAt(i),
+                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        this.getContentString().charAt(i),
                         font.getXb(), font.getYb(), font.getQ(), false);
 
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
@@ -96,8 +107,11 @@ public class TextBox extends AbstractControlableGameWindowComponent {
                 float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
 
                 Font.drawBoxTC(
-                        nowx0, nowy0 + realCharHeight * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
-                        font.getQ().s0(), font.getQ().t0(), font.getQ().s1(), font.getQ().t1()
+                        nowx0, nowy0 + realCharHeight * 0.8f,
+                        nowx0 + charWidthShould * scalex,
+                        nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
+                        font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
+                        font.getQ().t1()
                 );
 
                 lastxReal = nowx0 + charWidthShould * scalex;
@@ -121,7 +135,8 @@ public class TextBox extends AbstractControlableGameWindowComponent {
                     break;
                 }
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, nowChar,
+                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        nowChar,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -162,7 +177,8 @@ public class TextBox extends AbstractControlableGameWindowComponent {
                     break;
                 }
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, nowChar,
+                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        nowChar,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -172,8 +188,11 @@ public class TextBox extends AbstractControlableGameWindowComponent {
                 float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
 
                 Font.drawBoxTC(
-                        nowx0, nowy0 + realCharHeight * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
-                        font.getQ().s0(), font.getQ().t0(), font.getQ().s1(), font.getQ().t1()
+                        nowx0, nowy0 + realCharHeight * 0.8f,
+                        nowx0 + charWidthShould * scalex,
+                        nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
+                        font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
+                        font.getQ().t1()
                 );
 
                 lastxReal = nowx0 + charWidthShould * scalex;
@@ -185,7 +204,8 @@ public class TextBox extends AbstractControlableGameWindowComponent {
             i = ti - 1;
 
 //            stbtt_GetPackedQuad(
-//                    font.chardata, font.BITMAP_W, font.BITMAP_H, this.contentString.charAt(i),
+//                    font.chardata, font.BITMAP_W, font.BITMAP_H, this
+//                    .contentString.charAt(i),
 //                    font.xb, font.getYb(), font.q, false);
 //
 //            float charWidthShould = font.getQ().x1() - font.getQ().x0();
@@ -196,10 +216,12 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 //            float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
 //
 //            if (this.textColor != null) {
-//                glColor4f(this.textColor.x, this.textColor.y, this.textColor.z, this.textColor.w);
+//                glColor4f(this.textColor.x, this.textColor.y, this
+//                .textColor.z, this.textColor.w);
 //            }
 //
-//            if (nowx0 + charWidthShould * scalex > lineStartPosX + realWidth) {
+//            if (nowx0 + charWidthShould * scalex > lineStartPosX +
+//            realWidth) {
 //                //                glEnd();
 //                lineStartPosX = realLeftTopPosX;
 //                lineStartPosY += realCharHeight;
@@ -219,8 +241,11 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 //            }
 //
 //            font.drawBoxTC(
-//                    nowx0, nowy0 + realCharHeight * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
-//                    font.getQ().s0(), font.getQ().t0(), font.getQ().s1(), font.getQ().t1()
+//                    nowx0, nowy0 + realCharHeight * 0.8f, nowx0 +
+//                    charWidthShould * scalex, nowy0 + charHeightShould *
+//                    scaley + realCharHeight * 0.8f,
+//                    font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
+//                    font.getQ().t1()
 //            );
 //
 //            lastx_ = nowx0 + charWidthShould * scalex;

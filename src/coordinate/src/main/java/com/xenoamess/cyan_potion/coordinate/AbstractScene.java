@@ -29,29 +29,42 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
 
     private Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap = new HashMap<>();
 
-    private Map<AbstractShape, Set<AbstractShape>> shapeCollisionSet = new HashMap<>();
+    private Map<AbstractShape, Set<AbstractShape>> shapeCollisionSet =
+            new HashMap<>();
 
     public AbstractScene(GameWindow gameWindow) {
         super(gameWindow);
     }
 
-    public void drawBindableAbsolute(Camera camera, float scale, Bindable bindable, float posx, float posy, float size) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size, size);
+    public void drawBindableAbsolute(Camera camera, float scale,
+                                     Bindable bindable, float posx,
+                                     float posy, float size) {
+        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size,
+                size);
     }
 
-    public void drawBindableAbsolute(Camera camera, float scale, Bindable bindable, float posx, float posy, float size, Vector4f
+    public void drawBindableAbsolute(Camera camera, float scale,
+                                     Bindable bindable, float posx,
+                                     float posy, float size, Vector4f
             colorScale) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size, size, colorScale);
+        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size,
+                size, colorScale);
     }
 
-    public void drawBindableAbsolute(Camera camera, float scale, Bindable bindable, float posx, float posy, float width,
+    public void drawBindableAbsolute(Camera camera, float scale,
+                                     Bindable bindable, float posx,
+                                     float posy, float width,
                                      float height) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, width, height, new Vector4f(1, 1, 1, 1));
+        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, width,
+                height, new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableAbsolute(Camera camera, float scale, Bindable bindable, float posx, float posy, float width,
+    public void drawBindableAbsolute(Camera camera, float scale,
+                                     Bindable bindable, float posx,
+                                     float posy, float width,
                                      float height, Vector4f colorScale) {
-        this.getGameWindow().drawBindableRelative(bindable, (posx - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2, (posy - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2, width * scale, height * scale, colorScale);
+        this.getGameWindow().drawBindableRelative(bindable,
+                (posx - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2, (posy - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2, width * scale, height * scale, colorScale);
     }
 
     public Camera getCamera() {
@@ -90,7 +103,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         return boxToShapeMap;
     }
 
-    public void setBoxToShapeMap(Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap) {
+    public void setBoxToShapeMap(Map<ImmutablePair<Integer, Integer>,
+            Set<AbstractShape>> boxToShapeMap) {
         this.boxToShapeMap = boxToShapeMap;
     }
 

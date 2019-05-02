@@ -21,7 +21,14 @@ import static org.lwjgl.stb.STBTruetype.*;
  * @author XenoAmess
  */
 public class Font implements AutoCloseable {
-    public static final String DEFAULT_FONT_FILE_PATH = "/www/fonts/SourceHanSans-Normal.ttc";
+    /**
+     * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
+     * file.
+     *
+     * @See GameManager.startup
+     */
+    public static final String DEFAULT_DEFAULT_FONT_FILE_PATH = "/www/fonts" +
+            "/SourceHanSans-Normal.ttc";
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
     public static final int MAX_NUM = 40960;
@@ -49,9 +56,11 @@ public class Font implements AutoCloseable {
 
     public void loadBitmap() {
         ByteBuffer bitmap;
-        STBTTPackedchar.Buffer tmpChardata = STBTTPackedchar.malloc(6 * MAX_NUM);
+        STBTTPackedchar.Buffer tmpChardata =
+                STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            ByteBuffer ttf = FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()));
+            ByteBuffer ttf =
+                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()));
             bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
@@ -61,7 +70,8 @@ public class Font implements AutoCloseable {
             tmpChardata.clear();
             stbtt_PackEnd(pc);
             if (TEST_PRINT_FONT_BMP) {
-                stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1, bitmap);
+                stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
+                        bitmap);
             }
         }
         this.setBitmap(bitmap);
@@ -73,7 +83,8 @@ public class Font implements AutoCloseable {
         this.setGameWindow(gameWindow);
         this.setFontTexture(glGenTextures());
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0, GL_ALPHA, GL_UNSIGNED_BYTE, this.getBitmap());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0,
+                GL_ALPHA, GL_UNSIGNED_BYTE, this.getBitmap());
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     }
@@ -84,16 +95,19 @@ public class Font implements AutoCloseable {
 //        glDisable(GL_LIGHTING);
 
         Shader.unbind();
-        glViewport(0, 0, getGameWindow().getRealWindowWidth(), getGameWindow().getRealWindowHeight());
+        glViewport(0, 0, getGameWindow().getRealWindowWidth(),
+                getGameWindow().getRealWindowHeight());
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(0.0, getGameWindow().getRealWindowWidth(), getGameWindow().getRealWindowHeight(), 0.0, -1.0, 1.0);
+        glOrtho(0.0, getGameWindow().getRealWindowWidth(),
+                getGameWindow().getRealWindowHeight(), 0.0, -1.0, 1.0);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }
 
 
-    public static void drawBoxTC(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
+    public static void drawBoxTC(float x0, float y0, float x1, float y1,
+                                 float s0, float t0, float s1, float t1) {
         glTexCoord2f(s0, t0);
         glVertex2f(x0, y0);
         glTexCoord2f(s1, t0);
@@ -108,7 +122,8 @@ public class Font implements AutoCloseable {
     private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
     private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);
 
-//    public void drawText(float x, float y, float scalex, float scaley, float characterSpace, Vector4f color, String text) {
+//    public void drawText(float x, float y, float scalex, float scaley,
+//    float characterSpace, Vector4f color, String text) {
 ////        System.out.println("!!! x:" + x + " y:" + y);
 //        this.bind();
 //
@@ -130,8 +145,10 @@ public class Font implements AutoCloseable {
 //        float lastx_Should = x;
 //        float lasty_Should = y;
 //        for (int i = 0; i < text.length(); i++) {
-//            stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt(i), xb, yb, q, false);
-////            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
+//            stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt
+//            (i), xb, yb, q, false);
+////            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:"
+// + q.y0() + " y1:" + q.y1());
 //            float charWidthShould = q.x1() - q.x0();
 //            float charHeightShould = q.y1() - q.y0();
 //            float spaceLeftToCharShould = q.x0() - lastx_Should;
@@ -139,9 +156,12 @@ public class Font implements AutoCloseable {
 //            float nowx0 = lastx_ + spaceLeftToCharShould * scalex;
 ////            float nowy0 = lasty_ + spaceUpToCharShould * scaley;
 //            float nowy0 = y;
-////            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+////            System.out.println(charWidthShould + " " + charHeightShould +
+// " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + "
+// " + nowy0);
 //            drawBoxTC(
-//                    nowx0, nowy0, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley,
+//                    nowx0, nowy0, nowx0 + charWidthShould * scalex, nowy0 +
+//                    charHeightShould * scaley,
 ////                    q.x0(), q.y0(), q.x1(), q.y1(),
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
@@ -153,7 +173,9 @@ public class Font implements AutoCloseable {
 //        glEnd();
 //    }
 
-    public void drawText(float x, float y, float scalex, float scaley, float height, float characterSpace, Vector4f color, String text) {
+    public void drawText(float x, float y, float scalex, float scaley,
+                         float height, float characterSpace, Vector4f color,
+                         String text) {
 //        System.out.println("!!! x:" + x + " y:" + y);
 //        STBTTFontinfo fontInfo = STBTTFontinfo.create();
         this.bind();
@@ -176,9 +198,12 @@ public class Font implements AutoCloseable {
         float lastxShould = x;
         float lastyShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H, text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
-//            System.out.println("s0:" + q.s0() + " s1:" + q.s1() + " t0:" + q.t0() + " t1:" + q.t1());
+            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+                    text.charAt(i), getXb(), getYb(), getQ(), false);
+//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
+//            System.out.println("s0:" + q.s0() + " s1:" + q.s1() + " t0:" +
+//            q.t0() + " t1:" + q.t1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastxShould;
@@ -186,10 +211,14 @@ public class Font implements AutoCloseable {
             float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
             float nowy0 = lastyReal + spaceUpToCharShould * scaley;
 //            float nowy0 = y;
-//            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowx0 + " " + nowy0);
 
             drawBoxTC(
-                    nowx0, nowy0 + height * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowx0, nowy0 + height * 0.8f,
+                    nowx0 + charWidthShould * scalex,
+                    nowy0 + charHeightShould * scaley + height * 0.8f,
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
@@ -201,7 +230,9 @@ public class Font implements AutoCloseable {
         glEnd();
     }
 
-    public void drawTextFillAreaLeftTop(float x1, float y1, float width, float height, float characterSpace, Vector4f color, String text) {
+    public void drawTextFillAreaLeftTop(float x1, float y1, float width,
+                                        float height, float characterSpace,
+                                        Vector4f color, String text) {
 //        System.out.println("!!! x:" + x + " y:" + y);
         this.bind();
         getXb().put(0, x1);
@@ -226,17 +257,22 @@ public class Font implements AutoCloseable {
         float y3 = Float.MIN_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H, text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
+            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+                    text.charAt(i), getXb(), getYb(), getQ(), false);
+//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastxShould;
             float spaceUpToCharShould = getQ().y0() - lastyShould;
             float nowx0 = lastxReal + spaceLeftToCharShould;
             float nowy0 = y1;
-//            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowx0 + " " + nowy0);
 //            drawBoxTC(
-//                    nowx0, nowy0, nowx0 + charWidthShould * 1, nowy0 + charHeightShould * 1,
+//                    nowx0, nowy0, nowx0 + charWidthShould * 1, nowy0 +
+//                    charHeightShould * 1,
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
             x3 = Math.max(x3, nowx0 + charWidthShould);
@@ -272,12 +308,14 @@ public class Font implements AutoCloseable {
 
             float x3 = Float.MIN_VALUE;
             float y3 = Float.MIN_VALUE;
-            String text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String text =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             float ymin = Float.MAX_VALUE;
             float ymax = Float.MIN_VALUE;
 
             for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H, text.charAt(i), getXb(), getYb(), getQ(), false);
+                stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+                        text.charAt(i), getXb(), getYb(), getQ(), false);
                 ymin = Math.min(ymin, getQ().y0());
                 ymax = Math.max(ymax, getQ().y1());
             }
@@ -290,11 +328,17 @@ public class Font implements AutoCloseable {
         return height / getMaxCharHeight();
     }
 
-    public void drawTextGivenHeightLeftTop(float x1, float y1, float height, float characterSpace, Vector4f color, String text) {
-        this.drawTextGivenHeightLeftTop(x1, y1, -1, -1, height, characterSpace, color, text);
+    public void drawTextGivenHeightLeftTop(float x1, float y1, float height,
+                                           float characterSpace,
+                                           Vector4f color, String text) {
+        this.drawTextGivenHeightLeftTop(x1, y1, -1, -1, height,
+                characterSpace, color, text);
     }
 
-    public void drawTextGivenHeightLeftTop(float x1, float y1, float xMax, float yMax, float height, float characterSpace, Vector4f color, String text) {
+    public void drawTextGivenHeightLeftTop(float x1, float y1, float xMax,
+                                           float yMax, float height,
+                                           float characterSpace,
+                                           Vector4f color, String text) {
 //        System.out.println("!!! x:" + x + " y:" + y);
         this.bind();
         float scaley = this.getScale(height);
@@ -323,8 +367,10 @@ public class Font implements AutoCloseable {
         float lastxShould = x;
         float lastyShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H, text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
+            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+                    text.charAt(i), getXb(), getYb(), getQ(), false);
+//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastxShould;
@@ -338,10 +384,14 @@ public class Font implements AutoCloseable {
             if (yMax > 0 && nowy0 > yMax) {
                 break;
             }
-//            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowx0 + " " + nowy0);
 
             drawBoxTC(
-                    nowx0, nowy0 + height * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowx0, nowy0 + height * 0.8f,
+                    nowx0 + charWidthShould * scalex,
+                    nowy0 + charHeightShould * scaley + height * 0.8f,
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
 

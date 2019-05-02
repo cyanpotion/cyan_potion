@@ -212,7 +212,9 @@ public class GameMap {
     }
 
     static List<GameMap> getGameMaps(World world) {
-        List<GameMapInfoJson> gameMapInfoJsons = getGameMapInfoJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data/MapInfos.json"));
+        List<GameMapInfoJson> gameMapInfoJsons =
+                getGameMapInfoJsons(DataCenter.getObjectMapper(),
+                        FileUtil.getFile("/www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<GameMap>();
         for (GameMapInfoJson au : gameMapInfoJsons) {

@@ -11,7 +11,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class MouseScrollEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MouseScrollEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(MouseScrollEvent.class);
 
     private final long window;
     private final double xoffset;
@@ -27,7 +28,8 @@ public class MouseScrollEvent implements Event {
     @Override
     public Set<Event> apply(Object object) {
 
-        LOGGER.debug("MouseScrollEvent : {} {} {}", getWindow(), getXoffset(), getYoffset());
+        LOGGER.debug("MouseScrollEvent : {} {} {}", getWindow(), getXoffset()
+                , getYoffset());
 
         //        GameManager gameManager = DataCenter.currentGameManager;
         GameWindow gameWindow = DataCenter.getGameWindow(getWindow());

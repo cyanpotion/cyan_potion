@@ -18,7 +18,8 @@ import java.util.ArrayList;
  * @author XenoAmess
  */
 public class GamepadInput {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GamepadInput.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GamepadInput.class);
     private ArrayList<AbstractGamepadData> gamepadDatas;
 
     public GamepadInput() {
@@ -27,7 +28,8 @@ public class GamepadInput {
         try {
             int jXInputDeviceNum = XInputDevice.getAllDevices().length;
             for (int i = 0; i < jXInputDeviceNum; i++) {
-                AbstractGamepadDevice jXInputGamepadDevice = new JXInputGamepadDevice(i);
+                AbstractGamepadDevice jXInputGamepadDevice =
+                        new JXInputGamepadDevice(i);
 //                gamepadDevice.add(jXInputGamepadDevice);
                 getGamepadDatas().add(new JXInputGamepadData(jXInputGamepadDevice));
             }
@@ -36,9 +38,11 @@ public class GamepadInput {
         }
 
         if (DataCenter.RUN_WITH_STEAM == true) {
-            SteamControllerHandle[] steamControllerHandles = new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
+            SteamControllerHandle[] steamControllerHandles =
+                    new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();
-            int steamControllerNum = steamController.getConnectedControllers(steamControllerHandles);
+            int steamControllerNum =
+                    steamController.getConnectedControllers(steamControllerHandles);
 //        System.out.println("steamControllerNum : " + steamControllerNum);
             LOGGER.debug("steamControllerNum : {}", steamControllerNum);
 
@@ -90,7 +94,8 @@ public class GamepadInput {
 //        device.setVibration(0, 0);
 //        device.setVibration(300, 300);
 
-// Whenever the device is polled, listener events will be fired as long as there are changes
+// Whenever the device is polled, listener events will be fired as long as
+// there are changes
 
         while (true) {
             device.setVibration(65535, 65535);
@@ -146,7 +151,8 @@ public class GamepadInput {
             System.out.println(axes.rt);
             System.out.println(axes.dpad);
 
-            // Buttons and axes have public fields (although this is not idiomatic Java)
+            // Buttons and axes have public fields (although this is not
+            // idiomatic Java)
 
 //            // Retrieve button state
 //            if (buttons.a) {
