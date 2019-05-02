@@ -127,7 +127,7 @@ public abstract class AbstractShape {
     /**
      * @param shape: the other shape
      * @param rough: if true, then only return RELATION_UNDEFINED = -1,
-     *             RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
+     *               RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
      *               if false, then can return all the 6 status.
      * @return return the relationship between the two shapes.
      */

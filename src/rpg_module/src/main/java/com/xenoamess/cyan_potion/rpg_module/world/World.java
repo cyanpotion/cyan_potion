@@ -170,22 +170,23 @@ public class World extends AbstractScene {
         });
         this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
                 event -> {
-            float newScale = this.getScale();
-            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
-            if (mouseScrollEvent.getYoffset() > 0) {
-                newScale += 0.1;
-            } else if (mouseScrollEvent.getYoffset() < 0) {
-                newScale -= 0.1;
-            }
+                    float newScale = this.getScale();
+                    MouseScrollEvent mouseScrollEvent =
+                            (MouseScrollEvent) event;
+                    if (mouseScrollEvent.getYoffset() > 0) {
+                        newScale += 0.1;
+                    } else if (mouseScrollEvent.getYoffset() < 0) {
+                        newScale -= 0.1;
+                    }
 //            this.scale += mouseScrollEvent.yoffset;
-            if (newScale > MAX_SCALE) {
-                newScale = MAX_SCALE;
-            } else if (newScale < MIN_SCALE) {
-                newScale = MIN_SCALE;
-            }
-            this.changeScale(newScale);
-            return null;
-        });
+                    if (newScale > MAX_SCALE) {
+                        newScale = MAX_SCALE;
+                    } else if (newScale < MIN_SCALE) {
+                        newScale = MIN_SCALE;
+                    }
+                    this.changeScale(newScale);
+                    return null;
+                });
     }
 
     @Override

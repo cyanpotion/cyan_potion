@@ -48,39 +48,39 @@ public class GameWindowComponentTree implements AutoCloseable {
         AbstractGameWindowComponent baseComponent =
                 new AbstractGameWindowComponent(gameWindow) {
 
-            @Override
-            public void initProcessors() {
-                this.registerProcessor(KeyEvent.class.getCanonicalName(),
-                        event -> {
-                    KeyEvent keyEvent = (KeyEvent) event;
-                    switch (keyEvent.getKeyTranslated().getKey()) {
-                        case Keymap.XENOAMESS_KEY_ENTER:
-                            if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
-                                this.getGameWindow().changeFullScreen();
-                            }
-                            return null;
-                        default:
-                            return null;
+                    @Override
+                    public void initProcessors() {
+                        this.registerProcessor(KeyEvent.class.getCanonicalName(),
+                                event -> {
+                                    KeyEvent keyEvent = (KeyEvent) event;
+                                    switch (keyEvent.getKeyTranslated().getKey()) {
+                                        case Keymap.XENOAMESS_KEY_ENTER:
+                                            if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
+                                                this.getGameWindow().changeFullScreen();
+                                            }
+                                            return null;
+                                        default:
+                                            return null;
+                                    }
+                                });
                     }
-                });
-            }
 
-            @Override
-            public void close() {
-                this.getGameWindow().getGameManager().shutdown();
+                    @Override
+                    public void close() {
+                        this.getGameWindow().getGameManager().shutdown();
 //                super.close();
-            }
+                    }
 
-            @Override
-            public void update() {
+                    @Override
+                    public void update() {
 
-            }
+                    }
 
-            @Override
-            public void draw() {
+                    @Override
+                    public void draw() {
 
-            }
-        };
+                    }
+                };
 
         root = new GameWindowComponentTreeNode(this, null, baseComponent);
         leafNodes = new HashSet<>();

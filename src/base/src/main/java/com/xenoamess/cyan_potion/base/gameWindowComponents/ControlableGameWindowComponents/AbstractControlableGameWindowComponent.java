@@ -1,6 +1,7 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
 
 
+
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
@@ -25,9 +26,10 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     public void initProcessors() {
         this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
                 event -> {
-            MouseButtonEvent mouseButtonEvent = (MouseButtonEvent) event;
-            return processMouseButtonEvents(mouseButtonEvent);
-        });
+                    MouseButtonEvent mouseButtonEvent =
+                            (MouseButtonEvent) event;
+                    return processMouseButtonEvents(mouseButtonEvent);
+                });
 
 //        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
 //            KeyEvent keyEvent = (KeyEvent) event;

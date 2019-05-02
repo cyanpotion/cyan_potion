@@ -492,7 +492,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height,
                                      Vector4f
-            colorScale) {
+                                             colorScale) {
 //        int nowWindowWidth = this.realWindowWidth;
 //        int nowWindowHeight = this.realWindowHeight;
         posx = posx / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -577,7 +577,7 @@ public class GameWindow implements AutoCloseable {
 
     public void drawText(Font font, float x, float y, float scalex,
                          float scaley, float characterSpace, Vector4f
-            color, String text) {
+                                 color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         if (font == null) {

@@ -46,7 +46,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     public void drawBindableAbsolute(Camera camera, float scale,
                                      Bindable bindable, float posx,
                                      float posy, float size, Vector4f
-            colorScale) {
+                                             colorScale) {
         this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size,
                 size, colorScale);
     }
