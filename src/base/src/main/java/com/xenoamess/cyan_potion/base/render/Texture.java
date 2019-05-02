@@ -872,11 +872,11 @@ public class Texture extends AbstractResource implements Bindable {
         final String resourceType = resourceFileURIStrings[2];
 
         switch (resourceType) {
-            case "characters":
-                this.loadAsWalkingTexture(resourceFileURIStrings);
-                break;
             case "picture":
                 this.loadAsPictureTexture(resourceFileURIStrings);
+                break;
+            case "characters":
+                this.loadAsWalkingTexture(resourceFileURIStrings);
                 break;
             case "A5":
                 this.loadAsTilesetTextures8(resourceFileURIStrings);
