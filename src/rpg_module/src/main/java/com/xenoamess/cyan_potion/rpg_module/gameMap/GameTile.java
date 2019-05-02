@@ -8,8 +8,10 @@ import java.util.ArrayList;
  * @author XenoAmess
  */
 public class GameTile {
-    //    public static final GameTile tileGrass = new GameTile(new Texture("grass.png"));
-    //    public static final GameTile tileBlock = new GameTile(new Texture("checker.png")).setSolid();
+    //    public static final GameTile tileGrass = new GameTile(new Texture
+    //    ("grass.png"));
+    //    public static final GameTile tileBlock = new GameTile(new Texture
+    //    ("checker.png")).setSolid();
 
     private boolean solid = false;
 

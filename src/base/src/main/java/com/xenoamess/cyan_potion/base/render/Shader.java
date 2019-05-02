@@ -74,7 +74,8 @@ public class Shader implements AutoCloseable {
         glDeleteProgram(getProgramObject());
     }
 
-    private Map<String, Integer> uniformLocationMap = new HashMap<String, Integer>();
+    private Map<String, Integer> uniformLocationMap = new HashMap<String,
+            Integer>();
     private long lastClearTime = System.currentTimeMillis();
 
     protected int iGetUniformLocation(String uniformName) {
@@ -133,7 +134,9 @@ public class Shader implements AutoCloseable {
 
     private String readFile(String filename) {
         final StringBuilder outputString = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FileUtil.getFile("/shaders/" + filename)))) {
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(new FileReader(FileUtil.getFile(
+                             "/shaders/" + filename)))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 outputString.append(line);

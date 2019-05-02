@@ -3,9 +3,11 @@ package com.xenoamess.cyan_potion.rpg_module.eventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
 
 /**
- * This class is designed here for this engine to have ability to deal with event in some type of data.
+ * This class is designed here for this engine to have ability to deal with
+ * event in some type of data.
  * However I don't like this logic.
- * So when you are developing without some machining utils, please use pages as less as possible.
+ * So when you are developing without some machining utils, please use pages
+ * as less as possible.
  *
  * @author XenoAmess
  */

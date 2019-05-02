@@ -25,7 +25,8 @@ public class WalkingAnimation4Dirs extends Animation {
         }
     }
 
-    public WalkingAnimation4Dirs(int fps, Unit unit, String resourceURI, ResourceManager resourceManager) {
+    public WalkingAnimation4Dirs(int fps, Unit unit, String resourceURI,
+                                 ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
 
@@ -35,7 +36,9 @@ public class WalkingAnimation4Dirs extends Animation {
         switch (resourceType) {
             case "characters":
                 int peopleIndex = Integer.parseInt(resourceFileURIStrings[2]);
-                List<Texture> walkingTextures = Texture.getWalkingTextures(resourceManager, resourceFilePath).get(peopleIndex);
+                List<Texture> walkingTextures =
+                        Texture.getWalkingTextures(resourceManager,
+                                resourceFilePath).get(peopleIndex);
                 initTextures(walkingTextures);
                 break;
             default:
@@ -123,20 +126,24 @@ public class WalkingAnimation4Dirs extends Animation {
     //no this logic is wrong.
     //should not have this function in this class.
     //SORRY.
-    //    public static WalkingAnimation4Dirs GetResourceFromURI(DataCenter dataCenter, String fullResourceURI) {
+    //    public static WalkingAnimation4Dirs GetResourceFromURI(DataCenter
+    //    dataCenter, String fullResourceURI) {
     //        WalkingAnimation4Dirs res;
     //        String[] resourceFileURIStrings = fullResourceURI.split(":");
     //        String resourceFilePath = resourceFileURIStrings[0];
     //        String resourceType = resourceFileURIStrings[1];
     //        switch (resourceType) {
     //            case "characters":
-    //                int peopleIndex = Integer.parseInt(resourceFileURIStrings[2]);
-    //                int textureIndex = Integer.parseInt(resourceFileURIStrings[3]);
+    //                int peopleIndex = Integer.parseInt
+    //                (resourceFileURIStrings[2]);
+    //                int textureIndex = Integer.parseInt
+    //                (resourceFileURIStrings[3]);
     //                Texture.GetWalkingTextures(dataCenter, resourceFilePath);
     //                res = new WalkingAnimation4Dirs();
     //                break;
     //            default:
-    //                throw new Error("textureType not defined : " + resourceType);
+    //                throw new Error("textureType not defined : " +
+    //                resourceType);
     //        }
     //        return res;
     //

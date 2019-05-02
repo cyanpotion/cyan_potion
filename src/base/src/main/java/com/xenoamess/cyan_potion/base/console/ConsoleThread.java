@@ -50,7 +50,8 @@ class ConsoleTalkThread implements Runnable {
  * You can run Console to start a Console, and write your commands to Console.
  * The commands you wrote will be sent to ConsoleThread using TCP-IP
  * This thread uses TCP-IP and player will receive prompting message about it.
- * If you don't need this feature, you can just change config to not to start the thread.
+ * If you don't need this feature, you can just change config to not to start
+ * the thread.
  *
  * @author XenoAmess
  * @see Console
@@ -71,12 +72,15 @@ public class ConsoleThread extends Thread {
 
     @Override
     public void run() {
-        try (ServerSocket serverSocket = new ServerSocket(DataCenter.CONSOLE_PORT)) {
-            final ExecutorService executorService = Executors.newCachedThreadPool();
+        try (ServerSocket serverSocket =
+                     new ServerSocket(DataCenter.CONSOLE_PORT)) {
+            final ExecutorService executorService =
+                    Executors.newCachedThreadPool();
             while (!this.isInterrupted()) {
                 try {
                     final Socket socket = serverSocket.accept();
-                    executorService.execute(new ConsoleTalkThread(socket, this));
+                    executorService.execute(new ConsoleTalkThread(socket,
+                            this));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

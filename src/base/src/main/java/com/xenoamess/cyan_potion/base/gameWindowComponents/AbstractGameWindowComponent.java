@@ -29,7 +29,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.initProcessors();
     }
 
-    public AbstractGameWindowComponent init(float leftTopPosX, float leftTopPosY, float width, float height) {
+    public AbstractGameWindowComponent init(float leftTopPosX,
+                                            float leftTopPosY, float width,
+                                            float height) {
         this.setLeftTopPosX(leftTopPosX);
         this.setLeftTopPosY(leftTopPosY);
         this.setWidth(width);
@@ -54,11 +56,13 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         //TODO
     }
 
-    private Map<String, Function<Event, Event>> classNameToProcessorMap = new HashMap<>();
+    private Map<String, Function<Event, Event>> classNameToProcessorMap =
+            new HashMap<>();
 
     public abstract void initProcessors();
 
-    public void registerProcessor(String eventType, Function<Event, Event> processor) {
+    public void registerProcessor(String eventType,
+                                  Function<Event, Event> processor) {
         this.getClassNameToProcessorMap().put(eventType, processor);
     }
 
@@ -67,7 +71,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     }
 
     public Event process(Event event) {
-        Function<Event, Event> processor = this.getProcessor(event.getClass().getCanonicalName());
+        Function<Event, Event> processor =
+                this.getProcessor(event.getClass().getCanonicalName());
         if (processor != null) {
             return processor.apply(event);
         }
@@ -77,10 +82,14 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (gameWindowComponentTreeNode != null) {
             gameWindowComponentTreeNode.newNode(this);
-//            this.leftTopPosX = gameWindowComponentTreeNode.gameWindowComponent.leftTopPosX;
-//            this.leftTopPosY = gameWindowComponentTreeNode.gameWindowComponent.leftTopPosY;
-//            this.width = gameWindowComponentTreeNode.gameWindowComponent.width;
-//            this.height = gameWindowComponentTreeNode.gameWindowComponent.height;
+//            this.leftTopPosX = gameWindowComponentTreeNode
+//            .gameWindowComponent.leftTopPosX;
+//            this.leftTopPosY = gameWindowComponentTreeNode
+//            .gameWindowComponent.leftTopPosY;
+//            this.width = gameWindowComponentTreeNode.gameWindowComponent
+//            .width;
+//            this.height = gameWindowComponentTreeNode.gameWindowComponent
+//            .height;
         } else {
             getGameWindow().getGameManager().getGameWindowComponentTree().newNode(this);
         }
@@ -151,7 +160,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         return classNameToProcessorMap;
     }
 
-    public void setClassNameToProcessorMap(Map<String, Function<Event, Event>> classNameToProcessorMap) {
+    public void setClassNameToProcessorMap(Map<String,
+            Function<Event, Event>> classNameToProcessorMap) {
         this.classNameToProcessorMap = classNameToProcessorMap;
     }
 }

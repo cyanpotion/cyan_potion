@@ -20,7 +20,8 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @author XenoAmess
  */
 public class WaveData extends AbstractResource implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WaveData.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(WaveData.class);
 
     private int alBufferInt = -1;
 
@@ -56,15 +57,18 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 //    }
 
 
-    public static void alBufferData(int bufferName, int format, Buffer data, int frequency) {
+    public static void alBufferData(int bufferName, int format, Buffer data,
+                                    int frequency) {
         if (data instanceof ByteBuffer) {
             AL10.alBufferData(bufferName, format, (ByteBuffer) data, frequency);
         } else if (data instanceof ShortBuffer) {
-            AL10.alBufferData(bufferName, format, (ShortBuffer) data, frequency);
+            AL10.alBufferData(bufferName, format, (ShortBuffer) data,
+                    frequency);
         } else if (data instanceof IntBuffer) {
             AL10.alBufferData(bufferName, format, (IntBuffer) data, frequency);
         } else if (data instanceof FloatBuffer) {
-            AL10.alBufferData(bufferName, format, (FloatBuffer) data, frequency);
+            AL10.alBufferData(bufferName, format, (FloatBuffer) data,
+                    frequency);
         } else {
             throw new Error("Buffer Type not defined : " + data.getClass().getCanonicalName());
         }
@@ -74,9 +78,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         if (this.getAlBufferInt() == -1) {
             this.setAlBufferInt(alGenBuffers());
             if (this.getData() == null) {
-                LOGGER.error("AbstractResource {} : this.data == null . error?", this.getFullResourceURI());
+                LOGGER.error("AbstractResource {} : this.data == null . " +
+                        "error?", this.getFullResourceURI());
             }
-            alBufferData(this.getAlBufferInt(), this.getFormat(), this.getData(), this.getSampleRate());
+            alBufferData(this.getAlBufferInt(), this.getFormat(),
+                    this.getData(), this.getSampleRate());
         }
     }
 
@@ -92,7 +98,8 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 //    public static WaveData create(ByteBuffer buffer) {
 //        WaveData res = null;
 //        try {
-//            res = new WaveData(org.newdawn.slick.openal.WaveData.create(buffer));
+//            res = new WaveData(org.newdawn.slick.openal.WaveData.create
+//            (buffer));
 //        } catch (Exception e) {
 //            res = null;
 //        }
@@ -108,18 +115,21 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             IntBuffer error = BufferUtils.createIntBuffer(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
             if (decoder == MemoryUtil.NULL) {
-                throw new RuntimeException("Failed to open Ogg Vorbis file. Error: " + error.get(0));
+                throw new RuntimeException("Failed to open Ogg Vorbis file. " +
+                        "Error: " + error.get(0));
             }
             stb_vorbis_get_info(decoder, info);
             int channels = info.channels();
-            ShortBuffer pcm = BufferUtils.createShortBuffer(stb_vorbis_stream_length_in_samples(decoder) * channels);
+            ShortBuffer pcm =
+                    BufferUtils.createShortBuffer(stb_vorbis_stream_length_in_samples(decoder) * channels);
             stb_vorbis_get_samples_short_interleaved(decoder, channels, pcm);
             stb_vorbis_close(decoder);
 
 //            ByteBuffer byteBuffer = ByteBuffer.allocate(pcm.capacity() * 2);
 //            byteBuffer.asShortBuffer().put(pcm);
 //            byteBuffer.flip();
-            this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, info.sample_rate());
+            this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 :
+                    AL_FORMAT_STEREO16, info.sample_rate());
         }
     }
 
@@ -132,8 +142,10 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     public void loadAsMusic(String[] resourceFileURIStrings) {
         String resourceFilePath = resourceFileURIStrings[1];
         try {
-            org.newdawn.slick.openal.WaveData slickWaveData = org.newdawn.slick.openal.WaveData.create(FileUtil.getFile(resourceFilePath).toURI().toURL());
-            this.bake(slickWaveData.data, slickWaveData.format, slickWaveData.samplerate);
+            org.newdawn.slick.openal.WaveData slickWaveData =
+                    org.newdawn.slick.openal.WaveData.create(FileUtil.getFile(resourceFilePath).toURI().toURL());
+            this.bake(slickWaveData.data, slickWaveData.format,
+                    slickWaveData.samplerate);
         } catch (Exception e) {
             this.readVorbis(FileUtil.getFile(resourceFilePath));
         }
@@ -141,7 +153,8 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
     @Override
     public void forceLoad() {
-        //example       com.xenoamess.gearbar.render.WalkingAnimation4Dirs:/www/img/characters/Actor1.png:4:0
+        //example       com.xenoamess.gearbar.render
+        // .WalkingAnimation4Dirs:/www/img/characters/Actor1.png:4:0
         String[] resourceFileURIStrings = this.getFullResourceURI().split(":");
 
         String resourceFilePath = resourceFileURIStrings[1];

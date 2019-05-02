@@ -21,7 +21,8 @@ public class Source implements AutoCloseable {
     public void setCurrentWaveData(WaveData waveData) {
         this.currentWaveData = waveData;
         this.currentWaveData.load();
-        AL10.alSourcei(this.getAlSourceInt(), AL10.AL_BUFFER, waveData.getAlBufferInt());
+        AL10.alSourcei(this.getAlSourceInt(), AL10.AL_BUFFER,
+                waveData.getAlBufferInt());
     }
 
     public void setVolume(float volume) {
@@ -33,15 +34,18 @@ public class Source implements AutoCloseable {
     }
 
     public void setLooping(boolean looping) {
-        AL10.alSourcei(this.getAlSourceInt(), AL10.AL_LOOPING, looping ? AL10.AL_TRUE : AL10.AL_FALSE);
+        AL10.alSourcei(this.getAlSourceInt(), AL10.AL_LOOPING, looping ?
+                AL10.AL_TRUE : AL10.AL_FALSE);
     }
 
     public void setPosition(Vector3f position) {
-        AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, position.x, position.y, position.z);
+        AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, position.x,
+                position.y, position.z);
     }
 
     public void setVelocity(Vector3f velocity) {
-        AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, velocity.x, velocity.y, velocity.z);
+        AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, velocity.x,
+                velocity.y, velocity.z);
     }
 
     public int getState() {

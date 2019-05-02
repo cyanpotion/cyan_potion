@@ -10,7 +10,9 @@ import org.joml.Vector3f;
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 
-    public AbstractDynamicEntity(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable, AbstractShape shape) {
+    public AbstractDynamicEntity(AbstractScene scene, Vector3f centerPos,
+                                 Vector3f size, Bindable bindable,
+                                 AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 

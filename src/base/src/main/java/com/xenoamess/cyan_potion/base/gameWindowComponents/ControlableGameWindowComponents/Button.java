@@ -1,9 +1,11 @@
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
+
+ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess
@@ -18,7 +20,8 @@ public class Button extends AbstractControlableGameWindowComponent {
 //        this.buttonText = buttonText;
     }
 
-    public Button(GameWindow gameWindow, Texture buttonTexture, String buttonText) {
+    public Button(GameWindow gameWindow, Texture buttonTexture,
+                  String buttonText) {
         super(gameWindow);
         this.setButtonTexture(buttonTexture);
         this.setButtonText(buttonText);
@@ -30,7 +33,10 @@ public class Button extends AbstractControlableGameWindowComponent {
             this.getGameWindow().drawBindableRelativeLeftTop(this.getButtonTexture(), this.getLeftTopPosX(), this.getLeftTopPosY(), this.getWidth(), this.getHeight());
         }
         if (this.getButtonText() != null) {
-            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(), this.getLeftTopPosX() + this.getWidth() / 2, this.getLeftTopPosY() + this.getHeight() / 2, this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
+            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
+                    this.getLeftTopPosX() + this.getWidth() / 2,
+                    this.getLeftTopPosY() + this.getHeight() / 2,
+                    this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
                     0, new Vector4f(1, 1, 0, 1), this.getButtonText());
         }
     }

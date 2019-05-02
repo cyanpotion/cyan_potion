@@ -14,7 +14,8 @@ import java.util.*;
 /**
  * In normal cases the GameWindowComponentTree Shall be a List(Stack).
  * In other means there shall be one leafNode in the same time.
- * If there be more than one leafNodes,events would be processed by EVERY leafNode,thus can cause a same Event be handled several times.
+ * If there be more than one leafNodes,events would be processed by EVERY
+ * leafNode,thus can cause a same Event be handled several times.
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
@@ -28,12 +29,14 @@ public class GameWindowComponentTree implements AutoCloseable {
     }
 
     public List<GameWindowComponentTreeNode> getAllNodes() {
-        List<GameWindowComponentTreeNode> res = new ArrayList<GameWindowComponentTreeNode>();
+        List<GameWindowComponentTreeNode> res =
+                new ArrayList<GameWindowComponentTreeNode>();
         this.getAllNodes(this.getRoot(), res);
         return res;
     }
 
-    private void getAllNodes(GameWindowComponentTreeNode nowNode, List<GameWindowComponentTreeNode> res) {
+    private void getAllNodes(GameWindowComponentTreeNode nowNode,
+                             List<GameWindowComponentTreeNode> res) {
         for (GameWindowComponentTreeNode au : nowNode.getChildren()) {
             getAllNodes(au, res);
         }
@@ -42,11 +45,13 @@ public class GameWindowComponentTree implements AutoCloseable {
 
     public GameWindowComponentTree(GameWindow gameWindow) {
         super();
-        AbstractGameWindowComponent baseComponent = new AbstractGameWindowComponent(gameWindow) {
+        AbstractGameWindowComponent baseComponent =
+                new AbstractGameWindowComponent(gameWindow) {
 
             @Override
             public void initProcessors() {
-                this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
+                this.registerProcessor(KeyEvent.class.getCanonicalName(),
+                        event -> {
                     KeyEvent keyEvent = (KeyEvent) event;
                     switch (keyEvent.getKeyTranslated().getKey()) {
                         case Keymap.XENOAMESS_KEY_ENTER:
@@ -97,7 +102,8 @@ public class GameWindowComponentTree implements AutoCloseable {
         Set<Event> res = new HashSet<Event>();
         process(this.getRoot(), res, event);
         return res;
-//        Map<GameWindowComponentTreeNode, Set> eventMap = new HashMap<GameWindowComponentTreeNode, Set>();
+//        Map<GameWindowComponentTreeNode, Set> eventMap = new
+//        HashMap<GameWindowComponentTreeNode, Set>();
 //        for (GameWindowComponentTreeNode au : this.getLeafNodes()) {
 //            Set eventSet = new HashSet<Event>();
 //            eventSet.add(event);
@@ -105,8 +111,10 @@ public class GameWindowComponentTree implements AutoCloseable {
 //        }
 //
 //        while (!eventMap.isEmpty()) {
-//            Map<GameWindowComponentTreeNode, Set> newEventMap = new HashMap<GameWindowComponentTreeNode, Set>();
-//            for (Map.Entry<GameWindowComponentTreeNode, Set> entry : eventMap.entrySet()) {
+//            Map<GameWindowComponentTreeNode, Set> newEventMap = new
+//            HashMap<GameWindowComponentTreeNode, Set>();
+//            for (Map.Entry<GameWindowComponentTreeNode, Set> entry :
+//            eventMap.entrySet()) {
 //                if (entry.getValue().size() >= 2) {
 //                    entry.getValue().remove(event);
 //                }
@@ -114,13 +122,15 @@ public class GameWindowComponentTree implements AutoCloseable {
 //                for (Object object : entry.getValue()) {
 //                    if (object == null) continue;
 //                    Event originalEvent = (Event) object;
-//                    Event resEvent = entry.getKey().gameWindowComponent.process(originalEvent);
+//                    Event resEvent = entry.getKey().gameWindowComponent
+//                    .process(originalEvent);
 //                    GameWindowComponentTreeNode node = entry.getKey();
 //                    if (resEvent != null) {
 //                        if (node.father == null) {
 //                            res.add(resEvent);
 //                        } else {
-//                            Set<Event> eventSet = newEventMap.get(node.father);
+//                            Set<Event> eventSet = newEventMap.get(node
+//                            .father);
 //                            if (eventSet == null) {
 //                                eventSet = new HashSet<Event>();
 //                                newEventMap.put(node.father, eventSet);
@@ -136,7 +146,8 @@ public class GameWindowComponentTree implements AutoCloseable {
 //        return res;
     }
 
-    private boolean process(GameWindowComponentTreeNode nowNode, Set<Event> res, Event event) {
+    private boolean process(GameWindowComponentTreeNode nowNode,
+                            Set<Event> res, Event event) {
         boolean flag0 = false;
         for (GameWindowComponentTreeNode au : nowNode.getChildren()) {
             if (process(au, res, event)) {
@@ -168,11 +179,13 @@ public class GameWindowComponentTree implements AutoCloseable {
     }
 
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
-        Iterator<GameWindowComponentTreeNode> it = this.getLeafNodes().iterator();
+        Iterator<GameWindowComponentTreeNode> it =
+                this.getLeafNodes().iterator();
         if (it.hasNext()) {
             return it.next().newNode(gameWindowComponent);
         } else {
-            throw new Error("GameWindowComponentTree do not have any leafNode!!! What did you do???");
+            throw new Error("GameWindowComponentTree do not have any " +
+                    "leafNode!!! What did you do???");
         }
     }
 

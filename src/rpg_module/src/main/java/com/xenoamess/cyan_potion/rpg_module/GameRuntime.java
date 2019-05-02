@@ -15,7 +15,8 @@ public class GameRuntime {
 
 
     //TODO
-    //maybe it would be better to write an Item class and an Actor class to do this.
+    //maybe it would be better to write an Item class and an Actor class to
+    // do this.
     //emmmmmmm
 
     public GameRuntime(DataCenter dataCenter) {

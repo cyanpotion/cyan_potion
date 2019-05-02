@@ -9,7 +9,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class ConsoleEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ConsoleEvent.class);
 
     private final String command;
 

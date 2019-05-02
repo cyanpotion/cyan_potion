@@ -7,7 +7,8 @@ import org.joml.Vector3f;
  * @author XenoAmess
  */
 public class HorizontalRectangle extends AbstractShape {
-    public HorizontalRectangle(AbstractEntity entity, Vector3f centerPos, Vector3f size) {
+    public HorizontalRectangle(AbstractEntity entity, Vector3f centerPos,
+                               Vector3f size) {
         super(entity, centerPos, size);
     }
 
@@ -106,7 +107,8 @@ public class HorizontalRectangle extends AbstractShape {
                 return AbstractShape.RELATION_EQUAL;
             } else if ((thatMaxX <= thisMaxX) && (thatMaxY <= thisMaxY) && (thatMinX >= thisMinX) && (thatMinY >= thisMinY)) {
                 return AbstractShape.RELATION_OUTER;
-            } else if (target.ifIn(new Vector3f(thisMinX, thisMinY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMinY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMinX, thisMaxY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMaxY, this.getCenterPos().z))) {
+            } else if (target.ifIn(new Vector3f(thisMinX, thisMinY,
+                    this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMinY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMinX, thisMaxY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMaxY, this.getCenterPos().z))) {
                 return AbstractShape.RELATION_INNER;
             }
             return AbstractShape.RELATION_COLLIDE;

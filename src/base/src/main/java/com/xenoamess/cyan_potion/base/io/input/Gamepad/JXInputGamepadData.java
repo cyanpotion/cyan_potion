@@ -80,7 +80,8 @@ public class JXInputGamepadData extends AbstractGamepadData {
      * @param right the right button state
      * @return one of the <code>DPAD_*</code> values of this class
      */
-    public static int dpadFromButtons(final boolean up, final boolean down, final boolean left, final boolean right) {
+    public static int dpadFromButtons(final boolean up, final boolean down,
+                                      final boolean left, final boolean right) {
         boolean u = up;
         boolean d = down;
         boolean l = left;
@@ -189,7 +190,8 @@ public class JXInputGamepadData extends AbstractGamepadData {
 
     @Override
     public void updateGamepadStatus(GameWindow gameWindow) {
-        XInputComponents components = ((JXInputGamepadDevice) this.getGamepadDevice()).getRawXInputDevice().getComponents();
+        XInputComponents components =
+                ((JXInputGamepadDevice) this.getGamepadDevice()).getRawXInputDevice().getComponents();
         XInputButtons buttons = components.getButtons();
         XInputAxes axes = components.getAxes();
 //        axes.

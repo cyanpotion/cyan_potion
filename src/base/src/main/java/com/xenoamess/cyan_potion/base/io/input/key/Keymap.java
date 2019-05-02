@@ -25,16 +25,23 @@ public class Keymap {
     public static final int XENOAMESS_KEY_LEFT = GLFW_KEY_LEFT;
     public static final int XENOAMESS_KEY_DOWN = GLFW_KEY_DOWN;
     public static final int XENOAMESS_KEY_RIGHT = GLFW_KEY_RIGHT;
-    public static final int XENOAMESS_MOUSE_BUTTON_LEFT = GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_LEFT;
-    public static final int XENOAMESS_MOUSE_BUTTON_RIGHT = GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_RIGHT;
-    public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE = GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
+    public static final int XENOAMESS_MOUSE_BUTTON_LEFT =
+            GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_LEFT;
+    public static final int XENOAMESS_MOUSE_BUTTON_RIGHT =
+            GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_RIGHT;
+    public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
+            GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
     private Map<Key, Key> keymap = new HashMap<Key, Key>();
 
     private Map<Key, ArrayList> keymapReverse = new HashMap<Key, ArrayList>();
 
 
-    private boolean[][] rawKeys = new boolean[][]{new boolean[GLFW_KEY_LAST + 1], new boolean[GLFW_MOUSE_BUTTON_LAST + 1], new boolean[GLFW_JOYSTICK_LAST + 1], new boolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
+    private boolean[][] rawKeys =
+            new boolean[][]{new boolean[GLFW_KEY_LAST + 1],
+                    new boolean[GLFW_MOUSE_BUTTON_LAST + 1],
+                    new boolean[GLFW_JOYSTICK_LAST + 1],
+                    new boolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
     private boolean[] myKeys = new boolean[2000];
 
     public Key get(Key rawKey) {
@@ -85,9 +92,11 @@ public class Keymap {
         } else if (rawInput.startsWith("GLFW_MOUSE_BUTTON")) {
             type = Key.TYPE_MOUSE;
         } else {
-            throw new Error("if you want to implement Joystick you should add it here");
+            throw new Error("if you want to implement Joystick you should add" +
+                    " it here");
         }
-        return put(new Key(type, rawInputI), new Key(Key.TYPE_XENOAMESS_KEY, myInputI));
+        return put(new Key(type, rawInputI), new Key(Key.TYPE_XENOAMESS_KEY,
+                myInputI));
     }
 
 
@@ -138,32 +147,38 @@ public class Keymap {
             throw new Error("the key is not in correct type!!");
         }
         return getMyKeys()[myKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>) KeymapReverse.get(myInput);
+//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
+//        KeymapReverse.get(myInput);
 //        if (rawInputKeys == null) {
 //            return false;
 //        }
 //        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown(key)) {
+//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
+//            (key)) {
 //                return true;
 //            }
 //        }
 //        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window, key) == 1;
+//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
+//        key) == 1;
     }
 
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>) KeymapReverse.get(myInput);
+//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
+//        KeymapReverse.get(myInput);
 //        if (rawInputKeys == null) {
 //            return false;
 //        }
 //        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown(key)) {
+//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
+//            (key)) {
 //                return true;
 //            }
 //        }
 //        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window, key) == 1;
+//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
+//        key) == 1;
     }
 
     /**
