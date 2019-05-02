@@ -42,7 +42,7 @@ public class ResourceManager implements AutoCloseable {
             LoggerFactory.getLogger(ResourceManager.class);
 
     public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
-            4L * 1024 * 1024 * 1024;
+            8L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_START_POINT =
             3L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
@@ -50,8 +50,8 @@ public class ResourceManager implements AutoCloseable {
 
     private GameManager gameManager;
     private long totalMemorySize = 0;
-    private ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
-    private ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
+    private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (fullResourceURI == null || fullResourceURI.isEmpty()) {
@@ -240,8 +240,9 @@ public class ResourceManager implements AutoCloseable {
             return;
         }
 
-        getInMemoryResources().sort((o1, o2) -> o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
-                o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
+        getInMemoryResources().sort((o1, o2) ->
+                o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
+                        o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
             if (nowResource.isInMemory() == false) {
@@ -267,7 +268,8 @@ public class ResourceManager implements AutoCloseable {
                 nowResource.close();
             }
         }
-        this.setInMemoryResources(newInMemoryResources);
+        this.getInMemoryResources().clear();
+        this.getInMemoryResources().addAll(newInMemoryResources);
     }
 
 
@@ -291,16 +293,7 @@ public class ResourceManager implements AutoCloseable {
         return inMemoryResources;
     }
 
-    public void setInMemoryResources(ArrayList<AbstractResource> inMemoryResources) {
-        this.inMemoryResources = inMemoryResources;
-    }
-
     public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourecesURIMap() {
         return defaultResourecesURIMap;
-    }
-
-    public void setDefaultResourecesURIMap(ConcurrentHashMap<Class,
-            ConcurrentHashMap> defaultResourecesURIMap) {
-        this.defaultResourecesURIMap = defaultResourecesURIMap;
     }
 }
