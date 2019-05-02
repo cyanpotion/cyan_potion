@@ -84,7 +84,8 @@ public abstract class AbstractResource implements AutoCloseable {
     }
 
     public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
-        return this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(), shortenResourceURI);
+        return this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(),
+                shortenResourceURI);
     }
 
     protected abstract void forceLoad();

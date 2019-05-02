@@ -54,7 +54,8 @@ public class Button extends AbstractControlableGameWindowComponent {
     @Override
     public void ifVisibleThenDraw() {
         if (getButtonTexture() != null) {
-            this.getGameWindow().drawBindableRelativeLeftTop(this.getButtonTexture(), this.getLeftTopPosX(), this.getLeftTopPosY(), this.getWidth(), this.getHeight());
+            this.getGameWindow().drawBindableRelativeLeftTop(this.getButtonTexture(), this.getLeftTopPosX(),
+                    this.getLeftTopPosY(), this.getWidth(), this.getHeight());
         }
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),

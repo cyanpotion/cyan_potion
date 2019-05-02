@@ -94,7 +94,9 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                             insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
                         } else {
                             setContentString(getContentString().substring(0,
-                                    getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ? getContentString().substring(getNowInsertPos() + 1, getContentString().length()) : ""));
+                                    getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ?
+                                    getContentString().substring(getNowInsertPos() + 1, getContentString().length())
+                                    : ""));
                             this.limitNowInsertPos();
                         }
                         return null;
@@ -119,13 +121,17 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         return null;
                     case GLFW_KEY_UP:
                         insertPos = new Vector2f();
-                        drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, insertPos);
-                        this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x, insertPos.y - this.getCharHeight(), false, insertPos));
+                        drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                this.getGameWindow().getMousePosY(), false, insertPos);
+                        this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
+                                insertPos.y - this.getCharHeight(), false, insertPos));
                         return null;
                     case GLFW_KEY_DOWN:
                         insertPos = new Vector2f();
-                        drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, insertPos);
-                        this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x, insertPos.y + this.getCharHeight(), false, insertPos));
+                        drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                this.getGameWindow().getMousePosY(), false, insertPos);
+                        this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
+                                insertPos.y + this.getCharHeight(), false, insertPos));
                         return null;
                     case GLFW_KEY_A:
                         if (keyEvent.getAction() == GLFW_PRESS && keyEvent.getMods() == GLFW_MOD_CONTROL) {
@@ -142,7 +148,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                                     setNowSelectStartPos(getNowSelectEndPos());
                                     setNowSelectEndPos(tmpInt);
                                 }
-                                ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(), this.getNowSelectEndPos()));
+                                ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
+                                        this.getNowSelectEndPos()));
                                 setNowSelectStartPos(-1);
                                 setNowSelectEndPos(-1);
                             } else {
@@ -168,7 +175,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                                     setNowSelectStartPos(getNowSelectEndPos());
                                     setNowSelectEndPos(tmpInt);
                                 }
-                                ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(), this.getNowSelectEndPos()));
+                                ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
+                                        this.getNowSelectEndPos()));
                                 insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
                                 setNowSelectStartPos(-1);
                                 setNowSelectEndPos(-1);
@@ -228,7 +236,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             setNowSelectEndPos(tmpInt);
         }
         setContentString(getContentString().substring(0,
-                getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos(), getContentString().length()));
+                getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos(),
+                getContentString().length()));
         setNowInsertPos(getNowSelectStartPos() + insertString.length());
         limitNowInsertPos();
         setNowSelectStartPos(-1);
@@ -240,7 +249,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
     public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
         super.onMouseButtonLeftDown(mouseButtonEvent);
         int clickIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                        this.getGameWindow().getMousePosY(), false, null);
         setNowSelectStartPos(clickIndex);
         setNowSelectEndPos(clickIndex);
         setNowInsertPos(clickIndex);
@@ -261,7 +271,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             return null;
         }
         int releaseIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                        this.getGameWindow().getMousePosY(), false, null);
         setNowSelectEndPos(releaseIndex);
         setNowInsertPos(getNowSelectEndPos());
         if (getNowSelectStartPos() > getNowSelectEndPos()) {
@@ -286,7 +297,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             return null;
         }
         int clickIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                        this.getGameWindow().getMousePosY(), false, null);
         setNowSelectEndPos(clickIndex);
         return null;
     }
@@ -296,7 +308,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 //        this.getGameWindow().drawBindableRelativeLeftTop(this
 //        .backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width,
 //        this.height);
-        this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), true, null);
+        this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                this.getGameWindow().getMousePosY(), true, null);
     }
 
     private long slashStartTime = 0;

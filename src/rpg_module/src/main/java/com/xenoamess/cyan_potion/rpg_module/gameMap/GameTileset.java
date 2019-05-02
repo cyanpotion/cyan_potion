@@ -138,7 +138,8 @@ public class GameTileset {
 
     static List<GameTileset> getGameTilesets(ResourceManager resourceManager) {
         List<GameTilesetJson> gameTilesetJsons =
-                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data/Tilesets.json"));
+                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data" +
+                        "/Tilesets.json"));
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {
             if (au == null) {

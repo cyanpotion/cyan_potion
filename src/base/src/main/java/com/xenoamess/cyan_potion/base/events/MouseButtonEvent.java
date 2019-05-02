@@ -52,8 +52,7 @@ public class MouseButtonEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
      */
     private final int action;
     /**
@@ -80,8 +79,7 @@ public class MouseButtonEvent implements Event {
      * If this bit is set the Num Lock key is enabled.
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     private final int mods;
 
@@ -139,8 +137,7 @@ public class MouseButtonEvent implements Event {
      * notice that mouseButtonEvent's action can NEVER be
      * {@link GLFW#GLFW_REPEAT},
      * @see GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
      */
     public int getAction() {
         return action;
@@ -169,8 +166,7 @@ public class MouseButtonEvent implements Event {
      * #define 	GLFW_MOD_NUM_LOCK   0x0020
      * If this bit is set the Num Lock key is enabled.
      * @see GLFW
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     public int getMods() {
         return mods;

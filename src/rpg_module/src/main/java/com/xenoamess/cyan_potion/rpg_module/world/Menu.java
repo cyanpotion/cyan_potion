@@ -78,7 +78,8 @@ public class Menu extends AbstractGameWindowComponent {
         if (!getShow().get()) {
             return;
         }
-        this.getGameWindow().drawBindableRelativeCenter(getMenuBackGroundTexture(), this.getGameWindow().getLogicWindowWidth(), this.getGameWindow().getLogicWindowHeight());
+        this.getGameWindow().drawBindableRelativeCenter(getMenuBackGroundTexture(),
+                this.getGameWindow().getLogicWindowWidth(), this.getGameWindow().getLogicWindowHeight());
     }
 
     @Override
