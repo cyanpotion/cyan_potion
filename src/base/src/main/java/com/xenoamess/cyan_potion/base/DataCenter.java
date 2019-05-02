@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class DataCenter {
 
 //    public String openglVersion = "3.2";
 
-    private static final ArrayList<GameManager> GAME_MANAGERS = new ArrayList<>();
+//    private static final ArrayList<GameManager> GAME_MANAGERS = new ArrayList<>();
 
     private X8lTree globalSettingsTree;
     private final Map<String, String> commonSettings = new HashMap<>();
@@ -99,9 +98,9 @@ public class DataCenter {
     }
 
 
-    public static ArrayList<GameManager> getGameManagers() {
-        return GAME_MANAGERS;
-    }
+//    public static ArrayList<GameManager> getGameManagers() {
+//        return GAME_MANAGERS;
+//    }
 
     public X8lTree getGlobalSettingsTree() {
         return globalSettingsTree;
