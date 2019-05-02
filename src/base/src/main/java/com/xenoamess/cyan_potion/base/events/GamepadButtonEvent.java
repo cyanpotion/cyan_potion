@@ -56,8 +56,7 @@ public class GamepadButtonEvent implements Event {
      *
      * @see com.xenoamess.cyan_potion.base.io.input.key.Keymap
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     private final int action;
     private final AbstractGamepadDevice gamepadDevice;
@@ -112,8 +111,7 @@ public class GamepadButtonEvent implements Event {
      * such rules.
      * @see com.xenoamess.cyan_potion.base.io.input.key.Keymap
      * @see GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     public int getAction() {
         return action;

@@ -47,10 +47,13 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class TitleExample extends AbstractGameWindowComponent {
     private Texture saveSlotTexture =
-            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
+            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
+                    "/www/img/pictures/saveSlot.png:picture");
     private Texture saveStarTexture =
-            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveStar.png:picture");
-    private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents = new ArrayList<AbstractControlableGameWindowComponent>();
+            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
+                    "/www/img/pictures/saveStar.png:picture");
+    private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
+            new ArrayList<AbstractControlableGameWindowComponent>();
 
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
@@ -180,7 +183,8 @@ public class TitleExample extends AbstractGameWindowComponent {
         });
 
         Texture texture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
+                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
+                        "/www/img/pictures/saveSlot.png:picture");
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);
         InputBox inputBox = new InputBox(gameWindow);
@@ -382,7 +386,9 @@ public class TitleExample extends AbstractGameWindowComponent {
 //            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
 //            : 0.3f), "退出游戲");
         } else if (getState() == -101) {
-            this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(), this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2, 250, 50);
+            this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
+                    this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2,
+                    250, 50);
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getGameWindow().getLogicWindowWidth() / 2,
                     this.getGameWindow().getLogicWindowHeight() / 2, 250, 50,

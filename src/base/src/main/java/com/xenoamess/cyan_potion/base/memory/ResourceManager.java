@@ -240,7 +240,8 @@ public class ResourceManager implements AutoCloseable {
             return;
         }
 
-        getInMemoryResources().sort((o1, o2) -> o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 : o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
+        getInMemoryResources().sort((o1, o2) -> o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
+                o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
             if (nowResource.isInMemory() == false) {

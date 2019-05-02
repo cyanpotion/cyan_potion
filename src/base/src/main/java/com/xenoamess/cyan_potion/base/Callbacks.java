@@ -137,13 +137,16 @@ public final class Callbacks {
                 }
 
                 @Override
-                public void onLeaderboardScoresDownloaded(SteamLeaderboardHandle leaderboard, SteamLeaderboardEntriesHandle entries, int numEntries) {
+                public void onLeaderboardScoresDownloaded(SteamLeaderboardHandle leaderboard,
+                                                          SteamLeaderboardEntriesHandle entries, int numEntries) {
                     //TODO
                 }
 
                 @Override
                 public void onLeaderboardScoreUploaded(boolean success,
-                                                       SteamLeaderboardHandle leaderboard, int score, boolean scoreChanged, int globalRankNew, int globalRankPrevious) {
+                                                       SteamLeaderboardHandle leaderboard, int score,
+                                                       boolean scoreChanged, int globalRankNew,
+                                                       int globalRankPrevious) {
                     //TODO
                 }
 

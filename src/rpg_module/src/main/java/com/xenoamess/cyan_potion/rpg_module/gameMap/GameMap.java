@@ -82,7 +82,9 @@ public class GameMap {
         LOGGER.debug(gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName()));
 
         int tmpId = this.getGameMapInfoJson().getId();
-        this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(), FileUtil.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" : "0") + tmpId))));
+        this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
+                FileUtil.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                        "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
         //        gameMapJson.getData();
         //        getGameTileset().;

@@ -88,7 +88,9 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float posy, float width,
                                      float height, Vector4f colorScale) {
         this.getGameWindow().drawBindableRelative(bindable,
-                (posx - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2, (posy - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2, width * scale, height * scale, colorScale);
+                (posx - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2,
+                (posy - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2,
+                width * scale, height * scale, colorScale);
     }
 
     public Camera getCamera() {

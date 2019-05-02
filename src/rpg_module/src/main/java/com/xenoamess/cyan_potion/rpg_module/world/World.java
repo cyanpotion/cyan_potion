@@ -482,7 +482,9 @@ public class World extends AbstractScene {
                     for (Bindable au : t.getBindables()) {
                         this.drawBindableAbsolute(this.getCamera(),
                                 this.getScale(), au,
-                                (i + posX - (getViewX() / 2) + 1f) * RpgModuleDataCenter.TILE_SIZE, (j + posY - (getViewY() / 2)) * RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter.TILE_SIZE);
+                                (i + posX - (getViewX() / 2) + 1f) * RpgModuleDataCenter.TILE_SIZE,
+                                (j + posY - (getViewY() / 2)) * RpgModuleDataCenter.TILE_SIZE,
+                                RpgModuleDataCenter.TILE_SIZE);
                     }
                 }
             }

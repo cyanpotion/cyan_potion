@@ -47,7 +47,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
         this.logoTexture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/madewith.png:picture");
+                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
+                        "/www/img/pictures/madewith.png:picture");
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));

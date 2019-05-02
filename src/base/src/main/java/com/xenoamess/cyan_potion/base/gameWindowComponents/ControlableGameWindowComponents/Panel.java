@@ -65,7 +65,8 @@ public class Panel extends AbstractControlableGameWindowComponent {
     @Override
     public void draw() {
         if (getBackgroundTexture() != null) {
-            getGameWindow().drawBindableRelativeLeftTop(getBackgroundTexture(), this.getLeftTopPosX(), this.getLeftTopPosY(), this.getWidth(), this.getHeight());
+            getGameWindow().drawBindableRelativeLeftTop(getBackgroundTexture(), this.getLeftTopPosX(),
+                    this.getLeftTopPosY(), this.getWidth(), this.getHeight());
         }
         for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
             gameWindowComponent.draw();

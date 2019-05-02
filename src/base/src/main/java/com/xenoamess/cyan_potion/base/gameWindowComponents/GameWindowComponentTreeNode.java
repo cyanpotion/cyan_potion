@@ -39,7 +39,9 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     private final List<GameWindowComponentTreeNode> children =
             new ArrayList<>();
 
-    protected GameWindowComponentTreeNode(GameWindowComponentTree gameWindowComponentTree, GameWindowComponentTreeNode parent, AbstractGameWindowComponent gameWindowComponent) {
+    protected GameWindowComponentTreeNode(GameWindowComponentTree gameWindowComponentTree,
+                                          GameWindowComponentTreeNode parent,
+                                          AbstractGameWindowComponent gameWindowComponent) {
         super();
         this.gameWindowComponentTree = gameWindowComponentTree;
         this.parent = parent;

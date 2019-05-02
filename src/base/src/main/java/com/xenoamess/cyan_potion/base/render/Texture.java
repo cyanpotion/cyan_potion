@@ -147,7 +147,8 @@ public class Texture extends AbstractResource implements Bindable {
         byteBuffer.clear();
     }
 
-    public static List<List<Texture>> getWalkingTextures(ResourceManager resourceManager, String walkingTexturesFilepath) {
+    public static List<List<Texture>> getWalkingTextures(ResourceManager resourceManager,
+                                                         String walkingTexturesFilepath) {
         final List<List<Texture>> res = new ArrayList<>();
 
         for (int k = 0; k < 8; k++) {
@@ -156,7 +157,8 @@ public class Texture extends AbstractResource implements Bindable {
 
                 for (int j = 0; j < 3; j++) {
                     Texture nowTexture =
-                            resourceManager.fetchResourceWithShortenURI(Texture.class, walkingTexturesFilepath + ":characters:" + k + ":" + (i * 3 + j));
+                            resourceManager.fetchResourceWithShortenURI(Texture.class, walkingTexturesFilepath +
+                                    ":characters:" + k + ":" + (i * 3 + j));
                     nowTextures.add(nowTexture);
                 }
             }
@@ -172,14 +174,18 @@ public class Texture extends AbstractResource implements Bindable {
 
         for (int k = 0; k < 32; k++) {
             for (int ti = 0; ti < 48; ti++) {
-                res.add(resourceManager.fetchResourceWithShortenURI(Texture.class, tilesetTexturesFilepath + ":" + "A2" + ":" + k + ":" + ti));
+                res.add(resourceManager.fetchResourceWithShortenURI(Texture.class, tilesetTexturesFilepath + ":" +
+                        "A2" + ":" + k + ":" + ti));
             }
         }
         return res;
     }
 
 
-    static void loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String resourceFilePath, int kk, int ti, int singleSingleWidth, int singleSingleHeight, int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2, int[] pixelsRaws3) {
+    static void loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String resourceFilePath, int kk,
+                                                 int ti, int singleSingleWidth, int singleSingleHeight,
+                                                 int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
+                                                 int[] pixelsRaws3) {
         final Texture nowTexture =
                 resourceManager.fetchResourceWithShortenURI(Texture.class,
                         resourceFilePath + ":" + "A2" + ":" + kk + ":" + ti);
@@ -639,9 +645,11 @@ public class Texture extends AbstractResource implements Bindable {
 
             for (int ti = 0; ti < 48; ti++) {
                 final Texture nowTexture =
-                        this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(), tilesetTexturesFilepath + ":" + "A2" + ":" + k + ":" + ti);
+                        this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(),
+                                tilesetTexturesFilepath + ":" + "A2" + ":" + k + ":" + ti);
                 if (!nowTexture.isInMemory()) {
-                    loadTilesetTexturesA2Single(this.getGameManager().getResourceManager(), tilesetTexturesFilepath, k, singleWidth, singleHeight, entireWidth, entireHeight, startPosx, startPosy, pixelsRaw);
+                    loadTilesetTexturesA2Single(this.getGameManager().getResourceManager(), tilesetTexturesFilepath,
+                            k, singleWidth, singleHeight, entireWidth, entireHeight, startPosx, startPosy, pixelsRaw);
                     break;
                 }
             }
@@ -695,7 +703,8 @@ public class Texture extends AbstractResource implements Bindable {
         for (int k = 0; k < columNum; k++) {
             for (int i = 0; i < entireHeight / singleHeight; i++) {
                 for (int j = 0; j < 8; j++) {
-                    res.add(resourceManager.fetchResourceWithShortenURI(Texture.class, tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j)));
+                    res.add(resourceManager.fetchResourceWithShortenURI(Texture.class,
+                            tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j)));
                 }
             }
         }
@@ -750,7 +759,8 @@ public class Texture extends AbstractResource implements Bindable {
                 nowPosx = startPosx;
                 for (int j = 0; j < 8; j++) {
                     final Texture nowTexture =
-                            this.getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j));
+                            this.getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
+                                    tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j));
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
                                 entireWidth, entireHeight, nowPosx, nowPosy,
@@ -811,7 +821,8 @@ public class Texture extends AbstractResource implements Bindable {
                 nowPosx = startPosx;
                 for (int j = 0; j < 3; j++) {
                     final Texture nowTexture =
-                            this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(), walkingTexturesFilepath + ":characters:" + k + ":" + (i * 3 + j));
+                            this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(),
+                                    walkingTexturesFilepath + ":characters:" + k + ":" + (i * 3 + j));
 
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
