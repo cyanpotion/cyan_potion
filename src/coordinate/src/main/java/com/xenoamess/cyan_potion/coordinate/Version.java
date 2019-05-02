@@ -8,7 +8,8 @@ import java.net.URL;
 /**
  * A version class that represent a package's version.
  * It will read the /VERSION/${package name of this class}.VERSION file
- * That file is a template and shall be replaced and filled by maven when start up.
+ * That file is a template and shall be replaced and filled by maven when
+ * start up.
  * However if the file is not found then VERSION will be VERSION_MISSING,
  * And a waring message will be write to System.err
  * <p>
@@ -51,7 +52,8 @@ public class Version {
     public static String loadFile(String resourceFilePath) {
         String res = "";
         try (
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
+                BufferedReader bufferedReader =
+                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
         ) {
             final StringBuffer sb = new StringBuffer();
             String tmp;

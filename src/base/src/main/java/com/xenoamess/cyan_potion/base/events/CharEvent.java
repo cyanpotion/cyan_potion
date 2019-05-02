@@ -11,7 +11,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class CharEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CharEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(CharEvent.class);
 
     private final long window;
     private final int codepoint;

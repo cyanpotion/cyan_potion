@@ -39,11 +39,14 @@ public class GameTilesetJson implements Serializable {
     //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
     //
     //        //        try {
-    //        //            System.out.println(new String(new FileInputStream("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes()));
+    //        //            System.out.println(new String(new FileInputStream
+    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
+    //        ()));
     //        //        } catch (IOException e) {
     //        //            e.printStackTrace();
     //        //        }
-    //        for (GameTilesetJson au : GetGameTileSetJsons("/www/data/Tilesets.json")) {
+    //        for (GameTilesetJson au : GetGameTileSetJsons
+    //        ("/www/data/Tilesets.json")) {
     //            if (au != null) {
     //                System.out.println(au.id);
     //                System.out.println(au.name);

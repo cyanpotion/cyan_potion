@@ -1,5 +1,7 @@
 package com.xenoamess.cyan_potion.base;
 
+import java.util.Map;
+
 /**
  * @author XenoAmess
  */
@@ -10,8 +12,54 @@ public class GameManagerConfig {
     private GameManagerConfig() {
     }
 
+    public static boolean getBoolean(String key) {
+        switch (key.toLowerCase()) {
+            case "1":
+            case "true":
+            case "yes":
+                return true;
+            case "0":
+            case "false":
+            case "no":
+                return false;
+            default:
+                throw new RuntimeException("key is not a legal boolean");
+        }
+    }
+
+    public static boolean getBoolean(final Map<String, String> settingMap,
+                                     final String key) {
+        assert (settingMap != null);
+        assert (key != null);
+        if (!settingMap.containsKey(key)) {
+            return false;
+        }
+        return getBoolean(settingMap.get(key));
+    }
+
+    public static String getString(final Map<String, String> settingMap,
+                                   final String key) {
+        assert (settingMap != null);
+        assert (key != null);
+        if (!settingMap.containsKey(key)) {
+            return null;
+        }
+        return settingMap.get(key);
+    }
+
+    public static String getString(final Map<String, String> settingMap,
+                                   final String key,
+                                   final String defaultValue) {
+        String res = getString(settingMap, key);
+        if (res == null) {
+            res = defaultValue;
+        }
+        return res;
+    }
+
     /**
-     * If exist this tag then does not start console thread when start up the game.
+     * If exist this tag then does not start console thread when start up the
+     * game.
      *
      * @see com.xenoamess.cyan_potion.base.console.ConsoleThread
      */
@@ -46,7 +94,8 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_DEFAULT_FONT_FILE_PATH = "defaultFontFilePath";
+    public static final String STRING_DEFAULT_FONT_FILE_PATH =
+            "defaultFontFilePath";
 
 
     /**
@@ -61,7 +110,8 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_GAME_WINDOW_CLASS_NAME = "gameWindowClassName";
+    public static final String STRING_GAME_WINDOW_CLASS_NAME =
+            "gameWindowClassName";
 
     /**
      * The game window width when startup.
@@ -111,7 +161,8 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT = "autoShowGameWindowAfterInit";
+    public static final String STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT =
+            "autoShowGameWindowAfterInit";
 
     /**
      * The logo class(show when start up).

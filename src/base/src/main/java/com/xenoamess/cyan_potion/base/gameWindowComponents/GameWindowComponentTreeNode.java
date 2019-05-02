@@ -12,7 +12,8 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     private final GameWindowComponentTreeNode parent;
     private final int depth;
     private final AbstractGameWindowComponent gameWindowComponent;
-    private final List<GameWindowComponentTreeNode> children = new ArrayList<>();
+    private final List<GameWindowComponentTreeNode> children =
+            new ArrayList<>();
 
     protected GameWindowComponentTreeNode(GameWindowComponentTree gameWindowComponentTree, GameWindowComponentTreeNode parent, AbstractGameWindowComponent gameWindowComponent) {
         super();
@@ -36,7 +37,8 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
 
     @Override
     public void close() {
-        ArrayList<GameWindowComponentTreeNode> tmpSons = new ArrayList<GameWindowComponentTreeNode>(getChildren());
+        ArrayList<GameWindowComponentTreeNode> tmpSons =
+                new ArrayList<GameWindowComponentTreeNode>(getChildren());
 
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.close();
@@ -60,7 +62,8 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
 
 
     public void update() {
-        ArrayList<GameWindowComponentTreeNode> tmpSons = new ArrayList<GameWindowComponentTreeNode>(getChildren());
+        ArrayList<GameWindowComponentTreeNode> tmpSons =
+                new ArrayList<GameWindowComponentTreeNode>(getChildren());
 
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.update();
@@ -73,7 +76,8 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     public void draw() {
 
         this.getGameWindowComponent().draw();
-        ArrayList<GameWindowComponentTreeNode> tmpSons = new ArrayList<GameWindowComponentTreeNode>(getChildren());
+        ArrayList<GameWindowComponentTreeNode> tmpSons =
+                new ArrayList<GameWindowComponentTreeNode>(getChildren());
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.draw();
         }

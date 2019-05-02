@@ -11,16 +11,22 @@ import org.joml.Vector3f;
  * @author XenoAmess
  */
 public class Player extends Unit {
-    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable, AbstractShape shape) {
+    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                  Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
-    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable) {
-        super(scene, centerPos, size, bindable, new HorizontalRectangle(null, centerPos, size));
+    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                  Bindable bindable) {
+        super(scene, centerPos, size, bindable, new HorizontalRectangle(null,
+                centerPos, size));
     }
 
-    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size, String walkingAnimation4DirsURI, ResourceManager resourceManager) {
-        super(scene, centerPos, size, walkingAnimation4DirsURI, resourceManager);
+    public Player(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                  String walkingAnimation4DirsURI,
+                  ResourceManager resourceManager) {
+        super(scene, centerPos, size, walkingAnimation4DirsURI,
+                resourceManager);
     }
 
     @Override

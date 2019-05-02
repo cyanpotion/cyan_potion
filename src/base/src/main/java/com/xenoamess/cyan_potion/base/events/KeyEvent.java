@@ -14,7 +14,8 @@ import static org.lwjgl.glfw.GLFW.*;
  * @author XenoAmess
  */
 public class KeyEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeyEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(KeyEvent.class);
 
     private final long window;
     private final int key;
@@ -27,12 +28,14 @@ public class KeyEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     private final int action;
     /**
      * mods of the KeyEvent.
-     * notice that this shall be checked for the bit you use sometimes, and not always the whole value.
+     * notice that this shall be checked for the bit you use sometimes, and
+     * not always the whole value.
      * <p>
      * #define 	GLFW_MOD_SHIFT   0x0001
      * If this bit is set one or more Shift keys were held down.
@@ -53,7 +56,8 @@ public class KeyEvent implements Event {
      * If this bit is set the Num Lock key is enabled.
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see
+     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     private final int mods;
 
@@ -68,7 +72,8 @@ public class KeyEvent implements Event {
 
     @Override
     public Set<Event> apply(Object object) {
-        LOGGER.debug("KeyEvent : {} {} {} {}", getKey(), getScancode(), getAction(), getMods());
+        LOGGER.debug("KeyEvent : {} {} {} {}", getKey(), getScancode(),
+                getAction(), getMods());
         //        GameManager gameManager = DataCenter.currentGameManager;
         GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
         switch (getAction()) {
@@ -105,10 +110,12 @@ public class KeyEvent implements Event {
      * you shall just use CharEvent.
      * <p>
      * This function is a product of my lack of knowledge about GLFW.
-     * If you need to catch a text, please just use text input in GLFW, not key input.
+     * If you need to catch a text, please just use text input in GLFW, not
+     * key input.
      *
      * @return the string that the key refers to
-     * @see <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
+     * @see
+     * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
      */
     @Deprecated
     public String translate() {
@@ -363,7 +370,8 @@ public class KeyEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see
+     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     public int getAction() {
         return action;
@@ -371,7 +379,8 @@ public class KeyEvent implements Event {
 
     /**
      * @return mods of the KeyEvent.
-     * notice that this shall be checked for the bit you use sometimes, and not always the whole value.
+     * notice that this shall be checked for the bit you use sometimes, and
+     * not always the whole value.
      * <p>
      * #define 	GLFW_MOD_SHIFT   0x0001
      * If this bit is set one or more Shift keys were held down.
@@ -391,7 +400,8 @@ public class KeyEvent implements Event {
      * #define 	GLFW_MOD_NUM_LOCK   0x0020
      * If this bit is set the Num Lock key is enabled.
      * @see org.lwjgl.glfw.GLFW
-     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see
+     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     public int getMods() {
         return mods;

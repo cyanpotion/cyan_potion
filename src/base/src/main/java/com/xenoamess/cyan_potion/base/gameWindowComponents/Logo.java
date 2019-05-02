@@ -21,7 +21,8 @@ public class Logo extends AbstractGameWindowComponent {
 
     public Logo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture = this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/logo.png:picture");
+        this.logoTexture =
+                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/logo.png:picture");
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
@@ -88,7 +89,8 @@ public class Logo extends AbstractGameWindowComponent {
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        float t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
+        float t =
+                this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
         float pscale;
 //        System.out.println(t);
         float dynamicTime = 500f;
@@ -100,18 +102,26 @@ public class Logo extends AbstractGameWindowComponent {
         } else if (t < (1 - (1 - seg) / 2) * dynamicTime) {
             pscale = t / seg / dynamicTime;
         } else if (t < dynamicTime) {
-            pscale = ((1 - (1 - seg) / 2) * 2 * dynamicTime - t) / seg / dynamicTime;
+            pscale =
+                    ((1 - (1 - seg) / 2) * 2 * dynamicTime - t) / seg / dynamicTime;
         } else {
             pscale = 1;
         }
         if (t < dynamicTime + stayTime) {
-            this.getGameWindow().drawBindableRelative(getLogoTexture(), 0 + this.getGameWindow().getLogicWindowWidth() / 2, -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2, 480 / 2 * (pscale + 1) * 2, 60 / 2 * (pscale + 1) * 2, new Vector4f(1, 1, 1, pscale));
+            this.getGameWindow().drawBindableRelative(getLogoTexture(),
+                    0 + this.getGameWindow().getLogicWindowWidth() / 2,
+                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2
+                    , 480 / 2 * (pscale + 1) * 2, 60 / 2 * (pscale + 1) * 2,
+                    new Vector4f(1, 1, 1, pscale));
         } else {
             pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pscale < 0) {
                 pscale = 0;
             }
-            this.getGameWindow().drawBindableRelative(getLogoTexture(), 0 + this.getGameWindow().getLogicWindowWidth() / 2, -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2, 480 * 2, 60 * 2, new Vector4f(1, 1, 1, pscale));
+            this.getGameWindow().drawBindableRelative(getLogoTexture(),
+                    0 + this.getGameWindow().getLogicWindowWidth() / 2,
+                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2
+                    , 480 * 2, 60 * 2, new Vector4f(1, 1, 1, pscale));
         }
     }
 

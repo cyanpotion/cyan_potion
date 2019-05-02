@@ -14,11 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author XenoAmess
  */
 public class ResourceManager implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceManager.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ResourceManager.class);
 
-    public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT = 4L * 1024 * 1024 * 1024;
-    public static final long TOTAL_MEMORY_SIZE_START_POINT = 3L * 1024 * 1024 * 1024;
-    public static final long TOTAL_MEMORY_SIZE_DIST_POINT = 2L * 1024 * 1024 * 1024;
+    public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
+            4L * 1024 * 1024 * 1024;
+    public static final long TOTAL_MEMORY_SIZE_START_POINT =
+            3L * 1024 * 1024 * 1024;
+    public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
+            2L * 1024 * 1024 * 1024;
 
     private GameManager gameManager;
     private long totalMemorySize = 0;
@@ -27,7 +31,8 @@ public class ResourceManager implements AutoCloseable {
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (fullResourceURI == null || fullResourceURI.isEmpty()) {
-            throw (new Error("putResourceWithURI : fullResourceURI is null or Empty"));
+            throw (new Error("putResourceWithURI : fullResourceURI is null or" +
+                    " Empty"));
         }
 
         LOGGER.debug("putResource {}", fullResourceURI);
@@ -49,7 +54,8 @@ public class ResourceManager implements AutoCloseable {
         Class resourceClass = null;
 
         try {
-            resourceClass = this.getClass().getClassLoader().loadClass(resourceClassName);
+            resourceClass =
+                    this.getClass().getClassLoader().loadClass(resourceClassName);
         } catch (ClassNotFoundException e) {
             //            e.printStackTrace();
         }
@@ -88,7 +94,8 @@ public class ResourceManager implements AutoCloseable {
         Class resourceClass = null;
 
         try {
-            resourceClass = this.getClass().getClassLoader().loadClass(resourceClassName);
+            resourceClass =
+                    this.getClass().getClassLoader().loadClass(resourceClassName);
         } catch (ClassNotFoundException e) {
             //            e.printStackTrace();
         }
@@ -97,13 +104,15 @@ public class ResourceManager implements AutoCloseable {
             return null;
         }
 
-        Object res = this.getResourceFromShortenURI(resourceClass, fullResourceURI.substring(i));
+        Object res = this.getResourceFromShortenURI(resourceClass,
+                fullResourceURI.substring(i));
         return res;
     }
 
 
     public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
-        ConcurrentHashMap<String, T> resourceURIMap = getDefaultResourecesURIMap().get(t.getClass());
+        ConcurrentHashMap<String, T> resourceURIMap =
+                getDefaultResourecesURIMap().get(t.getClass());
         if (resourceURIMap == null) {
             resourceURIMap = new ConcurrentHashMap<>(100);
             getDefaultResourecesURIMap().put(t.getClass(), resourceURIMap);
@@ -111,9 +120,11 @@ public class ResourceManager implements AutoCloseable {
         resourceURIMap.put(shortenResourceURI, t);
     }
 
-    public <T> T getResourceFromShortenURI(Class<T> tClass, String shortenResourceURI) {
+    public <T> T getResourceFromShortenURI(Class<T> tClass,
+                                           String shortenResourceURI) {
 
-        ConcurrentHashMap<String, T> resourceURIMap = getDefaultResourecesURIMap().get(tClass);
+        ConcurrentHashMap<String, T> resourceURIMap =
+                getDefaultResourecesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return null;
         } else {
@@ -121,9 +132,11 @@ public class ResourceManager implements AutoCloseable {
         }
     }
 
-    public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass, String shortenResourceURI) {
+    public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass,
+                                                     String shortenResourceURI) {
 
-        ConcurrentHashMap<String, T> resourceURIMap = getDefaultResourecesURIMap().get(tClass);
+        ConcurrentHashMap<String, T> resourceURIMap =
+                getDefaultResourecesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return false;
         } else {
@@ -137,7 +150,9 @@ public class ResourceManager implements AutoCloseable {
             res = this.getResourceFromShortenURI(tClass, shortenResourceURI);
         } else {
             try {
-                res = tClass.getDeclaredConstructor(GameManager.class, String.class).newInstance(this.getGameManager(), tClass.getCanonicalName() + ":" + shortenResourceURI);
+                res = tClass.getDeclaredConstructor(GameManager.class,
+                        String.class).newInstance(this.getGameManager(),
+                        tClass.getCanonicalName() + ":" + shortenResourceURI);
                 this.putResourceWithShortenURI(shortenResourceURI, res);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
@@ -259,7 +274,8 @@ public class ResourceManager implements AutoCloseable {
         return defaultResourecesURIMap;
     }
 
-    public void setDefaultResourecesURIMap(ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap) {
+    public void setDefaultResourecesURIMap(ConcurrentHashMap<Class,
+            ConcurrentHashMap> defaultResourecesURIMap) {
         this.defaultResourecesURIMap = defaultResourecesURIMap;
     }
 }

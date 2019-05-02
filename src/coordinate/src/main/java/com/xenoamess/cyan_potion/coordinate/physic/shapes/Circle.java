@@ -6,7 +6,8 @@ import org.joml.Vector3f;
 /**
  * A circle.
  * Not an Oval. Do not use this class as an Oval.
- * although this.size.y is never used, please make sure it is equals this.size.x logically.
+ * although this.size.y is never used, please make sure it is equals this
+ * .size.x logically.
  *
  * @author XenoAmess
  */

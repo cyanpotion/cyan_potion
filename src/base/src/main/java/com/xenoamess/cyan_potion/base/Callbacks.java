@@ -14,7 +14,8 @@ public final class Callbacks {
         this.setGameManager(gameManager);
     }
 
-    public GLFWWindowCloseCallbackI windowCloseCallback = new GLFWWindowCloseCallbackI() {
+    public GLFWWindowCloseCallbackI windowCloseCallback =
+            new GLFWWindowCloseCallbackI() {
         @Override
         public void invoke(long window) {
             System.out.println("Alright I exit.");
@@ -24,20 +25,23 @@ public final class Callbacks {
 
     public GLFWKeyCallbackI keyCallback = new GLFWKeyCallbackI() {
         @Override
-        public void invoke(long window, int key, int scancode, int action, int mods) {
+        public void invoke(long window, int key, int scancode, int action,
+                           int mods) {
             Event event = new KeyEvent(window, key, scancode, action, mods);
             getGameManager().eventListAdd(event);
         }
     };
 
-    public GLFWJoystickCallbackI joystickCallback = new GLFWJoystickCallbackI() {
+    public GLFWJoystickCallbackI joystickCallback =
+            new GLFWJoystickCallbackI() {
         @Override
         public void invoke(int jid, int event) {
             System.out.println("jid" + jid + "event" + event);
         }
     };
 
-    public GLFWMouseButtonCallbackI mouseButtonCallback = new GLFWMouseButtonCallbackI() {
+    public GLFWMouseButtonCallbackI mouseButtonCallback =
+            new GLFWMouseButtonCallbackI() {
         @Override
         public void invoke(long window, int button, int action, int mods) {
             Event event = new MouseButtonEvent(window, button, action, mods);
@@ -54,7 +58,8 @@ public final class Callbacks {
     };
 
 
-    public GLFWWindowSizeCallbackI windowSizeCallback = new GLFWWindowSizeCallbackI() {
+    public GLFWWindowSizeCallbackI windowSizeCallback =
+            new GLFWWindowSizeCallbackI() {
         @Override
         public void invoke(long window, int width, int height) {
             Event event = new WindowResizeEvent(window, width, height);
@@ -71,10 +76,12 @@ public final class Callbacks {
     };
 
 
-    public SteamUserStatsCallback steamUserStatsCallback = new SteamUserStatsCallback() {
+    public SteamUserStatsCallback steamUserStatsCallback =
+            new SteamUserStatsCallback() {
 
         @Override
-        public void onUserStatsReceived(long gameId, SteamID steamIDUser, SteamResult result) {
+        public void onUserStatsReceived(long gameId, SteamID steamIDUser,
+                                        SteamResult result) {
             //TODO
         }
 
@@ -89,7 +96,10 @@ public final class Callbacks {
         }
 
         @Override
-        public void onUserAchievementStored(long gameId, boolean isGroupAchievement, String achievementName, int curProgress, int maxProgress) {
+        public void onUserAchievementStored(long gameId,
+                                            boolean isGroupAchievement,
+                                            String achievementName,
+                                            int curProgress, int maxProgress) {
             //TODO
         }
 
@@ -104,7 +114,8 @@ public final class Callbacks {
         }
 
         @Override
-        public void onLeaderboardScoreUploaded(boolean success, SteamLeaderboardHandle leaderboard, int score, boolean scoreChanged, int globalRankNew, int globalRankPrevious) {
+        public void onLeaderboardScoreUploaded(boolean success,
+                                               SteamLeaderboardHandle leaderboard, int score, boolean scoreChanged, int globalRankNew, int globalRankPrevious) {
             //TODO
         }
 

@@ -25,7 +25,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class GameWindow implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AutoCloseable.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(AutoCloseable.class);
 
     private GameManager gameManager;
 
@@ -126,16 +127,23 @@ public class GameWindow implements AutoCloseable {
     private void initGlfwWindow() {
 
         // Configure GLFW
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
+        glfwDefaultWindowHints(); // optional, the current window hints are
+        // already the default
 
 
-        //        System.out.println(Integer.parseInt(DataCenter.openglVersion.split("\\.")[0]));
-        //        System.out.println(Integer.parseInt(DataCenter.openglVersion.split("\\.")[1]));
+        //        System.out.println(Integer.parseInt(DataCenter
+        //        .openglVersion.split("\\.")[0]));
+        //        System.out.println(Integer.parseInt(DataCenter
+        //        .openglVersion.split("\\.")[1]));
         //        try {
-        //            int openglVersionMajor = Integer.parseInt(DataCenter.openglVersion.split("\\.")[0]);
-        //            int openglVersionMinor = Integer.parseInt(DataCenter.openglVersion.split("\\.")[1]);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, openglVersionMajor);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, openglVersionMinor);
+        //            int openglVersionMajor = Integer.parseInt(DataCenter
+        //            .openglVersion.split("\\.")[0]);
+        //            int openglVersionMinor = Integer.parseInt(DataCenter
+        //            .openglVersion.split("\\.")[1]);
+        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,
+        //            openglVersionMajor);
+        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
+        //            openglVersionMinor);
         //        } catch (Exception e) {
         //            e.printStackTrace();
         //        }
@@ -152,30 +160,41 @@ public class GameWindow implements AutoCloseable {
 
 
         // Create the window
-        setWindow(glfwCreateWindow(this.getRealWindowWidth(), this.getRealWindowHeight(), this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
+        setWindow(glfwCreateWindow(this.getRealWindowWidth(),
+                this.getRealWindowHeight(),
+                this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
 
 
         if (getWindow() == MemoryUtil.NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
-        //        // Setup a key callback. It will be called every time a key is pressed, repeated
+        //        // Setup a key callback. It will be called every time a key
+        //        is pressed, repeated
         //        // or released.
-        //        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+        //        glfwSetKeyCallback(window, (window, key, scancode, action,
+        //        mods) -> {
         //            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-        //                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+        //                glfwSetWindowShouldClose(window, true); // We will
+        //                detect this in the rendering loop
         //        });
 
 
-        glfwSetKeyCallback(getWindow(), this.getGameManager().getCallbacks().keyCallback);
-        glfwSetCharCallback(getWindow(), this.getGameManager().getCallbacks().charCallback);
+        glfwSetKeyCallback(getWindow(),
+                this.getGameManager().getCallbacks().keyCallback);
+        glfwSetCharCallback(getWindow(),
+                this.getGameManager().getCallbacks().charCallback);
 
-        glfwSetMouseButtonCallback(getWindow(), this.getGameManager().getCallbacks().mouseButtonCallback);
-        glfwSetScrollCallback(getWindow(), this.getGameManager().getCallbacks().scrollCallback);
+        glfwSetMouseButtonCallback(getWindow(),
+                this.getGameManager().getCallbacks().mouseButtonCallback);
+        glfwSetScrollCallback(getWindow(),
+                this.getGameManager().getCallbacks().scrollCallback);
         glfwSetJoystickCallback(this.getGameManager().getCallbacks().joystickCallback);
 
-        glfwSetWindowCloseCallback(getWindow(), this.getGameManager().getCallbacks().windowCloseCallback);
-        glfwSetWindowSizeCallback(getWindow(), this.getGameManager().getCallbacks().windowSizeCallback);
+        glfwSetWindowCloseCallback(getWindow(),
+                this.getGameManager().getCallbacks().windowCloseCallback);
+        glfwSetWindowSizeCallback(getWindow(),
+                this.getGameManager().getCallbacks().windowSizeCallback);
 
         if (!isFullScreen()) {
             //让窗口对于屏幕居中
@@ -186,7 +205,8 @@ public class GameWindow implements AutoCloseable {
             // Get the resolution of the primary monitor
             GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
             // Center the window
-            glfwSetWindowPos(getWindow(), (vidmode.width() - pWidth[0]) / 2, (vidmode.height() - pHeight[0]) / 2);
+            glfwSetWindowPos(getWindow(), (vidmode.width() - pWidth[0]) / 2,
+                    (vidmode.height() - pHeight[0]) / 2);
         }
 
         // Make the OpenGL context current
@@ -194,7 +214,8 @@ public class GameWindow implements AutoCloseable {
         // Enable v-sync
         glfwSwapInterval(1);
 
-        String iconFilePath = FileUtil.getURI(this.getGameManager().getDataCenter().getIconFilePath()).getPath();
+        String iconFilePath =
+                FileUtil.getURI(this.getGameManager().getDataCenter().getIconFilePath()).getPath();
 
         if (DataCenter.isWindows() && iconFilePath.startsWith("/")) {
             iconFilePath = iconFilePath.substring(1);
@@ -212,24 +233,37 @@ public class GameWindow implements AutoCloseable {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
 
-        //        System.out.println("OpenGL VERSION : " + glGetString(GL_VERSION));
+        //        System.out.println("OpenGL VERSION : " + glGetString
+        //        (GL_VERSION));
         //
         //        vao = glGenVertexArrays();
         //        glBindVertexArray(vao);
         //
         //        try (MemoryStack stack = MemoryStack.stackPush()) {
         //            FloatBuffer vertices = stack.mallocFloat(3 * 6);
-        //            vertices.put(-0.6f).put(-0.4f).put(0f).put(1f).put(0f).put(0f);
-        //            vertices.put(0.6f).put(-0.4f).put(0f).put(0f).put(1f).put(0f);
-        //            vertices.put(0f).put(0.6f).put(0f).put(0f).put(0f).put(1f);
+        //            vertices.put(-0.6f).put(-0.4f).put(0f).put(1f).put(0f)
+        //            .put(0f);
+        //            vertices.put(0.6f).put(-0.4f).put(0f).put(0f).put(1f)
+        //            .put(0f);
+        //            vertices.put(0f).put(0.6f).put(0f).put(0f).put(0f).put
+        //            (1f);
         //            vertices.flip();
         //
         //            int vbo = glGenBuffers();
         //            glBindBuffer(GL_ARRAY_BUFFER, vbo);
         //            glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
         //        }
-        //        String vertexSource = "#version 150 core\n" + "\n" + "in vec3 position;\n" + "in vec3 color;\n" + "\n" + "out vec3 vertexColor;\n" + "\n" + "uniform mat4 model;\n" + "uniform mat4 view;\n" + "uniform mat4 projection;\n" + "\n" + "void main() {\n" + "    vertexColor = color;\n" + "    mat4 mvp = projection * view * model;\n" + "    gl_Position = mvp * vec4(position, 1.0);\n" + "}";
-        //        String fragmentSource = "#version 150 core\n" + "\n" + "in vec3 vertexColor;\n" + "\n" + "out vec4 fragColor;\n" + "\n" + "void main() {\n" + "    fragColor = vec4(vertexColor, 1.0);\n" + "}";
+        //        String vertexSource = "#version 150 core\n" + "\n" + "in
+        //        vec3 position;\n" + "in vec3 color;\n" + "\n" + "out vec3
+        //        vertexColor;\n" + "\n" + "uniform mat4 model;\n" + "uniform
+        //        mat4 view;\n" + "uniform mat4 projection;\n" + "\n" + "void
+        //        main() {\n" + "    vertexColor = color;\n" + "    mat4 mvp
+        //        = projection * view * model;\n" + "    gl_Position = mvp *
+        //        vec4(position, 1.0);\n" + "}";
+        //        String fragmentSource = "#version 150 core\n" + "\n" + "in
+        //        vec3 vertexColor;\n" + "\n" + "out vec4 fragColor;\n" +
+        //        "\n" + "void main() {\n" + "    fragColor = vec4
+        //        (vertexColor, 1.0);\n" + "}";
         //
         //        int status;
         //        int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -238,7 +272,8 @@ public class GameWindow implements AutoCloseable {
         //
         //        status = glGetShaderi(vertexShader, GL_COMPILE_STATUS);
         //        if (status != GL_TRUE) {
-        //            throw new RuntimeException(glGetShaderInfoLog(vertexShader));
+        //            throw new RuntimeException(glGetShaderInfoLog
+        //            (vertexShader));
         //        }
         //
         //        int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -247,7 +282,8 @@ public class GameWindow implements AutoCloseable {
         //
         //        status = glGetShaderi(vertexShader, GL_COMPILE_STATUS);
         //        if (status != GL_TRUE) {
-        //            throw new RuntimeException(glGetShaderInfoLog(fragmentShader));
+        //            throw new RuntimeException(glGetShaderInfoLog
+        //            (fragmentShader));
         //        }
         //
         //        int shaderProgram = glCreateProgram();
@@ -258,7 +294,8 @@ public class GameWindow implements AutoCloseable {
         //
         //        status = glGetProgrami(shaderProgram, GL_LINK_STATUS);
         //        if (status != GL_TRUE) {
-        //            throw new RuntimeException(glGetProgramInfoLog(shaderProgram));
+        //            throw new RuntimeException(glGetProgramInfoLog
+        //            (shaderProgram));
         //        }
         //
         //        glUseProgram(shaderProgram);
@@ -266,30 +303,39 @@ public class GameWindow implements AutoCloseable {
         //
         //        int floatSize = 4;
         //
-        //        int posAttrib = glGetAttribLocation(shaderProgram, "position");
+        //        int posAttrib = glGetAttribLocation(shaderProgram,
+        //        "position");
         //        glEnableVertexAttribArray(posAttrib);
-        //        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, false, 6 * floatSize, 0);
+        //        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, false, 6 *
+        //        floatSize, 0);
         //
         //        int colAttrib = glGetAttribLocation(shaderProgram, "color");
         //        glEnableVertexAttribArray(colAttrib);
-        //        glVertexAttribPointer(colAttrib, 3, GL_FLOAT, false, 6 * floatSize, 3 * floatSize);
+        //        glVertexAttribPointer(colAttrib, 3, GL_FLOAT, false, 6 *
+        //        floatSize, 3 * floatSize);
         //
         //
         //        try (MemoryStack stack = MemoryStack.stackPush()) {
-        //            int uniModel = glGetUniformLocation(shaderProgram, "model");
+        //            int uniModel = glGetUniformLocation(shaderProgram,
+        //            "model");
         //            Matrix4f model = new Matrix4f();
-        //            glUniformMatrix4fv(uniModel, false, model.get(stack.mallocFloat(3 * 6)));
+        //            glUniformMatrix4fv(uniModel, false, model.get(stack
+        //            .mallocFloat(3 * 6)));
         //
         //            int uniView = glGetUniformLocation(shaderProgram, "view");
         //            Matrix4f view = new Matrix4f();
-        //            glUniformMatrix4fv(uniView, false, model.get(stack.mallocFloat(3 * 6)));
+        //            glUniformMatrix4fv(uniView, false, model.get(stack
+        //            .mallocFloat(3 * 6)));
         //
-        //            int uniProjection = glGetUniformLocation(shaderProgram, "projection");
+        //            int uniProjection = glGetUniformLocation(shaderProgram,
+        //            "projection");
         //            float ratio = 640f / 480f;
         //            Matrix4f projection = new Matrix4f();
-        //            projection.orthoLH(-ratio, ratio, -1f, 1f, -1f, 1f, projection);
+        //            projection.orthoLH(-ratio, ratio, -1f, 1f, -1f, 1f,
+        //            projection);
         //
-        //            glUniformMatrix4fv(uniProjection, false, projection.get(stack.mallocFloat(3 * 6)));
+        //            glUniformMatrix4fv(uniProjection, false, projection.get
+        //            (stack.mallocFloat(3 * 6)));
         //        }
         //
         //        glClear(GL_COLOR_BUFFER_BIT);
@@ -309,7 +355,8 @@ public class GameWindow implements AutoCloseable {
 
 //        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
 //        System.out.println("GLFW_JOYSTICK_1 present : " + present);
-//        System.out.println("GLFW_JOYSTICK_1 is gamepad : " + glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
+//        System.out.println("GLFW_JOYSTICK_1 is gamepad : " +
+//        glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
 //        FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
 //        System.out.println("axes : ");
 //        System.out.println("0 : " + axes.get(0));
@@ -331,22 +378,28 @@ public class GameWindow implements AutoCloseable {
 
     public void changeFullScreen() {
         LOGGER.debug("changeFullScreen! " + this.isFullScreen());
-        LOGGER.debug("Well I lose.If you want fullScreen please change it from the setting file,then reboot it.");
+        LOGGER.debug("Well I lose.If you want fullScreen please change it " +
+                "from the setting file,then reboot it.");
 
         //        this.fullScreen = !this.fullScreen;
 
         //        glfwMaximizeWindow(window);
 
         //        try (MemoryStack stack = stackPush()) {
-        //            //            IntBuffer pWidth = stack.mallocInt(1); // int*
-        //            //            IntBuffer pHeight = stack.mallocInt(1); // int*
+        //            //            IntBuffer pWidth = stack.mallocInt(1); //
+        //            int*
+        //            //            IntBuffer pHeight = stack.mallocInt(1);
+        // int*
         //            //
-        //            //            // Get the window size passed to glfwCreateWindow
+        //            //            // Get the window size passed to
+        //            glfwCreateWindow
         //            //            glfwGetWindowSize(window, pWidth, pHeight);
         //
         //            // Get the resolution of the primary monitor
-        //            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        //            glfwSetWindowSize(window, vidmode.width(), vidmode.height());
+        //            GLFWVidMode vidmode = glfwGetVideoMode
+        //            (glfwGetPrimaryMonitor());
+        //            glfwSetWindowSize(window, vidmode.width(), vidmode
+        //            .height());
         //
         //            glfwSetWindowPos(window, 0, 0);
         //        }
@@ -412,13 +465,15 @@ public class GameWindow implements AutoCloseable {
     //    public void getCurrent
 
 
-//    public void drawTexture(Texture texture, float posx, float posy, float size, Shader shader) {
+//    public void drawTexture(Texture texture, float posx, float posy, float
+//    size, Shader shader) {
 ////        texture.
 //        if (texture == null)
 //            return;
 //        shader.bind();
 //        texture.bind(0);
-//        Matrix4f pos = new Matrix4f().translate(new Vector3f(posx * 2, posy * 2, 0));
+//        Matrix4f pos = new Matrix4f().translate(new Vector3f(posx * 2, posy
+//        * 2, 0));
 //        Matrix4f target = new Matrix4f();
 //        this.camera.getProjection().mul(this.scaleMatrix4f, target);
 //        target.mul(pos);
@@ -428,18 +483,23 @@ public class GameWindow implements AutoCloseable {
 //    }
 
 
-    public void drawBindableRelative(Bindable bindable, float posx, float posy, float width, float height) {
-        this.drawBindableRelative(bindable, posx, posy, width, height, new Vector4f(1, 1, 1, 1));
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height) {
+        this.drawBindableRelative(bindable, posx, posy, width, height,
+                new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableRelative(Bindable bindable, float posx, float posy, float width, float height, Vector4f
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height,
+                                     Vector4f
             colorScale) {
 //        int nowWindowWidth = this.realWindowWidth;
 //        int nowWindowHeight = this.realWindowHeight;
         posx = posx / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         posy = posy / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        height =
+                height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         posx -= this.getRealWindowWidth() / 2;
         posy -= this.getRealWindowHeight() / 2;
 
@@ -464,7 +524,8 @@ public class GameWindow implements AutoCloseable {
                     2f / this.getRealWindowWidth() * width, 0, 0, 0,
                     0, 2f / this.getRealWindowHeight() * height, 0, 0,
                     0, 0, -1, 0,
-                    2f / this.getRealWindowWidth() * posx, -2f / this.getRealWindowHeight() * posy, 0, 1
+                    2f / this.getRealWindowWidth() * posx,
+                    -2f / this.getRealWindowHeight() * posy, 0, 1
             );
             // to this: |
             //          V
@@ -487,25 +548,35 @@ public class GameWindow implements AutoCloseable {
         Shader.unbind();
     }
 
-    public void drawBindableRelativeCenter(Bindable bindable, float width, float height) {
-        this.drawBindableRelative(bindable, getLogicWindowWidth() / 2, getLogicWindowHeight() / 2, width, height);
+    public void drawBindableRelativeCenter(Bindable bindable, float width,
+                                           float height) {
+        this.drawBindableRelative(bindable, getLogicWindowWidth() / 2,
+                getLogicWindowHeight() / 2, width, height);
     }
 
-    public void drawBindableRelativeCenter(Bindable bindable, float width, float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, width / 2, height / 2, width, height, colorScale);
+    public void drawBindableRelativeCenter(Bindable bindable, float width,
+                                           float height, Vector4f colorScale) {
+        this.drawBindableRelative(bindable, width / 2, height / 2, width,
+                height, colorScale);
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx, float posy, float width, float height) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, new Vector4f(1, 1, 1, 1));
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
+                                            float height) {
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
+                new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx, float posy, float width,
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
                                             float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posx + width / 2, posy + height / 2, width, height);
+        this.drawBindableRelative(bindable, posx + width / 2,
+                posy + height / 2, width, height);
     }
 
 
-    public void drawText(Font font, float x, float y, float scalex, float scaley, float characterSpace, Vector4f
+    public void drawText(Font font, float x, float y, float scalex,
+                         float scaley, float characterSpace, Vector4f
             color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
@@ -517,34 +588,44 @@ public class GameWindow implements AutoCloseable {
         font.drawText(x, y, scalex, scaley, 0, characterSpace, color, text);
     }
 
-    public void drawTextFillAreaLeftTop(Font font, float x1, float y1, float width, float height,
-                                        float characterSpace, Vector4f color, String text) {
+    public void drawTextFillAreaLeftTop(Font font, float x1, float y1,
+                                        float width, float height,
+                                        float characterSpace, Vector4f color,
+                                        String text) {
         x1 = x1 / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y1 = y1 / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        height =
+                height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         if (font == null) {
             font = Font.getDefaultFont();
         }
         font.bind();
-        font.drawTextFillAreaLeftTop(x1, y1, width, height, characterSpace, color, text);
+        font.drawTextFillAreaLeftTop(x1, y1, width, height, characterSpace,
+                color, text);
     }
 
-    public void drawTextFillArea(Font font, float x1, float y1, float width, float height,
-                                 float characterSpace, Vector4f color, String text) {
-        this.drawTextFillAreaLeftTop(font, x1 - width / 2, y1 - height / 2, width, height, characterSpace, color, text);
+    public void drawTextFillArea(Font font, float x1, float y1, float width,
+                                 float height,
+                                 float characterSpace, Vector4f color,
+                                 String text) {
+        this.drawTextFillAreaLeftTop(font, x1 - width / 2, y1 - height / 2,
+                width, height, characterSpace, color, text);
     }
 
 
-    public void drawText(Font font, float x, float y, float scalexy, Vector4f color, String text) {
+    public void drawText(Font font, float x, float y, float scalexy,
+                         Vector4f color, String text) {
         this.drawText(font, x, y, scalexy, scalexy, 0, color, text);
     }
 
-    public void drawText(Font font, float x, float y, float scalexy, String text) {
+    public void drawText(Font font, float x, float y, float scalexy,
+                         String text) {
         this.drawText(font, x, y, scalexy, null, text);
     }
 
-    public void drawText(Font font, float x, float y, Vector4f color, String text) {
+    public void drawText(Font font, float x, float y, Vector4f color,
+                         String text) {
         this.drawText(font, x, y, 1f, color, text);
     }
 

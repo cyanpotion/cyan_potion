@@ -22,8 +22,10 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class TitleExample extends AbstractGameWindowComponent {
-    private Texture saveSlotTexture = this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
-    private Texture saveStarTexture = this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveStar.png:picture");
+    private Texture saveSlotTexture =
+            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
+    private Texture saveStarTexture =
+            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveStar.png:picture");
     private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents = new ArrayList<AbstractControlableGameWindowComponent>();
 
     public TitleExample(GameWindow gameWindow) {
@@ -36,8 +38,10 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.init(-50 + 250 * index, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(), this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f : 0.3f), "开始游戏");
+                            this.getLeftTopPosY(), this.getWidth(),
+                            this.getHeight(), 0,
+                            new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    0.3f), "开始游戏");
                 }
             }
 
@@ -65,8 +69,10 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.init(-50 + 250 * index, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(), this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f : 0.3f), "设置选项");
+                            this.getLeftTopPosY(), this.getWidth(),
+                            this.getHeight(), 0,
+                            new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    0.3f), "设置选项");
                 }
             }
 
@@ -94,8 +100,10 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.init(-50 + 250 * index, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(), this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f : 0.3f), "制作人员");
+                            this.getLeftTopPosY(), this.getWidth(),
+                            this.getHeight(), 0,
+                            new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    0.3f), "制作人员");
                 }
             }
 
@@ -123,8 +131,10 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.init(-50 + 250 * index, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(), this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f : 0.3f), "退出游戏");
+                            this.getLeftTopPosY(), this.getWidth(),
+                            this.getHeight(), 0,
+                            new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    0.3f), "退出游戏");
                 }
             }
 
@@ -145,7 +155,8 @@ public class TitleExample extends AbstractGameWindowComponent {
             }
         });
 
-        Texture texture = this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
+        Texture texture =
+                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/saveSlot.png:picture");
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);
         InputBox inputBox = new InputBox(gameWindow);
@@ -211,7 +222,8 @@ public class TitleExample extends AbstractGameWindowComponent {
             return null;
         });
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(), event -> {
+        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
+                event -> {
             MouseButtonEvent mouseButtonEvent = (MouseButtonEvent) event;
             if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
                 return event;
@@ -241,7 +253,8 @@ public class TitleExample extends AbstractGameWindowComponent {
             return null;
         });
 
-        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(), event -> {
+        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
+                event -> {
             MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
             if (mouseScrollEvent.getYoffset() < 0) {
                 nextState();
@@ -256,7 +269,8 @@ public class TitleExample extends AbstractGameWindowComponent {
     @Override
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
-        for (AbstractControlableGameWindowComponent au : getControlableGameWindowComponents()) {
+        for (AbstractControlableGameWindowComponent au :
+                getControlableGameWindowComponents()) {
             au.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         }
     }
@@ -326,23 +340,37 @@ public class TitleExample extends AbstractGameWindowComponent {
 
         if (this.getState() >= 0 && this.getState() <= 4) {
 //            int nowIndex = 1;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 * nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f : 0.3f), "开始游戏");
+//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
+//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
+//            : 0.3f), "开始游戏");
 //            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 * nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f : 0.3f), "设置选项");
+//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
+//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
+//            : 0.3f), "设置选项");
 //            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 * nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f : 0.3f), "制作人员");
+//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
+//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
+//            : 0.3f), "制作人员");
 //            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 * nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f : 0.3f), "退出游戲");
+//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
+//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
+//            : 0.3f), "退出游戲");
         } else if (getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(), this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2, 250, 50);
-            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(), this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2, 250, 50, 0, new Vector4f(1, 1, 1, 1f), "校准文本Ugna");
+            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
+                    this.getGameWindow().getLogicWindowWidth() / 2,
+                    this.getGameWindow().getLogicWindowHeight() / 2, 250, 50,
+                    0, new Vector4f(1, 1, 1, 1f), "校准文本Ugna");
 
 //            for (int i = 0; i < 20; i++) {
-//                this.getGameWindow().drawBindableRelativeLeftTop(this.saveSlotTexture, i * 50, i * 50, 250, 50);
-//                this.getGameWindow().drawText(Font.defaultFont, i * 50, i * 50, 1, new Vector4f(1, 1, 1, 1f), "校准文本");
+//                this.getGameWindow().drawBindableRelativeLeftTop(this
+//                .saveSlotTexture, i * 50, i * 50, 250, 50);
+//                this.getGameWindow().drawText(Font.defaultFont, i * 50, i *
+//                50, 1, new Vector4f(1, 1, 1, 1f), "校准文本");
 //            }
 
-//            this.getGameWindow().drawBindableRelativeLeftTop(this.saveSlotTexture, 0, 0, 1280, 1024);
+//            this.getGameWindow().drawBindableRelativeLeftTop(this
+//            .saveSlotTexture, 0, 0, 1280, 1024);
 
 
         }
@@ -352,7 +380,8 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     private void startGame() {
         this.getGameWindowComponentTreeNode().close();
-        AbstractGameWindowComponent world = this.getGameWindow().getGameManager().getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(), "worldClassName", "com.xenoamess.cyan_potion.rpg_module.world.World");
+        AbstractGameWindowComponent world =
+                this.getGameWindow().getGameManager().getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(), "worldClassName", "com.xenoamess.cyan_potion.rpg_module.world.World");
         world.addToGameWindowComponentTree(null);
         world.enlargeAsFullWindow();
     }

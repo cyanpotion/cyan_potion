@@ -25,21 +25,27 @@ public class Unit extends AbstractDynamicEntity {
 
     private Bindable bindable;
 
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable, AbstractShape shape) {
+    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable) {
-        this(scene, centerPos, size, bindable, new HorizontalRectangle(null, centerPos, size));
+    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                Bindable bindable) {
+        this(scene, centerPos, size, bindable, new HorizontalRectangle(null,
+                centerPos, size));
     }
 
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size, String walkingAnimation4DirsURI, ResourceManager resourceManager) {
+    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+                String walkingAnimation4DirsURI,
+                ResourceManager resourceManager) {
         this(scene, centerPos, size, null);
         this.loadWalkingAnimations(walkingAnimation4DirsURI, resourceManager);
     }
 //
 
-//    public Unit(Transform transform, GameManager gameManager, String walkingAnimation4DirsURI) {
+//    public Unit(Transform transform, GameManager gameManager, String
+//    walkingAnimation4DirsURI) {
 //        super(transform, gameManager);
 //        this.walkingFileURI = walkingAnimation4DirsURI;
 //        loadWalkingAnimations(walkingAnimation4DirsURI);
@@ -84,9 +90,13 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
-    public void loadWalkingAnimations(String walkingAnimation4DirsURI, ResourceManager resourceManager) {
-        this.setBindable(new WalkingAnimation4Dirs(4, this, walkingAnimation4DirsURI, resourceManager));
-        //        this.walkingAnimation4Dirs = new WalkingAnimation4Dirs(this, 4, Texture.GetWalkingTextures("/www/img/characters/Actor1.png").get(4));
+    public void loadWalkingAnimations(String walkingAnimation4DirsURI,
+                                      ResourceManager resourceManager) {
+        this.setBindable(new WalkingAnimation4Dirs(4, this,
+                walkingAnimation4DirsURI, resourceManager));
+        //        this.walkingAnimation4Dirs = new WalkingAnimation4Dirs
+        //        (this, 4, Texture.GetWalkingTextures
+        //        ("/www/img/characters/Actor1.png").get(4));
     }
 
 

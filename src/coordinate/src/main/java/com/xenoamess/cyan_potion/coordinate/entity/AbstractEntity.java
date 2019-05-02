@@ -14,7 +14,9 @@ public abstract class AbstractEntity {
     private Vector3f size;
     private AbstractShape shape;
 
-    public AbstractEntity(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable, AbstractShape shape) {
+    public AbstractEntity(AbstractScene scene, Vector3f centerPos,
+                          Vector3f size, Bindable bindable,
+                          AbstractShape shape) {
         this.scene = scene;
         this.setCenterPos(new Vector3f(centerPos));
         this.setSize(new Vector3f(size));
@@ -30,7 +32,9 @@ public abstract class AbstractEntity {
     public abstract void setBindable(Bindable bindable);
 
     public void draw(AbstractScene scene) {
-        scene.drawBindableAbsolute(scene.getCamera(), scene.getScale(), this.getBindable(), getCenterPos().x, getCenterPos().y, this.getSize().x, this.getSize().y);
+        scene.drawBindableAbsolute(scene.getCamera(), scene.getScale(),
+                this.getBindable(), getCenterPos().x, getCenterPos().y,
+                this.getSize().x, this.getSize().y);
     }
 
     public void register() {

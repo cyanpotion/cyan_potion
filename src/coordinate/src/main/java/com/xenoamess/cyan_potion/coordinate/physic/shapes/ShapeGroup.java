@@ -8,14 +8,16 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * ShapeGroup is used as an AbstractEntity whose shape cannot be represented as simple AbstractShape,thus as a group of shapes.
+ * ShapeGroup is used as an AbstractEntity whose shape cannot be represented
+ * as simple AbstractShape,thus as a group of shapes.
  *
  * @author XenoAmess
  */
 public class ShapeGroup extends AbstractShape {
     private final List<AbstractShape> shapes = new ArrayList<>();
 
-    public ShapeGroup(AbstractEntity entity, Vector3f centerPos, Vector3f size, Collection shapes) {
+    public ShapeGroup(AbstractEntity entity, Vector3f centerPos,
+                      Vector3f size, Collection shapes) {
         super(entity, centerPos, size);
         shapes.addAll(shapes);
     }
@@ -30,7 +32,8 @@ public class ShapeGroup extends AbstractShape {
 
     /**
      * ShapeGroup can only accept rough as true.
-     * for more information about rough, please go and see relation function in class AbstractShape
+     * for more information about rough, please go and see relation function
+     * in class AbstractShape
      */
     @Override
     public int relation(AbstractShape shape, boolean rough) {

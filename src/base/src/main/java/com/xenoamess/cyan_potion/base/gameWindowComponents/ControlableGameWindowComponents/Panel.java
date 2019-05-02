@@ -1,4 +1,4 @@
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -8,11 +8,14 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import java.util.ArrayList;
 import java.util.List;
 
+ntrolableGameWindowComponents;
+
 /**
  * @author XenoAmess
  */
 public class Panel extends AbstractControlableGameWindowComponent {
-    private List<AbstractGameWindowComponent> contents = new ArrayList<AbstractGameWindowComponent>();
+    private List<AbstractGameWindowComponent> contents =
+            new ArrayList<AbstractGameWindowComponent>();
     private Texture backgroundTexture;
 
     public Panel(GameWindow gameWindow) {

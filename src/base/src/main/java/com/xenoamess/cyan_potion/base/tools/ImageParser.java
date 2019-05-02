@@ -35,7 +35,8 @@ import static org.lwjgl.stb.STBImage.stbi_load;
  * @author XenoAmess
  */
 public class ImageParser implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImageParser.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ImageParser.class);
 
     private ByteBuffer image;
     private int width;
@@ -62,7 +63,8 @@ public class ImageParser implements AutoCloseable {
 
             image = stbi_load(path, w, h, comp, 4);
             if (image == null) {
-                LOGGER.error("Could not load image resources : path = {}", path);
+                LOGGER.error("Could not load image resources : path = {}",
+                        path);
             }
             width = w.get();
             heigh = h.get();
@@ -72,7 +74,8 @@ public class ImageParser implements AutoCloseable {
 
     public static GLFWImage getGLFWImage(String path) {
         ImageParser imageparser = loadImage(path);
-        GLFWImage res = GLFWImage.malloc().set(imageparser.getWidth(), imageparser.getHeight(), imageparser.getImage());
+        GLFWImage res = GLFWImage.malloc().set(imageparser.getWidth(),
+                imageparser.getHeight(), imageparser.getImage());
         imageparser.close();
         return res;
     }
@@ -80,7 +83,8 @@ public class ImageParser implements AutoCloseable {
     public static void setWindowIcon(long window, String path) {
         try (
                 GLFWImage gameWindowIcon = getGLFWImage(path);
-                GLFWImage.Buffer gameWindowIconBuffer = GLFWImage.malloc(1).put(0, gameWindowIcon);
+                GLFWImage.Buffer gameWindowIconBuffer =
+                        GLFWImage.malloc(1).put(0, gameWindowIcon);
         ) {
             glfwSetWindowIcon(window, gameWindowIconBuffer);
         }
