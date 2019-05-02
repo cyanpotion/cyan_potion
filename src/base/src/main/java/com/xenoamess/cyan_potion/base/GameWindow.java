@@ -1,5 +1,6 @@
 package com.xenoamess.cyan_potion.base;
 
+import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -119,6 +120,7 @@ public class GameWindow implements AutoCloseable {
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
+        glfwUpdateGamepadMappings(SDL_GameControllerDB_Util.getSDL_GameControllerDB_ByteBuffer());
     }
 
     private void initGlfwWindow() {
@@ -304,6 +306,27 @@ public class GameWindow implements AutoCloseable {
 
     public void pollEvents() {
         glfwPollEvents();
+
+//        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+//        System.out.println("GLFW_JOYSTICK_1 present : " + present);
+//        System.out.println("GLFW_JOYSTICK_1 is gamepad : " + glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
+//        FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
+//        System.out.println("axes : ");
+//        System.out.println("0 : " + axes.get(0));
+//        System.out.println("1 : " + axes.get(1));
+//        System.out.println("2 : " + axes.get(2));
+//        System.out.println("3 : " + axes.get(3));
+//
+//        ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
+//        System.out.println("buttons : ");
+//        for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
+//            System.out.println(i + " : " + buttons.get(i));
+//        }
+//        String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
+//        System.out.println("GLFW_JOYSTICK_1 name : " + name);
+//        ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
+//        System.out.println("hats : ");
+//        System.out.println(hats.get(0));
     }
 
     public void changeFullScreen() {
