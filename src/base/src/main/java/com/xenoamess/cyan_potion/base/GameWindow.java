@@ -76,9 +76,14 @@ public class GameWindow implements AutoCloseable {
     private Model model;
 
 
-    public void setWindowSize(int windowWidth, int windowHeight) {
+    public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
         this.setLogicWindowHeight(windowHeight);
+    }
+
+    public void setRealWindowSize(int windowWidth, int windowHeight) {
+        this.setRealWindowWidth(windowWidth);
+        this.setRealWindowWidth(windowHeight);
     }
 
     public int getLogicWindowWidth() {

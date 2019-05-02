@@ -78,23 +78,6 @@ public class DataCenter {
         DataCenter.objectMapper = objectMapper;
     }
 
-    public AbstractGameWindowComponent fetchGameWindowComponentFromCommonSetting(GameWindow gameWindow, String
-            classNameKey, String backupClassName) {
-        AbstractGameWindowComponent gameWindowComponent = null;
-        String gameWindowComponentClassName = backupClassName;
-        if (this.getCommonSettings().containsKey(classNameKey)) {
-            gameWindowComponentClassName =
-                    this.getCommonSettings().get(classNameKey);
-        }
-        try {
-            gameWindowComponent =
-                    (AbstractGameWindowComponent) this.getClass().getClassLoader().loadClass(gameWindowComponentClassName).getConstructor(GameWindow.class).newInstance(gameWindow);
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-        return gameWindowComponent;
-    }
 
     private static ObjectMapper objectMapper = null;
 

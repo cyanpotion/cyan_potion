@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Map;
 
 /**
@@ -36,8 +38,16 @@ public class GameManagerConfig {
     private GameManagerConfig() {
     }
 
-    public static boolean getBoolean(String key) {
-        switch (key.toLowerCase()) {
+    public static boolean getBoolean(String value) {
+        /*
+         * if value is null or empty, we think that it have no value part,
+         * and a key part alone is thought to mean true.
+         */
+        if (StringUtils.isEmpty(value)) {
+            return true;
+        }
+
+        switch (value.toLowerCase()) {
             case "1":
             case "true":
             case "yes":
@@ -53,32 +63,33 @@ public class GameManagerConfig {
 
     public static boolean getBoolean(final Map<String, String> settingMap,
                                      final String key) {
+        return getBoolean(settingMap, key, false);
+    }
+
+    public static boolean getBoolean(final Map<String, String> settingMap,
+                                     final String key, boolean defaultValue) {
         assert (settingMap != null);
         assert (key != null);
         if (!settingMap.containsKey(key)) {
-            return false;
+            return defaultValue;
         }
         return getBoolean(settingMap.get(key));
     }
 
     public static String getString(final Map<String, String> settingMap,
                                    final String key) {
-        assert (settingMap != null);
-        assert (key != null);
-        if (!settingMap.containsKey(key)) {
-            return null;
-        }
-        return settingMap.get(key);
+        return getString(settingMap, key, null);
     }
 
     public static String getString(final Map<String, String> settingMap,
                                    final String key,
                                    final String defaultValue) {
-        String res = getString(settingMap, key);
-        if (res == null) {
-            res = defaultValue;
+        assert (settingMap != null);
+        assert (key != null);
+        if (!settingMap.containsKey(key)) {
+            return defaultValue;
         }
-        return res;
+        return settingMap.get(key);
     }
 
     /**
@@ -143,7 +154,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_WINDOW_WIDTH = "windowWidth";
+    public static final String STRING_LOGIC_WINDOW_WIDTH = "logicWindowWidth";
 
     /**
      * The game window height when startup.
@@ -151,7 +162,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_WINDOW_HEIGHT = "windowHeight";
+    public static final String STRING_LOGIC_WINDOW_HEIGHT = "logicWindowHeight";
 
     /**
      * The force game window width when startup.
@@ -159,7 +170,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_FORCE_WINDOW_WIDTH = "forceWindowWidth";
+    public static final String STRING_REAL_WINDOW_WIDTH = "realWindowWidth";
 
     /**
      * The force game window height when startup.
@@ -167,7 +178,7 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_FORCE_WINDOW_HEIGHT = "forceWindowHeight";
+    public static final String STRING_REAL_WINDOW_HEIGHT = "realWindowHeight";
 
 
     /**

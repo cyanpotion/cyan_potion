@@ -26,9 +26,11 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 //import com.xenoamess.gearbar.GameEngineObject;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -48,10 +50,26 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     private float width = -1;
     private float height = -1;
 
+
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         this.initProcessors();
     }
+
+    public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
+                                                                                     String gameWindowComponentClassName) {
+        assert (gameWindowComponentClassName != null);
+        AbstractGameWindowComponent gameWindowComponent = null;
+        try {
+            gameWindowComponent =
+                    (AbstractGameWindowComponent) DataCenter.class.getClassLoader().loadClass(gameWindowComponentClassName).getConstructor(GameWindow.class).newInstance(gameWindow);
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        return gameWindowComponent;
+    }
+
 
     public AbstractGameWindowComponent init(float leftTopPosX,
                                             float leftTopPosY, float width,
