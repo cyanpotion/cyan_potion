@@ -80,17 +80,19 @@ public class GameManager implements AutoCloseable {
 
     public GameManager(String[] args) {
         super();
-        this.setArgsMap(generateArgsMap(args));
         LOGGER.info("----------------------------------------");
         LOGGER.info("----------------------------------------");
         LOGGER.info("----------------------------------------");
         LOGGER.info("New game start at time : {}", new Date().toString());
+        this.setArgsMap(generateArgsMap(args));
+
         LOGGER.info("----------------------------------------");
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
         LOGGER.info("----------------------------------------");
+
         LOGGER.info("Platform : ->");
         Properties properties = System.getProperties();
         for (Map.Entry entry : properties.entrySet()) {
@@ -123,7 +125,7 @@ public class GameManager implements AutoCloseable {
         initSteam();
         loadGlobalSettings();
         getAlive().set(true);
-        DataCenter.getGameManagers().add(this);
+//        DataCenter.getGameManagers().add(this);
         if (this.getDataCenter().getSpecialSettings().containsKey(STRING_NO_CONSOLE_THREAD) && Integer.parseInt(this.getDataCenter().getSpecialSettings().get(STRING_NO_CONSOLE_THREAD)) != 0) {
             setConsoleThread(null);
         }
@@ -182,7 +184,12 @@ public class GameManager implements AutoCloseable {
             try {
                 Field field = DataCenter.class.getDeclaredField(name);
                 field.setAccessible(true);
-                map = (Map) field.get(this.getDataCenter());
+                Object object = field.get(this.getDataCenter());
+                if (object instanceof Map) {
+                    map = (Map) object;
+                } else {
+                    LOGGER.info("Field in DataCenter is not a map : {}", name);
+                }
             } catch (NoSuchFieldException e) {
                 LOGGER.info("No such field in DataCenter : {}", name);
             } catch (IllegalAccessException e) {
@@ -320,7 +327,7 @@ public class GameManager implements AutoCloseable {
         this.getAudioManager().close();
 
         getAlive().set(false);
-        DataCenter.getGameManagers().remove(this);
+//        DataCenter.getGameManagers().remove(this);
 
         if (getConsoleThread() != null) {
             getConsoleThread().shutdown();
@@ -600,5 +607,11 @@ public class GameManager implements AutoCloseable {
 
     public void setArgsMap(Map<String, String> argsMap) {
         this.argsMap = argsMap;
+        LOGGER.info("----------------------------------------");
+        LOGGER.info("Args : ->");
+        for (Map.Entry entry : this.getArgsMap().entrySet()) {
+            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
+        }
+        LOGGER.info("----------------------------------------");
     }
 }
