@@ -22,14 +22,13 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
 
-ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess

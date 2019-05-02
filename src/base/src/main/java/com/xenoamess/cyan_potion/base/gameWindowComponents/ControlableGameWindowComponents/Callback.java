@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.events.Event;
 
-ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
@@ -31,7 +31,6 @@ import org.joml.Vector4f;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
-ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess
