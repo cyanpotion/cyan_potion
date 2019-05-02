@@ -224,46 +224,48 @@ public class TitleExample extends AbstractGameWindowComponent {
 
         this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
                 event -> {
-            MouseButtonEvent mouseButtonEvent = (MouseButtonEvent) event;
-            if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
-                return event;
-            }
-            switch (mouseButtonEvent.getKeyTranslated().getKey()) {
-                case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
-                    if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
-                        if (getState() >= 0 && getState() <= 4) {
-                            this.setState(-this.getState());
-                        } else if (getState() == -101) {
-                            setState(-102);
-                        }
+                    MouseButtonEvent mouseButtonEvent =
+                            (MouseButtonEvent) event;
+                    if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
+                        return event;
                     }
-                    break;
-                case Keymap.XENOAMESS_MOUSE_BUTTON_RIGHT:
-                    if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
-                        if (getState() >= 0 && getState() <= 4) {
-                            this.setState(4);
-                        } else if (getState() == -101) {
-                            setState(1);
-                        }
+                    switch (mouseButtonEvent.getKeyTranslated().getKey()) {
+                        case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
+                            if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
+                                if (getState() >= 0 && getState() <= 4) {
+                                    this.setState(-this.getState());
+                                } else if (getState() == -101) {
+                                    setState(-102);
+                                }
+                            }
+                            break;
+                        case Keymap.XENOAMESS_MOUSE_BUTTON_RIGHT:
+                            if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
+                                if (getState() >= 0 && getState() <= 4) {
+                                    this.setState(4);
+                                } else if (getState() == -101) {
+                                    setState(1);
+                                }
+                            }
+                            break;
+                        default:
+                            return event;
                     }
-                    break;
-                default:
-                    return event;
-            }
-            return null;
-        });
+                    return null;
+                });
 
         this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
                 event -> {
-            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
-            if (mouseScrollEvent.getYoffset() < 0) {
-                nextState();
-            } else {
-                lastState();
-            }
-            this.getAlive().set(false);
-            return null;
-        });
+                    MouseScrollEvent mouseScrollEvent =
+                            (MouseScrollEvent) event;
+                    if (mouseScrollEvent.getYoffset() < 0) {
+                        nextState();
+                    } else {
+                        lastState();
+                    }
+                    this.getAlive().set(false);
+                    return null;
+                });
     }
 
     @Override
