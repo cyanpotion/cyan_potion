@@ -11,7 +11,8 @@ import org.joml.Vector3f;
 public class StaticEntity extends AbstractEntity {
     private Bindable bindable;
 
-    public StaticEntity(AbstractScene scene, Vector3f centerPos, Vector3f size, Bindable bindable, AbstractShape shape) {
+    public StaticEntity(AbstractScene scene, Vector3f centerPos,
+                        Vector3f size, Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 

@@ -1,4 +1,4 @@
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.CharEvent;
@@ -14,6 +14,8 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
+ntrolableGameWindowComponents;
+
 /**
  * @author XenoAmess
  */
@@ -24,14 +26,17 @@ public class InputBox extends AbstractControlableGameWindowComponent {
     private int nowSelectStartPos = -1;
     private int nowSelectEndPos = -1;
 
-    private float charHeight = 20.0f / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+    private float charHeight =
+            20.0f / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
     private Vector4f textColor = new Vector4f(1, 1, 1, 1);
     private Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
     private Vector4f insertColor = new Vector4f(1f, 1f, 1f, 1);
 
 //    public Texture backgroundTexture;
-//            this.this.getGameWindow().gameManager.resourceManager.fetchResourceWithShortenURI(Texture.class,  "/www/img/pictures/saveSlot.png:picture");
+//            this.this.getGameWindow().gameManager.resourceManager
+//            .fetchResourceWithShortenURI(Texture.class,
+//            "/www/img/pictures/saveSlot.png:picture");
 
     public InputBox(GameWindow gameWindow) {
         super(gameWindow);
@@ -64,7 +69,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         if (getNowSelectStartPos() != -1) {
                             insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
                         } else {
-                            setContentString(getContentString().substring(0, getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ? getContentString().substring(getNowInsertPos() + 1, getContentString().length()) : ""));
+                            setContentString(getContentString().substring(0,
+                                    getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ? getContentString().substring(getNowInsertPos() + 1, getContentString().length()) : ""));
                             this.limitNowInsertPos();
                         }
                         return null;
@@ -72,7 +78,9 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         if (getNowSelectStartPos() != -1) {
                             insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
                         } else {
-                            setContentString((getNowInsertPos() > 1 ? getContentString().substring(0, getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos(), getContentString().length()) : ""));
+                            setContentString((getNowInsertPos() > 1 ?
+                                    getContentString().substring(0,
+                                            getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos(), getContentString().length()) : ""));
                             setNowInsertPos(getNowInsertPos() - 1);
                             this.limitNowInsertPos();
                         }
@@ -195,7 +203,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             setNowSelectStartPos(getNowSelectEndPos());
             setNowSelectEndPos(tmpInt);
         }
-        setContentString(getContentString().substring(0, getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos(), getContentString().length()));
+        setContentString(getContentString().substring(0,
+                getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos(), getContentString().length()));
         setNowInsertPos(getNowSelectStartPos() + insertString.length());
         limitNowInsertPos();
         setNowSelectStartPos(-1);
@@ -206,7 +215,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
     @Override
     public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
         super.onMouseButtonLeftDown(mouseButtonEvent);
-        int clickIndex = this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+        int clickIndex =
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
         setNowSelectStartPos(clickIndex);
         setNowSelectEndPos(clickIndex);
         setNowInsertPos(clickIndex);
@@ -226,7 +236,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         if (getNowSelectStartPos() < 0) {
             return null;
         }
-        int releaseIndex = this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+        int releaseIndex =
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
         setNowSelectEndPos(releaseIndex);
         setNowInsertPos(getNowSelectEndPos());
         if (getNowSelectStartPos() > getNowSelectEndPos()) {
@@ -250,25 +261,36 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         if (getNowSelectStartPos() == -1) {
             return null;
         }
-        int clickIndex = this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
+        int clickIndex =
+                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), false, null);
         setNowSelectEndPos(clickIndex);
         return null;
     }
 
     @Override
     public void ifVisibleThenDraw() {
-//        this.getGameWindow().drawBindableRelativeLeftTop(this.backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width, this.height);
+//        this.getGameWindow().drawBindableRelativeLeftTop(this
+//        .backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width,
+//        this.height);
         this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(), this.getGameWindow().getMousePosY(), true, null);
     }
 
     private long slashStartTime = 0;
 
-    public int drawTextGivenHeightLeftTopAndGetIndex(float distPosX, float distPosY, boolean ifDraw, Vector2f insertPos) {
-        float realLeftTopPosX = this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
-        float realLeftTopPosY = this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
-        float realWidth = this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
-        float realHeight = this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
-        float realCharHeight = this.getCharHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+    public int drawTextGivenHeightLeftTopAndGetIndex(float distPosX,
+                                                     float distPosY,
+                                                     boolean ifDraw,
+                                                     Vector2f insertPos) {
+        float realLeftTopPosX =
+                this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        float realLeftTopPosY =
+                this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        float realWidth =
+                this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        float realHeight =
+                this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        float realCharHeight =
+                this.getCharHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
 
         float insPosX0 = 0;
@@ -316,7 +338,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
 
             if (this.getTextColor() != null) {
-                glColor4f(this.getTextColor().x, this.getTextColor().y, this.getTextColor().z, this.getTextColor().w);
+                glColor4f(this.getTextColor().x, this.getTextColor().y,
+                        this.getTextColor().z, this.getTextColor().w);
             }
 
             glBegin(GL_QUADS);
@@ -325,8 +348,11 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             float lastxShould = x;
             float lastyShould = y;
             for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, text.charAt(i), font.getXb(), font.getYb(), font.getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
+                stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
+                        Font.BITMAP_H, text.charAt(i), font.getXb(),
+                        font.getYb(), font.getQ(), false);
+//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
                 float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
@@ -334,16 +360,25 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                 float nowy0 = y + spaceUpToCharShould * scaley;
 
-//            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowx0 + " " + nowy0);
                 if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                    glColor4f(this.getTextSelectColor().x, this.getTextSelectColor().y, this.getTextSelectColor().z, this.getTextSelectColor().w);
+                    glColor4f(this.getTextSelectColor().x,
+                            this.getTextSelectColor().y,
+                            this.getTextSelectColor().z,
+                            this.getTextSelectColor().w);
                 } else {
-                    glColor4f(this.getTextColor().x, this.getTextColor().y, this.getTextColor().z, this.getTextColor().w);
+                    glColor4f(this.getTextColor().x, this.getTextColor().y,
+                            this.getTextColor().z, this.getTextColor().w);
                 }
                 if (ifDraw) {
                     Font.drawBoxTC(
-                            nowx0, nowy0 + height * 0.8f, nowx0 + charWidthShould * scalex, nowy0 + charHeightShould * scaley + height * 0.8f,
-                            font.getQ().s0(), font.getQ().t0(), font.getQ().s1(), font.getQ().t1()
+                            nowx0, nowy0 + height * 0.8f,
+                            nowx0 + charWidthShould * scalex,
+                            nowy0 + charHeightShould * scaley + height * 0.8f,
+                            font.getQ().s0(), font.getQ().t0(),
+                            font.getQ().s1(), font.getQ().t1()
                     );
                 }
 //                float nowx;
@@ -351,7 +386,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 //                float nowDist;
 
 //                nowx = nowx0;
-//                nowy = (nowy0 + height * 0.8f + nowy0 + charHeightShould * scaley + height * 0.8f) / 2;
+//                nowy = (nowy0 + height * 0.8f + nowy0 + charHeightShould *
+//                scaley + height * 0.8f) / 2;
 
                 float newx0 = nowx0;
                 float newx1 = nowx0 + charWidthShould * scalex;
@@ -376,7 +412,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     resIndex = index;
                 }
 
-//                nowDist = (distPosX - nowx) * (distPosX - nowx) + (distPosY - nowy) * (distPosY - nowy) * 1e3f;
+//                nowDist = (distPosX - nowx) * (distPosX - nowx) + (distPosY
+//                - nowy) * (distPosY - nowy) * 1e3f;
 //                if (minDist > nowDist) {
 //                    minDist = nowDist;
 //                    minIndex = index;
@@ -392,13 +429,16 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     insPosX1 = insPosX0 + 5;
                     insPosY1 = insPosY0 + realCharHeight;
                     if (insertPos != null) {
-                        insertPos.set(lastxReal, realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
+                        insertPos.set(lastxReal,
+                                realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
                     }
                 }
                 if (i == line.length() - 1) {
 //                    nowx = nowx0 + charWidthShould * scalex;
-//                    nowy = (nowy0 + height * 0.8f + nowy0 + charHeightShould * scaley + height * 0.8f) / 2;
-//                    nowDist = (distPosX - nowx) * (distPosX - nowx) + (distPosY - nowy) * (distPosY - nowy) * 1e3f;
+//                    nowy = (nowy0 + height * 0.8f + nowy0 +
+//                    charHeightShould * scaley + height * 0.8f) / 2;
+//                    nowDist = (distPosX - nowx) * (distPosX - nowx) +
+//                    (distPosY - nowy) * (distPosY - nowy) * 1e3f;
 //                    if (minDist > nowDist) {
 //                        minDist = nowDist;
 //                        minIndex = index + 1;
@@ -418,7 +458,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         insPosX1 = insPosX0 + 5;
                         insPosY1 = insPosY0 + realCharHeight;
                         if (insertPos != null) {
-                            insertPos.set(nowx0 + charWidthShould * scalex, realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
+                            insertPos.set(nowx0 + charWidthShould * scalex,
+                                    realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
                         }
                     }
                 }
@@ -436,8 +477,11 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
                     for (int i2 = 0; i2 < line.length(); i2++) {
 
-                        stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, text.charAt(i2), font.getXb(), font.getYb(), font.getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" + q.y0() + " y1:" + q.y1());
+                        stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W
+                                , Font.BITMAP_H, text.charAt(i2),
+                                font.getXb(), font.getYb(), font.getQ(), false);
+//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
                         spaceLeftToCharShould = font.getQ().x0() - lastxShould;
@@ -445,12 +489,20 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                         nowy0 = y + spaceUpToCharShould * scaley;
 
-//            System.out.println(charWidthShould + " " + charHeightShould + " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + " " + nowy0);
+//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowx0 + " " + nowy0);
 
                         if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                            glColor4f(this.getTextSelectColor().x, this.getTextSelectColor().y, this.getTextSelectColor().z, this.getTextSelectColor().w);
+                            glColor4f(this.getTextSelectColor().x,
+                                    this.getTextSelectColor().y,
+                                    this.getTextSelectColor().z,
+                                    this.getTextSelectColor().w);
                         } else {
-                            glColor4f(this.getTextColor().x, this.getTextColor().y, this.getTextColor().z, this.getTextColor().w);
+                            glColor4f(this.getTextColor().x,
+                                    this.getTextColor().y,
+                                    this.getTextColor().z,
+                                    this.getTextColor().w);
                         }
                         float nowDist = Math.abs(distPosX - nowx0);
                         if (nowDist < minDist) {
@@ -458,7 +510,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                             resIndex = index2;
                         }
                         if (i2 == line.length() - 1) {
-                            nowDist = Math.abs(distPosX - (nowx0 + charWidthShould * scalex));
+                            nowDist =
+                                    Math.abs(distPosX - (nowx0 + charWidthShould * scalex));
                             if (nowDist < minDist) {
                                 minDist = nowDist;
                                 resIndex = index2 + 1;
@@ -496,20 +549,28 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     insPosX0 = lastxReal;
                     insPosY0 = realLeftTopPosY + realCharHeight * j;
                     insPosX1 = lastxReal + 5;
-                    insPosY1 = realLeftTopPosY + realCharHeight * j + realCharHeight;
+                    insPosY1 =
+                            realLeftTopPosY + realCharHeight * j + realCharHeight;
                     if (insertPos != null) {
-                        insertPos.set(lastxReal, realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
+                        insertPos.set(lastxReal,
+                                realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
                     }
                 }
             }
 
             if (ifDraw) {
                 if (((System.currentTimeMillis() - slashStartTime) / this.getSlashTime()) % 2 == 0) {
-                    glColor4f(getInsertColor().x(), getInsertColor().y(), getInsertColor().z(), getInsertColor().w());
-                    stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W, Font.BITMAP_H, '|', font.getXb(), font.getYb(), font.getQ(), false);
+                    glColor4f(getInsertColor().x(), getInsertColor().y(),
+                            getInsertColor().z(), getInsertColor().w());
+                    stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
+                            Font.BITMAP_H, '|', font.getXb(), font.getYb(),
+                            font.getQ(), false);
                     Font.drawBoxTC(
-                            insPosX0, insPosY0 - (insPosY1 - insPosY0) / 4, insPosX1 - (insPosX1 - insPosX0) / 3 * 2, insPosY1 + (insPosY1 - insPosY0) / 4,
-                            font.getQ().s0(), font.getQ().t0(), font.getQ().s1(), font.getQ().t1()
+                            insPosX0, insPosY0 - (insPosY1 - insPosY0) / 4,
+                            insPosX1 - (insPosX1 - insPosX0) / 3 * 2,
+                            insPosY1 + (insPosY1 - insPosY0) / 4,
+                            font.getQ().s0(), font.getQ().t0(),
+                            font.getQ().s1(), font.getQ().t1()
                     );
                 }
             }
@@ -608,7 +669,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 }
 
 
-//    public Vector2f getNextPos(char nextChar, float lastPosX, float lastPosY) {
+//    public Vector2f getNextPos(char nextChar, float lastPosX, float
+//    lastPosY) {
 //
 //    }
 

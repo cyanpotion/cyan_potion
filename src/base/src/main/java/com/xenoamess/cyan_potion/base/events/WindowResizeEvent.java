@@ -12,7 +12,8 @@ import java.util.Set;
  * @author XenoAmess
  */
 public class WindowResizeEvent implements Event {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowResizeEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(WindowResizeEvent.class);
 
     private final long window;
     private final int width;

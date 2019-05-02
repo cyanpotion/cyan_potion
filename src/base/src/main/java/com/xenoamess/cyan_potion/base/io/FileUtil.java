@@ -22,7 +22,8 @@ import static org.lwjgl.BufferUtils.createByteBuffer;
  * @author XenoAmess
  */
 public class FileUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * Don't let anyone instantiate this class.
@@ -81,8 +82,11 @@ public class FileUtil {
                 if (bytes == -1) {
                     break;
                 }
-                //                //                    if (buffer.remaining() == 0) {
-                //                //                        buffer = resizeBuffer(buffer, buffer.capacity() * 3 / 2); // 50%
+                //                //                    if (buffer.remaining
+                //                () == 0) {
+                //                //                        buffer =
+                //                resizeBuffer(buffer, buffer.capacity() * 3
+                //                / 2); // 50%
                 //                //                    }
             }
             success = true;
@@ -127,8 +131,11 @@ public class FileUtil {
     public static String loadFile(String resourceFilePath) {
         String res = "";
         try (
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile())));
+                BufferedReader bufferedReader =
+                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
+//                BufferedReader bufferedReader = new BufferedReader(new
+//                InputStreamReader(new FileInputStream(file.getAbsoluteFile
+//                ())));
         ) {
             final StringBuffer sb = new StringBuffer();
             String tmp;
@@ -154,8 +161,11 @@ public class FileUtil {
         }
         String res = "";
         try (
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile())));
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile())));
+                BufferedReader bufferedReader =
+                        new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile())));
+//                BufferedReader bufferedReader = new BufferedReader(new
+//                InputStreamReader(new FileInputStream(file.getAbsoluteFile
+//                ())));
         ) {
             final StringBuffer sb = new StringBuffer();
             String tmp;

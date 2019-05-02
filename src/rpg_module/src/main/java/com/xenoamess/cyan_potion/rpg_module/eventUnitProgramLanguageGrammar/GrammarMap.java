@@ -11,8 +11,10 @@ public class GrammarMap {
     private GrammarMap() {
     }
 
-    private static final Map<Integer, String> MethodNumToMethodNameMap = new HashMap<>();
-    private static final Map<String, Integer> MethodNameToMethodNumMap = new HashMap<>();
+    private static final Map<Integer, String> MethodNumToMethodNameMap =
+            new HashMap<>();
+    private static final Map<String, Integer> MethodNameToMethodNumMap =
+            new HashMap<>();
 
 
     public static String getMethodName(int methodNum) {
@@ -38,8 +40,10 @@ public class GrammarMap {
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                    GrammarMap.MethodNumToMethodNameMap.put(methodNum, methodName);
-                    GrammarMap.MethodNameToMethodNumMap.put(methodName, methodNum);
+                    GrammarMap.MethodNumToMethodNameMap.put(methodNum,
+                            methodName);
+                    GrammarMap.MethodNameToMethodNumMap.put(methodName,
+                            methodNum);
                 }
             }
         }
@@ -53,11 +57,13 @@ public class GrammarMap {
     //    public static void main(String args[]) {
     //        checkInit();
     //        StringBuilder sb = new StringBuilder();
-    //        TreeSet<Integer> seta = new TreeSet<Integer>(MethodNumToMethodNameMap.keySet());
+    //        TreeSet<Integer> seta = new TreeSet<Integer>
+    //        (MethodNumToMethodNameMap.keySet());
     //        //        seta.addAll();
     //        for (int i = 0; i <= 1000; i++) {
     //            if (!seta.contains(i)) {
-    //                sb.append("{\"code\":" + i + ", \"indent\":0, \"parameters\": []},");
+    //                sb.append("{\"code\":" + i + ", \"indent\":0,
+    //                \"parameters\": []},");
     //            }
     //        }
     //        System.out.println(sb.toString());

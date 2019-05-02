@@ -35,7 +35,10 @@ public class ImageJson implements Serializable {
 //            }
             int tmp = ((this.direction >> 1) - 1) * 3;
             tmp += this.pattern;
-            return resourceManager.fetchResourceWithShortenURI(Texture.class, "/www/img/characters/" + this.characterName + ".png" + ":" + "characters" + ":" + this.characterIndex + ":" + tmp);
+            return resourceManager.fetchResourceWithShortenURI(Texture.class,
+                    "/www/img/characters/" + this.characterName + ".png" +
+                            ":" + "characters" + ":" + this.characterIndex +
+                            ":" + tmp);
         }
     }
 }

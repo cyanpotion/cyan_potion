@@ -45,7 +45,8 @@
 //        //        }
 //    }
 //
-//    public void renderTile(GameTile tile, float x, float y, Shader shader, Matrix4f scaleMatrix4f, Camera cam) {
+//    public void renderTile(GameTile tile, float x, float y, Shader shader,
+//    Matrix4f scaleMatrix4f, Camera cam) {
 //        for (Texture au : tile.textures) {
 //            this.gameWindow.drawTexture(au, x, y, 32, shader);
 //        }

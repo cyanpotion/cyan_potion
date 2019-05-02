@@ -1,6 +1,8 @@
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.Co
 
 import com.xenoamess.cyan_potion.base.events.Event;
+
+ntrolableGameWindowComponents;
 
 /**
  * @author XenoAmess

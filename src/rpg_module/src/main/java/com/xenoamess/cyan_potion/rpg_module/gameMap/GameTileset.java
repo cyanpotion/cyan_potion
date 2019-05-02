@@ -15,23 +15,27 @@ import java.util.*;
  * @author XenoAmess
  */
 public class GameTileset {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameTileset.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GameTileset.class);
 
     private GameTilesetJson gameTilesetJson;
 
-    private Map<Integer, Texture> idTextureMap = new HashMap<Integer, Texture>();
+    private Map<Integer, Texture> idTextureMap = new HashMap<Integer,
+            Texture>();
 
     private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
         return "/www/img/tilesets/" + gameMapInfoName + ".png";
     }
 
-    private GameTileset(ResourceManager resourceManager, GameTilesetJson gameTilesetJson) {
+    private GameTileset(ResourceManager resourceManager,
+                        GameTilesetJson gameTilesetJson) {
         this.setGameTilesetJson(gameTilesetJson);
         int ti;
         String ts;
         List<Texture> textures;
 
-        //TODO Currently can only read blocks in A2,A5,B,C. Seems every Tileset layer has an own format. Next time might deal with it.
+        //TODO Currently can only read blocks in A2,A5,B,C. Seems every
+        // Tileset layer has an own format. Next time might deal with it.
 
 
         {
@@ -109,7 +113,8 @@ public class GameTileset {
 
 
     static List<GameTileset> getGameTilesets(ResourceManager resourceManager) {
-        List<GameTilesetJson> gameTilesetJsons = GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data/Tilesets.json"));
+        List<GameTilesetJson> gameTilesetJsons =
+                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data/Tilesets.json"));
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {
             if (au == null) {
@@ -122,7 +127,8 @@ public class GameTileset {
     }
 
     public static void init(World world) {
-        List<GameTileset> gameTilesets = getGameTilesets(world.getGameWindow().getGameManager().getResourceManager());
+        List<GameTileset> gameTilesets =
+                getGameTilesets(world.getGameWindow().getGameManager().getResourceManager());
         Map<Integer, GameTileset> idGameTilesetMap = new TreeMap<>();
         int maxID = 0;
         for (GameTileset au : gameTilesets) {

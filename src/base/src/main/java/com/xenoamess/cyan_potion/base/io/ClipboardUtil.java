@@ -28,7 +28,8 @@ public class ClipboardUtil {
         if (trans != null) {
             if (trans.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 try {
-                    String text = (String) trans.getTransferData(DataFlavor.stringFlavor);
+                    String text =
+                            (String) trans.getTransferData(DataFlavor.stringFlavor);
                     return text;
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -19,7 +19,8 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * @author XenoAmess
  */
 public class AudioManager implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CharEvent.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(CharEvent.class);
     public static final int INITIAL_TEMP_SOURCES_NUM = 128;
 
     private final GameManager gameManager;
@@ -46,16 +47,19 @@ public class AudioManager implements AutoCloseable {
         ALC.create();
         this.setOpenalDevice(alcOpenDevice((ByteBuffer) null));
         if (this.getOpenalDevice() == MemoryUtil.NULL) {
-            throw new IllegalStateException("Failed to open the default device.");
+            throw new IllegalStateException("Failed to open the default " +
+                    "device.");
         }
-        ALCCapabilities deviceCaps = ALC.createCapabilities(this.getOpenalDevice());
+        ALCCapabilities deviceCaps =
+                ALC.createCapabilities(this.getOpenalDevice());
 // Query for Effect Extension
 //        if (!deviceCaps.ALC_EXT_EFX) {
 //            alcCloseDevice(device);
 //            throw new Exception("No EXTEfx supported by driver.");
 //        }
 //        System.out.println("EXTEfx found.");
-        this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(), (IntBuffer) null));
+        this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(),
+                (IntBuffer) null));
         alcSetThreadContext(this.getOpenalContext());
         AL.createCapabilities(deviceCaps);
         this.setListenerPosition(new Vector3f(0, 0, 0));
@@ -107,7 +111,8 @@ public class AudioManager implements AutoCloseable {
         }
         if (getUnusedSources().isEmpty()) {
             getUnusedSources().add(new Source());
-            LOGGER.debug("Audio source exhausted! Current num : {}", this.getUsedSources().size());
+            LOGGER.debug("Audio source exhausted! Current num : {}",
+                    this.getUsedSources().size());
         }
         Source res = getUnusedSources().iterator().next();
         return res;
@@ -156,12 +161,14 @@ public class AudioManager implements AutoCloseable {
 
     public void setListenerPosition(Vector3f listenerPosition) {
         this.listenerPosition = new Vector3f(listenerPosition);
-        AL10.alListener3f(AL10.AL_POSITION, this.listenerPosition.x, this.listenerPosition.y, this.listenerPosition.z);
+        AL10.alListener3f(AL10.AL_POSITION, this.listenerPosition.x,
+                this.listenerPosition.y, this.listenerPosition.z);
     }
 
     public void setListenerVelocity(Vector3f listenerVelocity) {
         this.listenerVelocity = new Vector3f(listenerVelocity);
-        AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x, this.listenerVelocity.y, this.listenerVelocity.z);
+        AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x,
+                this.listenerVelocity.y, this.listenerVelocity.z);
     }
 
     public GameManager getGameManager() {

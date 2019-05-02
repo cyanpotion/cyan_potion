@@ -161,10 +161,12 @@ public class GameSystemJson implements Serializable {
     public ArrayList<String> weaponTypes;
     public ArrayList<Integer> windowTone;
 
-    public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile) {
+    public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper,
+                                                   File getGameSystemJsonFile) {
         GameSystemJson res = null;
         try {
-            res = objectMapper.readValue(getGameSystemJsonFile, GameSystemJson.class);
+            res = objectMapper.readValue(getGameSystemJsonFile,
+                    GameSystemJson.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -178,7 +180,9 @@ public class GameSystemJson implements Serializable {
     //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
     //
     //        //        try {
-    //        //            System.out.println(new String(new FileInputStream("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes()));
+    //        //            System.out.println(new String(new FileInputStream
+    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
+    //        ()));
     //        //        } catch (IOException e) {
     //        //            e.printStackTrace();
     //        //        }
@@ -188,7 +192,9 @@ public class GameSystemJson implements Serializable {
     //
     //
     //        try {
-    //            gameSystemJson = JSON.parseObject(new String(new FileInputStream("D:\\workspace\\Gearbar\\www\\data\\System.json").readAllBytes()), GameSystemJson.class);
+    //            gameSystemJson = JSON.parseObject(new String(new
+    //            FileInputStream("D:\\workspace\\Gearbar\\www\\data\\System
+    //            .json").readAllBytes()), GameSystemJson.class);
     //        } catch (FileNotFoundException e) {
     //            e.printStackTrace();
     //        } catch (IOException e) {

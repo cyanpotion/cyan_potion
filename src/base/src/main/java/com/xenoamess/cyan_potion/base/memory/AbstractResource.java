@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  */
 public abstract class AbstractResource implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(AbstractResource.class);
 
     private final GameManager gameManager;
     private final String fullResourceURI;
@@ -30,7 +31,9 @@ public abstract class AbstractResource implements AutoCloseable {
         this.forceLoad();
         this.getGameManager().getResourceManager().load(this);
 
-        LOGGER.debug("loadResource {}, time {}, memory {}", this.getFullResourceURI(), this.getLastUsedFrameIndex(), this.getMemorySize());
+        LOGGER.debug("loadResource {}, time {}, memory {}",
+                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getMemorySize());
         if (this.getMemorySize() == 0) {
             LOGGER.warn("this.memorySize shows 0 here. potential track error?");
         }
@@ -50,7 +53,9 @@ public abstract class AbstractResource implements AutoCloseable {
         this.forceClose();
         this.getGameManager().getResourceManager().close(this);
 
-        LOGGER.debug("closeResource {}, time {}, memory {}", this.getFullResourceURI(), this.getLastUsedFrameIndex(), this.getMemorySize());
+        LOGGER.debug("closeResource {}, time {}, memory {}",
+                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getMemorySize());
 //        this.inMemory = false;
     }
 
