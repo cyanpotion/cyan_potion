@@ -302,10 +302,7 @@ public class GameManager implements AutoCloseable {
         }
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
         String language = MultiLanguageStructure.ENGLISH;
-        if (this.getDataCenter().getCommonSettings().containsKey(STRING_LANGUAGE)) {
-            language =
-                    this.getDataCenter().getCommonSettings().get(STRING_LANGUAGE);
-        }
+        getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
         if (DataCenter.RUN_WITH_STEAM) {
             language = new SteamApps().getCurrentGameLanguage();
         }
@@ -376,12 +373,8 @@ public class GameManager implements AutoCloseable {
 
     protected void initGameWindow() {
         if (this.getGameWindow() == null) {
-            String gameWindowClassName = "com.xenoamess.cyan_potion.base" +
-                    ".GameWindow";
-            if (this.getDataCenter().getCommonSettings().containsKey(STRING_GAME_WINDOW_CLASS_NAME)) {
-                gameWindowClassName =
-                        this.getDataCenter().getCommonSettings().get(STRING_GAME_WINDOW_CLASS_NAME);
-            }
+            String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
+                    STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
                 this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
@@ -390,18 +383,25 @@ public class GameManager implements AutoCloseable {
             }
         }
         getEventList().clear();
-        if (this.getDataCenter().getViews().containsKey(STRING_WINDOW_WIDTH) && this.getDataCenter().getViews().containsKey(STRING_WINDOW_HEIGHT)) {
-            getGameWindow().setWindowSize(Integer.parseInt(this.getDataCenter().getViews().get(STRING_WINDOW_WIDTH)),
-                    Integer.parseInt(this.getDataCenter().getViews().get(STRING_WINDOW_HEIGHT)));
-        }
+
+//        String tmpWindowWidthString = ;
+//        String tmpWindowHeightString = ;
+
+        this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
+                STRING_LOGIC_WINDOW_WIDTH, "1280")));
+        this.getGameWindow().setLogicWindowHeight(Integer.parseInt(getString(this.getDataCenter().getViews(),
+                STRING_LOGIC_WINDOW_HEIGHT, "1024")));
+        this.getGameWindow().setRealWindowWidth(this.getGameWindow().getLogicWindowWidth());
+        this.getGameWindow().setRealWindowHeight(this.getGameWindow().getLogicWindowHeight());
 
         {
-            if (this.getDataCenter().getViews().containsKey(STRING_FORCE_WINDOW_WIDTH)) {
-                getGameWindow().setRealWindowWidth(Integer.parseInt(this.getDataCenter().getViews().get(STRING_FORCE_WINDOW_WIDTH)));
+            String tmpString;
+            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_WIDTH)) != null) {
+                getGameWindow().setRealWindowWidth(Integer.parseInt(tmpString));
                 getGameWindow().setRealWindowHeight((int) (1f * getGameWindow().getRealWindowWidth() / getGameWindow().getLogicWindowWidth() * getGameWindow().getRealWindowHeight()));
             }
-            if (this.getDataCenter().getViews().containsKey(STRING_FORCE_WINDOW_HEIGHT)) {
-                getGameWindow().setRealWindowHeight(Integer.parseInt(this.getDataCenter().getViews().get(STRING_FORCE_WINDOW_HEIGHT)));
+            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_HEIGHT)) != null) {
+                getGameWindow().setRealWindowHeight(Integer.parseInt(tmpString));
                 getGameWindow().setRealWindowWidth((int) (1f * getGameWindow().getRealWindowHeight() / getGameWindow().getLogicWindowHeight() * getGameWindow().getLogicWindowWidth()));
             }
             if (getGameWindow().getRealWindowHeight() > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
@@ -414,17 +414,13 @@ public class GameManager implements AutoCloseable {
             }
         }
 
-        if (this.getDataCenter().getViews().containsKey(STRING_FULL_SCREEN)) {
-            String s = this.getDataCenter().getViews().get(STRING_FULL_SCREEN);
-            if ("".equals(s) || "1".equals(s)) {
-                getGameWindow().setFullScreen(true);
-            }
-        }
+        this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
         this.setGameWindowComponentTree(new GameWindowComponentTree(this.getGameWindow()));
-        getGameWindow().init();
+        this.getGameWindow().init();
 
-        if (this.getDataCenter().getSpecialSettings().containsKey(STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT) && Integer.parseInt(this.getDataCenter().getSpecialSettings().get(STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT)) == 0) {
-        } else {
+
+        if (getBoolean(this.getDataCenter().getSpecialSettings(),
+                STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT, true)) {
             this.getGameWindow().showWindow();
             this.getGameWindow().focusWindow();
         }
@@ -432,9 +428,9 @@ public class GameManager implements AutoCloseable {
 
     protected void setStartingContent() {
         final AbstractGameWindowComponent logo =
-                this.getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(),
-                        STRING_LOGO_CLASS_NAME, "com.xenoamess.cyan_potion" +
-                                ".base.gameWindowComponents.Logo");
+                AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
+                        getString(this.dataCenter.getCommonSettings(), STRING_LOGO_CLASS_NAME,
+                                "com.xenoamess.cyan_potion.base.gameWindowComponents.Logo"));
         logo.addToGameWindowComponentTree(null);
     }
 

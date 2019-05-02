@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
@@ -40,6 +41,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -413,7 +415,10 @@ public class TitleExample extends AbstractGameWindowComponent {
     private void startGame() {
         this.getGameWindowComponentTreeNode().close();
         AbstractGameWindowComponent world =
-                this.getGameWindow().getGameManager().getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(), "worldClassName", "com.xenoamess.cyan_potion.rpg_module.world.World");
+                AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
+                        getString(this.getGameWindow().getGameManager().getDataCenter().getCommonSettings(),
+                                "worldClassName",
+                                "com.xenoamess.cyan_potion.rpg_module.world.World"));
         world.addToGameWindowComponentTree(null);
         world.enlargeAsFullWindow();
     }
