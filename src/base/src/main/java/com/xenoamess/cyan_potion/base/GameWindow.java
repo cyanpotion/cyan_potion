@@ -226,7 +226,7 @@ public class GameWindow implements AutoCloseable {
                 this.getGameManager().getCallbacks().windowSizeCallback);
 
         if (!isFullScreen()) {
-            //让窗口对于屏幕居中
+            // make the window be at the center of the screen.
             int[] pWidth = new int[1];
             int[] pHeight = new int[1];
             // Get the window size passed to glfwCreateWindow
