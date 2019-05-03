@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.xenoamess.cyan_potion.base;
 
 import com.codedisaster.steamworks.SteamAPI;
@@ -13,6 +37,8 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
+import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -27,7 +53,6 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -36,6 +61,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterResourceManagerCreate;
 
 /**
  * @author XenoAmess
@@ -53,6 +79,8 @@ public class GameManager implements AutoCloseable {
     private final Callbacks callbacks = new Callbacks(this);
     private SteamUserStats steamUserStats = null;
     private final DataCenter dataCenter = new DataCenter(this);
+    private final CodePluginManager codePluginManager = new CodePluginManager();
+
     private Keymap keymap;
     private GamepadInput gamepadInput;
     private GameWindowComponentTree gameWindowComponentTree;
@@ -124,11 +152,7 @@ public class GameManager implements AutoCloseable {
         }
     }
 
-    public void startup() {
-        initSteam();
-        loadGlobalSettings();
-        getAlive().set(true);
-//        DataCenter.getGameManagers().add(this);
+    private void initConsoleThread() {
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
             setConsoleThread(null);
@@ -136,13 +160,19 @@ public class GameManager implements AutoCloseable {
         if (getConsoleThread() != null) {
             getConsoleThread().start();
         }
+    }
+
+    public void startup() {
+        initSteam();
+        loadGlobalSettings();
+        getAlive().set(true);
+        this.initConsoleThread();
+        this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.initGameWindow();
-
         this.getAudioManager().init();
         this.setGamepadInput(new GamepadInput());
         this.setStartingContent();
-
         String defaultFontFilePath =
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_FILE_PATH,
@@ -170,45 +200,32 @@ public class GameManager implements AutoCloseable {
 
         LOGGER.debug("SettingsFilePath : {}",
                 globalSettingsFile.getAbsolutePath());
-
         try {
             this.getDataCenter().setGlobalSettingsTree(X8lTree.loadFromFile(globalSettingsFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().root.children) {
-            if (!(au instanceof ContentNode)) {
-                continue;
-            }
-            ContentNode contentNode = (ContentNode) au;
-            if (contentNode.attributesKeyList == null || contentNode.attributesKeyList.isEmpty()) {
-                continue;
-            }
-            String name = contentNode.getName();
-            Map map = null;
-            try {
-                Field field = DataCenter.class.getDeclaredField(name);
-                field.setAccessible(true);
-                Object object = field.get(this.getDataCenter());
-                if (object instanceof Map) {
-                    map = (Map) object;
-                } else {
-                    LOGGER.info("Field in DataCenter is not a map : {}", name);
-                }
-            } catch (NoSuchFieldException e) {
-                LOGGER.info("No such field in DataCenter : {}", name);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            if (map != null) {
-                for (Map.Entry<String, String> entry :
-                        contentNode.attributes.entrySet()) {
-                    if (entry.getKey().equals(name)) {
-                        continue;
-                    }
-                    map.put(entry.getKey(), entry.getValue());
-                }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "commonSettings")) {
+            this.getDataCenter().getCommonSettings().putAll(contentNode.attributes);
+        }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "specialSettings")) {
+            this.getDataCenter().getSpecialSettings().putAll(contentNode.attributes);
+        }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "views")) {
+            this.getDataCenter().getViews().putAll(contentNode.attributes);
+        }
+        for (ContentNode pluginNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs("codePlugins"
+                )) {
+            for (ContentNode simplePluginNode : pluginNode.getContentNodesFromChildren()) {
+                this.codePluginManager.putCodePlugin(CodePluginPosition.valueOf(simplePluginNode.getName()),
+                        simplePluginNode.getTextNodesFromChildren(1).get(0).textContent);
             }
         }
     }
@@ -278,10 +295,7 @@ public class GameManager implements AutoCloseable {
         }
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
         String language = MultiLanguageStructure.ENGLISH;
-        if (this.getDataCenter().getCommonSettings().containsKey(STRING_LANGUAGE)) {
-            language =
-                    this.getDataCenter().getCommonSettings().get(STRING_LANGUAGE);
-        }
+        getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
         if (DataCenter.RUN_WITH_STEAM) {
             language = new SteamApps().getCurrentGameLanguage();
         }
@@ -352,12 +366,8 @@ public class GameManager implements AutoCloseable {
 
     protected void initGameWindow() {
         if (this.getGameWindow() == null) {
-            String gameWindowClassName = "com.xenoamess.cyan_potion.base" +
-                    ".GameWindow";
-            if (this.getDataCenter().getCommonSettings().containsKey(STRING_GAME_WINDOW_CLASS_NAME)) {
-                gameWindowClassName =
-                        this.getDataCenter().getCommonSettings().get(STRING_GAME_WINDOW_CLASS_NAME);
-            }
+            String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
+                    STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
                 this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
@@ -366,18 +376,25 @@ public class GameManager implements AutoCloseable {
             }
         }
         getEventList().clear();
-        if (this.getDataCenter().getViews().containsKey(STRING_WINDOW_WIDTH) && this.getDataCenter().getViews().containsKey(STRING_WINDOW_HEIGHT)) {
-            getGameWindow().setWindowSize(Integer.parseInt(this.getDataCenter().getViews().get(STRING_WINDOW_WIDTH)),
-                    Integer.parseInt(this.getDataCenter().getViews().get(STRING_WINDOW_HEIGHT)));
-        }
+
+//        String tmpWindowWidthString = ;
+//        String tmpWindowHeightString = ;
+
+        this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
+                STRING_LOGIC_WINDOW_WIDTH, "1280")));
+        this.getGameWindow().setLogicWindowHeight(Integer.parseInt(getString(this.getDataCenter().getViews(),
+                STRING_LOGIC_WINDOW_HEIGHT, "1024")));
+        this.getGameWindow().setRealWindowWidth(this.getGameWindow().getLogicWindowWidth());
+        this.getGameWindow().setRealWindowHeight(this.getGameWindow().getLogicWindowHeight());
 
         {
-            if (this.getDataCenter().getViews().containsKey(STRING_FORCE_WINDOW_WIDTH)) {
-                getGameWindow().setRealWindowWidth(Integer.parseInt(this.getDataCenter().getViews().get(STRING_FORCE_WINDOW_WIDTH)));
+            String tmpString;
+            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_WIDTH)) != null) {
+                getGameWindow().setRealWindowWidth(Integer.parseInt(tmpString));
                 getGameWindow().setRealWindowHeight((int) (1f * getGameWindow().getRealWindowWidth() / getGameWindow().getLogicWindowWidth() * getGameWindow().getRealWindowHeight()));
             }
-            if (this.getDataCenter().getViews().containsKey(STRING_FORCE_WINDOW_HEIGHT)) {
-                getGameWindow().setRealWindowHeight(Integer.parseInt(this.getDataCenter().getViews().get(STRING_FORCE_WINDOW_HEIGHT)));
+            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_HEIGHT)) != null) {
+                getGameWindow().setRealWindowHeight(Integer.parseInt(tmpString));
                 getGameWindow().setRealWindowWidth((int) (1f * getGameWindow().getRealWindowHeight() / getGameWindow().getLogicWindowHeight() * getGameWindow().getLogicWindowWidth()));
             }
             if (getGameWindow().getRealWindowHeight() > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
@@ -390,17 +407,13 @@ public class GameManager implements AutoCloseable {
             }
         }
 
-        if (this.getDataCenter().getViews().containsKey(STRING_FULL_SCREEN)) {
-            String s = this.getDataCenter().getViews().get(STRING_FULL_SCREEN);
-            if ("".equals(s) || "1".equals(s)) {
-                getGameWindow().setFullScreen(true);
-            }
-        }
+        this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
         this.setGameWindowComponentTree(new GameWindowComponentTree(this.getGameWindow()));
-        getGameWindow().init();
+        this.getGameWindow().init();
 
-        if (this.getDataCenter().getSpecialSettings().containsKey(STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT) && Integer.parseInt(this.getDataCenter().getSpecialSettings().get(STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT)) == 0) {
-        } else {
+
+        if (getBoolean(this.getDataCenter().getSpecialSettings(),
+                STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT, true)) {
             this.getGameWindow().showWindow();
             this.getGameWindow().focusWindow();
         }
@@ -408,9 +421,9 @@ public class GameManager implements AutoCloseable {
 
     protected void setStartingContent() {
         final AbstractGameWindowComponent logo =
-                this.getDataCenter().fetchGameWindowComponentFromCommonSetting(this.getGameWindow(),
-                        STRING_LOGO_CLASS_NAME, "com.xenoamess.cyan_potion" +
-                                ".base.gameWindowComponents.Logo");
+                AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
+                        getString(this.dataCenter.getCommonSettings(), STRING_LOGO_CLASS_NAME,
+                                "com.xenoamess.cyan_potion.base.gameWindowComponents.Logo"));
         logo.addToGameWindowComponentTree(null);
     }
 

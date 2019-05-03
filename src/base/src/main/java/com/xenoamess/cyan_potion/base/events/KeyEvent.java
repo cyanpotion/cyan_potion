@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -28,8 +52,7 @@ public class KeyEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     private final int action;
     /**
@@ -56,8 +79,7 @@ public class KeyEvent implements Event {
      * If this bit is set the Num Lock key is enabled.
      *
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     private final int mods;
 
@@ -370,8 +392,7 @@ public class KeyEvent implements Event {
      * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
      * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
+     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     public int getAction() {
         return action;
@@ -400,8 +421,7 @@ public class KeyEvent implements Event {
      * #define 	GLFW_MOD_NUM_LOCK   0x0020
      * If this bit is set the Num Lock key is enabled.
      * @see org.lwjgl.glfw.GLFW
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
+     * @see <a href="http://www.glfw.org/docs/latest/group__mods.html">GLFW documents</a>
      */
     public int getMods() {
         return mods;

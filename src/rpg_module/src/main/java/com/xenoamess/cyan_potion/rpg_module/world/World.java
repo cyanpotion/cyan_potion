@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -170,22 +194,23 @@ public class World extends AbstractScene {
         });
         this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
                 event -> {
-            float newScale = this.getScale();
-            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
-            if (mouseScrollEvent.getYoffset() > 0) {
-                newScale += 0.1;
-            } else if (mouseScrollEvent.getYoffset() < 0) {
-                newScale -= 0.1;
-            }
+                    float newScale = this.getScale();
+                    MouseScrollEvent mouseScrollEvent =
+                            (MouseScrollEvent) event;
+                    if (mouseScrollEvent.getYoffset() > 0) {
+                        newScale += 0.1;
+                    } else if (mouseScrollEvent.getYoffset() < 0) {
+                        newScale -= 0.1;
+                    }
 //            this.scale += mouseScrollEvent.yoffset;
-            if (newScale > MAX_SCALE) {
-                newScale = MAX_SCALE;
-            } else if (newScale < MIN_SCALE) {
-                newScale = MIN_SCALE;
-            }
-            this.changeScale(newScale);
-            return null;
-        });
+                    if (newScale > MAX_SCALE) {
+                        newScale = MAX_SCALE;
+                    } else if (newScale < MIN_SCALE) {
+                        newScale = MIN_SCALE;
+                    }
+                    this.changeScale(newScale);
+                    return null;
+                });
     }
 
     @Override
@@ -457,7 +482,9 @@ public class World extends AbstractScene {
                     for (Bindable au : t.getBindables()) {
                         this.drawBindableAbsolute(this.getCamera(),
                                 this.getScale(), au,
-                                (i + posX - (getViewX() / 2) + 1f) * RpgModuleDataCenter.TILE_SIZE, (j + posY - (getViewY() / 2)) * RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter.TILE_SIZE);
+                                (i + posX - (getViewX() / 2) + 1f) * RpgModuleDataCenter.TILE_SIZE,
+                                (j + posY - (getViewY() / 2)) * RpgModuleDataCenter.TILE_SIZE,
+                                RpgModuleDataCenter.TILE_SIZE);
                     }
                 }
             }
