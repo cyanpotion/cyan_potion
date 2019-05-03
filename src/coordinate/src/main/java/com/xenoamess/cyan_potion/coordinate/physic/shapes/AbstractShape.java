@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.AbstractScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
-import com.xenoamess.cyan_potion.coordinate.physic.shapeComparators.ShapeRelationJudger;
+import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudger;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;
 
