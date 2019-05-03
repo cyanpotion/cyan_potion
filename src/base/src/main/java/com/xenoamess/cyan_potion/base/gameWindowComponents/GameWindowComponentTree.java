@@ -123,76 +123,10 @@ public class GameWindowComponentTree implements AutoCloseable {
 
 
     public Set<Event> process(Event event) {
-        Set<Event> res = new HashSet<Event>();
-        process(this.getRoot(), res, event);
+        Set<Event> res = new HashSet<>();
+        this.getRoot().process(res, event);
         return res;
-//        Map<GameWindowComponentTreeNode, Set> eventMap = new
-//        HashMap<GameWindowComponentTreeNode, Set>();
-//        for (GameWindowComponentTreeNode au : this.getLeafNodes()) {
-//            Set eventSet = new HashSet<Event>();
-//            eventSet.add(event);
-//            eventMap.put(au, eventSet);
-//        }
-//
-//        while (!eventMap.isEmpty()) {
-//            Map<GameWindowComponentTreeNode, Set> newEventMap = new
-//            HashMap<GameWindowComponentTreeNode, Set>();
-//            for (Map.Entry<GameWindowComponentTreeNode, Set> entry :
-//            eventMap.entrySet()) {
-//                if (entry.getValue().size() >= 2) {
-//                    entry.getValue().remove(event);
-//                }
-//
-//                for (Object object : entry.getValue()) {
-//                    if (object == null) continue;
-//                    Event originalEvent = (Event) object;
-//                    Event resEvent = entry.getKey().gameWindowComponent
-//                    .process(originalEvent);
-//                    GameWindowComponentTreeNode node = entry.getKey();
-//                    if (resEvent != null) {
-//                        if (node.father == null) {
-//                            res.add(resEvent);
-//                        } else {
-//                            Set<Event> eventSet = newEventMap.get(node
-//                            .father);
-//                            if (eventSet == null) {
-//                                eventSet = new HashSet<Event>();
-//                                newEventMap.put(node.father, eventSet);
-//                            }
-//                            eventSet.add(resEvent);
-//                        }
-//                    }
-//                }
-//            }
-//            eventMap.clear();
-//            eventMap = newEventMap;
-//        }
-//        return res;
     }
-
-    private boolean process(GameWindowComponentTreeNode nowNode,
-                            Set<Event> res, Event event) {
-        boolean flag0 = false;
-        for (GameWindowComponentTreeNode au : nowNode.getChildren()) {
-            if (process(au, res, event)) {
-                flag0 = true;
-            }
-        }
-
-        if (flag0) {
-            return true;
-        } else {
-            Event resEvent = nowNode.getGameWindowComponent().process(event);
-            if (resEvent != event) {
-                if (resEvent != null) {
-                    res.add(resEvent);
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public void update() {
         getRoot().update();
