@@ -24,8 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.AbstractGamepadDevice;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import org.lwjgl.glfw.GLFW;
@@ -71,24 +70,23 @@ public class GamepadButtonEvent implements Event {
     }
 
     @Override
-    public Set<Event> apply(Object object) {
+    public Set<Event> apply(GameManager gameManager) {
         if (getAction() != GLFW.GLFW_REPEAT) {
             LOGGER.debug("GamepadButtonEvent : {} {} {}", getKey(),
                     getAction(), getGamepadDevice());
         }
-        GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
-                gameWindow.getGameManager().getKeymap().keyReleaseRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
+                gameManager.getKeymap().keyReleaseRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
                 break;
             case GLFW.GLFW_PRESS:
-                gameWindow.getGameManager().getKeymap().keyPressRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
+                gameManager.getKeymap().keyPressRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
                 break;
             case GLFW.GLFW_REPEAT:
                 break;
             default:
         }
-        return gameWindow.getGameManager().getGameWindowComponentTree().process(this);
+        return gameManager.getGameWindowComponentTree().process(this);
     }
 
     public long getWindow() {

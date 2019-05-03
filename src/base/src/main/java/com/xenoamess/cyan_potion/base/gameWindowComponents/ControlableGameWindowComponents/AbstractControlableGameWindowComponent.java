@@ -327,7 +327,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
     public Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
-        switch (mouseButtonEvent.getKeyTranslated().getKey()) {
+        switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
 
                 switch (mouseButtonEvent.getAction()) {
@@ -362,7 +362,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
     public Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
-        switch (mouseButtonEvent.getKeyTranslated().getKey()) {
+        switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
                 switch (mouseButtonEvent.getAction()) {
                     case GLFW.GLFW_PRESS:

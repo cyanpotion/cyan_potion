@@ -62,7 +62,7 @@ public class Logo extends AbstractGameWindowComponent {
         this.registerProcessor(KeyEvent.class.getCanonicalName(),
                 event -> {
                     KeyEvent keyEvent = (KeyEvent) event;
-                    switch (keyEvent.getKeyTranslated().getKey()) {
+                    switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:

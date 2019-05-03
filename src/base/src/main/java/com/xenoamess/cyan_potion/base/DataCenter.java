@@ -92,12 +92,7 @@ public class DataCenter {
     }
 
 
-    private static final Map<Long, GameWindow> GAME_WINDOW_MAP =
-            new HashMap<Long, GameWindow>();
-
-    public static GameWindow getGameWindow(long window) {
-        return GAME_WINDOW_MAP.get(window);
-    }
+    private static final Map<Long, GameWindow> GAME_WINDOW_MAP = new HashMap<>();
 
     public static void putGameWindow(long window, GameWindow gameWindow) {
         GAME_WINDOW_MAP.put(window, gameWindow);

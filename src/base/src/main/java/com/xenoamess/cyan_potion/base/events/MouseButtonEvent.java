@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,32 +92,28 @@ public class MouseButtonEvent implements Event {
     }
 
     @Override
-    public Set<Event> apply(Object object) {
+    public Set<Event> apply(GameManager gameManager) {
         LOGGER.debug("MouseButtonEvent : {} {} {}", getKey(), getAction(),
                 getMods());
 
-        //        GameManager gameManager = DataCenter.currentGameManager;
-        GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
-                gameWindow.getGameManager().getKeymap().keyReleaseRaw(new Key(Key.TYPE_MOUSE, getKey()));
+                gameManager.getKeymap().keyReleaseRaw(new Key(Key.TYPE_MOUSE, getKey()));
                 break;
             case GLFW.GLFW_PRESS:
-                gameWindow.getGameManager().getKeymap().keyPressRaw(new Key(Key.TYPE_MOUSE, getKey()));
+                gameManager.getKeymap().keyPressRaw(new Key(Key.TYPE_MOUSE, getKey()));
                 break;
             default:
         }
-        return gameWindow.getGameManager().getGameWindowComponentTree().process(this);
+        return gameManager.getGameWindowComponentTree().process(this);
     }
 
     public Key getKeyRaw() {
         return new Key(Key.TYPE_MOUSE, this.getKey());
     }
 
-    public Key getKeyTranslated() {
-//        return new Key(Key.TYPE_KEY, this.key);
-        GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
-        return gameWindow.getGameManager().getKeymap().get(this.getKeyRaw());
+    public Key getKeyTranslated(Keymap keymap) {
+        return keymap.get(this.getKeyRaw());
     }
 
     public long getWindow() {
