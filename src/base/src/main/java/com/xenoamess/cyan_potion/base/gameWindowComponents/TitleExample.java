@@ -292,7 +292,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     } else {
                         lastState();
                     }
-                    this.getAlive().set(false);
+                    this.setAlive(false);
                     return null;
                 });
     }
@@ -420,11 +420,6 @@ public class TitleExample extends AbstractGameWindowComponent {
                                 "com.xenoamess.cyan_potion.rpg_module.world.World"));
         world.addToGameWindowComponentTree(null);
         world.enlargeAsFullWindow();
-    }
-
-    @Override
-    public void close() {
-
     }
 
     public Texture getSaveSlotTexture() {

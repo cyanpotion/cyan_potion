@@ -91,8 +91,8 @@ public class GameWindowComponentTree implements AutoCloseable {
 
                     @Override
                     public void close() {
+                        super.close();
                         this.getGameWindow().getGameManager().shutdown();
-//                super.close();
                     }
 
                     @Override

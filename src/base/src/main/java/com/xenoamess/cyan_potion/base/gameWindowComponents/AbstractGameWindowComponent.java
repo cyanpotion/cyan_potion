@@ -44,12 +44,10 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
     private GameWindowComponentTreeNode gameWindowComponentTreeNode;
 
-
     private float leftTopPosX = 0;
     private float leftTopPosY = 0;
     private float width = -1;
     private float height = -1;
-
 
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -81,13 +79,14 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         return this;
     }
 
-    public AtomicBoolean getAlive() {
-        return alive;
+    public boolean getAlive() {
+        return alive.get();
     }
 
-    public void kill() {
-        this.getAlive().set(false);
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
     }
+
 
     public abstract void update();
 
@@ -95,6 +94,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
 
     @Override
     public void close() {
+        this.setAlive(false);
         //TODO
     }
 
@@ -147,10 +147,6 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     public void center() {
         this.setLeftTopPosX((this.getGameWindow().getLogicWindowWidth() - this.getWidth()) / 2);
         this.setLeftTopPosY((this.getGameWindow().getLogicWindowHeight() - this.getHeight()) / 2);
-    }
-
-    public void setAlive(boolean alive) {
-        this.getAlive().set(alive);
     }
 
 

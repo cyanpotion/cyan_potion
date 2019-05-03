@@ -29,5 +29,11 @@ package com.xenoamess.cyan_potion.base.plugins;
  */
 public enum CodePluginPosition {
     rightAfterResourceManagerCreate,
+    rightAfterEnterNewLogicFrame,
+    rightBeforeExitCurrentLogicFrame,
+    rightBeforeSolveEvents,
+    rightAfterSolveEvents,
+    rightBeforeUpdate,
+    rightAfterUpdate,
     ;
 }
