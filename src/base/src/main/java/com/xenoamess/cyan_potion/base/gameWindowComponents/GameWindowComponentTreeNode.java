@@ -24,8 +24,11 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
+import com.xenoamess.cyan_potion.base.events.Event;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author XenoAmess
@@ -89,24 +92,42 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
 
     public void update() {
         ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<GameWindowComponentTreeNode>(getChildren());
-
+                new ArrayList<>(getChildren());
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.update();
         }
-
         this.getGameWindowComponent().update();
-        //        super.update();
     }
 
     public void draw() {
-
         this.getGameWindowComponent().draw();
         ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<GameWindowComponentTreeNode>(getChildren());
+                new ArrayList<>(getChildren());
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.draw();
         }
+    }
+
+    public boolean process(final Set<Event> res, final Event event) {
+        boolean flag0 = false;
+        for (GameWindowComponentTreeNode au : this.getChildren()) {
+            if (au.process(res, event)) {
+                flag0 = true;
+            }
+        }
+
+        if (flag0) {
+            return true;
+        } else {
+            Event resEvent = this.getGameWindowComponent().process(event);
+            if (resEvent != event) {
+                if (resEvent != null) {
+                    res.add(resEvent);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {

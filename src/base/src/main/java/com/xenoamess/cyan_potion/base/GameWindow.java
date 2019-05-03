@@ -406,7 +406,7 @@ public class GameWindow implements AutoCloseable {
     }
 
     public void changeFullScreen() {
-        LOGGER.debug("changeFullScreen! " + this.isFullScreen());
+        LOGGER.debug("changeFullScreen! original : {}", this.isFullScreen());
         LOGGER.debug("Well I lose.If you want fullScreen please change it " +
                 "from the setting file,then reboot it.");
 
