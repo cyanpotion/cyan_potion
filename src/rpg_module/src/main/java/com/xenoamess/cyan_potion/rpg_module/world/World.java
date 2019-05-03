@@ -533,13 +533,6 @@ public class World extends AbstractScene {
 //        Font.defaultFont.draw_test();
     }
 
-
-    @Override
-    public void close() {
-        super.close();
-        //todo
-    }
-
     public int getViewX() {
         return viewX;
     }

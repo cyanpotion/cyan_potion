@@ -66,7 +66,7 @@ public class Logo extends AbstractGameWindowComponent {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:
-                            this.getAlive().set(false);
+                            this.setAlive(false);
                             break;
                         default:
                             return event;
@@ -77,7 +77,7 @@ public class Logo extends AbstractGameWindowComponent {
 
         this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
                 event -> {
-                    this.getAlive().set(false);
+                    this.setAlive(false);
                     return null;
                 }
         );
@@ -86,10 +86,10 @@ public class Logo extends AbstractGameWindowComponent {
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.getAlive().set(false);
+            this.setAlive(false);
         }
 
-        if (!this.getAlive().get()) {
+        if (!this.getAlive()) {
             this.getGameWindowComponentTreeNode().close();
             MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
             madeWithLogo.addToGameWindowComponentTree(null);
@@ -106,7 +106,7 @@ public class Logo extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-        if (!this.getAlive().get()) {
+        if (!this.getAlive()) {
             glClearColor(1, 1, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
             return;
@@ -150,10 +150,6 @@ public class Logo extends AbstractGameWindowComponent {
         }
     }
 
-    @Override
-    public void close() {
-
-    }
 
     public Texture getLogoTexture() {
         return logoTexture;

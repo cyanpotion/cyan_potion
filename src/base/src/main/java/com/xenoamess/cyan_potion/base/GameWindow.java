@@ -474,12 +474,6 @@ public class GameWindow implements AutoCloseable {
         glfwSwapBuffers(getWindow());
     }
 
-
-    //    public boolean hasResized() {
-    //        return hasResized;
-    //    }
-
-
     /**
      * @return the window handle
      */
@@ -487,9 +481,6 @@ public class GameWindow implements AutoCloseable {
         return window;
     }
 
-    //    public Input getInput() {
-    //        return input;
-    //    }
 
     //    public void getCurrent
 

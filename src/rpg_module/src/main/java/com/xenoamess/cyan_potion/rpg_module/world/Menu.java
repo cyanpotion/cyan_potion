@@ -90,12 +90,6 @@ public class Menu extends AbstractGameWindowComponent {
         return super.process(event);
     }
 
-    @Override
-    public void close() {
-
-    }
-
-
     public AtomicBoolean getShow() {
         return show;
     }
