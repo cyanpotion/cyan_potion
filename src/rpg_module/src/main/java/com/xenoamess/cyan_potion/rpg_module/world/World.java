@@ -182,7 +182,7 @@ public class World extends AbstractScene {
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
             KeyEvent keyEvent = (KeyEvent) event;
-            switch (keyEvent.getKeyTranslated().getKey()) {
+            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
                         this.getMenu().getShow().set(true);
