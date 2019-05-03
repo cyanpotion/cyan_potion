@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
-import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,25 +34,25 @@ public abstract class AbstractResource implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);
 
-    private final GameManager gameManager;
+    private final ResourceManager resourceManager;
     private final String fullResourceURI;
     private long memorySize;
     private boolean inMemory = false;
     private long lastUsedFrameIndex;
 
-    public AbstractResource(GameManager gameManager, String fullResourceURI) {
-        this.gameManager = gameManager;
+    public AbstractResource(ResourceManager resourceManager, String fullResourceURI) {
+        this.resourceManager = resourceManager;
         this.fullResourceURI = fullResourceURI;
     }
 
 
     public void load() {
-        this.setLastUsedFrameIndex(this.getGameManager().getNowFrameIndex());
+        this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
         if (this.isInMemory()) {
             return;
         }
         this.forceLoad();
-        this.getGameManager().getResourceManager().load(this);
+        this.getResourceManager().load(this);
 
         LOGGER.debug("loadResource {}, time {}, memory {}",
                 this.getFullResourceURI(), this.getLastUsedFrameIndex(),
@@ -75,7 +74,7 @@ public abstract class AbstractResource implements AutoCloseable {
             return;
         }
         this.forceClose();
-        this.getGameManager().getResourceManager().close(this);
+        this.getResourceManager().close(this);
 
         LOGGER.debug("closeResource {}, time {}, memory {}",
                 this.getFullResourceURI(), this.getLastUsedFrameIndex(),
@@ -84,7 +83,7 @@ public abstract class AbstractResource implements AutoCloseable {
     }
 
     public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
-        return this.getGameManager().getResourceManager().fetchResourceWithShortenURI(this.getClass(),
+        return this.getResourceManager().fetchResourceWithShortenURI(this.getClass(),
                 shortenResourceURI);
     }
 
@@ -93,8 +92,8 @@ public abstract class AbstractResource implements AutoCloseable {
     protected abstract void forceClose();
 
 
-    public GameManager getGameManager() {
-        return gameManager;
+    public ResourceManager getResourceManager() {
+        return this.resourceManager;
     }
 
     public String getFullResourceURI() {

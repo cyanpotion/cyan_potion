@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
-import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
@@ -69,11 +69,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         generate();
 
         this.setMemorySize(data.capacity());
-        this.getGameManager().getResourceManager().load(this);
+        this.getResourceManager().load(this);
     }
 
-    public WaveData(GameManager gameManager, String resourceURI) {
-        super(gameManager, resourceURI);
+    public WaveData(ResourceManager resourceManager, String resourceURI) {
+        super(resourceManager, resourceURI);
     }
 
 //    public int getAL_Buffer_Int() {

@@ -61,7 +61,7 @@ public class WalkingAnimation4Dirs extends Animation {
             case "characters":
                 int peopleIndex = Integer.parseInt(resourceFileURIStrings[2]);
                 List<Texture> walkingTextures =
-                        Texture.getWalkingTextures(resourceManager,
+                        TextureUtils.getWalkingTextures(resourceManager,
                                 resourceFilePath).get(peopleIndex);
                 initTextures(walkingTextures);
                 break;

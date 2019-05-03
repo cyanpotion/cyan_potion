@@ -37,6 +37,8 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
+import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -51,7 +53,6 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -60,6 +61,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterResourceManagerCreate;
 
 /**
  * @author XenoAmess
@@ -77,6 +79,8 @@ public class GameManager implements AutoCloseable {
     private final Callbacks callbacks = new Callbacks(this);
     private SteamUserStats steamUserStats = null;
     private final DataCenter dataCenter = new DataCenter(this);
+    private final CodePluginManager codePluginManager = new CodePluginManager();
+
     private Keymap keymap;
     private GamepadInput gamepadInput;
     private GameWindowComponentTree gameWindowComponentTree;
@@ -148,11 +152,7 @@ public class GameManager implements AutoCloseable {
         }
     }
 
-    public void startup() {
-        initSteam();
-        loadGlobalSettings();
-        getAlive().set(true);
-//        DataCenter.getGameManagers().add(this);
+    private void initConsoleThread() {
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
             setConsoleThread(null);
@@ -160,13 +160,19 @@ public class GameManager implements AutoCloseable {
         if (getConsoleThread() != null) {
             getConsoleThread().start();
         }
+    }
+
+    public void startup() {
+        initSteam();
+        loadGlobalSettings();
+        getAlive().set(true);
+        this.initConsoleThread();
+        this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.initGameWindow();
-
         this.getAudioManager().init();
         this.setGamepadInput(new GamepadInput());
         this.setStartingContent();
-
         String defaultFontFilePath =
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_FILE_PATH,
@@ -194,45 +200,32 @@ public class GameManager implements AutoCloseable {
 
         LOGGER.debug("SettingsFilePath : {}",
                 globalSettingsFile.getAbsolutePath());
-
         try {
             this.getDataCenter().setGlobalSettingsTree(X8lTree.loadFromFile(globalSettingsFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().root.children) {
-            if (!(au instanceof ContentNode)) {
-                continue;
-            }
-            ContentNode contentNode = (ContentNode) au;
-            if (contentNode.attributesKeyList == null || contentNode.attributesKeyList.isEmpty()) {
-                continue;
-            }
-            String name = contentNode.getName();
-            Map map = null;
-            try {
-                Field field = DataCenter.class.getDeclaredField(name);
-                field.setAccessible(true);
-                Object object = field.get(this.getDataCenter());
-                if (object instanceof Map) {
-                    map = (Map) object;
-                } else {
-                    LOGGER.info("Field in DataCenter is not a map : {}", name);
-                }
-            } catch (NoSuchFieldException e) {
-                LOGGER.info("No such field in DataCenter : {}", name);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            if (map != null) {
-                for (Map.Entry<String, String> entry :
-                        contentNode.attributes.entrySet()) {
-                    if (entry.getKey().equals(name)) {
-                        continue;
-                    }
-                    map.put(entry.getKey(), entry.getValue());
-                }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "commonSettings")) {
+            this.getDataCenter().getCommonSettings().putAll(contentNode.attributes);
+        }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "specialSettings")) {
+            this.getDataCenter().getSpecialSettings().putAll(contentNode.attributes);
+        }
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                        "views")) {
+            this.getDataCenter().getViews().putAll(contentNode.attributes);
+        }
+        for (ContentNode pluginNode :
+                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs("codePlugins"
+                )) {
+            for (ContentNode simplePluginNode : pluginNode.getContentNodesFromChildren()) {
+                this.codePluginManager.putCodePlugin(CodePluginPosition.valueOf(simplePluginNode.getName()),
+                        simplePluginNode.getTextNodesFromChildren(1).get(0).textContent);
             }
         }
     }

@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 /**
  * @author XenoAmess
@@ -52,6 +54,30 @@ public class ResourceManager implements AutoCloseable {
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesLoaderMap = new ConcurrentHashMap<>();
+
+    public <T> void putResourceLoader(Class<T> tClass, String resourceType, BiFunction<T, String, Void> loader) {
+        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+                defaultResourecesLoaderMap.get(tClass);
+        if (resourceLoaderMap == null) {
+            resourceLoaderMap = new ConcurrentHashMap<>(8);
+            defaultResourecesLoaderMap.put(tClass, resourceLoaderMap);
+        }
+        resourceLoaderMap.put(resourceType, loader);
+    }
+
+    public <T> BiFunction<T, String, Void> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+                defaultResourecesLoaderMap.get(tClass);
+        if (resourceLoaderMap == null) {
+            return null;
+        }
+        return resourceLoaderMap.get(resourceType);
+    }
+
+
+    private final ConcurrentHashMap<String, BiFunction<Texture, String[], Void>> resourceLoaders =
+            new ConcurrentHashMap<>();
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (fullResourceURI == null || fullResourceURI.isEmpty()) {
@@ -174,8 +200,8 @@ public class ResourceManager implements AutoCloseable {
             res = this.getResourceFromShortenURI(tClass, shortenResourceURI);
         } else {
             try {
-                res = tClass.getDeclaredConstructor(GameManager.class,
-                        String.class).newInstance(this.getGameManager(),
+                res = tClass.getDeclaredConstructor(ResourceManager.class,
+                        String.class).newInstance(this,
                         tClass.getCanonicalName() + ":" + shortenResourceURI);
                 this.putResourceWithShortenURI(shortenResourceURI, res);
             } catch (NoSuchMethodException e) {

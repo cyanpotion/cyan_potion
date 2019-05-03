@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson;
+import com.xenoamess.cyan_potion.rpg_module.render.TextureUtils;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +70,7 @@ public class GameTileset {
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
-                textures = Texture.getTilesetTexturesA5(resourceManager, ts);
+                textures = TextureUtils.getTilesetTexturesA5(resourceManager, ts);
                 ti = 1536;
                 for (Texture au : textures) {
                     getIdTextureMap().put(ti, au);
@@ -86,7 +87,7 @@ public class GameTileset {
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
-                textures = Texture.getTilesetTexturesB(resourceManager, ts);
+                textures = TextureUtils.getTilesetTexturesB(resourceManager, ts);
                 ti = 0;
                 for (Texture au : textures) {
                     getIdTextureMap().put(ti, au);
@@ -103,7 +104,7 @@ public class GameTileset {
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
-                textures = Texture.getTilesetTexturesC(resourceManager, ts);
+                textures = TextureUtils.getTilesetTexturesC(resourceManager, ts);
                 ti = 256;
                 for (Texture au : textures) {
                     getIdTextureMap().put(ti, au);
@@ -120,7 +121,7 @@ public class GameTileset {
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
-                textures = Texture.getTilesetTexturesA2(resourceManager, ts);
+                textures = TextureUtils.getTilesetTexturesA2(resourceManager, ts);
                 ti = 2816;
                 for (Texture au : textures) {
                     getIdTextureMap().put(ti, au);
