@@ -509,7 +509,6 @@ public class GameManager implements AutoCloseable {
             }
             getEventList().clear();
             getEventList().addAll(newEventList);
-            newEventList.clear();
         }
     }
 
