@@ -1,7 +1,32 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +34,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 /**
  * @author XenoAmess
@@ -18,7 +44,7 @@ public class ResourceManager implements AutoCloseable {
             LoggerFactory.getLogger(ResourceManager.class);
 
     public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
-            4L * 1024 * 1024 * 1024;
+            8L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_START_POINT =
             3L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
@@ -26,8 +52,32 @@ public class ResourceManager implements AutoCloseable {
 
     private GameManager gameManager;
     private long totalMemorySize = 0;
-    private ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
-    private ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
+    private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesLoaderMap = new ConcurrentHashMap<>();
+
+    public <T> void putResourceLoader(Class<T> tClass, String resourceType, BiFunction<T, String, Void> loader) {
+        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+                defaultResourecesLoaderMap.get(tClass);
+        if (resourceLoaderMap == null) {
+            resourceLoaderMap = new ConcurrentHashMap<>(8);
+            defaultResourecesLoaderMap.put(tClass, resourceLoaderMap);
+        }
+        resourceLoaderMap.put(resourceType, loader);
+    }
+
+    public <T> BiFunction<T, String, Void> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+                defaultResourecesLoaderMap.get(tClass);
+        if (resourceLoaderMap == null) {
+            return null;
+        }
+        return resourceLoaderMap.get(resourceType);
+    }
+
+
+    private final ConcurrentHashMap<String, BiFunction<Texture, String[], Void>> resourceLoaders =
+            new ConcurrentHashMap<>();
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (fullResourceURI == null || fullResourceURI.isEmpty()) {
@@ -150,8 +200,8 @@ public class ResourceManager implements AutoCloseable {
             res = this.getResourceFromShortenURI(tClass, shortenResourceURI);
         } else {
             try {
-                res = tClass.getDeclaredConstructor(GameManager.class,
-                        String.class).newInstance(this.getGameManager(),
+                res = tClass.getDeclaredConstructor(ResourceManager.class,
+                        String.class).newInstance(this,
                         tClass.getCanonicalName() + ":" + shortenResourceURI);
                 this.putResourceWithShortenURI(shortenResourceURI, res);
             } catch (NoSuchMethodException e) {
@@ -216,7 +266,9 @@ public class ResourceManager implements AutoCloseable {
             return;
         }
 
-        getInMemoryResources().sort((o1, o2) -> o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 : o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
+        getInMemoryResources().sort((o1, o2) ->
+                o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
+                        o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
             if (nowResource.isInMemory() == false) {
@@ -242,7 +294,8 @@ public class ResourceManager implements AutoCloseable {
                 nowResource.close();
             }
         }
-        this.setInMemoryResources(newInMemoryResources);
+        this.getInMemoryResources().clear();
+        this.getInMemoryResources().addAll(newInMemoryResources);
     }
 
 
@@ -266,16 +319,7 @@ public class ResourceManager implements AutoCloseable {
         return inMemoryResources;
     }
 
-    public void setInMemoryResources(ArrayList<AbstractResource> inMemoryResources) {
-        this.inMemoryResources = inMemoryResources;
-    }
-
     public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourecesURIMap() {
         return defaultResourecesURIMap;
-    }
-
-    public void setDefaultResourecesURIMap(ConcurrentHashMap<Class,
-            ConcurrentHashMap> defaultResourecesURIMap) {
-        this.defaultResourecesURIMap = defaultResourecesURIMap;
     }
 }

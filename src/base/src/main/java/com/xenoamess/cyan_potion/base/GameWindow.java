@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
@@ -52,9 +76,14 @@ public class GameWindow implements AutoCloseable {
     private Model model;
 
 
-    public void setWindowSize(int windowWidth, int windowHeight) {
+    public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
         this.setLogicWindowHeight(windowHeight);
+    }
+
+    public void setRealWindowSize(int windowWidth, int windowHeight) {
+        this.setRealWindowWidth(windowWidth);
+        this.setRealWindowWidth(windowHeight);
     }
 
     public int getLogicWindowWidth() {
@@ -492,7 +521,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height,
                                      Vector4f
-            colorScale) {
+                                             colorScale) {
 //        int nowWindowWidth = this.realWindowWidth;
 //        int nowWindowHeight = this.realWindowHeight;
         posx = posx / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -577,7 +606,7 @@ public class GameWindow implements AutoCloseable {
 
     public void drawText(Font font, float x, float y, float scalex,
                          float scaley, float characterSpace, Vector4f
-            color, String text) {
+                                 color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         if (font == null) {
