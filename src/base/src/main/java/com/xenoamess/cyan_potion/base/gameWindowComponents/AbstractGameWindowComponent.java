@@ -112,6 +112,21 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         return this.getClassNameToProcessorMap().get(eventType);
     }
 
+
+    /**
+     * 1. If the GameWindowComponent can not/shall not solve the event
+     * (like, the event is totally not relevant to the component),
+     * it will just return the event.
+     * <p>
+     * 2. If the event is totally solved by the component,
+     * then it shall return null
+     * <p>
+     * 3. If the event is solved by the component, but caused another event arise,
+     * then it shall return the new event.
+     *
+     * @param event
+     * @return
+     */
     public Event process(Event event) {
         Function<Event, Event> processor =
                 this.getProcessor(event.getClass().getCanonicalName());

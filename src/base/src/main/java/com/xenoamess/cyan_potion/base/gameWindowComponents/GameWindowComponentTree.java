@@ -77,7 +77,7 @@ public class GameWindowComponentTree implements AutoCloseable {
                         this.registerProcessor(KeyEvent.class.getCanonicalName(),
                                 event -> {
                                     KeyEvent keyEvent = (KeyEvent) event;
-                                    switch (keyEvent.getKeyTranslated().getKey()) {
+                                    switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                                         case Keymap.XENOAMESS_KEY_ENTER:
                                             if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
                                                 this.getGameWindow().changeFullScreen();

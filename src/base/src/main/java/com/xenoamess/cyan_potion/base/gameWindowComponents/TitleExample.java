@@ -202,7 +202,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             if (keyEvent.getAction() != GLFW.GLFW_PRESS) {
                 return event;
             }
-            switch (keyEvent.getKeyTranslated().getKey()) {
+            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
                         if (getState() >= 0 && getState() <= 4) {
@@ -258,7 +258,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
                         return event;
                     }
-                    switch (mouseButtonEvent.getKeyTranslated().getKey()) {
+                    switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
                             if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
                                 if (getState() >= 0 && getState() <= 4) {
