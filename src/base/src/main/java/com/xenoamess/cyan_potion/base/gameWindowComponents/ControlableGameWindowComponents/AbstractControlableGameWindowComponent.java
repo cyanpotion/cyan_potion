@@ -77,7 +77,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
 
     private boolean isMouseButtonLeftPressing = false;
 
-    public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         this.gainFocus();
         isMouseButtonLeftPressing = true;
@@ -94,7 +94,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onMouseButtonLeftDownCallback = callback;
     }
 
-    public Event onMouseButtonLeftUp(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonLeftUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonLeftPressing = false;
         if (onMouseButtonLeftUpCallback != null) {
@@ -109,23 +109,23 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onMouseButtonLeftUpCallback = callback;
     }
 
-    public Event onMouseButtonLeftPressing() {
-        if (onMouseButtonLeftPressiongCallback != null) {
-            return onMouseButtonLeftPressiongCallback.invoke(null);
+    protected final Event onMouseButtonLeftPressing() {
+        if (onMouseButtonLeftPressingCallback != null) {
+            return onMouseButtonLeftPressingCallback.invoke(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonLeftPressiongCallback;
+    private Callback onMouseButtonLeftPressingCallback;
 
-    public void registerOnMouseButtonLeftPressiongCallback(Callback callback) {
-        this.onMouseButtonLeftPressiongCallback = callback;
+    public void registerOnMouseButtonLeftPressingCallback(Callback callback) {
+        this.onMouseButtonLeftPressingCallback = callback;
     }
 
 
     private boolean isMouseButtonRightPressing = false;
 
-    public Event onMouseButtonRightDown(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonRightDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = true;
         if (onMouseButtonRightDownCallback != null) {
@@ -141,7 +141,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
 
-    public Event onMouseButtonRightUp(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonRightUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = false;
         if (onMouseButtonRightUpCallback != null) {
@@ -156,7 +156,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onMouseButtonRightUpCallback = callback;
     }
 
-    public Event onMouseButtonRightPressing() {
+    protected final Event onMouseButtonRightPressing() {
         if (onMouseButtonRightPressiongCallback != null) {
             return onMouseButtonRightPressiongCallback.invoke(null);
         }
@@ -172,7 +172,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
 
     private boolean isMouseButtonMiddlePressing = false;
 
-    public Event onMouseButtonMiddleDown(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonMiddleDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = true;
         if (onMouseButtonMiddleDownCallback != null) {
@@ -188,7 +188,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
 
-    public Event onMouseButtonMiddleUp(MouseButtonEvent mouseButtonEvent) {
+    protected final Event onMouseButtonMiddleUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = false;
         if (onMouseButtonMiddleUpCallback != null) {
@@ -203,7 +203,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onMouseButtonMiddleUpCallback = callback;
     }
 
-    public Event onMouseButtonMiddlePressing() {
+    protected final Event onMouseButtonMiddlePressing() {
         if (onMouseButtonMiddlePressiongCallback != null) {
             return onMouseButtonMiddlePressiongCallback.invoke(null);
         }
@@ -224,7 +224,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         setWillStillInFocus(false);
     }
 
-    public Event onGainFocus() {
+    protected final Event onGainFocus() {
         Event res = null;
         if (onGainFocusCallback != null) {
             res = onGainFocusCallback.invoke(null);
@@ -238,7 +238,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onGainFocusCallback = callback;
     }
 
-    public Event onLoseFocus() {
+    protected final Event onLoseFocus() {
         this.isMouseButtonLeftPressing = false;
         this.isMouseButtonMiddlePressing = false;
         this.isMouseButtonRightPressing = false;
@@ -256,7 +256,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
     }
 
 
-    public Event onMouseEnterArea() {
+    protected final Event onMouseEnterArea() {
         Event res = null;
         if (onMouseEnterAreaCallback != null) {
             res = onMouseEnterAreaCallback.invoke(null);
@@ -270,7 +270,7 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         this.onMouseEnterAreaCallback = callback;
     }
 
-    public Event onMouseLeaveArea() {
+    protected final Event onMouseLeaveArea() {
         Event res = null;
         if (onMouseLeaveAreaCallback != null) {
             res = onMouseLeaveAreaCallback.invoke(null);
