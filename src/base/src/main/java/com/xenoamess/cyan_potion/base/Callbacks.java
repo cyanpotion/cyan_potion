@@ -39,12 +39,9 @@ public final class Callbacks {
     }
 
     public GLFWWindowCloseCallbackI windowCloseCallback =
-            new GLFWWindowCloseCallbackI() {
-                @Override
-                public void invoke(long window) {
-                    System.out.println("Alright I exit.");
-                    getGameManager().shutdown();
-                }
+            window -> {
+                System.out.println("Alright I exit.");
+                getGameManager().shutdown();
             };
 
     public GLFWKeyCallbackI keyCallback = new GLFWKeyCallbackI() {

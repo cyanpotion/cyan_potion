@@ -53,7 +53,7 @@ public class WindowResizeEvent implements Event {
 
     @Override
     public Set<Event> apply(GameManager gameManager) {
-        //TODO will do if we do implement windows resize.
+        //TODO will implement it if we do implement windows resize.
         return null;
     }
 
