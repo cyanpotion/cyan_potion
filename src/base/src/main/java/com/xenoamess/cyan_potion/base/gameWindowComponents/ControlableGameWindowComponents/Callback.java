@@ -30,8 +30,11 @@ import com.xenoamess.cyan_potion.base.events.Event;
 /**
  * @author XenoAmess
  */
+@FunctionalInterface
 public interface Callback {
-    default Event invoke(Event e) {
-        return e;
-    }
+    //    default Event invoke(Event e) {
+    //        return e;
+    //    }
+    
+    Event invoke(Event e);
 }
