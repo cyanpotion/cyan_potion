@@ -47,6 +47,8 @@ public class ConsoleEvent implements Event {
     @Override
     public Set<Event> apply(GameManager gameManager) {
         //TODO should add some real console methods here.
+        // If anyone do have any idea about how it shall design,
+        // please just open issue. Thx.
         LOGGER.info(getCommand());
         return null;
     }
