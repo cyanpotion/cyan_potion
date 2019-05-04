@@ -129,12 +129,10 @@ public class GameWindow implements AutoCloseable {
     }
 
     public void register() {
-        DataCenter.putGameWindow(getWindow(), this);
     }
 
     @Override
     public void close() {
-        DataCenter.removeGameWindow(getWindow());
         // Free the window callbacks and close the window
         glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
