@@ -88,7 +88,7 @@ public class GameManager implements AutoCloseable {
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    private final ResourceManager resourceManager = new ResourceManager(this);
+    private ResourceManager resourceManager;
     private final ExecutorService executorService =
             Executors.newCachedThreadPool();
 
@@ -163,14 +163,25 @@ public class GameManager implements AutoCloseable {
     }
 
     public void startup() {
+        this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         initSteam();
         loadGlobalSettings();
-        getAlive().set(true);
+        setAlive(true);
         this.initConsoleThread();
+
+        this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
+        resourceManager = new ResourceManager(this);
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
+        this.codePluginManager.apply(this, rightBeforeGameWindowInit);
         this.initGameWindow();
+        this.codePluginManager.apply(this, rightAfterGameWindowInit);
+
+        this.codePluginManager.apply(this, rightBeforeAudioManagerInit);
         this.getAudioManager().init();
+        this.codePluginManager.apply(this, rightAfterAudioManagerInit);
+
+
         this.setGamepadInput(new GamepadInput());
         this.setStartingContent();
         String defaultFontFilePath =
@@ -335,7 +346,7 @@ public class GameManager implements AutoCloseable {
 
 
     public void shutdown() {
-        getAlive().set(false);
+        setAlive(false);
     }
 
     @Override
@@ -350,7 +361,7 @@ public class GameManager implements AutoCloseable {
         //        super.close();
         this.getAudioManager().close();
 
-        getAlive().set(false);
+        setAlive(false);
 //        DataCenter.getGameManagers().remove(this);
 
         if (getConsoleThread() != null) {
@@ -435,7 +446,7 @@ public class GameManager implements AutoCloseable {
         double unprocessed = 0;
 //        int timerForSteamCallback = 0;
 
-        while (getAlive().get()) {
+        while (getAlive()) {
             boolean canRender = false;
 
             long time2 = System.currentTimeMillis();
@@ -447,7 +458,7 @@ public class GameManager implements AutoCloseable {
 
 
             while (unprocessed >= DataCenter.FRAME_CAP) {
-                this.codePluginManager.apply(this, rightAfterEnterNewLogicFrame);
+                this.codePluginManager.apply(this, rightBeforeLogicFrame);
                 //                if (getGameWindow().hasResized()) {
                 //                    //                    camera
                 //                    .setProjection(window.getWidth(),
@@ -476,7 +487,7 @@ public class GameManager implements AutoCloseable {
                 setNowFrameIndex(getNowFrameIndex() + 1);
                 this.getResourceManager().suggestGc();
 
-                this.codePluginManager.apply(this, rightBeforeExitCurrentLogicFrame);
+                this.codePluginManager.apply(this, rightAfterLogicFrame);
             }
 
             if (canRender) {
@@ -537,8 +548,12 @@ public class GameManager implements AutoCloseable {
      * Getters and Setters
      */
 
-    public AtomicBoolean getAlive() {
-        return alive;
+    public boolean getAlive() {
+        return alive.get();
+    }
+
+    public void setAlive(boolean newAlive) {
+        this.alive.set(newAlive);
     }
 
     public ConsoleThread getConsoleThread() {
