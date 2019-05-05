@@ -42,5 +42,4 @@ public interface Bindable {
     default void bind() {
         bind(0);
     }
-
 }
