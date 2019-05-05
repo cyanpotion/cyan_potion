@@ -52,7 +52,15 @@ public class Texture extends AbstractResource implements Bindable {
     public static final int MAX_SAMPLER = 31;
 
     private int glTexture2DInt = -1;
+
+    /**
+     * the width of the raw texture pic.
+     */
     private int width;
+
+    /**
+     * the height of the raw texture pic.
+     */
     private int height;
 
 
@@ -217,7 +225,7 @@ public class Texture extends AbstractResource implements Bindable {
         return width;
     }
 
-    public void setWidth(int width) {
+    private void setWidth(int width) {
         this.width = width;
     }
 
@@ -225,7 +233,7 @@ public class Texture extends AbstractResource implements Bindable {
         return height;
     }
 
-    public void setHeight(int height) {
+    private void setHeight(int height) {
         this.height = height;
     }
 }
