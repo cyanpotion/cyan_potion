@@ -40,6 +40,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_WINDOW_RESIZABLE;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getBoolean;
 import static com.xenoamess.cyan_potion.base.tools.ImageParser.setWindowIcon;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -182,8 +184,12 @@ public class GameWindow implements AutoCloseable {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
 
-        // the window will not be resizable
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        // set the window can / cannot resize.
+        glfwWindowHint(
+                GLFW_RESIZABLE,
+                getBoolean(this.getGameManager().getDataCenter().getViews(),
+                        STRING_GAME_WINDOW_RESIZABLE, false)
+                        ? GLFW_TRUE : GLFW_FALSE);
 
 
         // Create the window
@@ -589,7 +595,7 @@ public class GameWindow implements AutoCloseable {
                                             float posy, float width,
                                             float height, Vector4f colorScale) {
         this.drawBindableRelative(bindable, posx + width / 2,
-                posy + height / 2, width, height);
+                posy + height / 2, width, height, colorScale);
     }
 
 
