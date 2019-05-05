@@ -29,9 +29,11 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
+import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
+import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -40,10 +42,6 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_WINDOW_RESIZABLE;
-import static com.xenoamess.cyan_potion.base.GameManagerConfig.getBoolean;
-import static com.xenoamess.cyan_potion.base.tools.ImageParser.setWindowIcon;
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -75,8 +73,6 @@ public class GameWindow implements AutoCloseable {
     private boolean showing = false;
     private boolean beingFocused = false;
 
-    private Model model;
-
 
     public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
@@ -102,22 +98,8 @@ public class GameWindow implements AutoCloseable {
         initOpengl();
 
         this.setShader(new Shader("shader"));
-        float[] vertices = new float[]{
-                -1f, 1f, 0,
-                // TOP LEFT 0
-
-                1f, 1f, 0,
-                // TOP RIGHT 1
-
-                1f, -1f, 0,
-                // BOTTOM RIGHT 2
-
-                -1f, -1f, 0,
-                // BOTTOM LEFT 3
-        };
-        float[] texture = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
-        int[] indices = new int[]{0, 1, 2, 2, 3, 0};
-        this.setModel(new Model(vertices, texture, indices));
+        Model.commonModel = new Model(Model.commonVerticesFloatArray, Model.commonTextureFloatArray,
+                Model.commonIndicesFloatArray);
     }
 
     public void showWindow() {
@@ -136,12 +118,12 @@ public class GameWindow implements AutoCloseable {
     @Override
     public void close() {
         // Free the window callbacks and close the window
-        glfwFreeCallbacks(getWindow());
+        Callbacks.glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
         // Terminate GLFW and free the error callback
         glfwTerminate();
         this.getShader().close();
-        this.getModel().close();
+        Model.commonModel.close();
         GL.destroy();
     }
 
@@ -187,8 +169,8 @@ public class GameWindow implements AutoCloseable {
         // set the window can / cannot resize.
         glfwWindowHint(
                 GLFW_RESIZABLE,
-                getBoolean(this.getGameManager().getDataCenter().getViews(),
-                        STRING_GAME_WINDOW_RESIZABLE, false)
+                GameManagerConfig.getBoolean(this.getGameManager().getDataCenter().getViews(),
+                        GameManagerConfig.STRING_GAME_WINDOW_RESIZABLE, false)
                         ? GLFW_TRUE : GLFW_FALSE);
 
 
@@ -254,7 +236,7 @@ public class GameWindow implements AutoCloseable {
             iconFilePath = iconFilePath.substring(1);
         }
 
-        setWindowIcon(getWindow(), iconFilePath);
+        ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
         register();
     }
@@ -487,39 +469,9 @@ public class GameWindow implements AutoCloseable {
     }
 
 
-    //    public void getCurrent
-
-
-//    public void drawTexture(Texture texture, float posx, float posy, float
-//    size, Shader shader) {
-////        texture.
-//        if (texture == null)
-//            return;
-//        shader.bind();
-//        texture.bind(0);
-//        Matrix4f pos = new Matrix4f().translate(new Vector3f(posx * 2, posy
-//        * 2, 0));
-//        Matrix4f target = new Matrix4f();
-//        this.camera.getProjection().mul(this.scaleMatrix4f, target);
-//        target.mul(pos);
-//        shader.setUniform("sampler", 0);
-//        shader.setUniform("projection", target);
-//        this.tileRender.tileModel.render();
-//    }
-
-
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height) {
-        this.drawBindableRelative(bindable, posx, posy, width, height,
-                new Vector4f(1, 1, 1, 1));
-    }
-
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height,
-                                     Vector4f
-                                             colorScale) {
-//        int nowWindowWidth = this.realWindowWidth;
-//        int nowWindowHeight = this.realWindowHeight;
+                                     Model model, Vector4f colorScale) {
         posx = posx / (float) this.getLogicWindowWidth();
         posy = posy / (float) this.getLogicWindowHeight();
         width = width / (float) this.getLogicWindowWidth();
@@ -544,38 +496,77 @@ public class GameWindow implements AutoCloseable {
 
         Matrix4f projection;
         {
-            // for better performance we change it from this:
             projection = new Matrix4f(
-                    2f * width, 0, 0, 0,
-                    0, 2f * height, 0, 0,
+                    2 * width, 0, 0, 0,
+                    0, 2 * height, 0, 0,
                     0, 0, -1, 0,
-                    2f * posx,
-                    -2f * posy, 0, 1
+                    2 * posx, -2 * posy, 0, 1
             );
-
-            // Once I changed the Matrix4f
-            // to this: |
-            //          V
-            //            projection = new Matrix4f();
-            //            projection.m00(2f / this.realWindowWidth * width);
-            //            projection.m11(2f / this.realWindowHeight * height);
-            //            projection.m22(-1);
-            //            projection.m30(2f / this.realWindowWidth * posx);
-            //            projection.m31(-2f / this.realWindowHeight * posy);
-            //            projection.m33(1);
-            //
-            // but it has even worse performance. So we change it back.
-
         }
 
         this.getShader().setUniform("sampler", 0);
         this.getShader().setUniform("projection", projection);
         this.getShader().setUniform("colorScale", colorScale);
-        this.getModel().render();
+
+        if (model == null) {
+            model = Model.commonModel;
+        }
+
+        model.render();
 
         bindable.unbind();
         Shader.unbind();
     }
+
+
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height) {
+        this.drawBindableRelative(bindable, posx, posy, width, height,
+                Model.commonModel, new Vector4f(1, 1, 1, 1));
+    }
+
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height, Model model) {
+        this.drawBindableRelative(bindable, posx, posy, width, height,
+                model, new Vector4f(1, 1, 1, 1));
+    }
+
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height, Vector4f colorScale) {
+        this.drawBindableRelative(bindable, posx, posy, width, height,
+                Model.commonModel, colorScale);
+    }
+
+
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
+                                            float height, Vector4f colorScale) {
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
+                Model.commonModel, colorScale);
+    }
+
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
+                                            float height, Model model) {
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
+                model, new Vector4f(1, 1, 1, 1));
+    }
+
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
+                                            float height) {
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.commonModel,
+                new Vector4f(1, 1, 1, 1));
+    }
+
+
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
+                                            float posy, float width,
+                                            float height, Model model, Vector4f colorScale) {
+        this.drawBindableRelative(bindable, posx + width / 2,
+                posy + height / 2, width, height, model, colorScale);
+    }
+
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
@@ -589,18 +580,16 @@ public class GameWindow implements AutoCloseable {
                 getLogicWindowHeight() / 2 - height / 2, width, height, colorScale);
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
-                                            float height) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
-                new Vector4f(1, 1, 1, 1));
+    public void drawBindableRelativeCenter(Bindable bindable, float width,
+                                           float height, Model model) {
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height, model);
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
-                                            float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posx + width / 2,
-                posy + height / 2, width, height, colorScale);
+    public void drawBindableRelativeCenter(Bindable bindable, float width,
+                                           float height, Model model, Vector4f colorScale) {
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height, model, colorScale);
     }
 
 
@@ -771,11 +760,4 @@ public class GameWindow implements AutoCloseable {
         this.mousePosY = mousePosY;
     }
 
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
 }

@@ -44,6 +44,22 @@ public class Model implements AutoCloseable {
 
     private int indexObject;
 
+
+    public static final float[] commonVerticesFloatArray = new float[]{
+            -1f, 1f, 0,
+            // TOP LEFT 0
+            1f, 1f, 0,
+            // TOP RIGHT 1
+            1f, -1f, 0,
+            // BOTTOM RIGHT 2
+            -1f, -1f, 0,
+            // BOTTOM LEFT 3
+    };
+    public static final float[] commonTextureFloatArray = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
+    public static final int[] commonIndicesFloatArray = new int[]{0, 1, 2, 2, 3, 0};
+    public static Model commonModel;
+
+
     public Model(float[] vertices, float[] texCoords, int[] indices) {
         setDrawCount(indices.length);
 
