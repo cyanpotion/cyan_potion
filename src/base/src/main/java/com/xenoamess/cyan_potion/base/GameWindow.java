@@ -474,6 +474,7 @@ public class GameWindow implements AutoCloseable {
         }
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
+        glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
         this.getGameManager().getGameWindowComponentTree().draw();
         glfwSwapBuffers(getWindow());
     }
@@ -574,14 +575,14 @@ public class GameWindow implements AutoCloseable {
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
-        this.drawBindableRelative(bindable, getLogicWindowWidth() / 2,
-                getLogicWindowHeight() / 2, width, height);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, width / 2, height / 2, width,
-                height, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height, colorScale);
     }
 
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
