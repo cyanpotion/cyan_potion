@@ -520,13 +520,13 @@ public class GameWindow implements AutoCloseable {
                                              colorScale) {
 //        int nowWindowWidth = this.realWindowWidth;
 //        int nowWindowHeight = this.realWindowHeight;
-        posx = posx / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        posy = posy / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        posx = posx / (float) this.getLogicWindowWidth();
+        posy = posy / (float) this.getLogicWindowHeight();
+        width = width / (float) this.getLogicWindowWidth();
         height =
-                height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        posx -= this.getRealWindowWidth() / 2;
-        posy -= this.getRealWindowHeight() / 2;
+                height / (float) this.getLogicWindowHeight();
+        posx -= .5f;
+        posy -= .5f;
 
         width /= 2;
         height /= 2;
@@ -546,12 +546,14 @@ public class GameWindow implements AutoCloseable {
         {
             // for better performance we change it from this:
             projection = new Matrix4f(
-                    2f / this.getRealWindowWidth() * width, 0, 0, 0,
-                    0, 2f / this.getRealWindowHeight() * height, 0, 0,
+                    2f * width, 0, 0, 0,
+                    0, 2f * height, 0, 0,
                     0, 0, -1, 0,
-                    2f / this.getRealWindowWidth() * posx,
-                    -2f / this.getRealWindowHeight() * posy, 0, 1
+                    2f * posx,
+                    -2f * posy, 0, 1
             );
+
+            // Once I changed the Matrix4f
             // to this: |
             //          V
             //            projection = new Matrix4f();
@@ -561,7 +563,9 @@ public class GameWindow implements AutoCloseable {
             //            projection.m30(2f / this.realWindowWidth * posx);
             //            projection.m31(-2f / this.realWindowHeight * posy);
             //            projection.m33(1);
-            // but it goes even worse.So we change it back.
+            //
+            // but it has even worse performance. So we change it back.
+
         }
 
         this.getShader().setUniform("sampler", 0);
