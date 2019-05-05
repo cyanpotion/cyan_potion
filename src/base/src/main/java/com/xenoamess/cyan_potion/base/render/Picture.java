@@ -22,52 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
-
-import com.xenoamess.cyan_potion.base.GameManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Set;
+package com.xenoamess.cyan_potion.base.render;
 
 /**
- * The event to describe a windows resize action.
- * Not implemented yet.
- *
  * @author XenoAmess
  */
-public class WindowResizeEvent implements Event {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(WindowResizeEvent.class);
-
-    private final long window;
-    private final int width;
-    private final int height;
-
-    public WindowResizeEvent(long window, int width, int height) {
-        super();
-        this.window = window;
-        this.width = width;
-        this.height = height;
-    }
-
-    @Override
-    public Set<Event> apply(GameManager gameManager) {
-        //TODO will implement it if we do implement windows resize.
-        gameManager.getGameWindow().setRealWindowHeight(height);
-        gameManager.getGameWindow().setRealWindowWidth(width);
-        return null;
-    }
-
-    public long getWindow() {
-        return window;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
+public class Picture {
 }

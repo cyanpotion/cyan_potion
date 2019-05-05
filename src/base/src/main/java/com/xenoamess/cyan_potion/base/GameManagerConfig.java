@@ -189,6 +189,13 @@ public class GameManagerConfig {
      */
     public static final String STRING_FULL_SCREEN = "fullScreen";
 
+    /**
+     * If the window resizable.
+     *
+     * @see GameWindow
+     */
+    public static final String STRING_GAME_WINDOW_RESIZABLE = "gameWindowResizable";
+
 
     /**
      * if auto show the window when init.
