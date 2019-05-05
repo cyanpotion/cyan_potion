@@ -114,13 +114,8 @@ public class Font implements AutoCloseable {
     }
 
     public void bind() {
-//        glDisable(GL_CULL_FACE);
-//        glDisable(GL_TEXTURE_2D);
-//        glDisable(GL_LIGHTING);
-
         Shader.unbind();
-        glViewport(0, 0, getGameWindow().getRealWindowWidth(),
-                getGameWindow().getRealWindowHeight());
+        gameWindow.bindGlViewportToFullWindow();
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0.0, getGameWindow().getRealWindowWidth(),

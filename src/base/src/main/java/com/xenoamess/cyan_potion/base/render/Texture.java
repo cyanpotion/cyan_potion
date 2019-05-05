@@ -55,11 +55,13 @@ public class Texture extends AbstractResource implements Bindable {
 
     /**
      * the width of the raw texture pic.
+     * notice that this value is irrelevant to the display height.
      */
     private int width;
 
     /**
      * the height of the raw texture pic.
+     * notice that this value is irrelevant to the display height.
      */
     private int height;
 

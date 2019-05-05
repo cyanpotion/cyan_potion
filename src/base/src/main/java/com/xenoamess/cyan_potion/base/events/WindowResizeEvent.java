@@ -53,10 +53,9 @@ public class WindowResizeEvent implements Event {
 
     @Override
     public Set<Event> apply(GameManager gameManager) {
-        //TODO will implement it if we do implement windows resize.
-        gameManager.getGameWindow().setRealWindowHeight(height);
-        gameManager.getGameWindow().setRealWindowWidth(width);
-        return null;
+        LOGGER.debug("WindowResizeEvent : {} {} {}",
+                getWindow(), getWidth(), getHeight());
+        return gameManager.getGameWindowComponentTree().process(this);
     }
 
     public long getWindow() {
