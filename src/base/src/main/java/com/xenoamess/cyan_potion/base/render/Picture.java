@@ -28,4 +28,5 @@ package com.xenoamess.cyan_potion.base.render;
  * @author XenoAmess
  */
 public class Picture {
+
 }

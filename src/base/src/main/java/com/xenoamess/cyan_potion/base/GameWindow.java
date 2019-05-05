@@ -474,7 +474,7 @@ public class GameWindow implements AutoCloseable {
         }
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
-        glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
+        this.bindGlViewportToFullWindow();
         this.getGameManager().getGameWindowComponentTree().draw();
         glfwSwapBuffers(getWindow());
     }
@@ -665,6 +665,10 @@ public class GameWindow implements AutoCloseable {
 
     public static void openDebug() {
         GLFWErrorCallback.createPrint().set();
+    }
+
+    public void bindGlViewportToFullWindow() {
+        glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
     }
 
     public GameManager getGameManager() {
