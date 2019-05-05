@@ -24,8 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,13 +49,10 @@ public class MouseScrollEvent implements Event {
     }
 
     @Override
-    public Set<Event> apply(Object object) {
+    public Set<Event> apply(GameManager gameManager) {
 
-        LOGGER.debug("MouseScrollEvent : {} {} {}", getWindow(), getXoffset()
-                , getYoffset());
-
-        //        GameManager gameManager = DataCenter.currentGameManager;
-        GameWindow gameWindow = DataCenter.getGameWindow(getWindow());
+        LOGGER.debug("MouseScrollEvent : {} {} {}",
+                getWindow(), getXoffset(), getYoffset());
 //        switch (action) {
 //            case 0:
 //                gameWindow.input.keyRelease(key);
@@ -68,7 +64,7 @@ public class MouseScrollEvent implements Event {
 //                break;
 //            default:
 //        }
-        return gameWindow.getGameManager().getGameWindowComponentTree().process(this);
+        return gameManager.getGameWindowComponentTree().process(this);
     }
 
     public long getWindow() {

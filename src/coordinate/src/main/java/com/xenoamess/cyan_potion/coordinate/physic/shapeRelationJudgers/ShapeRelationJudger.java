@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.coordinate.physic.shapeComparators;
+package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers;
 
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +45,10 @@ public class ConsoleEvent implements Event {
     }
 
     @Override
-    public Set<Event> apply(Object object) {
+    public Set<Event> apply(GameManager gameManager) {
         //TODO should add some real console methods here.
+        // If anyone do have any idea about how it shall design,
+        // please just open issue. Thx.
         LOGGER.info(getCommand());
         return null;
     }

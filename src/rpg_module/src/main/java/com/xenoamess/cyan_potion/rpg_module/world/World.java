@@ -182,7 +182,7 @@ public class World extends AbstractScene {
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
             KeyEvent keyEvent = (KeyEvent) event;
-            switch (keyEvent.getKeyTranslated().getKey()) {
+            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
                         this.getMenu().getShow().set(true);
@@ -531,13 +531,6 @@ public class World extends AbstractScene {
 //        this.getGameWindow().drawText(Font.defaultFont, 100, 100, 1, new
 //        Vector4f(0f, 255f, 255f, 1f), "剧情模式");
 //        Font.defaultFont.draw_test();
-    }
-
-
-    @Override
-    public void close() {
-        super.close();
-        //todo
     }
 
     public int getViewX() {

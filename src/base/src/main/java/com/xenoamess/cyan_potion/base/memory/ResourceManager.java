@@ -46,7 +46,7 @@ public class ResourceManager implements AutoCloseable {
     public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
             8L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_START_POINT =
-            3L * 1024 * 1024 * 1024;
+            6L * 1024 * 1024 * 1024;
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
             2L * 1024 * 1024 * 1024;
 
@@ -258,14 +258,21 @@ public class ResourceManager implements AutoCloseable {
         resource.setInMemory(false);
     }
 
-    public void gc() {
+
+    public void suggestGc() {
         if (this.getGameManager().getNowFrameIndex() % 1000 == 0) {
-            LOGGER.debug("totalMemorySize : {}", this.getTotalMemorySize());
+            LOGGER.debug("suggestGc at totalMemorySize : {}", this.getTotalMemorySize());
         }
         if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_START_POINT) {
+            LOGGER.debug("refuse gc");
             return;
         }
 
+        this.forceGc();
+        LOGGER.debug("after forceGc totalMemorySize changed to : {}", this.getTotalMemorySize());
+    }
+
+    public void forceGc() {
         getInMemoryResources().sort((o1, o2) ->
                 o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
                         o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);

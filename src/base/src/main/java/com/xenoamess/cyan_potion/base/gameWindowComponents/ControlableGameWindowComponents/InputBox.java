@@ -28,7 +28,6 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.CharEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
-import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.ClipboardUtil;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
@@ -60,6 +59,66 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 //            this.this.getGameWindow().gameManager.resourceManager
 //            .fetchResourceWithShortenURI(Texture.class,
 //            "/www/img/pictures/saveSlot.png:picture");
+
+    {
+        this.registerOnMouseButtonLeftDownCallback(
+                (Event event) -> {
+                    int clickIndex =
+                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
+                                    InputBox.this.getGameWindow().getMousePosY(), false, null);
+                    setNowSelectStartPos(clickIndex);
+                    setNowSelectEndPos(clickIndex);
+                    setNowInsertPos(clickIndex);
+                    InputBox.this.slashStartTime = System.currentTimeMillis();
+                    return null;
+                }
+        );
+
+        this.registerOnMouseLeaveAreaCallback(
+                (Event event) -> {
+                    return InputBox.this.onMouseButtonLeftUp(null);
+                }
+        );
+
+        this.registerOnMouseButtonLeftUpCallback(
+                (Event event) -> {
+                    if (getNowSelectStartPos() < 0) {
+                        return null;
+                    }
+                    int releaseIndex =
+                            this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                    this.getGameWindow().getMousePosY(), false, null);
+                    setNowSelectEndPos(releaseIndex);
+                    setNowInsertPos(getNowSelectEndPos());
+                    if (getNowSelectStartPos() > getNowSelectEndPos()) {
+                        int tmpInt = getNowSelectStartPos();
+                        setNowSelectStartPos(getNowSelectEndPos());
+                        setNowSelectEndPos(tmpInt);
+                    }
+                    if (getNowSelectStartPos() < 0) {
+                        setNowSelectStartPos(0);
+                    }
+                    if (getNowSelectStartPos() == getNowSelectEndPos()) {
+                        setNowSelectStartPos(-1);
+                        setNowSelectEndPos(-1);
+                    }
+                    return null;
+                }
+        );
+
+        this.registerOnMouseButtonLeftPressingCallback(
+                (Event event) -> {
+                    if (getNowSelectStartPos() == -1) {
+                        return null;
+                    }
+                    int clickIndex =
+                            this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                    this.getGameWindow().getMousePosY(), false, null);
+                    setNowSelectEndPos(clickIndex);
+                    return null;
+                }
+        );
+    }
 
     public InputBox(GameWindow gameWindow) {
         super(gameWindow);
@@ -243,64 +302,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         setNowSelectEndPos(-1);
     }
 
-
-    @Override
-    public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
-        super.onMouseButtonLeftDown(mouseButtonEvent);
-        int clickIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                        this.getGameWindow().getMousePosY(), false, null);
-        setNowSelectStartPos(clickIndex);
-        setNowSelectEndPos(clickIndex);
-        setNowInsertPos(clickIndex);
-        this.slashStartTime = System.currentTimeMillis();
-        return null;
-    }
-
-    @Override
-    public Event onMouseLeaveArea() {
-        return this.onMouseButtonLeftUp(null);
-    }
-
-
-    @Override
-    public Event onMouseButtonLeftUp(MouseButtonEvent mouseButtonEvent) {
-        super.onMouseButtonLeftUp(mouseButtonEvent);
-        if (getNowSelectStartPos() < 0) {
-            return null;
-        }
-        int releaseIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                        this.getGameWindow().getMousePosY(), false, null);
-        setNowSelectEndPos(releaseIndex);
-        setNowInsertPos(getNowSelectEndPos());
-        if (getNowSelectStartPos() > getNowSelectEndPos()) {
-            int tmpInt = getNowSelectStartPos();
-            setNowSelectStartPos(getNowSelectEndPos());
-            setNowSelectEndPos(tmpInt);
-        }
-        if (getNowSelectStartPos() < 0) {
-            setNowSelectStartPos(0);
-        }
-        if (getNowSelectStartPos() == getNowSelectEndPos()) {
-            setNowSelectStartPos(-1);
-            setNowSelectEndPos(-1);
-        }
-        return null;
-    }
-
-    @Override
-    public Event onMouseButtonLeftPressing() {
-        super.onMouseButtonLeftPressing();
-        if (getNowSelectStartPos() == -1) {
-            return null;
-        }
-        int clickIndex =
-                this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                        this.getGameWindow().getMousePosY(), false, null);
-        setNowSelectEndPos(clickIndex);
-        return null;
-    }
 
     @Override
     public void ifVisibleThenDraw() {
@@ -595,7 +596,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             }
 
             if (ifDraw) {
-                if (((System.currentTimeMillis() - slashStartTime) / this.getSlashTime()) % 2 == 0) {
+                if (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0) {
                     glColor4f(getInsertColor().x(), getInsertColor().y(),
                             getInsertColor().z(), getInsertColor().w());
                     stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,

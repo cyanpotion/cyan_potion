@@ -85,7 +85,6 @@ public class GamepadInput {
         }
     }
 
-
     public static void main(String[] args) {
         XInputDevice[] devices = null;
         try {

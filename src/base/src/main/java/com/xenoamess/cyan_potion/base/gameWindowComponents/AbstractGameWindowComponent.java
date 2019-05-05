@@ -44,12 +44,10 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
     private GameWindowComponentTreeNode gameWindowComponentTreeNode;
 
-
     private float leftTopPosX = 0;
     private float leftTopPosY = 0;
     private float width = -1;
     private float height = -1;
-
 
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -81,13 +79,14 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         return this;
     }
 
-    public AtomicBoolean getAlive() {
-        return alive;
+    public boolean getAlive() {
+        return alive.get();
     }
 
-    public void kill() {
-        this.getAlive().set(false);
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
     }
+
 
     public abstract void update();
 
@@ -95,6 +94,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
 
     @Override
     public void close() {
+        this.setAlive(false);
         //TODO
     }
 
@@ -112,6 +112,21 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         return this.getClassNameToProcessorMap().get(eventType);
     }
 
+
+    /**
+     * 1. If the GameWindowComponent can not/shall not solve the event
+     * (like, the event is totally not relevant to the component),
+     * it will just return the event.
+     * <p>
+     * 2. If the event is totally solved by the component,
+     * then it shall return null
+     * <p>
+     * 3. If the event is solved by the component, but caused another event arise,
+     * then it shall return the new event.
+     *
+     * @param event
+     * @return
+     */
     public Event process(Event event) {
         Function<Event, Event> processor =
                 this.getProcessor(event.getClass().getCanonicalName());
@@ -147,10 +162,6 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     public void center() {
         this.setLeftTopPosX((this.getGameWindow().getLogicWindowWidth() - this.getWidth()) / 2);
         this.setLeftTopPosY((this.getGameWindow().getLogicWindowHeight() - this.getHeight()) / 2);
-    }
-
-    public void setAlive(boolean alive) {
-        this.getAlive().set(alive);
     }
 
 

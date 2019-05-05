@@ -24,13 +24,13 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.events.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.AbstractControlableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.Callback;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.InputBox;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
@@ -60,6 +60,30 @@ public class TitleExample extends AbstractGameWindowComponent {
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
         getControlableGameWindowComponents().add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+            {
+                this.registerOnMouseEnterAreaCallback(
+                        new Callback() {
+                            @Override
+                            public Event invoke(Event event) {
+                                if (getState() >= 0 && getState() <= 4) {
+                                    setState(index);
+                                }
+                                return null;
+                            }
+                        }
+                );
+
+                this.registerOnMouseLeaveAreaCallback(
+                        event -> {
+                            if (getState() >= 0 && getState() <= 4) {
+                                setState(0);
+                            }
+                            return null;
+                        }
+                );
+            }
+
+
             int index = 1;
 
             @Override
@@ -74,115 +98,130 @@ public class TitleExample extends AbstractGameWindowComponent {
                 }
             }
 
-            @Override
-            public Event onMouseEnterArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(index);
-                }
-                return null;
-            }
-
-            @Override
-            public Event onMouseLeaveArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(0);
-                }
-                return null;
-            }
         });
-        getControlableGameWindowComponents().add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
-            int index = 2;
 
-            @Override
-            public void draw() {
-                this.init(-50 + 250 * index, 900, 120, 30);
-                if (getState() >= 0 && getState() <= 4) {
-                    this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(),
-                            this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f :
-                                    0.3f), "设置选项");
-                }
-            }
+        getControlableGameWindowComponents().
 
-            @Override
-            public Event onMouseEnterArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(index);
-                }
-                return null;
-            }
+                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                    {
+                        this.registerOnMouseEnterAreaCallback(
+                                new Callback() {
+                                    @Override
+                                    public Event invoke(Event event) {
+                                        if (getState() >= 0 && getState() <= 4) {
+                                            setState(index);
+                                        }
+                                        return null;
+                                    }
+                                }
+                        );
 
-            @Override
-            public Event onMouseLeaveArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(0);
-                }
-                return null;
-            }
-        });
-        getControlableGameWindowComponents().add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
-            int index = 3;
+                        this.registerOnMouseLeaveAreaCallback(
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(0);
+                                    }
+                                    return null;
+                                }
+                        );
+                    }
 
-            @Override
-            public void draw() {
-                this.init(-50 + 250 * index, 900, 120, 30);
-                if (getState() >= 0 && getState() <= 4) {
-                    this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(),
-                            this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f :
-                                    0.3f), "制作人员");
-                }
-            }
+                    int index = 2;
 
-            @Override
-            public Event onMouseEnterArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(index);
-                }
-                return null;
-            }
+                    @Override
+                    public void draw() {
+                        this.init(-50 + 250 * index, 900, 120, 30);
+                        if (getState() >= 0 && getState() <= 4) {
+                            this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
+                                    this.getLeftTopPosY(), this.getWidth(),
+                                    this.getHeight(), 0,
+                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                            0.3f), "设置选项");
+                        }
+                    }
+                });
 
-            @Override
-            public Event onMouseLeaveArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(0);
-                }
-                return null;
-            }
-        });
-        getControlableGameWindowComponents().add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
-            int index = 4;
+        getControlableGameWindowComponents().
 
-            @Override
-            public void draw() {
-                this.init(-50 + 250 * index, 900, 120, 30);
-                if (getState() >= 0 && getState() <= 4) {
-                    this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
-                            this.getLeftTopPosY(), this.getWidth(),
-                            this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f :
-                                    0.3f), "退出游戏");
-                }
-            }
+                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                    {
+                        this.registerOnMouseEnterAreaCallback(
+                                new Callback() {
+                                    @Override
+                                    public Event invoke(Event event) {
+                                        if (getState() >= 0 && getState() <= 4) {
+                                            setState(index);
+                                        }
+                                        return null;
+                                    }
+                                }
+                        );
 
-            @Override
-            public Event onMouseEnterArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(index);
-                }
-                return null;
-            }
+                        this.registerOnMouseLeaveAreaCallback(
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(0);
+                                    }
+                                    return null;
+                                }
+                        );
+                    }
 
-            @Override
-            public Event onMouseLeaveArea() {
-                if (getState() >= 0 && getState() <= 4) {
-                    setState(0);
-                }
-                return null;
-            }
-        });
+                    int index = 3;
+
+                    @Override
+                    public void draw() {
+                        this.init(-50 + 250 * index, 900, 120, 30);
+                        if (getState() >= 0 && getState() <= 4) {
+                            this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
+                                    this.getLeftTopPosY(), this.getWidth(),
+                                    this.getHeight(), 0,
+                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                            0.3f), "制作人员");
+                        }
+                    }
+                });
+
+        getControlableGameWindowComponents().
+
+                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                    {
+                        this.registerOnMouseEnterAreaCallback(
+                                new Callback() {
+                                    @Override
+                                    public Event invoke(Event event) {
+                                        if (getState() >= 0 && getState() <= 4) {
+                                            setState(index);
+                                        }
+                                        return null;
+                                    }
+                                }
+                        );
+
+                        this.registerOnMouseLeaveAreaCallback(
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(0);
+                                    }
+                                    return null;
+                                }
+                        );
+                    }
+
+                    int index = 4;
+
+                    @Override
+                    public void draw() {
+                        this.init(-50 + 250 * index, 900, 120, 30);
+                        if (getState() >= 0 && getState() <= 4) {
+                            this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
+                                    this.getLeftTopPosY(), this.getWidth(),
+                                    this.getHeight(), 0,
+                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                            0.3f), "退出游戏");
+                        }
+                    }
+                });
 
         Texture texture =
                 this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
@@ -193,7 +232,9 @@ public class TitleExample extends AbstractGameWindowComponent {
         inputBox.init(150, 150, 500, 500);
         panel.addContent(inputBox);
 
-        getControlableGameWindowComponents().add(panel);
+        getControlableGameWindowComponents().
+
+                add(panel);
     }
 
     @Override
@@ -203,7 +244,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             if (keyEvent.getAction() != GLFW.GLFW_PRESS) {
                 return event;
             }
-            switch (keyEvent.getKeyTranslated().getKey()) {
+            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
                         if (getState() >= 0 && getState() <= 4) {
@@ -259,7 +300,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
                         return event;
                     }
-                    switch (mouseButtonEvent.getKeyTranslated().getKey()) {
+                    switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
                             if (mouseButtonEvent.getAction() == GLFW.GLFW_PRESS) {
                                 if (getState() >= 0 && getState() <= 4) {
@@ -293,7 +334,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     } else {
                         lastState();
                     }
-                    this.getAlive().set(false);
+                    this.setAlive(false);
                     return null;
                 });
     }
@@ -423,11 +464,6 @@ public class TitleExample extends AbstractGameWindowComponent {
         world.enlargeAsFullWindow();
     }
 
-    @Override
-    public void close() {
-
-    }
-
     public Texture getSaveSlotTexture() {
         return saveSlotTexture;
     }
@@ -448,7 +484,8 @@ public class TitleExample extends AbstractGameWindowComponent {
         return controlableGameWindowComponents;
     }
 
-    public void setControlableGameWindowComponents(ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents) {
+    public void setControlableGameWindowComponents
+            (ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents) {
         this.controlableGameWindowComponents = controlableGameWindowComponents;
     }
 

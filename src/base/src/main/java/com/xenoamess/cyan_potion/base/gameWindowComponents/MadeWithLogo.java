@@ -64,11 +64,11 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
             KeyEvent keyEvent = (KeyEvent) event;
-            switch (keyEvent.getKeyTranslated().getKey()) {
+            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                 case Keymap.XENOAMESS_KEY_ENTER:
                 case Keymap.XENOAMESS_KEY_SPACE:
-                    this.getAlive().set(false);
+                    this.setAlive(false);
                     break;
                 default:
                     return event;
@@ -78,7 +78,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 
         this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
                 event -> {
-                    this.getAlive().set(false);
+                    this.setAlive(false);
                     return null;
                 }
         );
@@ -88,10 +88,10 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.getAlive().set(false);
+            this.setAlive(false);
         }
 
-        if (!this.getAlive().get() && Font.getDefaultFont() != null) {
+        if (!this.getAlive() && Font.getDefaultFont() != null) {
             this.getGameWindowComponentTreeNode().close();
             {
                 Font.getDefaultFont().init(this.getGameWindow());
@@ -128,7 +128,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-        if (!this.getAlive().get()) {
+        if (!this.getAlive()) {
             glClearColor(1, 1, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
             return;
@@ -154,11 +154,6 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                 , this.getGameWindow().getLogicWindowWidth(),
                 this.getGameWindow().getLogicWindowHeight(), new Vector4f(1,
                         cscale, cscale, 1));
-    }
-
-    @Override
-    public void close() {
-
     }
 
     public Texture getLogoTexture() {

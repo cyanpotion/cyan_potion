@@ -40,6 +40,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_WINDOW_RESIZABLE;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getBoolean;
 import static com.xenoamess.cyan_potion.base.tools.ImageParser.setWindowIcon;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -129,12 +131,10 @@ public class GameWindow implements AutoCloseable {
     }
 
     public void register() {
-        DataCenter.putGameWindow(getWindow(), this);
     }
 
     @Override
     public void close() {
-        DataCenter.removeGameWindow(getWindow());
         // Free the window callbacks and close the window
         glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
@@ -184,8 +184,12 @@ public class GameWindow implements AutoCloseable {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
 
-        // the window will not be resizable
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        // set the window can / cannot resize.
+        glfwWindowHint(
+                GLFW_RESIZABLE,
+                getBoolean(this.getGameManager().getDataCenter().getViews(),
+                        STRING_GAME_WINDOW_RESIZABLE, false)
+                        ? GLFW_TRUE : GLFW_FALSE);
 
 
         // Create the window
@@ -226,7 +230,7 @@ public class GameWindow implements AutoCloseable {
                 this.getGameManager().getCallbacks().windowSizeCallback);
 
         if (!isFullScreen()) {
-            //让窗口对于屏幕居中
+            // make the window be at the center of the screen.
             int[] pWidth = new int[1];
             int[] pHeight = new int[1];
             // Get the window size passed to glfwCreateWindow
@@ -406,7 +410,7 @@ public class GameWindow implements AutoCloseable {
     }
 
     public void changeFullScreen() {
-        LOGGER.debug("changeFullScreen! " + this.isFullScreen());
+        LOGGER.debug("changeFullScreen! original : {}", this.isFullScreen());
         LOGGER.debug("Well I lose.If you want fullScreen please change it " +
                 "from the setting file,then reboot it.");
 
@@ -470,15 +474,10 @@ public class GameWindow implements AutoCloseable {
         }
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
+        glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
         this.getGameManager().getGameWindowComponentTree().draw();
         glfwSwapBuffers(getWindow());
     }
-
-
-    //    public boolean hasResized() {
-    //        return hasResized;
-    //    }
-
 
     /**
      * @return the window handle
@@ -487,9 +486,6 @@ public class GameWindow implements AutoCloseable {
         return window;
     }
 
-    //    public Input getInput() {
-    //        return input;
-    //    }
 
     //    public void getCurrent
 
@@ -524,13 +520,13 @@ public class GameWindow implements AutoCloseable {
                                              colorScale) {
 //        int nowWindowWidth = this.realWindowWidth;
 //        int nowWindowHeight = this.realWindowHeight;
-        posx = posx / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        posy = posy / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        posx = posx / (float) this.getLogicWindowWidth();
+        posy = posy / (float) this.getLogicWindowHeight();
+        width = width / (float) this.getLogicWindowWidth();
         height =
-                height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        posx -= this.getRealWindowWidth() / 2;
-        posy -= this.getRealWindowHeight() / 2;
+                height / (float) this.getLogicWindowHeight();
+        posx -= .5f;
+        posy -= .5f;
 
         width /= 2;
         height /= 2;
@@ -550,12 +546,14 @@ public class GameWindow implements AutoCloseable {
         {
             // for better performance we change it from this:
             projection = new Matrix4f(
-                    2f / this.getRealWindowWidth() * width, 0, 0, 0,
-                    0, 2f / this.getRealWindowHeight() * height, 0, 0,
+                    2f * width, 0, 0, 0,
+                    0, 2f * height, 0, 0,
                     0, 0, -1, 0,
-                    2f / this.getRealWindowWidth() * posx,
-                    -2f / this.getRealWindowHeight() * posy, 0, 1
+                    2f * posx,
+                    -2f * posy, 0, 1
             );
+
+            // Once I changed the Matrix4f
             // to this: |
             //          V
             //            projection = new Matrix4f();
@@ -565,7 +563,9 @@ public class GameWindow implements AutoCloseable {
             //            projection.m30(2f / this.realWindowWidth * posx);
             //            projection.m31(-2f / this.realWindowHeight * posy);
             //            projection.m33(1);
-            // but it goes even worse.So we change it back.
+            //
+            // but it has even worse performance. So we change it back.
+
         }
 
         this.getShader().setUniform("sampler", 0);
@@ -579,14 +579,14 @@ public class GameWindow implements AutoCloseable {
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
-        this.drawBindableRelative(bindable, getLogicWindowWidth() / 2,
-                getLogicWindowHeight() / 2, width, height);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, width / 2, height / 2, width,
-                height, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
+                getLogicWindowHeight() / 2 - height / 2, width, height, colorScale);
     }
 
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
@@ -600,7 +600,7 @@ public class GameWindow implements AutoCloseable {
                                             float posy, float width,
                                             float height, Vector4f colorScale) {
         this.drawBindableRelative(bindable, posx + width / 2,
-                posy + height / 2, width, height);
+                posy + height / 2, width, height, colorScale);
     }
 
 
