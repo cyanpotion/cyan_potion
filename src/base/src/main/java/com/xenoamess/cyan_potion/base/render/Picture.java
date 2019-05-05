@@ -22,19 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
-
-import com.xenoamess.cyan_potion.base.events.Event;
-
+package com.xenoamess.cyan_potion.base.render;
 
 /**
  * @author XenoAmess
  */
-@FunctionalInterface
-public interface Callback {
-    //    default Event invoke(Event e) {
-    //        return e;
-    //    }
-    
-    Event invoke(Event e);
+public class Picture {
 }

@@ -25,9 +25,30 @@
 package com.xenoamess.cyan_potion.base.plugins;
 
 /**
+ * Notice that if no special instructions,
+ * then every of each tag here shall only be inserted in one position in code.
+ *
  * @author XenoAmess
  */
 public enum CodePluginPosition {
+    rightBeforeGameManagerStartup,
+
+    rightBeforeResourceManagerCreate,
     rightAfterResourceManagerCreate,
+
+    rightBeforeGameWindowInit,
+    rightAfterGameWindowInit,
+
+    rightBeforeAudioManagerInit,
+    rightAfterAudioManagerInit,
+
+    rightBeforeLogicFrame,
+    rightAfterLogicFrame,
+
+    rightBeforeSolveEvents,
+    rightAfterSolveEvents,
+
+    rightBeforeUpdate,
+    rightAfterUpdate,
     ;
 }

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +52,10 @@ public class WindowResizeEvent implements Event {
     }
 
     @Override
-    public Set<Event> apply(Object object) {
-        //TODO will do if we do implement windows resize.
+    public Set<Event> apply(GameManager gameManager) {
+        //TODO will implement it if we do implement windows resize.
+        gameManager.getGameWindow().setRealWindowHeight(height);
+        gameManager.getGameWindow().setRealWindowWidth(width);
         return null;
     }
 

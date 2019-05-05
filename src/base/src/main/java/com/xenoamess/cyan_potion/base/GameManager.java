@@ -61,7 +61,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
-import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterResourceManagerCreate;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
  * @author XenoAmess
@@ -88,7 +88,7 @@ public class GameManager implements AutoCloseable {
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    private final ResourceManager resourceManager = new ResourceManager(this);
+    private ResourceManager resourceManager;
     private final ExecutorService executorService =
             Executors.newCachedThreadPool();
 
@@ -163,14 +163,25 @@ public class GameManager implements AutoCloseable {
     }
 
     public void startup() {
+        this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         initSteam();
         loadGlobalSettings();
-        getAlive().set(true);
+        setAlive(true);
         this.initConsoleThread();
+
+        this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
+        resourceManager = new ResourceManager(this);
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
+        this.codePluginManager.apply(this, rightBeforeGameWindowInit);
         this.initGameWindow();
+        this.codePluginManager.apply(this, rightAfterGameWindowInit);
+
+        this.codePluginManager.apply(this, rightBeforeAudioManagerInit);
         this.getAudioManager().init();
+        this.codePluginManager.apply(this, rightAfterAudioManagerInit);
+
+
         this.setGamepadInput(new GamepadInput());
         this.setStartingContent();
         String defaultFontFilePath =
@@ -335,7 +346,7 @@ public class GameManager implements AutoCloseable {
 
 
     public void shutdown() {
-        getAlive().set(false);
+        setAlive(false);
     }
 
     @Override
@@ -350,7 +361,7 @@ public class GameManager implements AutoCloseable {
         //        super.close();
         this.getAudioManager().close();
 
-        getAlive().set(false);
+        setAlive(false);
 //        DataCenter.getGameManagers().remove(this);
 
         if (getConsoleThread() != null) {
@@ -428,31 +439,26 @@ public class GameManager implements AutoCloseable {
     }
 
     protected void loop() {
-        //        Camera camera = new Camera(getGameWindow()
-        //        .getLogicWindowWidth(), getGameWindow()
-        //        .getLogicWindowHeight());
-        //        Gui gui = new Gui(gameWindow);
-
-        long frameTime = 0;
-        int frames = 0;
+        double timeForFPS = 0;
+        int drawFramesForFPS = 0;
 
         long time = System.currentTimeMillis();
         double unprocessed = 0;
-        int timer = 0;
+//        int timerForSteamCallback = 0;
 
-        while (getAlive().get()) {
-//            DataCenter.currentGameManager = this;
+        while (getAlive()) {
             boolean canRender = false;
 
             long time2 = System.currentTimeMillis();
-            double passed = time2 - time;
-            passed /= 1000;
-            unprocessed += passed;
-            frameTime += passed;
+            double passed = (time2 - time) / 1000.0;
             time = time2;
 
-            while (unprocessed >= DataCenter.FRAME_CAP) {
+            unprocessed += passed;
+            timeForFPS += passed;
 
+
+            while (unprocessed >= DataCenter.FRAME_CAP) {
+                this.codePluginManager.apply(this, rightBeforeLogicFrame);
                 //                if (getGameWindow().hasResized()) {
                 //                    //                    camera
                 //                    .setProjection(window.getWidth(),
@@ -468,45 +474,37 @@ public class GameManager implements AutoCloseable {
                 unprocessed -= DataCenter.FRAME_CAP;
                 canRender = true;
 
+                this.codePluginManager.apply(this, rightBeforeSolveEvents);
                 solveEvents();
+                this.codePluginManager.apply(this, rightAfterSolveEvents);
+
+                this.codePluginManager.apply(this, rightBeforeUpdate);
                 update();
+                this.codePluginManager.apply(this, rightAfterUpdate);
 
-                //                gui.update(this.getGameWindow().input);
-
-                if (frameTime >= 10) {
-                    LOGGER.info("FPS : {}", frames / frameTime);
-                    frameTime = 0;
-                    frames = 0;
-                }
-
-                timer++;
-
-                if (timer == 600) {
-                    steamRunCallbacks();
-                    timer = 0;
-                }
+                steamRunCallbacks();
 
                 setNowFrameIndex(getNowFrameIndex() + 1);
-                this.getResourceManager().gc();
+                this.getResourceManager().suggestGc();
+
+                this.codePluginManager.apply(this, rightAfterLogicFrame);
             }
 
             if (canRender) {
-                // shader.bind();
-                // shader.setUniform("sampler", 0);
-                // shader.setUniform("projection",
-                // camera.getProjection().mul(target));
-                // model.render();
-                // tex.bind(0);
-
                 draw();
 
-                //                gui.render();
+                {//draw frame FPS calculate.
+                    drawFramesForFPS++;
+                    if (timeForFPS >= 10) {
+                        LOGGER.info("FPS : {}", drawFramesForFPS / timeForFPS);
+                        timeForFPS = 0;
+                        drawFramesForFPS = 0;
+                    }
+                }
 
-                frames++;
             }
         }
 
-//        Assets.deleteAsset();
         this.close();
     }
 
@@ -522,7 +520,6 @@ public class GameManager implements AutoCloseable {
             }
             getEventList().clear();
             getEventList().addAll(newEventList);
-            newEventList.clear();
         }
     }
 
@@ -537,14 +534,12 @@ public class GameManager implements AutoCloseable {
     }
 
     protected void steamRunCallbacks() {
-        if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-            if (SteamAPI.isSteamRunning()) {
-                SteamAPI.runCallbacks();
-            } else {
+        if (DataCenter.RUN_WITH_STEAM && SteamAPI.isSteamRunning()) {
+            SteamAPI.runCallbacks();
+        } else {
+            if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
                 this.shutdown();
             }
-        } else {
-            return;
         }
     }
 
@@ -553,8 +548,12 @@ public class GameManager implements AutoCloseable {
      * Getters and Setters
      */
 
-    public AtomicBoolean getAlive() {
-        return alive;
+    public boolean getAlive() {
+        return alive.get();
+    }
+
+    public void setAlive(boolean newAlive) {
+        this.alive.set(newAlive);
     }
 
     public ConsoleThread getConsoleThread() {

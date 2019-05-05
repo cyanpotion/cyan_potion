@@ -91,27 +91,6 @@ public class DataCenter {
         return System.getProperties().getProperty("os.name").toUpperCase().indexOf("WINDOWS") != -1;
     }
 
-
-    private static final Map<Long, GameWindow> GAME_WINDOW_MAP =
-            new HashMap<Long, GameWindow>();
-
-    public static GameWindow getGameWindow(long window) {
-        return GAME_WINDOW_MAP.get(window);
-    }
-
-    public static void putGameWindow(long window, GameWindow gameWindow) {
-        GAME_WINDOW_MAP.put(window, gameWindow);
-    }
-
-    public static void removeGameWindow(long window) {
-        GAME_WINDOW_MAP.remove(window);
-    }
-
-
-//    public static ArrayList<GameManager> getGameManagers() {
-//        return GAME_MANAGERS;
-//    }
-
     public X8lTree getGlobalSettingsTree() {
         return globalSettingsTree;
     }
