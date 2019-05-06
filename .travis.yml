@@ -13,9 +13,9 @@ env:
   global:
 matrix:
   include:
-    - os: linux
+    - os: linux x64
       jdk: openjdk12
-    - os: linux
+    - os: linux x64
       jdk: openjdk-ea
 script:
   - ./mvnw clean package -Dmaven.javadoc.skip=false
