@@ -98,7 +98,8 @@ public class Shader implements AutoCloseable {
         glDeleteProgram(getProgramObject());
     }
 
-    private final Map<String, Integer> uniformLocationMap = new HashMap<>();
+    private Map<String, Integer> uniformLocationMap = new HashMap<String,
+            Integer>();
     private long lastClearTime = System.currentTimeMillis();
 
     protected int iGetUniformLocation(String uniformName) {
@@ -198,6 +199,10 @@ public class Shader implements AutoCloseable {
 
     public Map<String, Integer> getUniformLocationMap() {
         return uniformLocationMap;
+    }
+
+    public void setUniformLocationMap(Map<String, Integer> uniformLocationMap) {
+        this.uniformLocationMap = uniformLocationMap;
     }
 
     public long getLastClearTime() {

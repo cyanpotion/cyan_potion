@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.rpg_module.render;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
-import org.lwjgl.system.MemoryUtil;
+import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -190,7 +190,7 @@ public class TextureUtils {
             return;
         }
         final ByteBuffer byteBuffer =
-                MemoryUtil.memAlloc(singleSingleWidth * 2 * singleSingleHeight * 2 * 4);
+                BufferUtils.createByteBuffer(singleSingleWidth * 2 * singleSingleHeight * 2 * 4);
 
         for (int i = 0; i < singleSingleHeight; i++) {
             for (int j = 0; j < singleSingleWidth; j++) {
@@ -230,8 +230,9 @@ public class TextureUtils {
             nowTexture.bake(singleSingleWidth * 2, singleSingleHeight * 2,
                     byteBuffer);
         }
-        MemoryUtil.memFree(byteBuffer);
+        byteBuffer.clear();
     }
+
 
     private static void loadTilesetTexturesA2Single(ResourceManager resourceManager,
                                                     String resourceFilePath, int kk, int singleWidth,
