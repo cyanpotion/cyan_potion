@@ -46,31 +46,6 @@ If you want to be put in the licenses folder also, please notice that we accept 
 
 Add the MIT license to your code piece and put it into into license folder, and write description about it.
 
-
-
-Purchase/Donate
-----------
-
-Notice that this version on github is granted MIT license, mean you can use it free of charge and yes even for commercial use.
-
-However you will also be able to buy a pro license on steam soon.
-
-(
-
-    when I manage to :
-    1.managed to get another register fee for steam.
-    2.finish the 3rd code refactoring.
-    3.managed to finish the modules left (quite some).
-
-)
-
-
-I can only promise that will be very cheap, so buy it if you want.
-
-~~I need food (and energy drink) for living and further development.~~
-
-Really thankful if you do that.
-
 Thanks for reading this
 ----------
 -----XenoAmess
