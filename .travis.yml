@@ -1,0 +1,21 @@
+language: java
+sudo: true
+dist: trusty
+before_install:
+  - chmod +x mvnw
+git:
+  depth: 1
+cache:
+  directories:
+    - $HOME/.m2
+install: true
+env:
+  global:
+matrix:
+  include:
+    - os: linux
+      jdk: openjdk12
+    - os: linux
+      jdk: openjdk-ea
+script:
+  - ./mvnw clean package -Dmaven.javadoc.skip=false
