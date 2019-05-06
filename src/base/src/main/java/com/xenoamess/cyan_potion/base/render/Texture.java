@@ -29,8 +29,8 @@ import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.system.MemoryUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -120,8 +120,8 @@ public class Texture extends AbstractResource implements Bindable {
         this.setWidth(singleWidth);
         this.setHeight(singleHeight);
 
-        final ByteBuffer byteBuffer =
-                BufferUtils.createByteBuffer(getWidth() * getHeight() * 4);
+        final ByteBuffer byteBuffer = MemoryUtil.memAlloc(getWidth() * getHeight() * 4);
+
         for (int i = 0; i < getHeight(); i++) {
             for (int j = 0; j < getWidth(); j++) {
                 int pixel =
@@ -156,7 +156,7 @@ public class Texture extends AbstractResource implements Bindable {
         }
         byteBuffer.flip();
         generate(byteBuffer);
-        byteBuffer.clear();
+        MemoryUtil.memFree(byteBuffer);
 
         this.setMemorySize(singleWidth * singleHeight * 4);
         this.getResourceManager().load(this);
@@ -169,7 +169,6 @@ public class Texture extends AbstractResource implements Bindable {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getWidth(), getHeight(), 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, byteBuffer);
-        byteBuffer.clear();
     }
 
     public void loadAsPictureTexture(String resourceFileURIString) {
