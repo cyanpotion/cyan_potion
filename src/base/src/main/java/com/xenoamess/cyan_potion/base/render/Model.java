@@ -58,18 +58,17 @@ public class Model implements AutoCloseable {
     public Model(float[] vertices, float[] texCoords, int[] indices) {
         setDrawCount(indices.length);
 
-        setVertexObject(glGenBuffers());
-        glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
-
-        setTextureCoordObject(glGenBuffers());
-        glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
-
-        setIndexObject(glGenBuffers());
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
-
         try (MemoryStack stack = MemoryStack.stackPush()) {
+            setVertexObject(glGenBuffers());
+            glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
             glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
+
+            setTextureCoordObject(glGenBuffers());
+            glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
             glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
+
+            setIndexObject(glGenBuffers());
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
         }
 
