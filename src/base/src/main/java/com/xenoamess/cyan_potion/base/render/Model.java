@@ -130,7 +130,7 @@ public class Model implements AutoCloseable {
         return drawCount;
     }
 
-    public void setDrawCount(int drawCount) {
+    private void setDrawCount(int drawCount) {
         this.drawCount = drawCount;
     }
 
@@ -138,7 +138,7 @@ public class Model implements AutoCloseable {
         return vertexObject;
     }
 
-    public void setVertexObject(int vertexObject) {
+    private void setVertexObject(int vertexObject) {
         this.vertexObject = vertexObject;
     }
 
@@ -146,7 +146,7 @@ public class Model implements AutoCloseable {
         return textureCoordObject;
     }
 
-    public void setTextureCoordObject(int textureCoordObject) {
+    private void setTextureCoordObject(int textureCoordObject) {
         this.textureCoordObject = textureCoordObject;
     }
 
@@ -154,7 +154,7 @@ public class Model implements AutoCloseable {
         return indexObject;
     }
 
-    public void setIndexObject(int indexObject) {
+    private void setIndexObject(int indexObject) {
         this.indexObject = indexObject;
     }
 }
