@@ -24,7 +24,10 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import org.lwjgl.system.MemoryStack;
+import org.lwjgl.BufferUtils;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -35,8 +38,10 @@ import static org.lwjgl.opengl.GL20.*;
  */
 public class Model implements AutoCloseable {
     private int drawCount;
+
     private int vertexObject;
     private int textureCoordObject;
+
     private int indexObject;
 
 
@@ -60,19 +65,28 @@ public class Model implements AutoCloseable {
 
         setVertexObject(glGenBuffers());
         glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
+        FloatBuffer floatBuffer;
+
+        floatBuffer = createBuffer(vertices);
+        glBufferData(GL_ARRAY_BUFFER, floatBuffer, GL_STATIC_DRAW);
+        floatBuffer.clear();
 
         setTextureCoordObject(glGenBuffers());
         glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
 
+        floatBuffer = createBuffer(vertices);
+        glBufferData(GL_ARRAY_BUFFER, createBuffer(texCoords), GL_STATIC_DRAW);
+        floatBuffer.clear();
+
         setIndexObject(glGenBuffers());
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
 
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
-            glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
-        }
-
+        IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+        buffer.put(indices);
+        buffer.flip();
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+        buffer.clear();
+//        memFree(buffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -105,6 +119,12 @@ public class Model implements AutoCloseable {
 
     }
 
+    private FloatBuffer createBuffer(float[] data) {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
+        buffer.put(data);
+        buffer.flip();
+        return buffer;
+    }
 
     public int getDrawCount() {
         return drawCount;
