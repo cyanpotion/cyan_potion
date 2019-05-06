@@ -29,7 +29,6 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
-import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,23 +126,24 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
     public void readVorbis(ByteBuffer vorbis) {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
-            try (MemoryStack memoryStack = MemoryStack.stackPush()) {
-                IntBuffer error = memoryStack.mallocInt(1);
-                long decoder = stb_vorbis_open_memory(vorbis, error, null);
-                if (decoder == MemoryUtil.NULL) {
-                    throw new RuntimeException("Failed to open Ogg Vorbis file. " +
-                            "Error: " + error.get(0));
-                }
-                stb_vorbis_get_info(decoder, info);
-                int channels = info.channels();
-                ShortBuffer pcm =
-                        memoryStack.mallocShort(stb_vorbis_stream_length_in_samples(decoder) * channels);
-                stb_vorbis_get_samples_short_interleaved(decoder, channels, pcm);
-                stb_vorbis_close(decoder);
-
-                this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 :
-                        AL_FORMAT_STEREO16, info.sample_rate());
+            IntBuffer error = MemoryUtil.memAllocInt(1);
+            long decoder = stb_vorbis_open_memory(vorbis, error, null);
+            if (decoder == 0) {
+                throw new RuntimeException("Failed to open Ogg Vorbis file. " +
+                        "Error: " + error.get(0));
             }
+            MemoryUtil.memFree(error);
+
+            stb_vorbis_get_info(decoder, info);
+            int channels = info.channels();
+            ShortBuffer pcm =
+                    MemoryUtil.memAllocShort(stb_vorbis_stream_length_in_samples(decoder) * channels);
+            stb_vorbis_get_samples_short_interleaved(decoder, channels, pcm);
+            stb_vorbis_close(decoder);
+
+            this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 :
+                    AL_FORMAT_STEREO16, info.sample_rate());
+//            MemoryUtil.memFree(pcm);
         }
     }
 
