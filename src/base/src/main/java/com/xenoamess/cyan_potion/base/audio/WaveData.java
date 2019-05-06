@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.base.audio;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryUtil;
@@ -49,8 +48,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
     private int alBufferInt = -1;
 
-    private Buffer data = null;
-
     private int format = -1;
 
     private int sampleRate = -1;
@@ -63,10 +60,9 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param sampleRate sample rate of data
      */
     public void bake(Buffer data, int format, int sampleRate) {
-        this.setData(data);
         this.setFormat(format);
         this.setSampleRate(sampleRate);
-        generate();
+        generate(data);
 
         this.setMemorySize(data.capacity());
         this.getResourceManager().load(this);
@@ -98,16 +94,10 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         }
     }
 
-    public void generate() {
-        if (this.getAlBufferInt() == -1) {
-            this.setAlBufferInt(alGenBuffers());
-            if (this.getData() == null) {
-                LOGGER.error("AbstractResource {} : this.data == null . " +
-                        "error?", this.getFullResourceURI());
-            }
-            alBufferData(this.getAlBufferInt(), this.getFormat(),
-                    this.getData(), this.getSampleRate());
-        }
+    private void generate(Buffer data) {
+        this.setAlBufferInt(alGenBuffers());
+        alBufferData(this.getAlBufferInt(), this.getFormat(),
+                data, this.getSampleRate());
     }
 
 //    public static WaveData create(URL url) {
@@ -136,30 +126,31 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
     public void readVorbis(ByteBuffer vorbis) {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
-            IntBuffer error = BufferUtils.createIntBuffer(1);
+            IntBuffer error = MemoryUtil.memAllocInt(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
-            if (decoder == MemoryUtil.NULL) {
+            if (decoder == 0) {
                 throw new RuntimeException("Failed to open Ogg Vorbis file. " +
                         "Error: " + error.get(0));
             }
+            MemoryUtil.memFree(error);
+
             stb_vorbis_get_info(decoder, info);
             int channels = info.channels();
             ShortBuffer pcm =
-                    BufferUtils.createShortBuffer(stb_vorbis_stream_length_in_samples(decoder) * channels);
+                    MemoryUtil.memAllocShort(stb_vorbis_stream_length_in_samples(decoder) * channels);
             stb_vorbis_get_samples_short_interleaved(decoder, channels, pcm);
             stb_vorbis_close(decoder);
 
-//            ByteBuffer byteBuffer = ByteBuffer.allocate(pcm.capacity() * 2);
-//            byteBuffer.asShortBuffer().put(pcm);
-//            byteBuffer.flip();
             this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 :
                     AL_FORMAT_STEREO16, info.sample_rate());
+            MemoryUtil.memFree(pcm);
         }
     }
 
     public void readVorbis(File resourceFile) {
-        ByteBuffer vorbis = FileUtil.loadFileBuffer(resourceFile);
+        ByteBuffer vorbis = FileUtil.loadFileBuffer(resourceFile, true);
         readVorbis(vorbis);
+        MemoryUtil.memFree(vorbis);
     }
 
 
@@ -199,10 +190,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             alDeleteBuffers(this.getAlBufferInt());
             this.setAlBufferInt(-1);
         }
-        if (getData() != null) {
-            getData().clear();
-            this.setData(null);
-        }
         this.setMemorySize(0);
     }
 
@@ -213,19 +200,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
     public void setAlBufferInt(int alBufferInt) {
         this.alBufferInt = alBufferInt;
-    }
-
-    /**
-     * actual wave data
-     *
-     * @return return data Buffer.
-     */
-    public Buffer getData() {
-        return data;
-    }
-
-    public void setData(Buffer data) {
-        this.data = data;
     }
 
     /**

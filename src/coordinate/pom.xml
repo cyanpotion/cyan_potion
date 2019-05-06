@@ -6,16 +6,18 @@
     <parent>
         <artifactId>cyan_potion</artifactId>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <version>0.131.0</version>
+        <version>0.132.0</version>
     </parent>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion_coordinate</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>the coordinate part of cyan_potion game engine, including a simple 2D physics engine.
+    <description>the coordinate part of cyan_potion game engine, including a
+        simple 2D physics engine.
     </description>
-    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/coordinate</url>
+    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/coordinate
+    </url>
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>

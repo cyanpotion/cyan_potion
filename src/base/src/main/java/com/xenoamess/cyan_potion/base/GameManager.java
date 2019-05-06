@@ -164,8 +164,12 @@ public class GameManager implements AutoCloseable {
 
     public void startup() {
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
-        initSteam();
-        loadGlobalSettings();
+        this.loadSettingFile();
+        this.readCommonSettings();
+        this.loadKeymap();
+        this.initSteam();
+        this.loadText();
+
         setAlive(true);
         this.initConsoleThread();
 
@@ -316,30 +320,36 @@ public class GameManager implements AutoCloseable {
         }
     }
 
-    protected void loadGlobalSettings() {
-        this.loadSettingFile();
-        this.readCommonSettings();
-        this.loadKeymap();
-        this.loadText();
-    }
 
     protected void initSteam() {
-        try {
-            SteamAPI.loadLibraries();
-            if (!SteamAPI.init()) {
-                throw new SteamException("Steamworks initialization error");
+        DataCenter.RUN_WITH_STEAM = getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam", true);
+        if (DataCenter.RUN_WITH_STEAM) {
+            try {
+                SteamAPI.loadLibraries();
+                if (!SteamAPI.init()) {
+                    throw new SteamException("Steamworks initialization error");
+                }
+                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().steamUserStatsCallback));
+                DataCenter.RUN_WITH_STEAM = true;
+            } catch (SteamException e) {
+                // Error extracting or loading native libraries
+                DataCenter.RUN_WITH_STEAM = false;
+                if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
+                    e.printStackTrace();
+                    LOGGER.warn("Steam load failed but somehow we cannot prevent " +
+                            "you from playing it.");
+                } else {
+                    LOGGER.error("Steam load failed, thus the game shut.");
+                    throw new Error(e);
+                }
             }
-            this.setSteamUserStats(new SteamUserStats(this.getCallbacks().steamUserStatsCallback));
-            DataCenter.RUN_WITH_STEAM = true;
-        } catch (SteamException e) {
-            // Error extracting or loading native libraries
-            DataCenter.RUN_WITH_STEAM = false;
+        } else {
             if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                e.printStackTrace();
                 LOGGER.warn("Steam load failed but somehow we cannot prevent " +
                         "you from playing it.");
             } else {
-                throw new Error(e);
+                LOGGER.warn("Steam load failed, thus the game shut.");
+                throw new RuntimeException("Steam load failed, thus the game shut.");
             }
         }
     }
