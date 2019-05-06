@@ -31,7 +31,6 @@ import org.joml.Vector4f;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
 import org.lwjgl.stb.STBTTPackedchar;
-import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
@@ -86,22 +85,21 @@ public class Font implements AutoCloseable {
         STBTTPackedchar.Buffer tmpChardata =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            try (MemoryStack memoryStack = MemoryStack.stackPush()) {
-                ByteBuffer ttf =
-                        FileUtil.loadFileBuffer(memoryStack, FileUtil.getFile(this.getTtfFilePath()));
-                bitmap = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-                stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
-                int p = 32;
-                tmpChardata.position(p);
-                stbtt_PackSetOversampling(pc, 1, 1);
-                stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, tmpChardata);
-                tmpChardata.clear();
-                stbtt_PackEnd(pc);
-                if (TEST_PRINT_FONT_BMP) {
-                    stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
-                            bitmap);
-                }
+            ByteBuffer ttf =
+                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()), true);
+            bitmap = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+            stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
+            int p = 32;
+            tmpChardata.position(p);
+            stbtt_PackSetOversampling(pc, 1, 1);
+            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, tmpChardata);
+            tmpChardata.clear();
+            stbtt_PackEnd(pc);
+            if (TEST_PRINT_FONT_BMP) {
+                stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
+                        bitmap);
             }
+
             this.bitmap = bitmap;
             this.setChardata(tmpChardata);
         }
