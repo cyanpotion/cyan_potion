@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.io;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,19 +78,20 @@ public class FileUtil {
      * @return the resource data
      */
     public static ByteBuffer loadFileBuffer(File resourceFile) {
-        return loadFileBuffer(null, resourceFile);
+        return loadFileBuffer(resourceFile, false);
     }
 
 
     /**
      * Reads the specified resource and returns the raw data as a ByteBuffer.
-     * if memoryStack == null, then use BufferUtil.
-     * else, allocate it from memoryStack.
+     * if ifUsingMemoryUtil == false, then use BufferUtil.
+     * else, allocate it using MemoryUtil.
      *
-     * @param resourceFile the resource file to read
+     * @param resourceFile      the resource file to read
+     * @param ifUsingMemoryUtil if using MemoryUtil here
      * @return the resource data
      */
-    public static ByteBuffer loadFileBuffer(MemoryStack memoryStack, File resourceFile) {
+    public static ByteBuffer loadFileBuffer(File resourceFile, boolean ifUsingMemoryUtil) {
         boolean success;
 
         ByteBuffer buffer = null;
@@ -98,10 +99,10 @@ public class FileUtil {
         Path path = Paths.get(absolutePath);
         if (Files.isReadable(path)) {
             try (SeekableByteChannel fc = Files.newByteChannel(path)) {
-                if (memoryStack == null) {
-                    buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
+                if (ifUsingMemoryUtil) {
+                    buffer = MemoryUtil.memAlloc((int) fc.size() + 1);
                 } else {
-                    buffer = memoryStack.malloc((int) fc.size() + 1);
+                    buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
                 }
 
 
@@ -128,10 +129,10 @@ public class FileUtil {
                 ReadableByteChannel rbc = Channels.newChannel(source)
         ) {
 
-            if (memoryStack == null) {
-                buffer = BufferUtils.createByteBuffer((int) resourceFile.length() + 1);
+            if (ifUsingMemoryUtil) {
+                buffer = MemoryUtil.memAlloc((int) resourceFile.length() + 1);
             } else {
-                buffer = memoryStack.malloc((int) resourceFile.length() + 1);
+                buffer = BufferUtils.createByteBuffer((int) resourceFile.length() + 1);
             }
 
             while (true) {
