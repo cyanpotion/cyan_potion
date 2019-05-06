@@ -15,7 +15,8 @@
     <name>${project.artifactId}</name>
     <description>the rpg module of cyan_potion game engine.
     </description>
-    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/rpg_module</url>
+    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/rpg_module
+    </url>
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
@@ -24,7 +25,8 @@
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>cyan_potion_coordinate</artifactId>       <!--加上childA的依赖-->
+            <artifactId>cyan_potion_coordinate
+            </artifactId>       <!--加上childA的依赖-->
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
