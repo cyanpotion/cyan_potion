@@ -45,8 +45,7 @@ public class GameTileset {
 
     private GameTilesetJson gameTilesetJson;
 
-    private Map<Integer, Texture> idTextureMap = new HashMap<Integer,
-            Texture>();
+    private Map<Integer, Texture> idTextureMap = new HashMap<>();
 
     private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
         return "/www/img/tilesets/" + gameMapInfoName + ".png";
