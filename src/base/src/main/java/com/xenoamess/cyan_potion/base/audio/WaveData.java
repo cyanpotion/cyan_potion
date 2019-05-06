@@ -143,7 +143,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
             this.bake(pcm, info.channels() == 1 ? AL_FORMAT_MONO16 :
                     AL_FORMAT_STEREO16, info.sample_rate());
-//            MemoryUtil.memFree(pcm);
+            MemoryUtil.memFree(pcm);
         }
     }
 
