@@ -28,7 +28,6 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
 import org.lwjgl.stb.STBTTPackedchar;
@@ -75,7 +74,10 @@ public class Font implements AutoCloseable {
         this.setTtfFilePath(ttfFilePath);
     }
 
-
+    /**
+     * this buffer will be freed after init(),
+     * so please does never use it after that.
+     */
     private ByteBuffer bitmap;
 
     public void loadBitmap() {
@@ -84,8 +86,8 @@ public class Font implements AutoCloseable {
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
-                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()));
-            bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
+                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()), true);
+            bitmap = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
             tmpChardata.position(p);
@@ -97,9 +99,10 @@ public class Font implements AutoCloseable {
                 stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
                         bitmap);
             }
+
+            this.bitmap = bitmap;
+            this.setChardata(tmpChardata);
         }
-        this.setBitmap(bitmap);
-        this.setChardata(tmpChardata);
     }
 
 
@@ -108,19 +111,15 @@ public class Font implements AutoCloseable {
         this.setFontTexture(glGenTextures());
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
         glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0,
-                GL_ALPHA, GL_UNSIGNED_BYTE, this.getBitmap());
+                GL_ALPHA, GL_UNSIGNED_BYTE, this.bitmap);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        MemoryUtil.memFree(this.bitmap);
     }
 
     public void bind() {
-//        glDisable(GL_CULL_FACE);
-//        glDisable(GL_TEXTURE_2D);
-//        glDisable(GL_LIGHTING);
-
         Shader.unbind();
-        glViewport(0, 0, getGameWindow().getRealWindowWidth(),
-                getGameWindow().getRealWindowHeight());
+        gameWindow.bindGlViewportToFullWindow();
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0.0, getGameWindow().getRealWindowWidth(),
@@ -473,10 +472,6 @@ public class Font implements AutoCloseable {
         CurrentFont = currentFont;
     }
 
-    private ByteBuffer getBitmap() {
-        return bitmap;
-    }
-
     public GameWindow getGameWindow() {
         return gameWindow;
     }
@@ -513,7 +508,4 @@ public class Font implements AutoCloseable {
         this.chardata = chardata;
     }
 
-    public void setBitmap(ByteBuffer bitmap) {
-        this.bitmap = bitmap;
-    }
 }

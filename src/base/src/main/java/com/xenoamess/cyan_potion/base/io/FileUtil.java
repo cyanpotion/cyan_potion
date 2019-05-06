@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +41,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.lwjgl.BufferUtils.createByteBuffer;
-
 /**
  * @author XenoAmess
  */
@@ -55,6 +54,16 @@ public class FileUtil {
     private FileUtil() {
     }
 
+    /**
+     * Resize buffer.
+     * Do never use this to resize a buffer from MemUtil,
+     * because If you do this I guess you can't use the MemUtil Buffer right.
+     * If you want to resize MemUtil's Buffer, please learn about it first.
+     *
+     * @param buffer      old buffer to resize
+     * @param newCapacity new buffer's capacity
+     * @return resized new buffer
+     */
     public static ByteBuffer resizeBuffer(ByteBuffer buffer, int newCapacity) {
         final ByteBuffer newBuffer = BufferUtils.createByteBuffer(newCapacity);
         buffer.flip();
@@ -69,6 +78,20 @@ public class FileUtil {
      * @return the resource data
      */
     public static ByteBuffer loadFileBuffer(File resourceFile) {
+        return loadFileBuffer(resourceFile, false);
+    }
+
+
+    /**
+     * Reads the specified resource and returns the raw data as a ByteBuffer.
+     * if ifUsingMemoryUtil == false, then use BufferUtil.
+     * else, allocate it using MemoryUtil.
+     *
+     * @param resourceFile      the resource file to read
+     * @param ifUsingMemoryUtil if using MemoryUtil here
+     * @return the resource data
+     */
+    public static ByteBuffer loadFileBuffer(File resourceFile, boolean ifUsingMemoryUtil) {
         boolean success;
 
         ByteBuffer buffer = null;
@@ -76,7 +99,13 @@ public class FileUtil {
         Path path = Paths.get(absolutePath);
         if (Files.isReadable(path)) {
             try (SeekableByteChannel fc = Files.newByteChannel(path)) {
-                buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
+                if (ifUsingMemoryUtil) {
+                    buffer = MemoryUtil.memAlloc((int) fc.size() + 1);
+                } else {
+                    buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
+                }
+
+
                 while (fc.read(buffer) != -1) {
                     ;
                 }
@@ -99,7 +128,12 @@ public class FileUtil {
                 InputStream source = new FileInputStream(resourceFile);
                 ReadableByteChannel rbc = Channels.newChannel(source)
         ) {
-            buffer = createByteBuffer((int) resourceFile.length() + 1);
+
+            if (ifUsingMemoryUtil) {
+                buffer = MemoryUtil.memAlloc((int) resourceFile.length() + 1);
+            } else {
+                buffer = BufferUtils.createByteBuffer((int) resourceFile.length() + 1);
+            }
 
             while (true) {
                 int bytes = rbc.read(buffer);

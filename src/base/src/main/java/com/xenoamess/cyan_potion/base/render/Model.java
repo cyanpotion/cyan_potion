@@ -24,10 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import org.lwjgl.BufferUtils;
-
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import org.lwjgl.system.MemoryStack;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -38,39 +35,43 @@ import static org.lwjgl.opengl.GL20.*;
  */
 public class Model implements AutoCloseable {
     private int drawCount;
-
     private int vertexObject;
     private int textureCoordObject;
-
     private int indexObject;
+
+
+    public static final float[] commonVerticesFloatArray = new float[]{
+            -1f, 1f, 0,
+            // TOP LEFT 0
+            1f, 1f, 0,
+            // TOP RIGHT 1
+            1f, -1f, 0,
+            // BOTTOM RIGHT 2
+            -1f, -1f, 0,
+            // BOTTOM LEFT 3
+    };
+    public static final float[] commonTextureFloatArray = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
+    public static final int[] commonIndicesFloatArray = new int[]{0, 1, 2, 2, 3, 0};
+    public static Model commonModel;
+
 
     public Model(float[] vertices, float[] texCoords, int[] indices) {
         setDrawCount(indices.length);
 
-        setVertexObject(glGenBuffers());
-        glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
-        FloatBuffer floatBuffer;
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            setVertexObject(glGenBuffers());
+            glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
+            glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
 
-        floatBuffer = createBuffer(vertices);
-        glBufferData(GL_ARRAY_BUFFER, floatBuffer, GL_STATIC_DRAW);
-        floatBuffer.clear();
+            setTextureCoordObject(glGenBuffers());
+            glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
+            glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
 
-        setTextureCoordObject(glGenBuffers());
-        glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
+            setIndexObject(glGenBuffers());
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
+        }
 
-        floatBuffer = createBuffer(vertices);
-        glBufferData(GL_ARRAY_BUFFER, createBuffer(texCoords), GL_STATIC_DRAW);
-        floatBuffer.clear();
-
-        setIndexObject(glGenBuffers());
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
-
-        IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
-        buffer.put(indices);
-        buffer.flip();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-        buffer.clear();
-//        memFree(buffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -103,18 +104,12 @@ public class Model implements AutoCloseable {
 
     }
 
-    private FloatBuffer createBuffer(float[] data) {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
-        buffer.put(data);
-        buffer.flip();
-        return buffer;
-    }
 
     public int getDrawCount() {
         return drawCount;
     }
 
-    public void setDrawCount(int drawCount) {
+    private void setDrawCount(int drawCount) {
         this.drawCount = drawCount;
     }
 
@@ -122,7 +117,7 @@ public class Model implements AutoCloseable {
         return vertexObject;
     }
 
-    public void setVertexObject(int vertexObject) {
+    private void setVertexObject(int vertexObject) {
         this.vertexObject = vertexObject;
     }
 
@@ -130,7 +125,7 @@ public class Model implements AutoCloseable {
         return textureCoordObject;
     }
 
-    public void setTextureCoordObject(int textureCoordObject) {
+    private void setTextureCoordObject(int textureCoordObject) {
         this.textureCoordObject = textureCoordObject;
     }
 
@@ -138,7 +133,7 @@ public class Model implements AutoCloseable {
         return indexObject;
     }
 
-    public void setIndexObject(int indexObject) {
+    private void setIndexObject(int indexObject) {
         this.indexObject = indexObject;
     }
 }

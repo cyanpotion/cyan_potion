@@ -29,6 +29,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
+import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import org.lwjgl.glfw.GLFW;
 
@@ -54,7 +55,7 @@ public class GameWindowComponentTree implements AutoCloseable {
 
     public List<GameWindowComponentTreeNode> getAllNodes() {
         List<GameWindowComponentTreeNode> res =
-                new ArrayList<GameWindowComponentTreeNode>();
+                new ArrayList<>();
         this.getAllNodes(this.getRoot(), res);
         return res;
     }
@@ -86,6 +87,14 @@ public class GameWindowComponentTree implements AutoCloseable {
                                         default:
                                             return null;
                                     }
+                                });
+                        this.registerProcessor(WindowResizeEvent.class.getCanonicalName(),
+                                event -> {
+                                    WindowResizeEvent windowResizeEvent = (WindowResizeEvent) event;
+                                    this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
+                                    this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
+                                    this.getGameWindow().bindGlViewportToFullWindow();
+                                    return null;
                                 });
                     }
 
