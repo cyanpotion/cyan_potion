@@ -230,7 +230,7 @@ public class TextureUtils {
             nowTexture.bake(singleSingleWidth * 2, singleSingleHeight * 2,
                     byteBuffer);
         }
-        MemoryUtil.memFree(byteBuffer);
+//        MemoryUtil.memFree(byteBuffer);
     }
 
     private static void loadTilesetTexturesA2Single(ResourceManager resourceManager,

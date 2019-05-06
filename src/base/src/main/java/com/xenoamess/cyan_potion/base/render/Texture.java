@@ -156,7 +156,7 @@ public class Texture extends AbstractResource implements Bindable {
         }
         byteBuffer.flip();
         generate(byteBuffer);
-        MemoryUtil.memFree(byteBuffer);
+//        MemoryUtil.memFree(byteBuffer);
 
         this.setMemorySize(singleWidth * singleHeight * 4);
         this.getResourceManager().load(this);
