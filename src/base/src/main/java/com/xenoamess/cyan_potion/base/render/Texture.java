@@ -162,7 +162,7 @@ public class Texture extends AbstractResource implements Bindable {
         this.getResourceManager().load(this);
     }
 
-    void generate(ByteBuffer byteBuffer) {
+    private void generate(ByteBuffer byteBuffer) {
         this.setGlTexture2DInt(glGenTextures());
         glBindTexture(GL_TEXTURE_2D, this.getGlTexture2DInt());
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
