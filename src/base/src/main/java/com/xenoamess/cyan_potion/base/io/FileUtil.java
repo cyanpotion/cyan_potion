@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.system.MemoryStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +40,6 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static org.lwjgl.BufferUtils.createByteBuffer;
 
 /**
  * @author XenoAmess
@@ -79,6 +78,19 @@ public class FileUtil {
      * @return the resource data
      */
     public static ByteBuffer loadFileBuffer(File resourceFile) {
+        return loadFileBuffer(null, resourceFile);
+    }
+
+
+    /**
+     * Reads the specified resource and returns the raw data as a ByteBuffer.
+     * if memoryStack == null, then use BufferUtil.
+     * else, allocate it from memoryStack.
+     *
+     * @param resourceFile the resource file to read
+     * @return the resource data
+     */
+    public static ByteBuffer loadFileBuffer(MemoryStack memoryStack, File resourceFile) {
         boolean success;
 
         ByteBuffer buffer = null;
@@ -86,7 +98,13 @@ public class FileUtil {
         Path path = Paths.get(absolutePath);
         if (Files.isReadable(path)) {
             try (SeekableByteChannel fc = Files.newByteChannel(path)) {
-                buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
+                if (memoryStack == null) {
+                    buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
+                } else {
+                    buffer = memoryStack.malloc((int) fc.size() + 1);
+                }
+
+
                 while (fc.read(buffer) != -1) {
                     ;
                 }
@@ -109,7 +127,12 @@ public class FileUtil {
                 InputStream source = new FileInputStream(resourceFile);
                 ReadableByteChannel rbc = Channels.newChannel(source)
         ) {
-            buffer = createByteBuffer((int) resourceFile.length() + 1);
+
+            if (memoryStack == null) {
+                buffer = BufferUtils.createByteBuffer((int) resourceFile.length() + 1);
+            } else {
+                buffer = memoryStack.malloc((int) resourceFile.length() + 1);
+            }
 
             while (true) {
                 int bytes = rbc.read(buffer);
