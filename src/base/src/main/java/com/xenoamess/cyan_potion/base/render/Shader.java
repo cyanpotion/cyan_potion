@@ -28,7 +28,7 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import org.lwjgl.system.MemoryUtil;
+import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -51,10 +51,6 @@ public class Shader implements AutoCloseable {
     private int programObject;
     private int vertexShaderObject;
     private int fragmentShaderObject;
-
-    private final Map<String, Integer> uniformLocationMap = new HashMap<>();
-    private long lastClearTime = System.currentTimeMillis();
-    private final FloatBuffer matrixData = MemoryUtil.memAllocFloat(16);
 
     public Shader(String filename) {
         setProgramObject(glCreateProgram());
@@ -100,9 +96,10 @@ public class Shader implements AutoCloseable {
         glDeleteShader(getVertexShaderObject());
         glDeleteShader(getFragmentShaderObject());
         glDeleteProgram(getProgramObject());
-        MemoryUtil.memFree(matrixData);
     }
 
+    private final Map<String, Integer> uniformLocationMap = new HashMap<>();
+    private long lastClearTime = System.currentTimeMillis();
 
     protected int iGetUniformLocation(String uniformName) {
         long nowClearTime = System.currentTimeMillis();
@@ -140,6 +137,7 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    private FloatBuffer matrixData = BufferUtils.createFloatBuffer(16);
 
     public void setUniform(String uniformName, Matrix4f value) {
         final int location = iGetUniformLocation(uniformName);
@@ -214,4 +212,7 @@ public class Shader implements AutoCloseable {
         return matrixData;
     }
 
+    public void setMatrixData(FloatBuffer matrixData) {
+        this.matrixData = matrixData;
+    }
 }
