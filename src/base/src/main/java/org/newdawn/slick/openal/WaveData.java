@@ -232,9 +232,6 @@ public class WaveData {
         //insert data into bytebuffer
         ByteBuffer buffer = convertAudioBytes(buf,
                 audioformat.getSampleSizeInBits() == 16);
-/*		ByteBuffer buffer = ByteBuffer.allocateDirect(buf.length);
-		buffer.put(buf);
-		buffer.rewind();*/
 
         //create our result
         WaveData wavedata =

@@ -28,10 +28,10 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
 import org.lwjgl.stb.STBTTPackedchar;
+import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
@@ -75,7 +75,10 @@ public class Font implements AutoCloseable {
         this.setTtfFilePath(ttfFilePath);
     }
 
-
+    /**
+     * this buffer will be freed after init(),
+     * so please does never use it after that.
+     */
     private ByteBuffer bitmap;
 
     public void loadBitmap() {
@@ -83,23 +86,25 @@ public class Font implements AutoCloseable {
         STBTTPackedchar.Buffer tmpChardata =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            ByteBuffer ttf =
-                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()));
-            bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
-            stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
-            int p = 32;
-            tmpChardata.position(p);
-            stbtt_PackSetOversampling(pc, 1, 1);
-            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, tmpChardata);
-            tmpChardata.clear();
-            stbtt_PackEnd(pc);
-            if (TEST_PRINT_FONT_BMP) {
-                stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
-                        bitmap);
+            try (MemoryStack memoryStack = MemoryStack.stackPush()) {
+                ByteBuffer ttf =
+                        FileUtil.loadFileBuffer(memoryStack, FileUtil.getFile(this.getTtfFilePath()));
+                bitmap = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+                stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
+                int p = 32;
+                tmpChardata.position(p);
+                stbtt_PackSetOversampling(pc, 1, 1);
+                stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, tmpChardata);
+                tmpChardata.clear();
+                stbtt_PackEnd(pc);
+                if (TEST_PRINT_FONT_BMP) {
+                    stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
+                            bitmap);
+                }
             }
+            this.bitmap = bitmap;
+            this.setChardata(tmpChardata);
         }
-        this.setBitmap(bitmap);
-        this.setChardata(tmpChardata);
     }
 
 
@@ -108,9 +113,10 @@ public class Font implements AutoCloseable {
         this.setFontTexture(glGenTextures());
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
         glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0,
-                GL_ALPHA, GL_UNSIGNED_BYTE, this.getBitmap());
+                GL_ALPHA, GL_UNSIGNED_BYTE, this.bitmap);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        MemoryUtil.memFree(this.bitmap);
     }
 
     public void bind() {
@@ -468,10 +474,6 @@ public class Font implements AutoCloseable {
         CurrentFont = currentFont;
     }
 
-    private ByteBuffer getBitmap() {
-        return bitmap;
-    }
-
     public GameWindow getGameWindow() {
         return gameWindow;
     }
@@ -508,7 +510,4 @@ public class Font implements AutoCloseable {
         this.chardata = chardata;
     }
 
-    public void setBitmap(ByteBuffer bitmap) {
-        this.bitmap = bitmap;
-    }
 }
