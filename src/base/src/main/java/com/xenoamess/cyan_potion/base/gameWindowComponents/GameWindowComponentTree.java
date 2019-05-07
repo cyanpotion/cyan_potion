@@ -106,12 +106,12 @@ public class GameWindowComponentTree implements AutoCloseable {
 
                     @Override
                     public void update() {
-
+                        //no update here.
                     }
 
                     @Override
                     public void draw() {
-
+                        //no draw here.
                     }
                 };
 

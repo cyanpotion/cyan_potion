@@ -28,12 +28,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author XenoAmess
  */
-public class Console {
-    public static void main(String[] args) {
+public class Console implements Runnable {
+    public AtomicBoolean alive;
+
+    public boolean getAlive() {
+        return this.alive.get();
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
+    }
+
+    @Override
+    public void run() {
         Socket socket = null;
         while (socket == null) {
             try {
@@ -51,7 +63,7 @@ public class Console {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        while (this.getAlive()) {
             try {
                 os.write((scanner.nextLine() + "\n").getBytes());
                 os.flush();
@@ -59,6 +71,9 @@ public class Console {
                 e.printStackTrace();
             }
         }
+    }
 
+    public static void main(String[] args) {
+        new Thread(new Console()).start();
     }
 }
