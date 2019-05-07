@@ -46,6 +46,7 @@ import com.xenoamess.x8l.AbstractTreeNode;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,12 +206,9 @@ public class GameManager implements AutoCloseable {
 
 
     protected void loadSettingFile() {
-        String settingFilePath = "/settings/DefaultSettings.x8l";
-        if (this.getArgsMap().containsKey("SettingFilePath")) {
-            String settingFilePathArgs = this.getArgsMap().get("SettingFilePath");
-            if (!settingFilePathArgs.isEmpty()) {
-                settingFilePath = settingFilePathArgs;
-            }
+        String settingFilePath = this.getArgsMap().get("SettingFilePath");
+        if (StringUtils.isBlank(settingFilePath)) {
+            settingFilePath = "/settings/DefaultSettings.x8l";
         }
 
         File globalSettingsFile = FileUtil.getFile(settingFilePath);

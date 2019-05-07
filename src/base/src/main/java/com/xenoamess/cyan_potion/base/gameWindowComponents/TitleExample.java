@@ -431,7 +431,7 @@ public class TitleExample extends AbstractGameWindowComponent {
 //            : 0.3f), "退出游戲");
         } else if (getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
-                    this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2,
+                    this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2F,
                     250, 50);
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getGameWindow().getLogicWindowWidth() / 2F,
