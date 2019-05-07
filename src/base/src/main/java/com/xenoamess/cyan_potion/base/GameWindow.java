@@ -98,8 +98,9 @@ public class GameWindow implements AutoCloseable {
         initOpengl();
 
         this.setShader(new Shader("shader"));
-        Model.commonModel = new Model(Model.commonVerticesFloatArray, Model.commonTextureFloatArray,
-                Model.commonIndicesFloatArray);
+        
+        Model.COMMON_MODEL.init(Model.COMMON_VERTICES_FLOAT_ARRAY, Model.COMMON_TEXTURE_FLOAT_ARRAY,
+                Model.COMMON_INDICES_FLOAT_ARRAY);
     }
 
     public void showWindow() {
@@ -123,7 +124,7 @@ public class GameWindow implements AutoCloseable {
         // Terminate GLFW and free the error callback
         glfwTerminate();
         this.getShader().close();
-        Model.commonModel.close();
+        Model.COMMON_MODEL.close();
         GL.destroy();
     }
 
@@ -509,7 +510,7 @@ public class GameWindow implements AutoCloseable {
         this.getShader().setUniform("colorScale", colorScale);
 
         if (model == null) {
-            model = Model.commonModel;
+            model = Model.COMMON_MODEL;
         }
 
         model.render();
@@ -522,7 +523,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height) {
         this.drawBindableRelative(bindable, posx, posy, width, height,
-                Model.commonModel, new Vector4f(1, 1, 1, 1));
+                Model.COMMON_MODEL, new Vector4f(1, 1, 1, 1));
     }
 
     public void drawBindableRelative(Bindable bindable, float posx,
@@ -534,7 +535,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height, Vector4f colorScale) {
         this.drawBindableRelative(bindable, posx, posy, width, height,
-                Model.commonModel, colorScale);
+                Model.COMMON_MODEL, colorScale);
     }
 
 
@@ -542,7 +543,7 @@ public class GameWindow implements AutoCloseable {
                                             float posy, float width,
                                             float height, Vector4f colorScale) {
         this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
-                Model.commonModel, colorScale);
+                Model.COMMON_MODEL, colorScale);
     }
 
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
@@ -555,7 +556,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
                                             float posy, float width,
                                             float height) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.commonModel,
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.COMMON_MODEL,
                 new Vector4f(1, 1, 1, 1));
     }
 
