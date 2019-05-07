@@ -64,11 +64,15 @@ public class Font implements AutoCloseable {
     private int fontTexture;
     private STBTTPackedchar.Buffer chardata = null;
 
-    private static Font DefaultFont = null;
-    private static Font CurrentFont = null;
+    private static final Font DEFAULT_FONT = new Font();
+    private static Font CurrentFont = DEFAULT_FONT;
 
 
     private GameWindow gameWindow;
+
+    public Font() {
+
+    }
 
     public Font(String ttfFilePath) {
         this.setTtfFilePath(ttfFilePath);
@@ -457,14 +461,10 @@ public class Font implements AutoCloseable {
     }
 
     public static Font getDefaultFont() {
-        return DefaultFont;
+        return DEFAULT_FONT;
     }
 
-    public static synchronized void setDefaultFont(Font defaultFont) {
-        DefaultFont = defaultFont;
-    }
-
-    public static Font getCurrentFont() {
+    public static synchronized Font getCurrentFont() {
         return CurrentFont;
     }
 

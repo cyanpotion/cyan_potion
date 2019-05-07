@@ -34,9 +34,7 @@ import org.lwjgl.system.MemoryUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -175,13 +173,12 @@ public class Texture extends AbstractResource implements Bindable {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final String resourceFilePath = resourceFileURIStrings[1];
         BufferedImage bufferedImage = null;
-
-        final URI fileURI = FileUtil.getURI(resourceFilePath);
         try {
-            bufferedImage = ImageIO.read(new File(fileURI));
+            bufferedImage = ImageIO.read(FileUtil.getFile(resourceFilePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,

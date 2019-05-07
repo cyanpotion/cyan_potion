@@ -53,6 +53,9 @@ public class Key {
 
     @Override
     public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
         if (!object.getClass().equals(this.getClass())) {
             return false;
         }

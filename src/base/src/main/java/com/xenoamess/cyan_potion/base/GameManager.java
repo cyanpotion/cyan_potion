@@ -190,18 +190,14 @@ public class GameManager implements AutoCloseable {
 
         this.setGamepadInput(new GamepadInput(this));
         this.setStartingContent();
-        String defaultFontFilePath =
+        final String defaultFontFilePath =
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_FILE_PATH,
                         Font.DEFAULT_DEFAULT_FONT_FILE_PATH);
 
-        final String tmpDefaultFontFilePath = defaultFontFilePath;
-
         this.getExecutorService().execute(() -> {
-            Font font = new Font(tmpDefaultFontFilePath);
-            font.loadBitmap();
-            Font.setDefaultFont(font);
-            Font.setCurrentFont(Font.getDefaultFont());
+            Font.getDefaultFont().setTtfFilePath(defaultFontFilePath);
+            Font.getDefaultFont().loadBitmap();
         });
 
         this.loop();
@@ -292,7 +288,6 @@ public class GameManager implements AutoCloseable {
                         this.dataCenter.setDebug(true);
                         Configuration.DEBUG.set(true);
                         Configuration.DEBUG_LOADER.set(true);
-                        GameWindow.openDebug();
                     }
                 }
             }
