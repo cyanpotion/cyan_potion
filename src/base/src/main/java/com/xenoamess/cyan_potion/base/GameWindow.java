@@ -570,26 +570,26 @@ public class GameWindow implements AutoCloseable {
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, colorScale);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, model);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, model);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, model, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, model, colorScale);
     }
 
 

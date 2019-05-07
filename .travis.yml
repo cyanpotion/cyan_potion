@@ -19,3 +19,12 @@ matrix:
       jdk: openjdk-ea
 script:
   - ./mvnw clean package -Dmaven.javadoc.skip=false
+  - cd ./src/
+  - cd ./base/
+  - ../../mvnw clean package -Dmaven.javadoc.skip=false
+  - cd ../
+  - cd ./coordinate
+  - ../../mvnw clean package -Dmaven.javadoc.skip=false
+  - cd ../
+  - cd ./rpg_module
+  - ../../mvnw clean package -Dmaven.javadoc.skip=false
