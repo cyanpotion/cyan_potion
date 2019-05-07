@@ -46,32 +46,26 @@ public class Console implements Runnable {
 
     @Override
     public void run() {
-        Socket socket = null;
-        while (socket == null) {
-            try {
-                socket = new Socket("localhost", 13888);
-            } catch (IOException e) {
-                e.printStackTrace();
+        try (Socket socket = new Socket("localhost", 13888);) {
+            OutputStream os = null;
+            while (os == null) {
+                try {
+                    os = socket.getOutputStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        OutputStream os = null;
-        while (os == null) {
-            try {
-                os = socket.getOutputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
+            Scanner scanner = new Scanner(System.in);
+            while (this.getAlive()) {
+                try {
+                    os.write((scanner.nextLine() + "\n").getBytes());
+                    os.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (this.getAlive()) {
-            try {
-                os.write((scanner.nextLine() + "\n").getBytes());
-                os.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
