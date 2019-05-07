@@ -27,11 +27,17 @@ package com.xenoamess.cyan_potion.base;
 import com.codedisaster.steamworks.*;
 import com.xenoamess.cyan_potion.base.events.*;
 import org.lwjgl.glfw.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author XenoAmess
  */
 public final class Callbacks {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Callbacks.class);
+
+
     private GameManager gameManager;
 
     public Callbacks(GameManager gameManager) {
@@ -44,59 +50,40 @@ public final class Callbacks {
                 getGameManager().shutdown();
             };
 
-    public GLFWKeyCallbackI keyCallback = new GLFWKeyCallbackI() {
-        @Override
-        public void invoke(long window, int key, int scancode, int action,
-                           int mods) {
-            Event event = new KeyEvent(window, key, scancode, action, mods);
-            getGameManager().eventListAdd(event);
-        }
-    };
+    public GLFWKeyCallbackI keyCallback =
+            (long window, int key, int scancode, int action, int mods) -> {
+                Event event = new KeyEvent(window, key, scancode, action, mods);
+                getGameManager().eventListAdd(event);
+            };
 
     public GLFWJoystickCallbackI joystickCallback =
-            new GLFWJoystickCallbackI() {
-                @Override
-                public void invoke(int jid, int event) {
-                    System.out.println("jid" + jid + "event" + event);
-                }
-            };
+            (int jid, int event) -> LOGGER.debug("jid : {}, event : {}", jid, event);
 
     public GLFWMouseButtonCallbackI mouseButtonCallback =
-            new GLFWMouseButtonCallbackI() {
-                @Override
-                public void invoke(long window, int button, int action,
-                                   int mods) {
-                    Event event = new MouseButtonEvent(window, button, action
-                            , mods);
-                    getGameManager().eventListAdd(event);
-                }
+            (long window, int button, int action, int mods) -> {
+                Event event = new MouseButtonEvent(window, button, action
+                        , mods);
+                getGameManager().eventListAdd(event);
             };
 
-    public GLFWScrollCallbackI scrollCallback = new GLFWScrollCallbackI() {
-        @Override
-        public void invoke(long window, double xoffset, double yoffset) {
-            Event event = new MouseScrollEvent(window, xoffset, yoffset);
-            getGameManager().eventListAdd(event);
-        }
-    };
+    public GLFWScrollCallbackI scrollCallback =
+            (long window, double xoffset, double yoffset) -> {
+                Event event = new MouseScrollEvent(window, xoffset, yoffset);
+                getGameManager().eventListAdd(event);
+            };
 
 
     public GLFWWindowSizeCallbackI windowSizeCallback =
-            new GLFWWindowSizeCallbackI() {
-                @Override
-                public void invoke(long window, int width, int height) {
-                    Event event = new WindowResizeEvent(window, width, height);
-                    getGameManager().eventListAdd(event);
-                }
+            (long window, int width, int height) -> {
+                Event event = new WindowResizeEvent(window, width, height);
+                getGameManager().eventListAdd(event);
             };
 
-    public GLFWCharCallbackI charCallback = new GLFWCharCallbackI() {
-        @Override
-        public void invoke(long window, int codepoint) {
-            Event event = new CharEvent(window, codepoint);
-            getGameManager().eventListAdd(event);
-        }
-    };
+    public GLFWCharCallbackI charCallback =
+            (long window, int codepoint) -> {
+                Event event = new CharEvent(window, codepoint);
+                getGameManager().eventListAdd(event);
+            };
 
 
     public SteamUserStatsCallback steamUserStatsCallback =
@@ -106,17 +93,17 @@ public final class Callbacks {
                 public void onUserStatsReceived(long gameId,
                                                 SteamID steamIDUser,
                                                 SteamResult result) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
                 public void onUserStatsStored(long gameId, SteamResult result) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
                 public void onUserStatsUnloaded(SteamID steamIDUser) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
@@ -125,18 +112,18 @@ public final class Callbacks {
                                                     String achievementName,
                                                     int curProgress,
                                                     int maxProgress) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
                 public void onLeaderboardFindResult(SteamLeaderboardHandle leaderboard, boolean found) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
                 public void onLeaderboardScoresDownloaded(SteamLeaderboardHandle leaderboard,
                                                           SteamLeaderboardEntriesHandle entries, int numEntries) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
@@ -144,13 +131,13 @@ public final class Callbacks {
                                                        SteamLeaderboardHandle leaderboard, int score,
                                                        boolean scoreChanged, int globalRankNew,
                                                        int globalRankPrevious) {
-                    //TODO
+                    // do nothing here.
                 }
 
                 @Override
                 public void onGlobalStatsReceived(long gameId,
                                                   SteamResult result) {
-                    //TODO
+                    // do nothing here.
                 }
             };
 

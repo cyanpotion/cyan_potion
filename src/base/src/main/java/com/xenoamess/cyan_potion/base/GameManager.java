@@ -188,7 +188,7 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
 
-        this.setGamepadInput(new GamepadInput());
+        this.setGamepadInput(new GamepadInput(this));
         this.setStartingContent();
         String defaultFontFilePath =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -314,7 +314,7 @@ public class GameManager implements AutoCloseable {
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
         String language = MultiLanguageStructure.ENGLISH;
         getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
-        if (DataCenter.RUN_WITH_STEAM) {
+        if (this.getDataCenter().isRunWithSteam()) {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
@@ -325,18 +325,18 @@ public class GameManager implements AutoCloseable {
 
 
     protected void initSteam() {
-        DataCenter.RUN_WITH_STEAM = getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam", true);
-        if (DataCenter.RUN_WITH_STEAM) {
+        this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam", true));
+        if (this.getDataCenter().isRunWithSteam()) {
             try {
                 SteamAPI.loadLibraries();
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
                 this.setSteamUserStats(new SteamUserStats(this.getCallbacks().steamUserStatsCallback));
-                DataCenter.RUN_WITH_STEAM = true;
+                this.getDataCenter().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
-                DataCenter.RUN_WITH_STEAM = false;
+                this.getDataCenter().setRunWithSteam(false);
                 if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
                     e.printStackTrace();
                     LOGGER.warn("Steam load failed but somehow we cannot prevent " +
@@ -381,7 +381,7 @@ public class GameManager implements AutoCloseable {
             getConsoleThread().shutdown();
         }
 
-        if (DataCenter.RUN_WITH_STEAM) {
+        if (this.getDataCenter().isRunWithSteam()) {
             this.getSteamUserStats().dispose();
             SteamAPI.shutdown();
         }
@@ -547,7 +547,7 @@ public class GameManager implements AutoCloseable {
     }
 
     protected void steamRunCallbacks() {
-        if (DataCenter.RUN_WITH_STEAM && SteamAPI.isSteamRunning()) {
+        if (this.getDataCenter().isRunWithSteam() && SteamAPI.isSteamRunning()) {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
