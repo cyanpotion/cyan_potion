@@ -43,7 +43,7 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 
     public TextBox(GameWindow gameWindow) {
         super(gameWindow);
-        this.setWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().ifLanguageNeedWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().currentLanguage));
+        this.setWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().ifLanguageNeedWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().getCurrentLanguage()));
     }
 
     @Override

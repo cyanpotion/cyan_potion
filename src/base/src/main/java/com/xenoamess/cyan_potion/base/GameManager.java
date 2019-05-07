@@ -221,26 +221,27 @@ public class GameManager implements AutoCloseable {
             e.printStackTrace();
         }
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "commonSettings")) {
-            this.getDataCenter().getCommonSettings().putAll(contentNode.attributes);
+            this.getDataCenter().getCommonSettings().putAll(contentNode.getAttributes());
         }
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "specialSettings")) {
-            this.getDataCenter().getSpecialSettings().putAll(contentNode.attributes);
+            this.getDataCenter().getSpecialSettings().putAll(contentNode.getAttributes());
         }
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "views")) {
-            this.getDataCenter().getViews().putAll(contentNode.attributes);
+            this.getDataCenter().getViews().putAll(contentNode.getAttributes());
         }
         for (ContentNode pluginNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs("codePlugins"
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "codePlugins"
                 )) {
             for (ContentNode simplePluginNode : pluginNode.getContentNodesFromChildren()) {
                 this.codePluginManager.putCodePlugin(CodePluginPosition.valueOf(simplePluginNode.getName()),
-                        simplePluginNode.getTextNodesFromChildren(1).get(0).textContent);
+                        simplePluginNode.getTextNodesFromChildren(1).get(0).getTextContent());
             }
         }
     }
@@ -258,37 +259,37 @@ public class GameManager implements AutoCloseable {
     protected void loadKeymap() {
         this.setKeymap(new Keymap());
         for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().root.children) {
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getChildren()) {
             if (!(au instanceof ContentNode)) {
                 continue;
             }
             ContentNode contentNode = (ContentNode) au;
-            if (contentNode.attributes.isEmpty()) {
+            if (contentNode.getAttributes().isEmpty()) {
                 continue;
             }
-            if ("keymap".equals(contentNode.getName()) && contentNode.attributes.containsKey("using")) {
-                for (AbstractTreeNode au2 : contentNode.children) {
+            if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
+                for (AbstractTreeNode au2 : contentNode.getChildren()) {
                     if (au2 instanceof TextNode) {
                         continue;
                     }
                     ContentNode contentNode2 = (ContentNode) au2;
-                    if (contentNode2.attributes.isEmpty() || contentNode2.children.isEmpty()) {
+                    if (contentNode2.getAttributes().isEmpty() || contentNode2.getChildren().isEmpty()) {
                         continue;
                     }
                     String rawInput = contentNode2.getName();
                     String myInput = null;
-                    for (AbstractTreeNode au3 : contentNode2.children) {
+                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
                         if (!(au3 instanceof TextNode)) {
                             continue;
                         }
-                        myInput = ((TextNode) au3).textContent;
+                        myInput = ((TextNode) au3).getTextContent();
                         break;
                     }
                     this.getKeymap().put(rawInput, myInput);
                 }
                 break;
             }
-            if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.attributes.get("debug"))) {
+            if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
                 DataCenter.DEBUG = true;
                 Configuration.DEBUG.set(true);
                 Configuration.DEBUG_LOADER.set(true);
