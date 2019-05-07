@@ -38,55 +38,55 @@ public final class Callbacks {
             LoggerFactory.getLogger(Callbacks.class);
 
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     public Callbacks(GameManager gameManager) {
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
-    public GLFWWindowCloseCallbackI windowCloseCallback =
+    private GLFWWindowCloseCallbackI windowCloseCallback =
             window -> {
                 System.out.println("Alright I exit.");
                 getGameManager().shutdown();
             };
 
-    public GLFWKeyCallbackI keyCallback =
+    private GLFWKeyCallbackI keyCallback =
             (long window, int key, int scancode, int action, int mods) -> {
                 Event event = new KeyEvent(window, key, scancode, action, mods);
                 getGameManager().eventListAdd(event);
             };
 
-    public GLFWJoystickCallbackI joystickCallback =
+    private GLFWJoystickCallbackI joystickCallback =
             (int jid, int event) -> LOGGER.debug("jid : {}, event : {}", jid, event);
 
-    public GLFWMouseButtonCallbackI mouseButtonCallback =
+    private GLFWMouseButtonCallbackI mouseButtonCallback =
             (long window, int button, int action, int mods) -> {
                 Event event = new MouseButtonEvent(window, button, action
                         , mods);
                 getGameManager().eventListAdd(event);
             };
 
-    public GLFWScrollCallbackI scrollCallback =
+    private GLFWScrollCallbackI scrollCallback =
             (long window, double xoffset, double yoffset) -> {
                 Event event = new MouseScrollEvent(window, xoffset, yoffset);
                 getGameManager().eventListAdd(event);
             };
 
 
-    public GLFWWindowSizeCallbackI windowSizeCallback =
+    private GLFWWindowSizeCallbackI windowSizeCallback =
             (long window, int width, int height) -> {
                 Event event = new WindowResizeEvent(window, width, height);
                 getGameManager().eventListAdd(event);
             };
 
-    public GLFWCharCallbackI charCallback =
+    private GLFWCharCallbackI charCallback =
             (long window, int codepoint) -> {
                 Event event = new CharEvent(window, codepoint);
                 getGameManager().eventListAdd(event);
             };
 
 
-    public SteamUserStatsCallback steamUserStatsCallback =
+    private SteamUserStatsCallback steamUserStatsCallback =
             new SteamUserStatsCallback() {
 
                 @Override
@@ -146,7 +146,67 @@ public final class Callbacks {
         return gameManager;
     }
 
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public GLFWWindowCloseCallbackI getWindowCloseCallback() {
+        return windowCloseCallback;
+    }
+
+    public void setWindowCloseCallback(GLFWWindowCloseCallbackI windowCloseCallback) {
+        this.windowCloseCallback = windowCloseCallback;
+    }
+
+    public GLFWKeyCallbackI getKeyCallback() {
+        return keyCallback;
+    }
+
+    public void setKeyCallback(GLFWKeyCallbackI keyCallback) {
+        this.keyCallback = keyCallback;
+    }
+
+    public GLFWJoystickCallbackI getJoystickCallback() {
+        return joystickCallback;
+    }
+
+    public void setJoystickCallback(GLFWJoystickCallbackI joystickCallback) {
+        this.joystickCallback = joystickCallback;
+    }
+
+    public GLFWMouseButtonCallbackI getMouseButtonCallback() {
+        return mouseButtonCallback;
+    }
+
+    public void setMouseButtonCallback(GLFWMouseButtonCallbackI mouseButtonCallback) {
+        this.mouseButtonCallback = mouseButtonCallback;
+    }
+
+    public GLFWScrollCallbackI getScrollCallback() {
+        return scrollCallback;
+    }
+
+    public void setScrollCallback(GLFWScrollCallbackI scrollCallback) {
+        this.scrollCallback = scrollCallback;
+    }
+
+    public GLFWWindowSizeCallbackI getWindowSizeCallback() {
+        return windowSizeCallback;
+    }
+
+    public void setWindowSizeCallback(GLFWWindowSizeCallbackI windowSizeCallback) {
+        this.windowSizeCallback = windowSizeCallback;
+    }
+
+    public GLFWCharCallbackI getCharCallback() {
+        return charCallback;
+    }
+
+    public void setCharCallback(GLFWCharCallbackI charCallback) {
+        this.charCallback = charCallback;
+    }
+
+    public SteamUserStatsCallback getSteamUserStatsCallback() {
+        return steamUserStatsCallback;
+    }
+
+    public void setSteamUserStatsCallback(SteamUserStatsCallback steamUserStatsCallback) {
+        this.steamUserStatsCallback = steamUserStatsCallback;
     }
 }

@@ -215,11 +215,17 @@ public class GameManager implements AutoCloseable {
 
         LOGGER.debug("SettingsFilePath : {}",
                 globalSettingsFile.getAbsolutePath());
+
+        X8lTree globalSettingsTree = null;
         try {
-            this.getDataCenter().setGlobalSettingsTree(X8lTree.loadFromFile(globalSettingsFile));
+            globalSettingsTree = X8lTree.loadFromFile(globalSettingsFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("X8lTree.loadFromFile(globalSettingsFile) fails " +
+                    ": ", e);
         }
+        assert (globalSettingsTree != null);
+
+        this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "commonSettings")) {
@@ -293,16 +299,15 @@ public class GameManager implements AutoCloseable {
     }
 
     protected void loadText() {
-        MultiLanguageX8lFileUtil multiLanguageUtil =
-                new MultiLanguageX8lFileUtil();
+        MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
             multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.error("load text from this.getDataCenter().textFilePath " +
-                    "fails!!");
+            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath())) " +
+                    "fails", e);
             System.exit(1);
         }
+
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
         String language = MultiLanguageStructure.ENGLISH;
         getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
@@ -325,7 +330,7 @@ public class GameManager implements AutoCloseable {
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
-                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().steamUserStatsCallback));
+                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback()));
                 this.getDataCenter().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
