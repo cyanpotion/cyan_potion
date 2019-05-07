@@ -431,12 +431,12 @@ public class TitleExample extends AbstractGameWindowComponent {
 //            : 0.3f), "退出游戲");
         } else if (getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
-                    this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2,
+                    this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2,
                     250, 50);
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
-                    this.getGameWindow().getLogicWindowWidth() / 2,
-                    this.getGameWindow().getLogicWindowHeight() / 2, 250, 50,
-                    0, new Vector4f(1, 1, 1, 1f), "校准文本Ugna");
+                    this.getGameWindow().getLogicWindowWidth() / 2F,
+                    this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
+                    0, new Vector4f(1, 1, 1, 1F), "校准文本Ugna");
 
 //            for (int i = 0; i < 20; i++) {
 //                this.getGameWindow().drawBindableRelativeLeftTop(this

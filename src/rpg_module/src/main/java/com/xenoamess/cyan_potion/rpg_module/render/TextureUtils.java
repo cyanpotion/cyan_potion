@@ -716,13 +716,12 @@ public class TextureUtils {
         final List<Texture> res = new ArrayList<Texture>();
 
         BufferedImage bufferedImage = null;
-
         try {
-            bufferedImage =
-                    ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
+            bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / columNum / 8;

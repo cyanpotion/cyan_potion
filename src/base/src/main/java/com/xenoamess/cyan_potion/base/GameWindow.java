@@ -72,7 +72,7 @@ public class GameWindow implements AutoCloseable {
 
     private boolean showing = false;
     private boolean beingFocused = false;
-
+    private GLFWErrorCallback glfwErrorCallback;
 
     public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
@@ -119,6 +119,7 @@ public class GameWindow implements AutoCloseable {
         Callbacks.glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
         // Terminate GLFW and free the error callback
+        glfwErrorCallback.close();
         glfwTerminate();
         this.getShader().close();
         Model.COMMON_MODEL.close();
@@ -126,7 +127,7 @@ public class GameWindow implements AutoCloseable {
     }
 
     private void initGlfw() {
-        GLFWErrorCallback.createPrint(System.err).set();
+        glfwErrorCallback = GLFWErrorCallback.createPrint(System.err).set();
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
@@ -646,11 +647,6 @@ public class GameWindow implements AutoCloseable {
 
     public void drawText(Font font, float x, float y, String text) {
         this.drawText(font, x, y, 1f, text);
-    }
-
-
-    public static void openDebug() {
-        GLFWErrorCallback.createPrint().set();
     }
 
     public void bindGlViewportToFullWindow() {
