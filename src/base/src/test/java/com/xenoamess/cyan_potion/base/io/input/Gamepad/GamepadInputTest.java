@@ -43,6 +43,7 @@ public class GamepadInputTest {
         } catch (XInputNotLoadedException e) {
             e.printStackTrace();
         }
+        assert (devices != null);
         System.out.println("devices count : " + devices.length);
         int nowi = 0;
         for (int i = 0; i < devices.length; i++) {
