@@ -98,7 +98,7 @@ public class GameWindow implements AutoCloseable {
         initOpengl();
 
         this.setShader(new Shader("shader"));
-        
+
         Model.COMMON_MODEL.init(Model.COMMON_VERTICES_FLOAT_ARRAY, Model.COMMON_TEXTURE_FLOAT_ARRAY,
                 Model.COMMON_INDICES_FLOAT_ARRAY);
     }
@@ -111,9 +111,6 @@ public class GameWindow implements AutoCloseable {
     public void focusWindow() {
         glfwFocusWindow(getWindow());
         this.setBeingFocused(true);
-    }
-
-    public void register() {
     }
 
     @Override
@@ -239,7 +236,6 @@ public class GameWindow implements AutoCloseable {
 
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
-        register();
     }
 
     private void initOpengl() {
