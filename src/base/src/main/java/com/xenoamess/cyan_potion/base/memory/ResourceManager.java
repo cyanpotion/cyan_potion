@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
@@ -123,7 +122,7 @@ public class ResourceManager implements AutoCloseable {
             return null;
         }
 
-        if (DataCenter.DEBUG) {
+        if (this.gameManager.getDataCenter().isDebug()) {
             LOGGER.debug("putResource {}", fullResourceURI);
         }
 

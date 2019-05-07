@@ -70,6 +70,8 @@ public class GameManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
 
+    public static final String LINE_SEGMENT = "----------------------------------------";
+
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
     private final ConcurrentLinkedDeque<Event> eventList =
@@ -111,25 +113,25 @@ public class GameManager implements AutoCloseable {
 
     public GameManager(String[] args) {
         super();
-        LOGGER.info("----------------------------------------");
-        LOGGER.info("----------------------------------------");
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("New game start at time : {}", new Date().toString());
         this.setArgsMap(generateArgsMap(args));
 
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
 
         LOGGER.info("Platform : ->");
         Properties properties = System.getProperties();
         for (Map.Entry entry : properties.entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("cyan_potion engine version : {}", Version.VERSION);
     }
 
@@ -290,7 +292,7 @@ public class GameManager implements AutoCloseable {
                 break;
             }
             if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
-                DataCenter.DEBUG = true;
+                this.dataCenter.setDebug(true);
                 Configuration.DEBUG.set(true);
                 Configuration.DEBUG_LOADER.set(true);
                 GameWindow.openDebug();
@@ -653,11 +655,11 @@ public class GameManager implements AutoCloseable {
 
     public void setArgsMap(Map<String, String> argsMap) {
         this.argsMap = argsMap;
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
     }
 }

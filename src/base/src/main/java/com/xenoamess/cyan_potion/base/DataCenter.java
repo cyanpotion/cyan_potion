@@ -40,7 +40,7 @@ public class DataCenter {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(DataCenter.class);
 
-    public static boolean DEBUG = false;
+    private boolean debug = false;
     public static boolean ALLOW_RUN_WITHOUT_STEAM = true;
     public static boolean RUN_WITH_STEAM = true;
 
@@ -152,4 +152,11 @@ public class DataCenter {
         this.titleTextID = titleTextID;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 }
