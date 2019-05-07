@@ -55,10 +55,12 @@ public class Console implements Runnable {
             }
         }
         OutputStream os = null;
-        try {
-            os = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (os == null) {
+            try {
+                os = socket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Scanner scanner = new Scanner(System.in);
