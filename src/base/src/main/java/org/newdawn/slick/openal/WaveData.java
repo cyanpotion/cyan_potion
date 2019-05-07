@@ -152,11 +152,10 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            res = null;
             LOGGER.debug("WaveData.create(byte[] buffer) fails", e);
-        } finally {
-            return res;
         }
+        return res;
+
     }
 
     /**
