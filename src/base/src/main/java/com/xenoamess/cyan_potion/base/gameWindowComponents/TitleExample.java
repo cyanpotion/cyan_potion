@@ -398,6 +398,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                 break;
             case -102:
                 startGame();
+                break;
             default:
                 break;
         }
