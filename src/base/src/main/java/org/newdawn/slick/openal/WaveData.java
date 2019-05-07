@@ -250,21 +250,21 @@ public class WaveData {
     /**
      * Convert the audio bytes into the stream
      *
-     * @param audio_bytes    The audio byts
-     * @param two_bytes_data True if we using double byte data
+     * @param audioBytes   The audio byts
+     * @param twoBytesData True if we using double byte data
      * @return The byte bufer of data
      */
-    private static ByteBuffer convertAudioBytes(byte[] audio_bytes,
-                                                boolean two_bytes_data) {
-        ByteBuffer dest = ByteBuffer.allocateDirect(audio_bytes.length);
+    private static ByteBuffer convertAudioBytes(byte[] audioBytes,
+                                                boolean twoBytesData) {
+        ByteBuffer dest = ByteBuffer.allocateDirect(audioBytes.length);
         dest.order(ByteOrder.nativeOrder());
-        ByteBuffer src = ByteBuffer.wrap(audio_bytes);
+        ByteBuffer src = ByteBuffer.wrap(audioBytes);
         src.order(ByteOrder.LITTLE_ENDIAN);
-        if (two_bytes_data) {
-            ShortBuffer dest_short = dest.asShortBuffer();
-            ShortBuffer src_short = src.asShortBuffer();
-            while (src_short.hasRemaining()) {
-                dest_short.put(src_short.get());
+        if (twoBytesData) {
+            ShortBuffer destShort = dest.asShortBuffer();
+            ShortBuffer srcShort = src.asShortBuffer();
+            while (srcShort.hasRemaining()) {
+                destShort.put(srcShort.get());
             }
         } else {
             while (src.hasRemaining()) {
