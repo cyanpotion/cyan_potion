@@ -146,13 +146,16 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(byte[] buffer) {
+        WaveData res = null;
         try {
-            return create(
+            res = create(
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            res = null;
+            LOGGER.debug("WaveData.create(byte[] buffer) fails", e);
+        } finally {
+            return res;
         }
     }
 

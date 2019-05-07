@@ -195,20 +195,20 @@ public class GameWindow implements AutoCloseable {
 
 
         glfwSetKeyCallback(getWindow(),
-                this.getGameManager().getCallbacks().keyCallback);
+                this.getGameManager().getCallbacks().getKeyCallback());
         glfwSetCharCallback(getWindow(),
-                this.getGameManager().getCallbacks().charCallback);
+                this.getGameManager().getCallbacks().getCharCallback());
 
         glfwSetMouseButtonCallback(getWindow(),
-                this.getGameManager().getCallbacks().mouseButtonCallback);
+                this.getGameManager().getCallbacks().getMouseButtonCallback());
         glfwSetScrollCallback(getWindow(),
-                this.getGameManager().getCallbacks().scrollCallback);
-        glfwSetJoystickCallback(this.getGameManager().getCallbacks().joystickCallback);
+                this.getGameManager().getCallbacks().getScrollCallback());
+        glfwSetJoystickCallback(this.getGameManager().getCallbacks().getJoystickCallback());
 
         glfwSetWindowCloseCallback(getWindow(),
-                this.getGameManager().getCallbacks().windowCloseCallback);
+                this.getGameManager().getCallbacks().getWindowCloseCallback());
         glfwSetWindowSizeCallback(getWindow(),
-                this.getGameManager().getCallbacks().windowSizeCallback);
+                this.getGameManager().getCallbacks().getWindowSizeCallback());
 
         if (!isFullScreen()) {
             // make the window be at the center of the screen.
