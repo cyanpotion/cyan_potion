@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +80,7 @@ public class ResourceManager implements AutoCloseable {
             new ConcurrentHashMap<>();
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
-        if (fullResourceURI == null || fullResourceURI.isEmpty()) {
+        if (StringUtils.isBlank(fullResourceURI)) {
             throw (new Error("putResourceWithURI : fullResourceURI is null or" +
                     " Empty"));
         }
@@ -118,7 +119,7 @@ public class ResourceManager implements AutoCloseable {
 
 
     public Object getResourceFromFullURI(String fullResourceURI) {
-        if (fullResourceURI == null || fullResourceURI.isEmpty()) {
+        if (StringUtils.isBlank(fullResourceURI)) {
             return null;
         }
 

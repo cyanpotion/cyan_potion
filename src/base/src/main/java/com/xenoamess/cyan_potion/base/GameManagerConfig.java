@@ -43,7 +43,7 @@ public class GameManagerConfig {
          * if value is null or empty, we think that it have no value part,
          * and a key part alone is thought to mean true.
          */
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.isBlank(value)) {
             return true;
         }
 
