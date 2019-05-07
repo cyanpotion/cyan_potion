@@ -116,7 +116,7 @@ public class GameManager implements AutoCloseable {
         LOGGER.info(LINE_SEGMENT);
         LOGGER.info(LINE_SEGMENT);
         LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("New game start at time : {}", new Date().toString());
+        LOGGER.info("New game start at time : {}", new Date());
         this.setArgsMap(generateArgsMap(args));
 
         LOGGER.info(LINE_SEGMENT);
@@ -209,10 +209,14 @@ public class GameManager implements AutoCloseable {
 
 
     protected void loadSettingFile() {
-        String settingFilePath = this.getArgsMap().get("SettingFilePath");
-        if (settingFilePath == null || settingFilePath.isEmpty()) {
-            settingFilePath = "/settings/DefaultSettings.x8l";
+        String settingFilePath = "/settings/DefaultSettings.x8l";
+        if (this.getArgsMap().containsKey("SettingFilePath")) {
+            String settingFilePathArgs = this.getArgsMap().get("SettingFilePath");
+            if (!settingFilePathArgs.isEmpty()) {
+                settingFilePath = settingFilePathArgs;
+            }
         }
+
         File globalSettingsFile = FileUtil.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}",
@@ -262,40 +266,35 @@ public class GameManager implements AutoCloseable {
         this.setKeymap(new Keymap());
         for (AbstractTreeNode au :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getChildren()) {
-            if (!(au instanceof ContentNode)) {
-                continue;
-            }
-            ContentNode contentNode = (ContentNode) au;
-            if (contentNode.getAttributes().isEmpty()) {
-                continue;
-            }
-            if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
-                for (AbstractTreeNode au2 : contentNode.getChildren()) {
-                    if (au2 instanceof TextNode) {
-                        continue;
-                    }
-                    ContentNode contentNode2 = (ContentNode) au2;
-                    if (contentNode2.getAttributes().isEmpty() || contentNode2.getChildren().isEmpty()) {
-                        continue;
-                    }
-                    String rawInput = contentNode2.getName();
-                    String myInput = null;
-                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
-                        if (!(au3 instanceof TextNode)) {
-                            continue;
+            if (au instanceof ContentNode) {
+                ContentNode contentNode = (ContentNode) au;
+                if (!contentNode.getAttributes().isEmpty()) {
+                    if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
+                        for (AbstractTreeNode au2 : contentNode.getChildren()) {
+                            if (au2 instanceof ContentNode) {
+                                ContentNode contentNode2 = (ContentNode) au2;
+                                if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
+                                    String rawInput = contentNode2.getName();
+                                    String myInput = null;
+                                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
+                                        if (au3 instanceof TextNode) {
+                                            myInput = ((TextNode) au3).getTextContent();
+                                            break;
+                                        }
+                                    }
+                                    this.getKeymap().put(rawInput, myInput);
+                                }
+                            }
                         }
-                        myInput = ((TextNode) au3).getTextContent();
                         break;
                     }
-                    this.getKeymap().put(rawInput, myInput);
+                    if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
+                        this.dataCenter.setDebug(true);
+                        Configuration.DEBUG.set(true);
+                        Configuration.DEBUG_LOADER.set(true);
+                        GameWindow.openDebug();
+                    }
                 }
-                break;
-            }
-            if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
-                this.dataCenter.setDebug(true);
-                Configuration.DEBUG.set(true);
-                Configuration.DEBUG_LOADER.set(true);
-                GameWindow.openDebug();
             }
         }
     }
@@ -325,7 +324,8 @@ public class GameManager implements AutoCloseable {
 
 
     protected void initSteam() {
-        this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam", true));
+        this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
+                true));
         if (this.getDataCenter().isRunWithSteam()) {
             try {
                 SteamAPI.loadLibraries();
