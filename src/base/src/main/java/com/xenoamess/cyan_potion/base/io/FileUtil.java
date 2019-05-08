@@ -162,8 +162,7 @@ public class FileUtil {
     }
 
     public static URL getURL(String resourceFilePath) {
-        final URL res = FileUtil.class.getResource(resourceFilePath);
-        return res;
+        return FileUtil.class.getResource(resourceFilePath);
     }
 
     public static URI getURI(String resourceFilePath) {

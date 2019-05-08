@@ -41,10 +41,9 @@ import java.util.ArrayList;
 public class GamepadInput {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInput.class);
-    private ArrayList<AbstractGamepadData> gamepadDatas;
+    private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
 
     public GamepadInput(GameManager gameManager) {
-        this.setGamepadDatas(new ArrayList<>());
         try {
             int jXInputDeviceNum = XInputDevice.getAllDevices().length;
             for (int i = 0; i < jXInputDeviceNum; i++) {
@@ -77,7 +76,4 @@ public class GamepadInput {
         return gamepadDatas;
     }
 
-    public void setGamepadDatas(ArrayList<AbstractGamepadData> gamepadDatas) {
-        this.gamepadDatas = gamepadDatas;
-    }
 }
