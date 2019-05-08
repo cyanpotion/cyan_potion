@@ -24,6 +24,9 @@
 
 package com.xenoamess.cyan_potion.base.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -34,6 +37,9 @@ import java.awt.datatransfer.Transferable;
  * @author XenoAmess
  */
 public class ClipboardUtil {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ClipboardUtil.class);
+
     /**
      * Don't let anyone instantiate this class.
      */
@@ -51,13 +57,13 @@ public class ClipboardUtil {
         Transferable trans = clipboard.getContents(null);
         if (trans != null) {
             if (trans.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                String text = "";
                 try {
-                    String text =
-                            (String) trans.getTransferData(DataFlavor.stringFlavor);
-                    return text;
+                    text = (String) trans.getTransferData(DataFlavor.stringFlavor);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.warn("ClipboardUtil.getText() fails", e);
                 }
+                return text;
             }
         }
         return "";

@@ -103,25 +103,6 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 
                 title.addToGameWindowComponentTree(null);
                 title.enlargeAsFullWindow();
-
-                //                TitleExample title = null;
-//                String titleClassName = ;
-//                if (this.getGameWindow().getGameManager().dataCenter
-//                .commonSettings.containsKey("titleClassName")) {
-//                    titleClassName = this.getGameWindow().getGameManager()
-//                    .dataCenter.commonSettings.get();
-//                }
-//                try {
-//                    title = (TitleExample) this.getClass().getClassLoader()
-//                    .loadClass(titleClassName).getConstructor(GameWindow
-//                    .class).newInstance(this.getGameWindow());
-//                } catch (ClassNotFoundException | IllegalAccessException |
-//                InstantiationException | NoSuchMethodException |
-//                InvocationTargetException e) {
-//                    e.printStackTrace();
-//                    System.exit(-1);
-//                }
-//
             }
         }
     }

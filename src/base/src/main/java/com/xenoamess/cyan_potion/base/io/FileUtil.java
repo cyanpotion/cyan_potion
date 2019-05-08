@@ -111,7 +111,6 @@ public class FileUtil {
                 }
                 success = true;
             } catch (IOException e) {
-                e.printStackTrace();
                 if (buffer != null) {
                     buffer.clear();
                 }
@@ -140,16 +139,9 @@ public class FileUtil {
                 if (bytes == -1) {
                     break;
                 }
-                //                //                    if (buffer.remaining
-                //                () == 0) {
-                //                //                        buffer =
-                //                resizeBuffer(buffer, buffer.capacity() * 3
-                //                / 2); // 50%
-                //                //                    }
             }
             success = true;
         } catch (IOException e) {
-            e.printStackTrace();
             success = false;
         }
         if (success) {
@@ -165,7 +157,6 @@ public class FileUtil {
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
         if (resUrl == null) {
-            LOGGER.error("getFile fail : {}", resourceFilePath);
             return null;
         }
         return new File(resUrl.getFile().replaceAll("%20", " "));
@@ -181,19 +172,18 @@ public class FileUtil {
         try {
             res = getURL(resourceFilePath).toURI();
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error("FileUtil.getURI(String resourceFilePath) fail", resourceFilePath, e);
         }
         return res;
     }
 
-    public static String loadFile(String resourceFilePath) {
+
+    public static String loadFile(InputStream inputStream) {
+        assert (inputStream != null);
         String res = "";
         try (
                 BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
-//                BufferedReader bufferedReader = new BufferedReader(new
-//                InputStreamReader(new FileInputStream(file.getAbsoluteFile
-//                ())));
+                        new BufferedReader(new InputStreamReader(inputStream));
         ) {
             final StringBuffer sb = new StringBuffer();
             String tmp;
@@ -207,7 +197,17 @@ public class FileUtil {
             }
             res = sb.toString();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("FileUtil.loadFile(InputStream inputStream) fail", inputStream, e);
+        }
+        return res;
+    }
+
+    public static String loadFile(String resourceFilePath) {
+        String res = "";
+        try (InputStream inputStream = getURL(resourceFilePath).openStream()) {
+            res = loadFile(inputStream);
+        } catch (IOException e) {
+            LOGGER.error("FileUtil.loadFile(String resourceFilePath) fail", resourceFilePath, e);
         }
         return res;
     }
@@ -218,26 +218,10 @@ public class FileUtil {
             return "";
         }
         String res = "";
-        try (
-                BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile())));
-//                BufferedReader bufferedReader = new BufferedReader(new
-//                InputStreamReader(new FileInputStream(file.getAbsoluteFile
-//                ())));
-        ) {
-            final StringBuffer sb = new StringBuffer();
-            String tmp;
-            while (true) {
-                tmp = bufferedReader.readLine();
-                if (tmp == null) {
-                    break;
-                }
-                sb.append(tmp);
-                sb.append("\n");
-            }
-            res = sb.toString();
+        try (FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile())) {
+            res = loadFile(fileInputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("FileUtil.loadFile(File file) fail", file, e);
         }
         return res;
     }
@@ -260,7 +244,8 @@ public class FileUtil {
         ) {
             fileWriter.write(contentString);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("FileUtil.saveFile(File file, String contentString) fail",
+                    file, contentString, e);
         }
     }
 
