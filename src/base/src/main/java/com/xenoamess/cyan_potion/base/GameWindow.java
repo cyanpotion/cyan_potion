@@ -440,7 +440,6 @@ public class GameWindow implements AutoCloseable {
         setMousePosX(Math.min(getMousePosX(), this.getLogicWindowWidth()));
         setMousePosY(Math.max(getMousePosY(), 0));
         setMousePosY(Math.min(getMousePosY(), this.getLogicWindowHeight()));
-//        LogUtil.out.println("mousePos : " + mousePosX + " " + mousePosY);
     }
 
     public void update() {
