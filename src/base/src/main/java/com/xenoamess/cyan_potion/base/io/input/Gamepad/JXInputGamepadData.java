@@ -222,9 +222,6 @@ public class JXInputGamepadData extends AbstractGamepadData {
         long window = gameWindow.getWindow();
         int action;
 
-//        LOGGER.debug("this.a : " + this.a);
-//        LOGGER.debug("buttons.a : " + buttons.a);
-
         if (this.a != buttons.a) {
             if (buttons.a) {
                 action = 1;

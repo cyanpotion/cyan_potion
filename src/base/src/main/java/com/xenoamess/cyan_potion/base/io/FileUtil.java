@@ -104,8 +104,7 @@ public class FileUtil {
                 } else {
                     buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
                 }
-
-
+                
                 while (fc.read(buffer) != -1) {
                 }
                 success = true;
@@ -183,7 +182,7 @@ public class FileUtil {
                 BufferedReader bufferedReader =
                         new BufferedReader(new InputStreamReader(inputStream))
         ) {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             String tmp;
             while (true) {
                 tmp = bufferedReader.readLine();

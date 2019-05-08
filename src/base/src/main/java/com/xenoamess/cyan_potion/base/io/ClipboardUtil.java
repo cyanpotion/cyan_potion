@@ -55,16 +55,15 @@ public class ClipboardUtil {
     public static String getText() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable trans = clipboard.getContents(null);
-        if (trans != null) {
-            if (trans.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                String text = "";
-                try {
-                    text = (String) trans.getTransferData(DataFlavor.stringFlavor);
-                } catch (Exception e) {
-                    LOGGER.warn("ClipboardUtil.getText() fails", e);
-                }
-                return text;
+        if (trans != null
+                && trans.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            String text = "";
+            try {
+                text = (String) trans.getTransferData(DataFlavor.stringFlavor);
+            } catch (Exception e) {
+                LOGGER.warn("ClipboardUtil.getText() fails", e);
             }
+            return text;
         }
         return "";
     }

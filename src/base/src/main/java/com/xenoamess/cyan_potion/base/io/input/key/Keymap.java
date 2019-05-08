@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.key;
 
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
+import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,17 +117,14 @@ public class Keymap {
             return null;
         }
 
-        //        LOGGER.debug(Keymap);
-        //        LOGGER.debug(rawInputI);
-        //        LOGGER.debug(myInputI);
+        int type;
 
-        int type = -2;
         if (rawInput.startsWith("GLFW_KEY")) {
             type = Key.TYPE_KEY;
         } else if (rawInput.startsWith("GLFW_MOUSE_BUTTON")) {
             type = Key.TYPE_MOUSE;
         } else {
-            throw new Error("if you want to implement Joystick you should add" +
+            throw new NotImplementedException("if you want to implement Joystick you should add" +
                     " it here");
         }
         return put(new Key(type, rawInputI), new Key(Key.TYPE_XENOAMESS_KEY,
@@ -181,38 +179,10 @@ public class Keymap {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         return getMyKeys()[myKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
-//        KeymapReverse.get(myInput);
-//        if (rawInputKeys == null) {
-//            return false;
-//        }
-//        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
-//            (key)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
-//        key) == 1;
     }
 
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
-//        KeymapReverse.get(myInput);
-//        if (rawInputKeys == null) {
-//            return false;
-//        }
-//        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
-//            (key)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
-//        key) == 1;
     }
 
     /**
