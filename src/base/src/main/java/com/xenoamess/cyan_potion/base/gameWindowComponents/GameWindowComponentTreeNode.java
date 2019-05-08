@@ -82,7 +82,6 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
                 getGameWindowComponentTree().getLeafNodes().add(getParent());
             }
         }
-        //        super.close();
     }
 
 

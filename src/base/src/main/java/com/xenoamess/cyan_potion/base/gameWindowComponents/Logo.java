@@ -94,13 +94,6 @@ public class Logo extends AbstractGameWindowComponent {
             MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
             madeWithLogo.addToGameWindowComponentTree(null);
             madeWithLogo.enlargeAsFullWindow();
-
-//            Font.defaultFont.loadBitmap();
-//            this.getGameWindow().gameWindowComponentTree.deleteNode(this);
-//            {
-//                World world = new World(this.gameWindow);
-//                world.addToGameWindowComponentTree();
-//            }
         }
     }
 
@@ -117,7 +110,6 @@ public class Logo extends AbstractGameWindowComponent {
         float t =
                 (float) (this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis());
         float pscale;
-//        LOGGER.debug(t);
         float dynamicTime = 500f;
         float stayTime = 2000f;
         float fadeTime = 1000f;
