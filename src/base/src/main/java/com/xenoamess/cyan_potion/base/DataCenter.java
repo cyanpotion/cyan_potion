@@ -63,10 +63,10 @@ public class DataCenter {
         this.setGameManager(gameManager);
     }
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static ObjectMapper getObjectMapper() {
-        return objectMapper;
+        return OBJECT_MAPPER;
     }
 
 

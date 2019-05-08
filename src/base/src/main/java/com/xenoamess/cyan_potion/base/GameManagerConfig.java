@@ -28,8 +28,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
-class ConfigFileBooleanValueStringIsNotBooleanExeption extends RuntimeException {
-    public ConfigFileBooleanValueStringIsNotBooleanExeption(String message) {
+class ConfigFileBooleanValueStringIsNotBooleanException extends RuntimeException {
+    public ConfigFileBooleanValueStringIsNotBooleanException(String message) {
         super(message);
     }
 }
@@ -64,7 +64,7 @@ public class GameManagerConfig {
             case "no":
                 return false;
             default:
-                throw new ConfigFileBooleanValueStringIsNotBooleanExeption(value);
+                throw new ConfigFileBooleanValueStringIsNotBooleanException(value);
         }
     }
 
