@@ -315,7 +315,7 @@ public class GameManager implements AutoCloseable {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
-            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language, );
+            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
             System.exit(1);
         }
     }
