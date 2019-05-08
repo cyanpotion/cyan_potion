@@ -53,7 +53,7 @@ public class GamepadInput {
                 getGamepadDatas().add(new JXInputGamepadData(jXInputGamepadDevice));
             }
         } catch (XInputNotLoadedException e) {
-            e.printStackTrace();
+            LOGGER.debug("XInputNotLoadedException", e);
         }
 
         if (gameManager.getDataCenter().isRunWithSteam() == true) {

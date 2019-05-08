@@ -134,29 +134,26 @@ public class GameWindow implements AutoCloseable {
         glfwUpdateGamepadMappings(SDL_GameControllerDB_Util.getSDL_GameControllerDB_ByteBuffer());
     }
 
+
+    public static void setOpenglVersion(String openglVersion) {
+        try {
+            int openglVersionMajor = Integer.parseInt(openglVersion.split("\\.")[0]);
+            int openglVersionMinor = Integer.parseInt(openglVersion.split("\\.")[1]);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,
+                    openglVersionMajor);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
+                    openglVersionMinor);
+        } catch (Exception e) {
+            LOGGER.error("GameWindow.setOpenglVersion(String openglVersion) fails", openglVersion, e);
+        }
+    }
+
     private void initGlfwWindow() {
 
         // Configure GLFW
         glfwDefaultWindowHints(); // optional, the current window hints are
         // already the default
 
-
-        //        LOGGER.debug(Integer.parseInt(DataCenter
-        //        .openglVersion.split("\\.")[0]));
-        //        LOGGER.debug(Integer.parseInt(DataCenter
-        //        .openglVersion.split("\\.")[1]));
-        //        try {
-        //            int openglVersionMajor = Integer.parseInt(DataCenter
-        //            .openglVersion.split("\\.")[0]);
-        //            int openglVersionMinor = Integer.parseInt(DataCenter
-        //            .openglVersion.split("\\.")[1]);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,
-        //            openglVersionMajor);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
-        //            openglVersionMinor);
-        //        } catch (Exception e) {
-        //            e.printStackTrace();
-        //        }
 
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_FALSE);

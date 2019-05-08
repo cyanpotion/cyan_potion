@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.io.input.key;
 
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
 import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ import static org.lwjgl.glfw.GLFW.*;
  * @author XenoAmess
  */
 public class Keymap {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Keymap.class);
 
     public static final int XENOAMESS_KEY_ESCAPE = GLFW_KEY_ESCAPE;
     public static final int XENOAMESS_KEY_ENTER = GLFW_KEY_ENTER;
@@ -80,16 +84,14 @@ public class Keymap {
         if (rawInput == null || myInput == null) {
             return null;
         }
-        //        LOGGER.debug(rawInput + " " + myInput);
         Integer rawInputI = null;
         Integer myInputI = null;
         try {
             Field field = GLFW.class.getField(rawInput);
+            field.setAccessible(true);
             rawInputI = (Integer) field.get(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
         }
         if (rawInputI == null) {
             return null;
@@ -97,11 +99,10 @@ public class Keymap {
         try {
             Field field = Keymap.class.getField(myInput);
             myInputI = (Integer) field.get(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
         }
+
         if (myInputI == null) {
             return null;
         }

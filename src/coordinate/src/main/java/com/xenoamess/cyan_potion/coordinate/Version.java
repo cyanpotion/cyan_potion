@@ -42,6 +42,7 @@ import java.net.URL;
  * @author XenoAmess
  */
 public class Version {
+
     private Version() {
 
     }
@@ -67,18 +68,19 @@ public class Version {
      * @param resourceFilePath path of the resource file
      * @return the url returned
      */
+    @SuppressWarnings("Duplicates")
     public static URL getURL(String resourceFilePath) {
-        final URL res = Version.class.getResource(resourceFilePath);
-        return res;
+        return Version.class.getResource(resourceFilePath);
     }
 
+    @SuppressWarnings("Duplicates")
     public static String loadFile(String resourceFilePath) {
         String res = "";
         try (
                 BufferedReader bufferedReader =
                         new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
         ) {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             String tmp;
             while (true) {
                 tmp = bufferedReader.readLine();
