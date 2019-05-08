@@ -76,12 +76,6 @@ public class AudioManager implements AutoCloseable {
         }
         ALCCapabilities deviceCaps =
                 ALC.createCapabilities(this.getOpenalDevice());
-// Query for Effect Extension
-//        if (!deviceCaps.ALC_EXT_EFX) {
-//            alcCloseDevice(device);
-//            throw new Exception("No EXTEfx supported by driver.");
-//        }
-//        LOGGER.debug("EXTEfx found.");
         this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(),
                 (IntBuffer) null));
         alcSetThreadContext(this.getOpenalContext());
@@ -142,12 +136,6 @@ public class AudioManager implements AutoCloseable {
     }
 
     public void playNew(WaveData waveData) {
-//        for (Source au : usedSources) {
-//            if (au.currentWaveData == waveData && au.isPaused()) {
-//                au.play();
-////                return;
-//            }
-//        }
         Source audioSource = this.getUnusedSource();
         getUnusedSources().remove(audioSource);
         getUsedSources().add(audioSource);
@@ -158,7 +146,6 @@ public class AudioManager implements AutoCloseable {
         for (Source au : getUsedSources()) {
             if (au.getCurrentWaveData() == waveData && au.isPaused()) {
                 au.play();
-//                return;
             }
         }
     }
@@ -167,17 +154,14 @@ public class AudioManager implements AutoCloseable {
         for (Source au : getUsedSources()) {
             if (au.getCurrentWaveData() == waveData && au.isPlaying()) {
                 au.pause();
-//                return;
             }
         }
     }
 
     public void stop(WaveData waveData) {
         for (Source au : getUsedSources()) {
-            if (au.getCurrentWaveData() == waveData) {
-                if (au.isPlaying() || au.isPaused()) {
-                    au.stop();
-                }
+            if (au.getCurrentWaveData() == waveData && (au.isPlaying() || au.isPaused())) {
+                au.stop();
             }
         }
     }
