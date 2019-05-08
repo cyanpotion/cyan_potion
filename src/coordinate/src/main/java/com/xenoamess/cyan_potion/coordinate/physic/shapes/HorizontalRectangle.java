@@ -51,10 +51,7 @@ public class HorizontalRectangle extends AbstractShape {
         if (point.y < this.minY()) {
             return false;
         }
-        if (point.y > this.maxY()) {
-            return false;
-        }
-        return true;
+        return !(point.y > this.maxY());
     }
 
     public int relation(HorizontalRectangle target, boolean rough) {

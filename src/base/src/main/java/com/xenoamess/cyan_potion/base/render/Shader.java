@@ -29,10 +29,9 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.system.MemoryUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +42,9 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  */
 public class Shader implements AutoCloseable {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Shader.class);
+
     /**
      * try to clear when reach CLEAR_TIME_MILLIS to last clear time.
      */
@@ -60,18 +62,18 @@ public class Shader implements AutoCloseable {
         setProgramObject(glCreateProgram());
 
         setVertexShaderObject(glCreateShader(GL_VERTEX_SHADER));
-        glShaderSource(getVertexShaderObject(), readFile(filename + ".vs"));
+        glShaderSource(getVertexShaderObject(), FileUtil.loadFile("/shaders/" + filename + ".vs"));
         glCompileShader(getVertexShaderObject());
         if (glGetShaderi(getVertexShaderObject(), GL_COMPILE_STATUS) != 1) {
-            System.err.println(glGetShaderInfoLog(getVertexShaderObject()));
+            LOGGER.error(glGetShaderInfoLog(getVertexShaderObject()));
             System.exit(1);
         }
 
         setFragmentShaderObject(glCreateShader(GL_FRAGMENT_SHADER));
-        glShaderSource(getFragmentShaderObject(), readFile(filename + ".fs"));
+        glShaderSource(getFragmentShaderObject(), FileUtil.loadFile("/shaders/" + filename + ".fs"));
         glCompileShader(getFragmentShaderObject());
         if (glGetShaderi(getFragmentShaderObject(), GL_COMPILE_STATUS) != 1) {
-            System.err.println(glGetShaderInfoLog(getFragmentShaderObject()));
+            LOGGER.error(glGetShaderInfoLog(getFragmentShaderObject()));
             System.exit(1);
         }
 
@@ -83,12 +85,12 @@ public class Shader implements AutoCloseable {
 
         glLinkProgram(getProgramObject());
         if (glGetProgrami(getProgramObject(), GL_LINK_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(getProgramObject()));
+            LOGGER.error(glGetProgramInfoLog(getProgramObject()));
             System.exit(1);
         }
         glValidateProgram(getProgramObject());
         if (glGetProgrami(getProgramObject(), GL_VALIDATE_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(getProgramObject()));
+            LOGGER.error(glGetProgramInfoLog(getProgramObject()));
             System.exit(1);
         }
     }
@@ -156,23 +158,6 @@ public class Shader implements AutoCloseable {
     public void bind() {
         glUseProgram(getProgramObject());
     }
-
-    private String readFile(String filename) {
-        final StringBuilder outputString = new StringBuilder();
-        try (BufferedReader bufferedReader =
-                     new BufferedReader(new FileReader(FileUtil.getFile(
-                             "/shaders/" + filename)))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                outputString.append(line);
-                outputString.append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return outputString.toString();
-    }
-
 
     public int getProgramObject() {
         return programObject;

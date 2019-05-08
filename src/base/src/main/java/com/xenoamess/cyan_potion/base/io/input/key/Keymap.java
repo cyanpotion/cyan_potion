@@ -24,8 +24,12 @@
 
 package com.xenoamess.cyan_potion.base.io.input.key;
 
+import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
+import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,6 +42,8 @@ import static org.lwjgl.glfw.GLFW.*;
  * @author XenoAmess
  */
 public class Keymap {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Keymap.class);
 
     public static final int XENOAMESS_KEY_ESCAPE = GLFW_KEY_ESCAPE;
     public static final int XENOAMESS_KEY_ENTER = GLFW_KEY_ENTER;
@@ -56,9 +62,9 @@ public class Keymap {
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
-    private Map<Key, Key> keymap = new HashMap<Key, Key>();
+    private Map<Key, Key> keymap = new HashMap<>();
 
-    private Map<Key, ArrayList> keymapReverse = new HashMap<Key, ArrayList>();
+    private Map<Key, ArrayList> keymapReverse = new HashMap<>();
 
 
     private boolean[][] rawKeys =
@@ -80,16 +86,14 @@ public class Keymap {
         if (rawInput == null || myInput == null) {
             return null;
         }
-        //        System.out.println(rawInput + " " + myInput);
         Integer rawInputI = null;
         Integer myInputI = null;
         try {
             Field field = GLFW.class.getField(rawInput);
+            field.setAccessible(true);
             rawInputI = (Integer) field.get(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
         }
         if (rawInputI == null) {
             return null;
@@ -97,26 +101,22 @@ public class Keymap {
         try {
             Field field = Keymap.class.getField(myInput);
             myInputI = (Integer) field.get(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
         }
+
         if (myInputI == null) {
             return null;
         }
 
-        //        System.out.println(Keymap);
-        //        System.out.println(rawInputI);
-        //        System.out.println(myInputI);
+        int type;
 
-        int type = -2;
         if (rawInput.startsWith("GLFW_KEY")) {
             type = Key.TYPE_KEY;
         } else if (rawInput.startsWith("GLFW_MOUSE_BUTTON")) {
             type = Key.TYPE_MOUSE;
         } else {
-            throw new Error("if you want to implement Joystick you should add" +
+            throw new NotImplementedException("if you want to implement Joystick you should add" +
                     " it here");
         }
         return put(new Key(type, rawInputI), new Key(Key.TYPE_XENOAMESS_KEY,
@@ -146,7 +146,7 @@ public class Keymap {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         getMyKeys()[myKey.getKey()] = true;
     }
@@ -161,48 +161,20 @@ public class Keymap {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         getMyKeys()[myKey.getKey()] = false;
     }
 
     public boolean isKeyDown(Key myKey) {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         return getMyKeys()[myKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
-//        KeymapReverse.get(myInput);
-//        if (rawInputKeys == null) {
-//            return false;
-//        }
-//        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
-//            (key)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
-//        key) == 1;
     }
 
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()];
-//        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
-//        KeymapReverse.get(myInput);
-//        if (rawInputKeys == null) {
-//            return false;
-//        }
-//        for (int key : rawInputKeys) {
-//            if (DataCenter.currentGameManager.gameWindow.input.isKeyDown
-//            (key)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//        return glfwGetKey(DataCenter.currentGameManager.gameWindow.window,
-//        key) == 1;
     }
 
     /**

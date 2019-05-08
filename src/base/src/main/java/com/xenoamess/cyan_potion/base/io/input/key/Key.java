@@ -53,16 +53,24 @@ public class Key {
 
     @Override
     public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
         if (!object.getClass().equals(this.getClass())) {
             return false;
         }
-        final Key key = (Key) (object);
-        return (this.getType() == key.getType() && this.getKey() == key.getKey());
+        final Key keyLocal = (Key) (object);
+        return (this.getType() == keyLocal.getType() && this.getKey() == keyLocal.getKey());
     }
 
     @Override
     public int hashCode() {
         return (this.getType() << 10) | this.getKey();
+    }
+
+    @Override
+    public String toString() {
+        return "type : " + this.type + ", key : " + key;
     }
 
     public int getType() {

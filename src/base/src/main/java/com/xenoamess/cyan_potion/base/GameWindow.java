@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
+import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -72,7 +73,7 @@ public class GameWindow implements AutoCloseable {
 
     private boolean showing = false;
     private boolean beingFocused = false;
-
+    private GLFWErrorCallback glfwErrorCallback;
 
     public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
@@ -98,8 +99,9 @@ public class GameWindow implements AutoCloseable {
         initOpengl();
 
         this.setShader(new Shader("shader"));
-        Model.commonModel = new Model(Model.commonVerticesFloatArray, Model.commonTextureFloatArray,
-                Model.commonIndicesFloatArray);
+
+        Model.COMMON_MODEL.init(Model.COMMON_VERTICES_FLOAT_ARRAY, Model.COMMON_TEXTURE_FLOAT_ARRAY,
+                Model.COMMON_INDICES_FLOAT_ARRAY);
     }
 
     public void showWindow() {
@@ -112,27 +114,39 @@ public class GameWindow implements AutoCloseable {
         this.setBeingFocused(true);
     }
 
-    public void register() {
-    }
-
     @Override
     public void close() {
         // Free the window callbacks and close the window
         Callbacks.glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
         // Terminate GLFW and free the error callback
+        glfwErrorCallback.close();
         glfwTerminate();
         this.getShader().close();
-        Model.commonModel.close();
+        Model.COMMON_MODEL.close();
         GL.destroy();
     }
 
     private void initGlfw() {
-        GLFWErrorCallback.createPrint(System.err).set();
+        glfwErrorCallback = GLFWErrorCallback.createPrint(System.err).set();
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
         glfwUpdateGamepadMappings(SDL_GameControllerDB_Util.getSDL_GameControllerDB_ByteBuffer());
+    }
+
+
+    public static void setOpenglVersion(String openglVersion) {
+        try {
+            int openglVersionMajor = Integer.parseInt(openglVersion.split("\\.")[0]);
+            int openglVersionMinor = Integer.parseInt(openglVersion.split("\\.")[1]);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,
+                    openglVersionMajor);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
+                    openglVersionMinor);
+        } catch (Exception e) {
+            LOGGER.error("GameWindow.setOpenglVersion(String openglVersion) fails", openglVersion, e);
+        }
     }
 
     private void initGlfwWindow() {
@@ -141,23 +155,6 @@ public class GameWindow implements AutoCloseable {
         glfwDefaultWindowHints(); // optional, the current window hints are
         // already the default
 
-
-        //        System.out.println(Integer.parseInt(DataCenter
-        //        .openglVersion.split("\\.")[0]));
-        //        System.out.println(Integer.parseInt(DataCenter
-        //        .openglVersion.split("\\.")[1]));
-        //        try {
-        //            int openglVersionMajor = Integer.parseInt(DataCenter
-        //            .openglVersion.split("\\.")[0]);
-        //            int openglVersionMinor = Integer.parseInt(DataCenter
-        //            .openglVersion.split("\\.")[1]);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,
-        //            openglVersionMajor);
-        //            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
-        //            openglVersionMinor);
-        //        } catch (Exception e) {
-        //            e.printStackTrace();
-        //        }
 
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_FALSE);
@@ -179,37 +176,25 @@ public class GameWindow implements AutoCloseable {
                 this.getRealWindowHeight(),
                 this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
 
-
-        if (getWindow() == MemoryUtil.NULL) {
-            throw new RuntimeException("Failed to create the GLFW window");
+        if (getWindow() == 0L) {
+            throw new FailToCreateGLFWWindowException();
         }
 
-        //        // Setup a key callback. It will be called every time a key
-        //        is pressed, repeated
-        //        // or released.
-        //        glfwSetKeyCallback(window, (window, key, scancode, action,
-        //        mods) -> {
-        //            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-        //                glfwSetWindowShouldClose(window, true); // We will
-        //                detect this in the rendering loop
-        //        });
-
-
         glfwSetKeyCallback(getWindow(),
-                this.getGameManager().getCallbacks().keyCallback);
+                this.getGameManager().getCallbacks().getKeyCallback());
         glfwSetCharCallback(getWindow(),
-                this.getGameManager().getCallbacks().charCallback);
+                this.getGameManager().getCallbacks().getCharCallback());
 
         glfwSetMouseButtonCallback(getWindow(),
-                this.getGameManager().getCallbacks().mouseButtonCallback);
+                this.getGameManager().getCallbacks().getMouseButtonCallback());
         glfwSetScrollCallback(getWindow(),
-                this.getGameManager().getCallbacks().scrollCallback);
-        glfwSetJoystickCallback(this.getGameManager().getCallbacks().joystickCallback);
+                this.getGameManager().getCallbacks().getScrollCallback());
+        glfwSetJoystickCallback(this.getGameManager().getCallbacks().getJoystickCallback());
 
         glfwSetWindowCloseCallback(getWindow(),
-                this.getGameManager().getCallbacks().windowCloseCallback);
+                this.getGameManager().getCallbacks().getWindowCloseCallback());
         glfwSetWindowSizeCallback(getWindow(),
-                this.getGameManager().getCallbacks().windowSizeCallback);
+                this.getGameManager().getCallbacks().getWindowSizeCallback());
 
         if (!isFullScreen()) {
             // make the window be at the center of the screen.
@@ -238,7 +223,6 @@ public class GameWindow implements AutoCloseable {
 
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
-        register();
     }
 
     private void initOpengl() {
@@ -248,7 +232,7 @@ public class GameWindow implements AutoCloseable {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
 
-        //        System.out.println("OpenGL VERSION : " + glGetString
+        //        LOGGER.debug("OpenGL VERSION : " + glGetString
         //        (GL_VERSION));
         //
         //        vao = glGenVertexArrays();
@@ -369,26 +353,26 @@ public class GameWindow implements AutoCloseable {
         glfwPollEvents();
 
 //        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-//        System.out.println("GLFW_JOYSTICK_1 present : " + present);
-//        System.out.println("GLFW_JOYSTICK_1 is gamepad : " +
+//        LOGGER.debug("GLFW_JOYSTICK_1 present : " + present);
+//        LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : " +
 //        glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
 //        FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
-//        System.out.println("axes : ");
-//        System.out.println("0 : " + axes.get(0));
-//        System.out.println("1 : " + axes.get(1));
-//        System.out.println("2 : " + axes.get(2));
-//        System.out.println("3 : " + axes.get(3));
+//        LOGGER.debug("axes : ");
+//        LOGGER.debug("0 : " + axes.get(0));
+//        LOGGER.debug("1 : " + axes.get(1));
+//        LOGGER.debug("2 : " + axes.get(2));
+//        LOGGER.debug("3 : " + axes.get(3));
 //
 //        ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
-//        System.out.println("buttons : ");
+//        LOGGER.debug("buttons : ");
 //        for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
-//            System.out.println(i + " : " + buttons.get(i));
+//            LOGGER.debug(i + " : " + buttons.get(i));
 //        }
 //        String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-//        System.out.println("GLFW_JOYSTICK_1 name : " + name);
+//        LOGGER.debug("GLFW_JOYSTICK_1 name : " + name);
 //        ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
-//        System.out.println("hats : ");
-//        System.out.println(hats.get(0));
+//        LOGGER.debug("hats : ");
+//        LOGGER.debug(hats.get(0));
     }
 
     public void changeFullScreen() {
@@ -432,7 +416,9 @@ public class GameWindow implements AutoCloseable {
     private float mousePosY;
 
     protected void updateMousePos() {
-        double[] x = new double[1], y = new double[1];
+        double[] x = new double[1];
+        double[] y = new double[1];
+
         glfwGetCursorPos(this.getWindow(), x, y);
         setLastMousePosX(getMousePosX());
         setLastMousePosY(getMousePosY());
@@ -442,7 +428,6 @@ public class GameWindow implements AutoCloseable {
         setMousePosX(Math.min(getMousePosX(), this.getLogicWindowWidth()));
         setMousePosY(Math.max(getMousePosY(), 0));
         setMousePosY(Math.min(getMousePosY(), this.getLogicWindowHeight()));
-//        LogUtil.out.println("mousePos : " + mousePosX + " " + mousePosY);
     }
 
     public void update() {
@@ -509,7 +494,7 @@ public class GameWindow implements AutoCloseable {
         this.getShader().setUniform("colorScale", colorScale);
 
         if (model == null) {
-            model = Model.commonModel;
+            model = Model.COMMON_MODEL;
         }
 
         model.render();
@@ -522,7 +507,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height) {
         this.drawBindableRelative(bindable, posx, posy, width, height,
-                Model.commonModel, new Vector4f(1, 1, 1, 1));
+                Model.COMMON_MODEL, new Vector4f(1, 1, 1, 1));
     }
 
     public void drawBindableRelative(Bindable bindable, float posx,
@@ -534,7 +519,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height, Vector4f colorScale) {
         this.drawBindableRelative(bindable, posx, posy, width, height,
-                Model.commonModel, colorScale);
+                Model.COMMON_MODEL, colorScale);
     }
 
 
@@ -542,7 +527,7 @@ public class GameWindow implements AutoCloseable {
                                             float posy, float width,
                                             float height, Vector4f colorScale) {
         this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
-                Model.commonModel, colorScale);
+                Model.COMMON_MODEL, colorScale);
     }
 
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
@@ -555,7 +540,7 @@ public class GameWindow implements AutoCloseable {
     public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
                                             float posy, float width,
                                             float height) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.commonModel,
+        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.COMMON_MODEL,
                 new Vector4f(1, 1, 1, 1));
     }
 
@@ -570,26 +555,26 @@ public class GameWindow implements AutoCloseable {
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, colorScale);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, model);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, model);
     }
 
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2 - width / 2,
-                getLogicWindowHeight() / 2 - height / 2, width, height, model, colorScale);
+        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
+                getLogicWindowHeight() / 2F - height / 2, width, height, model, colorScale);
     }
 
 
@@ -649,11 +634,6 @@ public class GameWindow implements AutoCloseable {
 
     public void drawText(Font font, float x, float y, String text) {
         this.drawText(font, x, y, 1f, text);
-    }
-
-
-    public static void openDebug() {
-        GLFWErrorCallback.createPrint().set();
     }
 
     public void bindGlViewportToFullWindow() {

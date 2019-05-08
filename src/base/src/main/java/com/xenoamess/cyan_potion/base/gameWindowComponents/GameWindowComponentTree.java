@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
-//import com.xenoamess.gearbar.GameEngineObject;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -106,12 +105,12 @@ public class GameWindowComponentTree implements AutoCloseable {
 
                     @Override
                     public void update() {
-
+                        //no update here.
                     }
 
                     @Override
                     public void draw() {
-
+                        //no draw here.
                     }
                 };
 
@@ -127,7 +126,6 @@ public class GameWindowComponentTree implements AutoCloseable {
         }
 
         getLeafNodes().clear();
-//        super.close();
     }
 
 
@@ -148,12 +146,8 @@ public class GameWindowComponentTree implements AutoCloseable {
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         Iterator<GameWindowComponentTreeNode> it =
                 this.getLeafNodes().iterator();
-        if (it.hasNext()) {
-            return it.next().newNode(gameWindowComponent);
-        } else {
-            throw new Error("GameWindowComponentTree do not have any " +
-                    "leafNode!!! What did you do???");
-        }
+        assert (it.hasNext());
+        return it.next().newNode(gameWindowComponent);
     }
 
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {

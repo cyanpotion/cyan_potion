@@ -59,16 +59,16 @@ public class SteamGamepadData extends AbstractGamepadData {
 
     @Override
     public void updateGamepadStatus(GameWindow gameWindow) {
-
+        //TODO
     }
 
     @Override
     public void reset() {
-
+        //TODO
     }
 
     @Override
     public void update(GameWindow gameWindow) {
-
+        //TODO
     }
 }

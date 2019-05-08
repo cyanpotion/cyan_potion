@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -50,7 +51,7 @@ public class ConsoleEvent implements Event {
         // If anyone do have any idea about how it shall design,
         // please just open issue. Thx.
         LOGGER.info(getCommand());
-        return null;
+        return new HashSet<>();
     }
 
     public String getCommand() {

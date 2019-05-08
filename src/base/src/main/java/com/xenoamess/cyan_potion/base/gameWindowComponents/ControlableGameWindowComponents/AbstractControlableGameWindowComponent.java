@@ -53,17 +53,6 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
                             (MouseButtonEvent) event;
                     return processMouseButtonEvents(mouseButtonEvent);
                 });
-
-//        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
-//            KeyEvent keyEvent = (KeyEvent) event;
-//            return processKeyEvents(keyEvent);
-//        });
-//
-//        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
-//        event -> {
-//            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
-//            return processMouseScrollEvents(mouseScrollEvent);
-//        });
     }
 
     public void setActive(boolean active) {
@@ -314,11 +303,10 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         if (this.getWidth() < 0 || this.getHeight() < 0) {
             return false;
         }
-        if (posX >= this.getLeftTopPosX() && posX <= this.getLeftTopPosX() + this.getWidth()
-                && posY >= this.getLeftTopPosY() && posY <= this.getLeftTopPosY() + this.getHeight()) {
-            return true;
-        }
-        return false;
+        return (posX >= this.getLeftTopPosX()
+                && posX <= this.getLeftTopPosX() + this.getWidth()
+                && posY >= this.getLeftTopPosY()
+                && posY <= this.getLeftTopPosY() + this.getHeight());
     }
 
     public boolean ifMouseInArea() {
@@ -407,13 +395,6 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         }
     }
 
-//    public Event processKeyEvents(KeyEvent keyEvent) {
-//        return keyEvent;
-//    }
-//
-//    public Event processMouseScrollEvents(MouseScrollEvent mouseScrollEvent) {
-//        return mouseScrollEvent;
-//    }
 
     @Override
     public Event process(Event event) {
