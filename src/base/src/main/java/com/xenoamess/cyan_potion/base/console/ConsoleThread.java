@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.console;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.ConsoleEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +40,9 @@ import java.util.concurrent.Executors;
 
 
 class ConsoleTalkThread implements Runnable {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ConsoleTalkThread.class);
+
     final private Socket socket;
     final private ConsoleThread consoleThread;
 
@@ -52,7 +57,7 @@ class ConsoleTalkThread implements Runnable {
         try {
             is = socket.getInputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleTalkThread fail", e);
         }
         Scanner scanner = new Scanner(is);
 
@@ -83,6 +88,9 @@ class ConsoleTalkThread implements Runnable {
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig
  */
 public class ConsoleThread extends Thread {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ConsoleTalkThread.class);
+
     final private GameManager gameManager;
 
     public ConsoleThread(GameManager gameManager) {
@@ -106,12 +114,12 @@ public class ConsoleThread extends Thread {
                     executorService.execute(new ConsoleTalkThread(socket,
                             this));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.error("ConsoleThread socket fail", e);
                 }
             }
             executorService.shutdown();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleThread serverSocket fail", e);
         }
 
     }

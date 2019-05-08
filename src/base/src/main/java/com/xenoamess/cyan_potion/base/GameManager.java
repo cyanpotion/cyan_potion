@@ -336,7 +336,7 @@ public class GameManager implements AutoCloseable {
                 // Error extracting or loading native libraries
                 this.getDataCenter().setRunWithSteam(false);
                 if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                    e.printStackTrace();
+                    LOGGER.warn("SteamAPI.init() fails", e);
                     LOGGER.warn("Steam load failed but somehow we cannot prevent " +
                             "you from playing it.");
                 } else {
@@ -391,7 +391,7 @@ public class GameManager implements AutoCloseable {
             try {
                 this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+                LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
             }
         }

@@ -64,8 +64,8 @@ public class Version {
      * Because I also use this in other projects.
      * So.
      *
-     * @param resourceFilePath resourceFilePath
-     * @return URL
+     * @param resourceFilePath path of the resource file
+     * @return the url returned
      */
     public static URL getURL(String resourceFilePath) {
         final URL res = Version.class.getResource(resourceFilePath);
