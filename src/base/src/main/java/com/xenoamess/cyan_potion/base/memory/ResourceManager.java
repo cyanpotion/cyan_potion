@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.render.Texture;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,11 +57,7 @@ public class ResourceManager implements AutoCloseable {
 
     public <T> void putResourceLoader(Class<T> tClass, String resourceType, BiFunction<T, String, Void> loader) {
         ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
-                defaultResourecesLoaderMap.get(tClass);
-        if (resourceLoaderMap == null) {
-            resourceLoaderMap = new ConcurrentHashMap<>(8);
-            defaultResourecesLoaderMap.put(tClass, resourceLoaderMap);
-        }
+                defaultResourecesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
@@ -74,10 +69,6 @@ public class ResourceManager implements AutoCloseable {
         }
         return resourceLoaderMap.get(resourceType);
     }
-
-
-    private final ConcurrentHashMap<String, BiFunction<Texture, String[], Void>> resourceLoaders =
-            new ConcurrentHashMap<>();
 
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (StringUtils.isBlank(fullResourceURI)) {
@@ -99,18 +90,6 @@ public class ResourceManager implements AutoCloseable {
         }
 
         String resourceClassName = sb.toString();
-        sb = new StringBuilder();
-
-        Class resourceClass = null;
-
-        try {
-            resourceClass =
-                    this.getClass().getClassLoader().loadClass(resourceClassName);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("putResourceWithURI : resourceClass is null", fullResourceURI, t, e);
-            System.exit(-1);
-        }
-
 
         this.putResourceWithShortenURI(fullResourceURI.substring(i), t);
     }
@@ -137,7 +116,7 @@ public class ResourceManager implements AutoCloseable {
         }
 
         String resourceClassName = sb.toString();
-        sb = new StringBuilder();
+
 
         Class resourceClass = null;
 
@@ -230,9 +209,6 @@ public class ResourceManager implements AutoCloseable {
         }
     }
 
-
-//    public ArrayList<AbstractResource> deletingResources = new ArrayList<>();
-
     public ResourceManager(GameManager gameManager) {
         this.setGameManager(gameManager);
     }
@@ -251,8 +227,6 @@ public class ResourceManager implements AutoCloseable {
             return;
         }
         setTotalMemorySize(getTotalMemorySize() - resource.getMemorySize());
-//        deletingResources.add(resource);
-//        inMemoryResources.remove(resource);
         resource.setInMemory(false);
     }
 
