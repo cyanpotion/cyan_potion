@@ -409,8 +409,7 @@ public class TitleExample extends AbstractGameWindowComponent {
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (this.getState() >= 0 && this.getState() <= 4) {
-        } else if (getState() == -101) {
+        if (!(this.getState() >= 0 && this.getState() <= 4) && getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
                     this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2F,
                     250, 50);
