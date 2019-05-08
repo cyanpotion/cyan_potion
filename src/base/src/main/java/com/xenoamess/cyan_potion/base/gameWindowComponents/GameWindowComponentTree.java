@@ -126,7 +126,6 @@ public class GameWindowComponentTree implements AutoCloseable {
         }
 
         getLeafNodes().clear();
-//        super.close();
     }
 
 
@@ -147,12 +146,8 @@ public class GameWindowComponentTree implements AutoCloseable {
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         Iterator<GameWindowComponentTreeNode> it =
                 this.getLeafNodes().iterator();
-        if (it.hasNext()) {
-            return it.next().newNode(gameWindowComponent);
-        } else {
-            throw new Error("GameWindowComponentTree do not have any " +
-                    "leafNode!!! What did you do???");
-        }
+        assert (it.hasNext());
+        return it.next().newNode(gameWindowComponent);
     }
 
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {

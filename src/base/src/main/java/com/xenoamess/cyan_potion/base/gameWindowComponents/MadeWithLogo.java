@@ -114,27 +114,22 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             glClear(GL_COLOR_BUFFER_BIT);
             return;
         }
-//        glClearColor(1, 1, 1, 1);
-//        glClear(GL_COLOR_BUFFER_BIT);
 
-        long t =
-                this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
-        float cscale;
+        long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
+        float colorScale;
 
         long stayTime = 5000L;
         long fadeTime = 5000L;
         if (t < stayTime) {
-            cscale = 1;
+            colorScale = 1;
         } else {
-            cscale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
+            colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
-//        cscale = 1.1f;
-
 
         this.getGameWindow().drawBindableRelativeCenter(this.getLogoTexture()
                 , this.getGameWindow().getLogicWindowWidth(),
                 this.getGameWindow().getLogicWindowHeight(), new Vector4f(1,
-                        cscale, cscale, 1));
+                        colorScale, colorScale, 1));
     }
 
     public Texture getLogoTexture() {
