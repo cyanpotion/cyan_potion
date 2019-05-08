@@ -68,6 +68,11 @@ public class Key {
         return (this.getType() << 10) | this.getKey();
     }
 
+    @Override
+    public String toString() {
+        return "type : " + this.type + ", key : " + key;
+    }
+
     public int getType() {
         return type;
     }

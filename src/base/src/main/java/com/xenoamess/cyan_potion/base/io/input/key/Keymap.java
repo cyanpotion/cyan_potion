@@ -39,6 +39,15 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * @author XenoAmess
  */
+class KeyShallBeXenoAmessKeyButItIsNotException extends RuntimeException {
+    public KeyShallBeXenoAmessKeyButItIsNotException(String message) {
+        super(message);
+    }
+}
+
+/**
+ * @author XenoAmess
+ */
 public class Keymap {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(Keymap.class);
@@ -147,7 +156,7 @@ public class Keymap {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         getMyKeys()[myKey.getKey()] = true;
     }
@@ -162,14 +171,14 @@ public class Keymap {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         getMyKeys()[myKey.getKey()] = false;
     }
 
     public boolean isKeyDown(Key myKey) {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new Error("the key is not in correct type!!");
+            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
         return getMyKeys()[myKey.getKey()];
 //        ArrayList<Integer> rawInputKeys = (ArrayList<Integer>)
