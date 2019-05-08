@@ -24,15 +24,10 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.xenoamess.cyan_potion.base.exceptions.ConfigFileBooleanValueStringIsNotBooleanException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
-
-class ConfigFileBooleanValueStringIsNotBooleanException extends RuntimeException {
-    public ConfigFileBooleanValueStringIsNotBooleanException(String message) {
-        super(message);
-    }
-}
 
 /**
  * @author XenoAmess
@@ -136,9 +131,8 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_DEFAULT_FONT_FILE_PATH =
-            "defaultFontFilePath";
-
+    public static final String STRING_DEFAULT_FONT_RESOURCE_URI =
+            "defaultFontResourceURI";
 
     /**
      * Language.

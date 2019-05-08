@@ -57,6 +57,7 @@ public class Logo extends AbstractGameWindowComponent {
         this(gameWindow, 500L + 2000L + 1000L);
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(),

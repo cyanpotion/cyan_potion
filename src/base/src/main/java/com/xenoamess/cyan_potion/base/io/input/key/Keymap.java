@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.key;
 
+import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
 import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
@@ -36,15 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.glfw.GLFW.*;
-
-/**
- * @author XenoAmess
- */
-class KeyShallBeXenoAmessKeyButItIsNotException extends RuntimeException {
-    public KeyShallBeXenoAmessKeyButItIsNotException(String message) {
-        super(message);
-    }
-}
 
 /**
  * @author XenoAmess

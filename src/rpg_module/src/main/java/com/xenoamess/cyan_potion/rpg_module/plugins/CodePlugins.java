@@ -42,32 +42,32 @@ public class CodePlugins {
 
     public static final Function<GameManager, Void> PLUGIN_RPG_MODULE_TEXTURE_LOADERS = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, "characters",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    loadAsWalkingTexture(texture, resourceFileURIStrings);
+                (Texture texture) -> {
+                    loadAsWalkingTexture(texture, texture.getFullResourceURI());
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "A5",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    loadAsTilesetTextures8(texture, resourceFileURIStrings);
+                (Texture texture) -> {
+                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "B",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    loadAsTilesetTextures8(texture, resourceFileURIStrings);
+                (Texture texture) -> {
+                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "C",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    loadAsTilesetTextures8(texture, resourceFileURIStrings);
+                (Texture texture) -> {
+                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "A2",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    loadAsTilesetTexturesA2(texture, resourceFileURIStrings);
+                (Texture texture) -> {
+                    loadAsTilesetTexturesA2(texture, texture.getFullResourceURI());
                     return null;
                 }
         );

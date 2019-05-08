@@ -33,7 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * @author XenoAmess
@@ -55,14 +55,14 @@ public class ResourceManager implements AutoCloseable {
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesLoaderMap = new ConcurrentHashMap<>();
 
-    public <T> void putResourceLoader(Class<T> tClass, String resourceType, BiFunction<T, String, Void> loader) {
-        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+    public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
+        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
                 defaultResourecesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
-    public <T> BiFunction<T, String, Void> getResourceLoader(Class<T> tClass, String resourceType) {
-        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+    public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
                 defaultResourecesLoaderMap.get(tClass);
         if (resourceLoaderMap == null) {
             return null;

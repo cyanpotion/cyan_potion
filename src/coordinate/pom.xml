@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>cyan_potion_base</artifactId>       <!--加上childA的依赖-->
+            <artifactId>cyan_potion_base</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

@@ -24,25 +24,45 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
+import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
 /**
  * @author XenoAmess
  */
-public abstract class AbstractResource implements AutoCloseable {
+public abstract class AbstractResource implements AutoCloseable, Bindable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);
 
     private final ResourceManager resourceManager;
     private final String fullResourceURI;
     private long memorySize;
-    private boolean inMemory = false;
+    private final AtomicBoolean inMemory = new AtomicBoolean(false);
     private long lastUsedFrameIndex;
 
+    /**
+     * !!!NOTICE!!!
+     * <p>
+     * This class shall never build from this constructor directly.
+     * You shall always use ResourceManager.fetchResource functions to get this instance.
+     *
+     * @param resourceManager resource Manager
+     * @param fullResourceURI full Resource URI
+     * @see ResourceManager
+     */
     public AbstractResource(ResourceManager resourceManager, String fullResourceURI) {
         this.resourceManager = resourceManager;
         this.fullResourceURI = fullResourceURI;
+    }
+
+    @Override
+    public void bind(int sampler) {
+        this.load();
     }
 
 
@@ -60,7 +80,7 @@ public abstract class AbstractResource implements AutoCloseable {
         if (this.getMemorySize() == 0) {
             LOGGER.warn("this.memorySize shows 0 here. potential track error?");
         }
-//        this.inMemory = true;
+        this.setInMemory(true);
     }
 
     public void reload() {
@@ -87,7 +107,25 @@ public abstract class AbstractResource implements AutoCloseable {
                 shortenResourceURI);
     }
 
-    protected abstract void forceLoad();
+    /**
+     * force to reload this resource.
+     * using loaders registered in this.getResourceManager() .
+     *
+     * @see ResourceManager
+     */
+    public void forceLoad() {
+        final String[] resourceFileURIStrings =
+                this.getFullResourceURI().split(":");
+        final String resourceFilePath = resourceFileURIStrings[1];
+        final String resourceType = resourceFileURIStrings[2];
+
+        Function loader =
+                this.getResourceManager().getResourceLoader(this.getClass(), resourceType);
+        if (loader == null) {
+            throw new URITypeNotDefinedException(this.getFullResourceURI());
+        }
+        loader.apply(this);
+    }
 
     protected abstract void forceClose();
 
@@ -109,11 +147,11 @@ public abstract class AbstractResource implements AutoCloseable {
     }
 
     public boolean isInMemory() {
-        return inMemory;
+        return inMemory.get();
     }
 
     public void setInMemory(boolean inMemory) {
-        this.inMemory = inMemory;
+        this.inMemory.set(inMemory);
     }
 
     public long getLastUsedFrameIndex() {

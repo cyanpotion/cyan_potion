@@ -191,14 +191,14 @@ public class GameManager implements AutoCloseable {
 
         this.setGamepadInput(new GamepadInput(this));
         this.setStartingContent();
-        final String defaultFontFilePath =
+        final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
-                        STRING_DEFAULT_FONT_FILE_PATH,
-                        Font.DEFAULT_DEFAULT_FONT_FILE_PATH);
-
+                        STRING_DEFAULT_FONT_RESOURCE_URI,
+                        Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
+        Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
         this.getExecutorService().execute(() -> {
-            Font.getDefaultFont().setTtfFilePath(defaultFontFilePath);
-            Font.getDefaultFont().loadBitmap();
+            Font.getDefaultFont().load();
+            Font.setCurrentFont(Font.getDefaultFont());
         });
 
         this.loop();

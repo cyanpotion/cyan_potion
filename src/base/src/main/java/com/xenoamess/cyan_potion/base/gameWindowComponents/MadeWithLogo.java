@@ -60,6 +60,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this(gameWindow, 5000L + 5000L);
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
@@ -91,7 +92,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             this.setAlive(false);
         }
 
-        if (!this.getAlive() && Font.getDefaultFont() != null) {
+        if (!this.getAlive() && Font.getDefaultFont().isInMemory()) {
             this.getGameWindowComponentTreeNode().close();
             {
                 Font.getDefaultFont().init(this.getGameWindow());
