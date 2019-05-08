@@ -102,14 +102,15 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(URL path) {
+        WaveData res = null;
         try {
-            return create(
+            res = create(
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(path.openStream())));
         } catch (Exception e) {
-            LOGGER.debug("Unable to create from: {}", path);
-            return null;
+            LOGGER.warn("WaveData.create(URL path) fails", path, e);
         }
+        return res;
     }
 
     /**
@@ -125,18 +126,17 @@ public class WaveData {
     /**
      * Creates a WaveData container from the specified inputstream
      *
-     * @param is InputStream to read from
+     * @param inputStream InputStream to read from
      * @return WaveData containing data, or null if a failure occured
      */
-    public static WaveData create(InputStream is) {
+    public static WaveData create(InputStream inputStream) {
+        WaveData res = null;
         try {
-            return create(
-                    AudioSystem.getAudioInputStream(is));
+            res = create(AudioSystem.getAudioInputStream(inputStream));
         } catch (Exception e) {
-            System.out.println("Unable to create from inputstream");
-//            e.printStackTrace();
-            return null;
+            LOGGER.warn("WaveData.create(InputStream inputStream) fails", inputStream, e);
         }
+        return res;
     }
 
     /**
@@ -146,14 +146,16 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(byte[] buffer) {
+        WaveData res = null;
         try {
-            return create(
+            res = create(
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            LOGGER.warn("WaveData.create(byte[] buffer) fails", buffer, e);
         }
+        return res;
+
     }
 
     /**
@@ -165,20 +167,21 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(ByteBuffer buffer) {
+        WaveData res = null;
         try {
             byte[] bytes = null;
-
             if (buffer.hasArray()) {
                 bytes = buffer.array();
             } else {
                 bytes = new byte[buffer.capacity()];
                 buffer.get(bytes);
             }
-            return create(bytes);
+            res = create(bytes);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails", buffer, e);
+
         }
+        return res;
     }
 
     /**
@@ -219,7 +222,9 @@ public class WaveData {
                         * (int) ais.getFrameLength()
                         * audioformat.getSampleSizeInBits()
                         / 8];
-        int read = 0, total = 0;
+        int read = 0;
+        int total = 0;
+
         try {
             while ((read = ais.read(buf, total, buf.length - total)) != -1
                     && total < buf.length) {
@@ -250,21 +255,21 @@ public class WaveData {
     /**
      * Convert the audio bytes into the stream
      *
-     * @param audio_bytes    The audio byts
-     * @param two_bytes_data True if we using double byte data
+     * @param audioBytes   The audio byts
+     * @param twoBytesData True if we using double byte data
      * @return The byte bufer of data
      */
-    private static ByteBuffer convertAudioBytes(byte[] audio_bytes,
-                                                boolean two_bytes_data) {
-        ByteBuffer dest = ByteBuffer.allocateDirect(audio_bytes.length);
+    private static ByteBuffer convertAudioBytes(byte[] audioBytes,
+                                                boolean twoBytesData) {
+        ByteBuffer dest = ByteBuffer.allocateDirect(audioBytes.length);
         dest.order(ByteOrder.nativeOrder());
-        ByteBuffer src = ByteBuffer.wrap(audio_bytes);
+        ByteBuffer src = ByteBuffer.wrap(audioBytes);
         src.order(ByteOrder.LITTLE_ENDIAN);
-        if (two_bytes_data) {
-            ShortBuffer dest_short = dest.asShortBuffer();
-            ShortBuffer src_short = src.asShortBuffer();
-            while (src_short.hasRemaining()) {
-                dest_short.put(src_short.get());
+        if (twoBytesData) {
+            ShortBuffer destShort = dest.asShortBuffer();
+            ShortBuffer srcShort = src.asShortBuffer();
+            while (srcShort.hasRemaining()) {
+                destShort.put(srcShort.get());
             }
         } else {
             while (src.hasRemaining()) {

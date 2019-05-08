@@ -27,8 +27,6 @@ package com.xenoamess.cyan_potion.base;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.x8l.X8lTree;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,22 +35,15 @@ import java.util.Map;
  * @author XenoAmess
  */
 public class DataCenter {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(DataCenter.class);
 
-    public static boolean DEBUG = false;
-    public static boolean ALLOW_RUN_WITHOUT_STEAM = true;
-    public static boolean RUN_WITH_STEAM = true;
+    private boolean debug = false;
+    public static final boolean ALLOW_RUN_WITHOUT_STEAM = true;
+    private boolean runWithSteam = true;
 
     public static final int CONSOLE_PORT = 13888;
     public static final double FRAME_CAP = 1 / 60.0;
     public static final float FRAME_CAP_F = (float) FRAME_CAP;
     public static final int SCALE = 2;
-
-//    public String openglVersion = "3.2";
-
-//    private static final ArrayList<GameManager> GAME_MANAGERS = new
-//    ArrayList<>();
 
     private X8lTree globalSettingsTree;
     private final Map<String, String> commonSettings = new HashMap<>();
@@ -72,18 +63,10 @@ public class DataCenter {
         this.setGameManager(gameManager);
     }
 
-    public static void setObjectMapper(ObjectMapper objectMapper) {
-        DataCenter.objectMapper = objectMapper;
-    }
-
-
-    private static ObjectMapper objectMapper = null;
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static ObjectMapper getObjectMapper() {
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
-        return objectMapper;
+        return OBJECT_MAPPER;
     }
 
 
@@ -152,4 +135,19 @@ public class DataCenter {
         this.titleTextID = titleTextID;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean isRunWithSteam() {
+        return runWithSteam;
+    }
+
+    public void setRunWithSteam(boolean runWithSteam) {
+        this.runWithSteam = runWithSteam;
+    }
 }

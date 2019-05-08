@@ -164,7 +164,7 @@ public class GameTileset {
             idGameTilesetMap.put(au.getID(), au);
         }
 
-        world.getRpgModuleDataCenter().setGameTilesets(new ArrayList<GameTileset>());
+        world.getRpgModuleDataCenter().setGameTilesets(new ArrayList<>());
         for (int i = 0; i <= maxID; i++) {
             world.getRpgModuleDataCenter().getGameTilesets().add(idGameTilesetMap.get(i));
         }

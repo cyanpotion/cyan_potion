@@ -133,8 +133,9 @@ public class KeyEvent implements Event {
      * @return the string that the key refers to
      * @see
      * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
+     * @deprecated
      */
-    @Deprecated
+    @Deprecated(since = "0.97.0")
     public String translate() {
         switch (this.getKeyRaw().getKey()) {
             case GLFW_KEY_KP_0:

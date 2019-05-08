@@ -24,6 +24,9 @@
 
 package com.xenoamess.cyan_potion.rpg_module.eventUnitProgramLanguageGrammar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +35,8 @@ import java.util.Map;
  * @author XenoAmess
  */
 public class GrammarMap {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
+
     private GrammarMap() {
     }
 
@@ -58,44 +63,21 @@ public class GrammarMap {
                 if (field.getType().equals(int.class) && field.getName().startsWith("G_")) {
                     String methodName = field.getName().substring(2);
                     int methodNum = -1;
-
+                    field.setAccessible(true);
                     try {
                         methodNum = (int) field.get(null);
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        LOGGER.warn("IllegalAccessException in GrammarMap.checkInit", e);
                     }
-                    GrammarMap.MethodNumToMethodNameMap.put(methodNum,
-                            methodName);
-                    GrammarMap.MethodNameToMethodNumMap.put(methodName,
-                            methodNum);
+
+                    if (methodNum != -1) {
+                        GrammarMap.MethodNumToMethodNameMap.put(methodNum,
+                                methodName);
+                        GrammarMap.MethodNameToMethodNumMap.put(methodName,
+                                methodNum);
+                    }
                 }
             }
         }
     }
-
-    //    public static void main(String args[]) {
-    //        System.out.println(getMethodName(101));
-    //    }
-
-
-    //    public static void main(String args[]) {
-    //        checkInit();
-    //        StringBuilder sb = new StringBuilder();
-    //        TreeSet<Integer> seta = new TreeSet<Integer>
-    //        (MethodNumToMethodNameMap.keySet());
-    //        //        seta.addAll();
-    //        for (int i = 0; i <= 1000; i++) {
-    //            if (!seta.contains(i)) {
-    //                sb.append("{\"code\":" + i + ", \"indent\":0,
-    //                \"parameters\": []},");
-    //            }
-    //        }
-    //        System.out.println(sb.toString());
-    //    }
-
-    //    public static void main(String args[]) {
-    //        checkInit();
-    //        System.out.println(MethodNumToMethodNameMap.size());
-    //    }
-
 }
