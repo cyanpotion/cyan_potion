@@ -54,8 +54,8 @@ public class TitleExample extends AbstractGameWindowComponent {
     private Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                     "/www/img/pictures/saveStar.png:picture");
-    private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
-            new ArrayList<AbstractControlableGameWindowComponent>();
+    private final ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
+            new ArrayList<>();
 
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
@@ -363,7 +363,6 @@ public class TitleExample extends AbstractGameWindowComponent {
             return;
         }
         setState(getState() + 1);
-        return;
     }
 
     void lastState() {
@@ -378,7 +377,6 @@ public class TitleExample extends AbstractGameWindowComponent {
             return;
         }
         setState(getState() - 1);
-        return;
     }
 
     @Override
@@ -398,6 +396,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                 break;
             case -102:
                 startGame();
+                break;
             default:
                 break;
         }
@@ -406,51 +405,19 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-//        System.out.println(state);
 
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (this.getState() >= 0 && this.getState() <= 4) {
-//            int nowIndex = 1;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "开始游戏");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "设置选项");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "制作人员");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "退出游戲");
-        } else if (getState() == -101) {
+        if (!(this.getState() >= 0 && this.getState() <= 4) && getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
-                    this.getGameWindow().getLogicWindowWidth() / 2, this.getGameWindow().getLogicWindowHeight() / 2,
+                    this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2F,
                     250, 50);
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
-                    this.getGameWindow().getLogicWindowWidth() / 2,
-                    this.getGameWindow().getLogicWindowHeight() / 2, 250, 50,
-                    0, new Vector4f(1, 1, 1, 1f), "校准文本Ugna");
-
-//            for (int i = 0; i < 20; i++) {
-//                this.getGameWindow().drawBindableRelativeLeftTop(this
-//                .saveSlotTexture, i * 50, i * 50, 250, 50);
-//                this.getGameWindow().drawText(Font.defaultFont, i * 50, i *
-//                50, 1, new Vector4f(1, 1, 1, 1f), "校准文本");
-//            }
-
-//            this.getGameWindow().drawBindableRelativeLeftTop(this
-//            .saveSlotTexture, 0, 0, 1280, 1024);
-
-
+                    this.getGameWindow().getLogicWindowWidth() / 2F,
+                    this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
+                    0, new Vector4f(1, 1, 1, 1F), "校准文本Ugna");
         }
-
-        //        this.
     }
 
     private void startGame() {
@@ -482,11 +449,6 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     public ArrayList<AbstractControlableGameWindowComponent> getControlableGameWindowComponents() {
         return controlableGameWindowComponents;
-    }
-
-    public void setControlableGameWindowComponents
-            (ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents) {
-        this.controlableGameWindowComponents = controlableGameWindowComponents;
     }
 
     public int getState() {

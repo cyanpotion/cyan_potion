@@ -26,11 +26,16 @@ package com.xenoamess.cyan_potion.base.io.input.Gamepad;
 
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author XenoAmess
  */
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(JXInputGamepadDevice.class);
+
     private int JXInputGamepadDeviceIndex;
     private XInputDevice rawXInputDevice;
 
@@ -39,7 +44,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
         try {
             this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));
         } catch (XInputNotLoadedException e) {
-            e.printStackTrace();
+            LOGGER.error("this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));", e);
         }
     }
 
@@ -48,7 +53,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
         try {
             this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));
         } catch (XInputNotLoadedException e) {
-            e.printStackTrace();
+            LOGGER.error("this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));", e);
         }
         this.getRawXInputDevice().poll();
     }

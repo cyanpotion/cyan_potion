@@ -56,8 +56,8 @@ public class GameMap {
     private GameMapJson gameMapJson;
     private GameMapInfoJson gameMapInfoJson;
 
-    private ArrayList<GameTile> gameTiles = new ArrayList<GameTile>();
-    private ArrayList<EventUnit> eventUnits = new ArrayList<EventUnit>();
+    private ArrayList<GameTile> gameTiles = new ArrayList<>();
+    private ArrayList<EventUnit> eventUnits = new ArrayList<>();
 
     //    ArrayList<>
 
@@ -242,7 +242,7 @@ public class GameMap {
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
                         FileUtil.getFile("/www/data/MapInfos.json"));
 
-        ArrayList<GameMap> gameMaps = new ArrayList<GameMap>();
+        ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {
             if (au == null) {
                 gameMaps.add(null);
@@ -256,7 +256,7 @@ public class GameMap {
     public static void init(World world) {
         //        GameMapInfoJson
         List<GameMap> gameMaps = getGameMaps(world);
-        Map<Integer, GameMap> idGameMapMap = new TreeMap<Integer, GameMap>();
+        Map<Integer, GameMap> idGameMapMap = new TreeMap<>();
         int maxID = 0;
         for (GameMap au : gameMaps) {
             if (au == null) {
@@ -265,7 +265,7 @@ public class GameMap {
             maxID = Math.max(maxID, au.getID());
             idGameMapMap.put(au.getID(), au);
         }
-        world.getRpgModuleDataCenter().setGameMaps(new ArrayList<GameMap>());
+        world.getRpgModuleDataCenter().setGameMaps(new ArrayList<>());
         for (int i = 0; i <= maxID; i++) {
             world.getRpgModuleDataCenter().getGameMaps().add(idGameMapMap.get(i));
         }
