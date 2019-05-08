@@ -34,13 +34,15 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  */
 public class Model implements AutoCloseable {
-    private int drawCount;
-    private int vertexObject;
-    private int textureCoordObject;
-    private int indexObject;
+    public static final int INITIALIZED_VALUE = -1;
+
+    private int drawCount = INITIALIZED_VALUE;
+    private int vertexObject = INITIALIZED_VALUE;
+    private int textureCoordObject = INITIALIZED_VALUE;
+    private int indexObject = INITIALIZED_VALUE;
 
 
-    public static final float[] commonVerticesFloatArray = new float[]{
+    public static final float[] COMMON_VERTICES_FLOAT_ARRAY = new float[]{
             -1f, 1f, 0,
             // TOP LEFT 0
             1f, 1f, 0,
@@ -50,31 +52,43 @@ public class Model implements AutoCloseable {
             -1f, -1f, 0,
             // BOTTOM LEFT 3
     };
-    public static final float[] commonTextureFloatArray = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
-    public static final int[] commonIndicesFloatArray = new int[]{0, 1, 2, 2, 3, 0};
-    public static Model commonModel;
+    public static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
+    public static final int[] COMMON_INDICES_FLOAT_ARRAY = new int[]{0, 1, 2, 2, 3, 0};
+    public static final Model COMMON_MODEL = new Model();
 
+
+    public Model() {
+
+    }
 
     public Model(float[] vertices, float[] texCoords, int[] indices) {
-        setDrawCount(indices.length);
+        this.init(vertices, texCoords, indices);
+    }
 
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            setVertexObject(glGenBuffers());
-            glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
-            glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
+    public void init(float[] vertices, float[] texCoords, int[] indices) {
+        if (this.getDrawCount() == INITIALIZED_VALUE) {
+            setDrawCount(indices.length);
 
-            setTextureCoordObject(glGenBuffers());
-            glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
-            glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
+            try (MemoryStack stack = MemoryStack.stackPush()) {
+                setVertexObject(glGenBuffers());
+                glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
+                glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
 
-            setIndexObject(glGenBuffers());
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
+                setTextureCoordObject(glGenBuffers());
+                glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
+                glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
+
+                setIndexObject(glGenBuffers());
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
+            }
+
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+
 
     @Override
     public void close() {

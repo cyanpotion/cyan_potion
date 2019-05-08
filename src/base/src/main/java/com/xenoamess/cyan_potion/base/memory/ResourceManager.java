@@ -24,9 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.render.Texture;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * @author XenoAmess
@@ -56,18 +55,14 @@ public class ResourceManager implements AutoCloseable {
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesLoaderMap = new ConcurrentHashMap<>();
 
-    public <T> void putResourceLoader(Class<T> tClass, String resourceType, BiFunction<T, String, Void> loader) {
-        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
-                defaultResourecesLoaderMap.get(tClass);
-        if (resourceLoaderMap == null) {
-            resourceLoaderMap = new ConcurrentHashMap<>(8);
-            defaultResourecesLoaderMap.put(tClass, resourceLoaderMap);
-        }
+    public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
+        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
+                defaultResourecesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
-    public <T> BiFunction<T, String, Void> getResourceLoader(Class<T> tClass, String resourceType) {
-        ConcurrentHashMap<String, BiFunction<T, String, Void>> resourceLoaderMap =
+    public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
                 defaultResourecesLoaderMap.get(tClass);
         if (resourceLoaderMap == null) {
             return null;
@@ -75,12 +70,8 @@ public class ResourceManager implements AutoCloseable {
         return resourceLoaderMap.get(resourceType);
     }
 
-
-    private final ConcurrentHashMap<String, BiFunction<Texture, String[], Void>> resourceLoaders =
-            new ConcurrentHashMap<>();
-
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
-        if (fullResourceURI == null || fullResourceURI.isEmpty()) {
+        if (StringUtils.isBlank(fullResourceURI)) {
             throw (new Error("putResourceWithURI : fullResourceURI is null or" +
                     " Empty"));
         }
@@ -98,32 +89,16 @@ public class ResourceManager implements AutoCloseable {
             sb.append(fullResourceURI.charAt(i));
         }
 
-        String resourceClassName = sb.toString();
-        sb = new StringBuilder();
-
-        Class resourceClass = null;
-
-        try {
-            resourceClass =
-                    this.getClass().getClassLoader().loadClass(resourceClassName);
-        } catch (ClassNotFoundException e) {
-            //            e.printStackTrace();
-        }
-
-        if (resourceClass == null) {
-            throw (new Error("putResourceWithURI : resourceClass is null"));
-        }
-
         this.putResourceWithShortenURI(fullResourceURI.substring(i), t);
     }
 
 
     public Object getResourceFromFullURI(String fullResourceURI) {
-        if (fullResourceURI == null || fullResourceURI.isEmpty()) {
+        if (StringUtils.isBlank(fullResourceURI)) {
             return null;
         }
 
-        if (DataCenter.DEBUG) {
+        if (this.gameManager.getDataCenter().isDebug()) {
             LOGGER.debug("putResource {}", fullResourceURI);
         }
 
@@ -139,7 +114,7 @@ public class ResourceManager implements AutoCloseable {
         }
 
         String resourceClassName = sb.toString();
-        sb = new StringBuilder();
+
 
         Class resourceClass = null;
 
@@ -147,16 +122,13 @@ public class ResourceManager implements AutoCloseable {
             resourceClass =
                     this.getClass().getClassLoader().loadClass(resourceClassName);
         } catch (ClassNotFoundException e) {
-            //            e.printStackTrace();
-        }
-
-        if (resourceClass == null) {
+            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null", fullResourceURI,
+                    resourceClassName, e);
             return null;
         }
 
-        Object res = this.getResourceFromShortenURI(resourceClass,
+        return this.getResourceFromShortenURI(resourceClass,
                 fullResourceURI.substring(i));
-        return res;
     }
 
 
@@ -178,7 +150,7 @@ public class ResourceManager implements AutoCloseable {
         if (resourceURIMap == null) {
             return null;
         } else {
-            return (T) resourceURIMap.get(shortenResourceURI);
+            return resourceURIMap.get(shortenResourceURI);
         }
     }
 
@@ -204,14 +176,9 @@ public class ResourceManager implements AutoCloseable {
                         String.class).newInstance(this,
                         tClass.getCanonicalName() + ":" + shortenResourceURI);
                 this.putResourceWithShortenURI(shortenResourceURI, res);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI)" +
+                        " fail", tClass, shortenResourceURI, e);
             }
         }
         return res;
@@ -219,21 +186,26 @@ public class ResourceManager implements AutoCloseable {
 
     @Override
     public void close() {
-        for (Map<Class, Map> submap : getDefaultResourecesURIMap().values()) {
-            for (Object object : submap.values()) {
-                if (object instanceof AutoCloseable) {
-                    try {
-                        ((AutoCloseable) object).close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        closeMap(getDefaultResourecesURIMap());
+    }
+
+    public static void closeMap(Map mapToClose) {
+        if (mapToClose == null) {
+            return;
+        }
+        for (Object object : mapToClose.values()) {
+            if (object instanceof Map) {
+                closeMap((Map) object);
+            }
+            if (object instanceof AutoCloseable) {
+                try {
+                    ((AutoCloseable) object).close();
+                } catch (Exception e) {
+                    LOGGER.error("close fail", object, e);
                 }
             }
         }
     }
-
-
-//    public ArrayList<AbstractResource> deletingResources = new ArrayList<>();
 
     public ResourceManager(GameManager gameManager) {
         this.setGameManager(gameManager);
@@ -253,8 +225,6 @@ public class ResourceManager implements AutoCloseable {
             return;
         }
         setTotalMemorySize(getTotalMemorySize() - resource.getMemorySize());
-//        deletingResources.add(resource);
-//        inMemoryResources.remove(resource);
         resource.setInMemory(false);
     }
 
@@ -278,27 +248,24 @@ public class ResourceManager implements AutoCloseable {
                         o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
-            if (nowResource.isInMemory() == false) {
-                continue;
-            }
-
-            if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_DIST_POINT) {
-                newInMemoryResources.add(nowResource);
-                continue;
-            }
-
-            if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_LIMIT_POINT) {
-                if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 3000) {
+            if (nowResource.isInMemory()) {
+                if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_DIST_POINT) {
+                    newInMemoryResources.add(nowResource);
+                    continue;
+                }
+                if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_LIMIT_POINT) {
+                    if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 3000) {
+                        newInMemoryResources.add(nowResource);
+                    } else {
+                        nowResource.close();
+                    }
+                    continue;
+                }
+                if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 50) {
                     newInMemoryResources.add(nowResource);
                 } else {
                     nowResource.close();
                 }
-                continue;
-            }
-            if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 50) {
-                newInMemoryResources.add(nowResource);
-            } else {
-                nowResource.close();
             }
         }
         this.getInMemoryResources().clear();

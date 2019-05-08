@@ -57,6 +57,7 @@ public class Logo extends AbstractGameWindowComponent {
         this(gameWindow, 500L + 2000L + 1000L);
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyEvent.class.getCanonicalName(),
@@ -94,13 +95,6 @@ public class Logo extends AbstractGameWindowComponent {
             MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
             madeWithLogo.addToGameWindowComponentTree(null);
             madeWithLogo.enlargeAsFullWindow();
-
-//            Font.defaultFont.loadBitmap();
-//            this.getGameWindow().gameWindowComponentTree.deleteNode(this);
-//            {
-//                World world = new World(this.gameWindow);
-//                world.addToGameWindowComponentTree();
-//            }
         }
     }
 
@@ -115,9 +109,8 @@ public class Logo extends AbstractGameWindowComponent {
         glClear(GL_COLOR_BUFFER_BIT);
 
         float t =
-                this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
+                (float) (this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis());
         float pscale;
-//        System.out.println(t);
         float dynamicTime = 500f;
         float stayTime = 2000f;
         float fadeTime = 1000f;
@@ -134,9 +127,9 @@ public class Logo extends AbstractGameWindowComponent {
         }
         if (t < dynamicTime + stayTime) {
             this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2
-                    , 480 / 2 * (pscale + 1) * 2, 60 / 2 * (pscale + 1) * 2,
+                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
+                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
+                    , 480 * (pscale + 1), 60 * (pscale + 1),
                     new Vector4f(1, 1, 1, pscale));
         } else {
             pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
@@ -144,8 +137,8 @@ public class Logo extends AbstractGameWindowComponent {
                 pscale = 0;
             }
             this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2
+                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
+                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
                     , 480 * 2, 60 * 2, new Vector4f(1, 1, 1, pscale));
         }
     }

@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.console;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.ConsoleEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,8 +40,11 @@ import java.util.concurrent.Executors;
 
 
 class ConsoleTalkThread implements Runnable {
-    final private Socket socket;
-    final private ConsoleThread consoleThread;
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ConsoleTalkThread.class);
+
+    private final Socket socket;
+    private final ConsoleThread consoleThread;
 
     ConsoleTalkThread(Socket socket, ConsoleThread consoleThread) {
         this.socket = socket;
@@ -52,7 +57,7 @@ class ConsoleTalkThread implements Runnable {
         try {
             is = socket.getInputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleTalkThread fail", e);
         }
         Scanner scanner = new Scanner(is);
 
@@ -83,7 +88,10 @@ class ConsoleTalkThread implements Runnable {
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig
  */
 public class ConsoleThread extends Thread {
-    final private GameManager gameManager;
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ConsoleTalkThread.class);
+
+    private final GameManager gameManager;
 
     public ConsoleThread(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -106,12 +114,12 @@ public class ConsoleThread extends Thread {
                     executorService.execute(new ConsoleTalkThread(socket,
                             this));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.error("ConsoleThread socket fail", e);
                 }
             }
             executorService.shutdown();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleThread serverSocket fail", e);
         }
 
     }

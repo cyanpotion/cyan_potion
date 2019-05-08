@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class Panel extends AbstractControlableGameWindowComponent {
     private List<AbstractGameWindowComponent> contents =
-            new ArrayList<AbstractGameWindowComponent>();
+            new ArrayList<>();
     private Texture backgroundTexture;
 
     public Panel(GameWindow gameWindow) {

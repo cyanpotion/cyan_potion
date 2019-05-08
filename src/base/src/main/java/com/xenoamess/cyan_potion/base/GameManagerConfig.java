@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.xenoamess.cyan_potion.base.exceptions.ConfigFileBooleanValueStringIsNotBooleanException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
@@ -32,6 +33,7 @@ import java.util.Map;
  * @author XenoAmess
  */
 public class GameManagerConfig {
+
     /**
      * Don't let anyone instantiate this class.
      */
@@ -43,7 +45,7 @@ public class GameManagerConfig {
          * if value is null or empty, we think that it have no value part,
          * and a key part alone is thought to mean true.
          */
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.isBlank(value)) {
             return true;
         }
 
@@ -57,7 +59,7 @@ public class GameManagerConfig {
             case "no":
                 return false;
             default:
-                throw new RuntimeException("key is not a legal boolean");
+                throw new ConfigFileBooleanValueStringIsNotBooleanException(value);
         }
     }
 
@@ -129,9 +131,8 @@ public class GameManagerConfig {
      * @see GameWindow
      * @see GameManager
      */
-    public static final String STRING_DEFAULT_FONT_FILE_PATH =
-            "defaultFontFilePath";
-
+    public static final String STRING_DEFAULT_FONT_RESOURCE_URI =
+            "defaultFontResourceURI";
 
     /**
      * Language.

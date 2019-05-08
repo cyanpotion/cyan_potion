@@ -39,8 +39,6 @@ public class Button extends AbstractControlableGameWindowComponent {
 
     public Button(GameWindow gameWindow, Texture buttonTexture) {
         this(gameWindow, buttonTexture, null);
-//        this.buttonTexture = buttonTexture;
-//        this.buttonText = buttonText;
     }
 
     public Button(GameWindow gameWindow, Texture buttonTexture,
@@ -81,13 +79,4 @@ public class Button extends AbstractControlableGameWindowComponent {
         this.buttonText = buttonText;
     }
 
-//    @Override
-//    public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
-//        Event res = mouseButtonEvent;
-//        super.onMouseButtonLeftDown(mouseButtonEvent);
-//        if (this.onMouseButtonLeftDownCallback != null) {
-//            res = this.onMouseButtonLeftDownCallback.invoke(mouseButtonEvent);
-//        }
-//        return res;
-//    }
 }

@@ -46,6 +46,7 @@ import com.xenoamess.x8l.AbstractTreeNode;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,8 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 public class GameManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
+
+    public static final String LINE_SEGMENT = "----------------------------------------";
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
@@ -111,25 +114,25 @@ public class GameManager implements AutoCloseable {
 
     public GameManager(String[] args) {
         super();
-        LOGGER.info("----------------------------------------");
-        LOGGER.info("----------------------------------------");
-        LOGGER.info("----------------------------------------");
-        LOGGER.info("New game start at time : {}", new Date().toString());
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("New game start at time : {}", new Date());
         this.setArgsMap(generateArgsMap(args));
 
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
 
         LOGGER.info("Platform : ->");
         Properties properties = System.getProperties();
         for (Map.Entry entry : properties.entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("cyan_potion engine version : {}", Version.VERSION);
     }
 
@@ -186,21 +189,20 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
 
-        this.setGamepadInput(new GamepadInput());
+        this.setGamepadInput(new GamepadInput(this));
         this.setStartingContent();
-        String defaultFontFilePath =
+        final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
-                        STRING_DEFAULT_FONT_FILE_PATH,
-                        Font.DEFAULT_DEFAULT_FONT_FILE_PATH);
+                        STRING_DEFAULT_FONT_RESOURCE_URI,
+                        Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
 
-        final String tmpDefaultFontFilePath = defaultFontFilePath;
-
-        this.getExecutorService().execute(() -> {
-            Font font = new Font(tmpDefaultFontFilePath);
-            font.loadBitmap();
-            Font.setDefaultFont(font);
-            Font.setCurrentFont(Font.getDefaultFont());
-        });
+        if (!StringUtils.isBlank(defaultFontResourceURI)) {
+            Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
+            this.getExecutorService().execute(() -> {
+                Font.getDefaultFont().load();
+                Font.setCurrentFont(Font.getDefaultFont());
+            });
+        }
 
         this.loop();
     }
@@ -208,39 +210,47 @@ public class GameManager implements AutoCloseable {
 
     protected void loadSettingFile() {
         String settingFilePath = this.getArgsMap().get("SettingFilePath");
-        if (settingFilePath == null || settingFilePath.isEmpty()) {
+        if (StringUtils.isBlank(settingFilePath)) {
             settingFilePath = "/settings/DefaultSettings.x8l";
         }
+
         File globalSettingsFile = FileUtil.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}",
                 globalSettingsFile.getAbsolutePath());
+
+        X8lTree globalSettingsTree = null;
         try {
-            this.getDataCenter().setGlobalSettingsTree(X8lTree.loadFromFile(globalSettingsFile));
+            globalSettingsTree = X8lTree.loadFromFile(globalSettingsFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("X8lTree.loadFromFile(globalSettingsFile) fails " +
+                    ": ", e);
         }
+        assert (globalSettingsTree != null);
+
+        this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "commonSettings")) {
-            this.getDataCenter().getCommonSettings().putAll(contentNode.attributes);
+            this.getDataCenter().getCommonSettings().putAll(contentNode.getAttributes());
         }
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "specialSettings")) {
-            this.getDataCenter().getSpecialSettings().putAll(contentNode.attributes);
+            this.getDataCenter().getSpecialSettings().putAll(contentNode.getAttributes());
         }
         for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs(
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "views")) {
-            this.getDataCenter().getViews().putAll(contentNode.attributes);
+            this.getDataCenter().getViews().putAll(contentNode.getAttributes());
         }
         for (ContentNode pluginNode :
-                this.getDataCenter().getGlobalSettingsTree().root.getContentNodesFromChildrenThatNameIs("codePlugins"
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "codePlugins"
                 )) {
             for (ContentNode simplePluginNode : pluginNode.getContentNodesFromChildren()) {
                 this.codePluginManager.putCodePlugin(CodePluginPosition.valueOf(simplePluginNode.getName()),
-                        simplePluginNode.getTextNodesFromChildren(1).get(0).textContent);
+                        simplePluginNode.getTextNodesFromChildren(1).get(0).getTextContent());
             }
         }
     }
@@ -258,89 +268,83 @@ public class GameManager implements AutoCloseable {
     protected void loadKeymap() {
         this.setKeymap(new Keymap());
         for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().root.children) {
-            if (!(au instanceof ContentNode)) {
-                continue;
-            }
-            ContentNode contentNode = (ContentNode) au;
-            if (contentNode.attributes.isEmpty()) {
-                continue;
-            }
-            if ("keymap".equals(contentNode.getName()) && contentNode.attributes.containsKey("using")) {
-                for (AbstractTreeNode au2 : contentNode.children) {
-                    if (au2 instanceof TextNode) {
-                        continue;
-                    }
-                    ContentNode contentNode2 = (ContentNode) au2;
-                    if (contentNode2.attributes.isEmpty() || contentNode2.children.isEmpty()) {
-                        continue;
-                    }
-                    String rawInput = contentNode2.getName();
-                    String myInput = null;
-                    for (AbstractTreeNode au3 : contentNode2.children) {
-                        if (!(au3 instanceof TextNode)) {
-                            continue;
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getChildren()) {
+            if (au instanceof ContentNode) {
+                ContentNode contentNode = (ContentNode) au;
+                if (!contentNode.getAttributes().isEmpty()) {
+                    if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
+                        for (AbstractTreeNode au2 : contentNode.getChildren()) {
+                            if (au2 instanceof ContentNode) {
+                                ContentNode contentNode2 = (ContentNode) au2;
+                                if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
+                                    String rawInput = contentNode2.getName();
+                                    String myInput = null;
+                                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
+                                        if (au3 instanceof TextNode) {
+                                            myInput = ((TextNode) au3).getTextContent();
+                                            break;
+                                        }
+                                    }
+                                    this.getKeymap().put(rawInput, myInput);
+                                }
+                            }
                         }
-                        myInput = ((TextNode) au3).textContent;
                         break;
                     }
-                    this.getKeymap().put(rawInput, myInput);
+                    if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
+                        this.dataCenter.setDebug(true);
+                        Configuration.DEBUG.set(true);
+                        Configuration.DEBUG_LOADER.set(true);
+                    }
                 }
-                break;
-            }
-            if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.attributes.get("debug"))) {
-                DataCenter.DEBUG = true;
-                Configuration.DEBUG.set(true);
-                Configuration.DEBUG_LOADER.set(true);
-                GameWindow.openDebug();
             }
         }
     }
 
     protected void loadText() {
-        MultiLanguageX8lFileUtil multiLanguageUtil =
-                new MultiLanguageX8lFileUtil();
+        MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
             multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.error("load text from this.getDataCenter().textFilePath " +
-                    "fails!!");
+            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath())) " +
+                    "fails", e);
             System.exit(1);
         }
+
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
         String language = MultiLanguageStructure.ENGLISH;
         getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
-        if (DataCenter.RUN_WITH_STEAM) {
+        if (this.getDataCenter().isRunWithSteam()) {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
-            throw new Error("Lack language " + language + ".Please change the" +
-                    " [language] in settings.");
+            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
+            System.exit(1);
         }
     }
 
 
     protected void initSteam() {
-        DataCenter.RUN_WITH_STEAM = getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam", true);
-        if (DataCenter.RUN_WITH_STEAM) {
+        this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
+                true));
+        if (this.getDataCenter().isRunWithSteam()) {
             try {
                 SteamAPI.loadLibraries();
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
-                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().steamUserStatsCallback));
-                DataCenter.RUN_WITH_STEAM = true;
+                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback()));
+                this.getDataCenter().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
-                DataCenter.RUN_WITH_STEAM = false;
+                this.getDataCenter().setRunWithSteam(false);
                 if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                    e.printStackTrace();
+                    LOGGER.warn("SteamAPI.init() fails", e);
                     LOGGER.warn("Steam load failed but somehow we cannot prevent " +
                             "you from playing it.");
                 } else {
                     LOGGER.error("Steam load failed, thus the game shut.");
-                    throw new Error(e);
+                    System.exit(1);
                 }
             }
         } else {
@@ -348,8 +352,8 @@ public class GameManager implements AutoCloseable {
                 LOGGER.warn("Steam load failed but somehow we cannot prevent " +
                         "you from playing it.");
             } else {
-                LOGGER.warn("Steam load failed, thus the game shut.");
-                throw new RuntimeException("Steam load failed, thus the game shut.");
+                LOGGER.error("Steam load failed, thus the game shut.");
+                System.exit(1);
             }
         }
     }
@@ -368,17 +372,15 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().close();
-        //        super.close();
         this.getAudioManager().close();
 
         setAlive(false);
-//        DataCenter.getGameManagers().remove(this);
 
         if (getConsoleThread() != null) {
             getConsoleThread().shutdown();
         }
 
-        if (DataCenter.RUN_WITH_STEAM) {
+        if (this.getDataCenter().isRunWithSteam()) {
             this.getSteamUserStats().dispose();
             SteamAPI.shutdown();
         }
@@ -392,14 +394,12 @@ public class GameManager implements AutoCloseable {
             try {
                 this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+                LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
             }
         }
         getEventList().clear();
 
-//        String tmpWindowWidthString = ;
-//        String tmpWindowHeightString = ;
 
         this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
                 STRING_LOGIC_WINDOW_WIDTH, "1280")));
@@ -454,7 +454,7 @@ public class GameManager implements AutoCloseable {
 
         long time = System.currentTimeMillis();
         double unprocessed = 0;
-//        int timerForSteamCallback = 0;
+        int timerForSteamCallback = 0;
 
         while (getAlive()) {
             boolean canRender = false;
@@ -469,17 +469,6 @@ public class GameManager implements AutoCloseable {
 
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.codePluginManager.apply(this, rightBeforeLogicFrame);
-                //                if (getGameWindow().hasResized()) {
-                //                    //                    camera
-                //                    .setProjection(window.getWidth(),
-                //                    window.getHeight());
-                //                    //                    gui.resizeCamera
-                //                    (window);
-                //                    //                    world
-                //                    .calculateView(window);
-                //                    //                    glViewport(0, 0,
-                //                    window.getWidth(), window.getHeight());
-                //                }
 
                 unprocessed -= DataCenter.FRAME_CAP;
                 canRender = true;
@@ -492,7 +481,11 @@ public class GameManager implements AutoCloseable {
                 update();
                 this.codePluginManager.apply(this, rightAfterUpdate);
 
-                steamRunCallbacks();
+                timerForSteamCallback++;
+                if (timerForSteamCallback >= 300) {
+                    timerForSteamCallback = 0;
+                    steamRunCallbacks();
+                }
 
                 setNowFrameIndex(getNowFrameIndex() + 1);
                 this.getResourceManager().suggestGc();
@@ -521,7 +514,7 @@ public class GameManager implements AutoCloseable {
     protected void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (getEventList()) {
-            ArrayList<Event> newEventList = new ArrayList<Event>();
+            ArrayList<Event> newEventList = new ArrayList<>();
             for (Event au : getEventList()) {
                 Set<Event> res = au.apply(this);
                 if (res != null) {
@@ -544,7 +537,7 @@ public class GameManager implements AutoCloseable {
     }
 
     protected void steamRunCallbacks() {
-        if (DataCenter.RUN_WITH_STEAM && SteamAPI.isSteamRunning()) {
+        if (this.getDataCenter().isRunWithSteam() && SteamAPI.isSteamRunning()) {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
@@ -652,11 +645,11 @@ public class GameManager implements AutoCloseable {
 
     public void setArgsMap(Map<String, String> argsMap) {
         this.argsMap = argsMap;
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
-        LOGGER.info("----------------------------------------");
+        LOGGER.info(LINE_SEGMENT);
     }
 }
