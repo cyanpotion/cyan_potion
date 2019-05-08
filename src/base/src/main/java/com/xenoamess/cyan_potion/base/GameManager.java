@@ -195,11 +195,14 @@ public class GameManager implements AutoCloseable {
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_RESOURCE_URI,
                         Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
-        Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
-        this.getExecutorService().execute(() -> {
-            Font.getDefaultFont().load();
-            Font.setCurrentFont(Font.getDefaultFont());
-        });
+
+        if (!StringUtils.isBlank(defaultFontResourceURI)) {
+            Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
+            this.getExecutorService().execute(() -> {
+                Font.getDefaultFont().load();
+                Font.setCurrentFont(Font.getDefaultFont());
+            });
+        }
 
         this.loop();
     }
