@@ -348,7 +348,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
         for (int j = 0; j < strings.length; j++) {
             String line = strings[j];
-//            System.out.println(line);
+//            LOGGER.debug(line);
 
             float x1 = realLeftTopPosX;
             float y1 = realLeftTopPosY + realCharHeight * j;
@@ -356,7 +356,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             float characterSpace = 0;
             String text = line;
 
-//        System.out.println("!!! x:" + x + " y:" + y);
+//        LOGGER.debug("!!! x:" + x + " y:" + y);
             font.bind();
             float scaley = font.getScale(height);
             float scalex = scaley;
@@ -365,7 +365,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
             float x = x1;
             float y = y1;
-            //        System.out.println("!!! x:" + x + " y:" + y);
+            //        LOGGER.debug("!!! x:" + x + " y:" + y);
             font.getXb().put(0, x);
             font.getYb().put(0, y);
 
@@ -388,7 +388,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
                         Font.BITMAP_H, text.charAt(i), font.getXb(),
                         font.getYb(), font.getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -397,7 +397,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                 float nowy0 = y + spaceUpToCharShould * scaley;
 
-//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowx0 + " " + nowy0);
                 if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
@@ -517,7 +517,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W
                                 , Font.BITMAP_H, text.charAt(i2),
                                 font.getXb(), font.getYb(), font.getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -526,7 +526,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                         nowy0 = y + spaceUpToCharShould * scaley;
 
-//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowx0 + " " + nowy0);
 
@@ -558,7 +558,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     }
                 }
             }
-//            System.out.println(line.length());
+//            LOGGER.debug(line.length());
             if (line.isEmpty()) {
                 float nowx0 = x;
                 float nowy0 = y;

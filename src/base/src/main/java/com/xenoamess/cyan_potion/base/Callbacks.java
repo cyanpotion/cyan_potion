@@ -46,7 +46,7 @@ public final class Callbacks {
 
     private GLFWWindowCloseCallbackI windowCloseCallback =
             window -> {
-                System.out.println("Alright I exit.");
+                LOGGER.debug("Alright I exit.");
                 getGameManager().shutdown();
             };
 

@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.plugins;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ import java.util.function.Function;
  * @author XenoAmess
  */
 public class CodePluginManager {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(CodePluginManager.class);
 
     private HashMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
             new HashMap<>();
@@ -59,12 +63,8 @@ public class CodePluginManager {
                     if (field.getType().equals(Function.class)) {
                         res = (Function<GameManager, Void>) field.get(null);
                     }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
+                    LOGGER.error("getCodePluginFunctionFromString(String codePluginString) fails", codePluginString, e);
                 }
                 break;
             default:

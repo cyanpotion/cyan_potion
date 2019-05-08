@@ -42,7 +42,6 @@ import java.net.URL;
  * @author XenoAmess
  */
 public class Version {
-
     private Version() {
 
     }

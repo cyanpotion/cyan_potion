@@ -223,8 +223,8 @@ public class JXInputGamepadData extends AbstractGamepadData {
         int key;
         int action;
 
-//        System.out.println("this.a : " + this.a);
-//        System.out.println("buttons.a : " + buttons.a);
+//        LOGGER.debug("this.a : " + this.a);
+//        LOGGER.debug("buttons.a : " + buttons.a);
 
         if (this.a != buttons.a) {
             if (buttons.a) {
