@@ -72,11 +72,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         super(resourceManager, resourceURI);
     }
 
-//    public int getAL_Buffer_Int() {
-//        return this.alBufferInt;
-//    }
-
-
     public static void alBufferData(int bufferName, int format, Buffer data,
                                     int frequency) {
         if (data instanceof ByteBuffer) {
