@@ -79,13 +79,4 @@ public class Button extends AbstractControlableGameWindowComponent {
         this.buttonText = buttonText;
     }
 
-//    @Override
-//    public Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
-//        Event res = mouseButtonEvent;
-//        super.onMouseButtonLeftDown(mouseButtonEvent);
-//        if (this.onMouseButtonLeftDownCallback != null) {
-//            res = this.onMouseButtonLeftDownCallback.invoke(mouseButtonEvent);
-//        }
-//        return res;
-//    }
 }
