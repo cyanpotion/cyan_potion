@@ -65,7 +65,7 @@ public class Font implements AutoCloseable {
     private STBTTPackedchar.Buffer chardata = null;
 
     private static final Font DEFAULT_FONT = new Font();
-    private static Font CurrentFont = DEFAULT_FONT;
+    private static Font currentFont = DEFAULT_FONT;
 
 
     private GameWindow gameWindow;
@@ -465,11 +465,11 @@ public class Font implements AutoCloseable {
     }
 
     public static synchronized Font getCurrentFont() {
-        return CurrentFont;
+        return currentFont;
     }
 
     public static synchronized void setCurrentFont(Font currentFont) {
-        CurrentFont = currentFont;
+        Font.currentFont = currentFont;
     }
 
     public GameWindow getGameWindow() {

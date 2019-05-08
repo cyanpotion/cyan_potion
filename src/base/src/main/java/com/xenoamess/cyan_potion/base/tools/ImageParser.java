@@ -79,7 +79,9 @@ public class ImageParser implements AutoCloseable {
 
     public static ImageParser loadImage(String path) {
         ByteBuffer image;
-        int width, heigh;
+        int width;
+        int height;
+
         try (MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer comp = stack.mallocInt(1);
             IntBuffer w = stack.mallocInt(1);
@@ -91,9 +93,9 @@ public class ImageParser implements AutoCloseable {
                         path);
             }
             width = w.get();
-            heigh = h.get();
+            height = h.get();
         }
-        return new ImageParser(width, heigh, image);
+        return new ImageParser(width, height, image);
     }
 
     public static GLFWImage getGLFWImage(String path) {
