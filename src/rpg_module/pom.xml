@@ -29,5 +29,11 @@
             </artifactId>       <!--加上childA的依赖-->
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
