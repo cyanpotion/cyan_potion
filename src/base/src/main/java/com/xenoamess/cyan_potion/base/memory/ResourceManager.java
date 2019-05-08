@@ -150,9 +150,8 @@ public class ResourceManager implements AutoCloseable {
             return null;
         }
 
-        Object res = this.getResourceFromShortenURI(resourceClass,
+        return this.getResourceFromShortenURI(resourceClass,
                 fullResourceURI.substring(i));
-        return res;
     }
 
 
@@ -211,12 +210,14 @@ public class ResourceManager implements AutoCloseable {
     @Override
     public void close() {
         for (Map<Class, Map> submap : getDefaultResourecesURIMap().values()) {
-            for (Object object : submap.values()) {
-                if (object instanceof AutoCloseable) {
-                    try {
-                        ((AutoCloseable) object).close();
-                    } catch (Exception e) {
-                        LOGGER.error("close fail", object, e);
+            for (Map subSubmap : submap.values()) {
+                for (Object object : subSubmap.values()) {
+                    if (object instanceof AutoCloseable) {
+                        try {
+                            ((AutoCloseable) object).close();
+                        } catch (Exception e) {
+                            LOGGER.error("close fail", object, e);
+                        }
                     }
                 }
             }
@@ -269,27 +270,24 @@ public class ResourceManager implements AutoCloseable {
                         o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
-            if (nowResource.isInMemory() == false) {
-                continue;
-            }
-
-            if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_DIST_POINT) {
-                newInMemoryResources.add(nowResource);
-                continue;
-            }
-
-            if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_LIMIT_POINT) {
-                if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 3000) {
+            if (nowResource.isInMemory()) {
+                if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_DIST_POINT) {
+                    newInMemoryResources.add(nowResource);
+                    continue;
+                }
+                if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_LIMIT_POINT) {
+                    if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 3000) {
+                        newInMemoryResources.add(nowResource);
+                    } else {
+                        nowResource.close();
+                    }
+                    continue;
+                }
+                if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 50) {
                     newInMemoryResources.add(nowResource);
                 } else {
                     nowResource.close();
                 }
-                continue;
-            }
-            if (this.getGameManager().getNowFrameIndex() - nowResource.getLastUsedFrameIndex() < 50) {
-                newInMemoryResources.add(nowResource);
-            } else {
-                nowResource.close();
             }
         }
         this.getInMemoryResources().clear();
