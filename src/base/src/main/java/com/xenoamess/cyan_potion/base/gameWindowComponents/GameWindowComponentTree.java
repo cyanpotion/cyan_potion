@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
-//import com.xenoamess.gearbar.GameEngineObject;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;

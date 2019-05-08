@@ -53,17 +53,6 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
                             (MouseButtonEvent) event;
                     return processMouseButtonEvents(mouseButtonEvent);
                 });
-
-//        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
-//            KeyEvent keyEvent = (KeyEvent) event;
-//            return processKeyEvents(keyEvent);
-//        });
-//
-//        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
-//        event -> {
-//            MouseScrollEvent mouseScrollEvent = (MouseScrollEvent) event;
-//            return processMouseScrollEvents(mouseScrollEvent);
-//        });
     }
 
     public void setActive(boolean active) {
@@ -406,13 +395,6 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         }
     }
 
-//    public Event processKeyEvents(KeyEvent keyEvent) {
-//        return keyEvent;
-//    }
-//
-//    public Event processMouseScrollEvents(MouseScrollEvent mouseScrollEvent) {
-//        return mouseScrollEvent;
-//    }
 
     @Override
     public Event process(Event event) {

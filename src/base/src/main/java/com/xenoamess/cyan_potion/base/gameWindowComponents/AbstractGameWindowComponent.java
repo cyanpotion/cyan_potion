@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
-//import com.xenoamess.gearbar.GameEngineObject;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -147,14 +146,6 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (gameWindowComponentTreeNode != null) {
             gameWindowComponentTreeNode.newNode(this);
-//            this.leftTopPosX = gameWindowComponentTreeNode
-//            .gameWindowComponent.leftTopPosX;
-//            this.leftTopPosY = gameWindowComponentTreeNode
-//            .gameWindowComponent.leftTopPosY;
-//            this.width = gameWindowComponentTreeNode.gameWindowComponent
-//            .width;
-//            this.height = gameWindowComponentTreeNode.gameWindowComponent
-//            .height;
         } else {
             getGameWindow().getGameManager().getGameWindowComponentTree().newNode(this);
         }
