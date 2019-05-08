@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  */
 public class Console implements Runnable {
-    public AtomicBoolean alive;
+    private final AtomicBoolean alive = new AtomicBoolean(true);
 
     public boolean getAlive() {
         return this.alive.get();
