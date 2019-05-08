@@ -222,7 +222,9 @@ public class WaveData {
                         * (int) ais.getFrameLength()
                         * audioformat.getSampleSizeInBits()
                         / 8];
-        int read = 0, total = 0;
+        int read = 0;
+        int total = 0;
+
         try {
             while ((read = ais.read(buf, total, buf.length - total)) != -1
                     && total < buf.length) {
