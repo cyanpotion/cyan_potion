@@ -50,20 +50,8 @@ public class MouseScrollEvent implements Event {
 
     @Override
     public Set<Event> apply(GameManager gameManager) {
-
         LOGGER.debug("MouseScrollEvent : {} {} {}",
                 getWindow(), getXoffset(), getYoffset());
-//        switch (action) {
-//            case 0:
-//                gameWindow.input.keyRelease(key);
-//                break;
-//            case 1:
-//                gameWindow.input.keyPress(key);
-//                break;
-//            case 2:
-//                break;
-//            default:
-//        }
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
