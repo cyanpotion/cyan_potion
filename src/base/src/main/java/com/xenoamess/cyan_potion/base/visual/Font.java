@@ -24,8 +24,12 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import org.joml.Vector4f;
 import org.lwjgl.stb.STBTTAlignedQuad;
@@ -35,7 +39,9 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.util.function.Function;
 
+import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldReSetCheck;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImageWrite.stbi_write_bmp;
 import static org.lwjgl.stb.STBTruetype.*;
@@ -43,15 +49,16 @@ import static org.lwjgl.stb.STBTruetype.*;
 /**
  * @author XenoAmess
  */
-public class Font implements AutoCloseable {
+public class Font extends AbstractResource {
     /**
      * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
      * file.
      *
      * @see com.xenoamess.cyan_potion.base.GameManager
      */
-    public static final String DEFAULT_DEFAULT_FONT_FILE_PATH = "/www/fonts" +
-            "/SourceHanSans-Normal.ttc";
+    public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
+            "/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
+
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
     public static final int MAX_NUM = 40960;
@@ -60,22 +67,50 @@ public class Font implements AutoCloseable {
     public static final int BITMAP_H = MAX_SIZE;
     public static final float SCALE = 36.0f;
 
-    private String ttfFilePath = null;
     private int fontTexture;
     private STBTTPackedchar.Buffer chardata = null;
 
-    private static final Font DEFAULT_FONT = new Font();
-    private static Font currentFont = DEFAULT_FONT;
+    @AsFinalField
+    private static Font defaultFont = null;
+
+    private static Font currentFont;
 
 
     private GameWindow gameWindow;
 
-    public Font() {
-
+    /**
+     * !!!NOTICE!!!
+     * <p>
+     * This class shall never build from this constructor directly.
+     * You shall always use ResourceManager.fetchResource functions to get this instance.
+     *
+     * @param resourceManager resource Manager
+     * @param fullResourceURI full Resource URI
+     * @see ResourceManager
+     */
+    public Font(ResourceManager resourceManager, String fullResourceURI) {
+        super(resourceManager, fullResourceURI);
     }
 
-    public Font(String ttfFilePath) {
-        this.setTtfFilePath(ttfFilePath);
+
+    /**
+     * !!!NOTICE!!!
+     * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
+     */
+    public static final Function<GameManager, Void> PUT_FONT_LOADER_TTFFILE = (GameManager gameManager) -> {
+        gameManager.getResourceManager().putResourceLoader(Font.class, "ttfFile",
+                (Font font) -> {
+                    font.loadAsTtfFileFont(font.getFullResourceURI());
+                    return null;
+                }
+        );
+        return null;
+    };
+
+    private void loadAsTtfFileFont(String fullResourceURI) {
+        String[] resourceFileURIStrings = fullResourceURI.split(":");
+        String resourceFilePath = resourceFileURIStrings[1];
+        this.loadBitmap(resourceFilePath);
     }
 
     /**
@@ -84,20 +119,20 @@ public class Font implements AutoCloseable {
      */
     private ByteBuffer bitmap;
 
-    public void loadBitmap() {
+    public void loadBitmap(String resourceFilePath) {
         ByteBuffer bitmapLocal;
-        STBTTPackedchar.Buffer tmpChardata =
+        STBTTPackedchar.Buffer chardataLocal =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
-                    FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()), true);
+                    FileUtil.loadFileBuffer(FileUtil.getFile(resourceFilePath), true);
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
-            tmpChardata.position(p);
+            chardataLocal.position(p);
             stbtt_PackSetOversampling(pc, 1, 1);
-            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, tmpChardata);
-            tmpChardata.clear();
+            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, chardataLocal);
+            chardataLocal.clear();
             stbtt_PackEnd(pc);
             if (TEST_PRINT_FONT_BMP) {
                 stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
@@ -105,7 +140,8 @@ public class Font implements AutoCloseable {
             }
 
             this.bitmap = bitmapLocal;
-            this.setChardata(tmpChardata);
+            this.setChardata(chardataLocal);
+            this.setMemorySize(chardataLocal.capacity());
         }
     }
 
@@ -121,7 +157,9 @@ public class Font implements AutoCloseable {
         MemoryUtil.memFree(this.bitmap);
     }
 
+    @Override
     public void bind() {
+        super.bind();
         Shader.unbind();
         gameWindow.bindGlViewportToFullWindow();
         glMatrixMode(GL_PROJECTION);
@@ -435,7 +473,7 @@ public class Font implements AutoCloseable {
     }
 
     @Override
-    public void close() {
+    public void forceClose() {
         getChardata().close();
 
         MemoryUtil.memFree(getYb());
@@ -448,10 +486,6 @@ public class Font implements AutoCloseable {
         }
     }
 
-    public String getTtfFilePath() {
-        return ttfFilePath;
-    }
-
     public int getFontTexture() {
         return fontTexture;
     }
@@ -461,8 +495,14 @@ public class Font implements AutoCloseable {
     }
 
     public static Font getDefaultFont() {
-        return DEFAULT_FONT;
+        return defaultFont;
     }
+
+    public static void setDefaultFont(Font defaultFont) {
+        asFinalFieldReSetCheck(Font.class, "defaultFont", Font.defaultFont);
+        Font.defaultFont = defaultFont;
+    }
+
 
     public static synchronized Font getCurrentFont() {
         return currentFont;
@@ -494,10 +534,6 @@ public class Font implements AutoCloseable {
 
     public FloatBuffer getYb() {
         return yb;
-    }
-
-    public void setTtfFilePath(String ttfFilePath) {
-        this.ttfFilePath = ttfFilePath;
     }
 
     public void setFontTexture(int fontTexture) {

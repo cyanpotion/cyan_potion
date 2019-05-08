@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
+import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
@@ -38,18 +38,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
-
-class TextureStateDisorderException extends RuntimeException {
-    public TextureStateDisorderException(String message) {
-        super(message);
-    }
-}
 
 /**
  * @author XenoAmess
@@ -77,21 +70,31 @@ public class Texture extends AbstractResource implements Bindable {
 
 
     /**
-     * This is used by reflection and don't delete it if you don't know about the plugin mechanism here.
+     * !!!NOTICE!!!
+     * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_PICTURE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, "picture",
-                (Texture texture, String resourceFileURIStrings) -> {
-                    texture.loadAsPictureTexture(resourceFileURIStrings);
+                (Texture texture) -> {
+                    texture.loadAsPictureTexture(texture.getFullResourceURI());
                     return null;
                 }
         );
         return null;
     };
 
-
-    public Texture(ResourceManager resourceManager, String resourceURI) {
-        super(resourceManager, resourceURI);
+    /**
+     * !!!NOTICE!!!
+     * <p>
+     * This class shall never build from this constructor directly.
+     * You shall always use ResourceManager.fetchResource functions to get this instance.
+     *
+     * @param resourceManager resource Manager
+     * @param fullResourceURI full Resource URI
+     * @see ResourceManager
+     */
+    public Texture(ResourceManager resourceManager, String fullResourceURI) {
+        super(resourceManager, fullResourceURI);
     }
 
 
@@ -101,7 +104,7 @@ public class Texture extends AbstractResource implements Bindable {
 
     @Override
     public void bind(int sampler) {
-        this.load();
+        super.bind(sampler);
         if ((this.getGlTexture2DInt() == -1) != (!this.isInMemory())) {
             throw new TextureStateDisorderException("Texture state chaos : " + this.getGlTexture2DInt() + " , " + this.isInMemory() + " , " + this.getFullResourceURI());
         }
@@ -167,14 +170,14 @@ public class Texture extends AbstractResource implements Bindable {
                 GL_RGBA, GL_UNSIGNED_BYTE, byteBuffer);
     }
 
-    public void loadAsPictureTexture(String resourceFileURIString) {
-        String[] resourceFileURIStrings = resourceFileURIString.split(":");
+    public void loadAsPictureTexture(String fullResourceURI) {
+        String[] resourceFileURIStrings = fullResourceURI.split(":");
         final String resourceFilePath = resourceFileURIStrings[1];
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(FileUtil.getFile(resourceFilePath));
         } catch (IOException e) {
-            LOGGER.error("Texture.loadAsPictureTexture(String resourceFileURIString) fails", resourceFileURIString, e);
+            LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails", fullResourceURI, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
@@ -185,24 +188,6 @@ public class Texture extends AbstractResource implements Bindable {
                 pixelsRaw);
     }
 
-    @Override
-    public void forceLoad() {
-        /**
-         * example       com.xenoamess.gearbar.render
-         * .WalkingAnimation4Dirs:/www/img/characters/Actor1.png:4:0
-         */
-        final String[] resourceFileURIStrings =
-                this.getFullResourceURI().split(":");
-        final String resourceFilePath = resourceFileURIStrings[1];
-        final String resourceType = resourceFileURIStrings[2];
-
-        BiFunction<Texture, String, Void> loader = this.getResourceManager().getResourceLoader(Texture.class,
-                resourceType);
-        if (loader == null) {
-            throw new URITypeNotDefinedException(this.getFullResourceURI());
-        }
-        loader.apply(this, this.getFullResourceURI());
-    }
 
     @Override
     public void forceClose() {

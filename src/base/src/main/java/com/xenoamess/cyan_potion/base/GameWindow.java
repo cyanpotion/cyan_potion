@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
+import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -44,12 +45,6 @@ import org.slf4j.LoggerFactory;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-
-class FailToCreateGLFWWindowException extends RuntimeException {
-    public FailToCreateGLFWWindowException() {
-        super();
-    }
-}
 
 /**
  * @author XenoAmess
