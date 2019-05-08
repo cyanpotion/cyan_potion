@@ -31,6 +31,8 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -46,6 +48,9 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * @author XenoAmess
  */
 public class Texture extends AbstractResource implements Bindable {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Texture.class);
+
     public static final int MIN_SAMPLER = 0;
     public static final int MAX_SAMPLER = 31;
 
@@ -129,15 +134,15 @@ public class Texture extends AbstractResource implements Bindable {
                 //                    pixel += Integer.MAX_VALUE;
                 //                }
 
-                //                System.out.println((byte) ((pixel >> 16) &
+                //                LOGGER.debug((byte) ((pixel >> 16) &
                 //                0xFF));
-                //                System.out.println((byte) ((pixel >> 8) &
+                //                LOGGER.debug((byte) ((pixel >> 8) &
                 //                0xFF));
-                //                System.out.println((byte) ((pixel >> 0) &
+                //                LOGGER.debug((byte) ((pixel >> 0) &
                 //                0xFF));
-                //                System.out.println((byte) ((pixel >> 24) &
+                //                LOGGER.debug((byte) ((pixel >> 24) &
                 //                0xFF));
-                //                System.out.println(i + " " + j + " " + pixel);
+                //                LOGGER.debug(i + " " + j + " " + pixel);
 
                 // RED
                 byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
@@ -176,7 +181,7 @@ public class Texture extends AbstractResource implements Bindable {
         try {
             bufferedImage = ImageIO.read(FileUtil.getFile(resourceFilePath));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Texture.loadAsPictureTexture(String resourceFileURIString) fails", resourceFileURIString, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();

@@ -407,7 +407,7 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-//        System.out.println(state);
+//        LOGGER.debug(state);
 
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);

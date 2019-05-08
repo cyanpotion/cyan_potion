@@ -80,7 +80,7 @@ public class Keymap {
         if (rawInput == null || myInput == null) {
             return null;
         }
-        //        System.out.println(rawInput + " " + myInput);
+        //        LOGGER.debug(rawInput + " " + myInput);
         Integer rawInputI = null;
         Integer myInputI = null;
         try {
@@ -106,9 +106,9 @@ public class Keymap {
             return null;
         }
 
-        //        System.out.println(Keymap);
-        //        System.out.println(rawInputI);
-        //        System.out.println(myInputI);
+        //        LOGGER.debug(Keymap);
+        //        LOGGER.debug(rawInputI);
+        //        LOGGER.debug(myInputI);
 
         int type = -2;
         if (rawInput.startsWith("GLFW_KEY")) {

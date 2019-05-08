@@ -102,14 +102,15 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(URL path) {
+        WaveData res = null;
         try {
-            return create(
+            res = create(
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(path.openStream())));
         } catch (Exception e) {
-            LOGGER.debug("Unable to create from: {}", path);
-            return null;
+            LOGGER.warn("WaveData.create(URL path) fails", path, e);
         }
+        return res;
     }
 
     /**
@@ -125,18 +126,17 @@ public class WaveData {
     /**
      * Creates a WaveData container from the specified inputstream
      *
-     * @param is InputStream to read from
+     * @param inputStream InputStream to read from
      * @return WaveData containing data, or null if a failure occured
      */
-    public static WaveData create(InputStream is) {
+    public static WaveData create(InputStream inputStream) {
+        WaveData res = null;
         try {
-            return create(
-                    AudioSystem.getAudioInputStream(is));
+            res = create(AudioSystem.getAudioInputStream(inputStream));
         } catch (Exception e) {
-            System.out.println("Unable to create from inputstream");
-//            e.printStackTrace();
-            return null;
+            LOGGER.warn("WaveData.create(InputStream inputStream) fails", inputStream, e);
         }
+        return res;
     }
 
     /**
@@ -152,7 +152,7 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            LOGGER.debug("WaveData.create(byte[] buffer) fails", e);
+            LOGGER.warn("WaveData.create(byte[] buffer) fails", buffer, e);
         }
         return res;
 
@@ -167,20 +167,21 @@ public class WaveData {
      * @return WaveData containing data, or null if a failure occured
      */
     public static WaveData create(ByteBuffer buffer) {
+        WaveData res = null;
         try {
             byte[] bytes = null;
-
             if (buffer.hasArray()) {
                 bytes = buffer.array();
             } else {
                 bytes = new byte[buffer.capacity()];
                 buffer.get(bytes);
             }
-            return create(bytes);
+            res = create(bytes);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails", buffer, e);
+
         }
+        return res;
     }
 
     /**

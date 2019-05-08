@@ -81,7 +81,7 @@ public class AudioManager implements AutoCloseable {
 //            alcCloseDevice(device);
 //            throw new Exception("No EXTEfx supported by driver.");
 //        }
-//        System.out.println("EXTEfx found.");
+//        LOGGER.debug("EXTEfx found.");
         this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(),
                 (IntBuffer) null));
         alcSetThreadContext(this.getOpenalContext());

@@ -151,7 +151,7 @@ public class Font implements AutoCloseable {
 
 //    public void drawText(float x, float y, float scalex, float scaley,
 //    float characterSpace, Vector4f color, String text) {
-////        System.out.println("!!! x:" + x + " y:" + y);
+////        LOGGER.debug("!!! x:" + x + " y:" + y);
 //        this.bind();
 //
 //        xb.put(0, x);
@@ -174,7 +174,7 @@ public class Font implements AutoCloseable {
 //        for (int i = 0; i < text.length(); i++) {
 //            stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt
 //            (i), xb, yb, q, false);
-////            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:"
+////            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:"
 // + q.y0() + " y1:" + q.y1());
 //            float charWidthShould = q.x1() - q.x0();
 //            float charHeightShould = q.y1() - q.y0();
@@ -183,7 +183,7 @@ public class Font implements AutoCloseable {
 //            float nowx0 = lastx_ + spaceLeftToCharShould * scalex;
 ////            float nowy0 = lasty_ + spaceUpToCharShould * scaley;
 //            float nowy0 = y;
-////            System.out.println(charWidthShould + " " + charHeightShould +
+////            LOGGER.debug(charWidthShould + " " + charHeightShould +
 // " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + "
 // " + nowy0);
 //            drawBoxTC(
@@ -203,7 +203,7 @@ public class Font implements AutoCloseable {
     public void drawText(float x, float y, float scalex, float scaley,
                          float height, float characterSpace, Vector4f color,
                          String text) {
-//        System.out.println("!!! x:" + x + " y:" + y);
+//        LOGGER.debug("!!! x:" + x + " y:" + y);
 //        STBTTFontinfo fontInfo = STBTTFontinfo.create();
         this.bind();
 
@@ -227,9 +227,9 @@ public class Font implements AutoCloseable {
         for (int i = 0; i < text.length(); i++) {
             stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
-//            System.out.println("s0:" + q.s0() + " s1:" + q.s1() + " t0:" +
+//            LOGGER.debug("s0:" + q.s0() + " s1:" + q.s1() + " t0:" +
 //            q.t0() + " t1:" + q.t1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
@@ -238,7 +238,7 @@ public class Font implements AutoCloseable {
             float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
             float nowy0 = lastyReal + spaceUpToCharShould * scaley;
 //            float nowy0 = y;
-//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowx0 + " " + nowy0);
 
@@ -260,7 +260,7 @@ public class Font implements AutoCloseable {
     public void drawTextFillAreaLeftTop(float x1, float y1, float width,
                                         float height, float characterSpace,
                                         Vector4f color, String text) {
-//        System.out.println("!!! x:" + x + " y:" + y);
+//        LOGGER.debug("!!! x:" + x + " y:" + y);
         this.bind();
         getXb().put(0, x1);
         getYb().put(0, y1);
@@ -286,7 +286,7 @@ public class Font implements AutoCloseable {
         for (int i = 0; i < text.length(); i++) {
             stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
@@ -294,7 +294,7 @@ public class Font implements AutoCloseable {
             float spaceUpToCharShould = getQ().y0() - lastyShould;
             float nowx0 = lastxReal + spaceLeftToCharShould;
             float nowy0 = y1;
-//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowx0 + " " + nowy0);
 //            drawBoxTC(
@@ -366,7 +366,7 @@ public class Font implements AutoCloseable {
                                            float yMax, float height,
                                            float characterSpace,
                                            Vector4f color, String text) {
-//        System.out.println("!!! x:" + x + " y:" + y);
+//        LOGGER.debug("!!! x:" + x + " y:" + y);
         this.bind();
         float scaley = this.getScale(height);
         float scalex = scaley;
@@ -375,7 +375,7 @@ public class Font implements AutoCloseable {
 
         float x = x1;
         float y = y1;
-        //        System.out.println("!!! x:" + x + " y:" + y);
+        //        LOGGER.debug("!!! x:" + x + " y:" + y);
         getXb().put(0, x);
         getYb().put(0, y);
 
@@ -396,7 +396,7 @@ public class Font implements AutoCloseable {
         for (int i = 0; i < text.length(); i++) {
             stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
-//            System.out.println("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
@@ -411,7 +411,7 @@ public class Font implements AutoCloseable {
             if (yMax > 0 && nowy0 > yMax) {
                 break;
             }
-//            System.out.println(charWidthShould + " " + charHeightShould + "
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowx0 + " " + nowy0);
 

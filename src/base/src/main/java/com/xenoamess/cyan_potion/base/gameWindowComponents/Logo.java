@@ -117,7 +117,7 @@ public class Logo extends AbstractGameWindowComponent {
         float t =
                 (float) (this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis());
         float pscale;
-//        System.out.println(t);
+//        LOGGER.debug(t);
         float dynamicTime = 500f;
         float stayTime = 2000f;
         float fadeTime = 1000f;
