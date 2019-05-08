@@ -42,7 +42,6 @@ import java.net.URL;
  * @author XenoAmess
  */
 public class Version {
-
     private Version() {
 
     }
@@ -65,8 +64,8 @@ public class Version {
      * Because I also use this in other projects.
      * So.
      *
-     * @param resourceFilePath
-     * @return
+     * @param resourceFilePath path of the resource file
+     * @return the url returned
      */
     public static URL getURL(String resourceFilePath) {
         final URL res = Version.class.getResource(resourceFilePath);
