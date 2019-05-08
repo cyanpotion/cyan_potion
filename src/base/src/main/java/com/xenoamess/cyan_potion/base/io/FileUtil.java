@@ -104,7 +104,7 @@ public class FileUtil {
                 } else {
                     buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
                 }
-                
+
                 while (fc.read(buffer) != -1) {
                 }
                 success = true;
