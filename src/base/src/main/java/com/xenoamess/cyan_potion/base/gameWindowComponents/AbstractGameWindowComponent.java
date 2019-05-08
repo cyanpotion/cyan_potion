@@ -124,8 +124,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
      * 3. If the event is solved by the component, but caused another event arise,
      * then it shall return the new event.
      *
-     * @param event
-     * @return
+     * @param event the old event that is being processed by this Component now.
+     * @return the new Event that generated during the processing of the old event.
+     * @see Event
      */
     public Event process(Event event) {
         Function<Event, Event> processor =
