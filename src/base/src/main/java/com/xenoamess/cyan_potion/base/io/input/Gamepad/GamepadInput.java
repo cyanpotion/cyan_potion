@@ -56,7 +56,7 @@ public class GamepadInput {
             LOGGER.debug("XInputNotLoadedException", e);
         }
 
-        if (gameManager.getDataCenter().isRunWithSteam() == true) {
+        if (gameManager.getDataCenter().isRunWithSteam()) {
             SteamControllerHandle[] steamControllerHandles =
                     new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();

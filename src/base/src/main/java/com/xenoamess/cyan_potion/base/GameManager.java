@@ -466,17 +466,6 @@ public class GameManager implements AutoCloseable {
 
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.codePluginManager.apply(this, rightBeforeLogicFrame);
-                //                if (getGameWindow().hasResized()) {
-                //                    //                    camera
-                //                    .setProjection(window.getWidth(),
-                //                    window.getHeight());
-                //                    //                    gui.resizeCamera
-                //                    (window);
-                //                    //                    world
-                //                    .calculateView(window);
-                //                    //                    glViewport(0, 0,
-                //                    window.getWidth(), window.getHeight());
-                //                }
 
                 unprocessed -= DataCenter.FRAME_CAP;
                 canRender = true;

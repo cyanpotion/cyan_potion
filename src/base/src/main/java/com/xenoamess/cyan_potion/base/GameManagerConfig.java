@@ -28,10 +28,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
+class ConfigFileBooleanValueStringIsNotBooleanExeption extends RuntimeException {
+    public ConfigFileBooleanValueStringIsNotBooleanExeption(String message) {
+        super(message);
+    }
+}
+
 /**
  * @author XenoAmess
  */
 public class GameManagerConfig {
+
     /**
      * Don't let anyone instantiate this class.
      */
@@ -57,7 +64,7 @@ public class GameManagerConfig {
             case "no":
                 return false;
             default:
-                throw new RuntimeException("key is not a legal boolean");
+                throw new ConfigFileBooleanValueStringIsNotBooleanExeption(value);
         }
     }
 
