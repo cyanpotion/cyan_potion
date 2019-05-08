@@ -133,6 +133,7 @@ public class KeyEvent implements Event {
      * @return the string that the key refers to
      * @see
      * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
+     * @deprecated
      */
     @Deprecated
     public String translate() {

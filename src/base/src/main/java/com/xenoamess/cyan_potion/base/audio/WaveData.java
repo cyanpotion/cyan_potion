@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
@@ -41,6 +42,12 @@ import static org.lwjgl.stb.STBVorbis.*;
 
 class UnexpectedBufferClassTypeException extends RuntimeException {
     public UnexpectedBufferClassTypeException(String message) {
+        super(message);
+    }
+}
+
+class FailedToOpenOggVorbisFileException extends RuntimeException {
+    public FailedToOpenOggVorbisFileException(String message) {
         super(message);
     }
 }
@@ -106,7 +113,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             IntBuffer error = MemoryUtil.memAllocInt(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
             if (decoder == 0) {
-                throw new RuntimeException("Failed to open Ogg Vorbis file. " +
+                throw new FailedToOpenOggVorbisFileException("Failed to open Ogg Vorbis file. " +
                         "Error: " + error.get(0));
             }
             MemoryUtil.memFree(error);
@@ -157,7 +164,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
                 this.loadAsMusic(resourceFileURIStrings);
                 break;
             default:
-                throw new Error("WaveData Type not defined : " + resourceType);
+                throw new URITypeNotDefinedException(this.getFullResourceURI());
         }
     }
 
