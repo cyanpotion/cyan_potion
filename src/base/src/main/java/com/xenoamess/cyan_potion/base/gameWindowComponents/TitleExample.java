@@ -54,7 +54,7 @@ public class TitleExample extends AbstractGameWindowComponent {
     private Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                     "/www/img/pictures/saveStar.png:picture");
-    private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
+    private final ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
             new ArrayList<>();
 
     public TitleExample(GameWindow gameWindow) {
@@ -363,7 +363,6 @@ public class TitleExample extends AbstractGameWindowComponent {
             return;
         }
         setState(getState() + 1);
-        return;
     }
 
     void lastState() {
@@ -378,7 +377,6 @@ public class TitleExample extends AbstractGameWindowComponent {
             return;
         }
         setState(getState() - 1);
-        return;
     }
 
     @Override
@@ -483,11 +481,6 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     public ArrayList<AbstractControlableGameWindowComponent> getControlableGameWindowComponents() {
         return controlableGameWindowComponents;
-    }
-
-    public void setControlableGameWindowComponents
-            (ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents) {
-        this.controlableGameWindowComponents = controlableGameWindowComponents;
     }
 
     public int getState() {
