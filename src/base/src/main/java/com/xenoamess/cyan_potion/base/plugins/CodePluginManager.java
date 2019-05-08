@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.function.Function;
 
 /**
@@ -41,8 +41,8 @@ public class CodePluginManager {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CodePluginManager.class);
 
-    private HashMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
-            new HashMap<>();
+    private EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
+            new EnumMap<>(CodePluginPosition.class);
 
     public CodePluginManager() {
         for (CodePluginPosition codePluginPosition : CodePluginPosition.values()) {

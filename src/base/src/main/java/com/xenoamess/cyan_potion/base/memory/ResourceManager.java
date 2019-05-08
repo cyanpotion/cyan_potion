@@ -209,16 +209,22 @@ public class ResourceManager implements AutoCloseable {
 
     @Override
     public void close() {
-        for (Map<Class, Map> submap : getDefaultResourecesURIMap().values()) {
-            for (Map subSubmap : submap.values()) {
-                for (Object object : subSubmap.values()) {
-                    if (object instanceof AutoCloseable) {
-                        try {
-                            ((AutoCloseable) object).close();
-                        } catch (Exception e) {
-                            LOGGER.error("close fail", object, e);
-                        }
-                    }
+        closeMap(getDefaultResourecesURIMap());
+    }
+
+    public static void closeMap(Map mapToClose) {
+        if (mapToClose == null) {
+            return;
+        }
+        for (Object object : mapToClose.values()) {
+            if (object instanceof Map) {
+                closeMap((Map) object);
+            }
+            if (object instanceof AutoCloseable) {
+                try {
+                    ((AutoCloseable) object).close();
+                } catch (Exception e) {
+                    LOGGER.error("close fail", object, e);
                 }
             }
         }
