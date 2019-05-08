@@ -315,8 +315,8 @@ public class GameManager implements AutoCloseable {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
-            throw new Error("Lack language " + language + ".Please change the" +
-                    " [language] in settings.");
+            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language, );
+            System.exit(1);
         }
     }
 
@@ -341,7 +341,7 @@ public class GameManager implements AutoCloseable {
                             "you from playing it.");
                 } else {
                     LOGGER.error("Steam load failed, thus the game shut.");
-                    throw new Error(e);
+                    System.exit(1);
                 }
             }
         } else {
@@ -349,8 +349,8 @@ public class GameManager implements AutoCloseable {
                 LOGGER.warn("Steam load failed but somehow we cannot prevent " +
                         "you from playing it.");
             } else {
-                LOGGER.warn("Steam load failed, thus the game shut.");
-                throw new RuntimeException("Steam load failed, thus the game shut.");
+                LOGGER.error("Steam load failed, thus the game shut.");
+                System.exit(1);
             }
         }
     }
@@ -369,11 +369,9 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().close();
-        //        super.close();
         this.getAudioManager().close();
 
         setAlive(false);
-//        DataCenter.getGameManagers().remove(this);
 
         if (getConsoleThread() != null) {
             getConsoleThread().shutdown();
@@ -399,8 +397,6 @@ public class GameManager implements AutoCloseable {
         }
         getEventList().clear();
 
-//        String tmpWindowWidthString = ;
-//        String tmpWindowHeightString = ;
 
         this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
                 STRING_LOGIC_WINDOW_WIDTH, "1280")));
@@ -455,7 +451,7 @@ public class GameManager implements AutoCloseable {
 
         long time = System.currentTimeMillis();
         double unprocessed = 0;
-//        int timerForSteamCallback = 0;
+        int timerForSteamCallback = 0;
 
         while (getAlive()) {
             boolean canRender = false;
@@ -493,7 +489,11 @@ public class GameManager implements AutoCloseable {
                 update();
                 this.codePluginManager.apply(this, rightAfterUpdate);
 
-                steamRunCallbacks();
+                timerForSteamCallback++;
+                if (timerForSteamCallback >= 300) {
+                    timerForSteamCallback = 0;
+                    steamRunCallbacks();
+                }
 
                 setNowFrameIndex(getNowFrameIndex() + 1);
                 this.getResourceManager().suggestGc();
