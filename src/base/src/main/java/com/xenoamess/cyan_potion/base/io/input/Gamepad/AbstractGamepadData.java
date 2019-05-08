@@ -46,12 +46,12 @@ public abstract class AbstractGamepadData {
     public abstract void reset();
 
     public void update(GameWindow gameWindow) {
-        AbstractGamepadDevice gamepadDevice = this.getGamepadDevice();
-        if (gamepadDevice != null) {
-            gamepadDevice.update();
+        AbstractGamepadDevice gamepadDeviceLocal = this.getGamepadDevice();
+        if (gamepadDeviceLocal != null) {
+            gamepadDeviceLocal.update();
         }
 
-        if (gamepadDevice == null || !gamepadDevice.isConnected()) {
+        if (gamepadDeviceLocal == null || !gamepadDeviceLocal.isConnected()) {
             this.reset();
         } else {
             updateGamepadStatus(gameWindow);

@@ -59,8 +59,8 @@ public class Key {
         if (!object.getClass().equals(this.getClass())) {
             return false;
         }
-        final Key key = (Key) (object);
-        return (this.getType() == key.getType() && this.getKey() == key.getKey());
+        final Key keyLocal = (Key) (object);
+        return (this.getType() == keyLocal.getType() && this.getKey() == keyLocal.getKey());
     }
 
     @Override

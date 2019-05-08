@@ -405,28 +405,11 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-//        LOGGER.debug(state);
 
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (this.getState() >= 0 && this.getState() <= 4) {
-//            int nowIndex = 1;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "开始游戏");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "设置选项");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "制作人员");
-//            nowIndex++;
-//            this.getGameWindow().drawText(Font.defaultFont, -50 + 250 *
-//            nowIndex, 900, 1, new Vector4f(1, 1, 1, state == nowIndex ? 1f
-//            : 0.3f), "退出游戲");
         } else if (getState() == -101) {
             this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
                     this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2F,
@@ -435,21 +418,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     this.getGameWindow().getLogicWindowWidth() / 2F,
                     this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
                     0, new Vector4f(1, 1, 1, 1F), "校准文本Ugna");
-
-//            for (int i = 0; i < 20; i++) {
-//                this.getGameWindow().drawBindableRelativeLeftTop(this
-//                .saveSlotTexture, i * 50, i * 50, 250, 50);
-//                this.getGameWindow().drawText(Font.defaultFont, i * 50, i *
-//                50, 1, new Vector4f(1, 1, 1, 1f), "校准文本");
-//            }
-
-//            this.getGameWindow().drawBindableRelativeLeftTop(this
-//            .saveSlotTexture, 0, 0, 1280, 1024);
-
-
         }
-
-        //        this.
     }
 
     private void startGame() {
