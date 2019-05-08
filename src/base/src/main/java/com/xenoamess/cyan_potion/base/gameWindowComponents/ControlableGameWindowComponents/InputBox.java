@@ -55,11 +55,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
     private Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
     private Vector4f insertColor = new Vector4f(1f, 1f, 1f, 1);
 
-//    public Texture backgroundTexture;
-//            this.this.getGameWindow().gameManager.resourceManager
-//            .fetchResourceWithShortenURI(Texture.class,
-//            "/www/img/pictures/saveSlot.png:picture");
-
     {
         this.registerOnMouseButtonLeftDownCallback(
                 (Event event) -> {
@@ -122,7 +117,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
     public InputBox(GameWindow gameWindow) {
         super(gameWindow);
-//        this.backgroundTexture = backgroundTexture;
     }
 
     @Override
@@ -305,9 +299,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
     @Override
     public void ifVisibleThenDraw() {
-//        this.getGameWindow().drawBindableRelativeLeftTop(this
-//        .backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width,
-//        this.height);
         this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
                 this.getGameWindow().getMousePosY(), true, null);
     }
@@ -339,16 +330,13 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         String[] strings = this.getContentString().split("\n", -1);
 
         float minDist = Float.MAX_VALUE;
-//        int minDistIndex = -1;
 
         int index = 0;
         int resIndex = -1;
         int resLineIndex = -1;
-//        int lineIndex = 0;
 
         for (int j = 0; j < strings.length; j++) {
             String line = strings[j];
-//            LOGGER.debug(line);
 
             float x1 = realLeftTopPosX;
             float y1 = realLeftTopPosY + realCharHeight * j;
@@ -356,20 +344,16 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             float characterSpace = 0;
             String text = line;
 
-//        LOGGER.debug("!!! x:" + x + " y:" + y);
             font.bind();
             float scaley = font.getScale(height);
             float scalex = scaley;
 
-//        drawText(x1, y1, scalex, scaley, characterSpace, color, text);
 
             float x = x1;
             float y = y1;
-            //        LOGGER.debug("!!! x:" + x + " y:" + y);
             font.getXb().put(0, x);
             font.getYb().put(0, y);
 
-//        chardata.position(font * MAX_NUM);
             font.getChardata().position(0);
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
@@ -388,8 +372,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
                         Font.BITMAP_H, text.charAt(i), font.getXb(),
                         font.getYb(), font.getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
                 float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
@@ -397,9 +379,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                 float nowy0 = y + spaceUpToCharShould * scaley;
 
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowx0 + " " + nowy0);
                 if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
                     glColor4f(this.getTextSelectColor().x,
                             this.getTextSelectColor().y,
@@ -418,13 +397,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                             font.getQ().s1(), font.getQ().t1()
                     );
                 }
-//                float nowx;
-//                float nowy;
-//                float nowDist;
-
-//                nowx = nowx0;
-//                nowy = (nowy0 + height * 0.8f + nowy0 + charHeightShould *
-//                scaley + height * 0.8f) / 2;
 
                 float newx0 = nowx0;
                 float newx1 = nowx0 + charWidthShould * scalex;
@@ -449,13 +421,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     resIndex = index;
                 }
 
-//                nowDist = (distPosX - nowx) * (distPosX - nowx) + (distPosY
-//                - nowy) * (distPosY - nowy) * 1e3f;
-//                if (minDist > nowDist) {
-//                    minDist = nowDist;
-//                    minIndex = index;
-//                }
-
                 if (index == this.getNowInsertPos()) {
                     insPosX0 = lastxReal;
                     if (i != 0 && text.charAt(i - 1) == ' ') {
@@ -471,15 +436,6 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     }
                 }
                 if (i == line.length() - 1) {
-//                    nowx = nowx0 + charWidthShould * scalex;
-//                    nowy = (nowy0 + height * 0.8f + nowy0 +
-//                    charHeightShould * scaley + height * 0.8f) / 2;
-//                    nowDist = (distPosX - nowx) * (distPosX - nowx) +
-//                    (distPosY - nowy) * (distPosY - nowy) * 1e3f;
-//                    if (minDist > nowDist) {
-//                        minDist = nowDist;
-//                        minIndex = index + 1;
-//                    }
                     newy0 = nowy0 + height * 0.8f;
                     newy1 = nowy0 + charHeightShould * scaley + height * 0.8f;
                     if (distPosY >= newy0 && distPosY <= newy1) {
@@ -517,18 +473,12 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W
                                 , Font.BITMAP_H, text.charAt(i2),
                                 font.getXb(), font.getYb(), font.getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
                         spaceLeftToCharShould = font.getQ().x0() - lastxShould;
                         spaceUpToCharShould = font.getQ().y0() - lastyShould;
                         nowx0 = lastxReal + spaceLeftToCharShould * scalex;
                         nowy0 = y + spaceUpToCharShould * scaley;
-
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowx0 + " " + nowy0);
 
                         if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
                             glColor4f(this.getTextSelectColor().x,
@@ -558,7 +508,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                     }
                 }
             }
-//            LOGGER.debug(line.length());
+
             if (line.isEmpty()) {
                 float nowx0 = x;
                 float nowy0 = y;
@@ -595,21 +545,19 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                 }
             }
 
-            if (ifDraw) {
-                if (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0) {
-                    glColor4f(getInsertColor().x(), getInsertColor().y(),
-                            getInsertColor().z(), getInsertColor().w());
-                    stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
-                            Font.BITMAP_H, '|', font.getXb(), font.getYb(),
-                            font.getQ(), false);
-                    Font.drawBoxTC(
-                            insPosX0, insPosY0 - (insPosY1 - insPosY0) / 4,
-                            insPosX1 - (insPosX1 - insPosX0) / 3 * 2,
-                            insPosY1 + (insPosY1 - insPosY0) / 4,
-                            font.getQ().s0(), font.getQ().t0(),
-                            font.getQ().s1(), font.getQ().t1()
-                    );
-                }
+            if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0)) {
+                glColor4f(getInsertColor().x(), getInsertColor().y(),
+                        getInsertColor().z(), getInsertColor().w());
+                stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
+                        Font.BITMAP_H, '|', font.getXb(), font.getYb(),
+                        font.getQ(), false);
+                Font.drawBoxTC(
+                        insPosX0, insPosY0 - (insPosY1 - insPosY0) / 4,
+                        insPosX1 - (insPosX1 - insPosX0) / 3 * 2,
+                        insPosY1 + (insPosY1 - insPosY0) / 4,
+                        font.getQ().s0(), font.getQ().t0(),
+                        font.getQ().s1(), font.getQ().t1()
+                );
             }
 
             glEnd();
@@ -621,7 +569,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         } else {
             return resIndex;
         }
-//        return resIndex;
+
     }
 
     public long getSlashTime() {
@@ -696,18 +644,5 @@ public class InputBox extends AbstractControlableGameWindowComponent {
         this.insertColor = insertColor;
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//        if(){
-//
-//        }
-//    }
 }
-
-
-//    public Vector2f getNextPos(char nextChar, float lastPosX, float
-//    lastPosY) {
-//
-//    }
 
