@@ -107,7 +107,6 @@ public class FileUtil {
 
 
                 while (fc.read(buffer) != -1) {
-                    ;
                 }
                 success = true;
             } catch (IOException e) {
@@ -183,7 +182,7 @@ public class FileUtil {
         String res = "";
         try (
                 BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(inputStream));
+                        new BufferedReader(new InputStreamReader(inputStream))
         ) {
             final StringBuffer sb = new StringBuffer();
             String tmp;
@@ -240,7 +239,7 @@ public class FileUtil {
             return;
         }
         try (
-                FileWriter fileWriter = new FileWriter(file);
+                FileWriter fileWriter = new FileWriter(file)
         ) {
             fileWriter.write(contentString);
         } catch (IOException e) {

@@ -174,7 +174,7 @@ public class ResourceManager implements AutoCloseable {
         if (resourceURIMap == null) {
             return null;
         } else {
-            return (T) resourceURIMap.get(shortenResourceURI);
+            return resourceURIMap.get(shortenResourceURI);
         }
     }
 

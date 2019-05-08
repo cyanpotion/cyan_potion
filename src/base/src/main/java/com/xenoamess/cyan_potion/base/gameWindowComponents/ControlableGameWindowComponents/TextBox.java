@@ -152,7 +152,7 @@ public class TextBox extends AbstractControlableGameWindowComponent {
             float ybBak = font.getYb().get(0);
             int ti;
 
-            for (ti = i; ti < this.getContentString().length() && (isWordWrap() ? true : ti < i + 1); ti++) {
+            for (ti = i; ti < this.getContentString().length() && (isWordWrap() || ti < i + 1); ti++) {
                 char nowChar = this.getContentString().charAt(ti);
                 if (Character.isWhitespace(nowChar)) {
                     break;
@@ -194,7 +194,7 @@ public class TextBox extends AbstractControlableGameWindowComponent {
                 font.getYb().put(0, lineStartPosY);
             }
 
-            for (ti = i; ti < this.getContentString().length() && (isWordWrap() ? true : ti < i + 1); ti++) {
+            for (ti = i; ti < this.getContentString().length() && (isWordWrap() || ti < i + 1); ti++) {
                 char nowChar = this.getContentString().charAt(ti);
                 if (Character.isWhitespace(nowChar)) {
                     break;
