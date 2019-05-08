@@ -138,8 +138,7 @@ public class AudioManager implements AutoCloseable {
             LOGGER.debug("Audio source exhausted! Current num : {}",
                     this.getUsedSources().size());
         }
-        Source res = getUnusedSources().iterator().next();
-        return res;
+        return getUnusedSources().iterator().next();
     }
 
     public void playNew(WaveData waveData) {

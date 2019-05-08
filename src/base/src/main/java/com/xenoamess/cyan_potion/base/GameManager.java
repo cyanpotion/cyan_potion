@@ -522,7 +522,7 @@ public class GameManager implements AutoCloseable {
     protected void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (getEventList()) {
-            ArrayList<Event> newEventList = new ArrayList<Event>();
+            ArrayList<Event> newEventList = new ArrayList<>();
             for (Event au : getEventList()) {
                 Set<Event> res = au.apply(this);
                 if (res != null) {

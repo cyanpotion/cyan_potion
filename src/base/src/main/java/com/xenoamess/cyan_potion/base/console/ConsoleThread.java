@@ -43,8 +43,8 @@ class ConsoleTalkThread implements Runnable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThread.class);
 
-    final private Socket socket;
-    final private ConsoleThread consoleThread;
+    private final Socket socket;
+    private final ConsoleThread consoleThread;
 
     ConsoleTalkThread(Socket socket, ConsoleThread consoleThread) {
         this.socket = socket;
@@ -91,7 +91,7 @@ public class ConsoleThread extends Thread {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThread.class);
 
-    final private GameManager gameManager;
+    private final GameManager gameManager;
 
     public ConsoleThread(GameManager gameManager) {
         this.gameManager = gameManager;
