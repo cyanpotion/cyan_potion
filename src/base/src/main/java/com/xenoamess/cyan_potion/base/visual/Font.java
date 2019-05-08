@@ -85,14 +85,14 @@ public class Font implements AutoCloseable {
     private ByteBuffer bitmap;
 
     public void loadBitmap() {
-        ByteBuffer bitmap;
+        ByteBuffer bitmapLocal;
         STBTTPackedchar.Buffer tmpChardata =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
                     FileUtil.loadFileBuffer(FileUtil.getFile(this.getTtfFilePath()), true);
-            bitmap = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-            stbtt_PackBegin(pc, bitmap, BITMAP_W, BITMAP_H, 0, 1, 0);
+            bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+            stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
             tmpChardata.position(p);
             stbtt_PackSetOversampling(pc, 1, 1);
@@ -101,10 +101,10 @@ public class Font implements AutoCloseable {
             stbtt_PackEnd(pc);
             if (TEST_PRINT_FONT_BMP) {
                 stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
-                        bitmap);
+                        bitmapLocal);
             }
 
-            this.bitmap = bitmap;
+            this.bitmap = bitmapLocal;
             this.setChardata(tmpChardata);
         }
     }
@@ -151,7 +151,7 @@ public class Font implements AutoCloseable {
 
 //    public void drawText(float x, float y, float scalex, float scaley,
 //    float characterSpace, Vector4f color, String text) {
-////        LOGGER.debug("!!! x:" + x + " y:" + y);
+//
 //        this.bind();
 //
 //        xb.put(0, x);
@@ -203,7 +203,7 @@ public class Font implements AutoCloseable {
     public void drawText(float x, float y, float scalex, float scaley,
                          float height, float characterSpace, Vector4f color,
                          String text) {
-//        LOGGER.debug("!!! x:" + x + " y:" + y);
+
 //        STBTTFontinfo fontInfo = STBTTFontinfo.create();
         this.bind();
 
@@ -260,7 +260,7 @@ public class Font implements AutoCloseable {
     public void drawTextFillAreaLeftTop(float x1, float y1, float width,
                                         float height, float characterSpace,
                                         Vector4f color, String text) {
-//        LOGGER.debug("!!! x:" + x + " y:" + y);
+
         this.bind();
         getXb().put(0, x1);
         getYb().put(0, y1);
@@ -366,7 +366,7 @@ public class Font implements AutoCloseable {
                                            float yMax, float height,
                                            float characterSpace,
                                            Vector4f color, String text) {
-//        LOGGER.debug("!!! x:" + x + " y:" + y);
+
         this.bind();
         float scaley = this.getScale(height);
         float scalex = scaley;
@@ -375,7 +375,7 @@ public class Font implements AutoCloseable {
 
         float x = x1;
         float y = y1;
-        //        LOGGER.debug("!!! x:" + x + " y:" + y);
+
         getXb().put(0, x);
         getYb().put(0, y);
 
