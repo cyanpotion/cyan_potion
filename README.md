@@ -2,6 +2,16 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/cyanpotion/cyan_potion.svg?branch=master)](https://travis-ci.org/cyanpotion/cyan_potion)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_base&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_base)
+cyan_potion_base
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_coordinate&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_coordinate)
+cyan_potion_coordinate
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_rpg_module&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_rpg_module)
+cyan_potion_rpg_module
 
 A lightweight 2d game engine in java.
 
