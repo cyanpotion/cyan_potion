@@ -48,9 +48,6 @@ public class TextBox extends AbstractControlableGameWindowComponent {
 
     @Override
     public void ifVisibleThenDraw() {
-//        this.getGameWindow()drawBindableRelativeLeftTop(this
-//        .backgroundTexture, this.leftTopPosX, this.leftTopPosY, this.width,
-//        this.height);
         this.drawText();
     }
 
@@ -99,20 +96,14 @@ public class TextBox extends AbstractControlableGameWindowComponent {
             }
 
             if (this.getContentString().charAt(i) == '\n') {
-//                glEnd();
                 lineStartPosX = realLeftTopPosX;
                 lineStartPosY += realCharHeight;
                 lastxReal = lineStartPosX;
                 lastyReal = lineStartPosY;
                 lastxShould = lineStartPosX;
                 lastyShould = lineStartPosY;
-//                font.bind();
                 font.getXb().put(0, lineStartPosX);
                 font.getYb().put(0, lineStartPosY);
-//                font.chardata.position(0);
-//                glEnable(GL_TEXTURE_2D);
-//                glBindTexture(GL_TEXTURE_2D, font.fontTexture);
-//                glBegin(GL_QUADS);
                 continue;
             }
 
@@ -225,56 +216,6 @@ public class TextBox extends AbstractControlableGameWindowComponent {
             }
 
             i = ti - 1;
-
-//            stbtt_GetPackedQuad(
-//                    font.chardata, font.BITMAP_W, font.BITMAP_H, this
-//                    .contentString.charAt(i),
-//                    font.xb, font.getYb(), font.q, false);
-//
-//            float charWidthShould = font.getQ().x1() - font.getQ().x0();
-//            float charHeightShould = font.getQ().y1() - font.getQ().y0();
-//            float spaceLeftToCharShould = font.getQ().x0() - lastx_Should;
-//            float spaceUpToCharShould = font.getQ().y0() - lasty_Should;
-//            float nowx0 = lastx_ + spaceLeftToCharShould * scalex;
-//            float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
-//
-//            if (this.textColor != null) {
-//                glColor4f(this.textColor.x, this.textColor.y, this
-//                .textColor.z, this.textColor.w);
-//            }
-//
-//            if (nowx0 + charWidthShould * scalex > lineStartPosX +
-//            realWidth) {
-//                //                glEnd();
-//                lineStartPosX = realLeftTopPosX;
-//                lineStartPosY += realCharHeight;
-//                lastx_ = lineStartPosX;
-//                lasty_ = lineStartPosY;
-//                lastx_Should = lineStartPosX;
-//                lasty_Should = lineStartPosY;
-////                font.bind();
-//                font.xb.put(0, lineStartPosX);
-//                font.getYb().put(0, lineStartPosY);
-////                font.chardata.position(0);
-////                glEnable(GL_TEXTURE_2D);
-////                glBindTexture(GL_TEXTURE_2D, font.fontTexture);
-////                glBegin(GL_QUADS);
-//                i--;
-//                continue;
-//            }
-//
-//            font.drawBoxTC(
-//                    nowx0, nowy0 + realCharHeight * 0.8f, nowx0 +
-//                    charWidthShould * scalex, nowy0 + charHeightShould *
-//                    scaley + realCharHeight * 0.8f,
-//                    font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
-//                    font.getQ().t1()
-//            );
-//
-//            lastx_ = nowx0 + charWidthShould * scalex;
-//            lasty_ = lineStartPosY;
-//            lastx_Should = font.getQ().x1();
-//            lasty_Should = lineStartPosY;
         }
         glEnd();
     }
