@@ -220,7 +220,6 @@ public class JXInputGamepadData extends AbstractGamepadData {
         XInputAxes axes = components.getAxes();
 //        axes.
         long window = gameWindow.getWindow();
-        int key;
         int action;
 
 //        LOGGER.debug("this.a : " + this.a);
