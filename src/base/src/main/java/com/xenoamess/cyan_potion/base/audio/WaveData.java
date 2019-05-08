@@ -39,6 +39,12 @@ import java.nio.*;
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.stb.STBVorbis.*;
 
+class UnexpectedBufferClassTypeException extends RuntimeException {
+    public UnexpectedBufferClassTypeException(String message) {
+        super(message);
+    }
+}
+
 /**
  * @author XenoAmess
  */
@@ -85,7 +91,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             AL10.alBufferData(bufferName, format, (FloatBuffer) data,
                     frequency);
         } else {
-            throw new Error("Buffer Type not defined : " + data.getClass().getCanonicalName());
+            throw new UnexpectedBufferClassTypeException("Unexpected buffer type here : " + data.getClass().getCanonicalName());
         }
     }
 
@@ -94,30 +100,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         alBufferData(this.getAlBufferInt(), this.getFormat(),
                 data, this.getSampleRate());
     }
-
-//    public static WaveData create(URL url) {
-//        return create(new File(url.getFile()));
-//    }
-//
-//    public static WaveData create(String path) {
-//        return create(FileUtil.GetURL(path));
-//    }
-
-
-//    public static WaveData create(ByteBuffer buffer) {
-//        WaveData res = null;
-//        try {
-//            res = new WaveData(org.newdawn.slick.openal.WaveData.create
-//            (buffer));
-//        } catch (Exception e) {
-//            res = null;
-//        }
-//        if (res == null) {
-//            res = ReadVorbis(buffer);
-//        }
-//        return res;
-//    }
-
 
     public void readVorbis(ByteBuffer vorbis) {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
