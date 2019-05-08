@@ -45,6 +45,12 @@ import org.slf4j.LoggerFactory;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+class FailToCreateGLFWWindowException extends RuntimeException {
+    public FailToCreateGLFWWindowException() {
+        super();
+    }
+}
+
 /**
  * @author XenoAmess
  */
@@ -175,8 +181,8 @@ public class GameWindow implements AutoCloseable {
                 this.getRealWindowHeight(),
                 this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
 
-        if (getWindow() == MemoryUtil.NULL) {
-            throw new RuntimeException("Failed to create the GLFW window");
+        if (getWindow() == 0L) {
+            throw new FailToCreateGLFWWindowException();
         }
 
         glfwSetKeyCallback(getWindow(),
