@@ -108,7 +108,7 @@ public class ImageParser implements AutoCloseable {
         try (
                 GLFWImage gameWindowIcon = getGLFWImage(path);
                 GLFWImage.Buffer gameWindowIconBuffer =
-                        GLFWImage.malloc(1).put(0, gameWindowIcon);
+                        GLFWImage.malloc(1).put(0, gameWindowIcon)
         ) {
             glfwSetWindowIcon(window, gameWindowIconBuffer);
         }

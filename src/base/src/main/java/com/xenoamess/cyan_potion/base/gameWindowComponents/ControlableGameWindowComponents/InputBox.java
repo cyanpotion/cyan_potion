@@ -153,7 +153,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         } else {
                             setContentString(getContentString().substring(0,
                                     getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ?
-                                    getContentString().substring(getNowInsertPos() + 1, getContentString().length())
+                                    getContentString().substring(getNowInsertPos() + 1)
                                     : ""));
                             this.limitNowInsertPos();
                         }
@@ -164,7 +164,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
                         } else {
                             setContentString((getNowInsertPos() > 1 ?
                                     getContentString().substring(0,
-                                            getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos(), getContentString().length()) : ""));
+                                            getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos()) : ""));
                             setNowInsertPos(getNowInsertPos() - 1);
                             this.limitNowInsertPos();
                         }
@@ -279,7 +279,7 @@ public class InputBox extends AbstractControlableGameWindowComponent {
 
     private void insertStringToInsertPos(String insertString) {
         limitNowInsertPos();
-        setContentString(getContentString().substring(0, getNowInsertPos()) + insertString + getContentString().substring(getNowInsertPos(), getContentString().length()));
+        setContentString(getContentString().substring(0, getNowInsertPos()) + insertString + getContentString().substring(getNowInsertPos()));
         setNowInsertPos(getNowInsertPos() + insertString.length());
         limitNowInsertPos();
     }
@@ -294,8 +294,8 @@ public class InputBox extends AbstractControlableGameWindowComponent {
             setNowSelectEndPos(tmpInt);
         }
         setContentString(getContentString().substring(0,
-                getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos(),
-                getContentString().length()));
+                getNowSelectStartPos()) + insertString + getContentString().substring(getNowSelectEndPos()
+        ));
         setNowInsertPos(getNowSelectStartPos() + insertString.length());
         limitNowInsertPos();
         setNowSelectStartPos(-1);

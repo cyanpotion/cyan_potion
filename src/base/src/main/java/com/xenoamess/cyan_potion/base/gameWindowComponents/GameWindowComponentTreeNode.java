@@ -51,9 +51,7 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         this.gameWindowComponent = gameWindowComponent;
         this.getGameWindowComponent().setGameWindowComponentTreeNode(this);
         if (this.getParent() != null) {
-            if (this.getGameWindowComponentTree().getLeafNodes().contains(this.getParent())) {
-                this.getGameWindowComponentTree().getLeafNodes().remove(this.getParent());
-            }
+            this.getGameWindowComponentTree().getLeafNodes().remove(this.getParent());
             this.getGameWindowComponentTree().getLeafNodes().add(this);
 
             this.getParent().getChildren().add(this);
@@ -76,9 +74,7 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         this.getGameWindowComponent().close();
 
 
-        if (getGameWindowComponentTree().getLeafNodes().contains(this)) {
-            getGameWindowComponentTree().getLeafNodes().remove(this);
-        }
+        getGameWindowComponentTree().getLeafNodes().remove(this);
 
         if (getParent() != null) {
             getParent().getChildren().remove(this);
