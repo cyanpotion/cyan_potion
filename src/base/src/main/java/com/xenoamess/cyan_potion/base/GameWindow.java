@@ -427,7 +427,9 @@ public class GameWindow implements AutoCloseable {
     private float mousePosY;
 
     protected void updateMousePos() {
-        double[] x = new double[1], y = new double[1];
+        double[] x = new double[1];
+        double[] y = new double[1];
+
         glfwGetCursorPos(this.getWindow(), x, y);
         setLastMousePosX(getMousePosX());
         setLastMousePosY(getMousePosY());
