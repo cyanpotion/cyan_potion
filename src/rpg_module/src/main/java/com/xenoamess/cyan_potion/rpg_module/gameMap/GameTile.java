@@ -39,7 +39,7 @@ public class GameTile {
 
     private boolean solid = false;
 
-    private ArrayList<Bindable> bindables = new ArrayList<Bindable>();
+    private ArrayList<Bindable> bindables = new ArrayList<>();
 
     public void addBindable(Bindable bindable) {
         this.getBindables().add(bindable);

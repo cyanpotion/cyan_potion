@@ -55,7 +55,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                     "/www/img/pictures/saveStar.png:picture");
     private ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
-            new ArrayList<AbstractControlableGameWindowComponent>();
+            new ArrayList<>();
 
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);

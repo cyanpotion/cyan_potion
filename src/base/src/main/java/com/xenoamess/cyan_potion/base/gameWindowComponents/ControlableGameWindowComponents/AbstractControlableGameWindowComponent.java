@@ -314,11 +314,10 @@ public abstract class AbstractControlableGameWindowComponent extends AbstractGam
         if (this.getWidth() < 0 || this.getHeight() < 0) {
             return false;
         }
-        if (posX >= this.getLeftTopPosX() && posX <= this.getLeftTopPosX() + this.getWidth()
-                && posY >= this.getLeftTopPosY() && posY <= this.getLeftTopPosY() + this.getHeight()) {
-            return true;
-        }
-        return false;
+        return (posX >= this.getLeftTopPosX()
+                && posX <= this.getLeftTopPosX() + this.getWidth()
+                && posY >= this.getLeftTopPosY()
+                && posY <= this.getLeftTopPosY() + this.getHeight());
     }
 
     public boolean ifMouseInArea() {

@@ -60,9 +60,9 @@ public class Keymap {
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
-    private Map<Key, Key> keymap = new HashMap<Key, Key>();
+    private Map<Key, Key> keymap = new HashMap<>();
 
-    private Map<Key, ArrayList> keymapReverse = new HashMap<Key, ArrayList>();
+    private Map<Key, ArrayList> keymapReverse = new HashMap<>();
 
 
     private boolean[][] rawKeys =

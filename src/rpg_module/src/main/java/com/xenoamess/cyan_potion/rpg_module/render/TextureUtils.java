@@ -713,7 +713,7 @@ public class TextureUtils {
 
     public static List<Texture> getTilesetTextures8(ResourceManager resourceManager, String resourceType, String
             tilesetTexturesFilepath, int columNum) {
-        final List<Texture> res = new ArrayList<Texture>();
+        final List<Texture> res = new ArrayList<>();
 
         BufferedImage bufferedImage = null;
         try {
