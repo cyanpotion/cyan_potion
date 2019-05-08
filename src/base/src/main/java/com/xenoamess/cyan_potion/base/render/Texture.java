@@ -44,6 +44,13 @@ import java.util.function.Function;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
+
+class TextureStateDisorderException extends RuntimeException {
+    public TextureStateDisorderException(String message) {
+        super(message);
+    }
+}
+
 /**
  * @author XenoAmess
  */
@@ -96,11 +103,11 @@ public class Texture extends AbstractResource implements Bindable {
     public void bind(int sampler) {
         this.load();
         if ((this.getGlTexture2DInt() == -1) != (!this.isInMemory())) {
-            throw new Error("Texture state chaos : " + this.getGlTexture2DInt() + " , " + this.isInMemory() + " , " + this.getFullResourceURI());
+            throw new TextureStateDisorderException("Texture state chaos : " + this.getGlTexture2DInt() + " , " + this.isInMemory() + " , " + this.getFullResourceURI());
         }
 
         if (this.getGlTexture2DInt() == -1) {
-            throw new Error("Binding non-ready texture : " + this.getFullResourceURI());
+            throw new TextureStateDisorderException("Binding non-ready texture : " + this.getFullResourceURI());
         }
         if (sampler >= MIN_SAMPLER && sampler <= MAX_SAMPLER) {
             glActiveTexture(GL13.GL_TEXTURE0 + sampler);
@@ -129,20 +136,6 @@ public class Texture extends AbstractResource implements Bindable {
             for (int j = 0; j < getWidth(); j++) {
                 int pixel =
                         pixelsRaw[(startHeight + i) * entireWidth + startWidth + j];
-                //                if (pixel < 0) {
-                //                    pixel += Integer.MAX_VALUE;
-                //                    pixel += Integer.MAX_VALUE;
-                //                }
-
-                //                LOGGER.debug((byte) ((pixel >> 16) &
-                //                0xFF));
-                //                LOGGER.debug((byte) ((pixel >> 8) &
-                //                0xFF));
-                //                LOGGER.debug((byte) ((pixel >> 0) &
-                //                0xFF));
-                //                LOGGER.debug((byte) ((pixel >> 24) &
-                //                0xFF));
-                //                LOGGER.debug(i + " " + j + " " + pixel);
 
                 // RED
                 byteBuffer.put((byte) ((pixel >> 16) & 0xFF));

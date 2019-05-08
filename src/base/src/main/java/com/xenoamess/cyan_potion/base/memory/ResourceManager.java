@@ -89,8 +89,6 @@ public class ResourceManager implements AutoCloseable {
             sb.append(fullResourceURI.charAt(i));
         }
 
-        String resourceClassName = sb.toString();
-
         this.putResourceWithShortenURI(fullResourceURI.substring(i), t);
     }
 
