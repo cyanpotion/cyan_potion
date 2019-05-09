@@ -261,7 +261,7 @@ under the License.
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <gpg.executable>C:\Program Files\Git\usr\bin\gpg.exe</gpg.executable>
+        <gpg.executable>gpg</gpg.executable>
         <gpg.passphrase>PASSWORD0</gpg.passphrase>
       </properties>
     </profile>
