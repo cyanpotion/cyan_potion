@@ -40,24 +40,24 @@ public class GrammarMap {
     private GrammarMap() {
     }
 
-    private static final Map<Integer, String> MethodNumToMethodNameMap =
+    private static final Map<Integer, String> METHOD_NUM_TO_METHOD_NAME_MAP =
             new HashMap<>();
-    private static final Map<String, Integer> MethodNameToMethodNumMap =
+    private static final Map<String, Integer> METHOD_NAME_TO_METHOD_NUM_MAP =
             new HashMap<>();
 
 
     public static String getMethodName(int methodNum) {
         checkInit();
-        return MethodNumToMethodNameMap.get(methodNum);
+        return METHOD_NUM_TO_METHOD_NAME_MAP.get(methodNum);
     }
 
     public static int getMethodNum(String methodName) {
         checkInit();
-        return MethodNameToMethodNumMap.get(methodName);
+        return METHOD_NAME_TO_METHOD_NUM_MAP.get(methodName);
     }
 
     private static void checkInit() {
-        if (MethodNumToMethodNameMap == null || MethodNameToMethodNumMap == null) {
+        if (METHOD_NUM_TO_METHOD_NAME_MAP == null || METHOD_NAME_TO_METHOD_NUM_MAP == null) {
             int size = Grammar.class.getDeclaredFields().length;
             for (Field field : Grammar.class.getDeclaredFields()) {
                 if (field.getType().equals(int.class) && field.getName().startsWith("G_")) {
@@ -71,9 +71,9 @@ public class GrammarMap {
                     }
 
                     if (methodNum != -1) {
-                        GrammarMap.MethodNumToMethodNameMap.put(methodNum,
+                        GrammarMap.METHOD_NUM_TO_METHOD_NAME_MAP.put(methodNum,
                                 methodName);
-                        GrammarMap.MethodNameToMethodNumMap.put(methodName,
+                        GrammarMap.METHOD_NAME_TO_METHOD_NUM_MAP.put(methodName,
                                 methodNum);
                     }
                 }

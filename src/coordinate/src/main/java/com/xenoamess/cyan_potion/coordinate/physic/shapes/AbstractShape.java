@@ -48,6 +48,8 @@ public abstract class AbstractShape {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
+    public static final String STRING_RELATION = "relation";
+
     private AbstractEntity entity;
     private Vector3f centerPos;
     private Vector3f size;
@@ -72,14 +74,14 @@ public abstract class AbstractShape {
         Method excludeMethod = null;
         try {
             excludeMethod = AbstractShape.class.getMethod(
-                    "relation", AbstractShape.class, boolean.class);
+                    STRING_RELATION, AbstractShape.class, boolean.class);
         } catch (NoSuchMethodException e) {
         }
 
         Method method = null;
         try {
             method = k.getClass().getMethod(
-                    "relation", v.getClass(), boolean.class);
+                    STRING_RELATION, v.getClass(), boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }
@@ -99,7 +101,7 @@ public abstract class AbstractShape {
 
         try {
             method = v.getClass().getMethod(
-                    "relation", k.getClass(), boolean.class);
+                    STRING_RELATION, k.getClass(), boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }

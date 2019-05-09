@@ -111,9 +111,6 @@ public class HorizontalRectangle extends AbstractShape {
             tmpy = thisMaxY;
         }
 
-//        tmpx -= target.centerPos.x;
-//        tmpy -= target.centerPos.y;
-
         if (target.ifIn(new Vector3f(tmpx, tmpy, this.getCenterPos().z))) {
             return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
