@@ -55,16 +55,16 @@ public class Menu extends AbstractGameWindowComponent {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
                         this.getShow().set(false);
-                        return null;
                     }
+                    return null;
                 case Keymap.XENOAMESS_KEY_UP:
                 case Keymap.XENOAMESS_KEY_DOWN:
                 case Keymap.XENOAMESS_KEY_LEFT:
                 case Keymap.XENOAMESS_KEY_RIGHT:
                     return null;
                 default:
+                    return event;
             }
-            return event;
         });
     }
 
