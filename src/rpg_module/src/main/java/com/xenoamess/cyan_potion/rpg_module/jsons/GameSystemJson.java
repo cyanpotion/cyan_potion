@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +37,9 @@ import java.util.ArrayList;
  * @author XenoAmess
  */
 public class GameSystemJson implements Serializable {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GameSystemJson.class);
+
     static class ShipJson implements Serializable {
         public GameMusicJson bgm;
         public int characterIndex;
@@ -192,7 +197,8 @@ public class GameSystemJson implements Serializable {
             res = objectMapper.readValue(getGameSystemJsonFile,
                     GameSystemJson.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile));",
+                    objectMapper, getGameSystemJsonFile, e);
         }
         return res;
     }

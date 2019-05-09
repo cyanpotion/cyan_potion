@@ -101,11 +101,8 @@ public class GameMapJson implements Serializable {
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (res == null) {
-            LOGGER.error("GetGameMapJson fails on {}", gameMapFile.getPath());
-            new Exception().printStackTrace();
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fail", objectMapper
+                    , gameMapFile, e);
         }
         return res;
     }
