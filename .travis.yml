@@ -2,7 +2,7 @@ language: java
 sudo: true
 dist: trusty
 before_install:
-  - openssl aes-256-cbc -K $encrypted_e0f6f4574771_key -iv $encrypted_e0f6f4574771_iv -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
+  - openssl aes-256-cbc -K "PASSWORD0" -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
   - chmod +x mvnw
 git:
   depth: false
