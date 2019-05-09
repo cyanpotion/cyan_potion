@@ -128,6 +128,11 @@ public class ShapeGroup extends AbstractShape {
     }
 
     @Override
+    public int hashCode() {
+        return this.getShapes().hashCode() + 1;
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (object == null) {
             return false;

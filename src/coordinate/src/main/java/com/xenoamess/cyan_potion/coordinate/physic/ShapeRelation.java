@@ -24,6 +24,9 @@
 
 package com.xenoamess.cyan_potion.coordinate.physic;
 
+/**
+ * @author XenoAmess
+ */
 public enum ShapeRelation {
     RELATION_UNDEFINED,
     RELATION_NO_COLLIDE,
