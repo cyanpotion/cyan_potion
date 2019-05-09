@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
+import org.apache.commons.collections4.CollectionUtils;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -124,5 +125,16 @@ public class ShapeGroup extends AbstractShape {
 
     public List<AbstractShape> getShapes() {
         return shapes;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (object instanceof ShapeGroup) {
+            return false;
+        }
+        return CollectionUtils.isEqualCollection(this.getShapes(), ((ShapeGroup) object).getShapes());
     }
 }

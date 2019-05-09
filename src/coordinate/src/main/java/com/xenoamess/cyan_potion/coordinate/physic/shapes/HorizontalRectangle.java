@@ -52,7 +52,7 @@ public class HorizontalRectangle extends AbstractShape {
         if (point.y < this.minY()) {
             return false;
         }
-        return !(point.y > this.maxY());
+        return point.y <= this.maxY();
     }
 
     public ShapeRelation relation(HorizontalRectangle target, boolean rough) {

@@ -53,7 +53,7 @@ public class Circle extends AbstractShape {
         float tmpx = this.getCenterPos().x - point.x;
         float tmpy = this.getCenterPos().y - point.y;
 
-        return !(tmpx * tmpx + tmpy * tmpy > this.getSize().x * this.getSize().x / 4);
+        return tmpx * tmpx + tmpy * tmpy <= this.getSize().x * this.getSize().x / 4;
     }
 
     public ShapeRelation relation(Circle target, boolean rough) {
