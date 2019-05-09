@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
+import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import org.joml.Vector3f;
 
 /**
@@ -55,23 +56,23 @@ public class Circle extends AbstractShape {
         return !(tmpx * tmpx + tmpy * tmpy > this.getSize().x * this.getSize().x / 4);
     }
 
-    public int relation(Circle target, boolean rough) {
+    public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         }
 
         float tmpx = this.getCenterPos().x - target.getCenterPos().x;
         float tmpy = this.getCenterPos().y - target.getCenterPos().y;
         float tmpr = this.getSize().x / 2 + target.getSize().x / 2;
         if (tmpx * tmpx + tmpy * tmpy > tmpr * tmpr) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
             if (rough) {
-                return AbstractShape.RELATION_COLLIDE;
+                return ShapeRelation.RELATION_COLLIDE;
             }
 
             if (this.getCenterPos().equals(target.getCenterPos()) && this.getSize().equals(target.getSize())) {
-                return AbstractShape.RELATION_EQUAL;
+                return ShapeRelation.RELATION_EQUAL;
             } else {
                 float thisMinX = this.minX();
                 float thisMaxX = this.maxX();
@@ -84,12 +85,12 @@ public class Circle extends AbstractShape {
                 float thatMaxY = target.maxY();
 
                 if ((thisMaxX <= thatMaxX) && (thisMaxY <= thatMaxY) && (thisMinX >= thatMinX) && (thisMinY >= thatMinY)) {
-                    return AbstractShape.RELATION_INNER;
+                    return ShapeRelation.RELATION_INNER;
                 } else if ((thatMaxX <= thisMaxX) && (thatMaxY <= thisMaxY) && (thatMinX >= thisMinX) && (thatMinY >= thisMinY)) {
-                    return AbstractShape.RELATION_OUTER;
+                    return ShapeRelation.RELATION_OUTER;
                 }
             }
-            return AbstractShape.RELATION_COLLIDE;
+            return ShapeRelation.RELATION_COLLIDE;
         }
     }
 }

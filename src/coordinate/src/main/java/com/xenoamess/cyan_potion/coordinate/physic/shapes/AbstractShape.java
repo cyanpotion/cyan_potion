@@ -26,25 +26,27 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.AbstractScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
+import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudger;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
+
 /**
  * @author XenoAmess
  */
 public abstract class AbstractShape {
-    public static final int RELATION_UNDEFINED = -1;
-    public static final int RELATION_NO_COLLIDE = 0;
-    public static final int RELATION_COLLIDE = 1;
-    public static final int RELATION_EQUAL = 2;
-    public static final int RELATION_INNER = 3;
-    public static final int RELATION_OUTER = 4;
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(AbstractShape.class);
 
     private AbstractEntity entity;
     private Vector3f centerPos;
@@ -64,33 +66,31 @@ public abstract class AbstractShape {
         this(shape.getEntity(), shape.getCenterPos(), shape.getSize());
     }
 
-    public static <K extends AbstractShape, V extends AbstractShape> int relation(K k, V v, boolean rough) {
-        int res = RELATION_UNDEFINED;
-        Method method = null;
+    public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
+        ShapeRelation res = RELATION_UNDEFINED;
+
         Method excludeMethod = null;
         try {
-            excludeMethod = AbstractShape.class.getMethod("relation",
-                    AbstractShape.class, boolean.class);
+            excludeMethod = AbstractShape.class.getMethod(
+                    "relation", AbstractShape.class, boolean.class);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
 
+        Method method = null;
         try {
-            method = k.getClass().getMethod("relation", v.getClass(),
-                    boolean.class);
+            method = k.getClass().getMethod(
+                    "relation", v.getClass(), boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
+
         if (method != null) {
             try {
-                res = (int) method.invoke(k, v, rough);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                res = (ShapeRelation) method.invoke(k, v, rough);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
             }
         }
         if (res != RELATION_UNDEFINED) {
@@ -98,26 +98,24 @@ public abstract class AbstractShape {
         }
 
         try {
-            method = v.getClass().getMethod("relation", k.getClass(),
-                    boolean.class);
+            method = v.getClass().getMethod(
+                    "relation", k.getClass(), boolean.class);
             if (method.equals(excludeMethod)) {
                 method = null;
             }
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
+
         if (method != null) {
             try {
-                res = (int) method.invoke(v, k, rough);
-                if (res == AbstractShape.RELATION_INNER) {
-                    res = AbstractShape.RELATION_OUTER;
-                } else if (res == AbstractShape.RELATION_OUTER) {
+                res = (ShapeRelation) method.invoke(v, k, rough);
+                if (res == RELATION_INNER) {
+                    res = RELATION_OUTER;
+                } else if (res == RELATION_OUTER) {
                     res = RELATION_INNER;
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
             }
         }
         if (res != RELATION_UNDEFINED) {
@@ -127,11 +125,12 @@ public abstract class AbstractShape {
         //if cannot find the relation function in it,then goto
 
         ShapeRelationJudger shapeComparator =
-                getShapeRelationJudgers().get(new ImmutablePair(k.getClass(),
-                        v.getClass()));
+                getShapeRelationJudgers().get(
+                        new ImmutablePair(k.getClass(), v.getClass()));
         if (shapeComparator == null) {
             shapeComparator =
-                    getShapeRelationJudgers().get(new ImmutablePair(v.getClass(), k.getClass()));
+                    getShapeRelationJudgers().get(
+                            new ImmutablePair(v.getClass(), k.getClass()));
             if (shapeComparator == null) {
                 return RELATION_UNDEFINED;
             } else {
@@ -155,7 +154,7 @@ public abstract class AbstractShape {
      *               if false, then can return all the 6 status.
      * @return return the relationship between the two shapes.
      */
-    public int relation(AbstractShape shape, boolean rough) {
+    public ShapeRelation relation(AbstractShape shape, boolean rough) {
         return relation(this, shape, rough);
     }
 
@@ -207,14 +206,8 @@ public abstract class AbstractShape {
             Constructor<? extends AbstractShape> constructor =
                     source.getClass().getDeclaredConstructor(source.getClass());
             res = (T) constructor.newInstance(source);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            throw new NotImplementedException(e.getMessage());
         }
         return res;
     }
@@ -241,7 +234,7 @@ public abstract class AbstractShape {
                     if (au2 == this) {
                         continue;
                     }
-                    if (this.relation(au2, true) == AbstractShape.RELATION_COLLIDE) {
+                    if (this.relation(au2, true) == RELATION_COLLIDE) {
                         res = false;
                     }
                 }
@@ -279,7 +272,7 @@ public abstract class AbstractShape {
                     if (au2 == this) {
                         continue;
                     }
-                    if (tmpCopy.relation(au2, true) == AbstractShape.RELATION_COLLIDE) {
+                    if (tmpCopy.relation(au2, true) == RELATION_COLLIDE) {
                         if (!oldCollisionSet.contains(au2)) {
                             return false;
                         }
