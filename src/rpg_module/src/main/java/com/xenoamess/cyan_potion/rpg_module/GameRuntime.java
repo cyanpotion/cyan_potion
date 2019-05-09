@@ -32,10 +32,10 @@ import java.util.ArrayList;
  * @author XenoAmess
  */
 public class GameRuntime {
-    public DataCenter dataCenter;
+    private DataCenter dataCenter;
 
-    public ArrayList<Boolean> runtimeSwitches;
-    public ArrayList<Integer> runtimeIntegerVariables;
+    private final ArrayList<Boolean> runtimeSwitches = new ArrayList<>();
+    private final ArrayList<Integer> runtimeIntegerVariables = new ArrayList<>();
 
 
     //TODO
@@ -44,7 +44,7 @@ public class GameRuntime {
     //emmmmmmm
 
     public GameRuntime(DataCenter dataCenter) {
-        this.dataCenter = dataCenter;
+        this.setDataCenter(dataCenter);
     }
 
 
@@ -54,5 +54,21 @@ public class GameRuntime {
 
     public void loadGameRuntime() {
         //TODO
+    }
+
+    public DataCenter getDataCenter() {
+        return dataCenter;
+    }
+
+    public void setDataCenter(DataCenter dataCenter) {
+        this.dataCenter = dataCenter;
+    }
+
+    public ArrayList<Boolean> getRuntimeSwitches() {
+        return runtimeSwitches;
+    }
+
+    public ArrayList<Integer> getRuntimeIntegerVariables() {
+        return runtimeIntegerVariables;
     }
 }

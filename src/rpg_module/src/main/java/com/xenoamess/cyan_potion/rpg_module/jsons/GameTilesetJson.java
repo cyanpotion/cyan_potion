@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,9 @@ import java.util.List;
  * @author XenoAmess
  */
 public class GameTilesetJson implements Serializable {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GameTilesetJson.class);
+
     public int id;
     public ArrayList<Integer> flags;
     public int mode;
@@ -46,38 +51,16 @@ public class GameTilesetJson implements Serializable {
 
 
     public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) {
-        List<GameTilesetJson> res = null;
+        List<GameTilesetJson> res = new ArrayList<>();
         try {
             res = objectMapper.readValue(gameTileSetsFile,
                     new TypeReference<List<GameTilesetJson>>() {
                     });
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) fail",
+                    objectMapper, gameTileSetsFile, e);
         }
         return res;
     }
-
-    //    //    @Test
-    //    public static void main(String args[]) {
-    //        //        String text = JSON.toJSONString(obj); //序列化
-    //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
-    //
-    //        //        try {
-    //        //            System.out.println(new String(new FileInputStream
-    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
-    //        ()));
-    //        //        } catch (IOException e) {
-    //        //            e.printStackTrace();
-    //        //        }
-    //        for (GameTilesetJson au : GetGameTileSetJsons
-    //        ("/www/data/Tilesets.json")) {
-    //            if (au != null) {
-    //                System.out.println(au.id);
-    //                System.out.println(au.name);
-    //            }
-    //        }
-    //        //        System.out.println();
-    //    }
-
 
 }

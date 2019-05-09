@@ -232,7 +232,8 @@ public class GameMap {
                     new TypeReference<List<GameMapInfoJson>>() {
                     });
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("GameMap.getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile)",
+                    objectMapper, gameMapInfosFile, e);
         }
         return res;
     }
