@@ -16,7 +16,6 @@ matrix:
     - os: linux x64
       jdk: openjdk12
 script:
-  - cp .travis.settings.xml $HOME/.m2/settings.xml
   - "./mvnw clean package -Dmaven.javadoc.skip=false"
   - "./mvnw sonar:sonar -Dsonar.projectKey=cyanpotion_cyan_potion -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=133240d1ee4abeaa8b7ba1ef36cab1a2b789ddcb"
   - cd ./src/
