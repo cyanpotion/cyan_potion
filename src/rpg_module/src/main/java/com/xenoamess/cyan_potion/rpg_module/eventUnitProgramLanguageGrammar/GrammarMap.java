@@ -58,7 +58,6 @@ public class GrammarMap {
 
     private static void checkInit() {
         if (METHOD_NUM_TO_METHOD_NAME_MAP == null || METHOD_NAME_TO_METHOD_NUM_MAP == null) {
-            int size = Grammar.class.getDeclaredFields().length;
             for (Field field : Grammar.class.getDeclaredFields()) {
                 if (field.getType().equals(int.class) && field.getName().startsWith("G_")) {
                     String methodName = field.getName().substring(2);

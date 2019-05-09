@@ -106,7 +106,7 @@ public class WalkingAnimation4Dirs extends Animation {
             setTexturePointer(0);
         }
 
-        if (getUnit().isMoving() == false) {
+        if (!getUnit().isMoving()) {
             setTexturePointer(1);
         }
 

@@ -55,7 +55,6 @@ public class TextureUtils {
 
         final String walkingTexturesFilepath = resourceFileURIStrings[1];
 
-        final List<List<Texture>> res = new ArrayList<>();
         BufferedImage bufferedImage = null;
 
         final URI file = FileUtil.getURI(walkingTexturesFilepath);

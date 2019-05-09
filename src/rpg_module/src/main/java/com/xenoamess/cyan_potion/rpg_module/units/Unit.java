@@ -87,7 +87,7 @@ public class Unit extends AbstractDynamicEntity {
 
     @Override
     public void update() {
-        if (this.isCanMove() == false) {
+        if (!this.isCanMove()) {
             this.getMovement().set(0, 0);
         }
         if (getMovement().x != 0 || getMovement().y != 0) {
