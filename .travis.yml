@@ -2,7 +2,6 @@ language: java
 sudo: true
 dist: trusty
 before_install:
-  - openssl aes-256-cbc -K "PASSWORD0" -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -iv 0 -d
   - chmod +x mvnw
 git:
   depth: false
@@ -12,25 +11,23 @@ cache:
 install: true
 env:
   global:
-    - secure: BIQGOScQh0+MZKIiGDD5BEqUOTFO1ZVu5Pex7M3WOWyhu2MlABG8/hLeoK0C5+CLtsevskJvVWQSEqUM9GaE38yhwgGMJap8XxV5zizBQhDUeboz0tVE3gWmHegbITJihCpzSB+3U+b+mT+IPOyTdcRV0egakdoRCCQ8CTy0rjhR920UnpcRX0keGbFAdEAzqbRiuxV+tOlPQhulqMp4eF48kguZdKJ19DfmmZzD0CJpUeSnTjxGXW9PmCsS6Py44tzhwENNChzrNnZhZcA1L/EVhcYrCcdp+HOYd2zp70Q5ubKamIUQeBqk1KDRJFz6v/ZwapKAs1bqncN3aD1v79Ol7SNhg39jOdrpxSWSvOVT38A1xKXPeA+GdXxgYRrQBlFhlZ5NUSZK5507aMJCTKAQz8VrFc20KJBWSjQm3cw4cRDK1x1fkuKIM9IYYulSWP1M9xYPsQ3c7yEXRsv3YGuxn+iLkGyYbb2RFD57ybrsravhon8s2upMWmANfyXT7ROQ+a9O3LfPy8O2qkEoi9WlAjkbneDwwz6wrwQxD5H5NOJkItqTZAg+lGGqKQhLp8tP9nBd/0JDKJHgegYAfYLyOkwLcydLzpp4w7YLiTzL2JfdYHHIm3PGsMVee3GJsQPW8oRFu9FljZqfvaKiHLGfI2neOQz1h24wcwQmjh8=
-    - secure: Fjx1I847vpZtoxvUWMDrPmYIHx0n2j8vYg/e7vaOSDjsyxXcV8+Naz8qTtV/thADO0KGQsxZ+7bYcKmdw760Eoaj+oVOADt5eTfUHX1kDjzOO7natB3bWDOKstfyXjCj2G/av2vO9l6vvY6xIs4E1kADB1F3/zZokNPBb79iTrQu6/FXP+iGCqvE8QvqS1udZPfdnmyZDBrIjttWH5zMAKPD3+QYPob4aUcG0qpYx1o/Gvnse9MaGdRqf/ZIQtM/7PHwXf1QUgMV4wQbv7fEi9JbL5BePbzfyGQTCZTSJIZBv2jrdFRuwJGURH81eV/5ur28W0C0qWgQ1uc9EnWDXNnhgM8QmiUBlTerkY6TqDiN4/4MX/ws6YVFSPLEjTPY1LTq/T6sRf+cO/yLendX2aDLK9/nDWWTmfFrNoJ0EkULMOJ7YKQQK7pHdOVQwE1+H5tlLO0zJTyT19kptTlwRKXfHN+hELX++Plae9A6o41ms8bI0bHaFAWZ7cQ+tBHpZ16F9qEGIWpOV/bnSwSlYHcBsYiSgf0ZU0TmMSSGlAJKRqTwMvw6tWPRzJ6B8Xr8Uh4Vw414nS3Z+G5yLy9GcrbRso7hvcKSMbfo0OxaBzEitjOrDXFumsHUqARFVSSfMcCRkMljIAzzt91CR/3vJ0f8lzu+nwEUYjtXPsHVGuE=
 matrix:
   include:
     - os: linux x64
       jdk: openjdk12
 script:
   - cp .travis.settings.xml $HOME/.m2/settings.xml
-  - "./mvnw clean package deploy -Dmaven.javadoc.skip=false"
+  - "./mvnw clean package -Dmaven.javadoc.skip=false"
   - "./mvnw sonar:sonar -Dsonar.projectKey=cyanpotion_cyan_potion -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=133240d1ee4abeaa8b7ba1ef36cab1a2b789ddcb"
   - cd ./src/
   - cd ./base/
-  - "../../mvnw clean package deploy -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean package -Dmaven.javadoc.skip=false"
   - "../../mvnw sonar:sonar -Dsonar.projectKey=cyan_potion_base -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=553972c4c1b0147c484f07f8741d76b24d51415c"
   - cd ../
   - cd ./coordinate
-  - "../../mvnw clean package deploy -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean package -Dmaven.javadoc.skip=false"
   - "../../mvnw sonar:sonar -Dsonar.projectKey=cyan_potion_coordinate -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3b4953bb762221ad019f1a4d2cfd37b0830e326f"
   - cd ../
   - cd ./rpg_module
-  - "../../mvnw clean package deploy -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean package -Dmaven.javadoc.skip=false"
   - "../../mvnw sonar:sonar -Dsonar.projectKey=cyan_potion_rpg_module -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=e50335ce1fed53dfa9ad4ce70995957336cf8e7e"
