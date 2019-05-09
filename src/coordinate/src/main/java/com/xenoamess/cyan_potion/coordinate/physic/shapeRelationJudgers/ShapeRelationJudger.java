@@ -33,5 +33,4 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 public interface ShapeRelationJudger<K extends AbstractShape,
         V extends AbstractShape> {
     ShapeRelation relation(K k, V v, boolean rough);
-//    public abstract int ifCollide(K k, V v);
 }

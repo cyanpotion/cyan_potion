@@ -53,7 +53,7 @@ public abstract class AbstractShape {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> ShapeRelationJudgers = new HashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers = new HashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
@@ -370,11 +370,11 @@ public abstract class AbstractShape {
     }
 
     public static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> getShapeRelationJudgers() {
-        return ShapeRelationJudgers;
+        return shapeRelationJudgers;
     }
 
     public static void setShapeRelationJudgers(Map<ImmutablePair<Class,
             Class>, ShapeRelationJudger> shapeRelationJudgers) {
-        ShapeRelationJudgers = shapeRelationJudgers;
+        AbstractShape.shapeRelationJudgers = shapeRelationJudgers;
     }
 }
