@@ -61,6 +61,7 @@ public class TextureUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 4 / 3;
@@ -134,6 +135,7 @@ public class TextureUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / columNum / 8;
@@ -572,6 +574,7 @@ public class TextureUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 8 / 2;

@@ -374,25 +374,25 @@ public class World extends AbstractScene {
                 getGameMap().getHeight() * RpgModuleDataCenter.TILE_SIZE;
 
         float windowWidth2DivScale =
-                (this.getGameWindow().getLogicWindowWidth() / 2) / this.getScale();
+                (this.getGameWindow().getLogicWindowWidth() / 2F) / this.getScale();
         float windowHeight2DivScale =
-                (this.getGameWindow().getLogicWindowHeight() / 2) / this.getScale();
+                (this.getGameWindow().getLogicWindowHeight() / 2F) / this.getScale();
 
 
-        if (pos.x < windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2) {
-            pos.x = windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2;
+        if (pos.x < windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            pos.x = windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.x > wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2) {
-            pos.x = wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2;
+        if (pos.x > wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            pos.x = wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.y < windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2) {
-            pos.y = windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2;
+        if (pos.y < windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            pos.y = windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.y > hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2) {
-            pos.y = hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2;
+        if (pos.y > hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            pos.y = hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
     }
 
