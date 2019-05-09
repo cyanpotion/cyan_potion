@@ -22,16 +22,14 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers;
+package com.xenoamess.cyan_potion.coordinate.physic;
 
-import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-
-/**
- * @author XenoAmess
- */
-public interface ShapeRelationJudger<K extends AbstractShape,
-        V extends AbstractShape> {
-    ShapeRelation relation(K k, V v, boolean rough);
-//    public abstract int ifCollide(K k, V v);
+public enum ShapeRelation {
+    RELATION_UNDEFINED,
+    RELATION_NO_COLLIDE,
+    RELATION_COLLIDE,
+    RELATION_EQUAL,
+    RELATION_INNER,
+    RELATION_OUTER,
+    ;
 }
