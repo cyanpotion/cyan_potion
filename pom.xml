@@ -563,14 +563,6 @@
             <version>0.1.0</version>
         </dependency>
 
-
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish/javax.annotation &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.glassfish</groupId>-->
-        <!--            <artifactId>javax.annotation</artifactId>-->
-        <!--            <version>3.2-b06</version>-->
-        <!--        </dependency>-->
-
     </dependencies>
 
     <build>
