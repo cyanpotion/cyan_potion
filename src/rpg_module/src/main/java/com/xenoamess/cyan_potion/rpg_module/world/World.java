@@ -486,13 +486,6 @@ public class World extends AbstractScene {
             entities.add(dynamicEntity);
         }
 
-//        for (StaticEntity staticEntity : this.staticEntitySet) {
-//            staticEntity.draw(this);
-//        }
-//
-//        for (AbstractDynamicEntity dynamicEntity : this.dynamicEntitySet) {
-//            dynamicEntity.draw(this);
-//        }
         for (Map.Entry<Integer, ArrayList<AbstractEntity>> entry :
                 layerToEntities.entrySet()) {
             ArrayList<AbstractEntity> entities = entry.getValue();
@@ -500,9 +493,6 @@ public class World extends AbstractScene {
                 entity.draw(this);
             }
         }
-//        this.getGameWindow().drawText(Font.defaultFont, 100, 100, 1, new
-//        Vector4f(0f, 255f, 255f, 1f), "剧情模式");
-//        Font.defaultFont.draw_test();
     }
 
     public int getViewX() {

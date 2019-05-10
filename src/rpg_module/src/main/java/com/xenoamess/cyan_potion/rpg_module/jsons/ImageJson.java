@@ -46,17 +46,6 @@ public class ImageJson implements Serializable {
             //if not from characters but from B
             return null;
         } else {
-//            int tmp;
-//            switch (direction) {
-//                case 2:
-//                    tmp = 3 * 0;
-//                case 4:
-//                    tmp = 3 * 1;
-//                case 6:
-//                    tmp = 3 * 2;
-//                case 8:
-//                    tmp = 3 * 3;
-//            }
             int tmp = ((this.direction >> 1) - 1) * 3;
             tmp += this.pattern;
             return resourceManager.fetchResourceWithShortenURI(Texture.class,

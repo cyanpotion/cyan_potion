@@ -202,39 +202,4 @@ public class GameSystemJson implements Serializable {
         }
         return res;
     }
-
-
-    //    //    @Test
-    //    public static void main(String args[]) {
-    //        //        String text = JSON.toJSONString(obj); //序列化
-    //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
-    //
-    //        //        try {
-    //        //            System.out.println(new String(new FileInputStream
-    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
-    //        ()));
-    //        //        } catch (IOException e) {
-    //        //            e.printStackTrace();
-    //        //        }
-    //
-    //
-    //        GameSystemJson gameSystemJson = null;
-    //
-    //
-    //        try {
-    //            gameSystemJson = JSON.parseObject(new String(new
-    //            FileInputStream("D:\\workspace\\Gearbar\\www\\data\\System
-    //            .json").readAllBytes()), GameSystemJson.class);
-    //        } catch (FileNotFoundException e) {
-    //            e.printStackTrace();
-    //        } catch (IOException e) {
-    //            e.printStackTrace();
-    //        }
-    //
-    //        System.out.println(gameSystemJson.battleback1Name);
-    //        for (String au : gameSystemJson.weaponTypes) {
-    //            System.out.println(au);
-    //        }
-    //        //        System.out.println();
-    //    }
 }
