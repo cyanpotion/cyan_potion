@@ -106,11 +106,11 @@ public class Texture extends AbstractResource implements Bindable {
     public void bind(int sampler) {
         super.bind(sampler);
         if ((this.getGlTexture2DInt() == -1) != (!this.isInMemory())) {
-            throw new TextureStateDisorderException("Texture state chaos : " + this.getGlTexture2DInt() + " , " + this.isInMemory() + " , " + this.getFullResourceURI());
+            throw new TextureStateDisorderException(this);
         }
 
         if (this.getGlTexture2DInt() == -1) {
-            throw new TextureStateDisorderException("Binding non-ready texture : " + this.getFullResourceURI());
+            throw new TextureStateDisorderException(this);
         }
         if (sampler >= MIN_SAMPLER && sampler <= MAX_SAMPLER) {
             glActiveTexture(GL13.GL_TEXTURE0 + sampler);
