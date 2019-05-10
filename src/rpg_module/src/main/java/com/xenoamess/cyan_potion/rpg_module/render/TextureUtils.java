@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -104,7 +105,7 @@ public class TextureUtils {
                                 entireWidth, entireHeight, nowPosx, nowPosy,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-                            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+                            throw new TextureStateDisorderException(nowTexture);
                         }
                     }
                     nowPosx += singleWidth;
@@ -173,7 +174,7 @@ public class TextureUtils {
                                 entireWidth, entireHeight, nowPosx, nowPosy,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-                            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+                            throw new TextureStateDisorderException(nowTexture);
                         }
                     }
                     nowPosx += singleWidth;
