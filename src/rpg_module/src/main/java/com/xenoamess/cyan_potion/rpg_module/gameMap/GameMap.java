@@ -65,7 +65,8 @@ public class GameMap {
         this.setWorld(world);
         this.setGameMapInfoJson(gameMapInfoJson);
 
-        LOGGER.debug("GameMapJsonURI", gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName()));
+        String GameMapJsonURI = gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName());
+        LOGGER.debug("GameMapJsonURI", GameMapJsonURI);
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),

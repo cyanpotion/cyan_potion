@@ -65,7 +65,8 @@ public class GameTileset {
         {
             //A5
             ts = this.getGameTilesetJson().tilesetNames.get(5 - 1);
-            LOGGER.debug(gameTilesetNameToGameTilesetJsonURI(ts));
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
@@ -82,7 +83,8 @@ public class GameTileset {
         {
             //B
             ts = this.getGameTilesetJson().tilesetNames.get(6 - 1);
-            LOGGER.debug(gameTilesetNameToGameTilesetJsonURI(ts));
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
@@ -99,7 +101,8 @@ public class GameTileset {
         {
             //C
             ts = this.getGameTilesetJson().tilesetNames.get(7 - 1);
-            LOGGER.debug(gameTilesetNameToGameTilesetJsonURI(ts));
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
@@ -116,7 +119,8 @@ public class GameTileset {
         {
             //A2
             ts = this.getGameTilesetJson().tilesetNames.get(2 - 1);
-            LOGGER.debug(gameTilesetNameToGameTilesetJsonURI(ts));
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
                 ts = gameTilesetNameToGameTilesetJsonURI(ts);
