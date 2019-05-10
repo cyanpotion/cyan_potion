@@ -147,33 +147,4 @@ public class WalkingAnimation4Dirs extends Animation {
     public void setDrawFaceDir(int drawFaceDir) {
         this.drawFaceDir = drawFaceDir;
     }
-
-    //no this logic is wrong.
-    //should not have this function in this class.
-    //SORRY.
-    //    public static WalkingAnimation4Dirs GetResourceFromURI(DataCenter
-    //    dataCenter, String fullResourceURI) {
-    //        WalkingAnimation4Dirs res;
-    //        String[] resourceFileURIStrings = fullResourceURI.split(":");
-    //        String resourceFilePath = resourceFileURIStrings[0];
-    //        String resourceType = resourceFileURIStrings[1];
-    //        switch (resourceType) {
-    //            case "characters":
-    //                int peopleIndex = Integer.parseInt
-    //                (resourceFileURIStrings[2]);
-    //                int textureIndex = Integer.parseInt
-    //                (resourceFileURIStrings[3]);
-    //                Texture.GetWalkingTextures(dataCenter, resourceFilePath);
-    //                res = new WalkingAnimation4Dirs();
-    //                break;
-    //            default:
-    //                throw new Error("textureType not defined : " +
-    //                resourceType);
-    //        }
-    //        return res;
-    //
-    //        return res;
-    //    }
-
-
 }

@@ -66,14 +66,6 @@ public class Unit extends AbstractDynamicEntity {
         this(scene, centerPos, size, null);
         this.loadWalkingAnimations(walkingAnimation4DirsURI, resourceManager);
     }
-//
-
-//    public Unit(Transform transform, GameManager gameManager, String
-//    walkingAnimation4DirsURI) {
-//        super(transform, gameManager);
-//        this.walkingFileURI = walkingAnimation4DirsURI;
-//        loadWalkingAnimations(walkingAnimation4DirsURI);
-//    }
 
     @Override
     public Bindable getBindable() {
@@ -118,9 +110,6 @@ public class Unit extends AbstractDynamicEntity {
                                       ResourceManager resourceManager) {
         this.setBindable(new WalkingAnimation4Dirs(4, this,
                 walkingAnimation4DirsURI, resourceManager));
-        //        this.walkingAnimation4Dirs = new WalkingAnimation4Dirs
-        //        (this, 4, Texture.GetWalkingTextures
-        //        ("/www/img/characters/Actor1.png").get(4));
     }
 
 
