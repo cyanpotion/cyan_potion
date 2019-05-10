@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Animation;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -66,7 +67,7 @@ public class WalkingAnimation4Dirs extends Animation {
                 initTextures(walkingTextures);
                 break;
             default:
-                throw new Error("textureType not defined : " + resourceType);
+                throw new URITypeNotDefinedException(resourceURI);
         }
     }
 

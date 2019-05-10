@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.plugins;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.URITypeNotDefinedException;
+import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
