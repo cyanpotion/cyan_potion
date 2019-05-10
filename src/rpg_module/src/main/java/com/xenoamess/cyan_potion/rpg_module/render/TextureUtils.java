@@ -262,13 +262,6 @@ public class TextureUtils {
         for (int k = 1; k <= 24; k++) {
             for (int i = 0; i < singleSingleHeight; i++) {
                 for (int j = 0; j < singleSingleWidth; j++) {
-                    //                    System.out.println
-                    //                    (singleSingleWidth *
-                    //                    singleSingleHeight + " " + i *
-                    //                    singleSingleWidth + j);
-                    //                    System.out.println(pixelsRaw.length
-                    //                    + " " + (nowPosy + i) * entireWidth
-                    //                    + nowPosx + j);
                     pixelsRaws[k][i * singleSingleWidth + j] =
                             pixelsRaw[(nowPosy + i) * entireWidth + nowPosx + j];
                 }
