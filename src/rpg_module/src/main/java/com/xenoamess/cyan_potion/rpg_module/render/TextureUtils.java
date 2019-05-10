@@ -48,6 +48,10 @@ public class TextureUtils {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
 
+    private TextureUtils() {
+
+    }
+
     public static void loadAsWalkingTexture(Texture texture, String resourceFileURIString) {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final int peopleIndex = Integer.parseInt(resourceFileURIStrings[3]);

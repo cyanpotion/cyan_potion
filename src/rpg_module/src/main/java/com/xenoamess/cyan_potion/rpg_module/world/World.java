@@ -125,17 +125,15 @@ public class World extends AbstractScene {
             this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(SCALE)));
         }
 
-        //                "startX": 8,
-        //                "startY": 6,
-        LOGGER.debug("" + this.getGameWindow().getGameManager());
-        LOGGER.debug("" + this.getRpgModuleDataCenter().getGameSystemJson());
-        LOGGER.debug("" + this.getRpgModuleDataCenter().getGameSystemJson().startMapId);
-        LOGGER.debug("" + this.getRpgModuleDataCenter().getGameMaps());
-        LOGGER.debug("" + this.getRpgModuleDataCenter().getGameMaps().size());
+        LOGGER.debug("GameManager", this.getGameWindow().getGameManager());
+        LOGGER.debug("GameSystemJson", this.getRpgModuleDataCenter().getGameSystemJson());
+        LOGGER.debug("startMapId", this.getRpgModuleDataCenter().getGameSystemJson().startMapId);
+        LOGGER.debug("GameMaps", this.getRpgModuleDataCenter().getGameMaps());
+        LOGGER.debug("GameMaps.size", this.getRpgModuleDataCenter().getGameMaps().size());
 
-        GameMap gameMap =
+        GameMap gameMapLocal =
                 this.getRpgModuleDataCenter().getGameMaps().get(this.getRpgModuleDataCenter().getGameSystemJson().startMapId);
-        this.loadGameMap(gameMap);
+        this.loadGameMap(gameMapLocal);
 
         {
             int startX =
@@ -151,26 +149,8 @@ public class World extends AbstractScene {
                             Unit.DEFAULT_UNIT_LAYER), "/www/img/characters" +
                     "/r2c_male_test.png:characters:0",
                     this.getGameWindow().getGameManager().getResourceManager()));
-//            this.player = new Player(new Vector3f(startX, startY, 0), new
-//            Vector3f(RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter
-//            .TILE_SIZE, 0), "/www/img/characters/r2c_male_test
-//            .png:characters:0", this.getGameWindow().getGameManager()
-//            .dataCenter);
             this.getPlayer().register();
             getDynamicEntitySet().add(getPlayer());
-
-//            Unit unit = new Unit(this, new Vector3f((startX - 3) *
-//            RpgModuleDataCenter.TILE_SIZE, (startY - 3) *
-//            RpgModuleDataCenter.TILE_SIZE, 0), new Vector3f
-//            (RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter.TILE_SIZE,
-//            0), "/www/img/characters/r2c_male_test.png:characters:0", this
-//            .getGameWindow().getGameManager().dataCenter);
-////            this.player = new Player(new Vector3f(startX, startY, 0), new
-// Vector3f(RpgModuleDataCenter.TILE_SIZE, RpgModuleDataCenter.TILE_SIZE, 0),
-// "/www/img/characters/r2c_male_test.png:characters:0", this.getGameWindow()
-// .getGameManager().dataCenter);
-//            dynamicEntitySet.add(unit);
-//            unit.shape.register();
 
             this.getCamera().getPosition().set(this.getPlayer().getCenterPos());
         }
@@ -453,14 +433,6 @@ public class World extends AbstractScene {
         }
 
         this.getCamera().getPosition().lerp(getPlayer().getCenterPos(), 0.05f);
-
-//        for (int i = 0; i < entities.size(); i++) {
-//            entities.get(i).collideWithTiles(this);
-//            for (int j = i + 1; j < entities.size(); j++) {
-//                entities.get(i).collideWithEntity(entities.get(j));
-//            }
-//            entities.get(i).collideWithTiles(this);
-//        }
         correctCamera();
     }
 

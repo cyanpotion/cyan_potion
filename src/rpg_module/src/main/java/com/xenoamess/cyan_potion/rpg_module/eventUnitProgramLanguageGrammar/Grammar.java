@@ -451,7 +451,7 @@ public class Grammar {
     public static final int G_SHOP_PROCESSING = 302;
     public static final int G_SHOP_PROCESSING_0 = 302;
 
-    private static final int G_NAME_INPUT_PROCESSING = 303;
+    public static final int G_NAME_INPUT_PROCESSING = 303;
     public static final int G_NAME_INPUT_PROCESSING_0 = 303;
 
     public static final int G_OPEN_MENU_SCREEN = 351;
