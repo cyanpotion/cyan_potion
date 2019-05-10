@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base;
+package com.xenoamess.cyan_potion.base.exceptions;
 
 /**
  * @author XenoAmess

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.render;
 
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
+import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -133,7 +134,7 @@ public class TextureUtils {
                 columNum = 2;
                 break;
             default:
-                throw new Error("textureType not defined in URI: " + texture.getFullResourceURI());
+                throw new URITypeNotDefinedException(texture.getFullResourceURI());
         }
 
 
@@ -196,7 +197,7 @@ public class TextureUtils {
                 resourceManager.fetchResourceWithShortenURI(Texture.class,
                         resourceFilePath + ":" + "A2" + ":" + kk + ":" + ti);
         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+            throw new TextureStateDisorderException(nowTexture);
         }
         if (nowTexture.isInMemory()) {
             return;
