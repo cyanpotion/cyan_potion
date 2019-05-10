@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
+import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import org.joml.Vector3f;
 
 /**
@@ -51,12 +52,12 @@ public class HorizontalRectangle extends AbstractShape {
         if (point.y < this.minY()) {
             return false;
         }
-        return !(point.y > this.maxY());
+        return point.y <= this.maxY();
     }
 
-    public int relation(HorizontalRectangle target, boolean rough) {
+    public ShapeRelation relation(HorizontalRectangle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         }
 
         float thisMinX = this.minX();
@@ -70,25 +71,25 @@ public class HorizontalRectangle extends AbstractShape {
         float thatMaxY = target.maxY();
 
         if ((thisMaxX < thatMinX) || (thisMaxY < thatMinY) || (thatMaxX < thisMinX) || (thatMaxY < thisMinY)) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
             if (rough) {
-                return AbstractShape.RELATION_COLLIDE;
+                return ShapeRelation.RELATION_COLLIDE;
             }
             if (this.getCenterPos().equals(target.getCenterPos()) && this.getSize().equals(target.getSize())) {
-                return AbstractShape.RELATION_EQUAL;
+                return ShapeRelation.RELATION_EQUAL;
             } else if ((thisMaxX <= thatMaxX) && (thisMaxY <= thatMaxY) && (thisMinX >= thatMinX) && (thisMinY >= thatMinY)) {
-                return AbstractShape.RELATION_INNER;
+                return ShapeRelation.RELATION_INNER;
             } else if ((thatMaxX <= thisMaxX) && (thatMaxY <= thisMaxY) && (thatMinX >= thisMinX) && (thatMinY >= thisMinY)) {
-                return AbstractShape.RELATION_OUTER;
+                return ShapeRelation.RELATION_OUTER;
             }
-            return AbstractShape.RELATION_COLLIDE;
+            return ShapeRelation.RELATION_COLLIDE;
         }
     }
 
-    public int relation(Circle target, boolean rough) {
+    public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         }
 
         float thisMinX = this.minX();
@@ -110,14 +111,11 @@ public class HorizontalRectangle extends AbstractShape {
             tmpy = thisMaxY;
         }
 
-//        tmpx -= target.centerPos.x;
-//        tmpy -= target.centerPos.y;
-
         if (target.ifIn(new Vector3f(tmpx, tmpy, this.getCenterPos().z))) {
-            return AbstractShape.RELATION_NO_COLLIDE;
+            return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
             if (rough) {
-                return AbstractShape.RELATION_COLLIDE;
+                return ShapeRelation.RELATION_COLLIDE;
             }
 
             float thatMinX = target.minX();
@@ -125,14 +123,14 @@ public class HorizontalRectangle extends AbstractShape {
             float thatMinY = target.minY();
             float thatMaxY = target.maxY();
             if (this.getCenterPos().equals(target.getCenterPos()) && this.getSize().equals(target.getSize())) {
-                return AbstractShape.RELATION_EQUAL;
+                return ShapeRelation.RELATION_EQUAL;
             } else if ((thatMaxX <= thisMaxX) && (thatMaxY <= thisMaxY) && (thatMinX >= thisMinX) && (thatMinY >= thisMinY)) {
-                return AbstractShape.RELATION_OUTER;
+                return ShapeRelation.RELATION_OUTER;
             } else if (target.ifIn(new Vector3f(thisMinX, thisMinY,
                     this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMinY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMinX, thisMaxY, this.getCenterPos().z)) && target.ifIn(new Vector3f(thisMaxX, thisMaxY, this.getCenterPos().z))) {
-                return AbstractShape.RELATION_INNER;
+                return ShapeRelation.RELATION_INNER;
             }
-            return AbstractShape.RELATION_COLLIDE;
+            return ShapeRelation.RELATION_COLLIDE;
         }
     }
 }

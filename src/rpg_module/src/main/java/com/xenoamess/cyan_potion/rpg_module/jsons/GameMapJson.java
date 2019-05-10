@@ -101,47 +101,9 @@ public class GameMapJson implements Serializable {
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (res == null) {
-            LOGGER.error("GetGameMapJson fails on {}", gameMapFile.getPath());
-            new Exception().printStackTrace();
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fail", objectMapper
+                    , gameMapFile, e);
         }
         return res;
     }
-
-
-    //    //    @Test
-    //    public static void main(String args[]) {
-    //        //        String text = JSON.toJSONString(obj); //序列化
-    //        //        VO vo = JSON.parseObject("{...}", VO.class); //反序列化
-    //
-    //        //        try {
-    //        //            System.out.println(new String(new FileInputStream
-    //        ("D:\\workspace\\Gearbar\\www\\data\\Map003.json").readAllBytes
-    //        ()));
-    //        //        } catch (IOException e) {
-    //        //            e.printStackTrace();
-    //        //        }
-    //
-    //
-    //        GameMapJson gameMap = null;
-    //
-    //
-    //        try {
-    //            gameMap = JSON.parseObject(new String(new FileInputStream
-    //            ("D:\\workspace\\Gearbar\\www\\data\\Map003.json")
-    //            .readAllBytes()), GameMapJson.class);
-    //        } catch (FileNotFoundException e) {
-    //            e.printStackTrace();
-    //        } catch (IOException e) {
-    //            e.printStackTrace();
-    //        }
-    //
-    //        System.out.println(gameMap.tilesetId);
-    //        for (int au : gameMap.data) {
-    //            System.out.println(au);
-    //        }
-    //        //        System.out.println();
-    //    }
 }

@@ -22,13 +22,17 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base;
+package com.xenoamess.cyan_potion.coordinate.physic;
 
 /**
  * @author XenoAmess
  */
-public class URITypeNotDefinedException extends RuntimeException {
-    public URITypeNotDefinedException(String message) {
-        super(message);
-    }
+public enum ShapeRelation {
+    RELATION_UNDEFINED,
+    RELATION_NO_COLLIDE,
+    RELATION_COLLIDE,
+    RELATION_EQUAL,
+    RELATION_INNER,
+    RELATION_OUTER,
+    ;
 }

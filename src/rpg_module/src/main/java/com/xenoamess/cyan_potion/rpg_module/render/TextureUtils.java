@@ -24,10 +24,14 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
+import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.lwjgl.system.MemoryUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -43,6 +47,12 @@ import java.util.List;
  * @author XenoAmess
  */
 public class TextureUtils {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(TextureUtils.class);
+
+    private TextureUtils() {
+
+    }
 
     public static void loadAsWalkingTexture(Texture texture, String resourceFileURIString) {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
@@ -51,7 +61,6 @@ public class TextureUtils {
 
         final String walkingTexturesFilepath = resourceFileURIStrings[1];
 
-        final List<List<Texture>> res = new ArrayList<>();
         BufferedImage bufferedImage = null;
 
         final URI file = FileUtil.getURI(walkingTexturesFilepath);
@@ -59,8 +68,10 @@ public class TextureUtils {
         try {
             bufferedImage = ImageIO.read(new File(file));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, String resourceFileURIString) fail",
+                    texture, resourceFileURIString, e);
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 4 / 3;
@@ -95,7 +106,7 @@ public class TextureUtils {
                                 entireWidth, entireHeight, nowPosx, nowPosy,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-                            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+                            throw new TextureStateDisorderException(nowTexture);
                         }
                     }
                     nowPosx += singleWidth;
@@ -123,7 +134,7 @@ public class TextureUtils {
                 columNum = 2;
                 break;
             default:
-                throw new Error("textureType not defined in URI: " + texture.getFullResourceURI());
+                throw new URITypeNotDefinedException(texture.getFullResourceURI());
         }
 
 
@@ -132,8 +143,10 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getURL(tilesetTexturesFilepath));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) fail",
+                    texture, resourceFileURIString, e);
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / columNum / 8;
@@ -162,7 +175,7 @@ public class TextureUtils {
                                 entireWidth, entireHeight, nowPosx, nowPosy,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-                            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+                            throw new TextureStateDisorderException(nowTexture);
                         }
                     }
                     nowPosx += singleWidth;
@@ -184,7 +197,7 @@ public class TextureUtils {
                 resourceManager.fetchResourceWithShortenURI(Texture.class,
                         resourceFilePath + ":" + "A2" + ":" + kk + ":" + ti);
         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
-            throw new Error("Texture state chaos : " + nowTexture.getGlTexture2DInt() + " , " + nowTexture.isInMemory() + " , " + nowTexture.getFullResourceURI());
+            throw new TextureStateDisorderException(nowTexture);
         }
         if (nowTexture.isInMemory()) {
             return;
@@ -249,13 +262,6 @@ public class TextureUtils {
         for (int k = 1; k <= 24; k++) {
             for (int i = 0; i < singleSingleHeight; i++) {
                 for (int j = 0; j < singleSingleWidth; j++) {
-                    //                    System.out.println
-                    //                    (singleSingleWidth *
-                    //                    singleSingleHeight + " " + i *
-                    //                    singleSingleWidth + j);
-                    //                    System.out.println(pixelsRaw.length
-                    //                    + " " + (nowPosy + i) * entireWidth
-                    //                    + nowPosx + j);
                     pixelsRaws[k][i * singleSingleWidth + j] =
                             pixelsRaw[(nowPosy + i) * entireWidth + nowPosx + j];
                 }
@@ -570,8 +576,10 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) fail",
+                    texture, resourceFileURIString, e);
         }
+        assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 8 / 2;
@@ -671,7 +679,9 @@ public class TextureUtils {
         try {
             bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
+                            "String tilesetTexturesFilepath, int columNum) fail",
+                    resourceManager, resourceType, tilesetTexturesFilepath, columNum, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();

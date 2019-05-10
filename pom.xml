@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.134.0</version>
+    <version>0.135.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -493,6 +493,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.3</version>
+        </dependency>
 
 
         <dependency>
@@ -556,14 +562,6 @@
             <artifactId>SDL_GameControllerDB_Util</artifactId>
             <version>0.1.0</version>
         </dependency>
-
-
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish/javax.annotation &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.glassfish</groupId>-->
-        <!--            <artifactId>javax.annotation</artifactId>-->
-        <!--            <version>3.2-b06</version>-->
-        <!--        </dependency>-->
 
     </dependencies>
 

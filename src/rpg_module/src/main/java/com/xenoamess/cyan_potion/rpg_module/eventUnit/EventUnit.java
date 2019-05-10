@@ -60,13 +60,6 @@ public class EventUnit extends Unit {
         }
     }
 
-
-    //    public EventUnit(Transform transform, String walkingFileURI,
-    //    EventUnitJson eventUnitJson) {
-    //        super(transform, walkingFileURI);
-    //        this.eventUnitJson = eventUnitJson;
-    //    }
-
     void initFromEventUnitJson(EventUnitJson eventUnitJson) {
         if (this.getEventUnitJson() != eventUnitJson) {
             this.setEventUnitJson(eventUnitJson);
