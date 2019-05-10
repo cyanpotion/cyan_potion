@@ -70,7 +70,7 @@ public class Menu extends AbstractGameWindowComponent {
 
     @Override
     public void update() {
-
+        //TODO
     }
 
     @Override

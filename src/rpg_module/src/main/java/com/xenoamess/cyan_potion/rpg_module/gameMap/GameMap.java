@@ -51,25 +51,11 @@ public class GameMap {
 
     private World world;
 
-    //    public static ArrayList<GameMap> gameMaps;
-
     private GameMapJson gameMapJson;
     private GameMapInfoJson gameMapInfoJson;
 
-    private ArrayList<GameTile> gameTiles = new ArrayList<>();
-    private ArrayList<EventUnit> eventUnits = new ArrayList<>();
-
-    //    ArrayList<>
-
-    //    public GameMap GetGameMap(GameMapInfoJson gameMapInfoJson) {
-    //        this.gameMapInfoJson = gameMapInfoJson;
-    //        if (URIGameMapMap.containsKey(mapFilePath)) {
-    //            return (GameMap) URIGameMapMap.get(mapFilePath);
-    //        }
-    //        GameMap gameMap = new GameMap(mapFilePath);
-    //        URIGameMapMap.put(mapFilePath, gameMap);
-    //        return gameMap;
-    //    }
+    private final ArrayList<GameTile> gameTiles = new ArrayList<>();
+    private final ArrayList<EventUnit> eventUnits = new ArrayList<>();
 
     private static String gameMapInfoNameToGameMapJsonURI(String gameMapInfoName) {
         return "/www/data/" + gameMapInfoName + ".json";
@@ -79,24 +65,19 @@ public class GameMap {
         this.setWorld(world);
         this.setGameMapInfoJson(gameMapInfoJson);
 
-        LOGGER.debug(gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName()));
+        LOGGER.debug("GameMapJsonURI", gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName()));
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
                 FileUtil.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
-        //        gameMapJson.getData();
-        //        getGameTileset().;
     }
 
     private void initFromGameMapJson(GameMapJson gameMapJson) {
-        //        if (this.gameMapJson != gameMapJson) {
         this.setGameMapJson(gameMapJson);
-        //        }
 
         this.getGameTiles().clear();
-//        this.eventUnits.clear();
 
         int ti = this.getGameMapJson().width * this.getGameMapJson().height;
         for (int i = 0; i < ti; i++) {
@@ -146,16 +127,8 @@ public class GameMap {
         return gameTiles;
     }
 
-    public void setGameTiles(ArrayList<GameTile> gameTiles) {
-        this.gameTiles = gameTiles;
-    }
-
     public ArrayList<EventUnit> getEventUnits() {
         return eventUnits;
-    }
-
-    public void setEventUnits(ArrayList<EventUnit> eventUnits) {
-        this.eventUnits = eventUnits;
     }
 
 
