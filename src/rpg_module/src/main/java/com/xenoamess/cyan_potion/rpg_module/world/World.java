@@ -146,8 +146,8 @@ public class World extends AbstractScene {
                             startY * RpgModuleDataCenter.TILE_SIZE, 100),
                     new Vector3f(RpgModuleDataCenter.TILE_SIZE,
                             RpgModuleDataCenter.TILE_SIZE,
-                            Unit.DEFAULT_UNIT_LAYER), "/www/img/characters" +
-                    "/r2c_male_test.png:characters:0",
+                            Unit.DEFAULT_UNIT_LAYER),
+                    "/www/img/characters/r2c_male_test.png:characters:0",
                     this.getGameWindow().getGameManager().getResourceManager()));
             this.getPlayer().register();
             getDynamicEntitySet().add(getPlayer());
