@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  */
 public class GrammarMapTest {
     @Test
-    public static void test() {
+    public void test() {
         GrammarMap.getMethodNum("");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i <= 1000; i++) {

@@ -51,7 +51,7 @@ replay_pid*
 /src/main/java/org/lwjgl/demo
 /log.txt
 
-/logs
+**/logs
 *.log
 *.MF
 

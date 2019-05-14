@@ -41,7 +41,7 @@ public class GamepadInputTest {
             LoggerFactory.getLogger(GamepadInputTest.class);
 
     @Test
-    public static void testGamepadInput() {
+    public void testGamepadInput() {
         XInputDevice[] devices = null;
         try {
             devices = XInputDevice.getAllDevices();
@@ -73,13 +73,14 @@ public class GamepadInputTest {
         // Whenever the device is polled, listener events will be fired as long as
         // there are changes
 
-        while (true) {
+        int loopTime = 100000;
+        while (--loopTime >= 0) {
             device.setVibration(65535, 65535);
             device.setVibration(0, 0);
             device.poll();
 
             nxt++;
-            if (nxt == 1000000) {
+            if (nxt == 100000) {
                 nxt = 0;
             } else {
                 continue;
