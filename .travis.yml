@@ -30,3 +30,6 @@ script:
   - cd ./rpg_module
   - "../../mvnw clean package -Dmaven.javadoc.skip=false"
   - "../../mvnw sonar:sonar -Dsonar.projectKey=cyan_potion_rpg_module -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=e50335ce1fed53dfa9ad4ce70995957336cf8e7e"
+  - cd ../
+  - cd ./demo
+  - "../../mvnw clean package -Dmaven.javadoc.skip=false"

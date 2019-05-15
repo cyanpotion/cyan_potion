@@ -84,7 +84,7 @@ public class GameManager implements AutoCloseable {
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
-    private Keymap keymap;
+    private final Keymap keymap = new Keymap();
     private GamepadInput gamepadInput;
     private GameWindowComponentTree gameWindowComponentTree;
     private long nowFrameIndex = 0L;
@@ -266,37 +266,36 @@ public class GameManager implements AutoCloseable {
 
 
     protected void loadKeymap() {
-        this.setKeymap(new Keymap());
-        for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getChildren()) {
-            if (au instanceof ContentNode) {
-                ContentNode contentNode = (ContentNode) au;
-                if (!contentNode.getAttributes().isEmpty()) {
-                    if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
-                        for (AbstractTreeNode au2 : contentNode.getChildren()) {
-                            if (au2 instanceof ContentNode) {
-                                ContentNode contentNode2 = (ContentNode) au2;
-                                if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
-                                    String rawInput = contentNode2.getName();
-                                    String myInput = null;
-                                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
-                                        if (au3 instanceof TextNode) {
-                                            myInput = ((TextNode) au3).getTextContent();
-                                            break;
-                                        }
-                                    }
-                                    this.getKeymap().put(rawInput, myInput);
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "keymap")) {
+            if (getBoolean(contentNode.getAttributes(), "using")) {
+                for (AbstractTreeNode au2 : contentNode.getChildren()) {
+                    if (au2 instanceof ContentNode) {
+                        ContentNode contentNode2 = (ContentNode) au2;
+                        if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
+                            String rawInput = contentNode2.getName();
+                            String myInput = null;
+                            for (AbstractTreeNode au3 : contentNode2.getChildren()) {
+                                if (au3 instanceof TextNode) {
+                                    myInput = ((TextNode) au3).getTextContent();
+                                    break;
                                 }
                             }
+                            this.getKeymap().put(rawInput, myInput);
                         }
-                        break;
-                    }
-                    if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
-                        this.dataCenter.setDebug(true);
-                        Configuration.DEBUG.set(true);
-                        Configuration.DEBUG_LOADER.set(true);
                     }
                 }
+            }
+        }
+
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "debug")) {
+            if (getBoolean(contentNode.getAttributes(), "debug")) {
+                this.dataCenter.setDebug(true);
+                Configuration.DEBUG.set(true);
+                Configuration.DEBUG_LOADER.set(true);
             }
         }
     }
@@ -625,10 +624,6 @@ public class GameManager implements AutoCloseable {
 
     public void setSteamUserStats(SteamUserStats steamUserStats) {
         this.steamUserStats = steamUserStats;
-    }
-
-    public void setKeymap(Keymap keymap) {
-        this.keymap = keymap;
     }
 
     public void setGamepadInput(GamepadInput gamepadInput) {

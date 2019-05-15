@@ -12,4 +12,7 @@ cd ../
 cd ./rpg_module
 call mvn clean deploy -Dmaven.javadoc.skip=false
 call mvn sonar:sonar -Dsonar.projectKey=cyan_potion_rpg_module -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=e50335ce1fed53dfa9ad4ce70995957336cf8e7e
+cd ../
+cd ./demo
+call mvn clean deploy -Dmaven.javadoc.skip=false
 pause
