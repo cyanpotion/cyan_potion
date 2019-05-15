@@ -29,6 +29,7 @@ import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,10 @@ public class GamepadInputTest {
 
     @Test
     public void testGamepadInput() {
+        if (!DataCenter.isWindows()) {
+            return;
+        }
+
         XInputDevice[] devices = null;
         try {
             devices = XInputDevice.getAllDevices();
