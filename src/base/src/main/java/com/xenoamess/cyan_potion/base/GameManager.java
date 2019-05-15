@@ -91,7 +91,7 @@ public class GameManager implements AutoCloseable {
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    private ResourceManager resourceManager;
+    private final ResourceManager resourceManager = new ResourceManager(this);
     private final ExecutorService executorService =
             Executors.newCachedThreadPool();
 
@@ -167,9 +167,9 @@ public class GameManager implements AutoCloseable {
 
     public void startup() {
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
-        this.loadSettingFile();
+        this.loadSettingTree();
         this.readCommonSettings();
-        this.loadKeymap();
+        this.readKeymap();
         this.initSteam();
         this.loadText();
 
@@ -177,7 +177,6 @@ public class GameManager implements AutoCloseable {
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
-        resourceManager = new ResourceManager(this);
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.codePluginManager.apply(this, rightBeforeGameWindowInit);
@@ -208,16 +207,12 @@ public class GameManager implements AutoCloseable {
     }
 
 
-    protected void loadSettingFile() {
-        String settingFilePath = this.getArgsMap().get("SettingFilePath");
-        if (StringUtils.isBlank(settingFilePath)) {
-            settingFilePath = "/settings/DefaultSettings.x8l";
-        }
+    protected void loadSettingTree() {
+        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
         File globalSettingsFile = FileUtil.getFile(settingFilePath);
 
-        LOGGER.debug("SettingsFilePath : {}",
-                globalSettingsFile.getAbsolutePath());
+        LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
         X8lTree globalSettingsTree = null;
         try {
@@ -227,8 +222,11 @@ public class GameManager implements AutoCloseable {
                     ": ", e);
         }
         assert (globalSettingsTree != null);
-
         this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
+        this.getDataCenter().patchGlobalSettingsTree();
+    }
+
+    protected void readCommonSettings() {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "commonSettings")) {
@@ -253,9 +251,7 @@ public class GameManager implements AutoCloseable {
                         simplePluginNode.getTextNodesFromChildren(1).get(0).getTextContent());
             }
         }
-    }
 
-    protected void readCommonSettings() {
         this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
         this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
@@ -265,7 +261,7 @@ public class GameManager implements AutoCloseable {
     }
 
 
-    protected void loadKeymap() {
+    protected void readKeymap() {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "keymap")) {
@@ -292,11 +288,10 @@ public class GameManager implements AutoCloseable {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "debug")) {
-            if (getBoolean(contentNode.getAttributes(), "debug")) {
-                this.dataCenter.setDebug(true);
-                Configuration.DEBUG.set(true);
-                Configuration.DEBUG_LOADER.set(true);
-            }
+            boolean debug = getBoolean(contentNode.getAttributes(), "debug");
+            this.dataCenter.setDebug(debug);
+            Configuration.DEBUG.set(debug);
+            Configuration.DEBUG_LOADER.set(debug);
         }
     }
 
@@ -311,14 +306,18 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
-        String language = MultiLanguageStructure.ENGLISH;
-        getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
+        String language = getString(
+                this.getDataCenter().getCommonSettings(),
+                STRING_LANGUAGE,
+                MultiLanguageStructure.ENGLISH);
         if (this.getDataCenter().isRunWithSteam()) {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
             LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
-            System.exit(1);
+            LOGGER.error("We will have to use english instead here.");
+            language = MultiLanguageStructure.ENGLISH;
+            this.getDataCenter().getTextStructure().setCurrentLanguage(language);
         }
     }
 

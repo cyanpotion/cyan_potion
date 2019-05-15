@@ -4,7 +4,7 @@
     language=english
     gameWindowClassName=com.xenoamess.cyan_potion.base.GameWindow
     titleClassName=com.xenoamess.cyan_potion.rpg_module.world.World
-    runWithSteam=0
+    runWithSteam=1
     defaultFontResourceURI=/www/fonts/SourceHanSans-Normal.ttc:ttfFile
 >>
 <views

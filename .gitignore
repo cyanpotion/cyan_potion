@@ -44,8 +44,6 @@ replay_pid*
 
 /resources
 
-/steam_appid.txt
-
 /run_build.lnk
 /test*
 /src/main/java/org/lwjgl/demo

@@ -46,6 +46,7 @@ public class DataCenter {
     public static final int SCALE = 2;
 
     private X8lTree globalSettingsTree;
+    private X8lTree patchSettingsTree;
     private final Map<String, String> commonSettings = new HashMap<>();
     private final Map<String, String> specialSettings = new HashMap<>();
     private final Map<String, String> views = new HashMap<>();
@@ -149,5 +150,17 @@ public class DataCenter {
 
     public void setRunWithSteam(boolean runWithSteam) {
         this.runWithSteam = runWithSteam;
+    }
+
+    public X8lTree getPatchSettingsTree() {
+        return patchSettingsTree;
+    }
+
+    public void setPatchSettingsTree(X8lTree patchSettingsTree) {
+        this.patchSettingsTree = patchSettingsTree;
+    }
+
+    public void patchGlobalSettingsTree() {
+        this.getGlobalSettingsTree().append(this.getPatchSettingsTree());
     }
 }

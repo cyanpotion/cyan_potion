@@ -47,7 +47,7 @@
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <log4j.version>2.11.2</log4j.version>
         <JXInput.version>v1.0.0</JXInput.version>
-        <!--        <x8l.version>0.42.1</x8l.version>-->
+        <x8l.version>0.42.4</x8l.version>
         <multi_language.version>0.43.2</multi_language.version>
         <SDL_GameControllerDB_Util.version>0.1.1
         </SDL_GameControllerDB_Util.version>
@@ -513,15 +513,21 @@
             <artifactId>JXInput</artifactId>
             <version>${JXInput.version}</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.xenoamess</groupId>-->
-        <!--            <artifactId>x8l</artifactId>-->
-        <!--            <version>${x8l.version}</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.xenoamess</groupId>
+            <artifactId>x8l</artifactId>
+            <version>${x8l.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.xenoamess</groupId>
             <artifactId>multi_language</artifactId>
             <version>${multi_language.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.xenoamess</groupId>
+                    <artifactId>x8l</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -563,6 +569,12 @@
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
             <version>${SDL_GameControllerDB_Util.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.lwjgl</groupId>
+                    <artifactId>lwjgl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
