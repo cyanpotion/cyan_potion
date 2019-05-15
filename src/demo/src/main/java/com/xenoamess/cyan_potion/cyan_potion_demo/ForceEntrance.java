@@ -11,7 +11,6 @@ import java.util.Map;
  */
 public class ForceEntrance {
     public static void main(String[] args) {
-        System.out.println(com.xenoamess.x8l.Version.VERSION);
         Map<String, String> argsMap = GameManager.generateArgsMap(args);
         argsMap.put("SettingFilePath", "/settings/RpgModuleDemoSettings.x8l");
         GameManager gameManager = new GameManager(argsMap);
