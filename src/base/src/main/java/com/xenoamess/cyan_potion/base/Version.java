@@ -56,6 +56,17 @@ public class Version implements Comparable<Version> {
     public static final String VERSION_MISSING = "VersionMissing";
 
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (Version.class != object.getClass()) {
+            return false;
+        }
+        return this.version.equals(((Version) object).version);
+    }
+
     public static int compareVersions(String versionString1, String versionString2) {
         String snapshotString = "-SNAPSHOT";
         if (versionString1.endsWith(snapshotString)) {

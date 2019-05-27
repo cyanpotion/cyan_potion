@@ -47,7 +47,7 @@
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <log4j.version>2.11.2</log4j.version>
         <JXInput.version>v1.0.0</JXInput.version>
-        <x8l.version>0.42.4</x8l.version>
+        <x8l.version>0.46.0</x8l.version>
         <multi_language.version>0.43.2</multi_language.version>
         <SDL_GameControllerDB_Util.version>0.1.1
         </SDL_GameControllerDB_Util.version>
