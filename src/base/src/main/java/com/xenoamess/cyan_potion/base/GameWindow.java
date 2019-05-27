@@ -35,6 +35,7 @@ import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.Callbacks;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -434,9 +435,15 @@ public class GameWindow implements AutoCloseable {
         this.updateMousePos();
     }
 
+    public boolean isIconified() {
+        return glfwGetWindowAttrib(this.window, GLFW.GLFW_ICONIFIED) != 0;
+    }
 
     public void draw() {
         if (!this.isShowing()) {
+            return;
+        }
+        if (isIconified()) {
             return;
         }
         glClearColor(0, 0, 0, 1);
