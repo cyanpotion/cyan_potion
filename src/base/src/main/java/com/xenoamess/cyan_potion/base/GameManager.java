@@ -57,6 +57,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -511,16 +512,19 @@ public class GameManager implements AutoCloseable {
 
     protected void solveEvents() {
         getGameWindow().pollEvents();
-        synchronized (getEventList()) {
-            ArrayList<Event> newEventList = new ArrayList<>();
-            for (Event au : getEventList()) {
-                Set<Event> res = au.apply(this);
+        synchronized (this.getEventList()) {
+            /**
+             * notice that newEventList must be a thread safe collection.
+             */
+            final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
+            this.getEventList().parallelStream().forEach(event -> {
+                Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
                 }
-            }
-            getEventList().clear();
-            getEventList().addAll(newEventList);
+            });
+            this.getEventList().clear();
+            this.getEventList().addAll(newEventList);
         }
     }
 
