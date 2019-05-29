@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +49,9 @@ public class CharEvent implements Event {
     }
 
     @Override
+    @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("CharEvent : {}", (char) getCodepoint());
+        LOGGER.debug("CharEvent : {}", (char) this.getCodepoint());
         return gameManager.getGameWindowComponentTree().process(this);
     }
 

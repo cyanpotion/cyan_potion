@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -33,7 +33,7 @@ import org.joml.Vector4f;
 /**
  * @author XenoAmess
  */
-public class Button extends AbstractControlableGameWindowComponent {
+public class Button extends AbstractControllableGameWindowComponent {
     private Texture buttonTexture;
     private String buttonText;
 

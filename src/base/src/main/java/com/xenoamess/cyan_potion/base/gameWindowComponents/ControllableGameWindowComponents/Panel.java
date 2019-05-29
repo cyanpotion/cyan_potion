@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author XenoAmess
  */
-public class Panel extends AbstractControlableGameWindowComponent {
+public class Panel extends AbstractControllableGameWindowComponent {
     private List<AbstractGameWindowComponent> contents =
             new ArrayList<>();
     private Texture backgroundTexture;

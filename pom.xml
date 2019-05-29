@@ -492,6 +492,13 @@
             <version>${steamworks4j-server.version}</version>
         </dependency>
 
+        <dependency>
+            <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>

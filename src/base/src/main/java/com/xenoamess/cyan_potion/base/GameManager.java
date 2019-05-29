@@ -28,6 +28,7 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
+import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -63,6 +64,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
@@ -78,7 +80,8 @@ public class GameManager implements AutoCloseable {
 
     private final ConcurrentLinkedDeque<Event> eventList =
             new ConcurrentLinkedDeque<>();
-    private ConsoleThread consoleThread = new ConsoleThread(this);
+    @AsFinalField
+    private ConsoleThread consoleThread;
     private GameWindow gameWindow = null;
     private final Callbacks callbacks = new Callbacks(this);
     private SteamUserStats steamUserStats = null;
@@ -86,8 +89,8 @@ public class GameManager implements AutoCloseable {
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
     private final Keymap keymap = new Keymap();
-    private GamepadInput gamepadInput;
-    private GameWindowComponentTree gameWindowComponentTree;
+    private final GamepadInput gamepadInput = new GamepadInput();
+    private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
 
@@ -157,9 +160,13 @@ public class GameManager implements AutoCloseable {
     }
 
     private void initConsoleThread() {
+
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
-            setConsoleThread(null);
+            asFinalFieldSet(this, "consoleThread", null);
+            this.consoleThread = null;
+        } else {
+            asFinalFieldSet(this, "consoleThread", new ConsoleThread(this));
         }
         if (getConsoleThread() != null) {
             getConsoleThread().start();
@@ -188,8 +195,7 @@ public class GameManager implements AutoCloseable {
         this.getAudioManager().init();
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
-
-        this.setGamepadInput(new GamepadInput(this));
+        this.getGamepadInput().init(this);
         this.setStartingContent();
         final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -428,7 +434,7 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
-        this.setGameWindowComponentTree(new GameWindowComponentTree(this.getGameWindow()));
+        this.getGameWindowComponentTree().init(this.getGameWindow());
         this.getGameWindow().init();
 
 
@@ -617,24 +623,12 @@ public class GameManager implements AutoCloseable {
         return eventList;
     }
 
-    public void setConsoleThread(ConsoleThread consoleThread) {
-        this.consoleThread = consoleThread;
-    }
-
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
 
     public void setSteamUserStats(SteamUserStats steamUserStats) {
         this.steamUserStats = steamUserStats;
-    }
-
-    public void setGamepadInput(GamepadInput gamepadInput) {
-        this.gamepadInput = gamepadInput;
-    }
-
-    public void setGameWindowComponentTree(GameWindowComponentTree gameWindowComponentTree) {
-        this.gameWindowComponentTree = gameWindowComponentTree;
     }
 
     public void setNowFrameIndex(long nowFrameIndex) {

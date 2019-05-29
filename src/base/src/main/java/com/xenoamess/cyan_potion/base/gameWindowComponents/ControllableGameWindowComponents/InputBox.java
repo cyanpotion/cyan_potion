@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.CharEvent;
@@ -41,7 +41,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 /**
  * @author XenoAmess
  */
-public class InputBox extends AbstractControlableGameWindowComponent {
+public class InputBox extends AbstractControllableGameWindowComponent {
     private long slashTime = 1000L;
     private String contentString = "";
     private int nowInsertPos = 0;

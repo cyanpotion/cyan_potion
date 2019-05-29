@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
@@ -35,7 +35,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 /**
  * @author XenoAmess
  */
-public class TextBox extends AbstractControlableGameWindowComponent {
+public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;
     private String contentString = "";
     private float charHeight = 20.0f;

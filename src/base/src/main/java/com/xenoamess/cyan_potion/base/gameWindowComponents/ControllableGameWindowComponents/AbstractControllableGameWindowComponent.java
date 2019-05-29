@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -35,19 +35,20 @@ import org.lwjgl.glfw.GLFW;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractControlableGameWindowComponent extends AbstractGameWindowComponent {
+public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     private boolean active = true;
     private boolean visible = true;
     private boolean inFocusNow = false;
     private boolean willStillInFocus = false;
 
-    public AbstractControlableGameWindowComponent(GameWindow gameWindow) {
+    public AbstractControllableGameWindowComponent(GameWindow gameWindow) {
         super(gameWindow);
     }
 
     @Override
     public void initProcessors() {
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
+        this.registerProcessor(
+                MouseButtonEvent.class.getCanonicalName(),
                 event -> {
                     MouseButtonEvent mouseButtonEvent =
                             (MouseButtonEvent) event;

@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.exceptions;
 
+import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
+
 import java.lang.reflect.Field;
 
 /**
@@ -38,23 +40,71 @@ public class AsFinalFieldReSetException extends RuntimeException {
         super(field.toGenericString());
     }
 
-    public static void asFinalFieldReSetCheck(
-            Class classObject, String fieldName, Object fieldValue
-    ) {
-        asFinalFieldReSetCheck(classObject, fieldName, fieldValue, null);
+
+    /**
+     * Check if object.fieldName is null.
+     * If it is null, then set it to a new value.
+     * Otherwise throw an AsFinalFieldReSetException.
+     * <p>
+     * if object is a Class, then will look into the class's static fields instead,
+     * but not the fields in the class object.
+     * <p>
+     * If this field is not an AsFinalField, then do no check and set it to newValue directly.
+     *
+     * @param object    the object that hold an AsFinalField field.
+     * @param fieldName fieldName that represent an AsFinalField field in object.
+     * @param newValue  the new value of the AsFinalField field.
+     * @see com.xenoamess.cyan_potion.base.annotations.AsFinalField
+     * @see AsFinalFieldReSetException
+     */
+    public static void asFinalFieldSet(Object object, String fieldName, Object newValue) {
+        asFinalFieldSet(object, fieldName, null, newValue);
     }
 
-    public static void asFinalFieldReSetCheck(
-            Class classObject, String fieldName, Object fieldValue, Object emptyValue
-    ) {
-        if (fieldValue == emptyValue) {
-            return;
-        }
 
+    /**
+     * Check if object.fieldName is emptyValue.
+     * If it is emptyValue, then set it to a new value.
+     * Otherwise throw an AsFinalFieldReSetException.
+     * <p>
+     * if object is a Class, then will look into the class's static fields instead,
+     * but not the fields in the class object.
+     * <p>
+     * If this field is not an AsFinalField, then do no check and set it to newValue directly.
+     *
+     * @param object     the object that hold an AsFinalField field.
+     * @param fieldName  fieldName that represent an AsFinalField field in object.
+     * @param emptyValue the value that thought be empty by that type.
+     * @param newValue   the new value of the AsFinalField field.
+     * @see com.xenoamess.cyan_potion.base.annotations.AsFinalField
+     * @see AsFinalFieldReSetException
+     */
+    public static void asFinalFieldSet(Object object, String fieldName, Object emptyValue, Object newValue) {
         try {
-            Field field = classObject.getDeclaredField(fieldName);
-            throw new AsFinalFieldReSetException(field);
+            Field field;
+            if (object instanceof Class) {
+                field = ((Class) object).getDeclaredField(fieldName);
+            } else {
+                field = object.getClass().getDeclaredField(fieldName);
+            }
+
+            field.setAccessible(true);
+            Object fieldValue = field.get(object);
+
+            if (field.getDeclaredAnnotation(AsFinalField.class) == null || fieldValue == emptyValue) {
+                if (object instanceof Class) {
+                    field.set(null, newValue);
+                } else {
+                    field.set(object, newValue);
+                }
+                return;
+            } else {
+                throw new AsFinalFieldReSetException(field);
+            }
         } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }
