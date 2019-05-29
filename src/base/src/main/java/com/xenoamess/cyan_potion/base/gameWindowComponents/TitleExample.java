@@ -30,10 +30,10 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.events.MouseScrollEvent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.AbstractControlableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.Callback;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.InputBox;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControlableGameWindowComponents.Panel;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.AbstractControllableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Callback;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
@@ -54,12 +54,12 @@ public class TitleExample extends AbstractGameWindowComponent {
     private Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                     "/www/img/pictures/saveStar.png:picture");
-    private final ArrayList<AbstractControlableGameWindowComponent> controlableGameWindowComponents =
+    private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
             new ArrayList<>();
 
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
-        getControlableGameWindowComponents().add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+        getControllableGameWindowComponents().add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
             {
                 this.registerOnMouseEnterAreaCallback(
                         new Callback() {
@@ -100,9 +100,9 @@ public class TitleExample extends AbstractGameWindowComponent {
 
         });
 
-        getControlableGameWindowComponents().
+        getControllableGameWindowComponents().
 
-                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
                                 new Callback() {
@@ -141,9 +141,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                 });
 
-        getControlableGameWindowComponents().
+        getControllableGameWindowComponents().
 
-                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
                                 new Callback() {
@@ -182,9 +182,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                 });
 
-        getControlableGameWindowComponents().
+        getControllableGameWindowComponents().
 
-                add(new AbstractControlableGameWindowComponent(this.getGameWindow()) {
+                add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
                                 new Callback() {
@@ -232,7 +232,7 @@ public class TitleExample extends AbstractGameWindowComponent {
         inputBox.init(150, 150, 500, 500);
         panel.addContent(inputBox);
 
-        getControlableGameWindowComponents().
+        getControllableGameWindowComponents().
 
                 add(panel);
     }
@@ -340,12 +340,17 @@ public class TitleExample extends AbstractGameWindowComponent {
     }
 
     @Override
-    public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+    public void addToGameWindowComponentTree(
+            GameWindowComponentTreeNode gameWindowComponentTreeNode
+    ) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
-        for (AbstractControlableGameWindowComponent au :
-                getControlableGameWindowComponents()) {
-            au.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        }
+        getControllableGameWindowComponents().forEach(
+                (AbstractControllableGameWindowComponent controllableGameWindowComponent) -> {
+                    controllableGameWindowComponent.addToGameWindowComponentTree(
+                            TitleExample.this.getGameWindowComponentTreeNode()
+                    );
+                }
+        );
     }
 
     private int state = 0;
@@ -447,8 +452,8 @@ public class TitleExample extends AbstractGameWindowComponent {
         this.saveStarTexture = saveStarTexture;
     }
 
-    public ArrayList<AbstractControlableGameWindowComponent> getControlableGameWindowComponents() {
-        return controlableGameWindowComponents;
+    public ArrayList<AbstractControllableGameWindowComponent> getControllableGameWindowComponents() {
+        return controllableGameWindowComponents;
     }
 
     public int getState() {

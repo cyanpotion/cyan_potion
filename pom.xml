@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.135.0</version>
+    <version>0.136.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -42,13 +42,15 @@
         <joml.version>1.9.14</joml.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
         <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.9</jackson.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <log4j.version>2.11.2</log4j.version>
         <JXInput.version>v1.0.0</JXInput.version>
-        <x8l.version>0.42.0</x8l.version>
-        <multi_language.version>0.43.1</multi_language.version>
+        <x8l.version>0.46.0</x8l.version>
+        <multi_language.version>0.43.2</multi_language.version>
+        <SDL_GameControllerDB_Util.version>0.1.1
+        </SDL_GameControllerDB_Util.version>
     </properties>
     <profiles>
         <profile>
@@ -91,6 +93,10 @@
         <!--            <id>com.xenoamess</id>-->
         <!--            <url>http://xenoamess.com:8081/repository/maven-releases/</url>-->
         <!--        </repository>-->
+        <repository>
+            <id>central</id>
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -486,6 +492,13 @@
             <version>${steamworks4j-server.version}</version>
         </dependency>
 
+        <dependency>
+            <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
@@ -503,9 +516,36 @@
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.github.StrikerX3</groupId>
             <artifactId>JXInput</artifactId>
@@ -520,6 +560,12 @@
             <groupId>com.xenoamess</groupId>
             <artifactId>multi_language</artifactId>
             <version>${multi_language.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.xenoamess</groupId>
+                    <artifactId>x8l</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -560,9 +606,21 @@
         <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
-            <version>0.1.0</version>
+            <version>${SDL_GameControllerDB_Util.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.lwjgl</groupId>
+                    <artifactId>lwjgl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

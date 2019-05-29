@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
@@ -33,6 +34,8 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
+
+import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldSet;
 
 
 /**
@@ -45,16 +48,16 @@ import java.util.*;
  * @author XenoAmess
  */
 public class GameWindowComponentTree implements AutoCloseable {
-    private final GameWindowComponentTreeNode root;
-    private final Set<GameWindowComponentTreeNode> leafNodes;
+    @AsFinalField
+    private GameWindowComponentTreeNode root;
+    private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
     public Set<GameWindowComponentTreeNode> getLeafNodes() {
         return leafNodes;
     }
 
     public List<GameWindowComponentTreeNode> getAllNodes() {
-        List<GameWindowComponentTreeNode> res =
-                new ArrayList<>();
+        List<GameWindowComponentTreeNode> res = new ArrayList<>();
         this.getAllNodes(this.getRoot(), res);
         return res;
     }
@@ -67,8 +70,7 @@ public class GameWindowComponentTree implements AutoCloseable {
         res.add(nowNode);
     }
 
-    public GameWindowComponentTree(GameWindow gameWindow) {
-        super();
+    public void init(GameWindow gameWindow) {
         AbstractGameWindowComponent baseComponent =
                 new AbstractGameWindowComponent(gameWindow) {
 
@@ -92,7 +94,6 @@ public class GameWindowComponentTree implements AutoCloseable {
                                     WindowResizeEvent windowResizeEvent = (WindowResizeEvent) event;
                                     this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
                                     this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
-                                    this.getGameWindow().bindGlViewportToFullWindow();
                                     return null;
                                 });
                     }
@@ -114,9 +115,8 @@ public class GameWindowComponentTree implements AutoCloseable {
                     }
                 };
 
-        root = new GameWindowComponentTreeNode(this, null, baseComponent);
-        leafNodes = new HashSet<>();
-        getLeafNodes().add(getRoot());
+        asFinalFieldSet(this, "root", new GameWindowComponentTreeNode(this, null, baseComponent));
+        this.getLeafNodes().add(this.getRoot());
     }
 
     @Override
@@ -127,7 +127,6 @@ public class GameWindowComponentTree implements AutoCloseable {
 
         getLeafNodes().clear();
     }
-
 
     public Set<Event> process(Event event) {
         Set<Event> res = new HashSet<>();
@@ -169,5 +168,9 @@ public class GameWindowComponentTree implements AutoCloseable {
 
     public GameWindowComponentTreeNode getRoot() {
         return root;
+    }
+
+    public void setRoot(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+
     }
 }

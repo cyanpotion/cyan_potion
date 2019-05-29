@@ -28,6 +28,7 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
+import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -57,11 +58,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
@@ -77,21 +80,25 @@ public class GameManager implements AutoCloseable {
 
     private final ConcurrentLinkedDeque<Event> eventList =
             new ConcurrentLinkedDeque<>();
-    private ConsoleThread consoleThread = new ConsoleThread(this);
+
+    @AsFinalField
+    private ConsoleThread consoleThread;
+    @AsFinalField
     private GameWindow gameWindow = null;
     private final Callbacks callbacks = new Callbacks(this);
+    @AsFinalField
     private SteamUserStats steamUserStats = null;
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
-    private Keymap keymap;
-    private GamepadInput gamepadInput;
-    private GameWindowComponentTree gameWindowComponentTree;
+    private final Keymap keymap = new Keymap();
+    private final GamepadInput gamepadInput = new GamepadInput();
+    private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    private ResourceManager resourceManager;
+    private final ResourceManager resourceManager = new ResourceManager(this);
     private final ExecutorService executorService =
             Executors.newCachedThreadPool();
 
@@ -156,9 +163,12 @@ public class GameManager implements AutoCloseable {
     }
 
     private void initConsoleThread() {
+
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
-            setConsoleThread(null);
+            asFinalFieldSet(this, "consoleThread", null);
+        } else {
+            asFinalFieldSet(this, "consoleThread", new ConsoleThread(this));
         }
         if (getConsoleThread() != null) {
             getConsoleThread().start();
@@ -167,9 +177,9 @@ public class GameManager implements AutoCloseable {
 
     public void startup() {
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
-        this.loadSettingFile();
+        this.loadSettingTree();
         this.readCommonSettings();
-        this.loadKeymap();
+        this.readKeymap();
         this.initSteam();
         this.loadText();
 
@@ -177,7 +187,6 @@ public class GameManager implements AutoCloseable {
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
-        resourceManager = new ResourceManager(this);
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.codePluginManager.apply(this, rightBeforeGameWindowInit);
@@ -188,8 +197,7 @@ public class GameManager implements AutoCloseable {
         this.getAudioManager().init();
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
-
-        this.setGamepadInput(new GamepadInput(this));
+        this.getGamepadInput().init(this);
         this.setStartingContent();
         final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -208,16 +216,12 @@ public class GameManager implements AutoCloseable {
     }
 
 
-    protected void loadSettingFile() {
-        String settingFilePath = this.getArgsMap().get("SettingFilePath");
-        if (StringUtils.isBlank(settingFilePath)) {
-            settingFilePath = "/settings/DefaultSettings.x8l";
-        }
+    protected void loadSettingTree() {
+        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
         File globalSettingsFile = FileUtil.getFile(settingFilePath);
 
-        LOGGER.debug("SettingsFilePath : {}",
-                globalSettingsFile.getAbsolutePath());
+        LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
         X8lTree globalSettingsTree = null;
         try {
@@ -227,8 +231,11 @@ public class GameManager implements AutoCloseable {
                     ": ", e);
         }
         assert (globalSettingsTree != null);
-
         this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
+        this.getDataCenter().patchGlobalSettingsTree();
+    }
+
+    protected void readCommonSettings() {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
                         "commonSettings")) {
@@ -253,9 +260,7 @@ public class GameManager implements AutoCloseable {
                         simplePluginNode.getTextNodesFromChildren(1).get(0).getTextContent());
             }
         }
-    }
 
-    protected void readCommonSettings() {
         this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
         this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
@@ -265,39 +270,37 @@ public class GameManager implements AutoCloseable {
     }
 
 
-    protected void loadKeymap() {
-        this.setKeymap(new Keymap());
-        for (AbstractTreeNode au :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getChildren()) {
-            if (au instanceof ContentNode) {
-                ContentNode contentNode = (ContentNode) au;
-                if (!contentNode.getAttributes().isEmpty()) {
-                    if ("keymap".equals(contentNode.getName()) && contentNode.getAttributes().containsKey("using")) {
-                        for (AbstractTreeNode au2 : contentNode.getChildren()) {
-                            if (au2 instanceof ContentNode) {
-                                ContentNode contentNode2 = (ContentNode) au2;
-                                if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
-                                    String rawInput = contentNode2.getName();
-                                    String myInput = null;
-                                    for (AbstractTreeNode au3 : contentNode2.getChildren()) {
-                                        if (au3 instanceof TextNode) {
-                                            myInput = ((TextNode) au3).getTextContent();
-                                            break;
-                                        }
-                                    }
-                                    this.getKeymap().put(rawInput, myInput);
+    protected void readKeymap() {
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "keymap")) {
+            if (getBoolean(contentNode.getAttributes(), "using")) {
+                for (AbstractTreeNode au2 : contentNode.getChildren()) {
+                    if (au2 instanceof ContentNode) {
+                        ContentNode contentNode2 = (ContentNode) au2;
+                        if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
+                            String rawInput = contentNode2.getName();
+                            String myInput = null;
+                            for (AbstractTreeNode au3 : contentNode2.getChildren()) {
+                                if (au3 instanceof TextNode) {
+                                    myInput = ((TextNode) au3).getTextContent();
+                                    break;
                                 }
                             }
+                            this.getKeymap().put(rawInput, myInput);
                         }
-                        break;
-                    }
-                    if ("debug".equals(contentNode.getName()) && !"0".equals(contentNode.getAttributes().get("debug"))) {
-                        this.dataCenter.setDebug(true);
-                        Configuration.DEBUG.set(true);
-                        Configuration.DEBUG_LOADER.set(true);
                     }
                 }
             }
+        }
+
+        for (ContentNode contentNode :
+                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
+                        "debug")) {
+            boolean debug = getBoolean(contentNode.getAttributes(), "debug");
+            this.dataCenter.setDebug(debug);
+            Configuration.DEBUG.set(debug);
+            Configuration.DEBUG_LOADER.set(debug);
         }
     }
 
@@ -312,14 +315,18 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
-        String language = MultiLanguageStructure.ENGLISH;
-        getString(this.getDataCenter().getCommonSettings(), STRING_LANGUAGE, MultiLanguageStructure.ENGLISH);
+        String language = getString(
+                this.getDataCenter().getCommonSettings(),
+                STRING_LANGUAGE,
+                MultiLanguageStructure.ENGLISH);
         if (this.getDataCenter().isRunWithSteam()) {
             language = new SteamApps().getCurrentGameLanguage();
         }
         if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
             LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
-            System.exit(1);
+            LOGGER.error("We will have to use english instead here.");
+            language = MultiLanguageStructure.ENGLISH;
+            this.getDataCenter().getTextStructure().setCurrentLanguage(language);
         }
     }
 
@@ -333,7 +340,11 @@ public class GameManager implements AutoCloseable {
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
-                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback()));
+                asFinalFieldSet(
+                        this,
+                        "steamUserStats",
+                        new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback())
+                );
                 this.getDataCenter().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
@@ -392,7 +403,8 @@ public class GameManager implements AutoCloseable {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
+                asFinalFieldSet(this, "gameWindow",
+                        this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
@@ -429,7 +441,7 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
-        this.setGameWindowComponentTree(new GameWindowComponentTree(this.getGameWindow()));
+        this.getGameWindowComponentTree().init(this.getGameWindow());
         this.getGameWindow().init();
 
 
@@ -513,16 +525,19 @@ public class GameManager implements AutoCloseable {
 
     protected void solveEvents() {
         getGameWindow().pollEvents();
-        synchronized (getEventList()) {
-            ArrayList<Event> newEventList = new ArrayList<>();
-            for (Event au : getEventList()) {
-                Set<Event> res = au.apply(this);
+        synchronized (this.getEventList()) {
+            /**
+             * notice that newEventList must be a thread safe collection.
+             */
+            final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
+            this.getEventList().parallelStream().forEach(event -> {
+                Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
                 }
-            }
-            getEventList().clear();
-            getEventList().addAll(newEventList);
+            });
+            this.getEventList().clear();
+            this.getEventList().addAll(newEventList);
         }
     }
 
@@ -613,30 +628,6 @@ public class GameManager implements AutoCloseable {
 
     public ConcurrentLinkedDeque<Event> getEventList() {
         return eventList;
-    }
-
-    public void setConsoleThread(ConsoleThread consoleThread) {
-        this.consoleThread = consoleThread;
-    }
-
-    public void setGameWindow(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
-    }
-
-    public void setSteamUserStats(SteamUserStats steamUserStats) {
-        this.steamUserStats = steamUserStats;
-    }
-
-    public void setKeymap(Keymap keymap) {
-        this.keymap = keymap;
-    }
-
-    public void setGamepadInput(GamepadInput gamepadInput) {
-        this.gamepadInput = gamepadInput;
-    }
-
-    public void setGameWindowComponentTree(GameWindowComponentTree gameWindowComponentTree) {
-        this.gameWindowComponentTree = gameWindowComponentTree;
     }
 
     public void setNowFrameIndex(long nowFrameIndex) {

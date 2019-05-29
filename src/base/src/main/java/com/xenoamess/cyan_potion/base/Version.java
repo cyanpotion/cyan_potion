@@ -41,16 +41,67 @@ import java.net.URL;
  *
  * @author XenoAmess
  */
-public class Version {
+public class Version implements Comparable<Version> {
 
-    private Version() {
+    private String version;
 
+    public Version(String version) {
+        this.version = version;
     }
 
-    public static final String VERSION = getVersion();
+    /**
+     * current version of this component.
+     */
+    public static final String VERSION = loadCurrentVersion();
     public static final String VERSION_MISSING = "VersionMissing";
 
-    private static String getVersion() {
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (Version.class != object.getClass()) {
+            return false;
+        }
+        return this.version.equals(((Version) object).version);
+    }
+
+    public static int compareVersions(String versionString1, String versionString2) {
+        String snapshotString = "-SNAPSHOT";
+        if (versionString1.endsWith(snapshotString)) {
+            versionString1 = versionString1.substring(0, versionString1.length() - snapshotString.length());
+            versionString1 += ".-2";
+        }
+        if (versionString2.endsWith(snapshotString)) {
+            versionString2 = versionString2.substring(0, versionString2.length() - snapshotString.length());
+            versionString2 += ".-2";
+        }
+        String[] versionStringSegments1 = versionString1.split("\\.");
+        String[] versionStringSegments2 = versionString2.split("\\.");
+        int length = Math.max(versionStringSegments1.length, versionStringSegments2.length);
+        for (int i = 0; i < length; i++) {
+            String versionStringSegment1 = versionStringSegments1.length > i ? versionStringSegments1[i] : "-1";
+            String versionStringSegment2 = versionStringSegments2.length > i ? versionStringSegments2[i] : "-1";
+
+            if (versionStringSegment1.equals(versionStringSegment2)) {
+                continue;
+            }
+            int versionIntSegment1 = Integer.parseInt(versionStringSegment1);
+            int versionIntSegment2 = Integer.parseInt(versionStringSegment2);
+            if (versionIntSegment1 != versionIntSegment2) {
+                return versionIntSegment1 - versionIntSegment2;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int compareTo(Version version) {
+        return compareVersions(this.getVersion(), version.getVersion());
+    }
+
+    private static String loadCurrentVersion() {
         String res;
         res = Version.loadFile("/VERSION/" + Version.class.getPackage().getName() + ".VERSION");
         if ("".equals(res)) {
@@ -78,7 +129,7 @@ public class Version {
         String res = "";
         try (
                 BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()))
+                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
         ) {
             final StringBuilder sb = new StringBuilder();
             String tmp;
@@ -95,5 +146,14 @@ public class Version {
             e.printStackTrace();
         }
         return res;
+    }
+
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

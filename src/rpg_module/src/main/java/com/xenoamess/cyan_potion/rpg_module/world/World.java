@@ -158,7 +158,7 @@ public class World extends AbstractScene {
             switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
-                        this.getMenu().getShow().set(true);
+                        this.getMenu().setShow(true);
                     }
                     return null;
                 default:
@@ -247,7 +247,7 @@ public class World extends AbstractScene {
 
     public void preparePlayerMovement(Unit player) {
         player.getMovement().set(0, 0);
-        if (this.getMenu().getShow().get()) {
+        if (this.getMenu().getShow()) {
             return;
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {

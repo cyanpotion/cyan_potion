@@ -40,7 +40,8 @@ And no books/documents for the inner logic for now.
 
 Demo
 ----------
-Here is the [demo](https://github.com/cyanpotion/cyan_potion_demo).
+Here is the [demo](https://github.com/cyanpotion/cyan_potion/tree/develop/src/demo).
+
 (The demo is actually for cyan_potion_rpg_module, but I guess this counts.)
 
 You can also take a look at [this](https://store.steampowered.com/app/999030/).

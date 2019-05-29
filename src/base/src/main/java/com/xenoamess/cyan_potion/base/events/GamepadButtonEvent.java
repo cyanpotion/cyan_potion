@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.events;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.AbstractGamepadDevice;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,7 @@ public class GamepadButtonEvent implements Event {
     }
 
     @Override
+    @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
         if (getAction() != GLFW.GLFW_REPEAT) {
             LOGGER.debug("GamepadButtonEvent : {} {} {}", getKey(),

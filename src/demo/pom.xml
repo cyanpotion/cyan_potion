@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>cyan_potion</artifactId>
+        <groupId>com.xenoamess.cyan_potion</groupId>
+        <version>0.136.0</version>
+    </parent>
+    <groupId>com.xenoamess.cyan_potion</groupId>
+    <artifactId>cyan_potion_demo</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>a demo of cyan_potion game engine.
+    </description>
+    <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/demo</url>
+    <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>cyan_potion_base</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>cyan_potion_coordinate</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>cyan_potion_rpg_module</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

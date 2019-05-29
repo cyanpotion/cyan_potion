@@ -41,7 +41,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.function.Function;
 
-import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldReSetCheck;
+import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldSet;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImageWrite.stbi_write_bmp;
 import static org.lwjgl.stb.STBTruetype.*;
@@ -499,8 +499,7 @@ public class Font extends AbstractResource {
     }
 
     public static void setDefaultFont(Font defaultFont) {
-        asFinalFieldReSetCheck(Font.class, "defaultFont", Font.defaultFont);
-        Font.defaultFont = defaultFont;
+        asFinalFieldSet(Font.class, "defaultFont", defaultFont);
     }
 
 

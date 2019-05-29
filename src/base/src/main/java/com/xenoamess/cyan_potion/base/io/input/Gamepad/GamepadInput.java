@@ -43,7 +43,7 @@ public class GamepadInput {
             LoggerFactory.getLogger(GamepadInput.class);
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
 
-    public GamepadInput(GameManager gameManager) {
+    public void init(GameManager gameManager) {
         try {
             int jXInputDeviceNum = XInputDevice.getAllDevices().length;
             for (int i = 0; i < jXInputDeviceNum; i++) {
@@ -63,7 +63,6 @@ public class GamepadInput {
                     steamController.getConnectedControllers(steamControllerHandles);
             LOGGER.debug("steamControllerNum : {}", steamControllerNum);
         }
-
     }
 
     public void update(GameWindow gameWindow) {

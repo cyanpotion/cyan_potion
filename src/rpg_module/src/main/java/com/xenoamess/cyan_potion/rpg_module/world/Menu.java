@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  */
 public class Menu extends AbstractGameWindowComponent {
-    private AtomicBoolean show = new AtomicBoolean(false);
+    private final AtomicBoolean show = new AtomicBoolean(false);
     private Texture menuBackGroundTexture;
     private World world;
 
@@ -54,7 +54,7 @@ public class Menu extends AbstractGameWindowComponent {
             switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
                     if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
-                        this.getShow().set(false);
+                        this.setShow(false);
                     }
                     return null;
                 case Keymap.XENOAMESS_KEY_UP:
@@ -75,7 +75,7 @@ public class Menu extends AbstractGameWindowComponent {
 
     @Override
     public void draw() {
-        if (!getShow().get()) {
+        if (!getShow()) {
             return;
         }
         this.getGameWindow().drawBindableRelativeCenter(getMenuBackGroundTexture(),
@@ -84,18 +84,18 @@ public class Menu extends AbstractGameWindowComponent {
 
     @Override
     public Event process(Event event) {
-        if (!getShow().get()) {
+        if (!getShow()) {
             return event;
         }
         return super.process(event);
     }
 
-    public AtomicBoolean getShow() {
-        return show;
+    public boolean getShow() {
+        return show.get();
     }
 
-    public void setShow(AtomicBoolean show) {
-        this.show = show;
+    public void setShow(boolean show) {
+        this.show.set(show);
     }
 
     public Texture getMenuBackGroundTexture() {
