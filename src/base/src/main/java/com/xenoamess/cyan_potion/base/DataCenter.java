@@ -43,7 +43,6 @@ public class DataCenter {
 
     public static final int CONSOLE_PORT = 13888;
     public static final double FRAME_CAP = 1 / 60.0;
-    public static final float FRAME_CAP_F = (float) FRAME_CAP;
     public static final int SCALE = 2;
 
     private X8lTree globalSettingsTree;

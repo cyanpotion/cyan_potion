@@ -252,17 +252,17 @@ public class World extends AbstractScene {
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {
             player.getMovement().add(0,
-                    -player.getMoveSpeed() * DataCenter.FRAME_CAP_F);
+                    -player.getMoveSpeed());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_LEFT))) {
-            player.getMovement().add(-player.getMoveSpeed() * DataCenter.FRAME_CAP_F, 0);
+            player.getMovement().add(-player.getMoveSpeed(), 0);
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_DOWN))) {
             player.getMovement().add(0,
-                    player.getMoveSpeed() * DataCenter.FRAME_CAP_F);
+                    player.getMoveSpeed());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_RIGHT))) {
-            player.getMovement().add(player.getMoveSpeed() * DataCenter.FRAME_CAP_F, 0);
+            player.getMovement().add(player.getMoveSpeed(), 0);
         }
     }
 

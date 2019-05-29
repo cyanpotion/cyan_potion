@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.rpg_module.units;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractScene;
@@ -43,7 +42,7 @@ public class Unit extends AbstractDynamicEntity {
 
     private boolean moving = false;
     private Vector2f movement = new Vector2f();
-    private int moveSpeed = 256;
+    private float moveSpeed = 3f;
     private int faceDir = 180;
     private boolean canMove = true;
 
@@ -90,8 +89,12 @@ public class Unit extends AbstractDynamicEntity {
                 ((WalkingAnimation4Dirs) this.getBindable()).setFaceDir(getFaceDir());
             }
 
-            if (getMovement().length() > getMoveSpeed() * DataCenter.FRAME_CAP_F) {
-                this.tryMove(new Vector3f(getMovement().mul(getMoveSpeed() * DataCenter.FRAME_CAP_F / getMovement().length(), new Vector2f()), 0));
+            if (getMovement().length() > getMoveSpeed()) {
+                this.tryMove(new Vector3f(
+                                getMovement().mul(getMoveSpeed() / getMovement().length(), new Vector2f()),
+                                0
+                        )
+                );
             } else {
                 this.tryMove(new Vector3f(getMovement(), 0));
             }
@@ -129,7 +132,7 @@ public class Unit extends AbstractDynamicEntity {
         this.movement = movement;
     }
 
-    public int getMoveSpeed() {
+    public float getMoveSpeed() {
         return moveSpeed;
     }
 
