@@ -80,10 +80,16 @@ public class GameManager implements AutoCloseable {
 
     private final ConcurrentLinkedDeque<Event> eventList =
             new ConcurrentLinkedDeque<>();
+
+    /**
+     * Assigned by reflection.
+     */
     @AsFinalField
     private ConsoleThread consoleThread;
+    @AsFinalField
     private GameWindow gameWindow = null;
     private final Callbacks callbacks = new Callbacks(this);
+    @AsFinalField
     private SteamUserStats steamUserStats = null;
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
@@ -164,7 +170,6 @@ public class GameManager implements AutoCloseable {
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
             asFinalFieldSet(this, "consoleThread", null);
-            this.consoleThread = null;
         } else {
             asFinalFieldSet(this, "consoleThread", new ConsoleThread(this));
         }
@@ -338,7 +343,11 @@ public class GameManager implements AutoCloseable {
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
-                this.setSteamUserStats(new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback()));
+                asFinalFieldSet(
+                        this,
+                        "steamUserStats",
+                        new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback())
+                );
                 this.getDataCenter().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
@@ -397,7 +406,8 @@ public class GameManager implements AutoCloseable {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                this.setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
+                asFinalFieldSet(this, "gameWindow",
+                        this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
@@ -621,14 +631,6 @@ public class GameManager implements AutoCloseable {
 
     public ConcurrentLinkedDeque<Event> getEventList() {
         return eventList;
-    }
-
-    public void setGameWindow(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
-    }
-
-    public void setSteamUserStats(SteamUserStats steamUserStats) {
-        this.steamUserStats = steamUserStats;
     }
 
     public void setNowFrameIndex(long nowFrameIndex) {
