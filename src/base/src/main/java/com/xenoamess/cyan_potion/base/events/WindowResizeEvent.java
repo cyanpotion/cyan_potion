@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +52,6 @@ public class WindowResizeEvent implements Event {
     }
 
     @Override
-    @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
         LOGGER.debug("WindowResizeEvent : {} {} {}",
                 getWindow(), getWidth(), getHeight());

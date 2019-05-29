@@ -28,6 +28,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.EventProcessor;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
 
 /**
  * @author XenoAmess
@@ -104,17 +104,16 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         //TODO
     }
 
-    private Map<String, Function<Event, Event>> classNameToProcessorMap =
-            new HashMap<>();
+    private final Map<String, EventProcessor> classNameToProcessorMap = new HashMap<>();
 
     public abstract void initProcessors();
 
     public void registerProcessor(String eventType,
-                                  Function<Event, Event> processor) {
+                                  EventProcessor processor) {
         this.getClassNameToProcessorMap().put(eventType, processor);
     }
 
-    public Function<Event, Event> getProcessor(String eventType) {
+    public EventProcessor getProcessor(String eventType) {
         return this.getClassNameToProcessorMap().get(eventType);
     }
 
@@ -135,7 +134,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
      * @see Event
      */
     public Event process(Event event) {
-        Function<Event, Event> processor =
+        EventProcessor processor =
                 this.getProcessor(event.getClass().getCanonicalName());
         if (processor != null) {
             return processor.apply(event);
@@ -208,12 +207,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.height = height;
     }
 
-    public Map<String, Function<Event, Event>> getClassNameToProcessorMap() {
+    public Map<String, EventProcessor> getClassNameToProcessorMap() {
         return classNameToProcessorMap;
-    }
-
-    public void setClassNameToProcessorMap(Map<String,
-            Function<Event, Event>> classNameToProcessorMap) {
-        this.classNameToProcessorMap = classNameToProcessorMap;
     }
 }

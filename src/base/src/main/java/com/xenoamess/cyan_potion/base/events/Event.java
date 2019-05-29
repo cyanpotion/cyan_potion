@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -36,6 +35,5 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
     @Override
-    @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager);
 }

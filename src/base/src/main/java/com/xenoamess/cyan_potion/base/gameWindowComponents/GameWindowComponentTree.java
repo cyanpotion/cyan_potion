@@ -94,7 +94,6 @@ public class GameWindowComponentTree implements AutoCloseable {
                                     WindowResizeEvent windowResizeEvent = (WindowResizeEvent) event;
                                     this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
                                     this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
-                                    this.getGameWindow().bindGlViewportToFullWindow();
                                     return null;
                                 });
                     }
