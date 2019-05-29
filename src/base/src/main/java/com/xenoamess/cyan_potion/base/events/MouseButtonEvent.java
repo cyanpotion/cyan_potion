@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.events;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,10 +93,10 @@ public class MouseButtonEvent implements Event {
     }
 
     @Override
+    @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
         LOGGER.debug("MouseButtonEvent : {} {} {}", getKey(), getAction(),
                 getMods());
-
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
                 gameManager.getKeymap().keyReleaseRaw(new Key(Key.TYPE_MOUSE, getKey()));

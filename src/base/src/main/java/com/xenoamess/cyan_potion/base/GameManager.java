@@ -81,9 +81,6 @@ public class GameManager implements AutoCloseable {
     private final ConcurrentLinkedDeque<Event> eventList =
             new ConcurrentLinkedDeque<>();
 
-    /**
-     * Assigned by reflection.
-     */
     @AsFinalField
     private ConsoleThread consoleThread;
     @AsFinalField

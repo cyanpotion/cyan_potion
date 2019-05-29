@@ -129,7 +129,6 @@ public class GameWindowComponentTree implements AutoCloseable {
         getLeafNodes().clear();
     }
 
-
     public Set<Event> process(Event event) {
         Set<Event> res = new HashSet<>();
         this.getRoot().process(res, event);
