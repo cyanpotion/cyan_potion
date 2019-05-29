@@ -57,6 +57,12 @@ If you want to be put in the licenses folder also, please notice that we accept 
 
 Add the MIT license to your code piece and put it into into license folder, and write description about it.
 
+Special Thanks
+----------
+[![Java Profiler](https://www.ej-technologies.com/images/product_banners/jprofiler_small.png)Java profiler](https://www.ej-technologies.com/products/jprofiler/overview.html)
+Thanks ej-technologies for providing such a wonderful performance analysing tool.
+
 Thanks for reading this
 ----------
+
 -----XenoAmess
