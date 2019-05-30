@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.lwjgl.glfw.GLFW;
 
@@ -38,13 +39,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Menu extends AbstractGameWindowComponent {
     private final AtomicBoolean show = new AtomicBoolean(false);
-    private Texture menuBackGroundTexture;
+    private final Texture menuBackGroundTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/menuBackGround.png:picture"
+                    );
+
+    private final Picture menuBackGroundPicture = new Picture(menuBackGroundTexture);
+
+    {
+        menuBackGroundPicture.setCoverFullWindow(this.getGameWindow());
+    }
+
     private World world;
 
     public Menu(World world) {
         super(world.getGameWindow());
         this.setWorld(world);
-        this.setMenuBackGroundTexture(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class, "/www/img/pictures/menuBackGround.png:picture"));
     }
 
     @Override
@@ -78,8 +90,7 @@ public class Menu extends AbstractGameWindowComponent {
         if (!getShow()) {
             return;
         }
-        this.getGameWindow().drawBindableRelativeCenter(getMenuBackGroundTexture(),
-                this.getGameWindow().getLogicWindowWidth(), this.getGameWindow().getLogicWindowHeight());
+        this.menuBackGroundPicture.draw(this.getGameWindow());
     }
 
     @Override
@@ -100,10 +111,6 @@ public class Menu extends AbstractGameWindowComponent {
 
     public Texture getMenuBackGroundTexture() {
         return menuBackGroundTexture;
-    }
-
-    public void setMenuBackGroundTexture(Texture menuBackGroundTexture) {
-        this.menuBackGroundTexture = menuBackGroundTexture;
     }
 
     public World getWorld() {

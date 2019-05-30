@@ -41,18 +41,26 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
-    private final Picture logoPicture;
+    private final Texture logoTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/madewith.png:picture"
+                    );
+
+    private final Picture logoPicture = new Picture(this.logoTexture);
+
+    {
+        this.logoPicture.setCoverFullWindow(this.getGameWindow());
+    }
+
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        Texture logoTexture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                        "/www/img/pictures/madewith.png:picture");
-        this.logoPicture = new Picture(logoTexture);
-        this.logoPicture.setCoverFullWindow(this.getGameWindow());
+
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));

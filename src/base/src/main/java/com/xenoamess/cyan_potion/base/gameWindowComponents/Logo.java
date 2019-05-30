@@ -39,19 +39,27 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class Logo extends AbstractGameWindowComponent {
-    private final Picture logoPicture;
+    private final Texture logoTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/logo.png:picture"
+                    );
+
+    private final Picture logoPicture = new Picture(this.logoTexture);
+
+    {
+        this.logoPicture.setCenter(this.getGameWindow());
+        this.logoPicture.moveY(-50 * 2);
+    }
+
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public Logo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        Texture logoTexture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                        "/www/img/pictures/logo.png:picture");
-        this.logoPicture = new Picture(logoTexture);
-        this.logoPicture.setCenter(this.getGameWindow());
-        this.logoPicture.moveY(-50 * 2);
+
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
