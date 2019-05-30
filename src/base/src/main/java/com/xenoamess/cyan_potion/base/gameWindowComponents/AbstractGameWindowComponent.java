@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
 import com.xenoamess.cyan_potion.base.DataCenter;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventProcessor;
@@ -130,7 +131,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
      *
      * @param event the old event that is being processed by this Component now.
      * @return the new Event that generated during the processing of the old event.
-     * @see Event
+     * @see Event#apply(GameManager)
      */
     public Event process(Event event) {
         EventProcessor processor =

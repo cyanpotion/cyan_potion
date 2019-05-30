@@ -53,7 +53,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      *
      * @param resourceManager resource Manager
      * @param fullResourceURI full Resource URI
-     * @see ResourceManager
+     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
     public AbstractResource(ResourceManager resourceManager, String fullResourceURI) {
         this.resourceManager = resourceManager;
@@ -111,7 +111,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * force to reload this resource.
      * using loaders registered in this.getResourceManager() .
      *
-     * @see ResourceManager
+     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
     public void forceLoad() {
         final String[] resourceFileURIStrings =

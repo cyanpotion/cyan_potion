@@ -24,13 +24,15 @@
 
 package com.xenoamess.cyan_potion.base.exceptions;
 
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+
 /**
  * This exception is thrown when we fail to parse a uri somewhere.
  * The most common case is from loading AbstractResource, or CodePlugin.
  *
  * @author XenoAmess
- * @see com.xenoamess.cyan_potion.base.memory.AbstractResource
- * @see com.xenoamess.cyan_potion.base.plugins.CodePluginManager
+ * @see AbstractResource#forceLoad()
+ * @see com.xenoamess.cyan_potion.base.plugins.CodePluginManager#getCodePluginFunctionFromString(String)
  */
 public class URITypeNotDefinedException extends RuntimeException {
     public URITypeNotDefinedException(String message) {

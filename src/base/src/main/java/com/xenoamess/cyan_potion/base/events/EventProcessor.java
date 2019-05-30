@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import net.jcip.annotations.GuardedBy;
 
 import java.util.function.Function;
@@ -37,7 +38,7 @@ public interface EventProcessor extends Function<Event, Event> {
      *
      * @param event the event that being processed.
      * @return the event that generated due to processing the event.
-     * @see Event
+     * @see Event#apply(GameManager)
      */
     @Override
     @GuardedBy("GameManager")
