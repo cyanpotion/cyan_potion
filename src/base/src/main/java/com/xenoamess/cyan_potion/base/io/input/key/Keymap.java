@@ -31,7 +31,9 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -67,13 +69,49 @@ public class Keymap {
 
     private final Map<Key, ArrayList> keymapReverse = new ConcurrentHashMap<>();
 
+    public static <T> T[] fillNew(T[] a) {
+        Class arrayClass = a.getClass();
+        Class componentClass = arrayClass.getComponentType();
+        try {
+            Constructor defaultConstructor = componentClass.getConstructor();
+            for (int i = 0, len = a.length; i < len; i++) {
+                a[i] = (T) defaultConstructor.newInstance();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return a;
+    }
+
+    /**
+     * Flip the atomicBoolean.
+     *
+     * @param atomicBoolean atomicBoolean
+     * @return new boolean value of atomicBoolean
+     * @link https://stackoverflow.com/questions/1255617/does-atomicboolean-not-have-a-negate-method
+     */
+    public static boolean flip(AtomicBoolean atomicBoolean) {
+        boolean v;
+        do {
+            v = atomicBoolean.get();
+        } while (!atomicBoolean.compareAndSet(v, !v));
+        return !v;
+    }
 
     private final AtomicBoolean[][] rawKeys =
-            new AtomicBoolean[][]{new AtomicBoolean[GLFW_KEY_LAST + 1],
-                    new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1],
-                    new AtomicBoolean[GLFW_JOYSTICK_LAST + 1],
-                    new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
-    private final AtomicBoolean[] myKeys = new AtomicBoolean[2000];
+            new AtomicBoolean[][]{
+                    fillNew(new AtomicBoolean[GLFW_KEY_LAST + 1]),
+                    fillNew(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
+                    fillNew(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
+                    fillNew(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
+
+    private final AtomicBoolean[] myKeys = fillNew(new AtomicBoolean[2000]);
 
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
@@ -137,34 +175,19 @@ public class Keymap {
         return res;
     }
 
-    public void keyPressRaw(Key rawKey) {
-        keyPress(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()].set(true);
+    public void keyFlipRaw(Key rawKey) {
+        keyFlip(getKeymap().get(rawKey));
+        flip(getRawKeys()[rawKey.getType()][rawKey.getKey()]);
     }
 
-    public void keyPress(Key myKey) {
+    public void keyFlip(Key myKey) {
         if (myKey == null) {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        getMyKeys()[myKey.getKey()].set(true);
-    }
-
-    public void keyReleaseRaw(Key rawKey) {
-        keyRelease(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()].set(false);
-    }
-
-    public void keyRelease(Key myKey) {
-        if (myKey == null) {
-            return;
-        }
-        if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
-        }
-        getMyKeys()[myKey.getKey()].set(false);
+        flip(getMyKeys()[myKey.getKey()]);
     }
 
     public boolean isKeyDown(Key myKey) {
