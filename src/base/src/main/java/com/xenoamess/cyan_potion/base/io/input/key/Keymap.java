@@ -31,7 +31,6 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -275,8 +274,8 @@ public class Keymap {
     }
 
     /**
-     * <p>Fill a array with creating new instance of the component class
-     * using constructor that accept that accept 0 arguments.
+     * <p>Fill a array with creating new instances of the component class
+     * using constructor that accept 0 arguments.
      *
      * <pre>
      *     private final AtomicBoolean[][] rawKeys =
@@ -287,25 +286,25 @@ public class Keymap {
      *                     fillNew(new AtomicBoolean[1000])};
      * </pre>
      *
-     * @param <T> the component type of the array
-     * @param a   the array to be filled
-     * @return the same array, {@code public static} empty array if {@code null}
-     * @throws IllegalArgumentException if T have no such constructor,
+     * @param <T>   the component type of the array
+     * @param array the array to be filled
+     * @return the same array
+     * @throws IllegalArgumentException if array is null,
+     *                                  or if T have no such constructor,
      *                                  or the constructor is not accessible,
      *                                  or the class cannot be instantiated.
      * @since 3.10
      */
-    public static <T> T[] fillNew(T[] a) {
-        if (a == null) {
-            Class type = a.getClass();
-            return (T[]) type.cast(Array.newInstance(type.getComponentType(), 0));
+    public static <T> T[] fillNew(T[] array) {
+        if (array == null) {
+            throw new IllegalArgumentException("The input array must not be null.");
         }
-        Class arrayClass = a.getClass();
+        Class arrayClass = array.getClass();
         Class componentClass = arrayClass.getComponentType();
         try {
             Constructor defaultConstructor = componentClass.getConstructor();
-            for (int i = 0, len = a.length; i < len; i++) {
-                a[i] = (T) defaultConstructor.newInstance();
+            for (int i = 0, len = array.length; i < len; i++) {
+                array[i] = (T) defaultConstructor.newInstance();
             }
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException(
@@ -328,7 +327,7 @@ public class Keymap {
                             + componentClass.getCanonicalName()
             );
         }
-        return a;
+        return array;
     }
 
     /**
