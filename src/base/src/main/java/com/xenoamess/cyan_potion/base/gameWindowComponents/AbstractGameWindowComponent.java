@@ -29,7 +29,6 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventProcessor;
-import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public abstract class AbstractGameWindowComponent implements AutoCloseable {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(Texture.class);
+            LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 
     private final GameWindow gameWindow;
     private final AtomicBoolean alive = new AtomicBoolean(true);

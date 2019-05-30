@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.joml.Vector4f;
 
@@ -125,21 +126,27 @@ public class Logo extends AbstractGameWindowComponent {
         } else {
             pscale = 1;
         }
+
         if (t < dynamicTime + stayTime) {
-            this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
-                    , 480 * (pscale + 1), 60 * (pscale + 1),
-                    new Vector4f(1, 1, 1, pscale));
+            Picture picture = new Picture(getLogoTexture());
+            picture.setCenterPosX(0 + this.getGameWindow().getLogicWindowWidth() / 2f);
+            picture.setCenterPosY(-50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f);
+            picture.setWidth(480 * (pscale + 1));
+            picture.setHeight(60 * (pscale + 1));
+            picture.setColorScale(new Vector4f(1, 1, 1, pscale));
+            picture.draw(getGameWindow());
         } else {
             pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pscale < 0) {
                 pscale = 0;
             }
-            this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
-                    , 480 * 2, 60 * 2, new Vector4f(1, 1, 1, pscale));
+            Picture picture = new Picture(getLogoTexture());
+            picture.setCenterPosX(0 + this.getGameWindow().getLogicWindowWidth() / 2f);
+            picture.setCenterPosY(-50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f);
+            picture.setWidth(480 * 2);
+            picture.setHeight(60 * 2);
+            picture.setColorScale(new Vector4f(1, 1, 1, pscale));
+            picture.draw(getGameWindow());
         }
     }
 

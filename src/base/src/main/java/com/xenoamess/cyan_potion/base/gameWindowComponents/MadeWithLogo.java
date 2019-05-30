@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
@@ -127,10 +128,10 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        this.getGameWindow().drawBindableRelativeCenter(this.getLogoTexture()
-                , this.getGameWindow().getLogicWindowWidth(),
-                this.getGameWindow().getLogicWindowHeight(), new Vector4f(1,
-                        colorScale, colorScale, 1));
+        Picture picture = new Picture(this.getLogoTexture());
+        picture.setCoverFullWindow(this.getGameWindow());
+        picture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
+        picture.draw(getGameWindow());
     }
 
     public Texture getLogoTexture() {

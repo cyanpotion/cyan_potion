@@ -33,6 +33,7 @@ import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
@@ -52,7 +53,7 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class GameWindow implements AutoCloseable {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(AutoCloseable.class);
+            LoggerFactory.getLogger(GameWindow.class);
 
     private GameManager gameManager;
 
@@ -101,8 +102,11 @@ public class GameWindow implements AutoCloseable {
 
         this.setShader(new Shader("shader"));
 
-        Model.COMMON_MODEL.init(Model.COMMON_VERTICES_FLOAT_ARRAY, Model.COMMON_TEXTURE_FLOAT_ARRAY,
-                Model.COMMON_INDICES_FLOAT_ARRAY);
+        Model.COMMON_MODEL.init(
+                Model.COMMON_VERTICES_FLOAT_ARRAY,
+                Model.COMMON_TEXTURE_FLOAT_ARRAY,
+                Model.COMMON_INDICES_INT_ARRAY
+        );
     }
 
     public void showWindow() {
@@ -460,45 +464,53 @@ public class GameWindow implements AutoCloseable {
         return window;
     }
 
-
     public void drawBindableRelative(Bindable bindable, float posx,
                                      float posy, float width, float height,
-                                     Model model, Vector4f colorScale) {
+                                     Model model, Vector4f colorScale, float rotateRadius) {
+        if (bindable == null) {
+            return;
+        }
+
         posx = posx / (float) this.getLogicWindowWidth();
         posy = posy / (float) this.getLogicWindowHeight();
-        width = width / (float) this.getLogicWindowWidth();
-        height =
-                height / (float) this.getLogicWindowHeight();
+
         posx -= .5f;
         posy -= .5f;
-
-        width /= 2;
-        height /= 2;
 
         if (colorScale == null) {
             colorScale = new Vector4f(1, 1, 1, 1);
         }
 
-        if (bindable == null) {
-            return;
-        }
-
         this.getShader().bind();
         bindable.bind();
 
-        Matrix4f projection;
-        {
-            projection = new Matrix4f(
-                    2 * width, 0, 0, 0,
-                    0, 2 * height, 0, 0,
+        if (rotateRadius == 0f) {
+            Matrix4f projection = new Matrix4f(
+                    width / (float) this.getLogicWindowWidth(), 0, 0, 0,
+                    0, height / (float) this.getLogicWindowHeight(), 0, 0,
                     0, 0, -1, 0,
                     2 * posx, -2 * posy, 0, 1
             );
+            this.getShader().setUniform("projection", projection);
+        } else {
+            Vector3f line0 = new Vector3f(width, 0, 0);
+            Vector3f line1 = new Vector3f(0, height, 0);
+            line0.rotateZ(rotateRadius);
+            line1.rotateZ(rotateRadius);
+
+            Matrix4f projection = new Matrix4f(
+                    line0.x / this.getLogicWindowWidth(), line0.y / this.getLogicWindowHeight(), 0, 0,
+                    line1.x / this.getLogicWindowWidth(), line1.y / this.getLogicWindowHeight(), 0, 0,
+                    0, 0, -1, 0,
+                    2 * posx, -2 * posy, 0, 1
+            );
+            this.getShader().setUniform("projection", projection);
         }
 
+
         this.getShader().setUniform("sampler", 0);
-        this.getShader().setUniform("projection", projection);
         this.getShader().setUniform("colorScale", colorScale);
+
 
         if (model == null) {
             model = Model.COMMON_MODEL;
@@ -508,6 +520,21 @@ public class GameWindow implements AutoCloseable {
 
         bindable.unbind();
         Shader.unbind();
+    }
+
+    public void drawBindableRelative(Bindable bindable, float posx,
+                                     float posy, float width, float height,
+                                     Model model, Vector4f colorScale) {
+        this.drawBindableRelative(
+                bindable,
+                posx,
+                posy,
+                width,
+                height,
+                model,
+                colorScale,
+                0f
+        );
     }
 
 

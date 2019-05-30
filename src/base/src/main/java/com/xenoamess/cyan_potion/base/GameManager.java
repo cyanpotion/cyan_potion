@@ -485,7 +485,7 @@ public class GameManager implements AutoCloseable {
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.codePluginManager.apply(this, rightBeforeLogicFrame);
 
-                this.setTimeToLastUpdate((float)DataCenter.FRAME_CAP);
+                this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
                 unprocessed -= DataCenter.FRAME_CAP;
                 canRender = true;
 

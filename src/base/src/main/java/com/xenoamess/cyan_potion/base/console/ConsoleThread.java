@@ -89,7 +89,7 @@ class ConsoleTalkThread implements Runnable {
  */
 public class ConsoleThread extends Thread {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(ConsoleTalkThread.class);
+            LoggerFactory.getLogger(ConsoleThread.class);
 
     private final GameManager gameManager;
 

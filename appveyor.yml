@@ -5,5 +5,5 @@ branches:
 clone_depth: 1
 build_script:
   - cmd: >-
-       mvnw.cmd package
+      mvnw.cmd package
 test: off
