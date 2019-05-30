@@ -37,7 +37,11 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 
@@ -55,7 +59,8 @@ public abstract class AbstractShape {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers = new HashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers =
+            new ConcurrentHashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {

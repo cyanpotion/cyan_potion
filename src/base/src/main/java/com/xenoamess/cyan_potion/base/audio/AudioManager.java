@@ -34,7 +34,11 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
@@ -49,7 +53,7 @@ public class AudioManager implements AutoCloseable {
 
     private final GameManager gameManager;
 
-    private final Map<String, Source> specialSources = new HashMap<>();
+    private final Map<String, Source> specialSources = new ConcurrentHashMap<>();
 
     private final Set<Source> unusedSources = new HashSet<>();
     private final Set<Source> usedSources = new HashSet<>();

@@ -34,7 +34,11 @@ import com.xenoamess.cyan_potion.rpg_module.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author XenoAmess
@@ -45,7 +49,7 @@ public class GameTileset {
 
     private GameTilesetJson gameTilesetJson;
 
-    private Map<Integer, Texture> idTextureMap = new HashMap<>();
+    private Map<Integer, Texture> idTextureMap = new ConcurrentHashMap<>();
 
     private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
         return "/www/img/tilesets/" + gameMapInfoName + ".png";

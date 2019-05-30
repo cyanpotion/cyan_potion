@@ -33,8 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.FloatBuffer;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -54,7 +54,7 @@ public class Shader implements AutoCloseable {
     private int vertexShaderObject;
     private int fragmentShaderObject;
 
-    private final Map<String, Integer> uniformLocationMap = new HashMap<>();
+    private final Map<String, Integer> uniformLocationMap = new ConcurrentHashMap<>();
     private long lastClearTime = System.currentTimeMillis();
     private final FloatBuffer matrixData = MemoryUtil.memAllocFloat(16);
 

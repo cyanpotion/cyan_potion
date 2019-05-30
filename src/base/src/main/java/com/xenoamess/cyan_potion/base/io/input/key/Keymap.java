@@ -33,8 +33,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -62,17 +63,17 @@ public class Keymap {
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
-    private Map<Key, Key> keymap = new HashMap<>();
+    private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
 
-    private Map<Key, ArrayList> keymapReverse = new HashMap<>();
+    private final Map<Key, ArrayList> keymapReverse = new ConcurrentHashMap<>();
 
 
-    private boolean[][] rawKeys =
-            new boolean[][]{new boolean[GLFW_KEY_LAST + 1],
-                    new boolean[GLFW_MOUSE_BUTTON_LAST + 1],
-                    new boolean[GLFW_JOYSTICK_LAST + 1],
-                    new boolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
-    private boolean[] myKeys = new boolean[2000];
+    private final AtomicBoolean[][] rawKeys =
+            new AtomicBoolean[][]{new AtomicBoolean[GLFW_KEY_LAST + 1],
+                    new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1],
+                    new AtomicBoolean[GLFW_JOYSTICK_LAST + 1],
+                    new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
+    private final AtomicBoolean[] myKeys = new AtomicBoolean[2000];
 
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
@@ -138,7 +139,7 @@ public class Keymap {
 
     public void keyPressRaw(Key rawKey) {
         keyPress(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()] = true;
+        getRawKeys()[rawKey.getType()][rawKey.getKey()].set(true);
     }
 
     public void keyPress(Key myKey) {
@@ -148,12 +149,12 @@ public class Keymap {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        getMyKeys()[myKey.getKey()] = true;
+        getMyKeys()[myKey.getKey()].set(true);
     }
 
     public void keyReleaseRaw(Key rawKey) {
         keyRelease(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()] = false;
+        getRawKeys()[rawKey.getType()][rawKey.getKey()].set(false);
     }
 
     public void keyRelease(Key myKey) {
@@ -163,18 +164,18 @@ public class Keymap {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        getMyKeys()[myKey.getKey()] = false;
+        getMyKeys()[myKey.getKey()].set(false);
     }
 
     public boolean isKeyDown(Key myKey) {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        return getMyKeys()[myKey.getKey()];
+        return getMyKeys()[myKey.getKey()].get();
     }
 
     public boolean isKeyDownRaw(Key rawKey) {
-        return getRawKeys()[rawKey.getType()][rawKey.getKey()];
+        return getRawKeys()[rawKey.getType()][rawKey.getKey()].get();
     }
 
     /**
@@ -184,10 +185,6 @@ public class Keymap {
         return keymap;
     }
 
-    public void setKeymap(Map<Key, Key> keymap) {
-        this.keymap = keymap;
-    }
-
     /**
      * @return the map to convert my-key-type to raw-key-type
      */
@@ -195,23 +192,12 @@ public class Keymap {
         return keymapReverse;
     }
 
-    public void setKeymapReverse(Map<Key, ArrayList> keymapReverse) {
-        this.keymapReverse = keymapReverse;
-    }
-
-    public boolean[][] getRawKeys() {
+    public AtomicBoolean[][] getRawKeys() {
         return rawKeys;
     }
 
-    public void setRawKeys(boolean[][] rawKeys) {
-        this.rawKeys = rawKeys;
-    }
-
-    public boolean[] getMyKeys() {
+    public AtomicBoolean[] getMyKeys() {
         return myKeys;
     }
 
-    public void setMyKeys(boolean[] myKeys) {
-        this.myKeys = myKeys;
-    }
 }

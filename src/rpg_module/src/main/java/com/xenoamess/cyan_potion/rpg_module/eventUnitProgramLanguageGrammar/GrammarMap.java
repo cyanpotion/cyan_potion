@@ -28,8 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author XenoAmess
@@ -41,9 +41,9 @@ public class GrammarMap {
     }
 
     private static final Map<Integer, String> METHOD_NUM_TO_METHOD_NAME_MAP =
-            new HashMap<>();
+            new ConcurrentHashMap<>();
     private static final Map<String, Integer> METHOD_NAME_TO_METHOD_NUM_MAP =
-            new HashMap<>();
+            new ConcurrentHashMap<>();
 
 
     public static String getMethodName(int methodNum) {

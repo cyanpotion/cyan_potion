@@ -34,10 +34,10 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector4f;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author XenoAmess
@@ -51,10 +51,10 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     private Set<StaticEntity> staticEntitySet = new HashSet<>();
     private Set<AbstractDynamicEntity> dynamicEntitySet = new HashSet<>();
 
-    private Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap = new HashMap<>();
+    private Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap = new ConcurrentHashMap<>();
 
     private Map<AbstractShape, Set<AbstractShape>> shapeCollisionSet =
-            new HashMap<>();
+            new ConcurrentHashMap<>();
 
     public AbstractScene(GameWindow gameWindow) {
         super(gameWindow);

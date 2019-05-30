@@ -33,8 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -103,7 +103,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         //TODO
     }
 
-    private final Map<String, EventProcessor> classNameToProcessorMap = new HashMap<>();
+    private final Map<String, EventProcessor> classNameToProcessorMap = new ConcurrentHashMap<>();
 
     public abstract void initProcessors();
 
