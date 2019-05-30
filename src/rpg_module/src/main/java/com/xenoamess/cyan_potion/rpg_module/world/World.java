@@ -33,7 +33,7 @@ import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.StaticEntity;
@@ -58,7 +58,7 @@ import java.util.TreeMap;
 /**
  * @author XenoAmess
  */
-public class World extends AbstractScene {
+public class World extends AbstractEntityScene {
     public static final String SCALE = "scale";
     private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
 

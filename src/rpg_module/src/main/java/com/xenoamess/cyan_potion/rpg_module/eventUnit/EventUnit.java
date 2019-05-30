@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.eventUnit;
 
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.ImageJson;
@@ -42,7 +42,7 @@ public class EventUnit extends Unit {
     private EventUnitJson eventUnitJson;
     private List<EventPage> eventPages = new ArrayList<>();
 
-    public EventUnit(AbstractScene scene, EventUnitJson eventUnitJson) {
+    public EventUnit(AbstractEntityScene scene, EventUnitJson eventUnitJson) {
         //todo
         super(scene,
                 new Vector3f(eventUnitJson.x * RpgModuleDataCenter.TILE_SIZE,
@@ -56,7 +56,7 @@ public class EventUnit extends Unit {
         }
         if (!getEventPages().isEmpty()) {
             ImageJson imageJson = getEventPages().get(0).getPageJson().image;
-            this.setBindable(imageJson.getBindable(scene.getGameWindow().getGameManager().getResourceManager()));
+            this.getPicture().setBindable(imageJson.getBindable(scene.getGameWindow().getGameManager().getResourceManager()));
         }
     }
 

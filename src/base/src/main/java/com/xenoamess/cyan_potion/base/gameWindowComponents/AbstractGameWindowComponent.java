@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
+import com.xenoamess.cyan_potion.base.Area;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -41,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable {
+public abstract class AbstractGameWindowComponent implements AutoCloseable, Area {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 
@@ -191,6 +192,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.leftTopPosY = leftTopPosY;
     }
 
+    @Override
     public float getWidth() {
         return width;
     }
@@ -199,8 +201,19 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.width = width;
     }
 
+    @Override
     public float getHeight() {
         return height;
+    }
+
+    @Override
+    public float getCenterPosX() {
+        return this.getLeftTopPosX() + this.getWidth() / 2F;
+    }
+
+    @Override
+    public float getCenterPosY() {
+        return this.getLeftTopPosY() + this.getHeight() / 2F;
     }
 
     public void setHeight(float height) {

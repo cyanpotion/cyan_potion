@@ -24,41 +24,44 @@
 
 package com.xenoamess.cyan_potion.coordinate.entity;
 
+import com.xenoamess.cyan_potion.base.Area;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+import com.xenoamess.cyan_potion.base.render.Picture;
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import org.joml.Vector3f;
 
 /**
  * @author XenoAmess
  */
-public abstract class AbstractEntity {
-    private final AbstractScene scene;
+public abstract class AbstractEntity implements Area {
+    private final AbstractEntityScene scene;
     private Vector3f centerPos;
     private Vector3f size;
     private AbstractShape shape;
+    private Picture picture = new Picture();
 
-    public AbstractEntity(AbstractScene scene, Vector3f centerPos,
+
+    public AbstractEntity(AbstractEntityScene scene, Vector3f centerPos,
                           Vector3f size, Bindable bindable,
                           AbstractShape shape) {
         this.scene = scene;
         this.setCenterPos(new Vector3f(centerPos));
         this.setSize(new Vector3f(size));
-        this.setBindable(bindable);
         this.setShape(shape);
         if (this.getShape() != null) {
             this.getShape().setEntity(this);
         }
+        this.getPicture().setBindable(bindable);
+        this.getPicture().cover(this);
     }
 
-    public abstract Bindable getBindable();
+    public Picture getPicture() {
+        return this.picture;
+    }
 
-    public abstract void setBindable(Bindable bindable);
-
-    public void draw(AbstractScene scene) {
-        scene.drawBindableAbsolute(scene.getCamera(), scene.getScale(),
-                this.getBindable(), getCenterPos().x, getCenterPos().y,
-                this.getSize().x, this.getSize().y);
+    public void draw(AbstractEntityScene scene) {
+        this.getPicture().draw(scene);
     }
 
     public void register() {
@@ -67,7 +70,7 @@ public abstract class AbstractEntity {
         }
     }
 
-    public AbstractScene getScene() {
+    public AbstractEntityScene getScene() {
         return scene;
     }
 
@@ -93,5 +96,25 @@ public abstract class AbstractEntity {
 
     public void setShape(AbstractShape shape) {
         this.shape = shape;
+    }
+
+    @Override
+    public float getCenterPosX() {
+        return this.getCenterPos().x();
+    }
+
+    @Override
+    public float getCenterPosY() {
+        return this.getCenterPos().y();
+    }
+
+    @Override
+    public float getWidth() {
+        return this.getSize().x();
+    }
+
+    @Override
+    public float getHeight() {
+        return this.getSize().y();
     }
 }

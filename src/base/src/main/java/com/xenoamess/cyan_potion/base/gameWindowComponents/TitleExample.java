@@ -35,6 +35,7 @@ import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindo
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
@@ -48,10 +49,21 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class TitleExample extends AbstractGameWindowComponent {
-    private Texture saveSlotTexture =
-            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                    "/www/img/pictures/saveSlot.png:picture");
-    private Texture saveStarTexture =
+    private final Texture saveSlotTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/saveSlot.png:picture"
+                    );
+
+    private final Picture saveSlotPicture = new Picture(saveSlotTexture);
+
+    {
+        this.saveSlotPicture.setCenter(this.getGameWindow());
+        this.saveSlotPicture.setSize(250, 50);
+    }
+
+    private final Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                     "/www/img/pictures/saveStar.png:picture");
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
@@ -415,9 +427,7 @@ public class TitleExample extends AbstractGameWindowComponent {
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (!(this.getState() >= 0 && this.getState() <= 4) && getState() == -101) {
-            this.getGameWindow().drawBindableRelative(this.getSaveSlotTexture(),
-                    this.getGameWindow().getLogicWindowWidth() / 2F, this.getGameWindow().getLogicWindowHeight() / 2F,
-                    250, 50);
+            this.saveSlotPicture.draw(this.getGameWindow());
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getGameWindow().getLogicWindowWidth() / 2F,
                     this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
@@ -440,16 +450,8 @@ public class TitleExample extends AbstractGameWindowComponent {
         return saveSlotTexture;
     }
 
-    public void setSaveSlotTexture(Texture saveSlotTexture) {
-        this.saveSlotTexture = saveSlotTexture;
-    }
-
     public Texture getSaveStarTexture() {
         return saveStarTexture;
-    }
-
-    public void setSaveStarTexture(Texture saveStarTexture) {
-        this.saveStarTexture = saveStarTexture;
     }
 
     public ArrayList<AbstractControllableGameWindowComponent> getControllableGameWindowComponents() {

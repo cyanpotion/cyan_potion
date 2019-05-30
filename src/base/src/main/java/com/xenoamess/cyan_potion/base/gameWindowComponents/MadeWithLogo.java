@@ -51,7 +51,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Picture logoPicture = new Picture(this.logoTexture);
 
     {
-        this.logoPicture.setCoverFullWindow(this.getGameWindow());
+        this.logoPicture.cover(this.getGameWindow());
     }
 
     private final long lifeTime;

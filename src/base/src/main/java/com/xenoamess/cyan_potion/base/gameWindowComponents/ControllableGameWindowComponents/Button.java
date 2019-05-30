@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
@@ -34,7 +35,7 @@ import org.joml.Vector4f;
  * @author XenoAmess
  */
 public class Button extends AbstractControllableGameWindowComponent {
-    private Texture buttonTexture;
+    private final Picture buttonPicture = new Picture();
     private String buttonText;
 
     public Button(GameWindow gameWindow, Texture buttonTexture) {
@@ -44,16 +45,19 @@ public class Button extends AbstractControllableGameWindowComponent {
     public Button(GameWindow gameWindow, Texture buttonTexture,
                   String buttonText) {
         super(gameWindow);
-        this.setButtonTexture(buttonTexture);
+        this.buttonPicture.setBindable(buttonTexture);
         this.setButtonText(buttonText);
     }
 
     @Override
+    public void update() {
+        super.update();
+        this.buttonPicture.cover(this);
+    }
+
+    @Override
     public void ifVisibleThenDraw() {
-        if (getButtonTexture() != null) {
-            this.getGameWindow().drawBindableRelativeLeftTop(this.getButtonTexture(), this.getLeftTopPosX(),
-                    this.getLeftTopPosY(), this.getWidth(), this.getHeight());
-        }
+        this.buttonPicture.draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getLeftTopPosX() + this.getWidth() / 2,
@@ -63,13 +67,6 @@ public class Button extends AbstractControllableGameWindowComponent {
         }
     }
 
-    public Texture getButtonTexture() {
-        return buttonTexture;
-    }
-
-    public void setButtonTexture(Texture buttonTexture) {
-        this.buttonTexture = buttonTexture;
-    }
 
     public String getButtonText() {
         return buttonText;

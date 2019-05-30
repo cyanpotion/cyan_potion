@@ -51,7 +51,7 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * @author XenoAmess
  */
-public class GameWindow implements AutoCloseable {
+public class GameWindow implements AutoCloseable, Area {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
@@ -522,9 +522,13 @@ public class GameWindow implements AutoCloseable {
         Shader.unbind();
     }
 
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height,
-                                     Model model, Vector4f colorScale) {
+    public void drawBindableRelative(Bindable bindable,
+                                     float posx,
+                                     float posy,
+                                     float width,
+                                     float height,
+                                     Model model,
+                                     Vector4f colorScale) {
         this.drawBindableRelative(
                 bindable,
                 posx,
@@ -774,4 +778,23 @@ public class GameWindow implements AutoCloseable {
         this.mousePosY = mousePosY;
     }
 
+    @Override
+    public float getCenterPosX() {
+        return this.getLogicWindowWidth() / 2F;
+    }
+
+    @Override
+    public float getCenterPosY() {
+        return this.getLogicWindowHeight() / 2F;
+    }
+
+    @Override
+    public float getWidth() {
+        return this.getLogicWindowWidth();
+    }
+
+    @Override
+    public float getHeight() {
+        return this.getLogicWindowHeight();
+    }
 }

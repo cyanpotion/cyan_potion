@@ -24,13 +24,15 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.xenoamess.cyan_potion.base.AbstractScene;
+import com.xenoamess.cyan_potion.base.Area;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import org.joml.Vector4f;
 
 /**
  * @author XenoAmess
  */
-public class Picture {
+public class Picture implements Area {
     private Bindable bindable;
     private float centerPosX;
     private float centerPosY;
@@ -40,7 +42,29 @@ public class Picture {
     private float rotateRadius = 0f;
 
     public void draw(GameWindow gameWindow) {
+        if (bindable == null) {
+            return;
+        }
         gameWindow.drawBindableRelative(
+                getBindable(),
+                getCenterPosX(),
+                getCenterPosY(),
+                getWidth(),
+                getHeight(),
+                Model.COMMON_MODEL,
+                getColorScale(),
+                getRotateRadius()
+        );
+    }
+
+    public void draw(AbstractScene scene) {
+        if (bindable == null) {
+            return;
+        }
+
+        scene.drawBindableAbsolute(
+                scene.getCamera(),
+                scene.getScale(),
                 getBindable(),
                 getCenterPosX(),
                 getCenterPosY(),
@@ -105,19 +129,19 @@ public class Picture {
         this.setCenterPosY(centerPosY);
     }
 
-    public void setCenter(GameWindow gameWindow) {
-        this.setCenterPosX(gameWindow.getLogicWindowWidth() / 2f);
-        this.setCenterPosY(gameWindow.getLogicWindowHeight() / 2f);
+    public void setCenter(Area area) {
+        this.setCenterPosX(area.getCenterPosX());
+        this.setCenterPosY(area.getCenterPosY());
     }
 
-    public void setCoverFullWindow(GameWindow gameWindow) {
-        this.setCenter(gameWindow);
-        this.setSize(gameWindow);
+    public void setSize(Area area) {
+        this.setWidth(area.getWidth());
+        this.setHeight(area.getHeight());
     }
 
-    public void setSize(GameWindow gameWindow) {
-        this.setWidth(gameWindow.getLogicWindowWidth());
-        this.setHeight(gameWindow.getLogicWindowHeight());
+    public void cover(Area area) {
+        this.setCenter(area);
+        this.setSize(area);
     }
 
     public void move(float centerMovementX, float centerMovementY) {
@@ -134,8 +158,6 @@ public class Picture {
     }
 
 
-
-
     //--- getters and setters ---
 
     public Bindable getBindable() {
@@ -146,6 +168,7 @@ public class Picture {
         this.bindable = bindable;
     }
 
+    @Override
     public float getCenterPosX() {
         return centerPosX;
     }
@@ -154,6 +177,7 @@ public class Picture {
         this.centerPosX = centerPosX;
     }
 
+    @Override
     public float getCenterPosY() {
         return centerPosY;
     }
@@ -162,6 +186,7 @@ public class Picture {
         this.centerPosY = centerPosY;
     }
 
+    @Override
     public float getWidth() {
         return width;
     }
@@ -170,6 +195,7 @@ public class Picture {
         this.width = width;
     }
 
+    @Override
     public float getHeight() {
         return height;
     }

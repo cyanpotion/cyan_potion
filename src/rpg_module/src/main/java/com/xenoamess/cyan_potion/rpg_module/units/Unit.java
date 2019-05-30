@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.rpg_module.units;
 
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle;
@@ -46,35 +46,24 @@ public class Unit extends AbstractDynamicEntity {
     private int faceDir = 180;
     private boolean canMove = true;
 
-    private Bindable bindable;
-
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 Bindable bindable) {
         this(scene, centerPos, size, bindable, new HorizontalRectangle(null,
                 centerPos, size));
     }
 
-    public Unit(AbstractScene scene, Vector3f centerPos, Vector3f size,
+    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 String walkingAnimation4DirsURI,
                 ResourceManager resourceManager) {
         this(scene, centerPos, size, null);
         this.loadWalkingAnimations(walkingAnimation4DirsURI, resourceManager);
     }
 
-    @Override
-    public Bindable getBindable() {
-        return bindable;
-    }
-
-    @Override
-    public void setBindable(Bindable bindable) {
-        this.bindable = bindable;
-    }
 
     @Override
     public void update() {
@@ -85,8 +74,8 @@ public class Unit extends AbstractDynamicEntity {
             setMoving(true);
             setFaceDir(getFaceDir(getMovement().x, getMovement().y));
 
-            if (this.getBindable() instanceof WalkingAnimation4Dirs) {
-                ((WalkingAnimation4Dirs) this.getBindable()).setFaceDir(getFaceDir());
+            if (this.getPicture().getBindable() instanceof WalkingAnimation4Dirs) {
+                ((WalkingAnimation4Dirs) this.getPicture().getBindable()).setFaceDir(getFaceDir());
             }
 
             if (getMovement().length() > getMoveSpeed()) {
@@ -111,7 +100,7 @@ public class Unit extends AbstractDynamicEntity {
 
     public void loadWalkingAnimations(String walkingAnimation4DirsURI,
                                       ResourceManager resourceManager) {
-        this.setBindable(new WalkingAnimation4Dirs(4, this,
+        this.getPicture().setBindable(new WalkingAnimation4Dirs(4, this,
                 walkingAnimation4DirsURI, resourceManager));
     }
 
