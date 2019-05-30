@@ -39,16 +39,19 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class Logo extends AbstractGameWindowComponent {
-    private final Texture logoTexture;
+    private final Picture logoPicture;
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public Logo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture =
+        Texture logoTexture =
                 this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                         "/www/img/pictures/logo.png:picture");
+        this.logoPicture = new Picture(logoTexture);
+        this.logoPicture.setCenter(this.getGameWindow());
+        this.logoPicture.moveY(-50 * 2);
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
@@ -128,32 +131,19 @@ public class Logo extends AbstractGameWindowComponent {
         }
 
         if (t < dynamicTime + stayTime) {
-            Picture picture = new Picture(getLogoTexture());
-            picture.setCenterPosX(0 + this.getGameWindow().getLogicWindowWidth() / 2f);
-            picture.setCenterPosY(-50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f);
-            picture.setWidth(480 * (pscale + 1));
-            picture.setHeight(60 * (pscale + 1));
-            picture.setColorScale(new Vector4f(1, 1, 1, pscale));
-            picture.draw(getGameWindow());
+            this.logoPicture.setWidth(480 * (pscale + 1));
+            this.logoPicture.setHeight(60 * (pscale + 1));
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
         } else {
             pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pscale < 0) {
                 pscale = 0;
             }
-            Picture picture = new Picture(getLogoTexture());
-            picture.setCenterPosX(0 + this.getGameWindow().getLogicWindowWidth() / 2f);
-            picture.setCenterPosY(-50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f);
-            picture.setWidth(480 * 2);
-            picture.setHeight(60 * 2);
-            picture.setColorScale(new Vector4f(1, 1, 1, pscale));
-            picture.draw(getGameWindow());
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
         }
+        this.logoPicture.draw(getGameWindow());
     }
 
-
-    public Texture getLogoTexture() {
-        return logoTexture;
-    }
 
     public long getLifeTime() {
         return lifeTime;

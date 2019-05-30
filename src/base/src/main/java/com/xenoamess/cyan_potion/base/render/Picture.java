@@ -73,13 +73,27 @@ public class Picture {
         this.enlargeHeight(newHeight);
     }
 
-    public void rotateTo(float newRotateRadius) {
-        this.setRotateRadius(newRotateRadius);
+    public void scaleWidth(float ratio) {
+        this.setWidth(this.getWidth() * ratio);
+    }
+
+    public void scaleHeight(float ratio) {
+        this.setHeight(this.getHeight() * ratio);
+    }
+
+    public void scaleSize(float ratio) {
+        this.scaleWidth(ratio);
+        this.scaleHeight(ratio);
     }
 
     public void rotate(float newRotateRadius) {
         this.setRotateRadius(this.getRotateRadius() + newRotateRadius);
     }
+
+    public void rotateTo(float newRotateRadius) {
+        this.setRotateRadius(newRotateRadius);
+    }
+
 
     public void setSize(float width, float height) {
         this.setWidth(width);
@@ -105,6 +119,22 @@ public class Picture {
         this.setWidth(gameWindow.getLogicWindowWidth());
         this.setHeight(gameWindow.getLogicWindowHeight());
     }
+
+    public void move(float centerMovementX, float centerMovementY) {
+        this.moveX(centerMovementX);
+        this.moveY(centerMovementY);
+    }
+
+    public void moveX(float centerMovementX) {
+        this.setCenterPosX(this.getCenterPosX() + centerMovementX);
+    }
+
+    public void moveY(float centerMovementY) {
+        this.setCenterPosY(this.getCenterPosY() + centerMovementY);
+    }
+
+
+
 
     //--- getters and setters ---
 

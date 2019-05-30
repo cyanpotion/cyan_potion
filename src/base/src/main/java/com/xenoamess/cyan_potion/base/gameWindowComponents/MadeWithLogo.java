@@ -41,20 +41,21 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
-    private final Texture logoTexture;
+    private final Picture logoPicture;
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture =
+        Texture logoTexture =
                 this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
                         "/www/img/pictures/madewith.png:picture");
+        this.logoPicture = new Picture(logoTexture);
+        this.logoPicture.setCoverFullWindow(this.getGameWindow());
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));
-
     }
 
     public MadeWithLogo(GameWindow gameWindow) {
@@ -128,14 +129,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        Picture picture = new Picture(this.getLogoTexture());
-        picture.setCoverFullWindow(this.getGameWindow());
-        picture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
-        picture.draw(getGameWindow());
-    }
-
-    public Texture getLogoTexture() {
-        return logoTexture;
+        this.logoPicture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
+        this.logoPicture.draw(getGameWindow());
     }
 
     public long getLifeTime() {
