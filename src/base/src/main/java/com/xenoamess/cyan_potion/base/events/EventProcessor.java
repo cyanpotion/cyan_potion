@@ -35,8 +35,9 @@ public interface EventProcessor extends Function<Event, Event> {
     /**
      * the method must be thread safe.
      *
-     * @param event
-     * @return
+     * @param event the event that being processed.
+     * @return the event that generated due to processing the event.
+     * @see Event
      */
     @Override
     @GuardedBy("GameManager")
