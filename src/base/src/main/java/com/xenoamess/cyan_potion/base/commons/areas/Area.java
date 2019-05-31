@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
 /**
  * @author XenoAmess
  */
-public interface AbstractArea {
+public interface Area {
     public float getCenterPosX();
 
     public float getCenterPosY();

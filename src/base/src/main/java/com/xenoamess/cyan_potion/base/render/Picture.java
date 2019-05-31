@@ -25,14 +25,14 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
+import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
 import org.joml.Vector4f;
 
 /**
  * @author XenoAmess
  */
-public class Picture implements AbstractArea {
+public class Picture implements Area {
     private Bindable bindable;
     private float centerPosX;
     private float centerPosY;
@@ -129,19 +129,19 @@ public class Picture implements AbstractArea {
         this.setCenterPosY(centerPosY);
     }
 
-    public void setCenter(AbstractArea abstractArea) {
-        this.setCenterPosX(abstractArea.getCenterPosX());
-        this.setCenterPosY(abstractArea.getCenterPosY());
+    public void setCenter(Area area) {
+        this.setCenterPosX(area.getCenterPosX());
+        this.setCenterPosY(area.getCenterPosY());
     }
 
-    public void setSize(AbstractArea abstractArea) {
-        this.setWidth(abstractArea.getWidth());
-        this.setHeight(abstractArea.getHeight());
+    public void setSize(Area area) {
+        this.setWidth(area.getWidth());
+        this.setHeight(area.getHeight());
     }
 
-    public void cover(AbstractArea abstractArea) {
-        this.setCenter(abstractArea);
-        this.setSize(abstractArea);
+    public void cover(Area area) {
+        this.setCenter(area);
+        this.setSize(area);
     }
 
     public void move(float centerMovementX, float centerMovementY) {

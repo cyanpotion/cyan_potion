@@ -27,17 +27,17 @@ package com.xenoamess.cyan_potion.base.commons.areas;
 /**
  * @author XenoAmess
  */
-public class MutableArea implements AbstractArea {
+public class MutableArea implements Area {
     private float centerPosX;
     private float centerPosY;
     private float width;
     private float height;
 
-    public MutableArea(AbstractArea abstractArea) {
-        this.setCenterPosX(abstractArea.getCenterPosX());
-        this.setCenterPosY(abstractArea.getCenterPosY());
-        this.setWidth(abstractArea.getWidth());
-        this.setHeight(abstractArea.getHeight());
+    public MutableArea(Area area) {
+        this.setCenterPosX(area.getCenterPosX());
+        this.setCenterPosY(area.getCenterPosY());
+        this.setWidth(area.getWidth());
+        this.setHeight(area.getHeight());
     }
 
     public MutableArea(float centerPosX, float centerPosY, float width, float height) {
@@ -53,8 +53,8 @@ public class MutableArea implements AbstractArea {
     }
 
     public static MutableArea generateMutableArea(
-            AbstractArea abstractArea) {
-        return new MutableArea(abstractArea);
+            Area area) {
+        return new MutableArea(area);
     }
 
     public static MutableArea generateMutableAreaFromLeftTop(

@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
+import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
@@ -50,7 +50,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractShape implements AbstractArea {
+public abstract class AbstractShape implements Area {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 

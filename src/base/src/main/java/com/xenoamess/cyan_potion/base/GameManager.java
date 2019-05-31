@@ -463,6 +463,27 @@ public class GameManager implements AutoCloseable {
         logo.addToGameWindowComponentTree(null);
     }
 
+    protected void loopOnce() {
+        this.codePluginManager.apply(this, rightBeforeLogicFrame);
+        this.codePluginManager.apply(this, rightBeforeSolveEvents);
+        solveEvents();
+        this.codePluginManager.apply(this, rightAfterSolveEvents);
+
+        this.codePluginManager.apply(this, rightBeforeUpdate);
+        update();
+        this.codePluginManager.apply(this, rightAfterUpdate);
+
+//        timerForSteamCallback++;
+//        if (timerForSteamCallback >= 300) {
+//            timerForSteamCallback = 0;
+//            steamRunCallbacks();
+//        }
+
+        setNowFrameIndex(getNowFrameIndex() + 1);
+        this.getResourceManager().suggestGc();
+
+        this.codePluginManager.apply(this, rightAfterLogicFrame);
+    }
 
     protected void loop() {
         double timeForFPS = 0;
@@ -483,58 +504,17 @@ public class GameManager implements AutoCloseable {
             timeForFPS += passed;
 
             while (unprocessed >= DataCenter.FRAME_CAP) {
-                this.codePluginManager.apply(this, rightBeforeLogicFrame);
-
                 this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
                 unprocessed -= DataCenter.FRAME_CAP;
                 canRender = true;
-
-                this.codePluginManager.apply(this, rightBeforeSolveEvents);
-                solveEvents();
-                this.codePluginManager.apply(this, rightAfterSolveEvents);
-
-                this.codePluginManager.apply(this, rightBeforeUpdate);
-                update();
-                this.codePluginManager.apply(this, rightAfterUpdate);
-
-                timerForSteamCallback++;
-                if (timerForSteamCallback >= 300) {
-                    timerForSteamCallback = 0;
-                    steamRunCallbacks();
-                }
-
-                setNowFrameIndex(getNowFrameIndex() + 1);
-                this.getResourceManager().suggestGc();
-
-                this.codePluginManager.apply(this, rightAfterLogicFrame);
+                this.loopOnce();
             }
 
-            {
-                this.codePluginManager.apply(this, rightBeforeLogicFrame);
+            this.setTimeToLastUpdate((float) unprocessed);
+            unprocessed = 0;
+            canRender = true;
+            this.loopOnce();
 
-                this.setTimeToLastUpdate((float) unprocessed);
-                unprocessed = 0;
-                canRender = true;
-
-                this.codePluginManager.apply(this, rightBeforeSolveEvents);
-                solveEvents();
-                this.codePluginManager.apply(this, rightAfterSolveEvents);
-
-                this.codePluginManager.apply(this, rightBeforeUpdate);
-                update();
-                this.codePluginManager.apply(this, rightAfterUpdate);
-
-                timerForSteamCallback++;
-                if (timerForSteamCallback >= 300) {
-                    timerForSteamCallback = 0;
-                    steamRunCallbacks();
-                }
-
-                setNowFrameIndex(getNowFrameIndex() + 1);
-                this.getResourceManager().suggestGc();
-
-                this.codePluginManager.apply(this, rightAfterLogicFrame);
-            }
 
             if (canRender) {
                 draw();

@@ -27,17 +27,17 @@ package com.xenoamess.cyan_potion.base.commons.areas;
 /**
  * @author XenoAmess
  */
-public class ImmutableArea implements AbstractArea {
+public class ImmutableArea implements Area {
     private final float centerPosX;
     private final float centerPosY;
     private final float width;
     private final float height;
 
-    public ImmutableArea(AbstractArea abstractArea) {
-        this.centerPosX = abstractArea.getCenterPosX();
-        this.centerPosY = abstractArea.getCenterPosY();
-        this.width = abstractArea.getWidth();
-        this.height = abstractArea.getHeight();
+    public ImmutableArea(Area area) {
+        this.centerPosX = area.getCenterPosX();
+        this.centerPosY = area.getCenterPosY();
+        this.width = area.getWidth();
+        this.height = area.getHeight();
     }
 
     public ImmutableArea(float centerPosX, float centerPosY, float width, float height) {
@@ -53,8 +53,8 @@ public class ImmutableArea implements AbstractArea {
     }
 
     public static ImmutableArea generateImmutableArea(
-            AbstractArea abstractArea) {
-        return new ImmutableArea(abstractArea);
+            Area area) {
+        return new ImmutableArea(area);
     }
 
     public static ImmutableArea generateImmutableAreaFromLeftTop(
