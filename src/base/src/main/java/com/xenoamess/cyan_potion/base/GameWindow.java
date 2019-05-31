@@ -104,9 +104,9 @@ public class GameWindow implements AutoCloseable, AbstractArea {
         this.setShader(new Shader("shader"));
 
         Model.COMMON_MODEL.init(
-                Model.COMMON_VERTICES_FLOAT_ARRAY,
-                Model.COMMON_TEXTURE_FLOAT_ARRAY,
-                Model.COMMON_INDICES_INT_ARRAY
+                Model.getCommonVerticesFloatArray(),
+                Model.getCommonTextureFloatArray(),
+                Model.getCommonIndicesIntArray()
         );
     }
 

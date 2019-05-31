@@ -42,7 +42,7 @@ public class Model implements AutoCloseable {
     private int indexObject = INITIALIZED_VALUE;
 
 
-    public static final float[] COMMON_VERTICES_FLOAT_ARRAY = new float[]{
+    private static final float[] COMMON_VERTICES_FLOAT_ARRAY = new float[]{
             -1f, 1f, 0,
             // TOP LEFT 0
             1f, 1f, 0,
@@ -53,8 +53,8 @@ public class Model implements AutoCloseable {
             // BOTTOM LEFT 3
     };
 
-    public static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
-    public static final int[] COMMON_INDICES_INT_ARRAY = new int[]{0, 1, 2, 2, 3, 0};
+    private static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
+    private static final int[] COMMON_INDICES_INT_ARRAY = new int[]{0, 1, 2, 2, 3, 0};
     public static final Model COMMON_MODEL = new Model();
 
 
@@ -150,5 +150,17 @@ public class Model implements AutoCloseable {
 
     private void setIndexObject(int indexObject) {
         this.indexObject = indexObject;
+    }
+
+    public static float[] getCommonVerticesFloatArray() {
+        return COMMON_VERTICES_FLOAT_ARRAY.clone();
+    }
+
+    public static float[] getCommonTextureFloatArray() {
+        return COMMON_TEXTURE_FLOAT_ARRAY.clone();
+    }
+
+    public static int[] getCommonIndicesIntArray() {
+        return COMMON_INDICES_INT_ARRAY.clone();
     }
 }
