@@ -31,7 +31,6 @@
  */
 package org.newdawn.slick.openal;
 
-import com.xenoamess.cyan_potion.base.events.CharEvent;
 import org.lwjgl.openal.AL10;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +57,7 @@ import java.nio.ShortBuffer;
  */
 public class WaveData {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(CharEvent.class);
+            LoggerFactory.getLogger(WaveData.class);
 
     /**
      * actual wave data

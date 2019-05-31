@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWind
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 
 import java.util.ArrayList;
@@ -37,9 +38,8 @@ import java.util.List;
  * @author XenoAmess
  */
 public class Panel extends AbstractControllableGameWindowComponent {
-    private List<AbstractGameWindowComponent> contents =
-            new ArrayList<>();
-    private Texture backgroundTexture;
+    private final List<AbstractGameWindowComponent> contents = new ArrayList<>();
+    private final Picture backgroundPicture = new Picture();
 
     public Panel(GameWindow gameWindow) {
         super(gameWindow);
@@ -47,7 +47,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
     public Panel(GameWindow gameWindow, Texture backgroundTexture) {
         super(gameWindow);
-        this.setBackgroundTexture(backgroundTexture);
+        this.backgroundPicture.setBindable(backgroundTexture);
     }
 
     public void addContent(AbstractGameWindowComponent gameWindowComponent) {
@@ -56,20 +56,21 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
     @Override
     public void update() {
+        super.update();
         for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
             gameWindowComponent.update();
         }
+        backgroundPicture.cover(this);
     }
 
     @Override
     public void draw() {
-        if (getBackgroundTexture() != null) {
-            getGameWindow().drawBindableRelativeLeftTop(getBackgroundTexture(), this.getLeftTopPosX(),
-                    this.getLeftTopPosY(), this.getWidth(), this.getHeight());
-        }
+        this.backgroundPicture.draw(this.getGameWindow());
+
         for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
             gameWindowComponent.draw();
         }
+
     }
 
     @Override
@@ -87,15 +88,4 @@ public class Panel extends AbstractControllableGameWindowComponent {
         return contents;
     }
 
-    public void setContents(List<AbstractGameWindowComponent> contents) {
-        this.contents = contents;
-    }
-
-    public Texture getBackgroundTexture() {
-        return backgroundTexture;
-    }
-
-    public void setBackgroundTexture(Texture backgroundTexture) {
-        this.backgroundTexture = backgroundTexture;
-    }
 }

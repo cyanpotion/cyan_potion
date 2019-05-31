@@ -100,10 +100,10 @@ public class KeyEvent implements Event {
                 getAction(), getMods());
         switch (getAction()) {
             case GLFW_RELEASE:
-                gameManager.getKeymap().keyReleaseRaw(new Key(Key.TYPE_KEY, getKey()));
+                gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_KEY, getKey()));
                 break;
             case GLFW_PRESS:
-                gameManager.getKeymap().keyPressRaw(new Key(Key.TYPE_KEY, getKey()));
+                gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_KEY, getKey()));
                 break;
             case GLFW_REPEAT:
                 break;

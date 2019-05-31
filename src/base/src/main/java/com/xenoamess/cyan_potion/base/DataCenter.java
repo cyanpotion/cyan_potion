@@ -29,8 +29,8 @@ import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.x8l.X8lTree;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author XenoAmess
@@ -43,14 +43,13 @@ public class DataCenter {
 
     public static final int CONSOLE_PORT = 13888;
     public static final double FRAME_CAP = 1 / 60.0;
-    public static final float FRAME_CAP_F = (float) FRAME_CAP;
     public static final int SCALE = 2;
 
     private X8lTree globalSettingsTree;
     private X8lTree patchSettingsTree;
-    private final Map<String, String> commonSettings = new HashMap<>();
-    private final Map<String, String> specialSettings = new HashMap<>();
-    private final Map<String, String> views = new HashMap<>();
+    private final Map<String, String> commonSettings = new ConcurrentHashMap<>();
+    private final Map<String, String> specialSettings = new ConcurrentHashMap<>();
+    private final Map<String, String> views = new ConcurrentHashMap<>();
 
 
     private String textFilePath = null;

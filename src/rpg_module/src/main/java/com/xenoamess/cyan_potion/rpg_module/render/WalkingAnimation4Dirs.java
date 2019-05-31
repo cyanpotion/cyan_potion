@@ -32,15 +32,15 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author XenoAmess
  */
 public class WalkingAnimation4Dirs extends Animation {
-    private Map<Integer, List<Texture>> faceDirFrameMap = new HashMap<>();
+    private Map<Integer, List<Texture>> faceDirFrameMap = new ConcurrentHashMap<>();
     private Unit unit;
     private int drawFaceDir;
 

@@ -79,10 +79,8 @@ public class GamepadButtonEvent implements Event {
         }
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
-                gameManager.getKeymap().keyReleaseRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
-                break;
             case GLFW.GLFW_PRESS:
-                gameManager.getKeymap().keyPressRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
+                gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_GAMEPAD, getKey()));
                 break;
             case GLFW.GLFW_REPEAT:
                 break;

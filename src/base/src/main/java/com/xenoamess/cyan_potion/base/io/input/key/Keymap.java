@@ -31,10 +31,14 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -62,17 +66,294 @@ public class Keymap {
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
-    private Map<Key, Key> keymap = new HashMap<>();
+    private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
 
-    private Map<Key, ArrayList> keymapReverse = new HashMap<>();
+    private final Map<Key, ArrayList> keymapReverse = new ConcurrentHashMap<>();
 
 
-    private boolean[][] rawKeys =
-            new boolean[][]{new boolean[GLFW_KEY_LAST + 1],
-                    new boolean[GLFW_MOUSE_BUTTON_LAST + 1],
-                    new boolean[GLFW_JOYSTICK_LAST + 1],
-                    new boolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1]};
-    private boolean[] myKeys = new boolean[2000];
+    // Filling
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(long[] a, long val)
+     */
+    public static long[] fill(long[] a, long val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(long[] a, int fromIndex, int toIndex, long val)
+     */
+    public static long[] fill(long[] a, int fromIndex, int toIndex, long val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(int[] a, int val)
+     */
+    public static int[] fill(int[] a, int val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(int[] a, int fromIndex, int toIndex, int val)
+     */
+    public static int[] fill(int[] a, int fromIndex, int toIndex, int val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(short[] a, short val)
+     */
+    public static short[] fill(short[] a, short val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(short[] a, int fromIndex, int toIndex, short val)
+     */
+    public static short[] fill(short[] a, int fromIndex, int toIndex, short val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(char[] a, char val)
+     */
+    public static char[] fill(char[] a, char val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(char[] a, int fromIndex, int toIndex, char val)
+     */
+    public static char[] fill(char[] a, int fromIndex, int toIndex, char val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(byte[] a, byte val)
+     */
+    public static byte[] fill(byte[] a, byte val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(byte[] a, int fromIndex, int toIndex, byte val)
+     */
+    public static byte[] fill(byte[] a, int fromIndex, int toIndex, byte val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(boolean[] a, boolean val)
+     */
+    public static boolean[] fill(boolean[] a, boolean val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(boolean[] a, int fromIndex, int toIndex, boolean val)
+     */
+    public static boolean[] fill(boolean[] a, int fromIndex, int toIndex,
+                                 boolean val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(double[] a, double val)
+     */
+    public static double[] fill(double[] a, double val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(double[] a, int fromIndex, int toIndex, double val)
+     */
+    public static double[] fill(double[] a, int fromIndex, int toIndex, double val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(float[] a, float val)
+     */
+    public static float[] fill(float[] a, float val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(float[] a, int fromIndex, int toIndex, float val)
+     */
+    public static float[] fill(float[] a, int fromIndex, int toIndex, float val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(Object[] a, Object val)
+     */
+    public static <T> T[] fill(T[] a, T val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(Object[] a, int fromIndex, int toIndex, Object val)
+     * @since 3.10
+     */
+    public static <T> T[] fill(T[] a, int fromIndex, int toIndex, T val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * <p>Fill a array with creating new instances of the component class
+     * using constructor that accept 0 arguments.
+     *
+     * <pre>
+     *     private final AtomicBoolean[][] rawKeys =
+     *             new AtomicBoolean[][]{
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000])};
+     * </pre>
+     *
+     * @param <T>   the component type of the array
+     * @param array the array to be filled
+     * @return the same array
+     * @throws IllegalArgumentException if array is null,
+     *                                  or if T have no such constructor,
+     *                                  or the constructor is not accessible,
+     *                                  or the class cannot be instantiated.
+     * @since 3.10
+     */
+    public static <T> T[] fillNew(T[] array) {
+        if (array == null) {
+            throw new IllegalArgumentException("The input array must not be null.");
+        }
+        Class arrayClass = array.getClass();
+        Class componentClass = arrayClass.getComponentType();
+        try {
+            Constructor defaultConstructor = componentClass.getConstructor();
+            for (int i = 0, len = array.length; i < len; i++) {
+                array[i] = (T) defaultConstructor.newInstance();
+            }
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException(
+                    "The class must have an constructor that accept 0 arguments, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(
+                    "The class's constructor that accept 0 arguments must be accessible by this class, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (InstantiationException e) {
+            throw new IllegalArgumentException(
+                    "The class must be able to be instantiated, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (InvocationTargetException e) {
+            throw new IllegalArgumentException(
+                    "The class's constructor that accept 0 arguments must really can accept 0 arguments, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        }
+        return array;
+    }
+
+    /**
+     * Flip the atomicBoolean.
+     *
+     * @param atomicBoolean atomicBoolean
+     * @return new boolean value of atomicBoolean
+     * @see
+     * <a href="https://stackoverflow.com/questions/1255617/does-atomicboolean-not-have-a-negate-method">question about this</a>
+     */
+    public static boolean flip(AtomicBoolean atomicBoolean) {
+        boolean currentBooleanValue;
+        do {
+            currentBooleanValue = atomicBoolean.get();
+        } while (!atomicBoolean.compareAndSet(currentBooleanValue, !currentBooleanValue));
+        return !currentBooleanValue;
+    }
+
+    private final AtomicBoolean[][] rawKeys =
+            new AtomicBoolean[][]{
+                    fillNew(new AtomicBoolean[GLFW_KEY_LAST + 1]),
+                    fillNew(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
+                    fillNew(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
+                    fillNew(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
+
+    private final AtomicBoolean[] myKeys = fillNew(new AtomicBoolean[2000]);
 
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
@@ -136,45 +417,30 @@ public class Keymap {
         return res;
     }
 
-    public void keyPressRaw(Key rawKey) {
-        keyPress(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()] = true;
+    public void keyFlipRaw(Key rawKey) {
+        keyFlip(getKeymap().get(rawKey));
+        flip(getRawKeys()[rawKey.getType()][rawKey.getKey()]);
     }
 
-    public void keyPress(Key myKey) {
+    public void keyFlip(Key myKey) {
         if (myKey == null) {
             return;
         }
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        getMyKeys()[myKey.getKey()] = true;
-    }
-
-    public void keyReleaseRaw(Key rawKey) {
-        keyRelease(getKeymap().get(rawKey));
-        getRawKeys()[rawKey.getType()][rawKey.getKey()] = false;
-    }
-
-    public void keyRelease(Key myKey) {
-        if (myKey == null) {
-            return;
-        }
-        if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
-            throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
-        }
-        getMyKeys()[myKey.getKey()] = false;
+        flip(getMyKeys()[myKey.getKey()]);
     }
 
     public boolean isKeyDown(Key myKey) {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
         }
-        return getMyKeys()[myKey.getKey()];
+        return getMyKeys()[myKey.getKey()].get();
     }
 
     public boolean isKeyDownRaw(Key rawKey) {
-        return getRawKeys()[rawKey.getType()][rawKey.getKey()];
+        return getRawKeys()[rawKey.getType()][rawKey.getKey()].get();
     }
 
     /**
@@ -184,10 +450,6 @@ public class Keymap {
         return keymap;
     }
 
-    public void setKeymap(Map<Key, Key> keymap) {
-        this.keymap = keymap;
-    }
-
     /**
      * @return the map to convert my-key-type to raw-key-type
      */
@@ -195,23 +457,12 @@ public class Keymap {
         return keymapReverse;
     }
 
-    public void setKeymapReverse(Map<Key, ArrayList> keymapReverse) {
-        this.keymapReverse = keymapReverse;
-    }
-
-    public boolean[][] getRawKeys() {
+    public AtomicBoolean[][] getRawKeys() {
         return rawKeys;
     }
 
-    public void setRawKeys(boolean[][] rawKeys) {
-        this.rawKeys = rawKeys;
-    }
-
-    public boolean[] getMyKeys() {
+    public AtomicBoolean[] getMyKeys() {
         return myKeys;
     }
 
-    public void setMyKeys(boolean[] myKeys) {
-        this.myKeys = myKeys;
-    }
 }

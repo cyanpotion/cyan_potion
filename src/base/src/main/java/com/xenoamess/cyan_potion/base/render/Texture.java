@@ -91,7 +91,7 @@ public class Texture extends AbstractResource implements Bindable {
      *
      * @param resourceManager resource Manager
      * @param fullResourceURI full Resource URI
-     * @see ResourceManager
+     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
     public Texture(ResourceManager resourceManager, String fullResourceURI) {
         super(resourceManager, fullResourceURI);

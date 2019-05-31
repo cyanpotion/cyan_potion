@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.entity;
 
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import org.joml.Vector3f;
 
@@ -34,7 +34,7 @@ import org.joml.Vector3f;
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 
-    public AbstractDynamicEntity(AbstractScene scene, Vector3f centerPos,
+    public AbstractDynamicEntity(AbstractEntityScene scene, Vector3f centerPos,
                                  Vector3f size, Bindable bindable,
                                  AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
@@ -47,6 +47,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
         if (this.getShape() != null) {
             this.getShape().forceMove(direction);
         }
+        this.getPicture().cover(this);
     }
 
     public boolean tryMove(Vector3f direction) {

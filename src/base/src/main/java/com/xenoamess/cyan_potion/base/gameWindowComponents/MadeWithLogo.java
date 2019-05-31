@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
@@ -40,20 +41,29 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
-    private final Texture logoTexture;
+    private final Texture logoTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/madewith.png:picture"
+                    );
+
+    private final Picture logoPicture = new Picture(this.logoTexture);
+
+    {
+        this.logoPicture.cover(this.getGameWindow());
+    }
+
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                        "/www/img/pictures/madewith.png:picture");
+
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));
-
     }
 
     public MadeWithLogo(GameWindow gameWindow) {
@@ -127,14 +137,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        this.getGameWindow().drawBindableRelativeCenter(this.getLogoTexture()
-                , this.getGameWindow().getLogicWindowWidth(),
-                this.getGameWindow().getLogicWindowHeight(), new Vector4f(1,
-                        colorScale, colorScale, 1));
-    }
-
-    public Texture getLogoTexture() {
-        return logoTexture;
+        this.logoPicture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
+        this.logoPicture.draw(getGameWindow());
     }
 
     public long getLifeTime() {

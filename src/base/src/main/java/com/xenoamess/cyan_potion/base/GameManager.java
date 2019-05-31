@@ -102,6 +102,9 @@ public class GameManager implements AutoCloseable {
     private final ExecutorService executorService =
             Executors.newCachedThreadPool();
 
+    private float timeToLastUpdate = 0;
+
+
     public static Map<String, String> generateArgsMap(String[] args) {
         Map<String, String> res = new LinkedHashMap<>();
         if (args == null) {
@@ -460,6 +463,7 @@ public class GameManager implements AutoCloseable {
         logo.addToGameWindowComponentTree(null);
     }
 
+
     protected void loop() {
         double timeForFPS = 0;
         int drawFramesForFPS = 0;
@@ -478,11 +482,38 @@ public class GameManager implements AutoCloseable {
             unprocessed += passed;
             timeForFPS += passed;
 
-
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.codePluginManager.apply(this, rightBeforeLogicFrame);
 
+                this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
                 unprocessed -= DataCenter.FRAME_CAP;
+                canRender = true;
+
+                this.codePluginManager.apply(this, rightBeforeSolveEvents);
+                solveEvents();
+                this.codePluginManager.apply(this, rightAfterSolveEvents);
+
+                this.codePluginManager.apply(this, rightBeforeUpdate);
+                update();
+                this.codePluginManager.apply(this, rightAfterUpdate);
+
+                timerForSteamCallback++;
+                if (timerForSteamCallback >= 300) {
+                    timerForSteamCallback = 0;
+                    steamRunCallbacks();
+                }
+
+                setNowFrameIndex(getNowFrameIndex() + 1);
+                this.getResourceManager().suggestGc();
+
+                this.codePluginManager.apply(this, rightAfterLogicFrame);
+            }
+
+            {
+                this.codePluginManager.apply(this, rightBeforeLogicFrame);
+
+                this.setTimeToLastUpdate((float) unprocessed);
+                unprocessed = 0;
                 canRender = true;
 
                 this.codePluginManager.apply(this, rightBeforeSolveEvents);
@@ -565,7 +596,6 @@ public class GameManager implements AutoCloseable {
     /*
      * Getters and Setters
      */
-
     public boolean getAlive() {
         return alive.get();
     }
@@ -642,5 +672,13 @@ public class GameManager implements AutoCloseable {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
         LOGGER.info(LINE_SEGMENT);
+    }
+
+    public float getTimeToLastUpdate() {
+        return timeToLastUpdate;
+    }
+
+    public void setTimeToLastUpdate(float timeToLastUpdate) {
+        this.timeToLastUpdate = timeToLastUpdate;
     }
 }

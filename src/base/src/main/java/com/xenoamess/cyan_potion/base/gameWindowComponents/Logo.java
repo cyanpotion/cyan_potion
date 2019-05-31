@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.events.KeyEvent;
 import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.render.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.joml.Vector4f;
 
@@ -38,16 +39,27 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  */
 public class Logo extends AbstractGameWindowComponent {
-    private final Texture logoTexture;
+    private final Texture logoTexture =
+            this.getGameWindow().getGameManager().getResourceManager().
+                    fetchResourceWithShortenURI(
+                            Texture.class,
+                            "/www/img/pictures/logo.png:picture"
+                    );
+
+    private final Picture logoPicture = new Picture(this.logoTexture);
+
+    {
+        this.logoPicture.setCenter(this.getGameWindow());
+        this.logoPicture.moveY(-50 * 2);
+    }
+
     private final long lifeTime;
     private final long dieTimeStamp;
 
 
     public Logo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
-        this.logoTexture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                        "/www/img/pictures/logo.png:picture");
+
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
@@ -125,28 +137,21 @@ public class Logo extends AbstractGameWindowComponent {
         } else {
             pscale = 1;
         }
+
         if (t < dynamicTime + stayTime) {
-            this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
-                    , 480 * (pscale + 1), 60 * (pscale + 1),
-                    new Vector4f(1, 1, 1, pscale));
+            this.logoPicture.setWidth(480 * (pscale + 1));
+            this.logoPicture.setHeight(60 * (pscale + 1));
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
         } else {
             pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pscale < 0) {
                 pscale = 0;
             }
-            this.getGameWindow().drawBindableRelative(getLogoTexture(),
-                    0 + this.getGameWindow().getLogicWindowWidth() / 2f,
-                    -50 * 2 + this.getGameWindow().getLogicWindowHeight() / 2f
-                    , 480 * 2, 60 * 2, new Vector4f(1, 1, 1, pscale));
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
         }
+        this.logoPicture.draw(getGameWindow());
     }
 
-
-    public Texture getLogoTexture() {
-        return logoTexture;
-    }
 
     public long getLifeTime() {
         return lifeTime;

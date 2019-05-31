@@ -25,25 +25,26 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
+import com.xenoamess.cyan_potion.base.Area;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventProcessor;
-import com.xenoamess.cyan_potion.base.render.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author XenoAmess
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable {
+public abstract class AbstractGameWindowComponent implements AutoCloseable, Area {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(Texture.class);
+            LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 
     private final GameWindow gameWindow;
     private final AtomicBoolean alive = new AtomicBoolean(true);
@@ -104,7 +105,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         //TODO
     }
 
-    private final Map<String, EventProcessor> classNameToProcessorMap = new HashMap<>();
+    private final Map<String, EventProcessor> classNameToProcessorMap = new ConcurrentHashMap<>();
 
     public abstract void initProcessors();
 
@@ -131,7 +132,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
      *
      * @param event the old event that is being processed by this Component now.
      * @return the new Event that generated during the processing of the old event.
-     * @see Event
+     * @see Event#apply(GameManager)
      */
     public Event process(Event event) {
         EventProcessor processor =
@@ -191,6 +192,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.leftTopPosY = leftTopPosY;
     }
 
+    @Override
     public float getWidth() {
         return width;
     }
@@ -199,8 +201,19 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable {
         this.width = width;
     }
 
+    @Override
     public float getHeight() {
         return height;
+    }
+
+    @Override
+    public float getCenterPosX() {
+        return this.getLeftTopPosX() + this.getWidth() / 2F;
+    }
+
+    @Override
+    public float getCenterPosY() {
+        return this.getLeftTopPosY() + this.getHeight() / 2F;
     }
 
     public void setHeight(float height) {

@@ -86,7 +86,7 @@ public class Font extends AbstractResource {
      *
      * @param resourceManager resource Manager
      * @param fullResourceURI full Resource URI
-     * @see ResourceManager
+     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
     public Font(ResourceManager resourceManager, String fullResourceURI) {
         super(resourceManager, fullResourceURI);

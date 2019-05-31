@@ -3,7 +3,7 @@
 /out/
 /target/
 
-*/target
+**/target
 *.iml
 **/.idea
 *.class

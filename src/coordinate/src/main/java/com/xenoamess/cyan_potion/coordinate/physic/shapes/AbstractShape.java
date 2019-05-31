@@ -24,7 +24,8 @@
 
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
-import com.xenoamess.cyan_potion.coordinate.AbstractScene;
+
+import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudger;
@@ -37,7 +38,11 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 
@@ -55,7 +60,8 @@ public abstract class AbstractShape {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers = new HashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers =
+            new ConcurrentHashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
@@ -190,10 +196,10 @@ public abstract class AbstractShape {
      */
     public Set<ImmutablePair<Integer, Integer>> getBoxes() {
         Set<ImmutablePair<Integer, Integer>> res = new HashSet<>();
-        int minBoxX = (int) Math.ceil(this.minX() / AbstractScene.BOX_SIZE);
-        int maxBoxX = (int) Math.ceil(this.maxX() / AbstractScene.BOX_SIZE);
-        int minBoxY = (int) Math.ceil(this.minY() / AbstractScene.BOX_SIZE);
-        int maxBoxY = (int) Math.ceil(this.maxY() / AbstractScene.BOX_SIZE);
+        int minBoxX = (int) Math.ceil(this.minX() / AbstractEntityScene.BOX_SIZE);
+        int maxBoxX = (int) Math.ceil(this.maxX() / AbstractEntityScene.BOX_SIZE);
+        int minBoxY = (int) Math.ceil(this.minY() / AbstractEntityScene.BOX_SIZE);
+        int maxBoxY = (int) Math.ceil(this.maxY() / AbstractEntityScene.BOX_SIZE);
         for (int i = minBoxY; i <= maxBoxY; i++) {
             for (int j = minBoxX; j <= maxBoxX; j++) {
                 res.add(new ImmutablePair<>(j, i));

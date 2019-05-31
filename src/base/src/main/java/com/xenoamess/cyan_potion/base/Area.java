@@ -22,25 +22,17 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
-
-import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
-
-import java.util.function.Function;
+package com.xenoamess.cyan_potion.base;
 
 /**
  * @author XenoAmess
  */
-public interface EventProcessor extends Function<Event, Event> {
-    /**
-     * the method must be thread safe.
-     *
-     * @param event the event that being processed.
-     * @return the event that generated due to processing the event.
-     * @see Event#apply(GameManager)
-     */
-    @Override
-    @GuardedBy("GameManager")
-    public Event apply(Event event);
+public interface Area {
+    public float getCenterPosX();
+
+    public float getCenterPosY();
+
+    public float getWidth();
+
+    public float getHeight();
 }
