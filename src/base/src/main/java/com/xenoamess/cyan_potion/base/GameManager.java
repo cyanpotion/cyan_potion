@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
@@ -57,10 +58,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
@@ -99,8 +97,8 @@ public class GameManager implements AutoCloseable {
 
     private final AudioManager audioManager = new AudioManager(this);
     private final ResourceManager resourceManager = new ResourceManager(this);
-    private final ExecutorService executorService =
-            Executors.newCachedThreadPool();
+    private final ScheduledExecutorService scheduledExecutorService =
+            Executors.newScheduledThreadPool(4);
 
     private float timeToLastUpdate = 0;
 
@@ -209,7 +207,7 @@ public class GameManager implements AutoCloseable {
 
         if (!StringUtils.isBlank(defaultFontResourceURI)) {
             Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
-            this.getExecutorService().execute(() -> {
+            this.getScheduledExecutorService().execute(() -> {
                 Font.getDefaultFont().load();
                 Font.setCurrentFont(Font.getDefaultFont());
             });
@@ -370,6 +368,22 @@ public class GameManager implements AutoCloseable {
                 System.exit(1);
             }
         }
+
+        long steamRunCallbacksNanoLong =
+                Long.parseLong(
+                        getString(
+                                this.getDataCenter().getCommonSettings(),
+                                "SteamRunCallbacksTime",
+                                "10_000_000_000L"
+                        )
+                );
+
+        if (this.getDataCenter().isRunWithSteam()) {
+            this.getScheduledExecutorService().scheduleAtFixedRate(
+                    this::steamRunCallbacks,
+                    0,
+                    steamRunCallbacksNanoLong, TimeUnit.NANOSECONDS);
+        }
     }
 
 
@@ -398,7 +412,7 @@ public class GameManager implements AutoCloseable {
             this.getSteamUserStats().dispose();
             SteamAPI.shutdown();
         }
-        this.getExecutorService().shutdown();
+        this.getScheduledExecutorService().shutdown();
     }
 
     protected void initGameWindow() {
@@ -473,12 +487,6 @@ public class GameManager implements AutoCloseable {
         update();
         this.codePluginManager.apply(this, rightAfterUpdate);
 
-//        timerForSteamCallback++;
-//        if (timerForSteamCallback >= 300) {
-//            timerForSteamCallback = 0;
-//            steamRunCallbacks();
-//        }
-
         setNowFrameIndex(getNowFrameIndex() + 1);
         this.getResourceManager().suggestGc();
 
@@ -540,8 +548,21 @@ public class GameManager implements AutoCloseable {
             /**
              * notice that newEventList must be a thread safe collection.
              */
+            final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();
             final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
+
             this.getEventList().parallelStream().forEach(event -> {
+                if (event instanceof MainThreadEvent) {
+                    mainThreadEvents.add((MainThreadEvent) event);
+                    return;
+                }
+                Set<Event> res = event.apply(GameManager.this);
+                if (res != null) {
+                    newEventList.addAll(res);
+                }
+            });
+
+            mainThreadEvents.stream().forEach(event -> {
                 Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
@@ -632,11 +653,11 @@ public class GameManager implements AutoCloseable {
         return resourceManager;
     }
 
-    public ExecutorService getExecutorService() {
-        return executorService;
+    public ScheduledExecutorService getScheduledExecutorService() {
+        return scheduledExecutorService;
     }
 
-    public ConcurrentLinkedDeque<Event> getEventList() {
+    protected ConcurrentLinkedDeque<Event> getEventList() {
         return eventList;
     }
 

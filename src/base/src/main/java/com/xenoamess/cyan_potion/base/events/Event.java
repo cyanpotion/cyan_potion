@@ -30,7 +30,18 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
+ * Event is an Event that notify GameManager of what happened.
+ * <p>
+ * Notice that events are not solved strictly follow time.
+ * <p>
+ * But we make sure that event appear in a frame will always be solved
+ * (for the first time) before next frame start.
+ *
  * @author XenoAmess
+ * @see com.xenoamess.cyan_potion.base.GameManager#eventListAdd(Event)
+ * @see com.xenoamess.cyan_potion.base.GameManager#solveEvents()
+ * @see com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree#process(Event)
+ * @see com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent#process(Event)
  */
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {

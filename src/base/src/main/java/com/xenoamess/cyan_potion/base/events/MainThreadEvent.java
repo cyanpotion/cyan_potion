@@ -26,7 +26,10 @@ package com.xenoamess.cyan_potion.base.events;
 
 /**
  * Event that must be applied by main thread due to some reasons,
- * for Example, some native invoke.
+ * for Example, some native invoke for glfw or opengl by lwjgl.
+ * <p>
+ * Notice that due to reason of performance, we decide to solve  all non-MainThreadEvent first,
+ * then we solve the MainThreadEvent s.
  *
  * @author XenoAmess
  */
