@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
-import com.xenoamess.cyan_potion.base.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable, Area {
+public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 

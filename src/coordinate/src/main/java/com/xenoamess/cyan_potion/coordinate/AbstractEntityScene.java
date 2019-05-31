@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.coordinate;
 
-import com.xenoamess.cyan_potion.base.AbstractScene;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.StaticEntity;

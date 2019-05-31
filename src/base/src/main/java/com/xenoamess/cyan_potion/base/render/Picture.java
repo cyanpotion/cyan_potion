@@ -24,15 +24,15 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import com.xenoamess.cyan_potion.base.AbstractScene;
-import com.xenoamess.cyan_potion.base.Area;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import org.joml.Vector4f;
 
 /**
  * @author XenoAmess
  */
-public class Picture implements Area {
+public class Picture implements AbstractArea {
     private Bindable bindable;
     private float centerPosX;
     private float centerPosY;
@@ -129,19 +129,19 @@ public class Picture implements Area {
         this.setCenterPosY(centerPosY);
     }
 
-    public void setCenter(Area area) {
-        this.setCenterPosX(area.getCenterPosX());
-        this.setCenterPosY(area.getCenterPosY());
+    public void setCenter(AbstractArea abstractArea) {
+        this.setCenterPosX(abstractArea.getCenterPosX());
+        this.setCenterPosY(abstractArea.getCenterPosY());
     }
 
-    public void setSize(Area area) {
-        this.setWidth(area.getWidth());
-        this.setHeight(area.getHeight());
+    public void setSize(AbstractArea abstractArea) {
+        this.setWidth(abstractArea.getWidth());
+        this.setHeight(abstractArea.getHeight());
     }
 
-    public void cover(Area area) {
-        this.setCenter(area);
-        this.setSize(area);
+    public void cover(AbstractArea abstractArea) {
+        this.setCenter(abstractArea);
+        this.setSize(abstractArea);
     }
 
     public void move(float centerMovementX, float centerMovementY) {
@@ -155,6 +155,14 @@ public class Picture implements Area {
 
     public void moveY(float centerMovementY) {
         this.setCenterPosY(this.getCenterPosY() + centerMovementY);
+    }
+
+    public void moveTo(float newCenterPosX, float newCenterPosY) {
+        this.setCenterPos(newCenterPosX, newCenterPosY);
+    }
+
+    public void moveToLeftTop(float newLeftTopPosX, float newLeftTopPosY) {
+        this.setCenterPos(newLeftTopPosX + this.getWidth() / 2F, newLeftTopPosY + this.getHeight() / 2F);
     }
 
 
