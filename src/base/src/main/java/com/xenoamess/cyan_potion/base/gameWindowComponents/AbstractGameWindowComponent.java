@@ -25,10 +25,10 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventProcessor;
 import org.slf4j.Logger;
