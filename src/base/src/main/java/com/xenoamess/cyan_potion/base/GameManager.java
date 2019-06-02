@@ -374,7 +374,7 @@ public class GameManager implements AutoCloseable {
                         getString(
                                 this.getDataCenter().getCommonSettings(),
                                 "SteamRunCallbacksTime",
-                                "10_000_000_000L"
+                                "10000000000"
                         )
                 );
 
