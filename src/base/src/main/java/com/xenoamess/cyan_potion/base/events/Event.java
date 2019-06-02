@@ -46,5 +46,5 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
     @Override
-    public Set<Event> apply(GameManager gameManager);
+    Set<Event> apply(GameManager gameManager);
 }

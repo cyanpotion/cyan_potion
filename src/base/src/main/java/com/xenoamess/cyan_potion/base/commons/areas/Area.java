@@ -28,15 +28,15 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * @author XenoAmess
  */
 public interface Area {
-    public float getCenterPosX();
+    float getCenterPosX();
 
-    public float getCenterPosY();
+    float getCenterPosY();
 
-    public float getWidth();
+    float getWidth();
 
-    public float getHeight();
+    float getHeight();
 
-    public default ImmutableArea copyArea() {
+    default ImmutableArea copyArea() {
         return new ImmutableArea(this);
     }
 }

@@ -135,7 +135,7 @@ public class Version implements Comparable<Version> {
         String res = "";
         try (
                 BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
+                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()))
         ) {
             final StringBuilder sb = new StringBuilder();
             String tmp;
