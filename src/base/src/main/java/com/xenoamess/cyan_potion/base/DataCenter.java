@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
+import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.x8l.X8lTree;
 
@@ -65,14 +65,14 @@ public class DataCenter {
     }
 
     @AsFinalField
-    private static ObjectMapper ObjectMapper;
+    private static ObjectMapper objectMapper;
 
     public static ObjectMapper getObjectMapper() {
         //lazy init.
-        if (ObjectMapper == null) {
-            ObjectMapper = new ObjectMapper();
+        if (objectMapper == null) {
+            objectMapper = new ObjectMapper();
         }
-        return ObjectMapper;
+        return objectMapper;
     }
 
 

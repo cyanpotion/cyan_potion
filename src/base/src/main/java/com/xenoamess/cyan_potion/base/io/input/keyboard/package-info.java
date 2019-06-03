@@ -22,12 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.annotations;
+/**
+ * Package to hold classes about keyboard input.
+ *
+ * @since 0.140.0
+ */
+package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AsFinalField {
-
-}

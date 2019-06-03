@@ -28,7 +28,6 @@ import com.github.strikerx3.jxinput.XInputAxes;
 import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.GamepadButtonEvent;
 
 /**
  * this class is used as data class, (struct)

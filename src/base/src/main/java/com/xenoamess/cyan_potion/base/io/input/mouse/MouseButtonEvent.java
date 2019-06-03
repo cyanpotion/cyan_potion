@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.base.io.input.mouse;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import net.jcip.annotations.GuardedBy;
@@ -57,7 +58,7 @@ public class MouseButtonEvent implements Event {
      */
     private final int action;
     /**
-     * mods of the KeyEvent.
+     * mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use, and not the
      * whole value.
      * <p>
@@ -141,7 +142,7 @@ public class MouseButtonEvent implements Event {
     }
 
     /**
-     * @return mods of the KeyEvent.
+     * @return mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use, and not the
      * whole value.
      * <p>

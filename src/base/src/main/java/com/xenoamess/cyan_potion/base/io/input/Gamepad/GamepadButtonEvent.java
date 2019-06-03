@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.base.io.input.Gamepad;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.io.input.Gamepad.AbstractGamepadDevice;
+import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;

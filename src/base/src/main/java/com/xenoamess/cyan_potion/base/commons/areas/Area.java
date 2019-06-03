@@ -22,50 +22,21 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
-
-import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Set;
+package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
  * @author XenoAmess
  */
-public class MouseScrollEvent implements Event {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(MouseScrollEvent.class);
+public interface Area {
+    float getCenterPosX();
 
-    private final long window;
-    private final double xoffset;
-    private final double yoffset;
+    float getCenterPosY();
 
-    public MouseScrollEvent(long window, double xoffset, double yoffset) {
-        super();
-        this.window = window;
-        this.xoffset = xoffset;
-        this.yoffset = yoffset;
-    }
+    float getWidth();
 
-    @Override
-    @GuardedBy("gameManager")
-    public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("MouseScrollEvent : {} {} {}",
-                getWindow(), getXoffset(), getYoffset());
-        return gameManager.getGameWindowComponentTree().process(this);
-    }
+    float getHeight();
 
-    public long getWindow() {
-        return window;
-    }
-
-    public double getXoffset() {
-        return xoffset;
-    }
-
-    public double getYoffset() {
-        return yoffset;
+    default ImmutableArea copyArea() {
+        return new ImmutableArea(this);
     }
 }

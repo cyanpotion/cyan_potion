@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base;
 
 import com.codedisaster.steamworks.*;
 import com.xenoamess.cyan_potion.base.events.*;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import org.lwjgl.glfw.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +56,7 @@ public final class Callbacks {
 
     private GLFWKeyCallbackI keyCallback =
             (long window, int key, int scancode, int action, int mods) -> {
-                Event event = new KeyEvent(window, key, scancode, action, mods);
+                Event event = new KeyboardEvent(window, key, scancode, action, mods);
                 getGameManager().eventListAdd(event);
             };
 

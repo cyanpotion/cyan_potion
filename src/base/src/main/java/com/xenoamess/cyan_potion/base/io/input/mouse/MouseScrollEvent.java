@@ -22,39 +22,51 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.base.io.input.mouse;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
+import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author XenoAmess
  */
-public class ConsoleEvent implements Event {
+public class MouseScrollEvent implements Event {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(ConsoleEvent.class);
+            LoggerFactory.getLogger(MouseScrollEvent.class);
 
-    private final String command;
+    private final long window;
+    private final double xoffset;
+    private final double yoffset;
 
-    public ConsoleEvent(String command) {
+    public MouseScrollEvent(long window, double xoffset, double yoffset) {
         super();
-        this.command = command;
+        this.window = window;
+        this.xoffset = xoffset;
+        this.yoffset = yoffset;
     }
 
     @Override
+    @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
-        //TODO should add some real console methods here.
-        // If anyone do have any idea about how it shall design,
-        // please just open issue. Thx.
-        LOGGER.info(getCommand());
-        return new HashSet<>();
+        LOGGER.debug("MouseScrollEvent : {} {} {}",
+                getWindow(), getXoffset(), getYoffset());
+        return gameManager.getGameWindowComponentTree().process(this);
     }
 
-    public String getCommand() {
-        return command;
+    public long getWindow() {
+        return window;
+    }
+
+    public double getXoffset() {
+        return xoffset;
+    }
+
+    public double getYoffset() {
+        return yoffset;
     }
 }

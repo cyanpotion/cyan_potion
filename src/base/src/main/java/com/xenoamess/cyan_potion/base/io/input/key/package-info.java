@@ -22,44 +22,11 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
-
-import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Set;
-
 /**
- * @author XenoAmess
+ * Package to hold classes about key (abstract key from all input devices cyan_potion can deal with, including
+ * gamepad, mouse, and keyboard keys.) input/parsing.
+ *
+ * @since 0.140.0
  */
-public class CharEvent implements Event {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(CharEvent.class);
+package com.xenoamess.cyan_potion.base.io.input.key;
 
-    private final long window;
-    private final int codepoint;
-
-
-    public CharEvent(long window, int codepoint) {
-        super();
-        this.window = window;
-        this.codepoint = codepoint;
-    }
-
-    @Override
-    @GuardedBy("gameManager")
-    public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("CharEvent : {}", (char) this.getCodepoint());
-        return gameManager.getGameWindowComponentTree().process(this);
-    }
-
-    public long getWindow() {
-        return window;
-    }
-
-    public int getCodepoint() {
-        return codepoint;
-    }
-}

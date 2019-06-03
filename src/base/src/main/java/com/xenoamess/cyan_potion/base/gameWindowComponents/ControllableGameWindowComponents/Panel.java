@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWind
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.render.Picture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 
 import java.util.ArrayList;

@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWind
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import org.lwjgl.glfw.GLFW;

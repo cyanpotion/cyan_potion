@@ -22,17 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base;
-
 /**
- * @author XenoAmess
+ * Package to hold controllable game window component classes.
+ *
+ * @since 0.140.0
  */
-public interface Area {
-    public float getCenterPosX();
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
-    public float getCenterPosY();
-
-    public float getWidth();
-
-    public float getHeight();
-}
