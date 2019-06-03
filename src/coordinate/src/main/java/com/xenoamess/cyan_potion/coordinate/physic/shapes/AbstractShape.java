@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
@@ -50,7 +49,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractShape implements Area {
+public abstract class AbstractShape {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
@@ -61,8 +60,8 @@ public abstract class AbstractShape implements Area {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger>
-            shapeRelationJudgers = new ConcurrentHashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> shapeRelationJudgers =
+            new ConcurrentHashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
@@ -385,25 +384,5 @@ public abstract class AbstractShape implements Area {
     public static void setShapeRelationJudgers(Map<ImmutablePair<Class,
             Class>, ShapeRelationJudger> shapeRelationJudgers) {
         AbstractShape.shapeRelationJudgers = shapeRelationJudgers;
-    }
-
-    @Override
-    public float getCenterPosX() {
-        return this.getCenterPos().x();
-    }
-
-    @Override
-    public float getCenterPosY() {
-        return this.getCenterPos().y();
-    }
-
-    @Override
-    public float getWidth() {
-        return this.getSize().x();
-    }
-
-    @Override
-    public float getHeight() {
-        return this.getSize().y();
     }
 }

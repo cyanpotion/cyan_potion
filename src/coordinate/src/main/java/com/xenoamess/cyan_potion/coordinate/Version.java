@@ -28,7 +28,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Objects;
 
 /**
  * A version class that represent a package's version.
@@ -44,10 +43,10 @@ import java.util.Objects;
  */
 public class Version implements Comparable<Version> {
 
-    private final String versionString;
+    private String version;
 
-    public Version(String versionString) {
-        this.versionString = versionString;
+    public Version(String version) {
+        this.version = version;
     }
 
     /**
@@ -55,6 +54,7 @@ public class Version implements Comparable<Version> {
      */
     public static final String VERSION = loadCurrentVersion();
     public static final String VERSION_MISSING = "VersionMissing";
+
 
     public static int compareVersions(String versionString1, String versionString2) {
         String snapshotString = "-SNAPSHOT";
@@ -87,24 +87,7 @@ public class Version implements Comparable<Version> {
 
     @Override
     public int compareTo(Version version) {
-        return compareVersions(this.versionString, version.versionString);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Version version = (Version) o;
-        return Objects.equals(versionString, version.versionString);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(versionString);
+        return compareVersions(this.getVersion(), version.getVersion());
     }
 
     private static String loadCurrentVersion() {
@@ -135,7 +118,7 @@ public class Version implements Comparable<Version> {
         String res = "";
         try (
                 BufferedReader bufferedReader =
-                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()))
+                        new BufferedReader(new InputStreamReader(getURL(resourceFilePath).openStream()));
         ) {
             final StringBuilder sb = new StringBuilder();
             String tmp;
@@ -154,8 +137,12 @@ public class Version implements Comparable<Version> {
         return res;
     }
 
-    @Override
-    public String toString() {
-        return this.versionString;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
