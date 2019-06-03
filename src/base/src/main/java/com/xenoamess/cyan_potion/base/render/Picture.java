@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.xenoamess.cyan_potion.base.AbstractScene;
+import com.xenoamess.cyan_potion.base.Area;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
 import org.joml.Vector4f;
 
 /**
@@ -155,14 +155,6 @@ public class Picture implements Area {
 
     public void moveY(float centerMovementY) {
         this.setCenterPosY(this.getCenterPosY() + centerMovementY);
-    }
-
-    public void moveTo(float newCenterPosX, float newCenterPosY) {
-        this.setCenterPos(newCenterPosX, newCenterPosY);
-    }
-
-    public void moveToLeftTop(float newLeftTopPosX, float newLeftTopPosY) {
-        this.setCenterPos(newLeftTopPosX + this.getWidth() / 2F, newLeftTopPosY + this.getHeight() / 2F);
     }
 
 
