@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.139.1</version>
+    <version>0.140.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -54,7 +54,7 @@
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
         <guava.version>27.1-jre</guava.version>
-        <commonx.version>0.3.0</commonx.version>
+        <commonx.version>0.4.0</commonx.version>
     </properties>
     <profiles>
         <profile>

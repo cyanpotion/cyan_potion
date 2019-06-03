@@ -26,8 +26,8 @@ package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.KeyEvent;
-import com.xenoamess.cyan_potion.base.events.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTreeNode;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
@@ -153,11 +153,11 @@ public class World extends AbstractEntityScene {
 
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
-            KeyEvent keyEvent = (KeyEvent) event;
-            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
+            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS && keyEvent.getMods() == 0) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.getMods() == 0) {
                         this.getMenu().setShow(true);
                     }
                     return null;

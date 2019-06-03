@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import net.jcip.annotations.GuardedBy;
@@ -38,15 +39,15 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * @author XenoAmess
  */
-public class KeyEvent implements Event {
+public class KeyboardEvent implements Event {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(KeyEvent.class);
+            LoggerFactory.getLogger(KeyboardEvent.class);
 
     private final long window;
     private final int key;
     private final int scancode;
     /**
-     * action of the KeyEvent
+     * action of the KeyboardEvent
      * The action is one of
      * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
      * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
@@ -57,7 +58,7 @@ public class KeyEvent implements Event {
      */
     private final int action;
     /**
-     * mods of the KeyEvent.
+     * mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use sometimes, and
      * not always the whole value.
      * <p>
@@ -84,7 +85,7 @@ public class KeyEvent implements Event {
      */
     private final int mods;
 
-    public KeyEvent(long window, int key, int scancode, int action, int mods) {
+    public KeyboardEvent(long window, int key, int scancode, int action, int mods) {
         super();
         this.window = window;
         this.key = key;
@@ -96,7 +97,7 @@ public class KeyEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("KeyEvent : {} {} {} {}", getKey(), getScancode(),
+        LOGGER.debug("KeyboardEvent : {} {} {} {}", getKey(), getScancode(),
                 getAction(), getMods());
         switch (getAction()) {
             case GLFW_RELEASE:
@@ -137,7 +138,7 @@ public class KeyEvent implements Event {
      * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
      * @deprecated
      */
-    @Deprecated(since = "0.97.0")
+    @Deprecated
     public String translate() {
         switch (this.getKeyRaw().getKey()) {
             case GLFW_KEY_KP_0:
@@ -384,7 +385,7 @@ public class KeyEvent implements Event {
     }
 
     /**
-     * @return action of the KeyEvent
+     * @return action of the KeyboardEvent
      * The action is one of
      * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
      * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
@@ -397,7 +398,7 @@ public class KeyEvent implements Event {
     }
 
     /**
-     * @return mods of the KeyEvent.
+     * @return mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use sometimes, and
      * not always the whole value.
      * <p>

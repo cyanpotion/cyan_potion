@@ -26,7 +26,6 @@ package com.xenoamess.cyan_potion.base.console;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.events.ConsoleEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

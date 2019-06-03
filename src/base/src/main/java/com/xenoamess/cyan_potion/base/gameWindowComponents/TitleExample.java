@@ -27,15 +27,15 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.events.KeyEvent;
-import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
-import com.xenoamess.cyan_potion.base.events.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.AbstractControllableGameWindowComponent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Callback;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.render.Picture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
@@ -251,14 +251,14 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
-            KeyEvent keyEvent = (KeyEvent) event;
-            if (keyEvent.getAction() != GLFW.GLFW_PRESS) {
+        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
+            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+            if (keyboardEvent.getAction() != GLFW.GLFW_PRESS) {
                 return event;
             }
-            switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                 case Keymap.XENOAMESS_KEY_ESCAPE:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         if (getState() >= 0 && getState() <= 4) {
                             setState(4);
                         } else if (getState() == -101) {
@@ -280,22 +280,22 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_UP:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         lastState();
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_DOWN:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         nextState();
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_LEFT:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         lastState();
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_RIGHT:
-                    if (keyEvent.getAction() == GLFW.GLFW_PRESS) {
+                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         nextState();
                     }
                     break;

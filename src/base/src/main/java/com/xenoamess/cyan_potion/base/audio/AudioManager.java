@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.events.CharEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import org.joml.Vector3f;
 import org.lwjgl.openal.*;
 import org.lwjgl.system.MemoryUtil;

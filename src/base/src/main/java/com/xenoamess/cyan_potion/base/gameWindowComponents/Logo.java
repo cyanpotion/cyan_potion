@@ -26,10 +26,10 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
-import com.xenoamess.cyan_potion.base.events.KeyEvent;
-import com.xenoamess.cyan_potion.base.events.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.render.Picture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.joml.Vector4f;
 
@@ -72,10 +72,10 @@ public class Logo extends AbstractGameWindowComponent {
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyEvent.class.getCanonicalName(),
+        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
                 event -> {
-                    KeyEvent keyEvent = (KeyEvent) event;
-                    switch (keyEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                    KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:

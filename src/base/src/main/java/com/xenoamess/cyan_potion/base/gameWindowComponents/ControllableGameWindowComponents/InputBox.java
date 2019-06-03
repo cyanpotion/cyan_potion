@@ -25,9 +25,9 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.CharEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.events.KeyEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.ClipboardUtil;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
@@ -122,17 +122,17 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     @Override
     public void initProcessors() {
         super.initProcessors();
-        this.registerProcessor(KeyEvent.class.getCanonicalName(), event -> {
+        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
             synchronized (InputBox.this) {
                 if (!this.isInFocusNow()) {
                     return event;
                 }
-                KeyEvent keyEvent = (KeyEvent) event;
+                KeyboardEvent keyboardEvent = (KeyboardEvent) event;
                 this.slashStartTime = System.currentTimeMillis();
 
-                if (keyEvent.getAction() == GLFW_PRESS || keyEvent.getAction() == GLFW_REPEAT) {
+                if (keyboardEvent.getAction() == GLFW_PRESS || keyboardEvent.getAction() == GLFW_REPEAT) {
                     Vector2f insertPos;
-                    switch (keyEvent.getKeyRaw().getKey()) {
+                    switch (keyboardEvent.getKeyRaw().getKey()) {
                         case GLFW_KEY_ENTER:
                             this.insertString("\n");
                             return null;
@@ -187,14 +187,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                     insertPos.y + this.getCharHeight(), false, insertPos));
                             return null;
                         case GLFW_KEY_A:
-                            if (keyEvent.getAction() == GLFW_PRESS && keyEvent.getMods() == GLFW_MOD_CONTROL) {
+                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
                                 setNowSelectStartPos(0);
                                 setNowSelectEndPos(this.getContentString().length());
                                 setNowInsertPos(0);
                             }
                             return null;
                         case GLFW_KEY_C:
-                            if (keyEvent.getAction() == GLFW_PRESS && keyEvent.getMods() == GLFW_MOD_CONTROL) {
+                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
                                 if (getNowSelectStartPos() != -1) {
                                     if (getNowSelectEndPos() < getNowSelectStartPos()) {
                                         int tmpInt = getNowSelectStartPos();
@@ -211,7 +211,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             }
                             return null;
                         case GLFW_KEY_V:
-                            if (keyEvent.getAction() == GLFW_PRESS && keyEvent.getMods() == GLFW_MOD_CONTROL) {
+                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
                                 if (getNowSelectStartPos() != -1) {
                                     insertStringToBetweenNowSelectStartPosAndNowSelectEndPos(ClipboardUtil.getText());
                                 } else {
@@ -221,7 +221,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             }
                             return null;
                         case GLFW_KEY_X:
-                            if (keyEvent.getAction() == GLFW_PRESS && keyEvent.getMods() == GLFW_MOD_CONTROL) {
+                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
                                 if (getNowSelectStartPos() != -1) {
                                     if (getNowSelectEndPos() < getNowSelectStartPos()) {
                                         int tmpInt = getNowSelectStartPos();
@@ -242,7 +242,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             return null;
                     }
                 }
-                return keyEvent;
+                return keyboardEvent;
             }
         });
 

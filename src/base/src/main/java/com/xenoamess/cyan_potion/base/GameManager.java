@@ -28,7 +28,7 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
-import com.xenoamess.cyan_potion.base.annotations.AsFinalField;
+import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -61,8 +61,8 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
-import static com.xenoamess.cyan_potion.base.exceptions.AsFinalFieldReSetException.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
