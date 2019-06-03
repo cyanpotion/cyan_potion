@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
+import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -103,9 +104,9 @@ public class GameWindow implements AutoCloseable, Area {
         this.setShader(new Shader("shader"));
 
         Model.COMMON_MODEL.init(
-                Model.COMMON_VERTICES_FLOAT_ARRAY,
-                Model.COMMON_TEXTURE_FLOAT_ARRAY,
-                Model.COMMON_INDICES_INT_ARRAY
+                Model.getCommonVerticesFloatArray(),
+                Model.getCommonTextureFloatArray(),
+                Model.getCommonIndicesIntArray()
         );
     }
 

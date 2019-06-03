@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base;
+package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Camera;
 import com.xenoamess.cyan_potion.base.render.Model;

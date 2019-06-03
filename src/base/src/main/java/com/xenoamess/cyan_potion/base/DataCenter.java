@@ -65,14 +65,14 @@ public class DataCenter {
     }
 
     @AsFinalField
-    private static ObjectMapper ObjectMapper;
+    private static ObjectMapper objectMapper;
 
     public static ObjectMapper getObjectMapper() {
         //lazy init.
-        if (ObjectMapper == null) {
-            ObjectMapper = new ObjectMapper();
+        if (objectMapper == null) {
+            objectMapper = new ObjectMapper();
         }
-        return ObjectMapper;
+        return objectMapper;
     }
 
 
