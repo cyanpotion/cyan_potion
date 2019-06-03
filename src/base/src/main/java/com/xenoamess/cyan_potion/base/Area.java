@@ -22,21 +22,17 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base;
 
 /**
  * @author XenoAmess
  */
 public interface Area {
-    float getCenterPosX();
+    public float getCenterPosX();
 
-    float getCenterPosY();
+    public float getCenterPosY();
 
-    float getWidth();
+    public float getWidth();
 
-    float getHeight();
-
-    default ImmutableArea copyArea() {
-        return new ImmutableArea(this);
-    }
+    public float getHeight();
 }

@@ -31,14 +31,15 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.xenoamess.commonx.java.util.Arraysx.fillNew;
-import static com.xenoamess.commonx.java.util.concurrent.atomic.AtomicBooleanUtilsx.flip;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -68,6 +69,282 @@ public class Keymap {
     private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
 
     private final Map<Key, ArrayList> keymapReverse = new ConcurrentHashMap<>();
+
+
+    // Filling
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(long[] a, long val)
+     */
+    public static long[] fill(long[] a, long val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(long[] a, int fromIndex, int toIndex, long val)
+     */
+    public static long[] fill(long[] a, int fromIndex, int toIndex, long val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(int[] a, int val)
+     */
+    public static int[] fill(int[] a, int val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(int[] a, int fromIndex, int toIndex, int val)
+     */
+    public static int[] fill(int[] a, int fromIndex, int toIndex, int val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(short[] a, short val)
+     */
+    public static short[] fill(short[] a, short val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(short[] a, int fromIndex, int toIndex, short val)
+     */
+    public static short[] fill(short[] a, int fromIndex, int toIndex, short val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(char[] a, char val)
+     */
+    public static char[] fill(char[] a, char val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(char[] a, int fromIndex, int toIndex, char val)
+     */
+    public static char[] fill(char[] a, int fromIndex, int toIndex, char val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(byte[] a, byte val)
+     */
+    public static byte[] fill(byte[] a, byte val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(byte[] a, int fromIndex, int toIndex, byte val)
+     */
+    public static byte[] fill(byte[] a, int fromIndex, int toIndex, byte val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(boolean[] a, boolean val)
+     */
+    public static boolean[] fill(boolean[] a, boolean val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(boolean[] a, int fromIndex, int toIndex, boolean val)
+     */
+    public static boolean[] fill(boolean[] a, int fromIndex, int toIndex,
+                                 boolean val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(double[] a, double val)
+     */
+    public static double[] fill(double[] a, double val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(double[] a, int fromIndex, int toIndex, double val)
+     */
+    public static double[] fill(double[] a, int fromIndex, int toIndex, double val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(float[] a, float val)
+     */
+    public static float[] fill(float[] a, float val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(float[] a, int fromIndex, int toIndex, float val)
+     */
+    public static float[] fill(float[] a, int fromIndex, int toIndex, float val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(Object[] a, Object val)
+     */
+    public static <T> T[] fill(T[] a, T val) {
+        Arrays.fill(a, val);
+        return a;
+    }
+
+    /**
+     * Wrapper of the same name function in java.util.Arrays,
+     * but returns the array itself after filling.
+     *
+     * @see Arrays#fill(Object[] a, int fromIndex, int toIndex, Object val)
+     * @since 3.10
+     */
+    public static <T> T[] fill(T[] a, int fromIndex, int toIndex, T val) {
+        Arrays.fill(a, fromIndex, toIndex, val);
+        return a;
+    }
+
+    /**
+     * <p>Fill a array with creating new instances of the component class
+     * using constructor that accept 0 arguments.
+     *
+     * <pre>
+     *     private final AtomicBoolean[][] rawKeys =
+     *             new AtomicBoolean[][]{
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000]),
+     *                     fillNew(new AtomicBoolean[1000])};
+     * </pre>
+     *
+     * @param <T>   the component type of the array
+     * @param array the array to be filled
+     * @return the same array
+     * @throws IllegalArgumentException if array is null,
+     *                                  or if T have no such constructor,
+     *                                  or the constructor is not accessible,
+     *                                  or the class cannot be instantiated.
+     * @since 3.10
+     */
+    public static <T> T[] fillNew(T[] array) {
+        if (array == null) {
+            throw new IllegalArgumentException("The input array must not be null.");
+        }
+        Class arrayClass = array.getClass();
+        Class componentClass = arrayClass.getComponentType();
+        try {
+            Constructor defaultConstructor = componentClass.getConstructor();
+            for (int i = 0, len = array.length; i < len; i++) {
+                array[i] = (T) defaultConstructor.newInstance();
+            }
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException(
+                    "The class must have an constructor that accept 0 arguments, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(
+                    "The class's constructor that accept 0 arguments must be accessible by this class, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (InstantiationException e) {
+            throw new IllegalArgumentException(
+                    "The class must be able to be instantiated, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        } catch (InvocationTargetException e) {
+            throw new IllegalArgumentException(
+                    "The class's constructor that accept 0 arguments must really can accept 0 arguments, but not : "
+                            + componentClass.getCanonicalName()
+            );
+        }
+        return array;
+    }
+
+    /**
+     * Flip the atomicBoolean.
+     *
+     * @param atomicBoolean atomicBoolean
+     * @return new boolean value of atomicBoolean
+     * @see
+     * <a href="https://stackoverflow.com/questions/1255617/does-atomicboolean-not-have-a-negate-method">question about this</a>
+     */
+    public static boolean flip(AtomicBoolean atomicBoolean) {
+        boolean currentBooleanValue;
+        do {
+            currentBooleanValue = atomicBoolean.get();
+        } while (!atomicBoolean.compareAndSet(currentBooleanValue, !currentBooleanValue));
+        return !currentBooleanValue;
+    }
 
     private final AtomicBoolean[][] rawKeys =
             new AtomicBoolean[][]{
