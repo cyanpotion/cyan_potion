@@ -42,5 +42,5 @@ public interface EventProcessor extends Function<Event, Event> {
      */
     @Override
     @GuardedBy("GameManager")
-    public Event apply(Event event);
+    Event apply(Event event);
 }

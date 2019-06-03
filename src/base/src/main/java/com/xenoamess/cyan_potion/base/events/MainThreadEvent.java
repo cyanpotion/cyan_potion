@@ -24,27 +24,14 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
-import com.xenoamess.cyan_potion.base.GameManager;
-
-import java.util.Set;
-import java.util.function.Function;
-
 /**
- * Event is an Event that notify GameManager of what happened.
+ * Event that must be applied by main thread due to some reasons,
+ * for Example, some native invoke for glfw or opengl by lwjgl.
  * <p>
- * Notice that events are not solved strictly follow time.
- * <p>
- * But we make sure that event appear in a frame will always be solved
- * (for the first time) before next frame start.
+ * Notice that due to reason of performance, we decide to solve  all non-MainThreadEvent first,
+ * then we solve the MainThreadEvent s.
  *
  * @author XenoAmess
- * @see com.xenoamess.cyan_potion.base.GameManager#eventListAdd(Event)
- * @see com.xenoamess.cyan_potion.base.GameManager#solveEvents()
- * @see com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree#process(Event)
- * @see com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent#process(Event)
  */
-@FunctionalInterface
-public interface Event extends Function<GameManager, Set<Event>> {
-    @Override
-    Set<Event> apply(GameManager gameManager);
+public interface MainThreadEvent extends Event {
 }
