@@ -11,8 +11,8 @@ cache:
 install: true
 matrix:
   include:
-    - os: linux
-      jdk: openjdk9
+#    - os: linux
+#      jdk: openjdk9
     - os: linux
       jdk: openjdk10
     - os: linux
