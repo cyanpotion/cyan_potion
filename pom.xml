@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.140.0</version>
+    <version>0.141.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -49,13 +49,14 @@
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <log4j.version>2.11.2</log4j.version>
         <JXInput.version>v1.0.0</JXInput.version>
-        <x8l.version>0.47.1</x8l.version>
-        <multi_language.version>0.43.3</multi_language.version>
+        <guava.version>27.1-jre</guava.version>
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
-        <guava.version>27.1-jre</guava.version>
-        <commonx.version>0.4.0</commonx.version>
+        <x8l.version>0.47.3</x8l.version>
+        <multi_language.version>0.43.4</multi_language.version>
+        <commonx.version>0.5.1</commonx.version>
     </properties>
+
     <profiles>
         <profile>
             <id>lwjgl-natives-linux</id>
@@ -630,7 +631,12 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
