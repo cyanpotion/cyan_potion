@@ -50,14 +50,35 @@
         <log4j.version>2.11.2</log4j.version>
         <JXInput.version>v1.0.0</JXInput.version>
         <guava.version>27.1-jre</guava.version>
+        <!---->
+        <!---->
+        <!--home made libraries-->
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
         <x8l.version>0.47.3</x8l.version>
         <multi_language.version>0.43.4</multi_language.version>
         <commonx.version>0.7.0</commonx.version>
-<!--        <maven-plugins-version>-->
-<!--            <maven-site-plugin>3.7.1</maven-site-plugin>-->
-<!--        </maven-plugins-version>-->
+        <!---->
+        <!---->
+        <!--maven plugins-->
+        <maven-site-plugin.version>RELEASE</maven-site-plugin.version>
+        <!--        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>-->
+        <maven-project-info-reports-plugin.version>RELEASE
+        </maven-project-info-reports-plugin.version>
+        <!--        <maven-project-info-reports-plugin>3.0.0</maven-project-info-reports-plugin>-->
+        <maven-javadoc-plugin.version>RELEASE</maven-javadoc-plugin.version>
+        <!--        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>-->
+        <maven-deploy-plugin.version>RELEASE</maven-deploy-plugin.version>
+        <!--        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>-->
+        <maven-source-plugin.version>RELEASE</maven-source-plugin.version>
+        <!--        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>-->
+        <maven-surefire-plugin.version>RELEASE</maven-surefire-plugin.version>
+        <!--        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>-->
+        <maven-compiler-plugin.version>RELEASE</maven-compiler-plugin.version>
+        <!--        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>-->
+        <maven-gpg-plugin.version>RELEASE</maven-gpg-plugin.version>
+        <!--        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>-->
+
     </properties>
 
     <profiles>
@@ -671,17 +692,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>${maven-site-plugin.version}
+                </version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-project-info-reports-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <locale>en</locale>
                     <show>private</show>
@@ -749,12 +771,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>${maven-deploy-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -767,12 +789,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}
                     </source>
@@ -784,7 +806,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>${maven-gpg-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -802,7 +824,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <locale>en</locale>
                     <show>private</show>
