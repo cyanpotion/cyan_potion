@@ -42,38 +42,42 @@
         <!---->
         <!---->
         <!--libraries versions-->
-        <lwjgl.version>3.2.2</lwjgl.version>
+        <commons-collections4.version>4.3</commons-collections4.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <guava.version>27.1-jre</guava.version>
+        <jackson.version>2.9.9</jackson.version>
         <joml.version>1.9.15</joml.version>
+        <log4j.version>2.11.2</log4j.version>
+        <lwjgl.version>3.2.2</lwjgl.version>
+        <slf4j.version>1.8.0-beta4</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
         <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
-        <jackson.version>2.9.9</jackson.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-collections4.version>4.3</commons-collections4.version>
-        <slf4j.version>1.8.0-beta4</slf4j.version>
-        <log4j.version>2.11.2</log4j.version>
         <JXInput.version>1.0.0</JXInput.version>
-        <guava.version>27.1-jre</guava.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
+        <commonx.version>0.7.0</commonx.version>
+        <multi_language.version>0.43.4</multi_language.version>
+        <x8l.version>0.47.3</x8l.version>
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
-        <x8l.version>0.47.3</x8l.version>
-        <multi_language.version>0.43.4</multi_language.version>
-        <commonx.version>0.7.0</commonx.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <junit-jupiter-api.version>5.5.0-RC1</junit-jupiter-api.version>
+        <junit-jupiter-engine.version>5.5.0-RC1</junit-jupiter-engine.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>2.0.0</maven-enforcer-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
-        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
-        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <junit.version>5.5.0-RC1</junit.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     </properties>
 
