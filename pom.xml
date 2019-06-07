@@ -52,7 +52,7 @@
         <guava.version>27.1-jre</guava.version>
         <!---->
         <!---->
-        <!--home made libraries-->
+        <!--home made libraries versions-->
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
         <x8l.version>0.47.3</x8l.version>
@@ -60,7 +60,7 @@
         <commonx.version>0.7.0</commonx.version>
         <!---->
         <!---->
-        <!--maven plugins-->
+        <!--maven plugins versions-->
         <maven-site-plugin.version>RELEASE</maven-site-plugin.version>
         <!--        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>-->
         <maven-project-info-reports-plugin.version>RELEASE
