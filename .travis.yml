@@ -12,6 +12,8 @@ install: true
 matrix:
   include:
     - os: linux
+      jdk: openjdk8
+    - os: linux
       jdk: openjdk9
     - os: linux
       jdk: openjdk10
