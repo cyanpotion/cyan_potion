@@ -54,7 +54,7 @@
         </SDL_GameControllerDB_Util.version>
         <x8l.version>0.47.3</x8l.version>
         <multi_language.version>0.43.4</multi_language.version>
-        <commonx.version>0.5.1</commonx.version>
+        <commonx.version>0.7.0</commonx.version>
     </properties>
 
     <profiles>
