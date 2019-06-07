@@ -43,7 +43,9 @@
         <!---->
         <!--libraries versions-->
         <commons-collections4.version>4.3</commons-collections4.version>
+        <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+        <dom4j.version>2.1.1</dom4j.version>
         <guava.version>27.1-jre</guava.version>
         <jackson.version>2.9.9</jackson.version>
         <joml.version>1.9.15</joml.version>
@@ -827,11 +829,29 @@
                             </dependencies>
                         </property>
                         <property>
+                            <name>commons-io.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>commons-io</groupId>
+                                    <artifactId>commons-io</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
                             <name>commons-lang3.version</name>
                             <dependencies>
                                 <dependency>
                                     <groupId>org.apache.commons</groupId>
                                     <artifactId>commons-lang3</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>dom4j.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.dom4j</groupId>
+                                    <artifactId>dom4j</artifactId>
                                 </dependency>
                             </dependencies>
                         </property>
