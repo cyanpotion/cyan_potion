@@ -769,16 +769,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${maven.compiler.source}
                     </source>
                     <target>${maven.compiler.target}
                     </target>
-                    <meminitial>128m</meminitial>
-                    <maxmem>512m</maxmem>
-                    <fork>true</fork>
-                    <compilerVersion>${java.version}</compilerVersion>
                 </configuration>
             </plugin>
             <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
