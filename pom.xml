@@ -27,7 +27,7 @@
     </developers>
     <scm>
         <connection>scm:git:${project.url}.git</connection>
-        <developerConnection>${scm.connection}</developerConnection>
+        <developerConnection>${project.scm.connection}</developerConnection>
         <url>${project.url}</url>
         <tag>${project.version}</tag>
     </scm>
