@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.xenoamess.commonx.java.util.Arraysx.fillNew;
+import static com.xenoamess.commonx.java.util.Arraysx.fillNewSelf;
 import static com.xenoamess.commonx.java.util.concurrent.atomic.AtomicBooleanUtilsx.flip;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -71,12 +71,12 @@ public class Keymap {
 
     private final AtomicBoolean[][] rawKeys =
             new AtomicBoolean[][]{
-                    fillNew(new AtomicBoolean[GLFW_KEY_LAST + 1]),
-                    fillNew(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
-                    fillNew(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
-                    fillNew(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
+                    fillNewSelf(new AtomicBoolean[GLFW_KEY_LAST + 1]),
+                    fillNewSelf(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
+                    fillNewSelf(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
+                    fillNewSelf(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
 
-    private final AtomicBoolean[] myKeys = fillNew(new AtomicBoolean[2000]);
+    private final AtomicBoolean[] myKeys = fillNewSelf(new AtomicBoolean[2000]);
 
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
