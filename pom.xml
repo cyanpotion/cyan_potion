@@ -61,24 +61,17 @@
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <maven-site-plugin.version>RELEASE</maven-site-plugin.version>
-        <!--        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>-->
-        <maven-project-info-reports-plugin.version>RELEASE
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
-        <!--        <maven-project-info-reports-plugin>3.0.0</maven-project-info-reports-plugin>-->
-        <maven-javadoc-plugin.version>RELEASE</maven-javadoc-plugin.version>
-        <!--        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>-->
-        <maven-deploy-plugin.version>RELEASE</maven-deploy-plugin.version>
-        <!--        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>-->
-        <maven-source-plugin.version>RELEASE</maven-source-plugin.version>
-        <!--        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>-->
-        <maven-surefire-plugin.version>RELEASE</maven-surefire-plugin.version>
-        <!--        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>-->
-        <maven-compiler-plugin.version>RELEASE</maven-compiler-plugin.version>
-        <!--        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>-->
-        <maven-gpg-plugin.version>RELEASE</maven-gpg-plugin.version>
-        <!--        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>-->
-
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <junit.version>5.5.0-M1</junit.version>
+        <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -529,13 +522,11 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
@@ -606,8 +597,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -618,8 +607,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -641,7 +628,6 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
@@ -653,19 +639,22 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>RELEASE</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
         </dependency>
     </dependencies>
 
@@ -817,6 +806,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
     <reporting>
@@ -879,6 +873,20 @@
                     <!--                    <javadocExecutable>${java.home}/bin/javadoc.exe-->
                     <!--                    </javadocExecutable>-->
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
