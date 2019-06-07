@@ -51,7 +51,7 @@ public class GrammarMap {
         return METHOD_NUM_TO_METHOD_NAME_MAP.get(methodNum);
     }
 
-    public static int getMethodNum(String methodName) {
+    public static Integer getMethodNum(String methodName) {
         checkInit();
         return METHOD_NAME_TO_METHOD_NUM_MAP.get(methodName);
     }
