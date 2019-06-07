@@ -46,6 +46,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <dom4j.version>2.1.1</dom4j.version>
+        <eclipse-collections.version>9.2.0</eclipse-collections.version>
         <guava.version>27.1-jre</guava.version>
         <jackson.version>2.9.9</jackson.version>
         <joml.version>1.9.15</joml.version>
@@ -661,6 +662,16 @@
             <artifactId>versions-maven-plugin</artifactId>
             <version>${versions-maven-plugin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
+            <version>${eclipse-collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+            <version>${eclipse-collections.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -852,6 +863,20 @@
                                 <dependency>
                                     <groupId>org.dom4j</groupId>
                                     <artifactId>dom4j</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>eclipse-collections.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.eclipse.collections</groupId>
+                                    <artifactId>eclipse-collections-api
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.collections</groupId>
+                                    <artifactId>eclipse-collections</artifactId>
                                 </dependency>
                             </dependencies>
                         </property>
