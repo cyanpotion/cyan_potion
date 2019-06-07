@@ -39,6 +39,9 @@
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!---->
+        <!---->
+        <!--libraries versions-->
         <lwjgl.version>3.2.2</lwjgl.version>
         <joml.version>1.9.15</joml.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
@@ -48,7 +51,7 @@
         <commons-collections4.version>4.3</commons-collections4.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <log4j.version>2.11.2</log4j.version>
-        <JXInput.version>v1.0.0</JXInput.version>
+        <JXInput.version>1.0.0</JXInput.version>
         <guava.version>27.1-jre</guava.version>
         <!---->
         <!---->
@@ -66,11 +69,11 @@
         </maven-project-info-reports-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <junit.version>5.5.0-M1</junit.version>
+        <junit.version>5.5.0-RC1</junit.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     </properties>
 
@@ -810,6 +813,14 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>${versions-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>update-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -873,20 +884,6 @@
                     <!--                    <javadocExecutable>${java.home}/bin/javadoc.exe-->
                     <!--                    </javadocExecutable>-->
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>dependency-updates-report</report>
-                            <report>plugin-updates-report</report>
-                            <report>property-updates-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
         </plugins>
     </reporting>
