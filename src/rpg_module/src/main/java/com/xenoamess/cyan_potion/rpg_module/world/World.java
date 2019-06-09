@@ -26,12 +26,12 @@ package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTreeNode;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;

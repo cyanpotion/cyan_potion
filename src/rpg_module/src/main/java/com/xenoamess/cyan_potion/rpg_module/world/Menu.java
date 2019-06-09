@@ -25,11 +25,11 @@
 package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.atomic.AtomicBoolean;

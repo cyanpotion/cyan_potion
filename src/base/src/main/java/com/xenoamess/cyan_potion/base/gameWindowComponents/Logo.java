@@ -26,11 +26,11 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
+import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
-import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
