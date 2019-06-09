@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class GameTilesetJson implements Serializable {
             LoggerFactory.getLogger(GameTilesetJson.class);
 
     public int id;
-    public ArrayList<Integer> flags;
+    public IntArrayList flags;
     public int mode;
     public String name;
     public String note;

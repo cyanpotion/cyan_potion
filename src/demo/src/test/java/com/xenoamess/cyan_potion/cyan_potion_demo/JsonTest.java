@@ -27,36 +27,59 @@ package com.xenoamess.cyan_potion.cyan_potion_demo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author XenoAmess
  */
-public class ForceEntranceTest {
-    public static void main(String[] args) {
+public class JsonTest {
+
+    @Test
+    public void mainTest() throws Exception {
         ObjectMapper mapper = new XmlMapper();
-        try {
-            GameTilesetJson gameTilesetJson = new GameTilesetJson();
-            gameTilesetJson.flags = new ArrayList<>();
+
+        GameTilesetJson gameTilesetJson = new GameTilesetJson();
+        gameTilesetJson.flags = new IntArrayList();
+
+        new File("out").mkdir();
+
+        {
             gameTilesetJson.flags.add(1);
             gameTilesetJson.flags.add(3);
             gameTilesetJson.flags.add(5);
             gameTilesetJson.flags.add(3);
 //            mapper.writeValue(System.out, gameTilesetJson);
 //            System.out.println();
-            mapper.writeValue(new File("ForceEntranceTest.1.txt"), gameTilesetJson);
+            mapper.writeValue(new File("out/JsonTest.1.txt"), gameTilesetJson);
             GameTilesetJson gameTilesetJson2 =
-                    mapper.readValue(new File("ForceEntranceTest.1.txt"), gameTilesetJson.getClass());
+                    mapper.readValue(new File("out/JsonTest.1.txt"), gameTilesetJson.getClass());
             System.out.println(gameTilesetJson2);
-            JsonNode jsonNode = mapper.readTree(new File("ForceEntranceTest.1.txt"));
+            JsonNode jsonNode = mapper.readTree(new File("out/JsonTest.1.txt"));
             String json = mapper.writeValueAsString(jsonNode);
             System.out.println(json);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        IntArrayList intArrayList = new IntArrayList();
+        {
+            intArrayList.addPrimitive(1);
+            intArrayList.addPrimitive(3);
+            intArrayList.addPrimitive(5);
+            intArrayList.addPrimitive(3);
+            gameTilesetJson.flags = intArrayList;
+//            mapper.writeValue(System.out, gameTilesetJson);
+//            System.out.println();
+            mapper.writeValue(new File("out/JsonTest.1.txt"), gameTilesetJson);
+            GameTilesetJson gameTilesetJson2 =
+                    mapper.readValue(new File("out/JsonTest.1.txt"), gameTilesetJson.getClass());
+            System.out.println(gameTilesetJson2);
+            JsonNode jsonNode = mapper.readTree(new File("out/JsonTest.1.txt"));
+            String json = mapper.writeValueAsString(jsonNode);
+            System.out.println(json);
+        }
+
     }
 }

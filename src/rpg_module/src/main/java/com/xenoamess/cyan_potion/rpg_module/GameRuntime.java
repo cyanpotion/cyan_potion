@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.rpg_module;
 
+import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.cyan_potion.base.DataCenter;
-
-import java.util.ArrayList;
 
 /**
  * @author XenoAmess
@@ -34,8 +34,8 @@ import java.util.ArrayList;
 public class GameRuntime {
     private DataCenter dataCenter;
 
-    private final ArrayList<Boolean> runtimeSwitches = new ArrayList<>();
-    private final ArrayList<Integer> runtimeIntegerVariables = new ArrayList<>();
+    private final BooleanArrayList runtimeSwitches = new BooleanArrayList();
+    private final IntArrayList runtimeIntegerVariables = new IntArrayList();
 
 
     //TODO
@@ -64,11 +64,11 @@ public class GameRuntime {
         this.dataCenter = dataCenter;
     }
 
-    public ArrayList<Boolean> getRuntimeSwitches() {
+    public BooleanArrayList getRuntimeSwitches() {
         return runtimeSwitches;
     }
 
-    public ArrayList<Integer> getRuntimeIntegerVariables() {
+    public IntArrayList getRuntimeIntegerVariables() {
         return runtimeIntegerVariables;
     }
 }

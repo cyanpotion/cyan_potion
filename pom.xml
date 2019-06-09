@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.140.0</version>
+    <version>0.141.2</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -27,7 +27,7 @@
     </developers>
     <scm>
         <connection>scm:git:${project.url}.git</connection>
-        <developerConnection>${scm.connection}</developerConnection>
+        <developerConnection>${project.scm.connection}</developerConnection>
         <url>${project.url}</url>
         <tag>${project.version}</tag>
     </scm>
@@ -39,24 +39,72 @@
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <lwjgl.version>3.2.2</lwjgl.version>
-        <joml.version>1.9.15</joml.version>
-        <steamworks4j.version>1.8.0</steamworks4j.version>
-        <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
-        <jackson.version>2.9.9</jackson.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <!---->
+        <!---->
+        <!--libraries versions-->
         <commons-collections4.version>4.3</commons-collections4.version>
-        <slf4j.version>1.8.0-beta4</slf4j.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <dom4j.version>2.1.1</dom4j.version>
+        <eclipse-collections.version>10.0.0.M3</eclipse-collections.version>
+        <guava.version>27.1-jre</guava.version>
+        <jackson.version>2.9.9</jackson.version>
+        <joml.version>1.9.15</joml.version>
         <log4j.version>2.11.2</log4j.version>
-        <JXInput.version>v1.0.0</JXInput.version>
-        <x8l.version>0.47.1</x8l.version>
-        <multi_language.version>0.43.3</multi_language.version>
+        <lwjgl.version>3.2.2</lwjgl.version>
+        <slf4j.version>1.8.0-beta4</slf4j.version>
+        <steamworks4j.version>1.8.0</steamworks4j.version>
+        <JXInput.version>1.0.0</JXInput.version>
+        <!---->
+        <!---->
+        <!--home made libraries versions-->
+        <commonx.version>0.8.0</commonx.version>
+        <multi_language.version>0.43.4</multi_language.version>
+        <x8l.version>0.47.3</x8l.version>
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
-        <guava.version>27.1-jre</guava.version>
-        <commonx.version>0.4.0</commonx.version>
+        <!---->
+        <!---->
+        <!--maven plugins versions-->
+        <junit-jupiter.version>5.5.0-RC1</junit-jupiter.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
+        <maven-project-info-reports-plugin.version>3.0.0
+        </maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
+        <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     </properties>
+
     <profiles>
+        <profile>
+            <id>ossrh</id>
+            <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>lwjgl-natives-linux</id>
             <activation>
@@ -493,7 +541,7 @@
         <dependency>
             <groupId>com.code-disaster.steamworks4j</groupId>
             <artifactId>steamworks4j-server</artifactId>
-            <version>${steamworks4j-server.version}</version>
+            <version>${steamworks4j.version}</version>
         </dependency>
 
         <dependency>
@@ -504,17 +552,20 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
@@ -553,8 +604,6 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>com.github.StrikerX3</groupId>
             <artifactId>JXInput</artifactId>
@@ -576,8 +625,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -588,8 +635,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -611,7 +656,6 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
@@ -623,18 +667,32 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
+            <version>${eclipse-collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+            <version>${eclipse-collections.version}</version>
         </dependency>
     </dependencies>
 
@@ -661,17 +719,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>${maven-site-plugin.version}
+                </version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-project-info-reports-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <locale>en</locale>
                     <show>private</show>
@@ -739,12 +798,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>${maven-deploy-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -757,34 +816,683 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}
                     </source>
                     <target>${maven.compiler.target}
                     </target>
-                    <meminitial>128m</meminitial>
-                    <maxmem>512m</maxmem>
-                    <fork>true</fork>
-                    <compilerVersion>${java.version}</compilerVersion>
                 </configuration>
             </plugin>
-            <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+                <configuration>
+                    <allowSnapshots>false</allowSnapshots>
+                    <properties>
+                        <property>
+                            <name>commons-collections4.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.commons</groupId>
+                                    <artifactId>commons-collections4
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>commons-io.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>commons-io</groupId>
+                                    <artifactId>commons-io</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>commons-lang3.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.commons</groupId>
+                                    <artifactId>commons-lang3</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>dom4j.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.dom4j</groupId>
+                                    <artifactId>dom4j</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>eclipse-collections.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.eclipse.collections</groupId>
+                                    <artifactId>eclipse-collections-api
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.collections</groupId>
+                                    <artifactId>eclipse-collections</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>guava.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.google.guava</groupId>
+                                    <artifactId>guava</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>jackson.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.fasterxml.jackson.core
+                                    </groupId>
+                                    <artifactId>jackson-core</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>com.fasterxml.jackson.core
+                                    </groupId>
+                                    <artifactId>jackson-databind
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>com.fasterxml.jackson.module
+                                    </groupId>
+                                    <artifactId>
+                                        jackson-module-parameter-names
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>
+                                        com.fasterxml.jackson.datatype
+                                    </groupId>
+                                    <artifactId>jackson-datatype-jdk8
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>
+                                        com.fasterxml.jackson.datatype
+                                    </groupId>
+                                    <artifactId>jackson-datatype-jsr310
+                                    </artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>
+                                        com.fasterxml.jackson.dataformat
+                                    </groupId>
+                                    <artifactId>jackson-dataformat-xml
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>joml.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.joml</groupId>
+                                    <artifactId>joml</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>log4j.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.logging.log4j
+                                    </groupId>
+                                    <artifactId>log4j-api</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.apache.logging.log4j
+                                    </groupId>
+                                    <artifactId>log4j-core</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.apache.logging.log4j
+                                    </groupId>
+                                    <artifactId>log4j-bom</artifactId>
+                                    <type>pom</type>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.apache.logging.log4j
+                                    </groupId>
+                                    <artifactId>log4j-slf4j-impl
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>lwjgl.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-assimp</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-bgfx</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-cuda</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-egl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-glfw</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-jawt</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-jemalloc</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-libdivide</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-llvm</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-lmdb</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-lz4</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-meow</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nanovg</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nfd</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nuklear</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-odbc</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-openal</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opencl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opengl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opengles</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-openvr</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opus</artifactId>
+                                </dependency>
+                                <!--        <dependency>-->
+                                <!--            <groupId>org.lwjgl</groupId>-->
+                                <!--            <artifactId>lwjgl-ovr</artifactId>-->
+                                <!--            -->
+                                <!--        </dependency>-->
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-par</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-remotery</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-rpmalloc</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-sse</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-stb</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tinyexr</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tinyfd</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tootle</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-vma</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-vulkan</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-xxhash</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-yoga</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-zstd</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-assimp</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-bgfx</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-glfw</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-jemalloc</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-libdivide</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-llvm</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-lmdb</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-lz4</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-meow</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nanovg</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nfd</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-nuklear</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-openal</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opengl</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opengles</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-openvr</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-opus</artifactId>
+                                </dependency>
+                                <!--        <dependency>-->
+                                <!--            <groupId>org.lwjgl</groupId>-->
+                                <!--            <artifactId>lwjgl-ovr</artifactId>-->
+                                <!--        </dependency>-->
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-par</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-remotery</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-rpmalloc</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-sse</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-stb</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tinyexr</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tinyfd</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-tootle</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-vma</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-xxhash</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-yoga</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.lwjgl</groupId>
+                                    <artifactId>lwjgl-zstd</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>slf4j.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-log4j12</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>steamworks4j.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>
+                                        com.code-disaster.steamworks4j
+                                    </groupId>
+                                    <artifactId>steamworks4j</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>
+                                        com.code-disaster.steamworks4j
+                                    </groupId>
+                                    <artifactId>steamworks4j-server
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>JXInput.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.github.StrikerX3</groupId>
+                                    <artifactId>JXInput</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>JXInput.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.github.StrikerX3</groupId>
+                                    <artifactId>JXInput</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <!---->
+                        <!---->
+                        <!--home made libraries versions-->
+                        <property>
+                            <name>commonx.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.xenoamess</groupId>
+                                    <artifactId>commonx</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>multi_language.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.xenoamess</groupId>
+                                    <artifactId>multi_language</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>x8l.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.xenoamess</groupId>
+                                    <artifactId>x8l</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>SDL_GameControllerDB_Util.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.xenoamess.cyan_potion</groupId>
+                                    <artifactId>SDL_GameControllerDB_Util
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <!---->
+                        <!---->
+                        <!--maven plugins versions-->
+                        <property>
+                            <name>junit-jupiter.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.junit.jupiter</groupId>
+                                    <artifactId>junit-jupiter-api</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.junit.jupiter</groupId>
+                                    <artifactId>junit-jupiter-engine
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-compiler-plugin.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-compiler-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-deploy-plugin.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-deploy-plugin</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-enforcer-plugin.version</name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-enforcer-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-gpg-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-gpg-plugin</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-javadoc-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-javadoc-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-project-info-reports-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>
+                                        maven-project-info-reports-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-site-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-site-plugin</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-source-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-source-plugin</artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>maven-surefire-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-surefire-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>properties-maven-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>properties-maven-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>templating-maven-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>templating-maven-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                        <property>
+                            <name>versions-maven-plugin.version
+                            </name>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>versions-maven-plugin
+                                    </artifactId>
+                                </dependency>
+                            </dependencies>
+                        </property>
+                    </properties>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>sign</goal>
+                            <goal>update-properties</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -796,7 +1504,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <locale>en</locale>
                     <show>private</show>
