@@ -4,6 +4,7 @@
 /target/
 
 **/target
+**/out
 *.iml
 **/.idea
 *.class

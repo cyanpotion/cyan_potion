@@ -46,7 +46,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <eclipse-collections.version>9.2.0</eclipse-collections.version>
+        <eclipse-collections.version>10.0.0.M3</eclipse-collections.version>
         <guava.version>27.1-jre</guava.version>
         <jackson.version>2.9.9</jackson.version>
         <joml.version>1.9.15</joml.version>
@@ -58,7 +58,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.7.0</commonx.version>
+        <commonx.version>0.8.0</commonx.version>
         <multi_language.version>0.43.4</multi_language.version>
         <x8l.version>0.47.3</x8l.version>
         <SDL_GameControllerDB_Util.version>0.1.2
