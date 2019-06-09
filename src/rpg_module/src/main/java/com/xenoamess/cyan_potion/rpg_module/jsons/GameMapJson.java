@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +92,7 @@ public class GameMapJson implements Serializable {
      * content
      */
 
-    public ArrayList<Integer> data;
+    public IntArrayList data;
     public ArrayList<EventUnitJson> events;
 
 

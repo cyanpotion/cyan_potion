@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -67,7 +68,7 @@ public class Keymap {
 
     private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
 
-    private final Map<Key, ArrayList> keymapReverse = new ConcurrentHashMap<>();
+    private final Map<Key, List> keymapReverse = new ConcurrentHashMap<>();
 
     private final AtomicBoolean[][] rawKeys =
             new AtomicBoolean[][]{
@@ -130,9 +131,9 @@ public class Keymap {
 
     public Key put(Key rawKey, Key myKey) {
         Key res = getKeymap().put(rawKey, myKey);
-        ArrayList rawInputKeys = getKeymapReverse().get(myKey);
+        List<Key> rawInputKeys = getKeymapReverse().get(myKey);
         if (rawInputKeys == null) {
-            rawInputKeys = new ArrayList<Integer>();
+            rawInputKeys = new ArrayList<>();
             getKeymapReverse().put(myKey, rawInputKeys);
         }
         rawInputKeys.add(rawKey);
@@ -176,7 +177,7 @@ public class Keymap {
     /**
      * @return the map to convert my-key-type to raw-key-type
      */
-    public Map<Key, ArrayList> getKeymapReverse() {
+    public Map<Key, List> getKeymapReverse() {
         return keymapReverse;
     }
 

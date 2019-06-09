@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,8 +87,8 @@ public class GameSystemJson implements Serializable {
     public String gameTitle;
     public GameMusicJson gameoverMe;
     public String locale;
-    public ArrayList<Integer> magicSkills;
-    public ArrayList<Boolean> menuCommands;
+    public IntArrayList magicSkills;
+    public BooleanArrayList menuCommands;
     public boolean optDisplayTp;
     public boolean optDrawTitle;
     public boolean optExtraExp;
@@ -95,7 +97,7 @@ public class GameSystemJson implements Serializable {
     public boolean optSideView;
     public boolean optSlipDeath;
     public boolean optTransparent;
-    public ArrayList<Integer> partyMembers;
+    public IntArrayList partyMembers;
 
     public ShipJson ship;
     public ArrayList<String> skillTypes;
@@ -173,7 +175,7 @@ public class GameSystemJson implements Serializable {
 
     static class BattlerJson implements Serializable {
         public int actorId;
-        public ArrayList<Integer> equips;
+        public IntArrayList equips;
         public int level;
     }
 
@@ -188,7 +190,7 @@ public class GameSystemJson implements Serializable {
     public int versionId;
     public GameMusicJson victoryMe;
     public ArrayList<String> weaponTypes;
-    public ArrayList<Integer> windowTone;
+    public IntArrayList windowTone;
 
     public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper,
                                                    File getGameSystemJsonFile) {
