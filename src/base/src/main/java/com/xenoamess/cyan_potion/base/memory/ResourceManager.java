@@ -98,7 +98,7 @@ public class ResourceManager implements AutoCloseable {
             resourceClass =
                     this.getClass().getClassLoader().loadClass(resourceClassName);
         } catch (ClassNotFoundException e) {
-            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null", fullResourceURI,
+            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null:{},{}", fullResourceURI,
                     resourceClassName, e);
         }
         if (resourceClass == null) {
@@ -155,7 +155,7 @@ public class ResourceManager implements AutoCloseable {
                 this.putResourceWithShortenURI(shortenResourceURI, res);
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI)" +
-                        " fails:", tClass, shortenResourceURI, e);
+                        " fails:{},{}", tClass, shortenResourceURI, e);
             }
         }
         return res;
@@ -178,7 +178,7 @@ public class ResourceManager implements AutoCloseable {
                 try {
                     ((AutoCloseable) object).close();
                 } catch (Exception e) {
-                    LOGGER.error("close fails:", object, e);
+                    LOGGER.error("close fails:{}", object, e);
                 }
             }
         }

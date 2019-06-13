@@ -151,7 +151,7 @@ public class GameWindow implements AutoCloseable, Area {
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,
                     openglVersionMinor);
         } catch (Exception e) {
-            LOGGER.error("GameWindow.setOpenglVersion(String openglVersion) fails", openglVersion, e);
+            LOGGER.error("GameWindow.setOpenglVersion(String openglVersion) fails:{}", openglVersion, e);
         }
     }
 

@@ -539,10 +539,10 @@ public class GameManager implements AutoCloseable {
         this.close();
     }
 
-    protected void solveEvents() {
+    public void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
-            /**
+            /*
              * notice that newEventList must be a thread safe collection.
              */
             final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();

@@ -64,7 +64,7 @@ public class CodePluginManager {
                         res = (Function<GameManager, Void>) field.get(null);
                     }
                 } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                    LOGGER.error("getCodePluginFunctionFromString(String codePluginString) fails", codePluginString, e);
+                    LOGGER.error("getCodePluginFunctionFromString(String codePluginString) fails:{}", codePluginString, e);
                 }
                 break;
             default:

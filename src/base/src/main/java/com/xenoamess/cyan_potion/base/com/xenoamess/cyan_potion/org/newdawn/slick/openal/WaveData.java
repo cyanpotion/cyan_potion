@@ -99,7 +99,7 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(path.openStream())));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(URL path) fails", path, e);
+            LOGGER.warn("WaveData.create(URL path) fails:{}", path, e);
         }
         return res;
     }
@@ -125,7 +125,7 @@ public class WaveData {
         try {
             res = create(AudioSystem.getAudioInputStream(inputStream));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(InputStream inputStream) fails", inputStream, e);
+            LOGGER.warn("WaveData.create(InputStream inputStream) fails:{}", inputStream, e);
         }
         return res;
     }
@@ -143,7 +143,7 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(byte[] buffer) fails", buffer, e);
+            LOGGER.warn("WaveData.create(byte[] buffer) fails:{}", buffer, e);
         }
         return res;
 
@@ -169,7 +169,7 @@ public class WaveData {
             }
             res = create(bytes);
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails", buffer, e);
+            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails:{}", buffer, e);
 
         }
         return res;

@@ -69,7 +69,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
                     (AbstractGameWindowComponent) DataCenter.class.getClassLoader().loadClass(gameWindowComponentClassName).getConstructor(GameWindow.class).newInstance(gameWindow);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             LOGGER.error("AbstractGameWindowComponent.createGameWindowComponentFromClassName(GameWindow gameWindow, " +
-                    "String gameWindowComponentClassName) fails", gameWindow, gameWindowComponentClassName, e);
+                    "String gameWindowComponentClassName) fails:{},{}", gameWindow, gameWindowComponentClassName, e);
             System.exit(-1);
         }
         return gameWindowComponent;

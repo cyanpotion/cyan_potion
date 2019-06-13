@@ -69,7 +69,7 @@ public class GamepadInputTest {
         try {
             device = XInputDevice.getDeviceFor(nowI);
         } catch (XInputNotLoadedException e) {
-            LOGGER.error("XInputDevice.getDeviceFor(nowI) returns null", nowI, e);
+            LOGGER.error("XInputDevice.getDeviceFor(nowI) returns null:{}", nowI, e);
         }
         assert (device != null);
 
