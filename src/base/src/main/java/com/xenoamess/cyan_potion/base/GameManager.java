@@ -578,7 +578,7 @@ public class GameManager implements AutoCloseable {
 
             mainThreadEventProcessPairs.forEach((ImmutablePair<EventProcessor, Event> pair) -> {
                 Event res = pair.left.apply(pair.right);
-                if (res != pair.right) {
+                if (res != null && res != pair.right) {
                     newEventList.add(res);
                 }
             });
