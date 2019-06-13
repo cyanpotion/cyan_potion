@@ -349,11 +349,10 @@ public class TitleExample extends AbstractGameWindowComponent {
     ) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
         getControllableGameWindowComponents().forEach(
-                (AbstractControllableGameWindowComponent controllableGameWindowComponent) -> {
-                    controllableGameWindowComponent.addToGameWindowComponentTree(
-                            TitleExample.this.getGameWindowComponentTreeNode()
-                    );
-                }
+                (AbstractControllableGameWindowComponent controllableGameWindowComponent)
+                        -> controllableGameWindowComponent.addToGameWindowComponentTree(
+                        TitleExample.this.getGameWindowComponentTreeNode()
+                )
         );
     }
 

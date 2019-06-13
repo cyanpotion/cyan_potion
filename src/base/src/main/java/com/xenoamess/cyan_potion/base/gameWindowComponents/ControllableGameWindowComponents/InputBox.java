@@ -70,9 +70,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
         this.registerOnMouseLeaveAreaCallback(
-                (Event event) -> {
-                    return InputBox.this.onMouseButtonLeftUp(null);
-                }
+                (Event event) -> InputBox.this.onMouseButtonLeftUp(null)
         );
 
         this.registerOnMouseButtonLeftUpCallback(
