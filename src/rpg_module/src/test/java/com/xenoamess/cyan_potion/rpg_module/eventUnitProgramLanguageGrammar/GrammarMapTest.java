@@ -40,5 +40,6 @@ public class GrammarMapTest {
                 sb.append("{\"code\":" + i + ", \"indent\":0, \"parameters\": []},");
             }
         }
+        System.out.println(sb.toString());
     }
 }

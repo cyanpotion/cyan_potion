@@ -78,18 +78,7 @@ public class ResourceManager implements AutoCloseable {
 
         LOGGER.debug("putResource {}", fullResourceURI);
 
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-
-        for (; i < fullResourceURI.length(); i++) {
-            if (fullResourceURI.charAt(i) == ':') {
-                i++;
-                break;
-            }
-            sb.append(fullResourceURI.charAt(i));
-        }
-
-        this.putResourceWithShortenURI(fullResourceURI.substring(i), t);
+        this.putResourceWithShortenURI(fullResourceURI.substring(fullResourceURI.indexOf(':')), t);
     }
 
 
