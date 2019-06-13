@@ -378,9 +378,9 @@ public class Font extends AbstractResource {
             float minY = Float.MAX_VALUE;
             float maxY = Float.MIN_VALUE;
 
-            for (int i = 0; i < text.length(); i++) {
+            for (char chr : text.toCharArray()) {
                 stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
-                        text.charAt(i), getXb(), getYb(), getQ(), false);
+                        chr, getXb(), getYb(), getQ(), false);
                 minY = Math.min(minY, getQ().y0());
                 maxY = Math.max(maxY, getQ().y1());
             }
