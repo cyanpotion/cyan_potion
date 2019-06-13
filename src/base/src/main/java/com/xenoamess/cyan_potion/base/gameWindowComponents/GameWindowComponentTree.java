@@ -52,8 +52,33 @@ public class GameWindowComponentTree implements AutoCloseable {
     private GameWindowComponentTreeNode root = null;
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
-    public Set<GameWindowComponentTreeNode> getLeafNodes() {
-        return leafNodes;
+    protected void leafNodesAdd(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        synchronized (leafNodes) {
+            leafNodes.add(gameWindowComponentTreeNode);
+        }
+    }
+
+    protected void leafNodesRemove(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        synchronized (leafNodes) {
+            leafNodes.remove(gameWindowComponentTreeNode);
+        }
+    }
+
+    protected GameWindowComponentTreeNode leafNodesFirst() {
+        GameWindowComponentTreeNode res = null;
+        synchronized (leafNodes) {
+            Iterator<GameWindowComponentTreeNode> iterator = leafNodes.iterator();
+            if (iterator.hasNext()) {
+                res = iterator.next();
+            }
+        }
+        return res;
+    }
+
+    protected void leafNodesClear() {
+        synchronized (leafNodes) {
+            leafNodes.clear();
+        }
     }
 
     public List<GameWindowComponentTreeNode> getAllNodes() {
@@ -64,7 +89,7 @@ public class GameWindowComponentTree implements AutoCloseable {
 
     private void getAllNodes(GameWindowComponentTreeNode nowNode,
                              List<GameWindowComponentTreeNode> res) {
-        for (GameWindowComponentTreeNode au : nowNode.getChildren()) {
+        for (GameWindowComponentTreeNode au : nowNode.childrenCopy()) {
             getAllNodes(au, res);
         }
         res.add(nowNode);
@@ -116,7 +141,7 @@ public class GameWindowComponentTree implements AutoCloseable {
                 };
 
         this.setRoot(new GameWindowComponentTreeNode(this, null, baseComponent));
-        this.getLeafNodes().add(this.getRoot());
+        this.leafNodesAdd(this.getRoot());
     }
 
     @Override
@@ -124,8 +149,7 @@ public class GameWindowComponentTree implements AutoCloseable {
         if (getRoot() != null) {
             getRoot().close();
         }
-
-        getLeafNodes().clear();
+        this.leafNodes.clear();
     }
 
     public Set<Event> process(Event event) {
@@ -143,18 +167,15 @@ public class GameWindowComponentTree implements AutoCloseable {
     }
 
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
-        Iterator<GameWindowComponentTreeNode> it =
-                this.getLeafNodes().iterator();
-        assert (it.hasNext());
-        return it.next().newNode(gameWindowComponent);
+        return this.leafNodesFirst().newNode(gameWindowComponent);
     }
 
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().findNode(gameWindowComponent);
     }
 
-    public GameWindowComponentTreeNode findNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        return this.getRoot().findNode(gameWindowComponentTreeNode);
+    public boolean contains(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        return this.getRoot().childrenTreeContains(gameWindowComponentTreeNode);
     }
 
     public boolean deleteNode(AbstractGameWindowComponent gameWindowComponent) {

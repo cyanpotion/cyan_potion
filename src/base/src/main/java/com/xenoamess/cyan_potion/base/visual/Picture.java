@@ -249,10 +249,4 @@ public class Picture implements Area {
                 Objects.equals(getBindable(), picture.getBindable()) &&
                 Objects.equals(getColorScale(), picture.getColorScale());
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getBindable(), getCenterPosX(), getCenterPosY(), getWidth(), getHeight(), getColorScale()
-                , getRotateRadius());
-    }
 }

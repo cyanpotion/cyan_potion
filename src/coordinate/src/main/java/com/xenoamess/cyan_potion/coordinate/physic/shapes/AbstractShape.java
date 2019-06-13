@@ -350,11 +350,6 @@ public abstract class AbstractShape implements Area {
                 Objects.equals(getSize(), that.getSize());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEntity(), getCenterPos(), getSize());
-    }
-
     public AbstractEntity getEntity() {
         return entity;
     }

@@ -136,9 +136,4 @@ public abstract class AbstractEntity implements Area {
                 Objects.equals(getShape(), that.getShape()) &&
                 Objects.equals(getPicture(), that.getPicture());
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getScene(), getCenterPos(), getSize(), getShape(), getPicture());
-    }
 }

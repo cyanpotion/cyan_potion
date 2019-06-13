@@ -87,11 +87,6 @@ public class Unit extends AbstractDynamicEntity {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), isMoving(), getMovement(), getMoveSpeed(), getFaceDir(), isCanMove());
-    }
-
-    @Override
     public void update() {
         if (!this.isCanMove()) {
             this.getMovement().set(0, 0);
