@@ -46,6 +46,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -210,6 +212,7 @@ public class GameWindow implements AutoCloseable, Area {
             glfwGetWindowSize(getWindow(), pWidth, pHeight);
             // Get the resolution of the primary monitor
             GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            Objects.requireNonNull(vidMode);
             // Center the window
             glfwSetWindowPos(getWindow(), (vidMode.width() - pWidth[0]) / 2,
                     (vidMode.height() - pHeight[0]) / 2);

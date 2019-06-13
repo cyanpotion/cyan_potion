@@ -37,7 +37,7 @@ public class GrammarMapTest {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i <= 1000; i++) {
             if (StringUtils.isBlank(GrammarMap.getMethodName(i))) {
-                sb.append("{\"code\":" + i + ", \"indent\":0, \"parameters\": []},");
+                sb.append("{\"code\":").append(i).append(", \"indent\":0, \"parameters\": []},");
             }
         }
         System.out.println(sb.toString());

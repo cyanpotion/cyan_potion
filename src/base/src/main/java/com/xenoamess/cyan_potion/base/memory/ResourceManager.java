@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -220,8 +221,7 @@ public class ResourceManager implements AutoCloseable {
     }
 
     public void forceGc() {
-        getInMemoryResources().sort((o1, o2) ->
-                Long.compare(o1.getLastUsedFrameIndex(), o2.getLastUsedFrameIndex()));
+        getInMemoryResources().sort(Comparator.comparingLong(AbstractResource::getLastUsedFrameIndex));
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
             if (nowResource.isInMemory()) {

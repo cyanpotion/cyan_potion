@@ -131,17 +131,16 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     }
 
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
-        GameWindowComponentTreeNode res = null;
         if (this.getGameWindowComponent() == gameWindowComponent) {
             return this;
         }
         for (GameWindowComponentTreeNode au : this.getChildren()) {
-            res = au.findNode(gameWindowComponent);
-            if (res != null) {
-                return res;
+            GameWindowComponentTreeNode tmp = au.findNode(gameWindowComponent);
+            if (tmp != null) {
+                return tmp;
             }
         }
-        return res;
+        return null;
     }
 
     public GameWindowComponentTreeNode findNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
@@ -197,7 +196,8 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getGameWindowComponentTree(), getParent(), getDepth(), getGameWindowComponent(), getChildren());
+        return Objects.hash(getGameWindowComponentTree(), getParent(), getDepth(), getGameWindowComponent(),
+                getChildren());
     }
 
     public AbstractGameWindowComponent getGameWindowComponent() {
