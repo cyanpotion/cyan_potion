@@ -154,9 +154,6 @@ public class FileUtil {
 
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
-        if (resUrl == null) {
-            throw new IllegalArgumentException("FileUtil.getFile(String resourceFilePath) fail:" + resourceFilePath);
-        }
         return new File(resUrl.getFile().replaceAll("%20", " "));
     }
 
@@ -169,7 +166,7 @@ public class FileUtil {
     }
 
     public static URI getURI(String resourceFilePath) {
-        URI res = null;
+        URI res;
         try {
             res = getURL(resourceFilePath).toURI();
         } catch (URISyntaxException e) {
@@ -178,10 +175,45 @@ public class FileUtil {
         return res;
     }
 
+    public static File createFileIfAbsent(String resourceFilePath) {
+        File file;
+        try {
+            file = getFile(resourceFilePath);
+        } catch (IllegalArgumentException e) {
+            int indexSlash = resourceFilePath.lastIndexOf('/');
+            File parentFolder = createFolderIfAbsent(resourceFilePath.substring(0, indexSlash));
+            file = new File(parentFolder.getAbsolutePath() + resourceFilePath.substring(indexSlash));
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                throw new IllegalArgumentException("FileUtil.createFileIfAbsent(String resourceFilePath) fail:" + resourceFilePath, ex);
+            }
+        }
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("FileUtil.createFileIfAbsent(String resourceFilePath) fail:" + resourceFilePath + " exist and is not a file.");
+        }
+        return file;
+    }
+
+    public static File createFolderIfAbsent(String resourceFilePath) {
+        File folder;
+        try {
+            folder = getFile(resourceFilePath);
+        } catch (IllegalArgumentException e) {
+            int indexSlash = resourceFilePath.lastIndexOf('/');
+            File parentFolder = createFolderIfAbsent(resourceFilePath.substring(0, indexSlash));
+            folder = new File(parentFolder.getAbsolutePath() + resourceFilePath.substring(indexSlash));
+            folder.mkdirs();
+        }
+        if (!folder.isDirectory()) {
+            throw new IllegalArgumentException("FileUtil.createFileIfAbsent(String resourceFilePath) fail:" + resourceFilePath + " exist and is not a folder.");
+        }
+        return folder;
+    }
 
     public static String loadFile(InputStream inputStream) {
         assert (inputStream != null);
-        String res = "";
+        String res;
         try (
                 BufferedReader bufferedReader =
                         new BufferedReader(new InputStreamReader(inputStream))
@@ -204,7 +236,7 @@ public class FileUtil {
     }
 
     public static String loadFile(String resourceFilePath) {
-        String res = "";
+        String res;
         try (InputStream inputStream = getURL(resourceFilePath).openStream()) {
             res = loadFile(inputStream);
         } catch (IOException e) {
@@ -218,7 +250,7 @@ public class FileUtil {
         if (file == null || !file.exists() || !file.isFile()) {
             throw new IllegalArgumentException("FileUtil.loadFile(File file) fails:" + file);
         }
-        String res = "";
+        String res;
         try (FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile())) {
             res = loadFile(fileInputStream);
         } catch (IOException e) {

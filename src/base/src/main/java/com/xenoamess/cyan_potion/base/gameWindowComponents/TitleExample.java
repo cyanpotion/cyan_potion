@@ -280,20 +280,12 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_UP:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        lastState();
-                    }
-                    break;
-                case Keymap.XENOAMESS_KEY_DOWN:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        nextState();
-                    }
-                    break;
                 case Keymap.XENOAMESS_KEY_LEFT:
                     if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         lastState();
                     }
                     break;
+                case Keymap.XENOAMESS_KEY_DOWN:
                 case Keymap.XENOAMESS_KEY_RIGHT:
                     if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         nextState();
@@ -403,8 +395,6 @@ public class TitleExample extends AbstractGameWindowComponent {
                 setState(-101);
                 break;
             case -2:
-                setState(-201);
-                break;
             case -3:
                 setState(-201);
                 break;

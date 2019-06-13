@@ -100,6 +100,8 @@ public class ResourceManager implements AutoCloseable {
         } catch (ClassNotFoundException e) {
             LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null", fullResourceURI,
                     resourceClassName, e);
+        }
+        if (resourceClass == null) {
             return null;
         }
 
@@ -219,8 +221,7 @@ public class ResourceManager implements AutoCloseable {
 
     public void forceGc() {
         getInMemoryResources().sort((o1, o2) ->
-                o1.getLastUsedFrameIndex() < o2.getLastUsedFrameIndex() ? -1 :
-                        o1.getLastUsedFrameIndex() == o2.getLastUsedFrameIndex() ? 0 : 1);
+                Long.compare(o1.getLastUsedFrameIndex(), o2.getLastUsedFrameIndex()));
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
         for (AbstractResource nowResource : getInMemoryResources()) {
             if (nowResource.isInMemory()) {

@@ -210,7 +210,7 @@ public abstract class AbstractShape implements Area {
     }
 
     public static <T extends AbstractShape> T copy(T source) {
-        T res = null;
+        T res;
         try {
             Constructor<? extends AbstractShape> constructor =
                     source.getClass().getDeclaredConstructor(source.getClass());
@@ -308,12 +308,7 @@ public abstract class AbstractShape implements Area {
                 oldBoxes.remove(au);
             } else {
                 Set<AbstractShape> shapes =
-                        this.getEntity().getScene().getBoxToShapeMap().get(au);
-                if (shapes == null) {
-                    shapes = new HashSet<>();
-                    this.getEntity().getScene().getBoxToShapeMap().put(au,
-                            shapes);
-                }
+                        this.getEntity().getScene().getBoxToShapeMap().computeIfAbsent(au, k -> new HashSet<>());
                 shapes.add(this);
             }
         }

@@ -100,8 +100,6 @@ public class MouseButtonEvent implements Event {
                 getMods());
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
-                gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_MOUSE, getKey()));
-                break;
             case GLFW.GLFW_PRESS:
                 gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_MOUSE, getKey()));
                 break;

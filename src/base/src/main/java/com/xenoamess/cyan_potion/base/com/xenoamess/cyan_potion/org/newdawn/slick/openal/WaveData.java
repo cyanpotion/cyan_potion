@@ -160,7 +160,7 @@ public class WaveData {
     public static WaveData create(ByteBuffer buffer) {
         WaveData res = null;
         try {
-            byte[] bytes = null;
+            byte[] bytes;
             if (buffer.hasArray()) {
                 bytes = buffer.array();
             } else {
@@ -186,7 +186,7 @@ public class WaveData {
         AudioFormat audioformat = ais.getFormat();
 
         // get channels
-        int channels = 0;
+        int channels;
         if (audioformat.getChannels() == 1) {
             if (audioformat.getSampleSizeInBits() == 8) {
                 channels = AL10.AL_FORMAT_MONO8;
@@ -213,7 +213,7 @@ public class WaveData {
                         * (int) ais.getFrameLength()
                         * audioformat.getSampleSizeInBits()
                         / 8];
-        int read = 0;
+        int read;
         int total = 0;
 
         try {

@@ -131,11 +131,7 @@ public class Keymap {
 
     public Key put(Key rawKey, Key myKey) {
         Key res = getKeymap().put(rawKey, myKey);
-        List<Key> rawInputKeys = getKeymapReverse().get(myKey);
-        if (rawInputKeys == null) {
-            rawInputKeys = new ArrayList<>();
-            getKeymapReverse().put(myKey, rawInputKeys);
-        }
+        List<Key> rawInputKeys = getKeymapReverse().computeIfAbsent(myKey, k -> new ArrayList<>());
         rawInputKeys.add(rawKey);
 
         return res;

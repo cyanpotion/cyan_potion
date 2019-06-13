@@ -128,8 +128,6 @@ public class TextureUtils {
                 columnNum = 1;
                 break;
             case "B":
-                columnNum = 2;
-                break;
             case "C":
                 columnNum = 2;
                 break;

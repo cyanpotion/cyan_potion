@@ -309,21 +309,12 @@ public class World extends AbstractEntityScene {
 
         for (StaticEntity staticEntity : this.getStaticEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.get(Math.round(staticEntity.getCenterPos().z));
-            if (entities == null) {
-                entities = new ArrayList<>();
-                layerToEntities.put(Math.round(staticEntity.getCenterPos().z)
-                        , entities);
-            }
+                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getCenterPos().z), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.get(Math.round(dynamicEntity.getCenterPos().z));
-            if (entities == null) {
-                entities = new ArrayList<>();
-                layerToEntities.put(Math.round(dynamicEntity.getCenterPos().z), entities);
-            }
+                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getCenterPos().z), k -> new ArrayList<>());
             entities.add(dynamicEntity);
         }
 

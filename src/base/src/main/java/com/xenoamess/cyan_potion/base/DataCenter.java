@@ -77,7 +77,7 @@ public class DataCenter {
 
 
     public static boolean isWindows() {
-        return System.getProperties().getProperty("os.name").toUpperCase().indexOf("WINDOWS") != -1;
+        return System.getProperties().getProperty("os.name").toUpperCase().contains("WINDOWS");
     }
 
     public X8lTree getGlobalSettingsTree() {
