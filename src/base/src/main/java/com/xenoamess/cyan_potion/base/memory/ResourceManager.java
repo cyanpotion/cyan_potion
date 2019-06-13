@@ -91,20 +91,8 @@ public class ResourceManager implements AutoCloseable {
             LOGGER.debug("putResource {}", fullResourceURI);
         }
 
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-
-        for (; i < fullResourceURI.length(); i++) {
-            if (fullResourceURI.charAt(i) == ':') {
-                i++;
-                break;
-            }
-            sb.append(fullResourceURI.charAt(i));
-        }
-
-        String resourceClassName = sb.toString();
-
-
+        int indexOfColon = fullResourceURI.indexOf(':');
+        String resourceClassName = fullResourceURI.substring(0, indexOfColon);
         Class resourceClass = null;
 
         try {
@@ -117,7 +105,7 @@ public class ResourceManager implements AutoCloseable {
         }
 
         return this.getResourceFromShortenURI(resourceClass,
-                fullResourceURI.substring(i));
+                fullResourceURI.substring(indexOfColon + 1));
     }
 
 
