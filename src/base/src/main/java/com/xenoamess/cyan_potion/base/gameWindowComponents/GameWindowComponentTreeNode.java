@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.base.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -179,13 +180,24 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GameWindowComponentTreeNode)) {
+            return false;
+        }
+        GameWindowComponentTreeNode that = (GameWindowComponentTreeNode) o;
+        return getDepth() == that.getDepth() &&
+                Objects.equals(getGameWindowComponentTree(), that.getGameWindowComponentTree()) &&
+                Objects.equals(getParent(), that.getParent()) &&
+                Objects.equals(getGameWindowComponent(), that.getGameWindowComponent()) &&
+                Objects.equals(getChildren(), that.getChildren());
     }
 
     @Override
-    public boolean equals(Object object) {
-        return super.equals(object);
+    public int hashCode() {
+        return Objects.hash(getGameWindowComponentTree(), getParent(), getDepth(), getGameWindowComponent(), getChildren());
     }
 
     public AbstractGameWindowComponent getGameWindowComponent() {

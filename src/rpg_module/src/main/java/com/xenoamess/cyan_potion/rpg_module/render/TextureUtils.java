@@ -105,7 +105,7 @@ public class TextureUtils {
                         nowTexture.bake(singleWidth, singleHeight,
                                 entireWidth, entireHeight, nowPosX, nowPosY,
                                 pixelsRaw);
-                        if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
+                        if ((nowTexture.getGlTexture2DInt() == -1) == (nowTexture.isInMemory())) {
                             throw new TextureStateDisorderException(nowTexture);
                         }
                     }
@@ -172,7 +172,7 @@ public class TextureUtils {
                         nowTexture.bake(singleWidth, singleHeight,
                                 entireWidth, entireHeight, nowPosX, nowPosY,
                                 pixelsRaw);
-                        if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
+                        if ((nowTexture.getGlTexture2DInt() == -1) == (nowTexture.isInMemory())) {
                             throw new TextureStateDisorderException(nowTexture);
                         }
                     }
@@ -194,7 +194,7 @@ public class TextureUtils {
         final Texture nowTexture =
                 resourceManager.fetchResourceWithShortenURI(Texture.class,
                         resourceFilePath + ":" + "A2" + ":" + kk + ":" + ti);
-        if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
+        if ((nowTexture.getGlTexture2DInt() == -1) == (nowTexture.isInMemory())) {
             throw new TextureStateDisorderException(nowTexture);
         }
         if (nowTexture.isInMemory()) {
