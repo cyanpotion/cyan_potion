@@ -80,22 +80,22 @@ public class TextureUtils {
         final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,
                 entireHeight, null, 0, entireWidth);
 
-        int startPosx = 0;
-        int startPosy = 0;
-        int nowPosx;
-        int nowPosy;
+        int startPosX = 0;
+        int startPosY = 0;
+        int nowPosX;
+        int nowPosY;
 
         for (int k = 0; k < 8; k++) {
             if (k == 4) {
-                startPosx = 0;
-                startPosy = singleHeight * 4;
+                startPosX = 0;
+                startPosY = singleHeight * 4;
             }
 
-            nowPosx = startPosx;
-            nowPosy = startPosy;
+            nowPosX = startPosX;
+            nowPosY = startPosY;
 
             for (int i = 0; i < 4; i++) {
-                nowPosx = startPosx;
+                nowPosX = startPosX;
                 for (int j = 0; j < 3; j++) {
                     final Texture nowTexture =
                             texture.getResourceManager().fetchResourceWithShortenURI(texture.getClass(),
@@ -103,17 +103,17 @@ public class TextureUtils {
 
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
-                                entireWidth, entireHeight, nowPosx, nowPosy,
+                                entireWidth, entireHeight, nowPosX, nowPosY,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
                             throw new TextureStateDisorderException(nowTexture);
                         }
                     }
-                    nowPosx += singleWidth;
+                    nowPosX += singleWidth;
                 }
-                nowPosy += singleHeight;
+                nowPosY += singleHeight;
             }
-            startPosx += singleWidth * 3;
+            startPosX += singleWidth * 3;
         }
     }
 
@@ -122,16 +122,16 @@ public class TextureUtils {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final String resourceType = resourceFileURIStrings[2];
         final String tilesetTexturesFilepath = resourceFileURIStrings[1];
-        int columNum;
+        int columnNum;
         switch (resourceType) {
             case "A5":
-                columNum = 1;
+                columnNum = 1;
                 break;
             case "B":
-                columNum = 2;
+                columnNum = 2;
                 break;
             case "C":
-                columNum = 2;
+                columnNum = 2;
                 break;
             default:
                 throw new URITypeNotDefinedException(texture.getFullResourceURI());
@@ -149,42 +149,42 @@ public class TextureUtils {
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
-        final int singleWidth = entireWidth / columNum / 8;
+        final int singleWidth = entireWidth / columnNum / 8;
         final int singleHeight = singleWidth;
 
         final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,
                 entireHeight, null, 0, entireWidth);
 
-        int startPosx = 0;
-        int startPosy = 0;
-        int nowPosx;
-        int nowPosy;
+        int startPosX = 0;
+        int startPosY = 0;
+        int nowPosX;
+        int nowPosY;
 
-        for (int k = 0; k < columNum; k++) {
-            nowPosx = startPosx;
-            nowPosy = startPosy;
+        for (int k = 0; k < columnNum; k++) {
+            nowPosX = startPosX;
+            nowPosY = startPosY;
             for (int i = 0; i < entireHeight / singleHeight; i++) {
 
-                nowPosx = startPosx;
+                nowPosX = startPosX;
                 for (int j = 0; j < 8; j++) {
                     final Texture nowTexture =
                             texture.getResourceManager().fetchResourceWithShortenURI(Texture.class,
                                     tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j));
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
-                                entireWidth, entireHeight, nowPosx, nowPosy,
+                                entireWidth, entireHeight, nowPosX, nowPosY,
                                 pixelsRaw);
                         if ((nowTexture.getGlTexture2DInt() == -1) != (!nowTexture.isInMemory())) {
                             throw new TextureStateDisorderException(nowTexture);
                         }
                     }
-                    nowPosx += singleWidth;
+                    nowPosX += singleWidth;
                 }
-                nowPosy += singleHeight;
+                nowPosY += singleHeight;
             }
 
-            startPosy = 0;
-            startPosx += entireWidth / columNum;
+            startPosY = 0;
+            startPosX += entireWidth / columnNum;
         }
     }
 
@@ -257,19 +257,19 @@ public class TextureUtils {
         final int[][] pixelsRaws =
                 new int[25][singleSingleWidth * singleSingleHeight];
 
-        int nowPosx = startWidth;
-        int nowPosy = startHeight;
+        int nowPosX = startWidth;
+        int nowPosY = startHeight;
         for (int k = 1; k <= 24; k++) {
             for (int i = 0; i < singleSingleHeight; i++) {
                 for (int j = 0; j < singleSingleWidth; j++) {
                     pixelsRaws[k][i * singleSingleWidth + j] =
-                            pixelsRaw[(nowPosy + i) * entireWidth + nowPosx + j];
+                            pixelsRaw[(nowPosY + i) * entireWidth + nowPosX + j];
                 }
             }
-            nowPosx += singleSingleWidth;
+            nowPosX += singleSingleWidth;
             if (k % 4 == 0) {
-                nowPosy += singleSingleHeight;
-                nowPosx = startWidth;
+                nowPosY += singleSingleHeight;
+                nowPosX = startWidth;
             }
         }
         {
@@ -589,10 +589,10 @@ public class TextureUtils {
                 entireHeight, null, 0, entireWidth);
 
 
-        int startStartPosx = 0;
-        int startStartPosy = 0;
-        int startPosx = 0;
-        int startPosy = 0;
+        int startStartPosX = 0;
+        int startStartPosY = 0;
+        int startPosX = 0;
+        int startPosY = 0;
 
 
         for (int k = 0; k < 32; k++) {
@@ -603,20 +603,20 @@ public class TextureUtils {
                                 tilesetTexturesFilepath + ":" + "A2" + ":" + k + ":" + ti);
                 if (!nowTexture.isInMemory()) {
                     loadTilesetTexturesA2Single(texture.getResourceManager(), tilesetTexturesFilepath,
-                            k, singleWidth, singleHeight, entireWidth, entireHeight, startPosx, startPosy, pixelsRaw);
+                            k, singleWidth, singleHeight, entireWidth, entireHeight, startPosX, startPosY, pixelsRaw);
                     break;
                 }
             }
 
-            startPosx += singleWidth * 2;
+            startPosX += singleWidth * 2;
             //            if (k % 16 == 15) {
-            //                startPosy = startStartPosy;
-            //                startStartPosx += singleWidth * 2 * 4;
-            //                startPosx = startStartPosx;
+            //                startPosY = startStartPosY;
+            //                startStartPosX += singleWidth * 2 * 4;
+            //                startPosX = startStartPosX;
             //            } else
             if (k % 8 == 7) {
-                startPosy += singleHeight * 3;
-                startPosx = startStartPosx;
+                startPosY += singleHeight * 3;
+                startPosX = startStartPosX;
             }
         }
     }
@@ -672,7 +672,7 @@ public class TextureUtils {
     }
 
     public static List<Texture> getTilesetTextures8(ResourceManager resourceManager, String resourceType, String
-            tilesetTexturesFilepath, int columNum) {
+            tilesetTexturesFilepath, int columnNum) {
         final List<Texture> res = new ArrayList<>();
 
         BufferedImage bufferedImage = null;
@@ -680,16 +680,16 @@ public class TextureUtils {
             bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
-                            "String tilesetTexturesFilepath, int columNum) fail",
-                    resourceManager, resourceType, tilesetTexturesFilepath, columNum, e);
+                            "String tilesetTexturesFilepath, int columnNum) fail",
+                    resourceManager, resourceType, tilesetTexturesFilepath, columnNum, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
-        final int singleWidth = entireWidth / columNum / 8;
+        final int singleWidth = entireWidth / columnNum / 8;
         final int singleHeight = singleWidth;
 
-        for (int k = 0; k < columNum; k++) {
+        for (int k = 0; k < columnNum; k++) {
             for (int i = 0; i < entireHeight / singleHeight; i++) {
                 for (int j = 0; j < 8; j++) {
                     res.add(resourceManager.fetchResourceWithShortenURI(Texture.class,

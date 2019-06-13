@@ -478,11 +478,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
                     this.getGamepadDevice()));
         }
 
-        boolean ifltNow = (this.lt > 0.5f);
-        boolean ifltNext = (axes.lt > 0.5f);
+        boolean ifLtNow = (this.lt > 0.5f);
+        boolean ifLtNext = (axes.lt > 0.5f);
 
-        if (ifltNow != ifltNext) {
-            if (ifltNext) {
+        if (ifLtNow != ifLtNext) {
+            if (ifLtNext) {
                 action = 1;
                 gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
                         this.getGamepadDevice()));
@@ -491,17 +491,17 @@ public class JXInputGamepadData extends AbstractGamepadData {
                 gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
                         this.getGamepadDevice()));
             }
-        } else if (ifltNext) {
+        } else if (ifLtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
                     this.getGamepadDevice()));
         }
 
-        boolean ifrtNow = (this.rt > 0.5f);
-        boolean ifrtNext = (axes.rt > 0.5f);
+        boolean ifRtNow = (this.rt > 0.5f);
+        boolean ifRtNext = (axes.rt > 0.5f);
 
-        if (ifrtNow != ifrtNext) {
-            if (ifrtNext) {
+        if (ifRtNow != ifRtNext) {
+            if (ifRtNext) {
                 action = 1;
                 gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
                         this.getGamepadDevice()));
@@ -510,7 +510,7 @@ public class JXInputGamepadData extends AbstractGamepadData {
                 gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
                         this.getGamepadDevice()));
             }
-        } else if (ifrtNext) {
+        } else if (ifRtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
                     this.getGamepadDevice()));

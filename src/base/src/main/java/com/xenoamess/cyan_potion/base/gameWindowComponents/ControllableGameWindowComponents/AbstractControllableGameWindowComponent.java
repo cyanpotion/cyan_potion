@@ -147,16 +147,16 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
     protected final Event onMouseButtonRightPressing() {
-        if (onMouseButtonRightPressiongCallback != null) {
-            return onMouseButtonRightPressiongCallback.invoke(null);
+        if (onMouseButtonRightPressingCallback != null) {
+            return onMouseButtonRightPressingCallback.invoke(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonRightPressiongCallback;
+    private Callback onMouseButtonRightPressingCallback;
 
-    public void registerOnMouseButtonRightPressiongCallback(Callback callback) {
-        this.onMouseButtonRightPressiongCallback = callback;
+    public void registerOnMouseButtonRightPressingCallback(Callback callback) {
+        this.onMouseButtonRightPressingCallback = callback;
     }
 
 
@@ -194,16 +194,16 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
     protected final Event onMouseButtonMiddlePressing() {
-        if (onMouseButtonMiddlePressiongCallback != null) {
-            return onMouseButtonMiddlePressiongCallback.invoke(null);
+        if (onMouseButtonMiddlePressingCallback != null) {
+            return onMouseButtonMiddlePressingCallback.invoke(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonMiddlePressiongCallback;
+    private Callback onMouseButtonMiddlePressingCallback;
 
-    public void registerOnMouseButtonMiddlePressiongCallback(Callback callback) {
-        this.onMouseButtonMiddlePressiongCallback = callback;
+    public void registerOnMouseButtonMiddlePressingCallback(Callback callback) {
+        this.onMouseButtonMiddlePressingCallback = callback;
     }
 
     public void gainFocus() {

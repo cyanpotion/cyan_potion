@@ -52,18 +52,18 @@ public class ResourceManager implements AutoCloseable {
     private GameManager gameManager;
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
-    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesURIMap = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourecesLoaderMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
     public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
-                defaultResourecesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
+                defaultResourcesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
     public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
-                defaultResourecesLoaderMap.get(tClass);
+                defaultResourcesLoaderMap.get(tClass);
         if (resourceLoaderMap == null) {
             return null;
         }
@@ -134,10 +134,10 @@ public class ResourceManager implements AutoCloseable {
 
     public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
         ConcurrentHashMap<String, T> resourceURIMap =
-                getDefaultResourecesURIMap().get(t.getClass());
+                getDefaultResourcesURIMap().get(t.getClass());
         if (resourceURIMap == null) {
             resourceURIMap = new ConcurrentHashMap<>(100);
-            getDefaultResourecesURIMap().put(t.getClass(), resourceURIMap);
+            getDefaultResourcesURIMap().put(t.getClass(), resourceURIMap);
         }
         resourceURIMap.put(shortenResourceURI, t);
     }
@@ -146,7 +146,7 @@ public class ResourceManager implements AutoCloseable {
                                            String shortenResourceURI) {
 
         ConcurrentHashMap<String, T> resourceURIMap =
-                getDefaultResourecesURIMap().get(tClass);
+                getDefaultResourcesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return null;
         } else {
@@ -158,7 +158,7 @@ public class ResourceManager implements AutoCloseable {
                                                      String shortenResourceURI) {
 
         ConcurrentHashMap<String, T> resourceURIMap =
-                getDefaultResourecesURIMap().get(tClass);
+                getDefaultResourcesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return false;
         } else {
@@ -186,7 +186,7 @@ public class ResourceManager implements AutoCloseable {
 
     @Override
     public void close() {
-        closeMap(getDefaultResourecesURIMap());
+        closeMap(getDefaultResourcesURIMap());
     }
 
     public static void closeMap(Map mapToClose) {
@@ -293,7 +293,7 @@ public class ResourceManager implements AutoCloseable {
         return inMemoryResources;
     }
 
-    public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourecesURIMap() {
-        return defaultResourecesURIMap;
+    public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourcesURIMap() {
+        return defaultResourcesURIMap;
     }
 }
