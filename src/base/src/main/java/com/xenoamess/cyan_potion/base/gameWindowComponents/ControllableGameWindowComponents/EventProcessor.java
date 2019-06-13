@@ -24,13 +24,26 @@
 
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
+import net.jcip.annotations.GuardedBy;
+
+import java.util.function.Function;
 
 
 /**
  * @author XenoAmess
  */
 @FunctionalInterface
-public interface Callback {
-    Event invoke(Event e);
+public interface EventProcessor extends Function<Event, Event> {
+    /**
+     * the method must be thread safe.
+     *
+     * @param event the event that being processed.
+     * @return the event that generated due to processing the event.
+     * @see Event#apply(GameManager)
+     */
+    @Override
+    @GuardedBy("GameManager")
+    Event apply(Event event);
 }

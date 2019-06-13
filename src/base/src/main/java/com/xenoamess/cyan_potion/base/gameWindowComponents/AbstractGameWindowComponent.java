@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.events.EventProcessor;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

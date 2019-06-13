@@ -28,7 +28,7 @@ import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Callback;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
@@ -74,9 +74,9 @@ public class TitleExample extends AbstractGameWindowComponent {
         getControllableGameWindowComponents().add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
             {
                 this.registerOnMouseEnterAreaCallback(
-                        new Callback() {
+                        new EventProcessor() {
                             @Override
-                            public Event invoke(Event event) {
+                            public Event apply(Event event) {
                                 if (getState() >= 0 && getState() <= 4) {
                                     setState(index);
                                 }
@@ -117,9 +117,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }
@@ -158,9 +158,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }
@@ -199,9 +199,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }

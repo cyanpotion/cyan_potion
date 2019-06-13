@@ -55,7 +55,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     private Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
     private Vector4f insertColor = new Vector4f(1f, 1f, 1f, 1);
 
-    {
+
+    public InputBox(GameWindow gameWindow) {
+        super(gameWindow);
+    }
+
+    @Override
+    public void initProcessors() {
+        super.initProcessors();
+
         this.registerOnMouseButtonLeftDownCallback(
                 (Event event) -> {
                     int clickIndex =
@@ -111,15 +119,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                     return null;
                 }
         );
-    }
 
-    public InputBox(GameWindow gameWindow) {
-        super(gameWindow);
-    }
-
-    @Override
-    public void initProcessors() {
-        super.initProcessors();
         this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
             synchronized (InputBox.this) {
                 if (!this.isInFocusNow()) {
