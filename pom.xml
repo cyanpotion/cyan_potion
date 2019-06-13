@@ -58,7 +58,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.8.0</commonx.version>
+        <commonx.version>0.8.1</commonx.version>
         <multi_language.version>0.43.4</multi_language.version>
         <x8l.version>0.47.3</x8l.version>
         <SDL_GameControllerDB_Util.version>0.1.2
