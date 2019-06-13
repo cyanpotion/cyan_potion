@@ -49,6 +49,7 @@ public class MainThreadEventProcessor implements EventProcessor {
     public Event apply(Event event) {
         if (Thread.currentThread().getId() != 1) {
             this.gameManager.delayMainThreadEventProcess(this, event);
+            return null;
         }
         return this.processor.apply(event);
     }
