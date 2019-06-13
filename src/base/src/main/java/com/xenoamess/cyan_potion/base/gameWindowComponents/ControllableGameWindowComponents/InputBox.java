@@ -65,19 +65,19 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         super.initProcessors();
 
         this.registerOnMouseButtonLeftDownCallback(
-                (Event event) -> {
-                    if (Thread.currentThread().getId() != 1) {
-                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftDownEventProcessor, event);
-                    }
-                    int clickIndex =
-                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
-                                    InputBox.this.getGameWindow().getMousePosY(), false, null);
-                    setNowSelectStartPos(clickIndex);
-                    setNowSelectEndPos(clickIndex);
-                    setNowInsertPos(clickIndex);
-                    InputBox.this.slashStartTime = System.currentTimeMillis();
-                    return null;
-                }
+                new MainThreadEventProcessor(
+                        this,
+                        (Event event) -> {
+                            int clickIndex =
+                                    InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
+                                            InputBox.this.getGameWindow().getMousePosY(), false, null);
+                            setNowSelectStartPos(clickIndex);
+                            setNowSelectEndPos(clickIndex);
+                            setNowInsertPos(clickIndex);
+                            InputBox.this.slashStartTime = System.currentTimeMillis();
+                            return null;
+                        }
+                )
         );
 
         this.registerOnMouseLeaveAreaCallback(
@@ -85,190 +85,194 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
         this.registerOnMouseButtonLeftUpCallback(
-                (Event event) -> {
-                    if (Thread.currentThread().getId() != 1) {
-                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftUpEventProcessor, event);
-                    }
-                    if (getNowSelectStartPos() < 0) {
-                        return null;
-                    }
-                    int releaseIndex =
-                            this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                    this.getGameWindow().getMousePosY(), false, null);
-                    setNowSelectEndPos(releaseIndex);
-                    setNowInsertPos(getNowSelectEndPos());
-                    if (getNowSelectStartPos() > getNowSelectEndPos()) {
-                        int tmpInt = getNowSelectStartPos();
-                        setNowSelectStartPos(getNowSelectEndPos());
-                        setNowSelectEndPos(tmpInt);
-                    }
-                    if (getNowSelectStartPos() < 0) {
-                        setNowSelectStartPos(0);
-                    }
-                    if (getNowSelectStartPos() == getNowSelectEndPos()) {
-                        setNowSelectStartPos(-1);
-                        setNowSelectEndPos(-1);
-                    }
-                    return null;
-                }
+                new MainThreadEventProcessor(
+                        this,
+                        (Event event) -> {
+                            if (getNowSelectStartPos() < 0) {
+                                return null;
+                            }
+                            int releaseIndex =
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                            this.getGameWindow().getMousePosY(), false, null);
+                            setNowSelectEndPos(releaseIndex);
+                            setNowInsertPos(getNowSelectEndPos());
+                            if (getNowSelectStartPos() > getNowSelectEndPos()) {
+                                int tmpInt = getNowSelectStartPos();
+                                setNowSelectStartPos(getNowSelectEndPos());
+                                setNowSelectEndPos(tmpInt);
+                            }
+                            if (getNowSelectStartPos() < 0) {
+                                setNowSelectStartPos(0);
+                            }
+                            if (getNowSelectStartPos() == getNowSelectEndPos()) {
+                                setNowSelectStartPos(-1);
+                                setNowSelectEndPos(-1);
+                            }
+                            return null;
+                        }
+                )
         );
 
         this.registerOnMouseButtonLeftPressingCallback(
-                (Event event) -> {
-                    if (Thread.currentThread().getId() != 1) {
-                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftPressingEventProcessor, event);
-                    }
-                    if (getNowSelectStartPos() == -1) {
-                        return null;
-                    }
-                    int clickIndex =
-                            this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                    this.getGameWindow().getMousePosY(), false, null);
-                    setNowSelectEndPos(clickIndex);
-                    return null;
-                }
+                new MainThreadEventProcessor(
+                        this,
+                        (Event event) -> {
+                            if (getNowSelectStartPos() == -1) {
+                                return null;
+                            }
+                            int clickIndex =
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                            this.getGameWindow().getMousePosY(), false, null);
+                            setNowSelectEndPos(clickIndex);
+                            return null;
+                        }
+                )
         );
 
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
-            if (Thread.currentThread().getId() != 1) {
-                InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.getProcessor(KeyboardEvent.class.getCanonicalName()), event);
-            }
-            synchronized (InputBox.this) {
-                if (!this.isInFocusNow()) {
-                    return event;
-                }
-                KeyboardEvent keyboardEvent = (KeyboardEvent) event;
-                this.slashStartTime = System.currentTimeMillis();
+        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
+                new MainThreadEventProcessor(
+                        this,
+                        event -> {
+                            synchronized (InputBox.this) {
+                                if (!this.isInFocusNow()) {
+                                    return event;
+                                }
+                                KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+                                this.slashStartTime = System.currentTimeMillis();
 
-                if (keyboardEvent.getAction() == GLFW_PRESS || keyboardEvent.getAction() == GLFW_REPEAT) {
-                    Vector2f insertPos;
-                    switch (keyboardEvent.getKeyRaw().getKey()) {
-                        case GLFW_KEY_ENTER:
-                            this.insertString("\n");
-                            return null;
-                        case GLFW_KEY_TAB:
-                            this.insertString("  ");
-                            return null;
-                        case GLFW_KEY_ESCAPE:
-                            this.loseFocus();
-                            return null;
-                        case GLFW_KEY_DELETE:
-                            if (getNowSelectStartPos() != -1) {
-                                insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
-                            } else {
-                                setContentString(getContentString().substring(0,
-                                        getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ?
-                                        getContentString().substring(getNowInsertPos() + 1)
-                                        : ""));
-                                this.limitNowInsertPos();
-                            }
-                            return null;
-                        case GLFW_KEY_BACKSPACE:
-                            if (getNowSelectStartPos() != -1) {
-                                insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
-                            } else {
-                                setContentString((getNowInsertPos() > 1 ?
-                                        getContentString().substring(0,
-                                                getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos()) : ""));
-                                setNowInsertPos(getNowInsertPos() - 1);
-                                this.limitNowInsertPos();
-                            }
-                            return null;
-                        case GLFW_KEY_LEFT:
-                            setNowInsertPos(getNowInsertPos() - 1);
-                            this.limitNowInsertPos();
-                            return null;
-                        case GLFW_KEY_RIGHT:
-                            setNowInsertPos(getNowInsertPos() + 1);
-                            this.limitNowInsertPos();
-                            return null;
-                        case GLFW_KEY_UP:
-                            insertPos = new Vector2f();
-                            drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                    this.getGameWindow().getMousePosY(), false, insertPos);
-                            this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
-                                    insertPos.y - this.getCharHeight(), false, insertPos));
-                            return null;
-                        case GLFW_KEY_DOWN:
-                            insertPos = new Vector2f();
-                            drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                    this.getGameWindow().getMousePosY(), false, insertPos);
-                            this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
-                                    insertPos.y + this.getCharHeight(), false, insertPos));
-                            return null;
-                        case GLFW_KEY_A:
-                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
-                                setNowSelectStartPos(0);
-                                setNowSelectEndPos(this.getContentString().length());
-                                setNowInsertPos(0);
-                            }
-                            return null;
-                        case GLFW_KEY_C:
-                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
-                                if (getNowSelectStartPos() != -1) {
-                                    if (getNowSelectEndPos() < getNowSelectStartPos()) {
-                                        int tmpInt = getNowSelectStartPos();
-                                        setNowSelectStartPos(getNowSelectEndPos());
-                                        setNowSelectEndPos(tmpInt);
+                                if (keyboardEvent.getAction() == GLFW_PRESS || keyboardEvent.getAction() == GLFW_REPEAT) {
+                                    Vector2f insertPos;
+                                    switch (keyboardEvent.getKeyRaw().getKey()) {
+                                        case GLFW_KEY_ENTER:
+                                            this.insertString("\n");
+                                            return null;
+                                        case GLFW_KEY_TAB:
+                                            this.insertString("  ");
+                                            return null;
+                                        case GLFW_KEY_ESCAPE:
+                                            this.loseFocus();
+                                            return null;
+                                        case GLFW_KEY_DELETE:
+                                            if (getNowSelectStartPos() != -1) {
+                                                insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
+                                            } else {
+                                                setContentString(getContentString().substring(0,
+                                                        getNowInsertPos()) + (getNowInsertPos() < getContentString().length() ?
+                                                        getContentString().substring(getNowInsertPos() + 1)
+                                                        : ""));
+                                                this.limitNowInsertPos();
+                                            }
+                                            return null;
+                                        case GLFW_KEY_BACKSPACE:
+                                            if (getNowSelectStartPos() != -1) {
+                                                insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
+                                            } else {
+                                                setContentString((getNowInsertPos() > 1 ?
+                                                        getContentString().substring(0,
+                                                                getNowInsertPos() - 1) : "") + (getNowInsertPos() <= getContentString().length() ? getContentString().substring(getNowInsertPos()) : ""));
+                                                setNowInsertPos(getNowInsertPos() - 1);
+                                                this.limitNowInsertPos();
+                                            }
+                                            return null;
+                                        case GLFW_KEY_LEFT:
+                                            setNowInsertPos(getNowInsertPos() - 1);
+                                            this.limitNowInsertPos();
+                                            return null;
+                                        case GLFW_KEY_RIGHT:
+                                            setNowInsertPos(getNowInsertPos() + 1);
+                                            this.limitNowInsertPos();
+                                            return null;
+                                        case GLFW_KEY_UP:
+                                            insertPos = new Vector2f();
+                                            drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                                    this.getGameWindow().getMousePosY(), false, insertPos);
+                                            this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
+                                                    insertPos.y - this.getCharHeight(), false, insertPos));
+                                            return null;
+                                        case GLFW_KEY_DOWN:
+                                            insertPos = new Vector2f();
+                                            drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
+                                                    this.getGameWindow().getMousePosY(), false, insertPos);
+                                            this.setNowInsertPos(drawTextGivenHeightLeftTopAndGetIndex(insertPos.x,
+                                                    insertPos.y + this.getCharHeight(), false, insertPos));
+                                            return null;
+                                        case GLFW_KEY_A:
+                                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
+                                                setNowSelectStartPos(0);
+                                                setNowSelectEndPos(this.getContentString().length());
+                                                setNowInsertPos(0);
+                                            }
+                                            return null;
+                                        case GLFW_KEY_C:
+                                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
+                                                if (getNowSelectStartPos() != -1) {
+                                                    if (getNowSelectEndPos() < getNowSelectStartPos()) {
+                                                        int tmpInt = getNowSelectStartPos();
+                                                        setNowSelectStartPos(getNowSelectEndPos());
+                                                        setNowSelectEndPos(tmpInt);
+                                                    }
+                                                    ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
+                                                            this.getNowSelectEndPos()));
+                                                    setNowSelectStartPos(-1);
+                                                    setNowSelectEndPos(-1);
+                                                } else {
+                                                    ClipboardUtil.setText("");
+                                                }
+                                            }
+                                            return null;
+                                        case GLFW_KEY_V:
+                                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
+                                                if (getNowSelectStartPos() != -1) {
+                                                    insertStringToBetweenNowSelectStartPosAndNowSelectEndPos(ClipboardUtil.getText());
+                                                } else {
+                                                    insertStringToInsertPos(ClipboardUtil.getText());
+                                                    this.limitNowInsertPos();
+                                                }
+                                            }
+                                            return null;
+                                        case GLFW_KEY_X:
+                                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
+                                                if (getNowSelectStartPos() != -1) {
+                                                    if (getNowSelectEndPos() < getNowSelectStartPos()) {
+                                                        int tmpInt = getNowSelectStartPos();
+                                                        setNowSelectStartPos(getNowSelectEndPos());
+                                                        setNowSelectEndPos(tmpInt);
+                                                    }
+                                                    ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
+                                                            this.getNowSelectEndPos()));
+                                                    insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
+                                                    setNowSelectStartPos(-1);
+                                                    setNowSelectEndPos(-1);
+                                                } else {
+                                                    ClipboardUtil.setText("");
+                                                }
+                                            }
+                                            return null;
+                                        default:
+                                            return null;
                                     }
-                                    ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
-                                            this.getNowSelectEndPos()));
-                                    setNowSelectStartPos(-1);
-                                    setNowSelectEndPos(-1);
-                                } else {
-                                    ClipboardUtil.setText("");
                                 }
+                                return keyboardEvent;
                             }
-                            return null;
-                        case GLFW_KEY_V:
-                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
-                                if (getNowSelectStartPos() != -1) {
-                                    insertStringToBetweenNowSelectStartPosAndNowSelectEndPos(ClipboardUtil.getText());
-                                } else {
-                                    insertStringToInsertPos(ClipboardUtil.getText());
-                                    this.limitNowInsertPos();
-                                }
-                            }
-                            return null;
-                        case GLFW_KEY_X:
-                            if (keyboardEvent.getAction() == GLFW_PRESS && keyboardEvent.getMods() == GLFW_MOD_CONTROL) {
-                                if (getNowSelectStartPos() != -1) {
-                                    if (getNowSelectEndPos() < getNowSelectStartPos()) {
-                                        int tmpInt = getNowSelectStartPos();
-                                        setNowSelectStartPos(getNowSelectEndPos());
-                                        setNowSelectEndPos(tmpInt);
-                                    }
-                                    ClipboardUtil.setText(this.getContentString().substring(this.getNowSelectStartPos(),
-                                            this.getNowSelectEndPos()));
-                                    insertStringToBetweenNowSelectStartPosAndNowSelectEndPos("");
-                                    setNowSelectStartPos(-1);
-                                    setNowSelectEndPos(-1);
-                                } else {
-                                    ClipboardUtil.setText("");
-                                }
-                            }
-                            return null;
-                        default:
-                            return null;
-                    }
-                }
-                return keyboardEvent;
-            }
-        });
+                        }
+                )
+        );
 
-        this.registerProcessor(CharEvent.class.getCanonicalName(), event -> {
-            if (Thread.currentThread().getId() != 1) {
-                InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.getProcessor(CharEvent.class.getCanonicalName()), event);
-            }
-            synchronized (InputBox.this) {
-                if (!this.isInFocusNow()) {
-                    return event;
-                }
-                CharEvent charEvent = (CharEvent) event;
-                this.insertString("" + (char) charEvent.getCodepoint());
-                return null;
-            }
-        });
+        this.registerProcessor(CharEvent.class.getCanonicalName(),
+                new MainThreadEventProcessor(
+                        this,
+                        event -> {
+                            synchronized (InputBox.this) {
+                                if (!this.isInFocusNow()) {
+                                    return event;
+                                }
+                                CharEvent charEvent = (CharEvent) event;
+                                this.insertString("" + (char) charEvent.getCodepoint());
+                                return null;
+                            }
+                        }
+                )
+        );
     }
 
     private void limitNowInsertPos() {
