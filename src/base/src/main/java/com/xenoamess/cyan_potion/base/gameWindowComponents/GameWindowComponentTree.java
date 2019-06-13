@@ -154,7 +154,7 @@ public class GameWindowComponentTree implements AutoCloseable {
     }
 
     public GameWindowComponentTreeNode findNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        return findNode(gameWindowComponentTreeNode);
+        return this.getRoot().findNode(gameWindowComponentTreeNode);
     }
 
     public boolean deleteNode(AbstractGameWindowComponent gameWindowComponent) {
