@@ -98,7 +98,7 @@ public class Keymap {
             field.setAccessible(true);
             rawInputI = (Integer) field.get(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fails:", rawInput, myInput, e);
         }
         if (rawInputI == null) {
             return null;
@@ -107,7 +107,7 @@ public class Keymap {
             Field field = Keymap.class.getField(myInput);
             myInputI = (Integer) field.get(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            LOGGER.debug("Keymap.put(String rawInput, String myInput) fail", rawInput, myInput, e);
+            LOGGER.debug("Keymap.put(String rawInput, String myInput) fails:", rawInput, myInput, e);
         }
 
         if (myInputI == null) {

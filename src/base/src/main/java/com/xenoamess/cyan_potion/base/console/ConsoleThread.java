@@ -56,7 +56,7 @@ class ConsoleTalkThread implements Runnable {
         try {
             is = socket.getInputStream();
         } catch (IOException e) {
-            LOGGER.error("ConsoleTalkThread fail", e);
+            LOGGER.error("ConsoleTalkThread fails:", e);
         }
 
         if (is == null) {
@@ -118,12 +118,12 @@ public class ConsoleThread extends Thread {
                     executorService.execute(new ConsoleTalkThread(socket,
                             this));
                 } catch (Exception e) {
-                    LOGGER.error("ConsoleThread socket fail", e);
+                    LOGGER.error("ConsoleThread socket fails:", e);
                 }
             }
             executorService.shutdown();
         } catch (IOException e) {
-            LOGGER.error("ConsoleThread serverSocket fail", e);
+            LOGGER.error("ConsoleThread serverSocket fails:", e);
         }
 
     }

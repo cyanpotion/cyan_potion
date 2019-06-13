@@ -68,7 +68,7 @@ public class TextureUtils {
         try {
             bufferedImage = ImageIO.read(new File(file));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, String resourceFileURIString) fail",
+            LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, String resourceFileURIString) fails:",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -143,7 +143,7 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getURL(tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) fail",
+            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) fails:",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -576,7 +576,7 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) fail",
+            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) fails:",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -680,7 +680,7 @@ public class TextureUtils {
             bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
-                            "String tilesetTexturesFilepath, int columnNum) fail",
+                            "String tilesetTexturesFilepath, int columnNum) fails:",
                     resourceManager, resourceType, tilesetTexturesFilepath, columnNum, e);
         }
         assert (bufferedImage != null);

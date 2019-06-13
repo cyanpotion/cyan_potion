@@ -58,7 +58,7 @@ public class GameTilesetJson implements Serializable {
                     new TypeReference<List<GameTilesetJson>>() {
                     });
         } catch (IOException e) {
-            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) fail",
+            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) fails:",
                     objectMapper, gameTileSetsFile, e);
         }
         return res;

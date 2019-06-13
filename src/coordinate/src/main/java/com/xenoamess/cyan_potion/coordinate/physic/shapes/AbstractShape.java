@@ -99,7 +99,7 @@ public abstract class AbstractShape implements Area {
             try {
                 res = (ShapeRelation) method.invoke(k, v, rough);
             } catch (IllegalAccessException | InvocationTargetException e) {
-                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fails:", e);
             }
         }
         if (res != RELATION_UNDEFINED) {
@@ -124,7 +124,7 @@ public abstract class AbstractShape implements Area {
                     res = RELATION_INNER;
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
-                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fails:", e);
             }
         }
         if (res != RELATION_UNDEFINED) {

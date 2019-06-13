@@ -146,8 +146,8 @@ public class FileUtil {
             buffer.flip();
             return buffer.slice();
         } else {
-            LOGGER.error("loadFileBuffer fail : {}", resourceFile);
-            return null;
+            throw new IllegalArgumentException("FileUtil.loadFileBuffer(File resourceFile, boolean ifUsingMemoryUtil)" +
+                    " fails:" + resourceFile + "," + ifUsingMemoryUtil);
         }
     }
 
@@ -155,13 +155,17 @@ public class FileUtil {
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
         if (resUrl == null) {
-            return null;
+            throw new IllegalArgumentException("FileUtil.getFile(String resourceFilePath) fail:" + resourceFilePath);
         }
         return new File(resUrl.getFile().replaceAll("%20", " "));
     }
 
     public static URL getURL(String resourceFilePath) {
-        return FileUtil.class.getResource(resourceFilePath);
+        URL res = FileUtil.class.getResource(resourceFilePath);
+        if (res == null) {
+            throw new IllegalArgumentException("FileUtil.getURL(String resourceFilePath) fail:" + resourceFilePath);
+        }
+        return res;
     }
 
     public static URI getURI(String resourceFilePath) {
@@ -169,7 +173,7 @@ public class FileUtil {
         try {
             res = getURL(resourceFilePath).toURI();
         } catch (URISyntaxException e) {
-            LOGGER.error("FileUtil.getURI(String resourceFilePath) fail", resourceFilePath, e);
+            throw new IllegalArgumentException("FileUtil.getURL(String resourceFilePath) fail:" + resourceFilePath, e);
         }
         return res;
     }
@@ -194,7 +198,7 @@ public class FileUtil {
             }
             res = sb.toString();
         } catch (IOException e) {
-            LOGGER.error("FileUtil.loadFile(InputStream inputStream) fail", inputStream, e);
+            throw new IllegalArgumentException("FileUtil.loadFile(InputStream inputStream) fails:" + inputStream, e);
         }
         return res;
     }
@@ -204,21 +208,21 @@ public class FileUtil {
         try (InputStream inputStream = getURL(resourceFilePath).openStream()) {
             res = loadFile(inputStream);
         } catch (IOException e) {
-            LOGGER.error("FileUtil.loadFile(String resourceFilePath) fail", resourceFilePath, e);
+            throw new IllegalArgumentException("FileUtil.loadFile(String resourceFilePath) fails:" + resourceFilePath
+                    , e);
         }
         return res;
     }
 
     public static String loadFile(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
-            LOGGER.error("loadFile fail : {}", file);
-            return "";
+            throw new IllegalArgumentException("FileUtil.loadFile(File file) fails:" + file);
         }
         String res = "";
         try (FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile())) {
             res = loadFile(fileInputStream);
         } catch (IOException e) {
-            LOGGER.error("FileUtil.loadFile(File file) fail", file, e);
+            throw new IllegalArgumentException("FileUtil.loadFile(File file) fails:" + file, e);
         }
         return res;
     }
@@ -228,21 +232,18 @@ public class FileUtil {
     }
 
     public static void saveFile(File file, String contentString) {
-        if (file == null) {
-            LOGGER.error("saveFile fail : file=null");
-            return;
-        }
         //if is not a file.
-        if (file.exists() && !file.isFile()) {
-            return;
+        if (file == null || !file.exists() || !file.isFile()) {
+            throw new IllegalArgumentException("FileUtil.saveFile(File file, String contentString) fails:" + file +
+                    "," + contentString);
         }
         try (
                 FileWriter fileWriter = new FileWriter(file)
         ) {
             fileWriter.write(contentString);
         } catch (IOException e) {
-            LOGGER.error("FileUtil.saveFile(File file, String contentString) fail",
-                    file, contentString, e);
+            throw new IllegalArgumentException("FileUtil.saveFile(File file, String contentString) fails:" + file +
+                    "," + contentString, e);
         }
     }
 
