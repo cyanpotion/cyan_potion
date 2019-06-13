@@ -115,7 +115,7 @@ public class GameWindowComponentTree implements AutoCloseable {
                     }
                 };
 
-        asFinalFieldSet(this, "root", new GameWindowComponentTreeNode(this, null, baseComponent));
+        this.setRoot(new GameWindowComponentTreeNode(this, null, baseComponent));
         this.getLeafNodes().add(this.getRoot());
     }
 
@@ -170,7 +170,14 @@ public class GameWindowComponentTree implements AutoCloseable {
         return root;
     }
 
+    /**
+     * set root of this tree.
+     * notice that root is an {@link AsFinalField}.
+     *
+     * @param gameWindowComponentTreeNode root
+     * @see AsFinalField
+     */
     public void setRoot(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-
+        asFinalFieldSet(this, "root", gameWindowComponentTreeNode);
     }
 }
