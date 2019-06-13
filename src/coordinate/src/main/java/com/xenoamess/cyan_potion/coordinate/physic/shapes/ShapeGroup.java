@@ -45,7 +45,7 @@ public class ShapeGroup extends AbstractShape {
     public ShapeGroup(AbstractEntity entity, Vector3f centerPos,
                       Vector3f size, Collection shapes) {
         super(entity, centerPos, size);
-        shapes.addAll(shapes);
+        this.getShapes().addAll(shapes);
     }
 
     public ShapeGroup(ShapeGroup shapeGroup) {
@@ -137,7 +137,7 @@ public class ShapeGroup extends AbstractShape {
         if (object == null) {
             return false;
         }
-        if (object instanceof ShapeGroup) {
+        if (!(object instanceof ShapeGroup)) {
             return false;
         }
         return CollectionUtils.isEqualCollection(this.getShapes(), ((ShapeGroup) object).getShapes());

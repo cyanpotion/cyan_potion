@@ -58,6 +58,11 @@ class ConsoleTalkThread implements Runnable {
         } catch (IOException e) {
             LOGGER.error("ConsoleTalkThread fail", e);
         }
+
+        if (is == null) {
+            return;
+        }
+
         Scanner scanner = new Scanner(is);
 
         while (scanner.hasNext()) {
