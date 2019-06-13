@@ -122,6 +122,22 @@ public abstract class AbstractEntity implements Area {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AbstractEntity)) {
+            return false;
+        }
+        AbstractEntity that = (AbstractEntity) o;
+        return Objects.equals(getScene(), that.getScene()) &&
+                Objects.equals(getCenterPos(), that.getCenterPos()) &&
+                Objects.equals(getSize(), that.getSize()) &&
+                Objects.equals(getShape(), that.getShape()) &&
+                Objects.equals(getPicture(), that.getPicture());
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(getScene(), getCenterPos(), getSize(), getShape(), getPicture());
     }

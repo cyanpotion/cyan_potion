@@ -559,7 +559,7 @@ public class GameManager implements AutoCloseable {
                 }
             });
 
-            mainThreadEvents.stream().forEach(event -> {
+            mainThreadEvents.forEach(event -> {
                 Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);

@@ -34,6 +34,8 @@ import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import java.util.Objects;
+
 /**
  * @author XenoAmess
  */
@@ -64,6 +66,30 @@ public class Unit extends AbstractDynamicEntity {
         this.loadWalkingAnimations(walkingAnimation4DirsURI, resourceManager);
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Unit)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Unit unit = (Unit) o;
+        return isMoving() == unit.isMoving() &&
+                Float.compare(unit.getMoveSpeed(), getMoveSpeed()) == 0 &&
+                getFaceDir() == unit.getFaceDir() &&
+                isCanMove() == unit.isCanMove() &&
+                Objects.equals(getMovement(), unit.getMovement());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMoving(), getMovement(), getMoveSpeed(), getFaceDir(), isCanMove());
+    }
 
     @Override
     public void update() {

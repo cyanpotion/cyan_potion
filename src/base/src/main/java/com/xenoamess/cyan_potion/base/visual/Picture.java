@@ -31,6 +31,8 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
 
+import java.util.Objects;
+
 /**
  * @author XenoAmess
  */
@@ -228,5 +230,29 @@ public class Picture implements Area {
 
     public void setRotateRadius(float rotateRadius) {
         this.rotateRadius = rotateRadius;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Picture)) {
+            return false;
+        }
+        Picture picture = (Picture) o;
+        return Float.compare(picture.getCenterPosX(), getCenterPosX()) == 0 &&
+                Float.compare(picture.getCenterPosY(), getCenterPosY()) == 0 &&
+                Float.compare(picture.getWidth(), getWidth()) == 0 &&
+                Float.compare(picture.getHeight(), getHeight()) == 0 &&
+                Float.compare(picture.getRotateRadius(), getRotateRadius()) == 0 &&
+                Objects.equals(getBindable(), picture.getBindable()) &&
+                Objects.equals(getColorScale(), picture.getColorScale());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBindable(), getCenterPosX(), getCenterPosY(), getWidth(), getHeight(), getColorScale()
+                , getRotateRadius());
     }
 }
