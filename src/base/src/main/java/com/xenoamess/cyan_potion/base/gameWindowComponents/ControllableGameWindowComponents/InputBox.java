@@ -349,8 +349,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             String text = line;
 
             font.bind();
-            float scaley = font.getScale(height);
-            float scalex = scaley;
+            float scaleY = font.getScale(height);
+            float scaleX = scaleY;
 
 
             float x = x1;
@@ -358,7 +358,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             font.getXb().put(0, x);
             font.getYb().put(0, y);
 
-            font.getChardata().position(0);
+            font.getCharData().position(0);
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
 
@@ -373,15 +373,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             float lastxShould = x;
             float lastyShould = y;
             for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
+                stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W,
                         Font.BITMAP_H, text.charAt(i), font.getXb(),
                         font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
                 float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
                 float spaceUpToCharShould = font.getQ().y0() - lastyShould;
-                float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-                float nowy0 = y + spaceUpToCharShould * scaley;
+                float nowx0 = lastxReal + spaceLeftToCharShould * scaleX;
+                float nowy0 = y + spaceUpToCharShould * scaleY;
 
                 if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
                     glColor4f(this.getTextSelectColor().x,
@@ -395,17 +395,17 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 if (ifDraw) {
                     Font.drawBoxTC(
                             nowx0, nowy0 + height * 0.8f,
-                            nowx0 + charWidthShould * scalex,
-                            nowy0 + charHeightShould * scaley + height * 0.8f,
+                            nowx0 + charWidthShould * scaleX,
+                            nowy0 + charHeightShould * scaleY + height * 0.8f,
                             font.getQ().s0(), font.getQ().t0(),
                             font.getQ().s1(), font.getQ().t1()
                     );
                 }
 
                 float newx0 = nowx0;
-                float newx1 = nowx0 + charWidthShould * scalex;
+                float newx1 = nowx0 + charWidthShould * scaleX;
                 float newy0 = nowy0 + height * 0.8f;
-                float newy1 = nowy0 + charHeightShould * scaley + height * 0.8f;
+                float newy1 = nowy0 + charHeightShould * scaleY + height * 0.8f;
 
                 if (distPosX >= newx0 && distPosX <= newx1 && distPosY >= newy0 && distPosY <= newy1) {
                     resIndex = index;
@@ -441,7 +441,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 }
                 if (i == line.length() - 1) {
                     newy0 = nowy0 + height * 0.8f;
-                    newy1 = nowy0 + charHeightShould * scaley + height * 0.8f;
+                    newy1 = nowy0 + charHeightShould * scaleY + height * 0.8f;
                     if (distPosY >= newy0 && distPosY <= newy1) {
                         resLineIndex = j;
                     }
@@ -450,18 +450,18 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                     }
 
                     if (index + 1 == this.getNowInsertPos()) {
-                        insPosX0 = nowx0 + charWidthShould * scalex;
+                        insPosX0 = nowx0 + charWidthShould * scaleX;
                         insPosY0 = realLeftTopPosY + realCharHeight * j;
                         insPosX1 = insPosX0 + 5;
                         insPosY1 = insPosY0 + realCharHeight;
                         if (insertPos != null) {
-                            insertPos.set(nowx0 + charWidthShould * scalex,
+                            insertPos.set(nowx0 + charWidthShould * scaleX,
                                     realLeftTopPosY + realCharHeight * j + realCharHeight / 2);
                         }
                     }
                 }
 
-                lastxReal = nowx0 + charWidthShould * scalex;
+                lastxReal = nowx0 + charWidthShould * scaleX;
                 lastyReal = y;
                 lastxShould = font.getQ().x1();
                 lastyShould = y;
@@ -474,15 +474,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
                     for (int i2 = 0; i2 < line.length(); i2++) {
 
-                        stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W
+                        stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W
                                 , Font.BITMAP_H, text.charAt(i2),
                                 font.getXb(), font.getYb(), font.getQ(), false);
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
                         spaceLeftToCharShould = font.getQ().x0() - lastxShould;
                         spaceUpToCharShould = font.getQ().y0() - lastyShould;
-                        nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-                        nowy0 = y + spaceUpToCharShould * scaley;
+                        nowx0 = lastxReal + spaceLeftToCharShould * scaleX;
+                        nowy0 = y + spaceUpToCharShould * scaleY;
 
                         if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
                             glColor4f(this.getTextSelectColor().x,
@@ -502,7 +502,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                         }
                         if (i2 == line.length() - 1) {
                             nowDist =
-                                    Math.abs(distPosX - (nowx0 + charWidthShould * scalex));
+                                    Math.abs(distPosX - (nowx0 + charWidthShould * scaleX));
                             if (nowDist < minDist) {
                                 minDist = nowDist;
                                 resIndex = index2 + 1;
@@ -518,9 +518,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 float nowy0 = y;
 
                 float newx0 = nowx0;
-                float newx1 = nowx0 + realCharHeight * scalex;
+                float newx1 = nowx0 + realCharHeight * scaleX;
                 float newy0 = nowy0 + height * 0.8f;
-                float newy1 = nowy0 + realCharHeight * scaley + height * 0.8f;
+                float newy1 = nowy0 + realCharHeight * scaleY + height * 0.8f;
 
                 if (distPosY >= newy0 && distPosY <= newy1) {
                     resLineIndex = j;
@@ -552,7 +552,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0)) {
                 glColor4f(getInsertColor().x(), getInsertColor().y(),
                         getInsertColor().z(), getInsertColor().w());
-                stbtt_GetPackedQuad(font.getChardata(), Font.BITMAP_W,
+                stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W,
                         Font.BITMAP_H, '|', font.getXb(), font.getYb(),
                         font.getQ(), false);
                 Font.drawBoxTC(

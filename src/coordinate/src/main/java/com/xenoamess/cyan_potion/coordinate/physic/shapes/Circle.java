@@ -50,10 +50,10 @@ public class Circle extends AbstractShape {
         if (point.z != this.getCenterPos().z) {
             return false;
         }
-        float tmpx = this.getCenterPos().x - point.x;
-        float tmpy = this.getCenterPos().y - point.y;
+        float tmpX = this.getCenterPos().x - point.x;
+        float tmpY = this.getCenterPos().y - point.y;
 
-        return tmpx * tmpx + tmpy * tmpy <= this.getSize().x * this.getSize().x / 4;
+        return tmpX * tmpX + tmpY * tmpY <= this.getSize().x * this.getSize().x / 4;
     }
 
     public ShapeRelation relation(Circle target, boolean rough) {
@@ -61,10 +61,10 @@ public class Circle extends AbstractShape {
             return ShapeRelation.RELATION_NO_COLLIDE;
         }
 
-        float tmpx = this.getCenterPos().x - target.getCenterPos().x;
-        float tmpy = this.getCenterPos().y - target.getCenterPos().y;
+        float tmpX = this.getCenterPos().x - target.getCenterPos().x;
+        float tmpY = this.getCenterPos().y - target.getCenterPos().y;
         float tmpr = this.getSize().x / 2 + target.getSize().x / 2;
-        if (tmpx * tmpx + tmpy * tmpy > tmpr * tmpr) {
+        if (tmpX * tmpX + tmpY * tmpY > tmpr * tmpr) {
             return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
             if (rough) {

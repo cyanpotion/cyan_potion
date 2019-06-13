@@ -29,7 +29,7 @@ import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudger;
+import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudge;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;
@@ -61,8 +61,8 @@ public abstract class AbstractShape implements Area {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger>
-            shapeRelationJudgers = new ConcurrentHashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
+            shapeRelationJudges = new ConcurrentHashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
@@ -133,12 +133,12 @@ public abstract class AbstractShape implements Area {
 
         //if cannot find the relation function in it,then goto
 
-        ShapeRelationJudger shapeComparator =
-                getShapeRelationJudgers().get(
+        ShapeRelationJudge shapeComparator =
+                getShapeRelationJudges().get(
                         new ImmutablePair(k.getClass(), v.getClass()));
         if (shapeComparator == null) {
             shapeComparator =
-                    getShapeRelationJudgers().get(
+                    getShapeRelationJudges().get(
                             new ImmutablePair(v.getClass(), k.getClass()));
             if (shapeComparator == null) {
                 return RELATION_UNDEFINED;
@@ -378,13 +378,13 @@ public abstract class AbstractShape implements Area {
         this.size = size;
     }
 
-    public static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> getShapeRelationJudgers() {
-        return shapeRelationJudgers;
+    public static Map<ImmutablePair<Class, Class>, ShapeRelationJudge> getShapeRelationJudges() {
+        return shapeRelationJudges;
     }
 
-    public static void setShapeRelationJudgers(Map<ImmutablePair<Class,
-            Class>, ShapeRelationJudger> shapeRelationJudgers) {
-        AbstractShape.shapeRelationJudgers = shapeRelationJudgers;
+    public static void setShapeRelationJudges(Map<ImmutablePair<Class,
+            Class>, ShapeRelationJudge> shapeRelationJudges) {
+        AbstractShape.shapeRelationJudges = shapeRelationJudges;
     }
 
     @Override

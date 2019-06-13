@@ -68,7 +68,7 @@ public class Font extends AbstractResource {
     public static final float SCALE = 36.0f;
 
     private int fontTexture;
-    private STBTTPackedchar.Buffer chardata = null;
+    private STBTTPackedchar.Buffer charData = null;
 
     @AsFinalField
     private static Font defaultFont = null;
@@ -140,7 +140,7 @@ public class Font extends AbstractResource {
             }
 
             this.bitmap = bitmapLocal;
-            this.setChardata(chardataLocal);
+            this.setCharData(chardataLocal);
             this.setMemorySize(chardataLocal.capacity());
         }
     }
@@ -187,7 +187,7 @@ public class Font extends AbstractResource {
     private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
     private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);
 
-//    public void drawText(float x, float y, float scalex, float scaley,
+//    public void drawText(float x, float y, float scaleX, float scaleY,
 //    float characterSpace, Vector4f color, String text) {
 //
 //        this.bind();
@@ -195,8 +195,8 @@ public class Font extends AbstractResource {
 //        xb.put(0, x);
 //        yb.put(0, y);
 //
-////        chardata.position(font * MAX_NUM);
-//        chardata.position(0 * MAX_NUM);
+////        charData.position(font * MAX_NUM);
+//        charData.position(0 * MAX_NUM);
 //        glEnable(GL_TEXTURE_2D);
 //        glBindTexture(GL_TEXTURE_2D, fontTexture);
 //
@@ -210,7 +210,7 @@ public class Font extends AbstractResource {
 //        float lastx_Should = x;
 //        float lasty_Should = y;
 //        for (int i = 0; i < text.length(); i++) {
-//            stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt
+//            stbtt_GetPackedQuad(charData, BITMAP_W, BITMAP_H, text.charAt
 //            (i), xb, yb, q, false);
 ////            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:"
 // + q.y0() + " y1:" + q.y1());
@@ -218,19 +218,19 @@ public class Font extends AbstractResource {
 //            float charHeightShould = q.y1() - q.y0();
 //            float spaceLeftToCharShould = q.x0() - lastx_Should;
 //            float spaceUpToCharShould = q.y0() - lasty_Should;
-//            float nowx0 = lastx_ + spaceLeftToCharShould * scalex;
-////            float nowy0 = lasty_ + spaceUpToCharShould * scaley;
+//            float nowx0 = lastx_ + spaceLeftToCharShould * scaleX;
+////            float nowy0 = lasty_ + spaceUpToCharShould * scaleY;
 //            float nowy0 = y;
 ////            LOGGER.debug(charWidthShould + " " + charHeightShould +
 // " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + "
 // " + nowy0);
 //            drawBoxTC(
-//                    nowx0, nowy0, nowx0 + charWidthShould * scalex, nowy0 +
-//                    charHeightShould * scaley,
+//                    nowx0, nowy0, nowx0 + charWidthShould * scaleX, nowy0 +
+//                    charHeightShould * scaleY,
 ////                    q.x0(), q.y0(), q.x1(), q.y1(),
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
-//            lastx_ = nowx0 + charWidthShould * scalex;
+//            lastx_ = nowx0 + charWidthShould * scaleX;
 //            lasty_ = y;
 //            lastx_Should = q.x1();
 //            lasty_Should = y;
@@ -238,7 +238,7 @@ public class Font extends AbstractResource {
 //        glEnd();
 //    }
 
-    public void drawText(float x, float y, float scalex, float scaley,
+    public void drawText(float x, float y, float scaleX, float scaleY,
                          float height, float characterSpace, Vector4f color,
                          String text) {
 
@@ -248,8 +248,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x);
         getYb().put(0, y);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -263,7 +263,7 @@ public class Font extends AbstractResource {
         float lastxShould = x;
         float lastyShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
@@ -273,8 +273,8 @@ public class Font extends AbstractResource {
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastxShould;
             float spaceUpToCharShould = getQ().y0() - lastyShould;
-            float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-            float nowy0 = lastyReal + spaceUpToCharShould * scaley;
+            float nowx0 = lastxReal + spaceLeftToCharShould * scaleX;
+            float nowy0 = lastyReal + spaceUpToCharShould * scaleY;
 //            float nowy0 = y;
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
@@ -282,12 +282,12 @@ public class Font extends AbstractResource {
 
             drawBoxTC(
                     nowx0, nowy0 + height * 0.8f,
-                    nowx0 + charWidthShould * scalex,
-                    nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowx0 + charWidthShould * scaleX,
+                    nowy0 + charHeightShould * scaleY + height * 0.8f,
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
-            lastxReal = nowx0 + charWidthShould * scalex;
+            lastxReal = nowx0 + charWidthShould * scaleX;
             lastyReal = y;
             lastxShould = getQ().x1();
             lastyShould = y;
@@ -303,8 +303,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x1);
         getYb().put(0, y1);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -322,7 +322,7 @@ public class Font extends AbstractResource {
         float y3 = Float.MIN_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
@@ -348,14 +348,14 @@ public class Font extends AbstractResource {
             lastyShould = y1;
         }
         glEnd();
-        float scalex = width / (x3 - x1);
-        float scaley = height / (y3 - y1);
+        float scaleX = width / (x3 - x1);
+        float scaleY = height / (y3 - y1);
         if (width < 0) {
-            scalex = scaley;
+            scaleX = scaleY;
         } else if (height < 0) {
-            scaley = scalex;
+            scaleY = scaleX;
         }
-        drawText(x1, y1, scalex, scaley, height, characterSpace, color, text);
+        drawText(x1, y1, scaleX, scaleY, height, characterSpace, color, text);
     }
 
     private float maxCharHeight = -1;
@@ -365,7 +365,7 @@ public class Font extends AbstractResource {
             this.bind();
             getXb().put(0, 0);
             getYb().put(0, 0);
-            getChardata().position(0 * MAX_NUM);
+            getCharData().position(0 * MAX_NUM);
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -375,16 +375,16 @@ public class Font extends AbstractResource {
             float y3 = Float.MIN_VALUE;
             String text =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            float ymin = Float.MAX_VALUE;
-            float ymax = Float.MIN_VALUE;
+            float minY = Float.MAX_VALUE;
+            float maxY = Float.MIN_VALUE;
 
             for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+                stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                         text.charAt(i), getXb(), getYb(), getQ(), false);
-                ymin = Math.min(ymin, getQ().y0());
-                ymax = Math.max(ymax, getQ().y1());
+                minY = Math.min(minY, getQ().y0());
+                maxY = Math.max(maxY, getQ().y1());
             }
-            maxCharHeight = ymax - ymin;
+            maxCharHeight = maxY - minY;
         }
         return maxCharHeight;
     }
@@ -406,10 +406,10 @@ public class Font extends AbstractResource {
                                            Vector4f color, String text) {
 
         this.bind();
-        float scaley = this.getScale(height);
-        float scalex = scaley;
+        float scaleY = this.getScale(height);
+        float scaleX = scaleY;
 
-//        drawText(x1, y1, scalex, scaley, characterSpace, color, text);
+//        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
 
         float x = x1;
         float y = y1;
@@ -417,8 +417,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x);
         getYb().put(0, y);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -432,7 +432,7 @@ public class Font extends AbstractResource {
         float lastxShould = x;
         float lastyShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
@@ -440,8 +440,8 @@ public class Font extends AbstractResource {
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastxShould;
             float spaceUpToCharShould = getQ().y0() - lastyShould;
-            float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-            float nowy0 = y + spaceUpToCharShould * scaley;
+            float nowx0 = lastxReal + spaceLeftToCharShould * scaleX;
+            float nowy0 = y + spaceUpToCharShould * scaleY;
 
             if (xMax > 0 && nowx0 > xMax) {
                 break;
@@ -455,8 +455,8 @@ public class Font extends AbstractResource {
 
             drawBoxTC(
                     nowx0, nowy0 + height * 0.8f,
-                    nowx0 + charWidthShould * scalex,
-                    nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowx0 + charWidthShould * scaleX,
+                    nowy0 + charHeightShould * scaleY + height * 0.8f,
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
 
@@ -464,7 +464,7 @@ public class Font extends AbstractResource {
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
-            lastxReal = nowx0 + charWidthShould * scalex;
+            lastxReal = nowx0 + charWidthShould * scaleX;
             lastyReal = y;
             lastxShould = getQ().x1();
             lastyShould = y;
@@ -474,7 +474,7 @@ public class Font extends AbstractResource {
 
     @Override
     public void forceClose() {
-        getChardata().close();
+        getCharData().close();
 
         MemoryUtil.memFree(getYb());
         MemoryUtil.memFree(getXb());
@@ -490,8 +490,8 @@ public class Font extends AbstractResource {
         return fontTexture;
     }
 
-    public STBTTPackedchar.Buffer getChardata() {
-        return chardata;
+    public STBTTPackedchar.Buffer getCharData() {
+        return charData;
     }
 
     public static Font getDefaultFont() {
@@ -539,8 +539,8 @@ public class Font extends AbstractResource {
         this.fontTexture = fontTexture;
     }
 
-    public void setChardata(STBTTPackedchar.Buffer chardata) {
-        this.chardata = chardata;
+    public void setCharData(STBTTPackedchar.Buffer charData) {
+        this.charData = charData;
     }
 
 }

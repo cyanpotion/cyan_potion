@@ -465,18 +465,18 @@ public class GameWindow implements AutoCloseable, Area {
         return window;
     }
 
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height,
+    public void drawBindableRelative(Bindable bindable, float posX,
+                                     float posY, float width, float height,
                                      Model model, Vector4f colorScale, float rotateRadius) {
         if (bindable == null) {
             return;
         }
 
-        posx = posx / (float) this.getLogicWindowWidth();
-        posy = posy / (float) this.getLogicWindowHeight();
+        posX = posX / (float) this.getLogicWindowWidth();
+        posY = posY / (float) this.getLogicWindowHeight();
 
-        posx -= .5f;
-        posy -= .5f;
+        posX -= .5f;
+        posY -= .5f;
 
         if (colorScale == null) {
             colorScale = new Vector4f(1, 1, 1, 1);
@@ -490,7 +490,7 @@ public class GameWindow implements AutoCloseable, Area {
                     width / (float) this.getLogicWindowWidth(), 0, 0, 0,
                     0, height / (float) this.getLogicWindowHeight(), 0, 0,
                     0, 0, -1, 0,
-                    2 * posx, -2 * posy, 0, 1
+                    2 * posX, -2 * posY, 0, 1
             );
             this.getShader().setUniform("projection", projection);
         } else {
@@ -503,7 +503,7 @@ public class GameWindow implements AutoCloseable, Area {
                     line0.x / this.getLogicWindowWidth(), line0.y / this.getLogicWindowHeight(), 0, 0,
                     line1.x / this.getLogicWindowWidth(), line1.y / this.getLogicWindowHeight(), 0, 0,
                     0, 0, -1, 0,
-                    2 * posx, -2 * posy, 0, 1
+                    2 * posX, -2 * posY, 0, 1
             );
             this.getShader().setUniform("projection", projection);
         }
@@ -524,16 +524,16 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
     public void drawBindableRelative(Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float width,
                                      float height,
                                      Model model,
                                      Vector4f colorScale) {
         this.drawBindableRelative(
                 bindable,
-                posx,
-                posy,
+                posX,
+                posY,
                 width,
                 height,
                 model,
@@ -543,52 +543,52 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height) {
-        this.drawBindableRelative(bindable, posx, posy, width, height,
+    public void drawBindableRelative(Bindable bindable, float posX,
+                                     float posY, float width, float height) {
+        this.drawBindableRelative(bindable, posX, posY, width, height,
                 Model.COMMON_MODEL, new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height, Model model) {
-        this.drawBindableRelative(bindable, posx, posy, width, height,
+    public void drawBindableRelative(Bindable bindable, float posX,
+                                     float posY, float width, float height, Model model) {
+        this.drawBindableRelative(bindable, posX, posY, width, height,
                 model, new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableRelative(Bindable bindable, float posx,
-                                     float posy, float width, float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posx, posy, width, height,
+    public void drawBindableRelative(Bindable bindable, float posX,
+                                     float posY, float width, float height, Vector4f colorScale) {
+        this.drawBindableRelative(bindable, posX, posY, width, height,
                 Model.COMMON_MODEL, colorScale);
     }
 
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
+                                            float posY, float width,
                                             float height, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
+        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height,
                 Model.COMMON_MODEL, colorScale);
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
+                                            float posY, float width,
                                             float height, Model model) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height,
+        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height,
                 model, new Vector4f(1, 1, 1, 1));
     }
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
+                                            float posY, float width,
                                             float height) {
-        this.drawBindableRelativeLeftTop(bindable, posx, posy, width, height, Model.COMMON_MODEL,
+        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height, Model.COMMON_MODEL,
                 new Vector4f(1, 1, 1, 1));
     }
 
 
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posx,
-                                            float posy, float width,
+    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
+                                            float posY, float width,
                                             float height, Model model, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posx + width / 2,
-                posy + height / 2, width, height, model, colorScale);
+        this.drawBindableRelative(bindable, posX + width / 2,
+                posY + height / 2, width, height, model, colorScale);
     }
 
 
@@ -617,8 +617,8 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
-    public void drawText(Font font, float x, float y, float scalex,
-                         float scaley, float characterSpace, Vector4f
+    public void drawText(Font font, float x, float y, float scaleX,
+                         float scaleY, float characterSpace, Vector4f
                                  color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
@@ -627,7 +627,7 @@ public class GameWindow implements AutoCloseable, Area {
         }
 
         font.bind();
-        font.drawText(x, y, scalex, scaley, 0, characterSpace, color, text);
+        font.drawText(x, y, scaleX, scaleY, 0, characterSpace, color, text);
     }
 
     public void drawTextFillAreaLeftTop(Font font, float x1, float y1,
@@ -656,14 +656,14 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
-    public void drawText(Font font, float x, float y, float scalexy,
+    public void drawText(Font font, float x, float y, float scaleXy,
                          Vector4f color, String text) {
-        this.drawText(font, x, y, scalexy, scalexy, 0, color, text);
+        this.drawText(font, x, y, scaleXy, scaleXy, 0, color, text);
     }
 
-    public void drawText(Font font, float x, float y, float scalexy,
+    public void drawText(Font font, float x, float y, float scaleXy,
                          String text) {
-        this.drawText(font, x, y, scalexy, null, text);
+        this.drawText(font, x, y, scaleXy, null, text);
     }
 
     public void drawText(Font font, float x, float y, Vector4f color,
