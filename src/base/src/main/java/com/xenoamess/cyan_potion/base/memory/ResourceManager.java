@@ -81,7 +81,6 @@ public class ResourceManager implements AutoCloseable {
         this.putResourceWithShortenURI(fullResourceURI.substring(fullResourceURI.indexOf(':') + 1), t);
     }
 
-
     public Object getResourceFromFullURI(String fullResourceURI) {
         if (StringUtils.isBlank(fullResourceURI)) {
             return null;
@@ -107,7 +106,6 @@ public class ResourceManager implements AutoCloseable {
         return this.getResourceFromShortenURI(resourceClass,
                 fullResourceURI.substring(indexOfColon + 1));
     }
-
 
     public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
         ConcurrentHashMap<String, T> resourceURIMap =
