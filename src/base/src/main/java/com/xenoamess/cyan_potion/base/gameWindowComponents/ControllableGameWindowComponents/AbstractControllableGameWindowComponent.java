@@ -78,7 +78,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
 
-    private EventProcessor onMouseButtonLeftDownEventProcessor;
+    protected EventProcessor onMouseButtonLeftDownEventProcessor;
 
     public void registerOnMouseButtonLeftDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftDownEventProcessor = eventProcessor;
@@ -93,7 +93,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseButtonLeftUpEventProcessor;
+    protected EventProcessor onMouseButtonLeftUpEventProcessor;
 
     public void registerOnMouseButtonLeftUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftUpEventProcessor = eventProcessor;
@@ -106,7 +106,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return null;
     }
 
-    private EventProcessor onMouseButtonLeftPressingEventProcessor;
+    protected EventProcessor onMouseButtonLeftPressingEventProcessor;
 
     public void registerOnMouseButtonLeftPressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftPressingEventProcessor = eventProcessor;
@@ -124,7 +124,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseButtonRightDownEventProcessor;
+    protected EventProcessor onMouseButtonRightDownEventProcessor;
 
     public void registerOnMouseButtonRightDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightDownEventProcessor = eventProcessor;
@@ -140,7 +140,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseButtonRightUpEventProcessor;
+    protected EventProcessor onMouseButtonRightUpEventProcessor;
 
     public void registerOnMouseButtonRightUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightUpEventProcessor = eventProcessor;
@@ -153,7 +153,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return null;
     }
 
-    private EventProcessor onMouseButtonRightPressingEventProcessor;
+    protected EventProcessor onMouseButtonRightPressingEventProcessor;
 
     public void registerOnMouseButtonRightPressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightPressingEventProcessor = eventProcessor;
@@ -171,7 +171,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseButtonMiddleDownEventProcessor;
+    protected EventProcessor onMouseButtonMiddleDownEventProcessor;
 
     public void registerOnMouseButtonMiddleDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddleDownEventProcessor = eventProcessor;
@@ -187,7 +187,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseButtonMiddleUpEventProcessor;
+    protected EventProcessor onMouseButtonMiddleUpEventProcessor;
 
     public void registerOnMouseButtonMiddleUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddleUpEventProcessor = eventProcessor;
@@ -200,7 +200,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return null;
     }
 
-    private EventProcessor onMouseButtonMiddlePressingEventProcessor;
+    protected EventProcessor onMouseButtonMiddlePressingEventProcessor;
 
     public void registerOnMouseButtonMiddlePressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddlePressingEventProcessor = eventProcessor;
@@ -222,7 +222,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onGainFocusEventProcessor;
+    protected EventProcessor onGainFocusEventProcessor;
 
     public void registerOnGainFocusCallback(EventProcessor eventProcessor) {
         this.onGainFocusEventProcessor = eventProcessor;
@@ -239,7 +239,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onLoseFocusEventProcessor;
+    protected EventProcessor onLoseFocusEventProcessor;
 
     public void registerOnLoseFocusCallback(EventProcessor eventProcessor) {
         this.onLoseFocusEventProcessor = eventProcessor;
@@ -254,7 +254,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseEnterAreaEventProcessor;
+    protected EventProcessor onMouseEnterAreaEventProcessor;
 
     public void registerOnMouseEnterAreaCallback(EventProcessor eventProcessor) {
         this.onMouseEnterAreaEventProcessor = eventProcessor;
@@ -268,7 +268,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
-    private EventProcessor onMouseLeaveAreaEventProcessor;
+    protected EventProcessor onMouseLeaveAreaEventProcessor;
 
     public void registerOnMouseLeaveAreaCallback(EventProcessor eventProcessor) {
         this.onMouseLeaveAreaEventProcessor = eventProcessor;

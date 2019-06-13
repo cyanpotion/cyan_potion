@@ -34,6 +34,7 @@ import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
@@ -49,6 +50,7 @@ import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
@@ -539,6 +542,13 @@ public class GameManager implements AutoCloseable {
         this.close();
     }
 
+    private final ConcurrentLinkedQueue<ImmutablePair<EventProcessor, Event>>
+            mainThreadEventProcessPairs = new ConcurrentLinkedQueue<>();
+
+    public void delayMainThreadEventProcess(EventProcessor eventProcessor, Event event) {
+        mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
+    }
+
     public void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
@@ -565,8 +575,17 @@ public class GameManager implements AutoCloseable {
                     newEventList.addAll(res);
                 }
             });
+
+            mainThreadEventProcessPairs.forEach((ImmutablePair<EventProcessor, Event> pair) -> {
+                Event res = pair.left.apply(pair.right);
+                if (res != pair.right) {
+                    newEventList.add(res);
+                }
+            });
+            mainThreadEventProcessPairs.clear();
+
             this.getEventList().clear();
-            this.getEventList().addAll(newEventList);
+            this.getEventList().addAll(newEventList.stream().distinct().collect(Collectors.toList()));
         }
     }
 

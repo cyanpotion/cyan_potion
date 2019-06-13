@@ -66,6 +66,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
         this.registerOnMouseButtonLeftDownCallback(
                 (Event event) -> {
+                    if (Thread.currentThread().getId() != 1) {
+                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftDownEventProcessor, event);
+                    }
                     int clickIndex =
                             InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
                                     InputBox.this.getGameWindow().getMousePosY(), false, null);
@@ -83,6 +86,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
         this.registerOnMouseButtonLeftUpCallback(
                 (Event event) -> {
+                    if (Thread.currentThread().getId() != 1) {
+                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftUpEventProcessor, event);
+                    }
                     if (getNowSelectStartPos() < 0) {
                         return null;
                     }
@@ -109,6 +115,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
         this.registerOnMouseButtonLeftPressingCallback(
                 (Event event) -> {
+                    if (Thread.currentThread().getId() != 1) {
+                        InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.onMouseButtonLeftPressingEventProcessor, event);
+                    }
                     if (getNowSelectStartPos() == -1) {
                         return null;
                     }
@@ -121,6 +130,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
         this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
+            if (Thread.currentThread().getId() != 1) {
+                InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.getProcessor(KeyboardEvent.class.getCanonicalName()), event);
+            }
             synchronized (InputBox.this) {
                 if (!this.isInFocusNow()) {
                     return event;
@@ -245,6 +257,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         });
 
         this.registerProcessor(CharEvent.class.getCanonicalName(), event -> {
+            if (Thread.currentThread().getId() != 1) {
+                InputBox.this.getGameWindow().getGameManager().delayMainThreadEventProcess(InputBox.this.getProcessor(CharEvent.class.getCanonicalName()), event);
+            }
             synchronized (InputBox.this) {
                 if (!this.isInFocusNow()) {
                     return event;
