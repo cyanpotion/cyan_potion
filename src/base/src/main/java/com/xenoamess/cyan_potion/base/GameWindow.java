@@ -209,10 +209,10 @@ public class GameWindow implements AutoCloseable, Area {
             // Get the window size passed to glfwCreateWindow
             glfwGetWindowSize(getWindow(), pWidth, pHeight);
             // Get the resolution of the primary monitor
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
             // Center the window
-            glfwSetWindowPos(getWindow(), (vidmode.width() - pWidth[0]) / 2,
-                    (vidmode.height() - pHeight[0]) / 2);
+            glfwSetWindowPos(getWindow(), (vidMode.width() - pWidth[0]) / 2,
+                    (vidMode.height() - pHeight[0]) / 2);
         }
 
         // Make the OpenGL context current
@@ -401,9 +401,9 @@ public class GameWindow implements AutoCloseable, Area {
         //            //            glfwGetWindowSize(window, pWidth, pHeight);
         //
         //            // Get the resolution of the primary monitor
-        //            GLFWVidMode vidmode = glfwGetVideoMode
+        //            GLFWVidMode vidMode = glfwGetVideoMode
         //            (glfwGetPrimaryMonitor());
-        //            glfwSetWindowSize(window, vidmode.width(), vidmode
+        //            glfwSetWindowSize(window, vidMode.width(), vidMode
         //            .height());
         //
         //            glfwSetWindowPos(window, 0, 0);

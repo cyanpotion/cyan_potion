@@ -76,7 +76,7 @@ public class GameMapJson implements Serializable {
 
 
     /*
-     * parralax
+     * parallax
      */
 
     public boolean parallaxLoopX;
