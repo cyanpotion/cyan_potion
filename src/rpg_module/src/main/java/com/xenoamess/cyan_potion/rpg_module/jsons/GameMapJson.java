@@ -102,9 +102,9 @@ public class GameMapJson implements Serializable {
     /**
      * <p>getGameMapJson.</p>
      *
-     * @param objectMapper a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param objectMapper objectMapper
      * @param gameMapFile  a {@link java.io.File} object.
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     * @return return
      */
     public static GameMapJson getGameMapJson(ObjectMapper objectMapper,
                                              File gameMapFile) {

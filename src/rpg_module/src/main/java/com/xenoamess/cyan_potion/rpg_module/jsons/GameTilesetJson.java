@@ -58,8 +58,8 @@ public class GameTilesetJson implements Serializable {
      * <p>getGameTileSetJsons.</p>
      *
      * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
-     * @param gameTileSetsFile a {@link java.io.File} object.
-     * @return a {@link java.util.List} object.
+     * @param gameTileSetsFile gameTileSetsFile
+     * @return return
      */
     public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) {
         List<GameTilesetJson> res = new ArrayList<>();

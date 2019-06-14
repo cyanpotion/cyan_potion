@@ -43,7 +43,7 @@ public class StaticEntity extends AbstractEntity {
      * <p>Constructor for StaticEntity.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.

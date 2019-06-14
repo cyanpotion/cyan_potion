@@ -64,7 +64,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for MadeWithLogo.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      * @param lifeTime   a long.
      */
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
@@ -78,7 +78,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for MadeWithLogo.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public MadeWithLogo(GameWindow gameWindow) {
         this(gameWindow, 5000L + 5000L);

@@ -41,8 +41,34 @@ public class MainThreadEventProcessor implements EventProcessor {
     /**
      * <p>Constructor for MainThreadEventProcessor.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      * @param processor   a
+     *                    <p>
+     *                    <p>
+     *                    <p>
+     *                    <p>
+     *                    <p>
+     *                    <p>
+     *                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
      */
     public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
@@ -54,8 +80,50 @@ public class MainThreadEventProcessor implements EventProcessor {
      * <p>Constructor for MainThreadEventProcessor.</p>
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                            object.
      * @param processor           a
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
      */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {

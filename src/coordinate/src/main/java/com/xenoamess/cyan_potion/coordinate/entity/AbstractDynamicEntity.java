@@ -43,7 +43,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
      * <p>Constructor for AbstractDynamicEntity.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
@@ -62,7 +62,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>forceMove.</p>
      *
-     * @param direction a {@link org.joml.Vector3f} object.
+     * @param direction direction
      */
     public void forceMove(Vector3f direction) {
         this.setCenterPos(this.getCenterPos().add(direction));
@@ -75,7 +75,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>tryMove.</p>
      *
-     * @param direction a {@link org.joml.Vector3f} object.
+     * @param direction direction
      * @return a boolean.
      */
     public boolean tryMove(Vector3f direction) {
@@ -90,7 +90,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>canMove.</p>
      *
-     * @param direction a {@link org.joml.Vector3f} object.
+     * @param direction direction
      * @return a boolean.
      */
     public boolean canMove(Vector3f direction) {

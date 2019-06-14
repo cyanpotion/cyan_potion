@@ -63,7 +63,7 @@ public class Logo extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for Logo.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      * @param lifeTime   a long.
      */
     public Logo(GameWindow gameWindow, long lifeTime) {
@@ -77,7 +77,7 @@ public class Logo extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for Logo.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public Logo(GameWindow gameWindow) {
         this(gameWindow, 500L + 2000L + 1000L);

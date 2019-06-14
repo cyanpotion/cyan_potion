@@ -70,7 +70,7 @@ public class GamepadButtonEvent implements Event {
      * @param window        a long.
      * @param key           a int.
      * @param action        a int.
-     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @param gamepadDevice gamepadDevice
      */
     public GamepadButtonEvent(long window, int key, int action,
                               AbstractGamepadDevice gamepadDevice) {
@@ -144,7 +144,7 @@ public class GamepadButtonEvent implements Event {
     /**
      * <p>Getter for the field <code>gamepadDevice</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @return return
      */
     public AbstractGamepadDevice getGamepadDevice() {
         return gamepadDevice;

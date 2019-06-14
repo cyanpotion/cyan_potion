@@ -143,7 +143,7 @@ public class Font extends AbstractResource {
     /**
      * <p>loadBitmap.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
+     * @param resourceFilePath resourceFilePath
      */
     public void loadBitmap(String resourceFilePath) {
         ByteBuffer bitmapLocal;
@@ -175,7 +175,7 @@ public class Font extends AbstractResource {
     /**
      * <p>init.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void init(GameWindow gameWindow) {
         this.setGameWindow(gameWindow);
@@ -603,7 +603,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>charData</code>.</p>
      *
-     * @return a {@link org.lwjgl.stb.STBTTPackedchar.Buffer} object.
+     * @return return
      */
     public STBTTPackedchar.Buffer getCharData() {
         return charData;
@@ -612,7 +612,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>defaultFont</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @return return
      */
     public static Font getDefaultFont() {
         return defaultFont;
@@ -621,7 +621,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Setter for the field <code>defaultFont</code>.</p>
      *
-     * @param defaultFont a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param defaultFont defaultFont
      */
     public static void setDefaultFont(Font defaultFont) {
         asFinalFieldSet(Font.class, "defaultFont", defaultFont);
@@ -631,7 +631,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>currentFont</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @return return
      */
     public static synchronized Font getCurrentFont() {
         return currentFont;
@@ -640,7 +640,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Setter for the field <code>currentFont</code>.</p>
      *
-     * @param currentFont a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param currentFont currentFont
      */
     public static synchronized void setCurrentFont(Font currentFont) {
         Font.currentFont = currentFont;
@@ -649,7 +649,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>gameWindow</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @return return
      */
     public GameWindow getGameWindow() {
         return gameWindow;
@@ -658,7 +658,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Setter for the field <code>gameWindow</code>.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -676,7 +676,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>q</code>.</p>
      *
-     * @return a {@link org.lwjgl.stb.STBTTAlignedQuad} object.
+     * @return return
      */
     public STBTTAlignedQuad getQ() {
         return q;
@@ -685,7 +685,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>xb</code>.</p>
      *
-     * @return a {@link java.nio.FloatBuffer} object.
+     * @return return
      */
     public FloatBuffer getXb() {
         return xb;
@@ -694,7 +694,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Getter for the field <code>yb</code>.</p>
      *
-     * @return a {@link java.nio.FloatBuffer} object.
+     * @return return
      */
     public FloatBuffer getYb() {
         return yb;
@@ -712,7 +712,7 @@ public class Font extends AbstractResource {
     /**
      * <p>Setter for the field <code>charData</code>.</p>
      *
-     * @param charData a {@link org.lwjgl.stb.STBTTPackedchar.Buffer} object.
+     * @param charData charData
      */
     public void setCharData(STBTTPackedchar.Buffer charData) {
         this.charData = charData;

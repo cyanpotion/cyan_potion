@@ -39,7 +39,7 @@ public class HorizontalRectangle extends AbstractShape {
      * <p>Constructor for HorizontalRectangle.</p>
      *
      * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      */
     public HorizontalRectangle(AbstractEntity entity, Vector3f centerPos,
@@ -51,7 +51,7 @@ public class HorizontalRectangle extends AbstractShape {
      * <p>Constructor for HorizontalRectangle.</p>
      *
      * @param horizontalRectangle a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle}
-     *                           object.
+     *                            object.
      */
     public HorizontalRectangle(HorizontalRectangle horizontalRectangle) {
         super(horizontalRectangle);

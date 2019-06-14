@@ -56,7 +56,7 @@ public abstract class AbstractEntityScene extends AbstractScene {
     /**
      * <p>Constructor for AbstractEntityScene.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public AbstractEntityScene(GameWindow gameWindow) {
         super(gameWindow);
@@ -65,7 +65,7 @@ public abstract class AbstractEntityScene extends AbstractScene {
     /**
      * <p>Getter for the field <code>staticEntitySet</code>.</p>
      *
-     * @return a {@link java.util.Set} object.
+     * @return return
      */
     public Set<StaticEntity> getStaticEntitySet() {
         return staticEntitySet;
@@ -74,7 +74,7 @@ public abstract class AbstractEntityScene extends AbstractScene {
     /**
      * <p>Getter for the field <code>dynamicEntitySet</code>.</p>
      *
-     * @return a {@link java.util.Set} object.
+     * @return return
      */
     public Set<AbstractDynamicEntity> getDynamicEntitySet() {
         return dynamicEntitySet;
@@ -83,7 +83,7 @@ public abstract class AbstractEntityScene extends AbstractScene {
     /**
      * <p>Getter for the field <code>boxToShapeMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> getBoxToShapeMap() {
         return boxToShapeMap;
@@ -92,7 +92,7 @@ public abstract class AbstractEntityScene extends AbstractScene {
     /**
      * <p>Getter for the field <code>shapeCollisionSet</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<AbstractShape, Set<AbstractShape>> getShapeCollisionSet() {
         return shapeCollisionSet;

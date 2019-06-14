@@ -64,7 +64,7 @@ public class WalkingAnimation4Dirs extends Animation {
      * @param fps             a int.
      * @param unit            a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
      * @param resourceURI     a {@link java.lang.String} object.
-     * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param resourceManager resourceManager
      */
     public WalkingAnimation4Dirs(int fps, Unit unit, String resourceURI,
                                  ResourceManager resourceManager) {
@@ -146,7 +146,7 @@ public class WalkingAnimation4Dirs extends Animation {
     /**
      * <p>Getter for the field <code>faceDirFrameMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<Integer, List<Texture>> getFaceDirFrameMap() {
         return faceDirFrameMap;
@@ -155,7 +155,7 @@ public class WalkingAnimation4Dirs extends Animation {
     /**
      * <p>Setter for the field <code>faceDirFrameMap</code>.</p>
      *
-     * @param faceDirFrameMap a {@link java.util.Map} object.
+     * @param faceDirFrameMap faceDirFrameMap
      */
     public void setFaceDirFrameMap(Map<Integer, List<Texture>> faceDirFrameMap) {
         this.faceDirFrameMap = faceDirFrameMap;
@@ -164,7 +164,7 @@ public class WalkingAnimation4Dirs extends Animation {
     /**
      * <p>Getter for the field <code>unit</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
+     * @return return
      */
     public Unit getUnit() {
         return unit;
@@ -173,7 +173,7 @@ public class WalkingAnimation4Dirs extends Animation {
     /**
      * <p>Setter for the field <code>unit</code>.</p>
      *
-     * @param unit a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
+     * @param unit unit
      */
     public void setUnit(Unit unit) {
         this.unit = unit;

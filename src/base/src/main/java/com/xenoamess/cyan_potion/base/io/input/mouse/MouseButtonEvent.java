@@ -125,7 +125,7 @@ public class MouseButtonEvent implements Event {
     /**
      * <p>getKeyRaw.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @return return
      */
     public Key getKeyRaw() {
         return new Key(Key.TYPE_MOUSE, this.getKey());
@@ -134,8 +134,8 @@ public class MouseButtonEvent implements Event {
     /**
      * <p>getKeyTranslated.</p>
      *
-     * @param keymap a {@link com.xenoamess.cyan_potion.base.io.input.key.Keymap} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param keymap keymap
+     * @return return
      */
     public Key getKeyTranslated(Keymap keymap) {
         return keymap.get(this.getKeyRaw());

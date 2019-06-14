@@ -39,7 +39,7 @@ public class URITypeNotDefinedException extends RuntimeException {
     /**
      * <p>Constructor for URITypeNotDefinedException.</p>
      *
-     * @param message a {@link java.lang.String} object.
+     * @param message message
      */
     public URITypeNotDefinedException(String message) {
         super(message);

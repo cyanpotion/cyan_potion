@@ -36,7 +36,7 @@ public class TextureStateDisorderException extends RuntimeException {
     /**
      * <p>Constructor for TextureStateDisorderException.</p>
      *
-     * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param texture texture
      */
     public TextureStateDisorderException(Texture texture) {
         super("Texture state chaos : getGlTexture2DInt: " + texture.getGlTexture2DInt() + ", isInMemory: " + texture.isInMemory() + ", getFullResourceURI: " + texture.getFullResourceURI() + ";");

@@ -75,7 +75,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Constructor for AudioManager.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public AudioManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -149,7 +149,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>getUnusedSource.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.Source} object.
+     * @return return
      */
     protected Source getUnusedSource() {
         if (getUnusedSources().isEmpty()) {
@@ -166,7 +166,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>playNew.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void playNew(WaveData waveData) {
         Source audioSource = this.getUnusedSource();
@@ -178,7 +178,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>resume.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void resume(WaveData waveData) {
         for (Source au : getUsedSources()) {
@@ -191,7 +191,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>pause.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void pause(WaveData waveData) {
         for (Source au : getUsedSources()) {
@@ -204,7 +204,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>stop.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void stop(WaveData waveData) {
         for (Source au : getUsedSources()) {
@@ -217,7 +217,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>listenerPosition</code>.</p>
      *
-     * @param listenerPosition a {@link org.joml.Vector3f} object.
+     * @param listenerPosition listenerPosition
      */
     public void setListenerPosition(Vector3f listenerPosition) {
         this.listenerPosition = new Vector3f(listenerPosition);
@@ -228,7 +228,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>listenerVelocity</code>.</p>
      *
-     * @param listenerVelocity a {@link org.joml.Vector3f} object.
+     * @param listenerVelocity listenerVelocity
      */
     public void setListenerVelocity(Vector3f listenerVelocity) {
         this.listenerVelocity = new Vector3f(listenerVelocity);
@@ -239,7 +239,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @return return
      */
     public GameManager getGameManager() {
         return gameManager;
@@ -248,7 +248,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>specialSources</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     private Map<String, Source> getSpecialSources() {
         return specialSources;
@@ -257,7 +257,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>unusedSources</code>.</p>
      *
-     * @return a {@link java.util.Set} object.
+     * @return return
      */
     private Set<Source> getUnusedSources() {
         return unusedSources;
@@ -266,7 +266,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>usedSources</code>.</p>
      *
-     * @return a {@link java.util.Set} object.
+     * @return return
      */
     private Set<Source> getUsedSources() {
         return usedSources;
@@ -311,7 +311,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>listenerPosition</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getListenerPosition() {
         return listenerPosition;
@@ -320,7 +320,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>listenerVelocity</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getListenerVelocity() {
         return listenerVelocity;

@@ -49,7 +49,7 @@ public class GamepadInput {
     /**
      * <p>init.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public void init(GameManager gameManager) {
         try {
@@ -76,7 +76,7 @@ public class GamepadInput {
     /**
      * <p>update.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void update(GameWindow gameWindow) {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
@@ -87,7 +87,7 @@ public class GamepadInput {
     /**
      * <p>Getter for the field <code>gamepadDatas</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<AbstractGamepadData> getGamepadDatas() {
         return gamepadDatas;

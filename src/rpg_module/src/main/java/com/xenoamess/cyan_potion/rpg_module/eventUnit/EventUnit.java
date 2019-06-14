@@ -49,7 +49,7 @@ public class EventUnit extends Unit {
      * <p>Constructor for EventUnit.</p>
      *
      * @param scene         a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param eventUnitJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson} object.
+     * @param eventUnitJson eventUnitJson
      */
     public EventUnit(AbstractEntityScene scene, EventUnitJson eventUnitJson) {
         //todo
@@ -80,7 +80,7 @@ public class EventUnit extends Unit {
     /**
      * <p>Getter for the field <code>eventUnitJson</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson} object.
+     * @return return
      */
     public EventUnitJson getEventUnitJson() {
         return eventUnitJson;
@@ -89,7 +89,7 @@ public class EventUnit extends Unit {
     /**
      * <p>Setter for the field <code>eventUnitJson</code>.</p>
      *
-     * @param eventUnitJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson} object.
+     * @param eventUnitJson eventUnitJson
      */
     public void setEventUnitJson(EventUnitJson eventUnitJson) {
         this.eventUnitJson = eventUnitJson;
@@ -98,7 +98,7 @@ public class EventUnit extends Unit {
     /**
      * <p>Getter for the field <code>eventPages</code>.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @return return
      */
     public List<EventPage> getEventPages() {
         return eventPages;
@@ -107,7 +107,7 @@ public class EventUnit extends Unit {
     /**
      * <p>Setter for the field <code>eventPages</code>.</p>
      *
-     * @param eventPages a {@link java.util.List} object.
+     * @param eventPages eventPages
      */
     public void setEventPages(List<EventPage> eventPages) {
         this.eventPages = eventPages;

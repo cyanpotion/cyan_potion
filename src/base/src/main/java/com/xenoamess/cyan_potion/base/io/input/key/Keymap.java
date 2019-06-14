@@ -121,8 +121,8 @@ public class Keymap {
     /**
      * <p>get.</p>
      *
-     * @param rawKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param rawKey rawKey
+     * @return return
      */
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
@@ -135,9 +135,9 @@ public class Keymap {
     /**
      * <p>put.</p>
      *
-     * @param rawInput a {@link java.lang.String} object.
+     * @param rawInput rawInput
      * @param myInput  a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @return return
      */
     public Key put(String rawInput, String myInput) {
         if (rawInput == null || myInput == null) {
@@ -184,9 +184,9 @@ public class Keymap {
     /**
      * <p>put.</p>
      *
-     * @param rawKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param rawKey rawKey
      * @param myKey  a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @return return
      */
     public Key put(Key rawKey, Key myKey) {
         Key res = getKeymap().put(rawKey, myKey);
@@ -199,7 +199,7 @@ public class Keymap {
     /**
      * <p>keyFlipRaw.</p>
      *
-     * @param rawKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param rawKey rawKey
      */
     public void keyFlipRaw(Key rawKey) {
         keyFlip(getKeymap().get(rawKey));
@@ -209,7 +209,7 @@ public class Keymap {
     /**
      * <p>keyFlip.</p>
      *
-     * @param myKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param myKey myKey
      */
     public void keyFlip(Key myKey) {
         if (myKey == null) {
@@ -224,7 +224,7 @@ public class Keymap {
     /**
      * <p>isKeyDown.</p>
      *
-     * @param myKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param myKey myKey
      * @return a boolean.
      */
     public boolean isKeyDown(Key myKey) {
@@ -237,7 +237,7 @@ public class Keymap {
     /**
      * <p>isKeyDownRaw.</p>
      *
-     * @param rawKey a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @param rawKey rawKey
      * @return a boolean.
      */
     public boolean isKeyDownRaw(Key rawKey) {

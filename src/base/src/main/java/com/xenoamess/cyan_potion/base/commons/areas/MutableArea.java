@@ -39,7 +39,7 @@ public class MutableArea implements Area {
     /**
      * <p>Constructor for MutableArea.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
+     * @param area area
      */
     public MutableArea(Area area) {
         this.setCenterPosX(area.getCenterPosX());
@@ -70,7 +70,7 @@ public class MutableArea implements Area {
      * @param centerPosY a float.
      * @param width      a float.
      * @param height     a float.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.MutableArea} object.
+     * @return return
      */
     public static MutableArea generateMutableArea(
             float centerPosX, float centerPosY, float width, float height) {
@@ -80,8 +80,8 @@ public class MutableArea implements Area {
     /**
      * <p>generateMutableArea.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.MutableArea} object.
+     * @param area area
+     * @return return
      */
     public static MutableArea generateMutableArea(
             Area area) {
@@ -95,7 +95,7 @@ public class MutableArea implements Area {
      * @param leftTopPosY a float.
      * @param width       a float.
      * @param height      a float.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.MutableArea} object.
+     * @return return
      */
     public static MutableArea generateMutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {

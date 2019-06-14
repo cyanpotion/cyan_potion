@@ -39,7 +39,7 @@ public abstract class AbstractGamepadData {
     /**
      * <p>Constructor for AbstractGamepadData.</p>
      *
-     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @param gamepadDevice gamepadDevice
      */
     public AbstractGamepadData(AbstractGamepadDevice gamepadDevice) {
         this.gamepadDevice = gamepadDevice;
@@ -48,7 +48,7 @@ public abstract class AbstractGamepadData {
     /**
      * <p>Getter for the field <code>gamepadDevice</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @return return
      */
     public AbstractGamepadDevice getGamepadDevice() {
         return this.gamepadDevice;
@@ -57,7 +57,7 @@ public abstract class AbstractGamepadData {
     /**
      * <p>updateGamepadStatus.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public abstract void updateGamepadStatus(GameWindow gameWindow);
 
@@ -69,7 +69,7 @@ public abstract class AbstractGamepadData {
     /**
      * <p>update.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void update(GameWindow gameWindow) {
         AbstractGamepadDevice gamepadDeviceLocal = this.getGamepadDevice();

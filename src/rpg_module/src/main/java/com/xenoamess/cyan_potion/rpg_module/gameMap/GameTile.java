@@ -43,7 +43,7 @@ public class GameTile {
     /**
      * <p>addBindable.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      */
     public void addBindable(Bindable bindable) {
         this.getBindables().add(bindable);
@@ -60,7 +60,7 @@ public class GameTile {
     /**
      * <p>Constructor for GameTile.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      */
     public GameTile(Bindable bindable) {
         this();
@@ -70,7 +70,7 @@ public class GameTile {
     /**
      * <p>Setter for the field <code>solid</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile} object.
+     * @return return
      */
     public GameTile setSolid() {
         this.setSolid(true);
@@ -98,7 +98,7 @@ public class GameTile {
     /**
      * <p>Getter for the field <code>bindables</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<Bindable> getBindables() {
         return bindables;
@@ -107,7 +107,7 @@ public class GameTile {
     /**
      * <p>Setter for the field <code>bindables</code>.</p>
      *
-     * @param bindables a {@link java.util.ArrayList} object.
+     * @param bindables bindables
      */
     public void setBindables(ArrayList<Bindable> bindables) {
         this.bindables = bindables;

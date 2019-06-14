@@ -53,7 +53,7 @@ public class GrammarMap {
      * <p>getMethodName.</p>
      *
      * @param methodNum a int.
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public static String getMethodName(int methodNum) {
         checkInit();
@@ -63,8 +63,8 @@ public class GrammarMap {
     /**
      * <p>getMethodNum.</p>
      *
-     * @param methodName a {@link java.lang.String} object.
-     * @return a {@link java.lang.Integer} object.
+     * @param methodName methodName
+     * @return return
      */
     public static Integer getMethodNum(String methodName) {
         checkInit();

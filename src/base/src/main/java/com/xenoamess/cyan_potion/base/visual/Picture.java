@@ -51,7 +51,7 @@ public class Picture implements Area {
     /**
      * <p>draw.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void draw(GameWindow gameWindow) {
         if (bindable == null) {
@@ -72,7 +72,7 @@ public class Picture implements Area {
     /**
      * <p>draw.</p>
      *
-     * @param scene a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractScene} object.
+     * @param scene scene
      */
     public void draw(AbstractScene scene) {
         if (bindable == null) {
@@ -96,7 +96,7 @@ public class Picture implements Area {
     /**
      * <p>Constructor for Picture.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      */
     public Picture(Bindable bindable) {
         this.setBindable(bindable);
@@ -210,7 +210,7 @@ public class Picture implements Area {
     /**
      * <p>setCenter.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
+     * @param area area
      */
     public void setCenter(Area area) {
         this.setCenterPosX(area.getCenterPosX());
@@ -220,7 +220,7 @@ public class Picture implements Area {
     /**
      * <p>setSize.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
+     * @param area area
      */
     public void setSize(Area area) {
         this.setWidth(area.getWidth());
@@ -230,7 +230,7 @@ public class Picture implements Area {
     /**
      * <p>cover.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
+     * @param area area
      */
     public void cover(Area area) {
         this.setCenter(area);
@@ -292,7 +292,7 @@ public class Picture implements Area {
     /**
      * <p>Getter for the field <code>bindable</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @return return
      */
     public Bindable getBindable() {
         return bindable;
@@ -301,7 +301,7 @@ public class Picture implements Area {
     /**
      * <p>Setter for the field <code>bindable</code>.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      */
     public void setBindable(Bindable bindable) {
         this.bindable = bindable;
@@ -378,7 +378,7 @@ public class Picture implements Area {
     /**
      * <p>Getter for the field <code>colorScale</code>.</p>
      *
-     * @return a {@link org.joml.Vector4f} object.
+     * @return return
      */
     public Vector4f getColorScale() {
         return colorScale;
@@ -387,7 +387,7 @@ public class Picture implements Area {
     /**
      * <p>Setter for the field <code>colorScale</code>.</p>
      *
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void setColorScale(Vector4f colorScale) {
         this.colorScale = colorScale;

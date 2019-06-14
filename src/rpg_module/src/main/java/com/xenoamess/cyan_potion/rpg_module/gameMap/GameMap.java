@@ -106,7 +106,7 @@ public class GameMap {
     /**
      * <p>Getter for the field <code>world</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @return return
      */
     public World getWorld() {
         return world;
@@ -115,7 +115,7 @@ public class GameMap {
     /**
      * <p>Setter for the field <code>world</code>.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public void setWorld(World world) {
         this.world = world;
@@ -124,7 +124,7 @@ public class GameMap {
     /**
      * <p>Getter for the field <code>gameMapJson</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     * @return return
      */
     public GameMapJson getGameMapJson() {
         return gameMapJson;
@@ -133,7 +133,7 @@ public class GameMap {
     /**
      * <p>Setter for the field <code>gameMapJson</code>.</p>
      *
-     * @param gameMapJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     * @param gameMapJson gameMapJson
      */
     public void setGameMapJson(GameMapJson gameMapJson) {
         this.gameMapJson = gameMapJson;
@@ -142,7 +142,7 @@ public class GameMap {
     /**
      * <p>Getter for the field <code>gameMapInfoJson</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap.GameMapInfoJson} object.
+     * @return return
      */
     public GameMapInfoJson getGameMapInfoJson() {
         return gameMapInfoJson;
@@ -151,7 +151,7 @@ public class GameMap {
     /**
      * <p>Setter for the field <code>gameMapInfoJson</code>.</p>
      *
-     * @param gameMapInfoJson a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap.GameMapInfoJson} object.
+     * @param gameMapInfoJson gameMapInfoJson
      */
     public void setGameMapInfoJson(GameMapInfoJson gameMapInfoJson) {
         this.gameMapInfoJson = gameMapInfoJson;
@@ -160,7 +160,7 @@ public class GameMap {
     /**
      * <p>Getter for the field <code>gameTiles</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<GameTile> getGameTiles() {
         return gameTiles;
@@ -169,7 +169,7 @@ public class GameMap {
     /**
      * <p>Getter for the field <code>eventUnits</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<EventUnit> getEventUnits() {
         return eventUnits;
@@ -246,8 +246,8 @@ public class GameMap {
      * <p>getGameMapInfoJsons.</p>
      *
      * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
-     * @param gameMapInfosFile a {@link java.io.File} object.
-     * @return a {@link java.util.List} object.
+     * @param gameMapInfosFile gameMapInfosFile
+     * @return return
      */
     public static List<GameMapInfoJson> getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile) {
         List<GameMapInfoJson> res = null;
@@ -281,7 +281,7 @@ public class GameMap {
     /**
      * <p>init.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public static void init(World world) {
         //        GameMapInfoJson
@@ -304,7 +304,7 @@ public class GameMap {
     /**
      * <p>getGameTileset.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset} object.
+     * @return return
      */
     public GameTileset getGameTileset() {
         return this.getWorld().getRpgModuleDataCenter().getGameTileset(this.getGameMapJson().tilesetId);

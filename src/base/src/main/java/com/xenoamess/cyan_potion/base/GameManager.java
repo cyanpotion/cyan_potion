@@ -116,7 +116,7 @@ public class GameManager implements AutoCloseable {
      * <p>generateArgsMap.</p>
      *
      * @param args an array of {@link java.lang.String} objects.
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public static Map<String, String> generateArgsMap(String[] args) {
         Map<String, String> res = new LinkedHashMap<>();
@@ -175,7 +175,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Constructor for GameManager.</p>
      *
-     * @param argsMap a {@link java.util.Map} object.
+     * @param argsMap argsMap
      */
     public GameManager(Map<String, String> argsMap) {
         this();
@@ -185,7 +185,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>eventListAdd.</p>
      *
-     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     * @param event event
      */
     public void eventListAdd(Event event) {
         if (event == null) {
@@ -614,8 +614,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>delayMainThreadEventProcess.</p>
      *
-     * @param eventProcessor a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     * @param eventProcessor eventProcessor
      * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
     public void delayMainThreadEventProcess(EventProcessor eventProcessor, Event event) {
@@ -720,7 +719,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>consoleThread</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.console.ConsoleThread} object.
+     * @return return
      */
     public ConsoleThread getConsoleThread() {
         return consoleThread;
@@ -729,7 +728,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>consoleThread</code>.</p>
      *
-     * @param consoleThread a {@link com.xenoamess.cyan_potion.base.console.ConsoleThread} object.
+     * @param consoleThread consoleThread
      */
     public void setConsoleThread(ConsoleThread consoleThread) {
         asFinalFieldSet(this, "consoleThread", consoleThread);
@@ -738,7 +737,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>gameWindow</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @return return
      */
     public GameWindow getGameWindow() {
         return gameWindow;
@@ -747,7 +746,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>gameWindow</code>.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void setGameWindow(GameWindow gameWindow) {
         asFinalFieldSet(this, "gameWindow", gameWindow);
@@ -756,7 +755,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>callbacks</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.Callbacks} object.
+     * @return return
      */
     public Callbacks getCallbacks() {
         return callbacks;
@@ -765,7 +764,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>steamUserStats</code>.</p>
      *
-     * @return a {@link com.codedisaster.steamworks.SteamUserStats} object.
+     * @return return
      */
     public SteamUserStats getSteamUserStats() {
         return steamUserStats;
@@ -774,7 +773,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>steamUserStats</code>.</p>
      *
-     * @param steamUserStats a {@link com.codedisaster.steamworks.SteamUserStats} object.
+     * @param steamUserStats steamUserStats
      */
     public void setSteamUserStats(SteamUserStats steamUserStats) {
         asFinalFieldSet(this, "steamUserStats", steamUserStats);
@@ -783,7 +782,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>dataCenter</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @return return
      */
     public DataCenter getDataCenter() {
         return dataCenter;
@@ -792,7 +791,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>keymap</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Keymap} object.
+     * @return return
      */
     public Keymap getKeymap() {
         return keymap;
@@ -801,7 +800,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>gamepadInput</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput} object.
+     * @return return
      */
     public GamepadInput getGamepadInput() {
         return gamepadInput;
@@ -810,7 +809,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>gameWindowComponentTree</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree} object.
+     * @return return
      */
     public GameWindowComponentTree getGameWindowComponentTree() {
         return gameWindowComponentTree;
@@ -828,7 +827,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>argsMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, String> getArgsMap() {
         return argsMap;
@@ -837,7 +836,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>audioManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.AudioManager} object.
+     * @return return
      */
     public AudioManager getAudioManager() {
         return audioManager;
@@ -846,7 +845,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>resourceManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @return return
      */
     public ResourceManager getResourceManager() {
         return resourceManager;
@@ -855,7 +854,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>scheduledExecutorService</code>.</p>
      *
-     * @return a {@link java.util.concurrent.ScheduledExecutorService} object.
+     * @return return
      */
     public ScheduledExecutorService getScheduledExecutorService() {
         return scheduledExecutorService;
@@ -864,7 +863,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Getter for the field <code>eventList</code>.</p>
      *
-     * @return a {@link java.util.concurrent.ConcurrentLinkedDeque} object.
+     * @return return
      */
     protected ConcurrentLinkedDeque<Event> getEventList() {
         return eventList;
@@ -882,7 +881,7 @@ public class GameManager implements AutoCloseable {
     /**
      * <p>Setter for the field <code>argsMap</code>.</p>
      *
-     * @param argsMap a {@link java.util.Map} object.
+     * @param argsMap argsMap
      */
     public void setArgsMap(Map<String, String> argsMap) {
         this.argsMap = argsMap;

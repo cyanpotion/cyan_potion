@@ -34,7 +34,7 @@ public class UnexpectedBufferClassTypeException extends RuntimeException {
     /**
      * <p>Constructor for UnexpectedBufferClassTypeException.</p>
      *
-     * @param message a {@link java.lang.String} object.
+     * @param message message
      */
     public UnexpectedBufferClassTypeException(String message) {
         super(message);

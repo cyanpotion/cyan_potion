@@ -46,7 +46,7 @@ public class GameManagerConfig {
     /**
      * <p>getBoolean.</p>
      *
-     * @param value a {@link java.lang.String} object.
+     * @param value value
      * @return a boolean.
      */
     public static boolean getBoolean(String value) {
@@ -75,7 +75,7 @@ public class GameManagerConfig {
     /**
      * <p>getBoolean.</p>
      *
-     * @param settingMap a {@link java.util.Map} object.
+     * @param settingMap settingMap
      * @param key        a {@link java.lang.String} object.
      * @return a boolean.
      */
@@ -105,9 +105,9 @@ public class GameManagerConfig {
     /**
      * <p>getString.</p>
      *
-     * @param settingMap a {@link java.util.Map} object.
+     * @param settingMap settingMap
      * @param key        a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public static String getString(final Map<String, String> settingMap,
                                    final String key) {
@@ -119,8 +119,8 @@ public class GameManagerConfig {
      *
      * @param settingMap   a {@link java.util.Map} object.
      * @param key          a {@link java.lang.String} object.
-     * @param defaultValue a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @param defaultValue defaultValue
+     * @return return
      */
     public static String getString(final Map<String, String> settingMap,
                                    final String key,

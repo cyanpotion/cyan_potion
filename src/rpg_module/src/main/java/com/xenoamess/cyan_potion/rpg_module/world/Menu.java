@@ -60,7 +60,7 @@ public class Menu extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for Menu.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public Menu(World world) {
         super(world.getGameWindow());
@@ -142,7 +142,7 @@ public class Menu extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>menuBackGroundTexture</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return return
      */
     public Texture getMenuBackGroundTexture() {
         return menuBackGroundTexture;
@@ -151,7 +151,7 @@ public class Menu extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>world</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @return return
      */
     public World getWorld() {
         return world;
@@ -160,7 +160,7 @@ public class Menu extends AbstractGameWindowComponent {
     /**
      * <p>Setter for the field <code>world</code>.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public void setWorld(World world) {
         this.world = world;

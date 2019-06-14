@@ -45,7 +45,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * <p>Constructor for Button.</p>
      *
      * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param buttonTexture buttonTexture
      */
     public Button(GameWindow gameWindow, Texture buttonTexture) {
         this(gameWindow, buttonTexture, null);
@@ -55,7 +55,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * <p>Constructor for Button.</p>
      *
      * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param buttonTexture buttonTexture
      * @param buttonText    a {@link java.lang.String} object.
      */
     public Button(GameWindow gameWindow, Texture buttonTexture,
@@ -93,7 +93,7 @@ public class Button extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>buttonText</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getButtonText() {
         return buttonText;
@@ -102,7 +102,7 @@ public class Button extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>buttonText</code>.</p>
      *
-     * @param buttonText a {@link java.lang.String} object.
+     * @param buttonText buttonText
      */
     public void setButtonText(String buttonText) {
         this.buttonText = buttonText;

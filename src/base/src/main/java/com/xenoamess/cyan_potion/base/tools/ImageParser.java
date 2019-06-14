@@ -86,8 +86,8 @@ public class ImageParser implements AutoCloseable {
     /**
      * <p>loadImage.</p>
      *
-     * @param path a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.tools.ImageParser} object.
+     * @param path path
+     * @return return
      */
     public static ImageParser loadImage(String path) {
         ByteBuffer image;
@@ -113,8 +113,8 @@ public class ImageParser implements AutoCloseable {
     /**
      * <p>getGLFWImage.</p>
      *
-     * @param path a {@link java.lang.String} object.
-     * @return a {@link org.lwjgl.glfw.GLFWImage} object.
+     * @param path path
+     * @return return
      */
     public static GLFWImage getGLFWImage(String path) {
         ImageParser imageparser = loadImage(path);
@@ -143,7 +143,7 @@ public class ImageParser implements AutoCloseable {
     /**
      * <p>Getter for the field <code>image</code>.</p>
      *
-     * @return a {@link java.nio.ByteBuffer} object.
+     * @return return
      */
     public ByteBuffer getImage() {
         return image;
@@ -152,7 +152,7 @@ public class ImageParser implements AutoCloseable {
     /**
      * <p>Setter for the field <code>image</code>.</p>
      *
-     * @param image a {@link java.nio.ByteBuffer} object.
+     * @param image image
      */
     public void setImage(ByteBuffer image) {
         this.image = image;

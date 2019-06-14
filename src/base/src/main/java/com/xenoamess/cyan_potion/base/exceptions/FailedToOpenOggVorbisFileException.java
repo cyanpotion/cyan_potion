@@ -34,7 +34,7 @@ public class FailedToOpenOggVorbisFileException extends RuntimeException {
     /**
      * <p>Constructor for FailedToOpenOggVorbisFileException.</p>
      *
-     * @param message a {@link java.lang.String} object.
+     * @param message message
      */
     public FailedToOpenOggVorbisFileException(String message) {
         super(message);

@@ -51,7 +51,7 @@ public abstract class AbstractEntity implements Area {
      * <p>Constructor for AbstractEntity.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
@@ -73,7 +73,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Getter for the field <code>picture</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Picture} object.
+     * @return return
      */
     public Picture getPicture() {
         return this.picture;
@@ -82,7 +82,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>draw.</p>
      *
-     * @param scene a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param scene scene
      */
     public void draw(AbstractEntityScene scene) {
         this.getPicture().draw(scene);
@@ -101,7 +101,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Getter for the field <code>scene</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @return return
      */
     public AbstractEntityScene getScene() {
         return scene;
@@ -110,7 +110,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Getter for the field <code>centerPos</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getCenterPos() {
         return centerPos;
@@ -119,7 +119,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Setter for the field <code>centerPos</code>.</p>
      *
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      */
     public void setCenterPos(Vector3f centerPos) {
         this.centerPos = centerPos;
@@ -128,7 +128,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Getter for the field <code>size</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getSize() {
         return size;
@@ -137,7 +137,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Setter for the field <code>size</code>.</p>
      *
-     * @param size a {@link org.joml.Vector3f} object.
+     * @param size size
      */
     public void setSize(Vector3f size) {
         this.size = size;
@@ -146,7 +146,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Getter for the field <code>shape</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @return return
      */
     public AbstractShape getShape() {
         return shape;
@@ -155,7 +155,7 @@ public abstract class AbstractEntity implements Area {
     /**
      * <p>Setter for the field <code>shape</code>.</p>
      *
-     * @param shape a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param shape shape
      */
     public void setShape(AbstractShape shape) {
         this.shape = shape;

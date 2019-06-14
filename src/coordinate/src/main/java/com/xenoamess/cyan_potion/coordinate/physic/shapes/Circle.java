@@ -42,7 +42,7 @@ public class Circle extends AbstractShape {
      * <p>Constructor for Circle.</p>
      *
      * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      */
     public Circle(AbstractEntity entity, Vector3f centerPos, Vector3f size) {
@@ -52,7 +52,7 @@ public class Circle extends AbstractShape {
     /**
      * <p>Constructor for Circle.</p>
      *
-     * @param circle a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.Circle} object.
+     * @param circle circle
      */
     public Circle(Circle circle) {
         super(circle);

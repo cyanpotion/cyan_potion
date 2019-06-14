@@ -62,7 +62,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for InputBox.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public InputBox(GameWindow gameWindow) {
         super(gameWindow);
@@ -298,7 +298,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>insertString.</p>
      *
-     * @param insertString a {@link java.lang.String} object.
+     * @param insertString insertString
      */
     public void insertString(String insertString) {
         if (getNowSelectStartPos() == -1) {
@@ -351,7 +351,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * @param distPosX  a float.
      * @param distPosY  a float.
      * @param ifDraw    a boolean.
-     * @param insertPos a {@link org.joml.Vector2f} object.
+     * @param insertPos insertPos
      * @return a int.
      */
     public int drawTextGivenHeightLeftTopAndGetIndex(float distPosX,
@@ -642,7 +642,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>contentString</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getContentString() {
         return contentString;
@@ -651,7 +651,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>contentString</code>.</p>
      *
-     * @param contentString a {@link java.lang.String} object.
+     * @param contentString contentString
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
@@ -732,7 +732,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>textColor</code>.</p>
      *
-     * @return a {@link org.joml.Vector4f} object.
+     * @return return
      */
     public Vector4f getTextColor() {
         return textColor;
@@ -741,7 +741,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>textColor</code>.</p>
      *
-     * @param textColor a {@link org.joml.Vector4f} object.
+     * @param textColor textColor
      */
     public void setTextColor(Vector4f textColor) {
         this.textColor = textColor;
@@ -750,7 +750,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>textSelectColor</code>.</p>
      *
-     * @return a {@link org.joml.Vector4f} object.
+     * @return return
      */
     public Vector4f getTextSelectColor() {
         return textSelectColor;
@@ -759,7 +759,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>textSelectColor</code>.</p>
      *
-     * @param textSelectColor a {@link org.joml.Vector4f} object.
+     * @param textSelectColor textSelectColor
      */
     public void setTextSelectColor(Vector4f textSelectColor) {
         this.textSelectColor = textSelectColor;
@@ -768,7 +768,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>insertColor</code>.</p>
      *
-     * @return a {@link org.joml.Vector4f} object.
+     * @return return
      */
     public Vector4f getInsertColor() {
         return insertColor;
@@ -777,7 +777,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>insertColor</code>.</p>
      *
-     * @param insertColor a {@link org.joml.Vector4f} object.
+     * @param insertColor insertColor
      */
     public void setInsertColor(Vector4f insertColor) {
         this.insertColor = insertColor;

@@ -88,7 +88,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     /**
      * <p>Getter for the field <code>rawXInputDevice</code>.</p>
      *
-     * @return a {@link com.github.strikerx3.jxinput.XInputDevice} object.
+     * @return return
      */
     public XInputDevice getRawXInputDevice() {
         return rawXInputDevice;
@@ -115,7 +115,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     /**
      * <p>Setter for the field <code>rawXInputDevice</code>.</p>
      *
-     * @param rawXInputDevice a {@link com.github.strikerx3.jxinput.XInputDevice} object.
+     * @param rawXInputDevice rawXInputDevice
      */
     public void setRawXInputDevice(XInputDevice rawXInputDevice) {
         this.rawXInputDevice = rawXInputDevice;

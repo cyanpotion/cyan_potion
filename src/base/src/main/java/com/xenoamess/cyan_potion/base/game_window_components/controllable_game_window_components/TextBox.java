@@ -47,7 +47,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for TextBox.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public TextBox(GameWindow gameWindow) {
         super(gameWindow);
@@ -255,7 +255,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>contentString</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getContentString() {
         return contentString;
@@ -264,7 +264,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>contentString</code>.</p>
      *
-     * @param contentString a {@link java.lang.String} object.
+     * @param contentString contentString
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
@@ -291,7 +291,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>textColor</code>.</p>
      *
-     * @return a {@link org.joml.Vector4f} object.
+     * @return return
      */
     public Vector4f getTextColor() {
         return textColor;
@@ -300,7 +300,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     /**
      * <p>Setter for the field <code>textColor</code>.</p>
      *
-     * @param textColor a {@link org.joml.Vector4f} object.
+     * @param textColor textColor
      */
     public void setTextColor(Vector4f textColor) {
         this.textColor = textColor;

@@ -47,7 +47,7 @@ public class ConsoleEvent implements Event {
     /**
      * <p>Constructor for ConsoleEvent.</p>
      *
-     * @param command a {@link java.lang.String} object.
+     * @param command command
      */
     public ConsoleEvent(String command) {
         super();
@@ -69,7 +69,7 @@ public class ConsoleEvent implements Event {
     /**
      * <p>Getter for the field <code>command</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getCommand() {
         return command;

@@ -71,7 +71,7 @@ public abstract class AbstractShape implements Area {
      * <p>Constructor for AbstractShape.</p>
      *
      * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      */
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
@@ -84,7 +84,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Constructor for AbstractShape.</p>
      *
-     * @param shape a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param shape shape
      */
     public AbstractShape(AbstractShape shape) {
         this(shape.getEntity(), shape.getCenterPos(), shape.getSize());
@@ -98,7 +98,7 @@ public abstract class AbstractShape implements Area {
      * @param rough a boolean.
      * @param <K>   a K object.
      * @param <V>   a V object.
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation} object.
+     * @return return
      */
     public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
         ShapeRelation res = RELATION_UNDEFINED;
@@ -280,7 +280,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>copy.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @return return
      */
     public AbstractShape copy() {
         return AbstractShape.copy(this);
@@ -392,7 +392,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>forceMove.</p>
      *
-     * @param direction a {@link org.joml.Vector3f} object.
+     * @param direction direction
      */
     public void forceMove(Vector3f direction) {
         this.setCenterPos(this.getCenterPos().add(direction));
@@ -401,7 +401,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>tryMove.</p>
      *
-     * @param direction a {@link org.joml.Vector3f} object.
+     * @param direction direction
      * @return a boolean.
      */
     public boolean tryMove(Vector3f direction) {
@@ -433,7 +433,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Getter for the field <code>entity</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @return return
      */
     public AbstractEntity getEntity() {
         return entity;
@@ -442,7 +442,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Setter for the field <code>entity</code>.</p>
      *
-     * @param entity a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @param entity entity
      */
     public void setEntity(AbstractEntity entity) {
         this.entity = entity;
@@ -451,7 +451,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Getter for the field <code>centerPos</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getCenterPos() {
         return centerPos;
@@ -460,7 +460,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Setter for the field <code>centerPos</code>.</p>
      *
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      */
     public void setCenterPos(Vector3f centerPos) {
         this.centerPos = centerPos;
@@ -469,7 +469,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Getter for the field <code>size</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getSize() {
         return size;
@@ -478,7 +478,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Setter for the field <code>size</code>.</p>
      *
-     * @param size a {@link org.joml.Vector3f} object.
+     * @param size size
      */
     public void setSize(Vector3f size) {
         this.size = size;
@@ -487,7 +487,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Getter for the field <code>shapeRelationJudges</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public static Map<ImmutablePair<Class, Class>, ShapeRelationJudge> getShapeRelationJudges() {
         return shapeRelationJudges;
@@ -496,7 +496,7 @@ public abstract class AbstractShape implements Area {
     /**
      * <p>Setter for the field <code>shapeRelationJudges</code>.</p>
      *
-     * @param shapeRelationJudges a {@link java.util.Map} object.
+     * @param shapeRelationJudges shapeRelationJudges
      */
     public static void setShapeRelationJudges(Map<ImmutablePair<Class,
             Class>, ShapeRelationJudge> shapeRelationJudges) {

@@ -120,8 +120,8 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     /**
      * <p>fetchResourceWithShortenURI.</p>
      *
-     * @param shortenResourceURI a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     * @param shortenResourceURI shortenResourceURI
+     * @return return
      */
     public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
         return this.getResourceManager().fetchResourceWithShortenURI(this.getClass(),
@@ -157,7 +157,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     /**
      * <p>Getter for the field <code>resourceManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @return return
      */
     public ResourceManager getResourceManager() {
         return this.resourceManager;
@@ -166,7 +166,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     /**
      * <p>Getter for the field <code>fullResourceURI</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getFullResourceURI() {
         return fullResourceURI;

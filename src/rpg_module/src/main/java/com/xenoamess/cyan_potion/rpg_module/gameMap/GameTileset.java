@@ -146,7 +146,7 @@ public class GameTileset {
      * <p>getGameTilesetTextureByID.</p>
      *
      * @param gameTilesetTextureID a int.
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return return
      */
     public Texture getGameTilesetTextureByID(int gameTilesetTextureID) {
         return this.getIdTextureMap().get(gameTilesetTextureID);
@@ -171,7 +171,7 @@ public class GameTileset {
     /**
      * <p>init.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public static void init(World world) {
         List<GameTileset> gameTilesets =
@@ -201,7 +201,7 @@ public class GameTileset {
     /**
      * <p>Getter for the field <code>gameTilesetJson</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson} object.
+     * @return return
      */
     public GameTilesetJson getGameTilesetJson() {
         return gameTilesetJson;
@@ -210,7 +210,7 @@ public class GameTileset {
     /**
      * <p>Setter for the field <code>gameTilesetJson</code>.</p>
      *
-     * @param gameTilesetJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson} object.
+     * @param gameTilesetJson gameTilesetJson
      */
     public void setGameTilesetJson(GameTilesetJson gameTilesetJson) {
         this.gameTilesetJson = gameTilesetJson;
@@ -219,7 +219,7 @@ public class GameTileset {
     /**
      * <p>Getter for the field <code>idTextureMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<Integer, Texture> getIdTextureMap() {
         return idTextureMap;
@@ -228,7 +228,7 @@ public class GameTileset {
     /**
      * <p>Setter for the field <code>idTextureMap</code>.</p>
      *
-     * @param idTextureMap a {@link java.util.Map} object.
+     * @param idTextureMap idTextureMap
      */
     public void setIdTextureMap(Map<Integer, Texture> idTextureMap) {
         this.idTextureMap = idTextureMap;

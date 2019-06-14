@@ -64,7 +64,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>Constructor for Shader.</p>
      *
-     * @param filename a {@link java.lang.String} object.
+     * @param filename filename
      */
     public Shader(String filename) {
         setProgramObject(glCreateProgram());
@@ -120,7 +120,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>iGetUniformLocation.</p>
      *
-     * @param uniformName a {@link java.lang.String} object.
+     * @param uniformName uniformName
      * @return a int.
      */
     protected int iGetUniformLocation(String uniformName) {
@@ -141,7 +141,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>setUniform.</p>
      *
-     * @param uniformName a {@link java.lang.String} object.
+     * @param uniformName uniformName
      * @param value       a int.
      */
     public void setUniform(String uniformName, int value) {
@@ -154,7 +154,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>setUniform.</p>
      *
-     * @param uniformName a {@link java.lang.String} object.
+     * @param uniformName uniformName
      * @param value       a {@link org.joml.Vector3f} object.
      */
     public void setUniform(String uniformName, Vector3f value) {
@@ -167,7 +167,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>setUniform.</p>
      *
-     * @param uniformName a {@link java.lang.String} object.
+     * @param uniformName uniformName
      * @param value       a {@link org.joml.Vector4f} object.
      */
     public void setUniform(String uniformName, Vector4f value) {
@@ -181,7 +181,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>setUniform.</p>
      *
-     * @param uniformName a {@link java.lang.String} object.
+     * @param uniformName uniformName
      * @param value       a {@link org.joml.Matrix4f} object.
      */
     public void setUniform(String uniformName, Matrix4f value) {
@@ -263,7 +263,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>Getter for the field <code>uniformLocationMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, Integer> getUniformLocationMap() {
         return uniformLocationMap;
@@ -290,7 +290,7 @@ public class Shader implements AutoCloseable {
     /**
      * <p>Getter for the field <code>matrixData</code>.</p>
      *
-     * @return a {@link java.nio.FloatBuffer} object.
+     * @return return
      */
     public FloatBuffer getMatrixData() {
         return matrixData;

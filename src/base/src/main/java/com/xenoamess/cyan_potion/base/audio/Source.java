@@ -51,7 +51,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>Setter for the field <code>currentWaveData</code>.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void setCurrentWaveData(WaveData waveData) {
         this.currentWaveData = waveData;
@@ -91,7 +91,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>setPosition.</p>
      *
-     * @param position a {@link org.joml.Vector3f} object.
+     * @param position position
      */
     public void setPosition(Vector3f position) {
         AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, position.x,
@@ -101,7 +101,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>setVelocity.</p>
      *
-     * @param velocity a {@link org.joml.Vector3f} object.
+     * @param velocity velocity
      */
     public void setVelocity(Vector3f velocity) {
         AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION, velocity.x,
@@ -156,7 +156,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>play.</p>
      *
-     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @param waveData waveData
      */
     public void play(WaveData waveData) {
         this.setCurrentWaveData(waveData);
@@ -242,7 +242,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>Getter for the field <code>currentWaveData</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     * @return return
      */
     public WaveData getCurrentWaveData() {
         return currentWaveData;

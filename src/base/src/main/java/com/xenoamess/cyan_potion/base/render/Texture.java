@@ -140,7 +140,7 @@ public class Texture extends AbstractResource implements Bindable {
      *
      * @param width      a int.
      * @param height     a int.
-     * @param byteBuffer a {@link java.nio.ByteBuffer} object.
+     * @param byteBuffer byteBuffer
      */
     public void bake(int width, int height, ByteBuffer byteBuffer) {
         this.setWidth(width);
@@ -208,7 +208,7 @@ public class Texture extends AbstractResource implements Bindable {
     /**
      * <p>loadAsPictureTexture.</p>
      *
-     * @param fullResourceURI a {@link java.lang.String} object.
+     * @param fullResourceURI fullResourceURI
      */
     public void loadAsPictureTexture(String fullResourceURI) {
         String[] resourceFileURIStrings = fullResourceURI.split(":");

@@ -46,8 +46,8 @@ public class ImageJson implements Serializable {
     /**
      * <p>getBindable.</p>
      *
-     * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param resourceManager resourceManager
+     * @return return
      */
     public Bindable getBindable(ResourceManager resourceManager) {
         if ("".equals(this.characterName)) {

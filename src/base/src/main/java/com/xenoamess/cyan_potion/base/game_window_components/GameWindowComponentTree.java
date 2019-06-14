@@ -57,7 +57,23 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>leafNodesAdd.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      */
     protected void leafNodesAdd(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         synchronized (leafNodes) {
@@ -69,7 +85,23 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>leafNodesRemove.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      */
     protected void leafNodesRemove(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         synchronized (leafNodes) {
@@ -80,7 +112,7 @@ public class GameWindowComponentTree implements AutoCloseable {
     /**
      * <p>leafNodesFirst.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     * @return return
      */
     protected GameWindowComponentTreeNode leafNodesFirst() {
         GameWindowComponentTreeNode res = null;
@@ -105,7 +137,7 @@ public class GameWindowComponentTree implements AutoCloseable {
     /**
      * <p>getAllNodes.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @return return
      */
     public List<GameWindowComponentTreeNode> getAllNodes() {
         List<GameWindowComponentTreeNode> res = new ArrayList<>();
@@ -124,7 +156,7 @@ public class GameWindowComponentTree implements AutoCloseable {
     /**
      * <p>init.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void init(GameWindow gameWindow) {
         AbstractGameWindowComponent baseComponent =
@@ -189,8 +221,8 @@ public class GameWindowComponentTree implements AutoCloseable {
     /**
      * <p>process.</p>
      *
-     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     * @return a {@link java.util.Set} object.
+     * @param event event
+     * @return return
      */
     public Set<Event> process(Event event) {
         Set<Event> res = new HashSet<>();
@@ -216,8 +248,14 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>newNode.</p>
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                            object.
+     * @return return
      */
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.leafNodesFirst().newNode(gameWindowComponent);
@@ -227,8 +265,14 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>findNode.</p>
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                            object.
+     * @return return
      */
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().findNode(gameWindowComponent);
@@ -238,7 +282,23 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>contains.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      * @return a boolean.
      */
     public boolean contains(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
@@ -249,7 +309,13 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>deleteNode.</p>
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                            object.
      * @return a boolean.
      */
     public boolean deleteNode(AbstractGameWindowComponent gameWindowComponent) {
@@ -260,7 +326,23 @@ public class GameWindowComponentTree implements AutoCloseable {
      * <p>deleteNode.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      * @return a boolean.
      */
     public boolean deleteNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
@@ -271,7 +353,7 @@ public class GameWindowComponentTree implements AutoCloseable {
     /**
      * <p>Getter for the field <code>root</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     * @return return
      */
     public GameWindowComponentTreeNode getRoot() {
         return root;

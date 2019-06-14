@@ -34,7 +34,7 @@ public class ConfigFileBooleanValueStringIsNotBooleanException extends RuntimeEx
     /**
      * <p>Constructor for ConfigFileBooleanValueStringIsNotBooleanException.</p>
      *
-     * @param message a {@link java.lang.String} object.
+     * @param message message
      */
     public ConfigFileBooleanValueStringIsNotBooleanException(String message) {
         super(message);

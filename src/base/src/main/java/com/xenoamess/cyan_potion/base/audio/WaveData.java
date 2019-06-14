@@ -138,7 +138,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     /**
      * <p>readVorbis.</p>
      *
-     * @param vorbis a {@link java.nio.ByteBuffer} object.
+     * @param vorbis vorbis
      */
     public void readVorbis(ByteBuffer vorbis) {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
@@ -166,7 +166,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     /**
      * <p>readVorbis.</p>
      *
-     * @param resourceFile a {@link java.io.File} object.
+     * @param resourceFile resourceFile
      */
     public void readVorbis(File resourceFile) {
         ByteBuffer vorbis = FileUtil.loadFileBuffer(resourceFile, true);

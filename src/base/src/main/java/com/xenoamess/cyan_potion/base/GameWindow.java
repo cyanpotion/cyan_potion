@@ -66,7 +66,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>Constructor for GameWindow.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public GameWindow(GameManager gameManager) {
         super();
@@ -189,7 +189,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>setOpenglVersion.</p>
      *
-     * @param openglVersion a {@link java.lang.String} object.
+     * @param openglVersion openglVersion
      */
     public static void setOpenglVersion(String openglVersion) {
         try {
@@ -616,7 +616,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param width      a float.
      * @param height     a float.
      * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelative(Bindable bindable,
                                      float posX,
@@ -641,7 +641,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelative.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param width    a float.
@@ -656,7 +656,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelative.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param width    a float.
@@ -677,7 +677,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param posY       a float.
      * @param width      a float.
      * @param height     a float.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelative(Bindable bindable, float posX,
                                      float posY, float width, float height, Vector4f colorScale) {
@@ -694,7 +694,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param posY       a float.
      * @param width      a float.
      * @param height     a float.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
@@ -706,7 +706,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelativeLeftTop.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param width    a float.
@@ -723,7 +723,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelativeLeftTop.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param width    a float.
@@ -746,7 +746,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param width      a float.
      * @param height     a float.
      * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
@@ -759,7 +759,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelativeCenter.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param width    a float.
      * @param height   a float.
      */
@@ -775,7 +775,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param width      a float.
      * @param height     a float.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
@@ -786,7 +786,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawBindableRelativeCenter.</p>
      *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param width    a float.
      * @param height   a float.
      * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
@@ -804,7 +804,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param width      a float.
      * @param height     a float.
      * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model, Vector4f colorScale) {
@@ -923,7 +923,7 @@ public class GameWindow implements AutoCloseable, Area {
      * @param font  a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
      * @param x     a float.
      * @param y     a float.
-     * @param color a {@link org.joml.Vector4f} object.
+     * @param color color
      * @param text  a {@link java.lang.String} object.
      */
     public void drawText(Font font, float x, float y, Vector4f color,
@@ -934,10 +934,10 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>drawText.</p>
      *
-     * @param font a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param font font
      * @param x    a float.
      * @param y    a float.
-     * @param text a {@link java.lang.String} object.
+     * @param text text
      */
     public void drawText(Font font, float x, float y, String text) {
         this.drawText(font, x, y, 1f, text);
@@ -953,7 +953,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @return return
      */
     public GameManager getGameManager() {
         return gameManager;
@@ -962,7 +962,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>Setter for the field <code>gameManager</code>.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -1052,7 +1052,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>Getter for the field <code>shader</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Shader} object.
+     * @return return
      */
     public Shader getShader() {
         return shader;
@@ -1061,7 +1061,7 @@ public class GameWindow implements AutoCloseable, Area {
     /**
      * <p>Setter for the field <code>shader</code>.</p>
      *
-     * @param shader a {@link com.xenoamess.cyan_potion.base.render.Shader} object.
+     * @param shader shader
      */
     public void setShader(Shader shader) {
         this.shader = shader;

@@ -78,7 +78,7 @@ public class DataCenter {
     /**
      * <p>Constructor for DataCenter.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public DataCenter(GameManager gameManager) {
         this.setGameManager(gameManager);
@@ -90,7 +90,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>objectMapper</code>.</p>
      *
-     * @return a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @return return
      */
     public static ObjectMapper getObjectMapper() {
         /*
@@ -116,7 +116,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>globalSettingsTree</code>.</p>
      *
-     * @return a {@link com.xenoamess.x8l.X8lTree} object.
+     * @return return
      */
     public X8lTree getGlobalSettingsTree() {
         return globalSettingsTree;
@@ -125,7 +125,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>globalSettingsTree</code>.</p>
      *
-     * @param globalSettingsTree a {@link com.xenoamess.x8l.X8lTree} object.
+     * @param globalSettingsTree globalSettingsTree
      */
     public void setGlobalSettingsTree(X8lTree globalSettingsTree) {
         this.globalSettingsTree = globalSettingsTree;
@@ -134,7 +134,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>commonSettings</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, String> getCommonSettings() {
         return commonSettings;
@@ -144,7 +144,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>specialSettings</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, String> getSpecialSettings() {
         return specialSettings;
@@ -153,7 +153,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>views</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, String> getViews() {
         return views;
@@ -162,7 +162,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>textFilePath</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getTextFilePath() {
         return textFilePath;
@@ -171,7 +171,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>textFilePath</code>.</p>
      *
-     * @param textFilePath a {@link java.lang.String} object.
+     * @param textFilePath textFilePath
      */
     public void setTextFilePath(String textFilePath) {
         this.textFilePath = textFilePath;
@@ -180,7 +180,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>iconFilePath</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getIconFilePath() {
         return iconFilePath;
@@ -189,7 +189,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>iconFilePath</code>.</p>
      *
-     * @param iconFilePath a {@link java.lang.String} object.
+     * @param iconFilePath iconFilePath
      */
     public void setIconFilePath(String iconFilePath) {
         this.iconFilePath = iconFilePath;
@@ -198,7 +198,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>textStructure</code>.</p>
      *
-     * @return a {@link com.xenoamess.multi_language.MultiLanguageStructure} object.
+     * @return return
      */
     public MultiLanguageStructure getTextStructure() {
         return textStructure;
@@ -207,7 +207,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>textStructure</code>.</p>
      *
-     * @param textStructure a {@link com.xenoamess.multi_language.MultiLanguageStructure} object.
+     * @param textStructure textStructure
      */
     public void setTextStructure(MultiLanguageStructure textStructure) {
         this.textStructure = textStructure;
@@ -216,7 +216,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @return return
      */
     public GameManager getGameManager() {
         return gameManager;
@@ -225,7 +225,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>gameManager</code>.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -234,7 +234,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>titleTextID</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public String getTitleTextID() {
         return titleTextID;
@@ -243,7 +243,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>titleTextID</code>.</p>
      *
-     * @param titleTextID a {@link java.lang.String} object.
+     * @param titleTextID titleTextID
      */
     public void setTitleTextID(String titleTextID) {
         this.titleTextID = titleTextID;
@@ -288,7 +288,7 @@ public class DataCenter {
     /**
      * <p>Getter for the field <code>patchSettingsTree</code>.</p>
      *
-     * @return a {@link com.xenoamess.x8l.X8lTree} object.
+     * @return return
      */
     public X8lTree getPatchSettingsTree() {
         return patchSettingsTree;
@@ -297,7 +297,7 @@ public class DataCenter {
     /**
      * <p>Setter for the field <code>patchSettingsTree</code>.</p>
      *
-     * @param patchSettingsTree a {@link com.xenoamess.x8l.X8lTree} object.
+     * @param patchSettingsTree patchSettingsTree
      */
     public void setPatchSettingsTree(X8lTree patchSettingsTree) {
         this.patchSettingsTree = patchSettingsTree;

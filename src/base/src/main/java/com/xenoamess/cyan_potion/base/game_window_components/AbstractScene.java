@@ -43,7 +43,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for AbstractScene.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public AbstractScene(GameWindow gameWindow) {
         super(gameWindow);
@@ -54,7 +54,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      *
      * @param camera   a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
      * @param scale    a float.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param size     a float.
@@ -78,7 +78,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @param posX       a float.
      * @param posY       a float.
      * @param size       a float.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
@@ -95,7 +95,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      *
      * @param camera   a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
      * @param scale    a float.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param bindable bindable
      * @param posX     a float.
      * @param posY     a float.
      * @param width    a float.
@@ -121,7 +121,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @param posY       a float.
      * @param width      a float.
      * @param height     a float.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
@@ -155,7 +155,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @param width      a float.
      * @param height     a float.
      * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale a {@link org.joml.Vector4f} object.
+     * @param colorScale colorScale
      */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
@@ -219,7 +219,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>camera</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @return return
      */
     public Camera getCamera() {
         return camera;
@@ -228,7 +228,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     /**
      * <p>Setter for the field <code>camera</code>.</p>
      *
-     * @param camera a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param camera camera
      */
     public void setCamera(Camera camera) {
         this.camera = camera;

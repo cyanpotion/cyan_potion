@@ -62,7 +62,7 @@ public interface Area {
     /**
      * <p>copyArea.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.ImmutableArea} object.
+     * @return return
      */
     default ImmutableArea copyArea() {
         return new ImmutableArea(this);

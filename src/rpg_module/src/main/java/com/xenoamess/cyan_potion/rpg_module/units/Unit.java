@@ -58,7 +58,7 @@ public class Unit extends AbstractDynamicEntity {
      * <p>Constructor for Unit.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
@@ -72,7 +72,7 @@ public class Unit extends AbstractDynamicEntity {
      * <p>Constructor for Unit.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      */
@@ -88,7 +88,7 @@ public class Unit extends AbstractDynamicEntity {
      * @param scene                    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
      * @param centerPos                a {@link org.joml.Vector3f} object.
      * @param size                     a {@link org.joml.Vector3f} object.
-     * @param walkingAnimation4DirsURI a {@link java.lang.String} object.
+     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
      * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
     public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
@@ -160,7 +160,7 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>loadWalkingAnimations.</p>
      *
-     * @param walkingAnimation4DirsURI a {@link java.lang.String} object.
+     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
      * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
     public void loadWalkingAnimations(String walkingAnimation4DirsURI,
@@ -191,7 +191,7 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Getter for the field <code>movement</code>.</p>
      *
-     * @return a {@link org.joml.Vector2f} object.
+     * @return return
      */
     public Vector2f getMovement() {
         return movement;
@@ -200,7 +200,7 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Setter for the field <code>movement</code>.</p>
      *
-     * @param movement a {@link org.joml.Vector2f} object.
+     * @param movement movement
      */
     public void setMovement(Vector2f movement) {
         this.movement = movement;

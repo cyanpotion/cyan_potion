@@ -55,7 +55,7 @@ public class Animation implements Bindable {
     /**
      * <p>getCurrentBindable.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @return return
      */
     public Bindable getCurrentBindable() {
         long currentTime = System.currentTimeMillis();
@@ -147,7 +147,7 @@ public class Animation implements Bindable {
     /**
      * <p>Getter for the field <code>frames</code>.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @return return
      */
     public List<Bindable> getFrames() {
         return frames;

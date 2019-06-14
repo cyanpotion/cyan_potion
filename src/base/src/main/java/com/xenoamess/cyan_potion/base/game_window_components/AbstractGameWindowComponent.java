@@ -61,7 +61,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>Constructor for AbstractGameWindowComponent.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -72,8 +72,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
      * <p>createGameWindowComponentFromClassName.</p>
      *
      * @param gameWindow                   a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param gameWindowComponentClassName a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @param gameWindowComponentClassName gameWindowComponentClassName
+     * @return return
      */
     public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
                                                                                      String gameWindowComponentClassName) {
@@ -98,7 +98,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
      * @param leftTopPosY a float.
      * @param width       a float.
      * @param height      a float.
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @return return
      */
     public AbstractGameWindowComponent init(float leftTopPosX,
                                             float leftTopPosY, float width,
@@ -158,8 +158,30 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>registerProcessor.</p>
      *
-     * @param eventType a {@link java.lang.String} object.
+     * @param eventType eventType
      * @param processor a
+     *                  <p>
+     *                  <p>
+     *                  <p>
+     *                  <p>
+     *                  <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
      */
     public void registerProcessor(String eventType,
@@ -170,8 +192,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>getProcessor.</p>
      *
-     * @param eventType a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     * @param eventType eventType
+     * @return return
      */
     public EventProcessor getProcessor(String eventType) {
         return this.getClassNameToProcessorMap().get(eventType);
@@ -206,7 +228,23 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
      * <p>addToGameWindowComponentTree.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (gameWindowComponentTreeNode != null) {
@@ -238,7 +276,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>Getter for the field <code>gameWindow</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @return return
      */
     public GameWindow getGameWindow() {
         return gameWindow;
@@ -247,7 +285,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>Getter for the field <code>gameWindowComponentTreeNode</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     * @return return
      */
     public GameWindowComponentTreeNode getGameWindowComponentTreeNode() {
         return gameWindowComponentTreeNode;
@@ -257,7 +295,23 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
      * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
      *
      * @param gameWindowComponentTreeNode a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *                                    <p>
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
+     *                                    object.
      */
     public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
@@ -352,7 +406,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>Getter for the field <code>classNameToProcessorMap</code>.</p>
      *
-     * @return a {@link java.util.Map} object.
+     * @return return
      */
     public Map<String, EventProcessor> getClassNameToProcessorMap() {
         return classNameToProcessorMap;

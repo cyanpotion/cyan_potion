@@ -52,7 +52,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Constructor for RpgModuleDataCenter.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public RpgModuleDataCenter(World world) {
         this.setWorld(world);
@@ -62,7 +62,7 @@ public class RpgModuleDataCenter {
      * <p>getGameTileset.</p>
      *
      * @param gameTilesetID a int.
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset} object.
+     * @return return
      */
     public GameTileset getGameTileset(int gameTilesetID) {
         return this.getGameTilesets().get(gameTilesetID);
@@ -71,7 +71,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Getter for the field <code>world</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @return return
      */
     public World getWorld() {
         return world;
@@ -80,7 +80,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Setter for the field <code>world</code>.</p>
      *
-     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     * @param world world
      */
     public void setWorld(World world) {
         this.world = world;
@@ -89,7 +89,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Getter for the field <code>gameSystemJson</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson} object.
+     * @return return
      */
     public GameSystemJson getGameSystemJson() {
         return gameSystemJson;
@@ -98,7 +98,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Setter for the field <code>gameSystemJson</code>.</p>
      *
-     * @param gameSystemJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson} object.
+     * @param gameSystemJson gameSystemJson
      */
     public void setGameSystemJson(GameSystemJson gameSystemJson) {
         this.gameSystemJson = gameSystemJson;
@@ -107,7 +107,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Getter for the field <code>gameTilesets</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<GameTileset> getGameTilesets() {
         return gameTilesets;
@@ -116,7 +116,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Setter for the field <code>gameTilesets</code>.</p>
      *
-     * @param gameTilesets a {@link java.util.ArrayList} object.
+     * @param gameTilesets gameTilesets
      */
     public void setGameTilesets(ArrayList<GameTileset> gameTilesets) {
         this.gameTilesets = gameTilesets;
@@ -125,7 +125,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Getter for the field <code>gameMaps</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<GameMap> getGameMaps() {
         return gameMaps;
@@ -134,7 +134,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Setter for the field <code>gameMaps</code>.</p>
      *
-     * @param gameMaps a {@link java.util.ArrayList} object.
+     * @param gameMaps gameMaps
      */
     public void setGameMaps(ArrayList<GameMap> gameMaps) {
         this.gameMaps = gameMaps;
@@ -143,7 +143,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Getter for the field <code>gameRuntime</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.GameRuntime} object.
+     * @return return
      */
     public GameRuntime getGameRuntime() {
         return gameRuntime;
@@ -152,7 +152,7 @@ public class RpgModuleDataCenter {
     /**
      * <p>Setter for the field <code>gameRuntime</code>.</p>
      *
-     * @param gameRuntime a {@link com.xenoamess.cyan_potion.rpg_module.GameRuntime} object.
+     * @param gameRuntime gameRuntime
      */
     public void setGameRuntime(GameRuntime gameRuntime) {
         this.gameRuntime = gameRuntime;

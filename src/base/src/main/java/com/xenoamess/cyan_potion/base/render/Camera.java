@@ -48,7 +48,7 @@ public class Camera {
     /**
      * <p>Getter for the field <code>position</code>.</p>
      *
-     * @return a {@link org.joml.Vector3f} object.
+     * @return return
      */
     public Vector3f getPosition() {
         return position;

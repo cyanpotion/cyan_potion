@@ -52,7 +52,7 @@ public class ClipboardUtil {
     /**
      * <p>setText.</p>
      *
-     * @param text a {@link java.lang.String} object.
+     * @param text text
      */
     public static void setText(String text) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -63,7 +63,7 @@ public class ClipboardUtil {
     /**
      * <p>getText.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return return
      */
     public static String getText() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

@@ -158,8 +158,8 @@ public class FileUtil {
     /**
      * <p>getFile.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.io.File} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
@@ -169,8 +169,8 @@ public class FileUtil {
     /**
      * <p>getURL.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.net.URL} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static URL getURL(String resourceFilePath) {
         URL res = FileUtil.class.getResource(resourceFilePath);
@@ -183,8 +183,8 @@ public class FileUtil {
     /**
      * <p>getURI.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.net.URI} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static URI getURI(String resourceFilePath) {
         URI res;
@@ -199,8 +199,8 @@ public class FileUtil {
     /**
      * <p>createFileIfAbsent.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.io.File} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static File createFileIfAbsent(String resourceFilePath) {
         File file;
@@ -225,8 +225,8 @@ public class FileUtil {
     /**
      * <p>createFolderIfAbsent.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.io.File} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static File createFolderIfAbsent(String resourceFilePath) {
         File folder;
@@ -247,8 +247,8 @@ public class FileUtil {
     /**
      * <p>loadFile.</p>
      *
-     * @param inputStream a {@link java.io.InputStream} object.
-     * @return a {@link java.lang.String} object.
+     * @param inputStream inputStream
+     * @return return
      */
     public static String loadFile(InputStream inputStream) {
         assert (inputStream != null);
@@ -277,8 +277,8 @@ public class FileUtil {
     /**
      * <p>loadFile.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     public static String loadFile(String resourceFilePath) {
         String res;
@@ -294,8 +294,8 @@ public class FileUtil {
     /**
      * <p>loadFile.</p>
      *
-     * @param file a {@link java.io.File} object.
-     * @return a {@link java.lang.String} object.
+     * @param file file
+     * @return return
      */
     public static String loadFile(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
@@ -313,7 +313,7 @@ public class FileUtil {
     /**
      * <p>saveFile.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
+     * @param resourceFilePath resourceFilePath
      * @param contentString    a {@link java.lang.String} object.
      */
     public static void saveFile(String resourceFilePath, String contentString) {
@@ -324,7 +324,7 @@ public class FileUtil {
      * <p>saveFile.</p>
      *
      * @param file          a {@link java.io.File} object.
-     * @param contentString a {@link java.lang.String} object.
+     * @param contentString contentString
      */
     public static void saveFile(File file, String contentString) {
         //if is not a file.

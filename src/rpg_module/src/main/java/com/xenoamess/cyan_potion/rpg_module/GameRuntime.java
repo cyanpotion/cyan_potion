@@ -49,7 +49,7 @@ public class GameRuntime {
     /**
      * <p>Constructor for GameRuntime.</p>
      *
-     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @param dataCenter dataCenter
      */
     public GameRuntime(DataCenter dataCenter) {
         this.setDataCenter(dataCenter);
@@ -73,7 +73,7 @@ public class GameRuntime {
     /**
      * <p>Getter for the field <code>dataCenter</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @return return
      */
     public DataCenter getDataCenter() {
         return dataCenter;
@@ -82,7 +82,7 @@ public class GameRuntime {
     /**
      * <p>Setter for the field <code>dataCenter</code>.</p>
      *
-     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @param dataCenter dataCenter
      */
     public void setDataCenter(DataCenter dataCenter) {
         this.dataCenter = dataCenter;
@@ -91,7 +91,7 @@ public class GameRuntime {
     /**
      * <p>Getter for the field <code>runtimeSwitches</code>.</p>
      *
-     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList} object.
+     * @return return
      */
     public BooleanArrayList getRuntimeSwitches() {
         return runtimeSwitches;
@@ -100,7 +100,7 @@ public class GameRuntime {
     /**
      * <p>Getter for the field <code>runtimeIntegerVariables</code>.</p>
      *
-     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList} object.
+     * @return return
      */
     public IntArrayList getRuntimeIntegerVariables() {
         return runtimeIntegerVariables;

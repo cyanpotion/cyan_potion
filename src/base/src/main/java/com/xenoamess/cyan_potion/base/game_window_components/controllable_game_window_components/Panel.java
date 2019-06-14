@@ -47,7 +47,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for Panel.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public Panel(GameWindow gameWindow) {
         super(gameWindow);
@@ -57,7 +57,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * <p>Constructor for Panel.</p>
      *
      * @param gameWindow        a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param backgroundTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param backgroundTexture backgroundTexture
      */
     public Panel(GameWindow gameWindow, Texture backgroundTexture) {
         super(gameWindow);
@@ -68,7 +68,13 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * <p>addContent.</p>
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     *                            <p>
+     *                            <p>
+     *
+     *
+     *
+     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                            object.
      */
     public void addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.getContents().add(gameWindowComponent);
@@ -116,7 +122,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * <p>Getter for the field <code>contents</code>.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @return return
      */
     public List<AbstractGameWindowComponent> getContents() {
         return contents;

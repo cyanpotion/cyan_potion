@@ -60,8 +60,8 @@ public class CodePluginManager {
     /**
      * <p>getCodePluginFunctionFromString.</p>
      *
-     * @param codePluginString a {@link java.lang.String} object.
-     * @return a {@link java.util.function.Function} object.
+     * @param codePluginString codePluginString
+     * @return return
      */
     public Function<GameManager, Void> getCodePluginFunctionFromString(String codePluginString) {
         Function<GameManager, Void> res = null;
@@ -91,7 +91,7 @@ public class CodePluginManager {
     /**
      * <p>putCodePlugin.</p>
      *
-     * @param codePluginPosition a {@link com.xenoamess.cyan_potion.base.plugins.CodePluginPosition} object.
+     * @param codePluginPosition codePluginPosition
      * @param codePluginString   a {@link java.lang.String} object.
      */
     public void putCodePlugin(CodePluginPosition codePluginPosition, String codePluginString) {
@@ -101,8 +101,8 @@ public class CodePluginManager {
     /**
      * <p>putCodePlugin.</p>
      *
-     * @param codePluginPosition a {@link com.xenoamess.cyan_potion.base.plugins.CodePluginPosition} object.
-     * @param codePluginFunction a {@link java.util.function.Function} object.
+     * @param codePluginPosition codePluginPosition
+     * @param codePluginFunction codePluginFunction
      */
     public void putCodePlugin(CodePluginPosition codePluginPosition, Function<GameManager, Void> codePluginFunction) {
         codePluginPositionFunctionHashMap.get(codePluginPosition).add(codePluginFunction);
@@ -111,8 +111,8 @@ public class CodePluginManager {
     /**
      * <p>getCodePluginFunctions.</p>
      *
-     * @param codePluginPosition a {@link com.xenoamess.cyan_potion.base.plugins.CodePluginPosition} object.
-     * @return a {@link java.util.ArrayList} object.
+     * @param codePluginPosition codePluginPosition
+     * @return return
      */
     public ArrayList<Function<GameManager, Void>> getCodePluginFunctions(CodePluginPosition codePluginPosition) {
         return codePluginPositionFunctionHashMap.get(codePluginPosition);
@@ -122,7 +122,7 @@ public class CodePluginManager {
      * <p>apply.</p>
      *
      * @param gameManager        a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     * @param codePluginPosition a {@link com.xenoamess.cyan_potion.base.plugins.CodePluginPosition} object.
+     * @param codePluginPosition codePluginPosition
      */
     public void apply(GameManager gameManager, CodePluginPosition codePluginPosition) {
         for (Function<GameManager, Void> function : this.getCodePluginFunctions(codePluginPosition)) {

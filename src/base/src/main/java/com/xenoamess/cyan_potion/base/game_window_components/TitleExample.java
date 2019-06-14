@@ -75,7 +75,7 @@ public class TitleExample extends AbstractGameWindowComponent {
     /**
      * <p>Constructor for TitleExample.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
@@ -458,7 +458,7 @@ public class TitleExample extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>saveSlotTexture</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return return
      */
     public Texture getSaveSlotTexture() {
         return saveSlotTexture;
@@ -467,7 +467,7 @@ public class TitleExample extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>saveStarTexture</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return return
      */
     public Texture getSaveStarTexture() {
         return saveStarTexture;
@@ -476,7 +476,7 @@ public class TitleExample extends AbstractGameWindowComponent {
     /**
      * <p>Getter for the field <code>controllableGameWindowComponents</code>.</p>
      *
-     * @return a {@link java.util.ArrayList} object.
+     * @return return
      */
     public ArrayList<AbstractControllableGameWindowComponent> getControllableGameWindowComponents() {
         return controllableGameWindowComponents;

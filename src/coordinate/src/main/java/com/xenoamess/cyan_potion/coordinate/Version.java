@@ -50,7 +50,7 @@ public class Version implements Comparable<Version> {
     /**
      * <p>Constructor for Version.</p>
      *
-     * @param versionString a {@link java.lang.String} object.
+     * @param versionString versionString
      */
     public Version(String versionString) {
         this.versionString = versionString;
@@ -68,8 +68,8 @@ public class Version implements Comparable<Version> {
     /**
      * <p>compareVersions.</p>
      *
-     * @param versionString1 a {@link java.lang.String} object.
-     * @param versionString2 a {@link java.lang.String} object.
+     * @param versionString1 versionString1
+     * @param versionString2 versionString2
      * @return a int.
      */
     public static int compareVersions(String versionString1, String versionString2) {
@@ -158,8 +158,8 @@ public class Version implements Comparable<Version> {
     /**
      * <p>loadFile.</p>
      *
-     * @param resourceFilePath a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @param resourceFilePath resourceFilePath
+     * @return return
      */
     @SuppressWarnings("Duplicates")
     public static String loadFile(String resourceFilePath) {

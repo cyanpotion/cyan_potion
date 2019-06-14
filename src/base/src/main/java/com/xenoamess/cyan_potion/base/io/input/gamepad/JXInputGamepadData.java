@@ -261,7 +261,7 @@ public class JXInputGamepadData extends AbstractGamepadData {
     /**
      * <p>copy.</p>
      *
-     * @param buttons a {@link com.github.strikerx3.jxinput.XInputButtons} object.
+     * @param buttons buttons
      */
     protected void copy(final XInputButtons buttons) {
         this.a = buttons.a;
@@ -285,7 +285,7 @@ public class JXInputGamepadData extends AbstractGamepadData {
     /**
      * <p>copy.</p>
      *
-     * @param axes a {@link com.github.strikerx3.jxinput.XInputAxes} object.
+     * @param axes axes
      */
     protected void copy(final XInputAxes axes) {
         this.lxRaw = axes.lxRaw;
@@ -307,7 +307,7 @@ public class JXInputGamepadData extends AbstractGamepadData {
     /**
      * <p>Constructor for JXInputGamepadData.</p>
      *
-     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @param gamepadDevice gamepadDevice
      */
     public JXInputGamepadData(AbstractGamepadDevice gamepadDevice) {
         super(gamepadDevice);

@@ -41,7 +41,7 @@ public interface ShapeRelationJudge<K extends AbstractShape,
      * @param k     a K object.
      * @param v     a V object.
      * @param rough a boolean.
-     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation} object.
+     * @return return
      */
     ShapeRelation relation(K k, V v, boolean rough);
 }

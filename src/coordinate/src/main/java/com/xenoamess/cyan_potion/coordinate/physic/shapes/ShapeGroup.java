@@ -47,7 +47,7 @@ public class ShapeGroup extends AbstractShape {
      * <p>Constructor for ShapeGroup.</p>
      *
      * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param shapes    a {@link java.util.Collection} object.
      */
@@ -60,7 +60,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * <p>Constructor for ShapeGroup.</p>
      *
-     * @param shapeGroup a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.ShapeGroup} object.
+     * @param shapeGroup shapeGroup
      */
     public ShapeGroup(ShapeGroup shapeGroup) {
         super(shapeGroup);
@@ -156,7 +156,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * <p>Getter for the field <code>shapes</code>.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @return return
      */
     public List<AbstractShape> getShapes() {
         return shapes;

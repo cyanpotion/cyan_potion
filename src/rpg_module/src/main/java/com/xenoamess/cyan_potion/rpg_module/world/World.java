@@ -108,7 +108,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>loadGameMap.</p>
      *
-     * @param gameMap a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     * @param gameMap gameMap
      */
     public void loadGameMap(GameMap gameMap) {
         this.setGameMap(gameMap);
@@ -122,7 +122,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Constructor for World.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public World(GameWindow gameWindow) {
         super(gameWindow);
@@ -231,7 +231,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>calculateView.</p>
      *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindow gameWindow
      */
     public void calculateView(GameWindow gameWindow) {
         setViewX((int) Math.ceil((gameWindow.getLogicWindowWidth() / (RpgModuleDataCenter.TILE_SIZE * this.getScale())) + 4));
@@ -278,7 +278,7 @@ public class World extends AbstractEntityScene {
      *
      * @param x a int.
      * @param y a int.
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile} object.
+     * @return return
      */
     public GameTile getTile(int x, int y) {
         if (x < 0 || x >= getGameMap().getWidth()) {
@@ -299,7 +299,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>preparePlayerMovement.</p>
      *
-     * @param player a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
+     * @param player player
      */
     public void preparePlayerMovement(Unit player) {
         player.getMovement().set(0, 0);
@@ -428,7 +428,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Getter for the field <code>player</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.units.Player} object.
+     * @return return
      */
     public Player getPlayer() {
         return player;
@@ -437,7 +437,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Setter for the field <code>player</code>.</p>
      *
-     * @param player a {@link com.xenoamess.cyan_potion.rpg_module.units.Player} object.
+     * @param player player
      */
     public void setPlayer(Player player) {
         this.player = player;
@@ -446,7 +446,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Getter for the field <code>gameMap</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     * @return return
      */
     public GameMap getGameMap() {
         return gameMap;
@@ -455,7 +455,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Setter for the field <code>gameMap</code>.</p>
      *
-     * @param gameMap a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     * @param gameMap gameMap
      */
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -464,7 +464,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Getter for the field <code>menu</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.Menu} object.
+     * @return return
      */
     public Menu getMenu() {
         return menu;
@@ -473,7 +473,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Setter for the field <code>menu</code>.</p>
      *
-     * @param menu a {@link com.xenoamess.cyan_potion.rpg_module.world.Menu} object.
+     * @param menu menu
      */
     public void setMenu(Menu menu) {
         this.menu = menu;
@@ -482,7 +482,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Getter for the field <code>scaleMatrix4f</code>.</p>
      *
-     * @return a {@link org.joml.Matrix4f} object.
+     * @return return
      */
     public Matrix4f getScaleMatrix4f() {
         return scaleMatrix4f;
@@ -491,7 +491,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Setter for the field <code>scaleMatrix4f</code>.</p>
      *
-     * @param scaleMatrix4f a {@link org.joml.Matrix4f} object.
+     * @param scaleMatrix4f scaleMatrix4f
      */
     public void setScaleMatrix4f(Matrix4f scaleMatrix4f) {
         this.scaleMatrix4f = scaleMatrix4f;
@@ -500,7 +500,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Getter for the field <code>rpgModuleDataCenter</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter} object.
+     * @return return
      */
     public RpgModuleDataCenter getRpgModuleDataCenter() {
         return rpgModuleDataCenter;
@@ -509,7 +509,7 @@ public class World extends AbstractEntityScene {
     /**
      * <p>Setter for the field <code>rpgModuleDataCenter</code>.</p>
      *
-     * @param rpgModuleDataCenter a {@link com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter} object.
+     * @param rpgModuleDataCenter rpgModuleDataCenter
      */
     public void setRpgModuleDataCenter(RpgModuleDataCenter rpgModuleDataCenter) {
         this.rpgModuleDataCenter = rpgModuleDataCenter;

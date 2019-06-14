@@ -39,7 +39,7 @@ public class ImmutableArea implements Area {
     /**
      * <p>Constructor for ImmutableArea.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
+     * @param area area
      */
     public ImmutableArea(Area area) {
         this.centerPosX = area.getCenterPosX();
@@ -70,7 +70,7 @@ public class ImmutableArea implements Area {
      * @param centerPosY a float.
      * @param width      a float.
      * @param height     a float.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.ImmutableArea} object.
+     * @return return
      */
     public static ImmutableArea generateImmutableArea(
             float centerPosX, float centerPosY, float width, float height) {
@@ -80,8 +80,8 @@ public class ImmutableArea implements Area {
     /**
      * <p>generateImmutableArea.</p>
      *
-     * @param area a {@link com.xenoamess.cyan_potion.base.commons.areas.Area} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.ImmutableArea} object.
+     * @param area area
+     * @return return
      */
     public static ImmutableArea generateImmutableArea(
             Area area) {
@@ -95,7 +95,7 @@ public class ImmutableArea implements Area {
      * @param leftTopPosY a float.
      * @param width       a float.
      * @param height      a float.
-     * @return a {@link com.xenoamess.cyan_potion.base.commons.areas.ImmutableArea} object.
+     * @return return
      */
     public static ImmutableArea generateImmutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {

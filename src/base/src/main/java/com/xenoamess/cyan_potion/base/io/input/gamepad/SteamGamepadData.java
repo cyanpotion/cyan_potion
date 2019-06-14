@@ -114,7 +114,7 @@ public class SteamGamepadData extends AbstractGamepadData {
     /**
      * <p>Constructor for SteamGamepadData.</p>
      *
-     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     * @param gamepadDevice gamepadDevice
      */
     public SteamGamepadData(AbstractGamepadDevice gamepadDevice) {
         super(gamepadDevice);

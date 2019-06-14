@@ -77,7 +77,7 @@ class ConsoleTalkThread implements Runnable {
     /**
      * <p>dealWithCommand.</p>
      *
-     * @param command a {@link java.lang.String} object.
+     * @param command command
      */
     protected void dealWithCommand(String command) {
         this.consoleThread.getGameManager().eventListAdd(new ConsoleEvent(command));
@@ -120,7 +120,7 @@ public class ConsoleThread extends Thread {
     /**
      * <p>Constructor for ConsoleThread.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public ConsoleThread(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -164,7 +164,7 @@ public class ConsoleThread extends Thread {
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @return return
      */
     public GameManager getGameManager() {
         return gameManager;

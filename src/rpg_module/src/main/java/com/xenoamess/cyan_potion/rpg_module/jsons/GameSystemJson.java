@@ -199,8 +199,8 @@ public class GameSystemJson implements Serializable {
      * <p>getGameSystemJson.</p>
      *
      * @param objectMapper          a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
-     * @param getGameSystemJsonFile a {@link java.io.File} object.
-     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson} object.
+     * @param getGameSystemJsonFile getGameSystemJsonFile
+     * @return return
      */
     public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper,
                                                    File getGameSystemJsonFile) {

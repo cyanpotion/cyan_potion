@@ -42,7 +42,7 @@ public class Player extends Unit {
      * <p>Constructor for Player.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
@@ -56,7 +56,7 @@ public class Player extends Unit {
      * <p>Constructor for Player.</p>
      *
      * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      */
@@ -72,7 +72,7 @@ public class Player extends Unit {
      * @param scene                    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
      * @param centerPos                a {@link org.joml.Vector3f} object.
      * @param size                     a {@link org.joml.Vector3f} object.
-     * @param walkingAnimation4DirsURI a {@link java.lang.String} object.
+     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
      * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
     public Player(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,

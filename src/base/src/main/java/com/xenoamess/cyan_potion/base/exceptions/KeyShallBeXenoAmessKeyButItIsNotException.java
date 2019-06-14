@@ -34,7 +34,7 @@ public class KeyShallBeXenoAmessKeyButItIsNotException extends RuntimeException 
     /**
      * <p>Constructor for KeyShallBeXenoAmessKeyButItIsNotException.</p>
      *
-     * @param message a {@link java.lang.String} object.
+     * @param message message
      */
     public KeyShallBeXenoAmessKeyButItIsNotException(String message) {
         super(message);
