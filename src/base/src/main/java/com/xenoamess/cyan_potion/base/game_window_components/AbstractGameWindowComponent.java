@@ -159,30 +159,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
      * <p>registerProcessor.</p>
      *
      * @param eventType eventType
-     * @param processor a
-     *                  <p>
-     *                  <p>
-     *                  <p>
-     *                  <p>
-     *                  <p>
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     * @param processor eventType
      */
     public void registerProcessor(String eventType,
                                   EventProcessor processor) {
@@ -227,24 +204,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>addToGameWindowComponentTree.</p>
      *
-     * @param gameWindowComponentTreeNode a
-     *                                    <p>
-     *                                    <p>
-     *                                    <p>
-     *                                    <p>
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
-     *                                    object.
+     * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (gameWindowComponentTreeNode != null) {
@@ -294,24 +254,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     /**
      * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
      *
-     * @param gameWindowComponentTreeNode a
-     *                                    <p>
-     *                                    <p>
-     *                                    <p>
-     *                                    <p>
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode}
-     *                                    object.
+     * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
     public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;

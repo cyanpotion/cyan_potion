@@ -42,34 +42,7 @@ public class MainThreadEventProcessor implements EventProcessor {
      * <p>Constructor for MainThreadEventProcessor.</p>
      *
      * @param gameManager gameManager
-     * @param processor   a
-     *                    <p>
-     *                    <p>
-     *                    <p>
-     *                    <p>
-     *                    <p>
-     *                    <p>
-     *                    <p>
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     * @param processor   processor
      */
     public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
         this.gameManager = gameManager;
@@ -79,52 +52,8 @@ public class MainThreadEventProcessor implements EventProcessor {
     /**
      * <p>Constructor for MainThreadEventProcessor.</p>
      *
-     * @param gameWindowComponent a
-     *                            <p>
-     *                            <p>
-     *
-     *
-     *
-     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
-     *                            object.
-     * @param processor           a
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *                            <p>
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     * @param gameWindowComponent gameWindowComponent
+     * @param processor           processor
      */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
         this.gameManager = gameWindowComponent.getGameWindow().getGameManager();

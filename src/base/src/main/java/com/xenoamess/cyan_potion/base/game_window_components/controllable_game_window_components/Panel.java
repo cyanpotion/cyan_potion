@@ -67,14 +67,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * <p>addContent.</p>
      *
-     * @param gameWindowComponent a
-     *                            <p>
-     *                            <p>
-     *
-     *
-     *
-     *                         {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
-     *                            object.
+     * @param gameWindowComponent gameWindowComponent
      */
     public void addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.getContents().add(gameWindowComponent);
