@@ -37,9 +37,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>Abstract AbstractEntityScene class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractEntityScene extends AbstractScene {
+    /**
+     * Constant <code>BOX_SIZE=128</code>
+     */
     public static final int BOX_SIZE = 128;
 
     private final Set<StaticEntity> staticEntitySet = new HashSet<>();
@@ -47,22 +53,47 @@ public abstract class AbstractEntityScene extends AbstractScene {
     private final Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap = new ConcurrentHashMap<>();
     private final Map<AbstractShape, Set<AbstractShape>> shapeCollisionSet = new ConcurrentHashMap<>();
 
+    /**
+     * <p>Constructor for AbstractEntityScene.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public AbstractEntityScene(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>Getter for the field <code>staticEntitySet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<StaticEntity> getStaticEntitySet() {
         return staticEntitySet;
     }
 
+    /**
+     * <p>Getter for the field <code>dynamicEntitySet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<AbstractDynamicEntity> getDynamicEntitySet() {
         return dynamicEntitySet;
     }
 
+    /**
+     * <p>Getter for the field <code>boxToShapeMap</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> getBoxToShapeMap() {
         return boxToShapeMap;
     }
 
+    /**
+     * <p>Getter for the field <code>shapeCollisionSet</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<AbstractShape, Set<AbstractShape>> getShapeCollisionSet() {
         return shapeCollisionSet;
     }

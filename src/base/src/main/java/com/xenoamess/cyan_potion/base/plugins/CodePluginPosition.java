@@ -29,6 +29,7 @@ package com.xenoamess.cyan_potion.base.plugins;
  * then every of each tag here shall only be inserted in one position in code.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public enum CodePluginPosition {
     rightBeforeGameManagerStartup,

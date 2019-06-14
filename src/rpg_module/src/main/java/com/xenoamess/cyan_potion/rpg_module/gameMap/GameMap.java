@@ -44,7 +44,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * <p>GameMap class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameMap {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
@@ -100,34 +103,74 @@ public class GameMap {
 
     }
 
+    /**
+     * <p>Getter for the field <code>world</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * <p>Setter for the field <code>world</code>.</p>
+     *
+     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     */
     public void setWorld(World world) {
         this.world = world;
     }
 
+    /**
+     * <p>Getter for the field <code>gameMapJson</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     */
     public GameMapJson getGameMapJson() {
         return gameMapJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameMapJson</code>.</p>
+     *
+     * @param gameMapJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     */
     public void setGameMapJson(GameMapJson gameMapJson) {
         this.gameMapJson = gameMapJson;
     }
 
+    /**
+     * <p>Getter for the field <code>gameMapInfoJson</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap.GameMapInfoJson} object.
+     */
     public GameMapInfoJson getGameMapInfoJson() {
         return gameMapInfoJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameMapInfoJson</code>.</p>
+     *
+     * @param gameMapInfoJson a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap.GameMapInfoJson} object.
+     */
     public void setGameMapInfoJson(GameMapInfoJson gameMapInfoJson) {
         this.gameMapInfoJson = gameMapInfoJson;
     }
 
+    /**
+     * <p>Getter for the field <code>gameTiles</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<GameTile> getGameTiles() {
         return gameTiles;
     }
 
+    /**
+     * <p>Getter for the field <code>eventUnits</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<EventUnit> getEventUnits() {
         return eventUnits;
     }
@@ -199,6 +242,13 @@ public class GameMap {
         }
     }
 
+    /**
+     * <p>getGameMapInfoJsons.</p>
+     *
+     * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param gameMapInfosFile a {@link java.io.File} object.
+     * @return a {@link java.util.List} object.
+     */
     public static List<GameMapInfoJson> getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile) {
         List<GameMapInfoJson> res = null;
         try {
@@ -228,6 +278,11 @@ public class GameMap {
         return gameMaps;
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     */
     public static void init(World world) {
         //        GameMapInfoJson
         List<GameMap> gameMaps = getGameMaps(world);
@@ -246,18 +301,38 @@ public class GameMap {
         }
     }
 
+    /**
+     * <p>getGameTileset.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset} object.
+     */
     public GameTileset getGameTileset() {
         return this.getWorld().getRpgModuleDataCenter().getGameTileset(this.getGameMapJson().tilesetId);
     }
 
+    /**
+     * <p>getID.</p>
+     *
+     * @return a int.
+     */
     public int getID() {
         return getGameMapInfoJson().getId();
     }
 
+    /**
+     * <p>getHeight.</p>
+     *
+     * @return a int.
+     */
     public int getHeight() {
         return getGameMapJson().height;
     }
 
+    /**
+     * <p>getWidth.</p>
+     *
+     * @return a int.
+     */
     public int getWidth() {
         return getGameMapJson().width;
     }

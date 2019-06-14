@@ -50,6 +50,9 @@ class ConsoleTalkThread implements Runnable {
         this.consoleThread = consoleThread;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void run() {
         InputStream is = null;
@@ -71,6 +74,11 @@ class ConsoleTalkThread implements Runnable {
         }
     }
 
+    /**
+     * <p>dealWithCommand.</p>
+     *
+     * @param command a {@link java.lang.String} object.
+     */
     protected void dealWithCommand(String command) {
         this.consoleThread.getGameManager().eventListAdd(new ConsoleEvent(command));
     }
@@ -86,10 +94,27 @@ class ConsoleTalkThread implements Runnable {
  * If you don't need this feature, you can just change config to not to start
  * the thread.
  *
- * @author XenoAmess
- * @see Console
- * @see GameManager
- * @see com.xenoamess.cyan_potion.base.GameManagerConfig
+ * @version 0.143.0
+ */
+ *A thread to deal with console input.
+         *Console input is designed to be used when debug.
+         *When the GameManager init,it will start a ConsoleThread.
+         *You can run Console to start a Console,and write your commands to Console.
+         *The commands you wrote will be sent to ConsoleThread using TCP-IP
+         *This thread uses TCP-IP and player will receive prompting message about it.
+         *If you don't need this feature, you can just change config to not to start
+         *the thread.
+         *
+         *@author XenoAmess
+        *@see Console
+        *@see GameManager
+        *@see com.xenoamess.cyan_potion.base.GameManagerConfig
+        */
+
+/**
+ * <p>Constructor for ConsoleThread.</p>
+ *
+ * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
  */
 public class ConsoleThread extends Thread {
     private static final Logger LOGGER =
@@ -97,9 +122,14 @@ public class ConsoleThread extends Thread {
 
     private final GameManager gameManager;
 
+    /**
+     * <p>shutdown.</p>
+     */
+
     public ConsoleThread(GameManager gameManager) {
         this.gameManager = gameManager;
         this.setDaemon(true);
+        /** {@inheritDoc} */
     }
 
     public void shutdown() {
@@ -122,6 +152,11 @@ public class ConsoleThread extends Thread {
                 }
             }
             executorService.shutdown();
+            /**
+             * <p>Getter for the field <code>gameManager</code>.</p>
+             *
+             * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+             */
         } catch (IOException e) {
             LOGGER.error("ConsoleThread serverSocket fails:", e);
         }

@@ -29,18 +29,37 @@ import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import org.joml.Vector3f;
 
 /**
+ * <p>HorizontalRectangle class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class HorizontalRectangle extends AbstractShape {
+    /**
+     * <p>Constructor for HorizontalRectangle.</p>
+     *
+     * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param size      a {@link org.joml.Vector3f} object.
+     */
     public HorizontalRectangle(AbstractEntity entity, Vector3f centerPos,
                                Vector3f size) {
         super(entity, centerPos, size);
     }
 
+    /**
+     * <p>Constructor for HorizontalRectangle.</p>
+     *
+     * @param horizontalRectangle a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle}
+     *                           object.
+     */
     public HorizontalRectangle(HorizontalRectangle horizontalRectangle) {
         super(horizontalRectangle);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean ifIn(Vector3f point) {
         if (point.x < this.minX()) {
@@ -55,6 +74,9 @@ public class HorizontalRectangle extends AbstractShape {
         return point.y <= this.maxY();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ShapeRelation relation(HorizontalRectangle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;
@@ -87,6 +109,9 @@ public class HorizontalRectangle extends AbstractShape {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;

@@ -32,18 +32,38 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 /**
+ * <p>Abstract AbstractDynamicEntity class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 
+    /**
+     * <p>Constructor for AbstractDynamicEntity.</p>
+     *
+     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public AbstractDynamicEntity(AbstractEntityScene scene, Vector3f centerPos,
                                  Vector3f size, Bindable bindable,
                                  AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
+    /**
+     * <p>update.</p>
+     */
     public abstract void update();
 
+    /**
+     * <p>forceMove.</p>
+     *
+     * @param direction a {@link org.joml.Vector3f} object.
+     */
     public void forceMove(Vector3f direction) {
         this.setCenterPos(this.getCenterPos().add(direction));
         if (this.getShape() != null) {
@@ -52,6 +72,12 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
         this.getPicture().cover(this);
     }
 
+    /**
+     * <p>tryMove.</p>
+     *
+     * @param direction a {@link org.joml.Vector3f} object.
+     * @return a boolean.
+     */
     public boolean tryMove(Vector3f direction) {
         if (this.canMove(direction)) {
             this.forceMove(direction);
@@ -61,6 +87,12 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
         }
     }
 
+    /**
+     * <p>canMove.</p>
+     *
+     * @param direction a {@link org.joml.Vector3f} object.
+     * @return a boolean.
+     */
     public boolean canMove(Vector3f direction) {
         if (this.getShape() == null) {
             return true;
@@ -68,6 +100,9 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
         return this.getShape().canMove(direction);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

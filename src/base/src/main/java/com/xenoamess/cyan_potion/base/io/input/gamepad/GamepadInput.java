@@ -36,13 +36,21 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
+ * <p>GamepadInput class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GamepadInput {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInput.class);
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
 
+    /**
+     * <p>init.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public void init(GameManager gameManager) {
         try {
             int jXInputDeviceNum = XInputDevice.getAllDevices().length;
@@ -65,12 +73,22 @@ public class GamepadInput {
         }
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public void update(GameWindow gameWindow) {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
             gamepadData.update(gameWindow);
         }
     }
 
+    /**
+     * <p>Getter for the field <code>gamepadDatas</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<AbstractGamepadData> getGamepadDatas() {
         return gamepadDatas;
     }

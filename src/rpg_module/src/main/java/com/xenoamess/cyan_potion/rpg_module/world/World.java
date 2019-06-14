@@ -56,13 +56,25 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * <p>World class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class World extends AbstractEntityScene {
+    /**
+     * Constant <code>SCALE="scale"</code>
+     */
     public static final String SCALE = "scale";
     private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
+    /**
+     * Constant <code>MAX_SCALE=10</code>
+     */
     public static final float MAX_SCALE = 10;
+    /**
+     * Constant <code>MIN_SCALE=0.01F</code>
+     */
     public static final float MIN_SCALE = 0.01F;
 
     private int viewX;
@@ -74,17 +86,30 @@ public class World extends AbstractEntityScene {
     private Matrix4f scaleMatrix4f;
     private RpgModuleDataCenter rpgModuleDataCenter;
 
+    /**
+     * <p>recalculateScaleMatrix4f.</p>
+     */
     protected void recalculateScaleMatrix4f() {
         this.setScaleMatrix4f(new Matrix4f().setTranslation(new Vector3f(0)));
         this.getScaleMatrix4f().scale(this.getScale());
     }
 
+    /**
+     * <p>changeScale.</p>
+     *
+     * @param newScale a float.
+     */
     public void changeScale(float newScale) {
         this.setScale(newScale);
         recalculateScaleMatrix4f();
         this.calculateView(this.getGameWindow());
     }
 
+    /**
+     * <p>loadGameMap.</p>
+     *
+     * @param gameMap a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     */
     public void loadGameMap(GameMap gameMap) {
         this.setGameMap(gameMap);
         for (AbstractDynamicEntity au : gameMap.getEventUnits()) {
@@ -94,6 +119,11 @@ public class World extends AbstractEntityScene {
     }
 
 
+    /**
+     * <p>Constructor for World.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public World(GameWindow gameWindow) {
         super(gameWindow);
 
@@ -151,6 +181,9 @@ public class World extends AbstractEntityScene {
         this.setMenu(new Menu(this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
@@ -186,18 +219,29 @@ public class World extends AbstractEntityScene {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
         this.getMenu().addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
+    /**
+     * <p>calculateView.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public void calculateView(GameWindow gameWindow) {
         setViewX((int) Math.ceil((gameWindow.getLogicWindowWidth() / (RpgModuleDataCenter.TILE_SIZE * this.getScale())) + 4));
         setViewY((int) Math.ceil((gameWindow.getLogicWindowHeight() / (RpgModuleDataCenter.TILE_SIZE * this.getScale())) + 4));
     }
 
 
+    /**
+     * <p>correctCamera.</p>
+     */
     public void correctCamera() {
         Vector3f pos = this.getCamera().getPosition();
 
@@ -229,6 +273,13 @@ public class World extends AbstractEntityScene {
         }
     }
 
+    /**
+     * <p>getTile.</p>
+     *
+     * @param x a int.
+     * @param y a int.
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile} object.
+     */
     public GameTile getTile(int x, int y) {
         if (x < 0 || x >= getGameMap().getWidth()) {
             return null;
@@ -245,6 +296,11 @@ public class World extends AbstractEntityScene {
     }
 
 
+    /**
+     * <p>preparePlayerMovement.</p>
+     *
+     * @param player a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
+     */
     public void preparePlayerMovement(Unit player) {
         player.getMovement().set(0, 0);
         if (this.getMenu().getShow()) {
@@ -267,6 +323,9 @@ public class World extends AbstractEntityScene {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         preparePlayerMovement(this.getPlayer());
@@ -279,6 +338,9 @@ public class World extends AbstractEntityScene {
         correctCamera();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         int posX =
@@ -327,58 +389,128 @@ public class World extends AbstractEntityScene {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>viewX</code>.</p>
+     *
+     * @return a int.
+     */
     public int getViewX() {
         return viewX;
     }
 
+    /**
+     * <p>Setter for the field <code>viewX</code>.</p>
+     *
+     * @param viewX a int.
+     */
     public void setViewX(int viewX) {
         this.viewX = viewX;
     }
 
+    /**
+     * <p>Getter for the field <code>viewY</code>.</p>
+     *
+     * @return a int.
+     */
     public int getViewY() {
         return viewY;
     }
 
+    /**
+     * <p>Setter for the field <code>viewY</code>.</p>
+     *
+     * @param viewY a int.
+     */
     public void setViewY(int viewY) {
         this.viewY = viewY;
     }
 
+    /**
+     * <p>Getter for the field <code>player</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.units.Player} object.
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * <p>Setter for the field <code>player</code>.</p>
+     *
+     * @param player a {@link com.xenoamess.cyan_potion.rpg_module.units.Player} object.
+     */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     * <p>Getter for the field <code>gameMap</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     */
     public GameMap getGameMap() {
         return gameMap;
     }
 
+    /**
+     * <p>Setter for the field <code>gameMap</code>.</p>
+     *
+     * @param gameMap a {@link com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap} object.
+     */
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
     }
 
+    /**
+     * <p>Getter for the field <code>menu</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.world.Menu} object.
+     */
     public Menu getMenu() {
         return menu;
     }
 
+    /**
+     * <p>Setter for the field <code>menu</code>.</p>
+     *
+     * @param menu a {@link com.xenoamess.cyan_potion.rpg_module.world.Menu} object.
+     */
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
 
+    /**
+     * <p>Getter for the field <code>scaleMatrix4f</code>.</p>
+     *
+     * @return a {@link org.joml.Matrix4f} object.
+     */
     public Matrix4f getScaleMatrix4f() {
         return scaleMatrix4f;
     }
 
+    /**
+     * <p>Setter for the field <code>scaleMatrix4f</code>.</p>
+     *
+     * @param scaleMatrix4f a {@link org.joml.Matrix4f} object.
+     */
     public void setScaleMatrix4f(Matrix4f scaleMatrix4f) {
         this.scaleMatrix4f = scaleMatrix4f;
     }
 
+    /**
+     * <p>Getter for the field <code>rpgModuleDataCenter</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter} object.
+     */
     public RpgModuleDataCenter getRpgModuleDataCenter() {
         return rpgModuleDataCenter;
     }
 
+    /**
+     * <p>Setter for the field <code>rpgModuleDataCenter</code>.</p>
+     *
+     * @param rpgModuleDataCenter a {@link com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter} object.
+     */
     public void setRpgModuleDataCenter(RpgModuleDataCenter rpgModuleDataCenter) {
         this.rpgModuleDataCenter = rpgModuleDataCenter;
     }

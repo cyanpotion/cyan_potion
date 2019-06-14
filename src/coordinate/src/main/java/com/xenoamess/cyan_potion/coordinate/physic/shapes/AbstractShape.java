@@ -45,12 +45,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 
 /**
+ * <p>Abstract AbstractShape class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractShape implements Area {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
+    /**
+     * Constant <code>STRING_RELATION="relation"</code>
+     */
     public static final String STRING_RELATION = "relation";
 
     private AbstractEntity entity;
@@ -61,6 +67,13 @@ public abstract class AbstractShape implements Area {
     private static Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
             shapeRelationJudges = new ConcurrentHashMap<>();
 
+    /**
+     * <p>Constructor for AbstractShape.</p>
+     *
+     * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param size      a {@link org.joml.Vector3f} object.
+     */
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
         this.setEntity(entity);
@@ -68,10 +81,25 @@ public abstract class AbstractShape implements Area {
         this.setSize(new Vector3f(size));
     }
 
+    /**
+     * <p>Constructor for AbstractShape.</p>
+     *
+     * @param shape a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public AbstractShape(AbstractShape shape) {
         this(shape.getEntity(), shape.getCenterPos(), shape.getSize());
     }
 
+    /**
+     * <p>relation.</p>
+     *
+     * @param k     a K object.
+     * @param v     a V object.
+     * @param rough a boolean.
+     * @param <K>   a K object.
+     * @param <V>   a V object.
+     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation} object.
+     */
     public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
         ShapeRelation res = RELATION_UNDEFINED;
 
@@ -154,6 +182,8 @@ public abstract class AbstractShape implements Area {
     }
 
     /**
+     * <p>relation.</p>
+     *
      * @param shape: the other shape
      * @param rough: if true, then only return RELATION_UNDEFINED = -1,
      *               RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
@@ -164,18 +194,38 @@ public abstract class AbstractShape implements Area {
         return relation(this, shape, rough);
     }
 
+    /**
+     * <p>minX.</p>
+     *
+     * @return a float.
+     */
     public float minX() {
         return this.getCenterPos().x - this.getSize().x / 2;
     }
 
+    /**
+     * <p>maxX.</p>
+     *
+     * @return a float.
+     */
     public float maxX() {
         return this.getCenterPos().x + this.getSize().x / 2;
     }
 
+    /**
+     * <p>minY.</p>
+     *
+     * @return a float.
+     */
     public float minY() {
         return this.getCenterPos().y - this.getSize().y / 2;
     }
 
+    /**
+     * <p>maxY.</p>
+     *
+     * @return a float.
+     */
     public float maxY() {
         return this.getCenterPos().y + this.getSize().y / 2;
     }
@@ -189,6 +239,8 @@ public abstract class AbstractShape implements Area {
     public abstract boolean ifIn(Vector3f point);
 
     /**
+     * <p>getBoxes.</p>
+     *
      * @return boxes that the shape is in.
      * box size is 128*128.
      */
@@ -206,6 +258,13 @@ public abstract class AbstractShape implements Area {
         return res;
     }
 
+    /**
+     * <p>copy.</p>
+     *
+     * @param source a T object.
+     * @param <T>    a T object.
+     * @return a T object.
+     */
     public static <T extends AbstractShape> T copy(T source) {
         T res;
         try {
@@ -218,6 +277,11 @@ public abstract class AbstractShape implements Area {
         return res;
     }
 
+    /**
+     * <p>copy.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public AbstractShape copy() {
         return AbstractShape.copy(this);
     }
@@ -254,6 +318,8 @@ public abstract class AbstractShape implements Area {
     }
 
     /**
+     * <p>canMove.</p>
+     *
      * @param direction the direction the moves to
      * @return true: can move. false: cannot move.
      */
@@ -323,10 +389,21 @@ public abstract class AbstractShape implements Area {
         return true;
     }
 
+    /**
+     * <p>forceMove.</p>
+     *
+     * @param direction a {@link org.joml.Vector3f} object.
+     */
     public void forceMove(Vector3f direction) {
         this.setCenterPos(this.getCenterPos().add(direction));
     }
 
+    /**
+     * <p>tryMove.</p>
+     *
+     * @param direction a {@link org.joml.Vector3f} object.
+     * @return a boolean.
+     */
     public boolean tryMove(Vector3f direction) {
         if (this.canMove(direction)) {
             this.forceMove(direction);
@@ -336,6 +413,9 @@ public abstract class AbstractShape implements Area {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -350,54 +430,106 @@ public abstract class AbstractShape implements Area {
                 Objects.equals(getSize(), that.getSize());
     }
 
+    /**
+     * <p>Getter for the field <code>entity</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     */
     public AbstractEntity getEntity() {
         return entity;
     }
 
+    /**
+     * <p>Setter for the field <code>entity</code>.</p>
+     *
+     * @param entity a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     */
     public void setEntity(AbstractEntity entity) {
         this.entity = entity;
     }
 
+    /**
+     * <p>Getter for the field <code>centerPos</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getCenterPos() {
         return centerPos;
     }
 
+    /**
+     * <p>Setter for the field <code>centerPos</code>.</p>
+     *
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     */
     public void setCenterPos(Vector3f centerPos) {
         this.centerPos = centerPos;
     }
 
+    /**
+     * <p>Getter for the field <code>size</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getSize() {
         return size;
     }
 
+    /**
+     * <p>Setter for the field <code>size</code>.</p>
+     *
+     * @param size a {@link org.joml.Vector3f} object.
+     */
     public void setSize(Vector3f size) {
         this.size = size;
     }
 
+    /**
+     * <p>Getter for the field <code>shapeRelationJudges</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public static Map<ImmutablePair<Class, Class>, ShapeRelationJudge> getShapeRelationJudges() {
         return shapeRelationJudges;
     }
 
+    /**
+     * <p>Setter for the field <code>shapeRelationJudges</code>.</p>
+     *
+     * @param shapeRelationJudges a {@link java.util.Map} object.
+     */
     public static void setShapeRelationJudges(Map<ImmutablePair<Class,
             Class>, ShapeRelationJudge> shapeRelationJudges) {
         AbstractShape.shapeRelationJudges = shapeRelationJudges;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosX() {
         return this.getCenterPos().x();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosY() {
         return this.getCenterPos().y();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getWidth() {
         return this.getSize().x();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getHeight() {
         return this.getSize().y();

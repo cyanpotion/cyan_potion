@@ -37,16 +37,28 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
+ * <p>ResourceManager class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ResourceManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
 
+    /**
+     * Constant <code>TOTAL_MEMORY_SIZE_LIMIT_POINT=8L * 1024 * 1024 * 1024</code>
+     */
     public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
             8L * 1024 * 1024 * 1024;
+    /**
+     * Constant <code>TOTAL_MEMORY_SIZE_START_POINT=6L * 1024 * 1024 * 1024</code>
+     */
     public static final long TOTAL_MEMORY_SIZE_START_POINT =
             6L * 1024 * 1024 * 1024;
+    /**
+     * Constant <code>TOTAL_MEMORY_SIZE_DIST_POINT=2L * 1024 * 1024 * 1024</code>
+     */
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
             2L * 1024 * 1024 * 1024;
 
@@ -56,12 +68,28 @@ public class ResourceManager implements AutoCloseable {
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
+    /**
+     * <p>putResourceLoader.</p>
+     *
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceType a {@link java.lang.String} object.
+     * @param loader       a {@link java.util.function.Function} object.
+     * @param <T>          a T object.
+     */
     public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
                 defaultResourcesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
+    /**
+     * <p>getResourceLoader.</p>
+     *
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceType a {@link java.lang.String} object.
+     * @param <T>          a T object.
+     * @return a {@link java.util.function.Function} object.
+     */
     public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
                 defaultResourcesLoaderMap.get(tClass);
@@ -71,6 +99,13 @@ public class ResourceManager implements AutoCloseable {
         return resourceLoaderMap.get(resourceType);
     }
 
+    /**
+     * <p>putResourceWithFullURI.</p>
+     *
+     * @param fullResourceURI a {@link java.lang.String} object.
+     * @param t               a T object.
+     * @param <T>             a T object.
+     */
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (StringUtils.isBlank(fullResourceURI)) {
             throw (new Error("putResourceWithURI : fullResourceURI is null or" +
@@ -82,6 +117,12 @@ public class ResourceManager implements AutoCloseable {
         this.putResourceWithShortenURI(fullResourceURI.substring(fullResourceURI.indexOf(':') + 1), t);
     }
 
+    /**
+     * <p>getResourceFromFullURI.</p>
+     *
+     * @param fullResourceURI a {@link java.lang.String} object.
+     * @return a {@link java.lang.Object} object.
+     */
     public Object getResourceFromFullURI(String fullResourceURI) {
         if (StringUtils.isBlank(fullResourceURI)) {
             return null;
@@ -111,6 +152,13 @@ public class ResourceManager implements AutoCloseable {
                 fullResourceURI.substring(indexOfColon + 1));
     }
 
+    /**
+     * <p>putResourceWithShortenURI.</p>
+     *
+     * @param shortenResourceURI a {@link java.lang.String} object.
+     * @param t                  a T object.
+     * @param <T>                a T object.
+     */
     public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
         ConcurrentHashMap<String, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(t.getClass());
@@ -121,6 +169,14 @@ public class ResourceManager implements AutoCloseable {
         resourceURIMap.put(shortenResourceURI, t);
     }
 
+    /**
+     * <p>getResourceFromShortenURI.</p>
+     *
+     * @param tClass             a {@link java.lang.Class} object.
+     * @param shortenResourceURI a {@link java.lang.String} object.
+     * @param <T>                a T object.
+     * @return a T object.
+     */
     public <T> T getResourceFromShortenURI(Class<T> tClass,
                                            String shortenResourceURI) {
 
@@ -133,6 +189,14 @@ public class ResourceManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>ifExistResourceFromShortenURI.</p>
+     *
+     * @param tClass             a {@link java.lang.Class} object.
+     * @param shortenResourceURI a {@link java.lang.String} object.
+     * @param <T>                a T object.
+     * @return a boolean.
+     */
     public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass,
                                                      String shortenResourceURI) {
 
@@ -145,6 +209,14 @@ public class ResourceManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>fetchResourceWithShortenURI.</p>
+     *
+     * @param tClass             a {@link java.lang.Class} object.
+     * @param shortenResourceURI a {@link java.lang.String} object.
+     * @param <T>                a T object.
+     * @return a T object.
+     */
     public <T extends AbstractResource> T fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI) {
         T res = null;
         if (this.ifExistResourceFromShortenURI(tClass, shortenResourceURI)) {
@@ -163,11 +235,19 @@ public class ResourceManager implements AutoCloseable {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         closeMap(getDefaultResourcesURIMap());
     }
 
+    /**
+     * <p>closeMap.</p>
+     *
+     * @param mapToClose a {@link java.util.Map} object.
+     */
     public static void closeMap(Map mapToClose) {
         if (mapToClose == null) {
             return;
@@ -186,10 +266,20 @@ public class ResourceManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>Constructor for ResourceManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public ResourceManager(GameManager gameManager) {
         this.setGameManager(gameManager);
     }
 
+    /**
+     * <p>load.</p>
+     *
+     * @param resource a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     */
     public void load(AbstractResource resource) {
         if (resource.isInMemory()) {
             return;
@@ -199,6 +289,11 @@ public class ResourceManager implements AutoCloseable {
         resource.setInMemory(true);
     }
 
+    /**
+     * <p>close.</p>
+     *
+     * @param resource a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     */
     public void close(AbstractResource resource) {
         if (!resource.isInMemory()) {
             return;
@@ -208,6 +303,9 @@ public class ResourceManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>suggestGc.</p>
+     */
     public void suggestGc() {
         if (this.getGameManager().getNowFrameIndex() % 1000 == 0) {
             LOGGER.debug("suggestGc at totalMemorySize : {}", this.getTotalMemorySize());
@@ -221,6 +319,9 @@ public class ResourceManager implements AutoCloseable {
         LOGGER.debug("after forceGc totalMemorySize changed to : {}", this.getTotalMemorySize());
     }
 
+    /**
+     * <p>forceGc.</p>
+     */
     public void forceGc() {
         getInMemoryResources().sort(Comparator.comparingLong(AbstractResource::getLastUsedFrameIndex));
         ArrayList<AbstractResource> newInMemoryResources = new ArrayList<>();
@@ -250,26 +351,56 @@ public class ResourceManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
 
+    /**
+     * <p>Setter for the field <code>gameManager</code>.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>Getter for the field <code>totalMemorySize</code>.</p>
+     *
+     * @return a long.
+     */
     public long getTotalMemorySize() {
         return totalMemorySize;
     }
 
+    /**
+     * <p>Setter for the field <code>totalMemorySize</code>.</p>
+     *
+     * @param totalMemorySize a long.
+     */
     public void setTotalMemorySize(long totalMemorySize) {
         this.totalMemorySize = totalMemorySize;
     }
 
+    /**
+     * <p>Getter for the field <code>inMemoryResources</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<AbstractResource> getInMemoryResources() {
         return inMemoryResources;
     }
 
+    /**
+     * <p>Getter for the field <code>defaultResourcesURIMap</code>.</p>
+     *
+     * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
+     */
     public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourcesURIMap() {
         return defaultResourcesURIMap;
     }

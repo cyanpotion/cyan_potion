@@ -35,7 +35,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * <p>GameMapJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameMapJson implements Serializable {
     private static final Logger LOGGER =
@@ -96,6 +99,13 @@ public class GameMapJson implements Serializable {
     public ArrayList<EventUnitJson> events;
 
 
+    /**
+     * <p>getGameMapJson.</p>
+     *
+     * @param objectMapper a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param gameMapFile  a {@link java.io.File} object.
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson} object.
+     */
     public static GameMapJson getGameMapJson(ObjectMapper objectMapper,
                                              File gameMapFile) {
         GameMapJson res = null;

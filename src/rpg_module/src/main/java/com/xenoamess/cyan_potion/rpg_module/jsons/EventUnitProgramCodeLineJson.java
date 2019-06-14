@@ -28,7 +28,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * <p>EventUnitProgramCodeLineJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class EventUnitProgramCodeLineJson implements Serializable {
     public int code;

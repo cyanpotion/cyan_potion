@@ -25,18 +25,47 @@
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 /**
+ * <p>Abstract AbstractGamepadDevice class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractGamepadDevice {
+    /**
+     * Constant <code>MIN_VIBRATION_POWER=0</code>
+     */
     public static final int MIN_VIBRATION_POWER = 0;
+    /**
+     * Constant <code>MAX_VIBRATION_POWER=65535</code>
+     */
     public static final int MAX_VIBRATION_POWER = 65535;
 
+    /**
+     * <p>update.</p>
+     */
     public abstract void update();
 
+    /**
+     * <p>isConnected.</p>
+     *
+     * @return a boolean.
+     */
     public abstract boolean isConnected();
 
+    /**
+     * <p>setVibration.</p>
+     *
+     * @param leftVibration  a int.
+     * @param rightVibration a int.
+     */
     public abstract void setVibration(int leftVibration, int rightVibration);
 
+    /**
+     * <p>fixVibrationPower.</p>
+     *
+     * @param originalVibrationPower a int.
+     * @return a int.
+     */
     public static int fixVibrationPower(int originalVibrationPower) {
         if (originalVibrationPower < MIN_VIBRATION_POWER) {
             originalVibrationPower = MIN_VIBRATION_POWER;

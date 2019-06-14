@@ -29,7 +29,10 @@ import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayLis
 import com.xenoamess.cyan_potion.base.DataCenter;
 
 /**
+ * <p>GameRuntime class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameRuntime {
     private DataCenter dataCenter;
@@ -43,31 +46,62 @@ public class GameRuntime {
     // do this.
     //emmmmmmm
 
+    /**
+     * <p>Constructor for GameRuntime.</p>
+     *
+     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
     public GameRuntime(DataCenter dataCenter) {
         this.setDataCenter(dataCenter);
     }
 
 
+    /**
+     * <p>saveGameRuntime.</p>
+     */
     public void saveGameRuntime() {
         //TODO
     }
 
+    /**
+     * <p>loadGameRuntime.</p>
+     */
     public void loadGameRuntime() {
         //TODO
     }
 
+    /**
+     * <p>Getter for the field <code>dataCenter</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
     public DataCenter getDataCenter() {
         return dataCenter;
     }
 
+    /**
+     * <p>Setter for the field <code>dataCenter</code>.</p>
+     *
+     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
     public void setDataCenter(DataCenter dataCenter) {
         this.dataCenter = dataCenter;
     }
 
+    /**
+     * <p>Getter for the field <code>runtimeSwitches</code>.</p>
+     *
+     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList} object.
+     */
     public BooleanArrayList getRuntimeSwitches() {
         return runtimeSwitches;
     }
 
+    /**
+     * <p>Getter for the field <code>runtimeIntegerVariables</code>.</p>
+     *
+     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList} object.
+     */
     public IntArrayList getRuntimeIntegerVariables() {
         return runtimeIntegerVariables;
     }

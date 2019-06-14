@@ -30,7 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <p>JXInputGamepadDevice class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
     private static final Logger LOGGER =
@@ -39,6 +42,11 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     private int JXInputGamepadDeviceIndex;
     private XInputDevice rawXInputDevice;
 
+    /**
+     * <p>Constructor for JXInputGamepadDevice.</p>
+     *
+     * @param JXInputGamepadDeviceIndex a int.
+     */
     public JXInputGamepadDevice(int JXInputGamepadDeviceIndex) {
         this.setJXInputGamepadDeviceIndex(JXInputGamepadDeviceIndex);
         try {
@@ -48,6 +56,9 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         try {
@@ -58,28 +69,54 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
         this.getRawXInputDevice().poll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isConnected() {
         return this.getRawXInputDevice().isConnected();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
         this.getRawXInputDevice().setVibration(fixVibrationPower(leftVibration), fixVibrationPower(rightVibration));
     }
 
+    /**
+     * <p>Getter for the field <code>rawXInputDevice</code>.</p>
+     *
+     * @return a {@link com.github.strikerx3.jxinput.XInputDevice} object.
+     */
     public XInputDevice getRawXInputDevice() {
         return rawXInputDevice;
     }
 
+    /**
+     * <p>getJXInputGamepadDeviceIndex.</p>
+     *
+     * @return a int.
+     */
     public int getJXInputGamepadDeviceIndex() {
         return JXInputGamepadDeviceIndex;
     }
 
+    /**
+     * <p>setJXInputGamepadDeviceIndex.</p>
+     *
+     * @param JXInputGamepadDeviceIndex a int.
+     */
     public void setJXInputGamepadDeviceIndex(int JXInputGamepadDeviceIndex) {
         this.JXInputGamepadDeviceIndex = JXInputGamepadDeviceIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>rawXInputDevice</code>.</p>
+     *
+     * @param rawXInputDevice a {@link com.github.strikerx3.jxinput.XInputDevice} object.
+     */
     public void setRawXInputDevice(XInputDevice rawXInputDevice) {
         this.rawXInputDevice = rawXInputDevice;
     }

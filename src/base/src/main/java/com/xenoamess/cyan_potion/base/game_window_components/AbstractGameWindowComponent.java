@@ -40,7 +40,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * <p>Abstract AbstractGameWindowComponent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractGameWindowComponent implements AutoCloseable, Area {
     private static final Logger LOGGER =
@@ -55,11 +58,23 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     private float width = -1;
     private float height = -1;
 
+    /**
+     * <p>Constructor for AbstractGameWindowComponent.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         this.initProcessors();
     }
 
+    /**
+     * <p>createGameWindowComponentFromClassName.</p>
+     *
+     * @param gameWindow                   a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param gameWindowComponentClassName a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     */
     public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
                                                                                      String gameWindowComponentClassName) {
         assert (gameWindowComponentClassName != null);
@@ -76,6 +91,15 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
     }
 
 
+    /**
+     * <p>init.</p>
+     *
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     */
     public AbstractGameWindowComponent init(float leftTopPosX,
                                             float leftTopPosY, float width,
                                             float height) {
@@ -86,19 +110,38 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
         return this;
     }
 
+    /**
+     * <p>Getter for the field <code>alive</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAlive() {
         return alive.get();
     }
 
+    /**
+     * <p>Setter for the field <code>alive</code>.</p>
+     *
+     * @param alive a boolean.
+     */
     public void setAlive(boolean alive) {
         this.alive.set(alive);
     }
 
 
+    /**
+     * <p>update.</p>
+     */
     public abstract void update();
 
+    /**
+     * <p>draw.</p>
+     */
     public abstract void draw();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         this.setAlive(false);
@@ -107,13 +150,29 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
 
     private final Map<String, EventProcessor> classNameToProcessorMap = new ConcurrentHashMap<>();
 
+    /**
+     * <p>initProcessors.</p>
+     */
     public abstract void initProcessors();
 
+    /**
+     * <p>registerProcessor.</p>
+     *
+     * @param eventType a {@link java.lang.String} object.
+     * @param processor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerProcessor(String eventType,
                                   EventProcessor processor) {
         this.getClassNameToProcessorMap().put(eventType, processor);
     }
 
+    /**
+     * <p>getProcessor.</p>
+     *
+     * @param eventType a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public EventProcessor getProcessor(String eventType) {
         return this.getClassNameToProcessorMap().get(eventType);
     }
@@ -143,6 +202,12 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
         return event;
     }
 
+    /**
+     * <p>addToGameWindowComponentTree.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (gameWindowComponentTreeNode != null) {
             gameWindowComponentTreeNode.newNode(this);
@@ -151,6 +216,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
         }
     }
 
+    /**
+     * <p>enlargeAsFullWindow.</p>
+     */
     public void enlargeAsFullWindow() {
         this.setLeftTopPosX(0);
         this.setLeftTopPosY(0);
@@ -158,68 +226,134 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Area
         this.setHeight(this.getGameWindow().getLogicWindowHeight());
     }
 
+    /**
+     * <p>center.</p>
+     */
     public void center() {
         this.setLeftTopPosX((this.getGameWindow().getLogicWindowWidth() - this.getWidth()) / 2);
         this.setLeftTopPosY((this.getGameWindow().getLogicWindowHeight() - this.getHeight()) / 2);
     }
 
 
+    /**
+     * <p>Getter for the field <code>gameWindow</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public GameWindow getGameWindow() {
         return gameWindow;
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindowComponentTreeNode</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public GameWindowComponentTreeNode getGameWindowComponentTreeNode() {
         return gameWindowComponentTreeNode;
     }
 
+    /**
+     * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
     }
 
+    /**
+     * <p>Getter for the field <code>leftTopPosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLeftTopPosX() {
         return leftTopPosX;
     }
 
+    /**
+     * <p>Setter for the field <code>leftTopPosX</code>.</p>
+     *
+     * @param leftTopPosX a float.
+     */
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }
 
+    /**
+     * <p>Getter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLeftTopPosY() {
         return leftTopPosY;
     }
 
+    /**
+     * <p>Setter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @param leftTopPosY a float.
+     */
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getWidth() {
         return width;
     }
 
+    /**
+     * <p>Setter for the field <code>width</code>.</p>
+     *
+     * @param width a float.
+     */
     public void setWidth(float width) {
         this.width = width;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getHeight() {
         return height;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosX() {
         return this.getLeftTopPosX() + this.getWidth() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosY() {
         return this.getLeftTopPosY() + this.getHeight() / 2F;
     }
 
+    /**
+     * <p>Setter for the field <code>height</code>.</p>
+     *
+     * @param height a float.
+     */
     public void setHeight(float height) {
         this.height = height;
     }
 
+    /**
+     * <p>Getter for the field <code>classNameToProcessorMap</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<String, EventProcessor> getClassNameToProcessorMap() {
         return classNameToProcessorMap;
     }

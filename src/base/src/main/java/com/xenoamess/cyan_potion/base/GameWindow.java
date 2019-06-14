@@ -52,7 +52,10 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
+ * <p>GameWindow class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameWindow implements AutoCloseable, Area {
     private static final Logger LOGGER =
@@ -60,6 +63,11 @@ public class GameWindow implements AutoCloseable, Area {
 
     private GameManager gameManager;
 
+    /**
+     * <p>Constructor for GameWindow.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameWindow(GameManager gameManager) {
         super();
         this.setGameManager(gameManager);
@@ -80,24 +88,49 @@ public class GameWindow implements AutoCloseable, Area {
     private boolean beingFocused = false;
     private GLFWErrorCallback glfwErrorCallback;
 
+    /**
+     * <p>setLogicWindowSize.</p>
+     *
+     * @param windowWidth  a int.
+     * @param windowHeight a int.
+     */
     public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
         this.setLogicWindowHeight(windowHeight);
     }
 
+    /**
+     * <p>setRealWindowSize.</p>
+     *
+     * @param windowWidth  a int.
+     * @param windowHeight a int.
+     */
     public void setRealWindowSize(int windowWidth, int windowHeight) {
         this.setRealWindowWidth(windowWidth);
         this.setRealWindowWidth(windowHeight);
     }
 
+    /**
+     * <p>Getter for the field <code>logicWindowWidth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLogicWindowWidth() {
         return logicWindowWidth;
     }
 
+    /**
+     * <p>Getter for the field <code>logicWindowHeight</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLogicWindowHeight() {
         return logicWindowHeight;
     }
 
+    /**
+     * <p>init.</p>
+     */
     public void init() {
         initGlfw();
         initGlfwWindow();
@@ -112,16 +145,25 @@ public class GameWindow implements AutoCloseable, Area {
         );
     }
 
+    /**
+     * <p>showWindow.</p>
+     */
     public void showWindow() {
         glfwShowWindow(getWindow());
         this.setShowing(true);
     }
 
+    /**
+     * <p>focusWindow.</p>
+     */
     public void focusWindow() {
         glfwFocusWindow(getWindow());
         this.setBeingFocused(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         // Free the window callbacks and close the window
@@ -144,6 +186,11 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>setOpenglVersion.</p>
+     *
+     * @param openglVersion a {@link java.lang.String} object.
+     */
     public static void setOpenglVersion(String openglVersion) {
         try {
             int openglVersionMajor = Integer.parseInt(openglVersion.split("\\.")[0]);
@@ -358,6 +405,9 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>pollEvents.</p>
+     */
     public void pollEvents() {
         glfwPollEvents();
 
@@ -384,6 +434,9 @@ public class GameWindow implements AutoCloseable, Area {
 //        LOGGER.debug(hats.get(0));
     }
 
+    /**
+     * <p>changeFullScreen.</p>
+     */
     public void changeFullScreen() {
         LOGGER.debug("changeFullScreen! original : {}", this.isFullScreen());
         LOGGER.debug("Well I lose.If you want fullScreen please change it " +
@@ -424,6 +477,9 @@ public class GameWindow implements AutoCloseable, Area {
     private float mousePosX;
     private float mousePosY;
 
+    /**
+     * <p>updateMousePos.</p>
+     */
     protected void updateMousePos() {
         double[] x = new double[1];
         double[] y = new double[1];
@@ -439,14 +495,25 @@ public class GameWindow implements AutoCloseable, Area {
         setMousePosY(Math.min(getMousePosY(), this.getLogicWindowHeight()));
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
         this.updateMousePos();
     }
 
+    /**
+     * <p>isIconified.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isIconified() {
         return glfwGetWindowAttrib(this.window, GLFW.GLFW_ICONIFIED) != 0;
     }
 
+    /**
+     * <p>draw.</p>
+     */
     public void draw() {
         if (!this.isShowing()) {
             return;
@@ -462,12 +529,26 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
     /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
      * @return the window handle
      */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable     a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX         a float.
+     * @param posY         a float.
+     * @param width        a float.
+     * @param height       a float.
+     * @param model        a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale   a {@link org.joml.Vector4f} object.
+     * @param rotateRadius a float.
+     */
     public void drawBindableRelative(Bindable bindable, float posX,
                                      float posY, float width, float height,
                                      Model model, Vector4f colorScale, float rotateRadius) {
@@ -526,6 +607,17 @@ public class GameWindow implements AutoCloseable, Area {
         Shader.unbind();
     }
 
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelative(Bindable bindable,
                                      float posX,
                                      float posY,
@@ -546,18 +638,47 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param width    a float.
+     * @param height   a float.
+     */
     public void drawBindableRelative(Bindable bindable, float posX,
                                      float posY, float width, float height) {
         this.drawBindableRelative(bindable, posX, posY, width, height,
                 Model.COMMON_MODEL, new Vector4f(1, 1, 1, 1));
     }
 
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param width    a float.
+     * @param height   a float.
+     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     */
     public void drawBindableRelative(Bindable bindable, float posX,
                                      float posY, float width, float height, Model model) {
         this.drawBindableRelative(bindable, posX, posY, width, height,
                 model, new Vector4f(1, 1, 1, 1));
     }
 
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelative(Bindable bindable, float posX,
                                      float posY, float width, float height, Vector4f colorScale) {
         this.drawBindableRelative(bindable, posX, posY, width, height,
@@ -565,6 +686,16 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
                                             float height, Vector4f colorScale) {
@@ -572,6 +703,16 @@ public class GameWindow implements AutoCloseable, Area {
                 Model.COMMON_MODEL, colorScale);
     }
 
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param width    a float.
+     * @param height   a float.
+     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
                                             float height, Model model) {
@@ -579,6 +720,15 @@ public class GameWindow implements AutoCloseable, Area {
                 model, new Vector4f(1, 1, 1, 1));
     }
 
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param width    a float.
+     * @param height   a float.
+     */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
                                             float height) {
@@ -587,6 +737,17 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
                                             float posY, float width,
                                             float height, Model model, Vector4f colorScale) {
@@ -595,24 +756,56 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawBindableRelativeCenter.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param width    a float.
+     * @param height   a float.
+     */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height) {
         this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
                 getLogicWindowHeight() / 2F - height / 2, width, height);
     }
 
+    /**
+     * <p>drawBindableRelativeCenter.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param width      a float.
+     * @param height     a float.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Vector4f colorScale) {
         this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
                 getLogicWindowHeight() / 2F - height / 2, width, height, colorScale);
     }
 
+    /**
+     * <p>drawBindableRelativeCenter.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param width    a float.
+     * @param height   a float.
+     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model) {
         this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
                 getLogicWindowHeight() / 2F - height / 2, width, height, model);
     }
 
+    /**
+     * <p>drawBindableRelativeCenter.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableRelativeCenter(Bindable bindable, float width,
                                            float height, Model model, Vector4f colorScale) {
         this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
@@ -620,6 +813,18 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x              a float.
+     * @param y              a float.
+     * @param scaleX         a float.
+     * @param scaleY         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawText(Font font, float x, float y, float scaleX,
                          float scaleY, float characterSpace, Vector4f
                                  color, String text) {
@@ -633,6 +838,18 @@ public class GameWindow implements AutoCloseable, Area {
         font.drawText(x, y, scaleX, scaleY, 0, characterSpace, color, text);
     }
 
+    /**
+     * <p>drawTextFillAreaLeftTop.</p>
+     *
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x1             a float.
+     * @param y1             a float.
+     * @param width          a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawTextFillAreaLeftTop(Font font, float x1, float y1,
                                         float width, float height,
                                         float characterSpace, Vector4f color,
@@ -650,6 +867,18 @@ public class GameWindow implements AutoCloseable, Area {
                 color, text);
     }
 
+    /**
+     * <p>drawTextFillArea.</p>
+     *
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x1             a float.
+     * @param y1             a float.
+     * @param width          a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawTextFillArea(Font font, float x1, float y1, float width,
                                  float height,
                                  float characterSpace, Vector4f color,
@@ -659,144 +888,320 @@ public class GameWindow implements AutoCloseable, Area {
     }
 
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x       a float.
+     * @param y       a float.
+     * @param scaleXy a float.
+     * @param color   a {@link org.joml.Vector4f} object.
+     * @param text    a {@link java.lang.String} object.
+     */
     public void drawText(Font font, float x, float y, float scaleXy,
                          Vector4f color, String text) {
         this.drawText(font, x, y, scaleXy, scaleXy, 0, color, text);
     }
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x       a float.
+     * @param y       a float.
+     * @param scaleXy a float.
+     * @param text    a {@link java.lang.String} object.
+     */
     public void drawText(Font font, float x, float y, float scaleXy,
                          String text) {
         this.drawText(font, x, y, scaleXy, null, text);
     }
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font  a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x     a float.
+     * @param y     a float.
+     * @param color a {@link org.joml.Vector4f} object.
+     * @param text  a {@link java.lang.String} object.
+     */
     public void drawText(Font font, float x, float y, Vector4f color,
                          String text) {
         this.drawText(font, x, y, 1f, color, text);
     }
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x    a float.
+     * @param y    a float.
+     * @param text a {@link java.lang.String} object.
+     */
     public void drawText(Font font, float x, float y, String text) {
         this.drawText(font, x, y, 1f, text);
     }
 
+    /**
+     * <p>bindGlViewportToFullWindow.</p>
+     */
     public void bindGlViewportToFullWindow() {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
     }
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
 
+    /**
+     * <p>Setter for the field <code>gameManager</code>.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>Setter for the field <code>window</code>.</p>
+     *
+     * @param window a long.
+     */
     public void setWindow(long window) {
         this.window = window;
     }
 
+    /**
+     * <p>Setter for the field <code>logicWindowWidth</code>.</p>
+     *
+     * @param logicWindowWidth a int.
+     */
     public void setLogicWindowWidth(int logicWindowWidth) {
         this.logicWindowWidth = logicWindowWidth;
     }
 
+    /**
+     * <p>Setter for the field <code>logicWindowHeight</code>.</p>
+     *
+     * @param logicWindowHeight a int.
+     */
     public void setLogicWindowHeight(int logicWindowHeight) {
         this.logicWindowHeight = logicWindowHeight;
     }
 
+    /**
+     * <p>Getter for the field <code>realWindowWidth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getRealWindowWidth() {
         return realWindowWidth;
     }
 
+    /**
+     * <p>Setter for the field <code>realWindowWidth</code>.</p>
+     *
+     * @param realWindowWidth a int.
+     */
     public void setRealWindowWidth(int realWindowWidth) {
         this.realWindowWidth = realWindowWidth;
     }
 
+    /**
+     * <p>Getter for the field <code>realWindowHeight</code>.</p>
+     *
+     * @return a int.
+     */
     public int getRealWindowHeight() {
         return realWindowHeight;
     }
 
+    /**
+     * <p>Setter for the field <code>realWindowHeight</code>.</p>
+     *
+     * @param realWindowHeight a int.
+     */
     public void setRealWindowHeight(int realWindowHeight) {
         this.realWindowHeight = realWindowHeight;
     }
 
+    /**
+     * <p>isFullScreen.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isFullScreen() {
         return fullScreen;
     }
 
+    /**
+     * <p>Setter for the field <code>fullScreen</code>.</p>
+     *
+     * @param fullScreen a boolean.
+     */
     public void setFullScreen(boolean fullScreen) {
         this.fullScreen = fullScreen;
     }
 
+    /**
+     * <p>Getter for the field <code>shader</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Shader} object.
+     */
     public Shader getShader() {
         return shader;
     }
 
+    /**
+     * <p>Setter for the field <code>shader</code>.</p>
+     *
+     * @param shader a {@link com.xenoamess.cyan_potion.base.render.Shader} object.
+     */
     public void setShader(Shader shader) {
         this.shader = shader;
     }
 
+    /**
+     * <p>isShowing.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isShowing() {
         return showing;
     }
 
+    /**
+     * <p>Setter for the field <code>showing</code>.</p>
+     *
+     * @param showing a boolean.
+     */
     public void setShowing(boolean showing) {
         this.showing = showing;
     }
 
+    /**
+     * <p>isBeingFocused.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBeingFocused() {
         return beingFocused;
     }
 
+    /**
+     * <p>Setter for the field <code>beingFocused</code>.</p>
+     *
+     * @param beingFocused a boolean.
+     */
     public void setBeingFocused(boolean beingFocused) {
         this.beingFocused = beingFocused;
     }
 
+    /**
+     * <p>Getter for the field <code>lastMousePosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLastMousePosX() {
         return lastMousePosX;
     }
 
+    /**
+     * <p>Setter for the field <code>lastMousePosX</code>.</p>
+     *
+     * @param lastMousePosX a float.
+     */
     public void setLastMousePosX(float lastMousePosX) {
         this.lastMousePosX = lastMousePosX;
     }
 
+    /**
+     * <p>Getter for the field <code>lastMousePosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLastMousePosY() {
         return lastMousePosY;
     }
 
+    /**
+     * <p>Setter for the field <code>lastMousePosY</code>.</p>
+     *
+     * @param lastMousePosY a float.
+     */
     public void setLastMousePosY(float lastMousePosY) {
         this.lastMousePosY = lastMousePosY;
     }
 
+    /**
+     * <p>Getter for the field <code>mousePosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMousePosX() {
         return mousePosX;
     }
 
+    /**
+     * <p>Setter for the field <code>mousePosX</code>.</p>
+     *
+     * @param mousePosX a float.
+     */
     public void setMousePosX(float mousePosX) {
         this.mousePosX = mousePosX;
     }
 
+    /**
+     * <p>Getter for the field <code>mousePosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMousePosY() {
         return mousePosY;
     }
 
+    /**
+     * <p>Setter for the field <code>mousePosY</code>.</p>
+     *
+     * @param mousePosY a float.
+     */
     public void setMousePosY(float mousePosY) {
         this.mousePosY = mousePosY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosX() {
         return this.getLogicWindowWidth() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosY() {
         return this.getLogicWindowHeight() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getWidth() {
         return this.getLogicWindowWidth();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getHeight() {
         return this.getLogicWindowHeight();

@@ -38,7 +38,10 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
+ * <p>MadeWithLogo class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
@@ -58,6 +61,12 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     private final long dieTimeStamp;
 
 
+    /**
+     * <p>Constructor for MadeWithLogo.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param lifeTime   a long.
+     */
     public MadeWithLogo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
 
@@ -66,10 +75,18 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));
     }
 
+    /**
+     * <p>Constructor for MadeWithLogo.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public MadeWithLogo(GameWindow gameWindow) {
         this(gameWindow, 5000L + 5000L);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
@@ -96,6 +113,9 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
@@ -118,6 +138,9 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         if (!this.getAlive()) {
@@ -141,10 +164,20 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.logoPicture.draw(getGameWindow());
     }
 
+    /**
+     * <p>Getter for the field <code>lifeTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLifeTime() {
         return lifeTime;
     }
 
+    /**
+     * <p>Getter for the field <code>dieTimeStamp</code>.</p>
+     *
+     * @return a long.
+     */
     public long getDieTimeStamp() {
         return dieTimeStamp;
     }

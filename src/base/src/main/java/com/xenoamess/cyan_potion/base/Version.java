@@ -41,11 +41,17 @@ import java.util.Objects;
  * See pom of this project for more information.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Version implements Comparable<Version> {
 
     private final String versionString;
 
+    /**
+     * <p>Constructor for Version.</p>
+     *
+     * @param versionString a {@link java.lang.String} object.
+     */
     public Version(String versionString) {
         this.versionString = versionString;
     }
@@ -54,8 +60,18 @@ public class Version implements Comparable<Version> {
      * current version of this component.
      */
     public static final String VERSION = loadCurrentVersion();
+    /**
+     * Constant <code>VERSION_MISSING="VersionMissing"</code>
+     */
     public static final String VERSION_MISSING = "VersionMissing";
 
+    /**
+     * <p>compareVersions.</p>
+     *
+     * @param versionString1 a {@link java.lang.String} object.
+     * @param versionString2 a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int compareVersions(String versionString1, String versionString2) {
         String snapshotString = "-SNAPSHOT";
         if (versionString1.endsWith(snapshotString)) {
@@ -85,11 +101,17 @@ public class Version implements Comparable<Version> {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compareTo(Version version) {
         return compareVersions(this.versionString, version.versionString);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,6 +124,9 @@ public class Version implements Comparable<Version> {
         return Objects.equals(versionString, version.versionString);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(versionString);
@@ -130,6 +155,12 @@ public class Version implements Comparable<Version> {
         return Version.class.getResource(resourceFilePath);
     }
 
+    /**
+     * <p>loadFile.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     @SuppressWarnings("Duplicates")
     public static String loadFile(String resourceFilePath) {
         String res = "";
@@ -154,6 +185,9 @@ public class Version implements Comparable<Version> {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.versionString;

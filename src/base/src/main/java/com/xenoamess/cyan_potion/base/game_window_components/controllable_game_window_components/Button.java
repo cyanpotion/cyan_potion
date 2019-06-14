@@ -32,16 +32,32 @@ import org.joml.Vector4f;
 
 
 /**
+ * <p>Button class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();
     private String buttonText;
 
+    /**
+     * <p>Constructor for Button.</p>
+     *
+     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param buttonTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public Button(GameWindow gameWindow, Texture buttonTexture) {
         this(gameWindow, buttonTexture, null);
     }
 
+    /**
+     * <p>Constructor for Button.</p>
+     *
+     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param buttonTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param buttonText    a {@link java.lang.String} object.
+     */
     public Button(GameWindow gameWindow, Texture buttonTexture,
                   String buttonText) {
         super(gameWindow);
@@ -49,12 +65,18 @@ public class Button extends AbstractControllableGameWindowComponent {
         this.setButtonText(buttonText);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         super.update();
         this.buttonPicture.cover(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ifVisibleThenDraw() {
         this.buttonPicture.draw(this.getGameWindow());
@@ -68,10 +90,20 @@ public class Button extends AbstractControllableGameWindowComponent {
     }
 
 
+    /**
+     * <p>Getter for the field <code>buttonText</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getButtonText() {
         return buttonText;
     }
 
+    /**
+     * <p>Setter for the field <code>buttonText</code>.</p>
+     *
+     * @param buttonText a {@link java.lang.String} object.
+     */
     public void setButtonText(String buttonText) {
         this.buttonText = buttonText;
     }

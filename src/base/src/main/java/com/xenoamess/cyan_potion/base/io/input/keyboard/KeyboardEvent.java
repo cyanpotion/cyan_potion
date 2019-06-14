@@ -37,7 +37,10 @@ import java.util.Set;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
+ * <p>KeyboardEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class KeyboardEvent implements Event {
     private static final Logger LOGGER =
@@ -85,6 +88,15 @@ public class KeyboardEvent implements Event {
      */
     private final int mods;
 
+    /**
+     * <p>Constructor for KeyboardEvent.</p>
+     *
+     * @param window   a long.
+     * @param key      a int.
+     * @param scancode a int.
+     * @param action   a int.
+     * @param mods     a int.
+     */
     public KeyboardEvent(long window, int key, int scancode, int action, int mods) {
         super();
         this.window = window;
@@ -94,6 +106,9 @@ public class KeyboardEvent implements Event {
         this.mods = mods;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
@@ -111,14 +126,31 @@ public class KeyboardEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>getKeyRaw.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     */
     public Key getKeyRaw() {
         return new Key(Key.TYPE_KEY, this.getKey());
     }
 
+    /**
+     * <p>getKeyTranslated.</p>
+     *
+     * @param keymap a {@link com.xenoamess.cyan_potion.base.io.input.key.Keymap} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     */
     public Key getKeyTranslated(Keymap keymap) {
         return keymap.get(this.getKeyRaw());
     }
 
+    /**
+     * <p>checkMods.</p>
+     *
+     * @param glfwModArgument a int.
+     * @return a boolean.
+     */
     public boolean checkMods(final int glfwModArgument) {
         return (this.getMods() & glfwModArgument) != 0;
     }
@@ -132,9 +164,6 @@ public class KeyboardEvent implements Event {
      * key input.
      *
      * @return the string that the key refers to
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
-     * @deprecated
      */
     @Deprecated
     public String translate() {
@@ -370,19 +399,36 @@ public class KeyboardEvent implements Event {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>key</code>.</p>
+     *
+     * @return a int.
+     */
     public int getKey() {
         return key;
     }
 
+    /**
+     * <p>Getter for the field <code>scancode</code>.</p>
+     *
+     * @return a int.
+     */
     public int getScancode() {
         return scancode;
     }
 
     /**
+     * <p>Getter for the field <code>action</code>.</p>
+     *
      * @return action of the KeyboardEvent
      * The action is one of
      * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
@@ -396,6 +442,8 @@ public class KeyboardEvent implements Event {
     }
 
     /**
+     * <p>Getter for the field <code>mods</code>.</p>
+     *
      * @return mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use sometimes, and
      * not always the whole value.

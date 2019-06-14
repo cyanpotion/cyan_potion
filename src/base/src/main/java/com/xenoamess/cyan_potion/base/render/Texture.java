@@ -45,13 +45,22 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 
 /**
+ * <p>Texture class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Texture extends AbstractResource implements Bindable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(Texture.class);
 
+    /**
+     * Constant <code>MIN_SAMPLER=0</code>
+     */
     public static final int MIN_SAMPLER = 0;
+    /**
+     * Constant <code>MAX_SAMPLER=31</code>
+     */
     public static final int MAX_SAMPLER = 31;
 
     private int glTexture2DInt = -1;
@@ -98,10 +107,18 @@ public class Texture extends AbstractResource implements Bindable {
     }
 
 
+    /**
+     * <p>Getter for the field <code>glTexture2DInt</code>.</p>
+     *
+     * @return a int.
+     */
     public int getGlTexture2DInt() {
         return this.glTexture2DInt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind(int sampler) {
         super.bind(sampler);
@@ -118,6 +135,13 @@ public class Texture extends AbstractResource implements Bindable {
         }
     }
 
+    /**
+     * <p>bake.</p>
+     *
+     * @param width      a int.
+     * @param height     a int.
+     * @param byteBuffer a {@link java.nio.ByteBuffer} object.
+     */
     public void bake(int width, int height, ByteBuffer byteBuffer) {
         this.setWidth(width);
         this.setHeight(height);
@@ -127,6 +151,17 @@ public class Texture extends AbstractResource implements Bindable {
         this.getResourceManager().load(this);
     }
 
+    /**
+     * <p>bake.</p>
+     *
+     * @param singleWidth  a int.
+     * @param singleHeight a int.
+     * @param entireWidth  a int.
+     * @param entireHeight a int.
+     * @param startWidth   a int.
+     * @param startHeight  a int.
+     * @param pixelsRaw    an array of {@link int} objects.
+     */
     public void bake(int singleWidth, int singleHeight, int entireWidth,
                      int entireHeight, int startWidth, int startHeight,
                      int[] pixelsRaw) {
@@ -170,6 +205,11 @@ public class Texture extends AbstractResource implements Bindable {
                 GL_RGBA, GL_UNSIGNED_BYTE, byteBuffer);
     }
 
+    /**
+     * <p>loadAsPictureTexture.</p>
+     *
+     * @param fullResourceURI a {@link java.lang.String} object.
+     */
     public void loadAsPictureTexture(String fullResourceURI) {
         String[] resourceFileURIStrings = fullResourceURI.split(":");
         final String resourceFilePath = resourceFileURIStrings[1];
@@ -189,6 +229,9 @@ public class Texture extends AbstractResource implements Bindable {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void forceClose() {
         if (this.getGlTexture2DInt() != -1) {
@@ -198,10 +241,20 @@ public class Texture extends AbstractResource implements Bindable {
         this.setMemorySize(0);
     }
 
+    /**
+     * <p>Setter for the field <code>glTexture2DInt</code>.</p>
+     *
+     * @param glTexture2DInt a int.
+     */
     public void setGlTexture2DInt(int glTexture2DInt) {
         this.glTexture2DInt = glTexture2DInt;
     }
 
+    /**
+     * <p>Getter for the field <code>width</code>.</p>
+     *
+     * @return a int.
+     */
     public int getWidth() {
         return width;
     }
@@ -210,6 +263,11 @@ public class Texture extends AbstractResource implements Bindable {
         this.width = width;
     }
 
+    /**
+     * <p>Getter for the field <code>height</code>.</p>
+     *
+     * @return a int.
+     */
     public int getHeight() {
         return height;
     }

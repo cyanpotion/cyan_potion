@@ -44,11 +44,17 @@ import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
 
 /**
+ * <p>AudioManager class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class AudioManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
+    /**
+     * Constant <code>INITIAL_TEMP_SOURCES_NUM=128</code>
+     */
     public static final int INITIAL_TEMP_SOURCES_NUM = 128;
 
     private final GameManager gameManager;
@@ -65,10 +71,18 @@ public class AudioManager implements AutoCloseable {
     private Vector3f listenerPosition = null;
     private Vector3f listenerVelocity = null;
 
+    /**
+     * <p>Constructor for AudioManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public AudioManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>init.</p>
+     */
     public void init() {
         this.close();
 
@@ -92,6 +106,9 @@ public class AudioManager implements AutoCloseable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         getUnusedSources().clear();
@@ -112,6 +129,9 @@ public class AudioManager implements AutoCloseable {
         ALC.destroy();
     }
 
+    /**
+     * <p>gc.</p>
+     */
     public void gc() {
         ArrayList<Source> deletedSource = new ArrayList<>();
         for (Source au : getUsedSources()) {
@@ -127,6 +147,11 @@ public class AudioManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>getUnusedSource.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.audio.Source} object.
+     */
     protected Source getUnusedSource() {
         if (getUnusedSources().isEmpty()) {
             this.gc();
@@ -139,6 +164,11 @@ public class AudioManager implements AutoCloseable {
         return getUnusedSources().iterator().next();
     }
 
+    /**
+     * <p>playNew.</p>
+     *
+     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     */
     public void playNew(WaveData waveData) {
         Source audioSource = this.getUnusedSource();
         getUnusedSources().remove(audioSource);
@@ -146,6 +176,11 @@ public class AudioManager implements AutoCloseable {
         audioSource.play(waveData);
     }
 
+    /**
+     * <p>resume.</p>
+     *
+     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     */
     public void resume(WaveData waveData) {
         for (Source au : getUsedSources()) {
             if (au.getCurrentWaveData() == waveData && au.isPaused()) {
@@ -154,6 +189,11 @@ public class AudioManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>pause.</p>
+     *
+     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     */
     public void pause(WaveData waveData) {
         for (Source au : getUsedSources()) {
             if (au.getCurrentWaveData() == waveData && au.isPlaying()) {
@@ -162,6 +202,11 @@ public class AudioManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>stop.</p>
+     *
+     * @param waveData a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
+     */
     public void stop(WaveData waveData) {
         for (Source au : getUsedSources()) {
             if (au.getCurrentWaveData() == waveData && (au.isPlaying() || au.isPaused())) {
@@ -170,54 +215,114 @@ public class AudioManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>Setter for the field <code>listenerPosition</code>.</p>
+     *
+     * @param listenerPosition a {@link org.joml.Vector3f} object.
+     */
     public void setListenerPosition(Vector3f listenerPosition) {
         this.listenerPosition = new Vector3f(listenerPosition);
         AL10.alListener3f(AL10.AL_POSITION, this.listenerPosition.x,
                 this.listenerPosition.y, this.listenerPosition.z);
     }
 
+    /**
+     * <p>Setter for the field <code>listenerVelocity</code>.</p>
+     *
+     * @param listenerVelocity a {@link org.joml.Vector3f} object.
+     */
     public void setListenerVelocity(Vector3f listenerVelocity) {
         this.listenerVelocity = new Vector3f(listenerVelocity);
         AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x,
                 this.listenerVelocity.y, this.listenerVelocity.z);
     }
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
 
+    /**
+     * <p>Getter for the field <code>specialSources</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<String, Source> getSpecialSources() {
         return specialSources;
     }
 
+    /**
+     * <p>Getter for the field <code>unusedSources</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Source> getUnusedSources() {
         return unusedSources;
     }
 
+    /**
+     * <p>Getter for the field <code>usedSources</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Source> getUsedSources() {
         return usedSources;
     }
 
+    /**
+     * <p>Getter for the field <code>openalDevice</code>.</p>
+     *
+     * @return a long.
+     */
     public long getOpenalDevice() {
         return openalDevice;
     }
 
+    /**
+     * <p>Setter for the field <code>openalDevice</code>.</p>
+     *
+     * @param openalDevice a long.
+     */
     public void setOpenalDevice(long openalDevice) {
         this.openalDevice = openalDevice;
     }
 
+    /**
+     * <p>Getter for the field <code>openalContext</code>.</p>
+     *
+     * @return a long.
+     */
     public long getOpenalContext() {
         return openalContext;
     }
 
+    /**
+     * <p>Setter for the field <code>openalContext</code>.</p>
+     *
+     * @param openalContext a long.
+     */
     public void setOpenalContext(long openalContext) {
         this.openalContext = openalContext;
     }
 
+    /**
+     * <p>Getter for the field <code>listenerPosition</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getListenerPosition() {
         return listenerPosition;
     }
 
+    /**
+     * <p>Getter for the field <code>listenerVelocity</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getListenerVelocity() {
         return listenerVelocity;
     }

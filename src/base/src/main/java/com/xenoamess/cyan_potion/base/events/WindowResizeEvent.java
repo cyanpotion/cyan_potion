@@ -35,6 +35,7 @@ import java.util.Set;
  * Not implemented yet.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class WindowResizeEvent implements Event {
     private static final Logger LOGGER =
@@ -44,6 +45,13 @@ public class WindowResizeEvent implements Event {
     private final int width;
     private final int height;
 
+    /**
+     * <p>Constructor for WindowResizeEvent.</p>
+     *
+     * @param window a long.
+     * @param width  a int.
+     * @param height a int.
+     */
     public WindowResizeEvent(long window, int width, int height) {
         super();
         this.window = window;
@@ -51,6 +59,9 @@ public class WindowResizeEvent implements Event {
         this.height = height;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Event> apply(GameManager gameManager) {
         LOGGER.debug("WindowResizeEvent : {} {} {}",
@@ -58,14 +69,29 @@ public class WindowResizeEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>width</code>.</p>
+     *
+     * @return a int.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * <p>Getter for the field <code>height</code>.</p>
+     *
+     * @return a int.
+     */
     public int getHeight() {
         return height;
     }

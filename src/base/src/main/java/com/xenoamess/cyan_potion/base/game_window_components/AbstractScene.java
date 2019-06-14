@@ -31,16 +31,34 @@ import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
 
 /**
+ * <p>Abstract AbstractScene class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractScene extends AbstractGameWindowComponent {
     private Camera camera = new Camera(0, 0);
     private float scale;
 
+    /**
+     * <p>Constructor for AbstractScene.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public AbstractScene(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera   a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale    a float.
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param size     a float.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -51,6 +69,17 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         this.drawBindableAbsolute(camera, scale, bindable, posX, posY, size, size);
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera     a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale      a float.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param size       a float.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -61,6 +90,17 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         this.drawBindableAbsolute(camera, scale, bindable, posX, posY, size, size, colorScale);
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera   a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale    a float.
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX     a float.
+     * @param posY     a float.
+     * @param width    a float.
+     * @param height   a float.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -71,6 +111,18 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         this.drawBindableAbsolute(camera, scale, bindable, posX, posY, width, height, new Vector4f(1, 1, 1, 1));
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera     a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale      a float.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -92,6 +144,19 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         );
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera     a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale      a float.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX       a float.
+     * @param posY       a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -115,6 +180,20 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         );
     }
 
+    /**
+     * <p>drawBindableAbsolute.</p>
+     *
+     * @param camera       a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param scale        a float.
+     * @param bindable     a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param posX         a float.
+     * @param posY         a float.
+     * @param width        a float.
+     * @param height       a float.
+     * @param model        a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale   a {@link org.joml.Vector4f} object.
+     * @param rotateRadius a float.
+     */
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
@@ -137,18 +216,38 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         );
     }
 
+    /**
+     * <p>Getter for the field <code>camera</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     */
     public Camera getCamera() {
         return camera;
     }
 
+    /**
+     * <p>Setter for the field <code>camera</code>.</p>
+     *
+     * @param camera a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     */
     public void setCamera(Camera camera) {
         this.camera = camera;
     }
 
+    /**
+     * <p>Getter for the field <code>scale</code>.</p>
+     *
+     * @return a float.
+     */
     public float getScale() {
         return scale;
     }
 
+    /**
+     * <p>Setter for the field <code>scale</code>.</p>
+     *
+     * @param scale a float.
+     */
     public void setScale(float scale) {
         this.scale = scale;
     }

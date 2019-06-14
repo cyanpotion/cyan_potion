@@ -38,6 +38,7 @@ import java.util.function.Function;
  * (for the first time) before next frame start.
  *
  * @author XenoAmess
+ * @version 0.143.0
  * @see com.xenoamess.cyan_potion.base.GameManager#eventListAdd(Event)
  * @see com.xenoamess.cyan_potion.base.GameManager#solveEvents()
  * @see com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree#process(Event)
@@ -45,6 +46,9 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     Set<Event> apply(GameManager gameManager);
 }

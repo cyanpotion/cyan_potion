@@ -36,7 +36,10 @@ import org.joml.Vector4f;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
+ * <p>Logo class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
@@ -57,6 +60,12 @@ public class Logo extends AbstractGameWindowComponent {
     private final long dieTimeStamp;
 
 
+    /**
+     * <p>Constructor for Logo.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param lifeTime   a long.
+     */
     public Logo(GameWindow gameWindow, long lifeTime) {
         super(gameWindow);
 
@@ -65,10 +74,18 @@ public class Logo extends AbstractGameWindowComponent {
         this.getGameWindow().getGameManager().getAudioManager().playNew(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
     }
 
+    /**
+     * <p>Constructor for Logo.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public Logo(GameWindow gameWindow) {
         this(gameWindow, 500L + 2000L + 1000L);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
@@ -96,6 +113,9 @@ public class Logo extends AbstractGameWindowComponent {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
@@ -110,6 +130,9 @@ public class Logo extends AbstractGameWindowComponent {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         if (!this.getAlive()) {
@@ -153,10 +176,20 @@ public class Logo extends AbstractGameWindowComponent {
     }
 
 
+    /**
+     * <p>Getter for the field <code>lifeTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLifeTime() {
         return lifeTime;
     }
 
+    /**
+     * <p>Getter for the field <code>dieTimeStamp</code>.</p>
+     *
+     * @return a long.
+     */
     public long getDieTimeStamp() {
         return dieTimeStamp;
     }

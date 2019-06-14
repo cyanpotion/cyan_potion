@@ -35,7 +35,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
+ * <p>GamepadButtonEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GamepadButtonEvent implements Event {
     private static final Logger LOGGER =
@@ -61,6 +64,14 @@ public class GamepadButtonEvent implements Event {
     private final int action;
     private final AbstractGamepadDevice gamepadDevice;
 
+    /**
+     * <p>Constructor for GamepadButtonEvent.</p>
+     *
+     * @param window        a long.
+     * @param key           a int.
+     * @param action        a int.
+     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     */
     public GamepadButtonEvent(long window, int key, int action,
                               AbstractGamepadDevice gamepadDevice) {
         super();
@@ -70,6 +81,9 @@ public class GamepadButtonEvent implements Event {
         this.gamepadDevice = gamepadDevice;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
@@ -89,20 +103,32 @@ public class GamepadButtonEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>key</code>.</p>
+     *
+     * @return a int.
+     */
     public int getKey() {
         return key;
     }
 
     /**
+     * <p>Getter for the field <code>action</code>.</p>
+     *
      * @return action of the GamepadButtonEvent
      * The action is one of
-     * {@link GLFW#GLFW_PRESS},
-     * {@link GLFW#GLFW_REPEAT},
-     * {@link GLFW#GLFW_RELEASE}
+     * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
+     * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
+     * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * <p>
      * Notice that this is not included in original GLFW.
      * I just use JXInput to deal with it, and I manage to force it to follow
@@ -115,6 +141,11 @@ public class GamepadButtonEvent implements Event {
         return action;
     }
 
+    /**
+     * <p>Getter for the field <code>gamepadDevice</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     */
     public AbstractGamepadDevice getGamepadDevice() {
         return gamepadDevice;
     }

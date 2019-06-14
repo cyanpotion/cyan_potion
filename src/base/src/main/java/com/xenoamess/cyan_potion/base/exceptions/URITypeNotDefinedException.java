@@ -31,10 +31,16 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
  * The most common case is from loading AbstractResource, or CodePlugin.
  *
  * @author XenoAmess
+ * @version 0.143.0
  * @see AbstractResource#forceLoad()
  * @see com.xenoamess.cyan_potion.base.plugins.CodePluginManager#getCodePluginFunctionFromString(String)
  */
 public class URITypeNotDefinedException extends RuntimeException {
+    /**
+     * <p>Constructor for URITypeNotDefinedException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public URITypeNotDefinedException(String message) {
         super(message);
     }

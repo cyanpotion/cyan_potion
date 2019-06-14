@@ -34,37 +34,122 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class JXInputGamepadData extends AbstractGamepadData {
+    /**
+     * Constant <code>JXINPUT_KEY_A=0</code>
+     */
     public static final int JXINPUT_KEY_A = 0;
+    /**
+     * Constant <code>JXINPUT_KEY_B=1</code>
+     */
     public static final int JXINPUT_KEY_B = 1;
+    /**
+     * Constant <code>JXINPUT_KEY_X=2</code>
+     */
     public static final int JXINPUT_KEY_X = 2;
+    /**
+     * Constant <code>JXINPUT_KEY_Y=3</code>
+     */
     public static final int JXINPUT_KEY_Y = 3;
+    /**
+     * Constant <code>JXINPUT_KEY_BACK=4</code>
+     */
     public static final int JXINPUT_KEY_BACK = 4;
+    /**
+     * Constant <code>JXINPUT_KEY_START=5</code>
+     */
     public static final int JXINPUT_KEY_START = 5;
+    /**
+     * Constant <code>JXINPUT_KEY_LB=6</code>
+     */
     public static final int JXINPUT_KEY_LB = 6;
+    /**
+     * Constant <code>JXINPUT_KEY_RB=7</code>
+     */
     public static final int JXINPUT_KEY_RB = 7;
+    /**
+     * Constant <code>JXINPUT_KEY_L=8</code>
+     */
     public static final int JXINPUT_KEY_L = 8;
+    /**
+     * Constant <code>JXINPUT_KEY_R=9</code>
+     */
     public static final int JXINPUT_KEY_R = 9;
+    /**
+     * Constant <code>JXINPUT_KEY_UP=10</code>
+     */
     public static final int JXINPUT_KEY_UP = 10;
+    /**
+     * Constant <code>JXINPUT_KEY_DOWN=11</code>
+     */
     public static final int JXINPUT_KEY_DOWN = 11;
+    /**
+     * Constant <code>JXINPUT_KEY_LEFT=12</code>
+     */
     public static final int JXINPUT_KEY_LEFT = 12;
+    /**
+     * Constant <code>JXINPUT_KEY_RIGHT=13</code>
+     */
     public static final int JXINPUT_KEY_RIGHT = 13;
+    /**
+     * Constant <code>JXINPUT_KEY_GUIDE=14</code>
+     */
     public static final int JXINPUT_KEY_GUIDE = 14;
+    /**
+     * Constant <code>JXINPUT_KEY_UNKNOWN=15</code>
+     */
     public static final int JXINPUT_KEY_UNKNOWN = 15;
+    /**
+     * Constant <code>JXINPUT_KEY_LT=16</code>
+     */
     public static final int JXINPUT_KEY_LT = 16;
+    /**
+     * Constant <code>JXINPUT_KEY_RT=17</code>
+     */
     public static final int JXINPUT_KEY_RT = 17;
+    /**
+     * Constant <code>JXINPUT_KEY_LAST=17</code>
+     */
     public static final int JXINPUT_KEY_LAST = 17;
 
 
+    /**
+     * Constant <code>DPAD_CENTER=-1</code>
+     */
     public static final int DPAD_CENTER = -1;
+    /**
+     * Constant <code>DPAD_UP_LEFT=0</code>
+     */
     public static final int DPAD_UP_LEFT = 0;
+    /**
+     * Constant <code>DPAD_UP=1</code>
+     */
     public static final int DPAD_UP = 1;
+    /**
+     * Constant <code>DPAD_UP_RIGHT=2</code>
+     */
     public static final int DPAD_UP_RIGHT = 2;
+    /**
+     * Constant <code>DPAD_RIGHT=3</code>
+     */
     public static final int DPAD_RIGHT = 3;
+    /**
+     * Constant <code>DPAD_DOWN_RIGHT=4</code>
+     */
     public static final int DPAD_DOWN_RIGHT = 4;
+    /**
+     * Constant <code>DPAD_DOWN=5</code>
+     */
     public static final int DPAD_DOWN = 5;
+    /**
+     * Constant <code>DPAD_DOWN_LEFT=6</code>
+     */
     public static final int DPAD_DOWN_LEFT = 6;
+    /**
+     * Constant <code>DPAD_LEFT=7</code>
+     */
     public static final int DPAD_LEFT = 7;
 
 
@@ -153,6 +238,9 @@ public class JXInputGamepadData extends AbstractGamepadData {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reset() {
         this.a = this.b = this.x = this.y = false;
@@ -170,6 +258,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         this.dpad = DPAD_CENTER;
     }
 
+    /**
+     * <p>copy.</p>
+     *
+     * @param buttons a {@link com.github.strikerx3.jxinput.XInputButtons} object.
+     */
     protected void copy(final XInputButtons buttons) {
         this.a = buttons.a;
         this.b = buttons.b;
@@ -189,6 +282,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         this.unknown = buttons.unknown;
     }
 
+    /**
+     * <p>copy.</p>
+     *
+     * @param axes a {@link com.github.strikerx3.jxinput.XInputAxes} object.
+     */
     protected void copy(final XInputAxes axes) {
         this.lxRaw = axes.lxRaw;
         this.lyRaw = axes.lyRaw;
@@ -206,11 +304,19 @@ public class JXInputGamepadData extends AbstractGamepadData {
     }
 
 
+    /**
+     * <p>Constructor for JXInputGamepadData.</p>
+     *
+     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     */
     public JXInputGamepadData(AbstractGamepadDevice gamepadDevice) {
         super(gamepadDevice);
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateGamepadStatus(GameWindow gameWindow) {
         XInputComponents components =

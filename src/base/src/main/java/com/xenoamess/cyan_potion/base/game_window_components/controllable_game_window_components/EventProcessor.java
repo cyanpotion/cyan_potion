@@ -32,15 +32,18 @@ import java.util.function.Function;
 
 
 /**
+ * <p>EventProcessor interface.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 @FunctionalInterface
 public interface EventProcessor extends Function<Event, Event> {
     /**
+     * {@inheritDoc}
+     * <p>
      * the method must be thread safe.
      *
-     * @param event the event that being processed.
-     * @return the event that generated due to processing the event.
      * @see Event#apply(GameManager)
      */
     @Override

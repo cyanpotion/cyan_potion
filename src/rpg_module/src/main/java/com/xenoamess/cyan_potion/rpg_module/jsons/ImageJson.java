@@ -31,7 +31,10 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import java.io.Serializable;
 
 /**
+ * <p>ImageJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ImageJson implements Serializable {
     public int tileId;
@@ -40,6 +43,12 @@ public class ImageJson implements Serializable {
     public int pattern;
     public int characterIndex;
 
+    /**
+     * <p>getBindable.</p>
+     *
+     * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public Bindable getBindable(ResourceManager resourceManager) {
         if ("".equals(this.characterName)) {
             //todo

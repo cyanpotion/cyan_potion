@@ -41,7 +41,10 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>GameTileset class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameTileset {
     private static final Logger LOGGER =
@@ -139,6 +142,12 @@ public class GameTileset {
         }
     }
 
+    /**
+     * <p>getGameTilesetTextureByID.</p>
+     *
+     * @param gameTilesetTextureID a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public Texture getGameTilesetTextureByID(int gameTilesetTextureID) {
         return this.getIdTextureMap().get(gameTilesetTextureID);
     }
@@ -159,6 +168,11 @@ public class GameTileset {
         return gameTilesets;
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param world a {@link com.xenoamess.cyan_potion.rpg_module.world.World} object.
+     */
     public static void init(World world) {
         List<GameTileset> gameTilesets =
                 getGameTilesets(world.getGameWindow().getGameManager().getResourceManager());
@@ -184,18 +198,38 @@ public class GameTileset {
     }
 
 
+    /**
+     * <p>Getter for the field <code>gameTilesetJson</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson} object.
+     */
     public GameTilesetJson getGameTilesetJson() {
         return gameTilesetJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameTilesetJson</code>.</p>
+     *
+     * @param gameTilesetJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson} object.
+     */
     public void setGameTilesetJson(GameTilesetJson gameTilesetJson) {
         this.gameTilesetJson = gameTilesetJson;
     }
 
+    /**
+     * <p>Getter for the field <code>idTextureMap</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<Integer, Texture> getIdTextureMap() {
         return idTextureMap;
     }
 
+    /**
+     * <p>Setter for the field <code>idTextureMap</code>.</p>
+     *
+     * @param idTextureMap a {@link java.util.Map} object.
+     */
     public void setIdTextureMap(Map<Integer, Texture> idTextureMap) {
         this.idTextureMap = idTextureMap;
     }

@@ -29,22 +29,43 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 
 /**
+ * <p>MainThreadEventProcessor class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class MainThreadEventProcessor implements EventProcessor {
     public GameManager gameManager;
     public EventProcessor processor;
 
+    /**
+     * <p>Constructor for MainThreadEventProcessor.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param processor   a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
         this.gameManager = gameManager;
         this.processor = processor;
     }
 
+    /**
+     * <p>Constructor for MainThreadEventProcessor.</p>
+     *
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @param processor           a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
         this.gameManager = gameWindowComponent.getGameWindow().getGameManager();
         this.processor = processor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event apply(Event event) {
         if (Thread.currentThread().getId() != 1) {

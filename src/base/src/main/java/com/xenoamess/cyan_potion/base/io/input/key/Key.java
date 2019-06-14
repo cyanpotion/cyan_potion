@@ -25,32 +25,64 @@
 package com.xenoamess.cyan_potion.base.io.input.key;
 
 /**
+ * <p>Key class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Key {
+    /**
+     * Constant <code>TYPE_XENOAMESS_KEY=-1</code>
+     */
     public static final int TYPE_XENOAMESS_KEY = -1;
+    /**
+     * Constant <code>TYPE_KEY=0</code>
+     */
     public static final int TYPE_KEY = 0;
+    /**
+     * Constant <code>TYPE_MOUSE=1</code>
+     */
     public static final int TYPE_MOUSE = 1;
     /**
      * not implemented yet
      */
     public static final int TYPE_JOYSTICK = 2;
+    /**
+     * Constant <code>TYPE_GAMEPAD=3</code>
+     */
     public static final int TYPE_GAMEPAD = 3;
 
+    /**
+     * Constant <code>NULL</code>
+     */
     public static final Key NULL = new Key(-666, -666);
 
     private final int type;
     private final int key;
 
+    /**
+     * <p>Constructor for Key.</p>
+     *
+     * @param key a int.
+     */
     public Key(int key) {
         this(TYPE_XENOAMESS_KEY, key);
     }
 
+    /**
+     * <p>Constructor for Key.</p>
+     *
+     * @param type a int.
+     * @param key  a int.
+     */
     public Key(int type, int key) {
         this.type = type;
         this.key = key;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object object) {
         if (object == null) {
@@ -63,20 +95,36 @@ public class Key {
         return (this.getType() == keyLocal.getType() && this.getKey() == keyLocal.getKey());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return (this.getType() << 10) | this.getKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "type : " + this.type + ", key : " + key;
     }
 
+    /**
+     * <p>Getter for the field <code>type</code>.</p>
+     *
+     * @return a int.
+     */
     public int getType() {
         return type;
     }
 
+    /**
+     * <p>Getter for the field <code>key</code>.</p>
+     *
+     * @return a int.
+     */
     public int getKey() {
         return key;
     }

@@ -33,7 +33,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * <p>ConsoleEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ConsoleEvent implements Event {
     private static final Logger LOGGER =
@@ -41,11 +44,19 @@ public class ConsoleEvent implements Event {
 
     private final String command;
 
+    /**
+     * <p>Constructor for ConsoleEvent.</p>
+     *
+     * @param command a {@link java.lang.String} object.
+     */
     public ConsoleEvent(String command) {
         super();
         this.command = command;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Event> apply(GameManager gameManager) {
         //TODO should add some real console methods here.
@@ -55,6 +66,11 @@ public class ConsoleEvent implements Event {
         return new HashSet<>();
     }
 
+    /**
+     * <p>Getter for the field <code>command</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCommand() {
         return command;
     }

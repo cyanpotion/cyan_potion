@@ -42,7 +42,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
+ * <p>FileUtil class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class FileUtil {
     private static final Logger LOGGER =
@@ -152,11 +155,23 @@ public class FileUtil {
     }
 
 
+    /**
+     * <p>getFile.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.io.File} object.
+     */
     public static File getFile(String resourceFilePath) {
         final URL resUrl = getURL(resourceFilePath);
         return new File(resUrl.getFile().replaceAll("%20", " "));
     }
 
+    /**
+     * <p>getURL.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.net.URL} object.
+     */
     public static URL getURL(String resourceFilePath) {
         URL res = FileUtil.class.getResource(resourceFilePath);
         if (res == null) {
@@ -165,6 +180,12 @@ public class FileUtil {
         return res;
     }
 
+    /**
+     * <p>getURI.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.net.URI} object.
+     */
     public static URI getURI(String resourceFilePath) {
         URI res;
         try {
@@ -175,6 +196,12 @@ public class FileUtil {
         return res;
     }
 
+    /**
+     * <p>createFileIfAbsent.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.io.File} object.
+     */
     public static File createFileIfAbsent(String resourceFilePath) {
         File file;
         try {
@@ -195,6 +222,12 @@ public class FileUtil {
         return file;
     }
 
+    /**
+     * <p>createFolderIfAbsent.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.io.File} object.
+     */
     public static File createFolderIfAbsent(String resourceFilePath) {
         File folder;
         try {
@@ -211,6 +244,12 @@ public class FileUtil {
         return folder;
     }
 
+    /**
+     * <p>loadFile.</p>
+     *
+     * @param inputStream a {@link java.io.InputStream} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String loadFile(InputStream inputStream) {
         assert (inputStream != null);
         String res;
@@ -235,6 +274,12 @@ public class FileUtil {
         return res;
     }
 
+    /**
+     * <p>loadFile.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String loadFile(String resourceFilePath) {
         String res;
         try (InputStream inputStream = getURL(resourceFilePath).openStream()) {
@@ -246,6 +291,12 @@ public class FileUtil {
         return res;
     }
 
+    /**
+     * <p>loadFile.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String loadFile(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
             throw new IllegalArgumentException("FileUtil.loadFile(File file) fails:" + file);
@@ -259,10 +310,22 @@ public class FileUtil {
         return res;
     }
 
+    /**
+     * <p>saveFile.</p>
+     *
+     * @param resourceFilePath a {@link java.lang.String} object.
+     * @param contentString    a {@link java.lang.String} object.
+     */
     public static void saveFile(String resourceFilePath, String contentString) {
         saveFile(getFile(resourceFilePath), contentString);
     }
 
+    /**
+     * <p>saveFile.</p>
+     *
+     * @param file          a {@link java.io.File} object.
+     * @param contentString a {@link java.lang.String} object.
+     */
     public static void saveFile(File file, String contentString) {
         //if is not a file.
         if (file == null || !file.exists() || !file.isFile()) {

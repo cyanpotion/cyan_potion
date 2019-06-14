@@ -39,7 +39,10 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
 
 /**
+ * <p>InputBox class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
     private long slashTime = 1000L;
@@ -56,10 +59,18 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     private Vector4f insertColor = new Vector4f(1f, 1f, 1f, 1);
 
 
+    /**
+     * <p>Constructor for InputBox.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public InputBox(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initProcessors() {
         super.initProcessors();
@@ -284,6 +295,11 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         }
     }
 
+    /**
+     * <p>insertString.</p>
+     *
+     * @param insertString a {@link java.lang.String} object.
+     */
     public void insertString(String insertString) {
         if (getNowSelectStartPos() == -1) {
             this.insertStringToInsertPos(insertString);
@@ -318,6 +334,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ifVisibleThenDraw() {
         this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
@@ -326,6 +345,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     private long slashStartTime = 0;
 
+    /**
+     * <p>drawTextGivenHeightLeftTopAndGetIndex.</p>
+     *
+     * @param distPosX  a float.
+     * @param distPosY  a float.
+     * @param ifDraw    a boolean.
+     * @param insertPos a {@link org.joml.Vector2f} object.
+     * @return a int.
+     */
     public int drawTextGivenHeightLeftTopAndGetIndex(float distPosX,
                                                      float distPosY,
                                                      boolean ifDraw,
@@ -593,74 +621,164 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     }
 
+    /**
+     * <p>Getter for the field <code>slashTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getSlashTime() {
         return slashTime;
     }
 
+    /**
+     * <p>Setter for the field <code>slashTime</code>.</p>
+     *
+     * @param slashTime a long.
+     */
     public void setSlashTime(long slashTime) {
         this.slashTime = slashTime;
     }
 
+    /**
+     * <p>Getter for the field <code>contentString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getContentString() {
         return contentString;
     }
 
+    /**
+     * <p>Setter for the field <code>contentString</code>.</p>
+     *
+     * @param contentString a {@link java.lang.String} object.
+     */
     public void setContentString(String contentString) {
         this.contentString = contentString;
     }
 
+    /**
+     * <p>Getter for the field <code>nowInsertPos</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNowInsertPos() {
         return nowInsertPos;
     }
 
+    /**
+     * <p>Setter for the field <code>nowInsertPos</code>.</p>
+     *
+     * @param nowInsertPos a int.
+     */
     public void setNowInsertPos(int nowInsertPos) {
         this.nowInsertPos = nowInsertPos;
     }
 
+    /**
+     * <p>Getter for the field <code>nowSelectStartPos</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNowSelectStartPos() {
         return nowSelectStartPos;
     }
 
+    /**
+     * <p>Setter for the field <code>nowSelectStartPos</code>.</p>
+     *
+     * @param nowSelectStartPos a int.
+     */
     public void setNowSelectStartPos(int nowSelectStartPos) {
         this.nowSelectStartPos = nowSelectStartPos;
     }
 
+    /**
+     * <p>Getter for the field <code>nowSelectEndPos</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNowSelectEndPos() {
         return nowSelectEndPos;
     }
 
+    /**
+     * <p>Setter for the field <code>nowSelectEndPos</code>.</p>
+     *
+     * @param nowSelectEndPos a int.
+     */
     public void setNowSelectEndPos(int nowSelectEndPos) {
         this.nowSelectEndPos = nowSelectEndPos;
     }
 
+    /**
+     * <p>Getter for the field <code>charHeight</code>.</p>
+     *
+     * @return a float.
+     */
     public float getCharHeight() {
         return charHeight;
     }
 
+    /**
+     * <p>Setter for the field <code>charHeight</code>.</p>
+     *
+     * @param charHeight a float.
+     */
     public void setCharHeight(float charHeight) {
         this.charHeight = charHeight;
     }
 
+    /**
+     * <p>Getter for the field <code>textColor</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4f} object.
+     */
     public Vector4f getTextColor() {
         return textColor;
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param textColor a {@link org.joml.Vector4f} object.
+     */
     public void setTextColor(Vector4f textColor) {
         this.textColor = textColor;
     }
 
+    /**
+     * <p>Getter for the field <code>textSelectColor</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4f} object.
+     */
     public Vector4f getTextSelectColor() {
         return textSelectColor;
     }
 
+    /**
+     * <p>Setter for the field <code>textSelectColor</code>.</p>
+     *
+     * @param textSelectColor a {@link org.joml.Vector4f} object.
+     */
     public void setTextSelectColor(Vector4f textSelectColor) {
         this.textSelectColor = textSelectColor;
     }
 
+    /**
+     * <p>Getter for the field <code>insertColor</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4f} object.
+     */
     public Vector4f getInsertColor() {
         return insertColor;
     }
 
+    /**
+     * <p>Setter for the field <code>insertColor</code>.</p>
+     *
+     * @param insertColor a {@link org.joml.Vector4f} object.
+     */
     public void setInsertColor(Vector4f insertColor) {
         this.insertColor = insertColor;
     }

@@ -33,7 +33,10 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
 
 /**
+ * <p>Abstract AbstractControllableGameWindowComponent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     private boolean active = true;
@@ -41,10 +44,18 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     private boolean inFocusNow = false;
     private boolean willStillInFocus = false;
 
+    /**
+     * <p>Constructor for AbstractControllableGameWindowComponent.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public AbstractControllableGameWindowComponent(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initProcessors() {
         this.registerProcessor(
@@ -56,10 +67,20 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
                 });
     }
 
+    /**
+     * <p>Setter for the field <code>active</code>.</p>
+     *
+     * @param active a boolean.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * <p>Setter for the field <code>visible</code>.</p>
+     *
+     * @param visible a boolean.
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
@@ -67,6 +88,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     private boolean isMouseButtonLeftPressing = false;
 
+    /**
+     * <p>onMouseButtonLeftDown.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonLeftDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         this.gainFocus();
@@ -80,10 +107,22 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonLeftDownEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonLeftDownCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonLeftDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftDownEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onMouseButtonLeftUp.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonLeftUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonLeftPressing = false;
@@ -95,10 +134,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonLeftUpEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonLeftUpCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonLeftUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftUpEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onMouseButtonLeftPressing.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonLeftPressing() {
         if (onMouseButtonLeftPressingEventProcessor != null) {
             return onMouseButtonLeftPressingEventProcessor.apply(null);
@@ -108,6 +158,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonLeftPressingEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonLeftPressingCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonLeftPressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonLeftPressingEventProcessor = eventProcessor;
     }
@@ -115,6 +171,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     private boolean isMouseButtonRightPressing = false;
 
+    /**
+     * <p>onMouseButtonRightDown.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonRightDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = true;
@@ -126,11 +188,23 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonRightDownEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonRightDownCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonRightDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightDownEventProcessor = eventProcessor;
     }
 
 
+    /**
+     * <p>onMouseButtonRightUp.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonRightUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = false;
@@ -142,10 +216,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonRightUpEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonRightUpCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonRightUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightUpEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onMouseButtonRightPressing.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonRightPressing() {
         if (onMouseButtonRightPressingEventProcessor != null) {
             return onMouseButtonRightPressingEventProcessor.apply(null);
@@ -155,6 +240,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonRightPressingEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonRightPressingCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonRightPressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonRightPressingEventProcessor = eventProcessor;
     }
@@ -162,6 +253,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     private boolean isMouseButtonMiddlePressing = false;
 
+    /**
+     * <p>onMouseButtonMiddleDown.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonMiddleDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = true;
@@ -173,11 +270,23 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonMiddleDownEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonMiddleDownCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonMiddleDownCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddleDownEventProcessor = eventProcessor;
     }
 
 
+    /**
+     * <p>onMouseButtonMiddleUp.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonMiddleUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = false;
@@ -189,10 +298,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonMiddleUpEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonMiddleUpCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonMiddleUpCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddleUpEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onMouseButtonMiddlePressing.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseButtonMiddlePressing() {
         if (onMouseButtonMiddlePressingEventProcessor != null) {
             return onMouseButtonMiddlePressingEventProcessor.apply(null);
@@ -202,18 +322,35 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseButtonMiddlePressingEventProcessor;
 
+    /**
+     * <p>registerOnMouseButtonMiddlePressingCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseButtonMiddlePressingCallback(EventProcessor eventProcessor) {
         this.onMouseButtonMiddlePressingEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>gainFocus.</p>
+     */
     public void gainFocus() {
         setWillStillInFocus(true);
     }
 
+    /**
+     * <p>loseFocus.</p>
+     */
     public void loseFocus() {
         setWillStillInFocus(false);
     }
 
+    /**
+     * <p>onGainFocus.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onGainFocus() {
         Event res = null;
         if (onGainFocusEventProcessor != null) {
@@ -224,10 +361,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onGainFocusEventProcessor;
 
+    /**
+     * <p>registerOnGainFocusCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnGainFocusCallback(EventProcessor eventProcessor) {
         this.onGainFocusEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onLoseFocus.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onLoseFocus() {
         this.isMouseButtonLeftPressing = false;
         this.isMouseButtonMiddlePressing = false;
@@ -241,11 +389,22 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onLoseFocusEventProcessor;
 
+    /**
+     * <p>registerOnLoseFocusCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnLoseFocusCallback(EventProcessor eventProcessor) {
         this.onLoseFocusEventProcessor = eventProcessor;
     }
 
 
+    /**
+     * <p>onMouseEnterArea.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseEnterArea() {
         Event res = null;
         if (onMouseEnterAreaEventProcessor != null) {
@@ -256,10 +415,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseEnterAreaEventProcessor;
 
+    /**
+     * <p>registerOnMouseEnterAreaCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseEnterAreaCallback(EventProcessor eventProcessor) {
         this.onMouseEnterAreaEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>onMouseLeaveArea.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     protected final Event onMouseLeaveArea() {
         Event res = null;
         if (onMouseLeaveAreaEventProcessor != null) {
@@ -270,10 +440,21 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected EventProcessor onMouseLeaveAreaEventProcessor;
 
+    /**
+     * <p>registerOnMouseLeaveAreaCallback.</p>
+     *
+     * @param eventProcessor a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
     public void registerOnMouseLeaveAreaCallback(EventProcessor eventProcessor) {
         this.onMouseLeaveAreaEventProcessor = eventProcessor;
     }
 
+    /**
+     * <p>processMouseEnterAreaAndLeaveArea.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event processMouseEnterAreaAndLeaveArea() {
         boolean ifPosInAreaNow =
                 this.ifPosInArea(this.getGameWindow().getMousePosX(),
@@ -289,6 +470,11 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return null;
     }
 
+    /**
+     * <p>processGainFocusAndLoseFocus.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event processGainFocusAndLoseFocus() {
         Event res = null;
         if (isInFocusNow() && !isWillStillInFocus()) {
@@ -300,6 +486,13 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return res;
     }
 
+    /**
+     * <p>ifPosInArea.</p>
+     *
+     * @param posX a float.
+     * @param posY a float.
+     * @return a boolean.
+     */
     public boolean ifPosInArea(float posX, float posY) {
         if (this.getWidth() < 0 || this.getHeight() < 0) {
             return false;
@@ -310,11 +503,22 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
                 && posY <= this.getLeftTopPosY() + this.getHeight());
     }
 
+    /**
+     * <p>ifMouseInArea.</p>
+     *
+     * @return a boolean.
+     */
     public boolean ifMouseInArea() {
         return this.ifPosInArea(this.getGameWindow().getMousePosX(),
                 this.getGameWindow().getMousePosY());
     }
 
+    /**
+     * <p>processMouseButtonEventsInside.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
@@ -350,6 +554,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         }
     }
 
+    /**
+     * <p>processMouseButtonEventsOutside.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
@@ -388,6 +598,12 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
 
+    /**
+     * <p>processMouseButtonEvents.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event processMouseButtonEvents(MouseButtonEvent mouseButtonEvent) {
         if (this.ifMouseInArea()) {
             return this.processMouseButtonEventsInside(mouseButtonEvent);
@@ -397,6 +613,9 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event process(Event event) {
         if (!this.isActive()) {
@@ -405,6 +624,9 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return super.process(event);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         Event processMouseEnterAreaAndLeaveAreaEvent =
@@ -437,10 +659,16 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         }
     }
 
+    /**
+     * <p>ifVisibleThenDraw.</p>
+     */
     public void ifVisibleThenDraw() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         if (this.isVisible()) {
@@ -448,26 +676,56 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         }
     }
 
+    /**
+     * <p>isActive.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * <p>isVisible.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * <p>isInFocusNow.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isInFocusNow() {
         return inFocusNow;
     }
 
+    /**
+     * <p>Setter for the field <code>inFocusNow</code>.</p>
+     *
+     * @param inFocusNow a boolean.
+     */
     public void setInFocusNow(boolean inFocusNow) {
         this.inFocusNow = inFocusNow;
     }
 
+    /**
+     * <p>isWillStillInFocus.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isWillStillInFocus() {
         return willStillInFocus;
     }
 
+    /**
+     * <p>Setter for the field <code>willStillInFocus</code>.</p>
+     *
+     * @param willStillInFocus a boolean.
+     */
     public void setWillStillInFocus(boolean willStillInFocus) {
         this.willStillInFocus = willStillInFocus;
     }

@@ -27,24 +27,50 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.xenoamess.cyan_potion.base.GameWindow;
 
 /**
+ * <p>Abstract AbstractGamepadData class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractGamepadData {
 
     private final AbstractGamepadDevice gamepadDevice;
 
+    /**
+     * <p>Constructor for AbstractGamepadData.</p>
+     *
+     * @param gamepadDevice a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     */
     public AbstractGamepadData(AbstractGamepadDevice gamepadDevice) {
         this.gamepadDevice = gamepadDevice;
     }
 
+    /**
+     * <p>Getter for the field <code>gamepadDevice</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.AbstractGamepadDevice} object.
+     */
     public AbstractGamepadDevice getGamepadDevice() {
         return this.gamepadDevice;
     }
 
+    /**
+     * <p>updateGamepadStatus.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public abstract void updateGamepadStatus(GameWindow gameWindow);
 
+    /**
+     * <p>reset.</p>
+     */
     public abstract void reset();
 
+    /**
+     * <p>update.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public void update(GameWindow gameWindow) {
         AbstractGamepadDevice gamepadDeviceLocal = this.getGamepadDevice();
         if (gamepadDeviceLocal != null) {

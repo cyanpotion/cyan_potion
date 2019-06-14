@@ -38,16 +38,30 @@ import java.util.List;
  * as simple AbstractShape,thus as a group of shapes.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ShapeGroup extends AbstractShape {
     private final List<AbstractShape> shapes = new ArrayList<>();
 
+    /**
+     * <p>Constructor for ShapeGroup.</p>
+     *
+     * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param shapes    a {@link java.util.Collection} object.
+     */
     public ShapeGroup(AbstractEntity entity, Vector3f centerPos,
                       Vector3f size, Collection shapes) {
         super(entity, centerPos, size);
         this.getShapes().addAll(shapes);
     }
 
+    /**
+     * <p>Constructor for ShapeGroup.</p>
+     *
+     * @param shapeGroup a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.ShapeGroup} object.
+     */
     public ShapeGroup(ShapeGroup shapeGroup) {
         super(shapeGroup);
         for (AbstractShape au : shapeGroup.getShapes()) {
@@ -57,6 +71,8 @@ public class ShapeGroup extends AbstractShape {
 
 
     /**
+     * {@inheritDoc}
+     * <p>
      * ShapeGroup can only accept rough as true.
      * for more information about rough, please go and see relation function
      * in class AbstractShape
@@ -74,6 +90,9 @@ public class ShapeGroup extends AbstractShape {
         return ShapeRelation.RELATION_NO_COLLIDE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float minX() {
         float minX = Float.MAX_VALUE;
@@ -83,6 +102,9 @@ public class ShapeGroup extends AbstractShape {
         return minX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float maxX() {
         float maxX = Float.MIN_VALUE;
@@ -92,6 +114,9 @@ public class ShapeGroup extends AbstractShape {
         return maxX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float minY() {
         float minY = Float.MAX_VALUE;
@@ -101,6 +126,9 @@ public class ShapeGroup extends AbstractShape {
         return minY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float maxY() {
         float maxY = Float.MIN_VALUE;
@@ -111,6 +139,8 @@ public class ShapeGroup extends AbstractShape {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * detect if a point is in the shape.
      */
     @Override
@@ -123,15 +153,26 @@ public class ShapeGroup extends AbstractShape {
         return false;
     }
 
+    /**
+     * <p>Getter for the field <code>shapes</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<AbstractShape> getShapes() {
         return shapes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return this.getShapes().hashCode() + 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object object) {
         if (object == null) {

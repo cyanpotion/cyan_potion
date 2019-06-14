@@ -46,7 +46,10 @@ import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
+ * <p>TitleExample class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveSlotTexture =
@@ -69,6 +72,11 @@ public class TitleExample extends AbstractGameWindowComponent {
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
             new ArrayList<>();
 
+    /**
+     * <p>Constructor for TitleExample.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public TitleExample(GameWindow gameWindow) {
         super(gameWindow);
         getControllableGameWindowComponents().add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
@@ -249,6 +257,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(panel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
@@ -343,6 +354,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addToGameWindowComponentTree(
             GameWindowComponentTreeNode gameWindowComponentTreeNode
@@ -387,6 +401,9 @@ public class TitleExample extends AbstractGameWindowComponent {
         setState(getState() - 1);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         switch (getState()) {
@@ -409,6 +426,9 @@ public class TitleExample extends AbstractGameWindowComponent {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
 
@@ -435,30 +455,65 @@ public class TitleExample extends AbstractGameWindowComponent {
         world.enlargeAsFullWindow();
     }
 
+    /**
+     * <p>Getter for the field <code>saveSlotTexture</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public Texture getSaveSlotTexture() {
         return saveSlotTexture;
     }
 
+    /**
+     * <p>Getter for the field <code>saveStarTexture</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public Texture getSaveStarTexture() {
         return saveStarTexture;
     }
 
+    /**
+     * <p>Getter for the field <code>controllableGameWindowComponents</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<AbstractControllableGameWindowComponent> getControllableGameWindowComponents() {
         return controllableGameWindowComponents;
     }
 
+    /**
+     * <p>Getter for the field <code>state</code>.</p>
+     *
+     * @return a int.
+     */
     public int getState() {
         return state;
     }
 
+    /**
+     * <p>Setter for the field <code>state</code>.</p>
+     *
+     * @param state a int.
+     */
     public void setState(int state) {
         this.state = state;
     }
 
+    /**
+     * <p>Getter for the field <code>time</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTime() {
         return time;
     }
 
+    /**
+     * <p>Setter for the field <code>time</code>.</p>
+     *
+     * @param time a int.
+     */
     public void setTime(int time) {
         this.time = time;
     }

@@ -33,7 +33,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 /**
+ * <p>Abstract AbstractResource class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractResource implements AutoCloseable, Bindable {
     private static final Logger LOGGER =
@@ -60,12 +63,18 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.fullResourceURI = fullResourceURI;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind(int sampler) {
         this.load();
     }
 
 
+    /**
+     * <p>load.</p>
+     */
     public void load() {
         this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
         if (this.isInMemory()) {
@@ -83,11 +92,17 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.setInMemory(true);
     }
 
+    /**
+     * <p>reload.</p>
+     */
     public void reload() {
         this.close();
         this.load();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         if (!this.isInMemory()) {
@@ -102,6 +117,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
 //        this.inMemory = false;
     }
 
+    /**
+     * <p>fetchResourceWithShortenURI.</p>
+     *
+     * @param shortenResourceURI a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     */
     public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
         return this.getResourceManager().fetchResourceWithShortenURI(this.getClass(),
                 shortenResourceURI);
@@ -127,37 +148,80 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         loader.apply(this);
     }
 
+    /**
+     * <p>forceClose.</p>
+     */
     protected abstract void forceClose();
 
 
+    /**
+     * <p>Getter for the field <code>resourceManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public ResourceManager getResourceManager() {
         return this.resourceManager;
     }
 
+    /**
+     * <p>Getter for the field <code>fullResourceURI</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getFullResourceURI() {
         return fullResourceURI;
     }
 
+    /**
+     * <p>Getter for the field <code>memorySize</code>.</p>
+     *
+     * @return a long.
+     */
     public long getMemorySize() {
         return memorySize;
     }
 
+    /**
+     * <p>Setter for the field <code>memorySize</code>.</p>
+     *
+     * @param memorySize a long.
+     */
     public void setMemorySize(long memorySize) {
         this.memorySize = memorySize;
     }
 
+    /**
+     * <p>isInMemory.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isInMemory() {
         return inMemory.get();
     }
 
+    /**
+     * <p>Setter for the field <code>inMemory</code>.</p>
+     *
+     * @param inMemory a boolean.
+     */
     public void setInMemory(boolean inMemory) {
         this.inMemory.set(inMemory);
     }
 
+    /**
+     * <p>Getter for the field <code>lastUsedFrameIndex</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLastUsedFrameIndex() {
         return lastUsedFrameIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>lastUsedFrameIndex</code>.</p>
+     *
+     * @param lastUsedFrameIndex a long.
+     */
     public void setLastUsedFrameIndex(long lastUsedFrameIndex) {
         this.lastUsedFrameIndex = lastUsedFrameIndex;
     }

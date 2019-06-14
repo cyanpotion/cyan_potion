@@ -31,9 +31,17 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
+ * <p>ForceEntrance class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ForceEntrance {
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         Map<String, String> argsMap = GameManager.generateArgsMap(args);
         argsMap.put("SettingFilePath", "/settings/RpgModuleDemoSettings.x8l");

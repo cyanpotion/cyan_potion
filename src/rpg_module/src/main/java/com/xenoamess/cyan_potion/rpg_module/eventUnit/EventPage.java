@@ -34,30 +34,56 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
  * as less as possible.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
-
 public class EventPage {
     private PageJson pageJson;
     private EventUnit eventUnit;
 
+    /**
+     * <p>Constructor for EventPage.</p>
+     *
+     * @param pageJson  a {@link com.xenoamess.cyan_potion.rpg_module.jsons.PageJson} object.
+     * @param eventUnit a {@link com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit} object.
+     */
     public EventPage(PageJson pageJson, EventUnit eventUnit) {
         this.setPageJson(pageJson);
         this.setEventUnit(eventUnit);
     }
 
 
+    /**
+     * <p>Getter for the field <code>pageJson</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.jsons.PageJson} object.
+     */
     public PageJson getPageJson() {
         return pageJson;
     }
 
+    /**
+     * <p>Setter for the field <code>pageJson</code>.</p>
+     *
+     * @param pageJson a {@link com.xenoamess.cyan_potion.rpg_module.jsons.PageJson} object.
+     */
     public void setPageJson(PageJson pageJson) {
         this.pageJson = pageJson;
     }
 
+    /**
+     * <p>Getter for the field <code>eventUnit</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit} object.
+     */
     public EventUnit getEventUnit() {
         return eventUnit;
     }
 
+    /**
+     * <p>Setter for the field <code>eventUnit</code>.</p>
+     *
+     * @param eventUnit a {@link com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit} object.
+     */
     public void setEventUnit(EventUnit eventUnit) {
         this.eventUnit = eventUnit;
     }

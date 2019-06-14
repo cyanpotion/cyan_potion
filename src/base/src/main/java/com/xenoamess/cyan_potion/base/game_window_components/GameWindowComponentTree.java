@@ -46,24 +46,42 @@ import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFiel
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameWindowComponentTree implements AutoCloseable {
     @AsFinalField
     private GameWindowComponentTreeNode root = null;
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
+    /**
+     * <p>leafNodesAdd.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     protected void leafNodesAdd(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         synchronized (leafNodes) {
             leafNodes.add(gameWindowComponentTreeNode);
         }
     }
 
+    /**
+     * <p>leafNodesRemove.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     protected void leafNodesRemove(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         synchronized (leafNodes) {
             leafNodes.remove(gameWindowComponentTreeNode);
         }
     }
 
+    /**
+     * <p>leafNodesFirst.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     protected GameWindowComponentTreeNode leafNodesFirst() {
         GameWindowComponentTreeNode res = null;
         synchronized (leafNodes) {
@@ -75,12 +93,20 @@ public class GameWindowComponentTree implements AutoCloseable {
         return res;
     }
 
+    /**
+     * <p>leafNodesClear.</p>
+     */
     protected void leafNodesClear() {
         synchronized (leafNodes) {
             leafNodes.clear();
         }
     }
 
+    /**
+     * <p>getAllNodes.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<GameWindowComponentTreeNode> getAllNodes() {
         List<GameWindowComponentTreeNode> res = new ArrayList<>();
         this.getAllNodes(this.getRoot(), res);
@@ -95,6 +121,11 @@ public class GameWindowComponentTree implements AutoCloseable {
         res.add(nowNode);
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public void init(GameWindow gameWindow) {
         AbstractGameWindowComponent baseComponent =
                 new AbstractGameWindowComponent(gameWindow) {
@@ -144,6 +175,9 @@ public class GameWindowComponentTree implements AutoCloseable {
         this.leafNodesAdd(this.getRoot());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         if (getRoot() != null) {
@@ -152,48 +186,100 @@ public class GameWindowComponentTree implements AutoCloseable {
         this.leafNodes.clear();
     }
 
+    /**
+     * <p>process.</p>
+     *
+     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Event> process(Event event) {
         Set<Event> res = new HashSet<>();
         this.getRoot().process(res, event);
         return res;
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
         getRoot().update();
     }
 
+    /**
+     * <p>draw.</p>
+     */
     public void draw() {
         getRoot().draw();
     }
 
+    /**
+     * <p>newNode.</p>
+     *
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.leafNodesFirst().newNode(gameWindowComponent);
     }
 
+    /**
+     * <p>findNode.</p>
+     *
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().findNode(gameWindowComponent);
     }
 
+    /**
+     * <p>contains.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     * @return a boolean.
+     */
     public boolean contains(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         return this.getRoot().childrenTreeContains(gameWindowComponentTreeNode);
     }
 
+    /**
+     * <p>deleteNode.</p>
+     *
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @return a boolean.
+     */
     public boolean deleteNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().deleteNode(gameWindowComponent);
     }
 
+    /**
+     * <p>deleteNode.</p>
+     *
+     * @param gameWindowComponentTreeNode a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     * @return a boolean.
+     */
     public boolean deleteNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         return this.getRoot().deleteNode(gameWindowComponentTreeNode);
     }
 
 
+    /**
+     * <p>Getter for the field <code>root</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode} object.
+     */
     public GameWindowComponentTreeNode getRoot() {
         return root;
     }
 
     /**
      * set root of this tree.
-     * notice that root is an {@link AsFinalField}.
+     * notice that root is an {@link com.xenoamess.commons.as_final_field.AsFinalField}.
      *
      * @param gameWindowComponentTreeNode root
      * @see AsFinalField

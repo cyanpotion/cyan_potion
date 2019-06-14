@@ -35,25 +35,48 @@ import java.util.List;
 
 
 /**
+ * <p>Panel class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new ArrayList<>();
     private final Picture backgroundPicture = new Picture();
 
+    /**
+     * <p>Constructor for Panel.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public Panel(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>Constructor for Panel.</p>
+     *
+     * @param gameWindow        a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param backgroundTexture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public Panel(GameWindow gameWindow, Texture backgroundTexture) {
         super(gameWindow);
         this.backgroundPicture.setBindable(backgroundTexture);
     }
 
+    /**
+     * <p>addContent.</p>
+     *
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     */
     public void addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.getContents().add(gameWindowComponent);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         super.update();
@@ -63,6 +86,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
         backgroundPicture.cover(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         this.backgroundPicture.draw(this.getGameWindow());
@@ -73,6 +99,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event process(Event event) {
         for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
@@ -84,6 +113,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
         return event;
     }
 
+    /**
+     * <p>Getter for the field <code>contents</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<AbstractGameWindowComponent> getContents() {
         return contents;
     }

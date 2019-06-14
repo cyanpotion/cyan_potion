@@ -34,7 +34,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 
 /**
+ * <p>ClipboardUtil class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ClipboardUtil {
     private static final Logger LOGGER =
@@ -46,12 +49,22 @@ public class ClipboardUtil {
     private ClipboardUtil() {
     }
 
+    /**
+     * <p>setText.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     */
     public static void setText(String text) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable trans = new StringSelection(text);
         clipboard.setContents(trans, null);
     }
 
+    /**
+     * <p>getText.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public static String getText() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable trans = clipboard.getContents(null);

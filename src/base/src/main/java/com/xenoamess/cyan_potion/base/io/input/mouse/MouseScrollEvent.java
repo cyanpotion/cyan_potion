@@ -33,7 +33,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
+ * <p>MouseScrollEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class MouseScrollEvent implements Event {
     private static final Logger LOGGER =
@@ -43,6 +46,13 @@ public class MouseScrollEvent implements Event {
     private final double xoffset;
     private final double yoffset;
 
+    /**
+     * <p>Constructor for MouseScrollEvent.</p>
+     *
+     * @param window  a long.
+     * @param xoffset a double.
+     * @param yoffset a double.
+     */
     public MouseScrollEvent(long window, double xoffset, double yoffset) {
         super();
         this.window = window;
@@ -50,6 +60,9 @@ public class MouseScrollEvent implements Event {
         this.yoffset = yoffset;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
@@ -58,14 +71,29 @@ public class MouseScrollEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>xoffset</code>.</p>
+     *
+     * @return a double.
+     */
     public double getXoffset() {
         return xoffset;
     }
 
+    /**
+     * <p>Getter for the field <code>yoffset</code>.</p>
+     *
+     * @return a double.
+     */
     public double getYoffset() {
         return yoffset;
     }

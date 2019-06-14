@@ -31,9 +31,15 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
+ * <p>Model class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Model implements AutoCloseable {
+    /**
+     * Constant <code>INITIALIZED_VALUE=-1</code>
+     */
     public static final int INITIALIZED_VALUE = -1;
 
     private int drawCount = INITIALIZED_VALUE;
@@ -55,17 +61,37 @@ public class Model implements AutoCloseable {
 
     private static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
     private static final int[] COMMON_INDICES_INT_ARRAY = new int[]{0, 1, 2, 2, 3, 0};
+    /**
+     * Constant <code>COMMON_MODEL</code>
+     */
     public static final Model COMMON_MODEL = new Model();
 
 
+    /**
+     * <p>Constructor for Model.</p>
+     */
     public Model() {
 
     }
 
+    /**
+     * <p>Constructor for Model.</p>
+     *
+     * @param vertices  an array of {@link float} objects.
+     * @param texCoords an array of {@link float} objects.
+     * @param indices   an array of {@link int} objects.
+     */
     public Model(float[] vertices, float[] texCoords, int[] indices) {
         this.init(vertices, texCoords, indices);
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param vertices  an array of {@link float} objects.
+     * @param texCoords an array of {@link float} objects.
+     * @param indices   an array of {@link int} objects.
+     */
     public void init(float[] vertices, float[] texCoords, int[] indices) {
         if (this.getDrawCount() == INITIALIZED_VALUE) {
             setDrawCount(indices.length);
@@ -91,6 +117,9 @@ public class Model implements AutoCloseable {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         glDeleteBuffers(getVertexObject());
@@ -98,6 +127,9 @@ public class Model implements AutoCloseable {
         glDeleteBuffers(getIndexObject());
     }
 
+    /**
+     * <p>render.</p>
+     */
     public void render() {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -120,6 +152,11 @@ public class Model implements AutoCloseable {
     }
 
 
+    /**
+     * <p>Getter for the field <code>drawCount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getDrawCount() {
         return drawCount;
     }
@@ -128,6 +165,11 @@ public class Model implements AutoCloseable {
         this.drawCount = drawCount;
     }
 
+    /**
+     * <p>Getter for the field <code>vertexObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getVertexObject() {
         return vertexObject;
     }
@@ -136,6 +178,11 @@ public class Model implements AutoCloseable {
         this.vertexObject = vertexObject;
     }
 
+    /**
+     * <p>Getter for the field <code>textureCoordObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTextureCoordObject() {
         return textureCoordObject;
     }
@@ -144,6 +191,11 @@ public class Model implements AutoCloseable {
         this.textureCoordObject = textureCoordObject;
     }
 
+    /**
+     * <p>Getter for the field <code>indexObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getIndexObject() {
         return indexObject;
     }
@@ -152,14 +204,29 @@ public class Model implements AutoCloseable {
         this.indexObject = indexObject;
     }
 
+    /**
+     * <p>getCommonVerticesFloatArray.</p>
+     *
+     * @return an array of {@link float} objects.
+     */
     public static float[] getCommonVerticesFloatArray() {
         return COMMON_VERTICES_FLOAT_ARRAY.clone();
     }
 
+    /**
+     * <p>getCommonTextureFloatArray.</p>
+     *
+     * @return an array of {@link float} objects.
+     */
     public static float[] getCommonTextureFloatArray() {
         return COMMON_TEXTURE_FLOAT_ARRAY.clone();
     }
 
+    /**
+     * <p>getCommonIndicesIntArray.</p>
+     *
+     * @return an array of {@link int} objects.
+     */
     public static int[] getCommonIndicesIntArray() {
         return COMMON_INDICES_INT_ARRAY.clone();
     }

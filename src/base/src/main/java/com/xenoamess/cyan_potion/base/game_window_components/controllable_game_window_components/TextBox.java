@@ -33,7 +33,10 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
 
 /**
+ * <p>TextBox class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;
@@ -41,17 +44,28 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     private float charHeight = 20.0f;
     private Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
+    /**
+     * <p>Constructor for TextBox.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public TextBox(GameWindow gameWindow) {
         super(gameWindow);
         this.setWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().ifLanguageNeedWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().getCurrentLanguage()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ifVisibleThenDraw() {
         this.drawText();
     }
 
 
+    /**
+     * <p>drawText.</p>
+     */
     public void drawText() {
         float realLeftTopPosX =
                 this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
@@ -220,34 +234,74 @@ public class TextBox extends AbstractControllableGameWindowComponent {
         glEnd();
     }
 
+    /**
+     * <p>isWordWrap.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isWordWrap() {
         return wordWrap;
     }
 
+    /**
+     * <p>Setter for the field <code>wordWrap</code>.</p>
+     *
+     * @param wordWrap a boolean.
+     */
     public void setWordWrap(boolean wordWrap) {
         this.wordWrap = wordWrap;
     }
 
+    /**
+     * <p>Getter for the field <code>contentString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getContentString() {
         return contentString;
     }
 
+    /**
+     * <p>Setter for the field <code>contentString</code>.</p>
+     *
+     * @param contentString a {@link java.lang.String} object.
+     */
     public void setContentString(String contentString) {
         this.contentString = contentString;
     }
 
+    /**
+     * <p>Getter for the field <code>charHeight</code>.</p>
+     *
+     * @return a float.
+     */
     public float getCharHeight() {
         return charHeight;
     }
 
+    /**
+     * <p>Setter for the field <code>charHeight</code>.</p>
+     *
+     * @param charHeight a float.
+     */
     public void setCharHeight(float charHeight) {
         this.charHeight = charHeight;
     }
 
+    /**
+     * <p>Getter for the field <code>textColor</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4f} object.
+     */
     public Vector4f getTextColor() {
         return textColor;
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param textColor a {@link org.joml.Vector4f} object.
+     */
     public void setTextColor(Vector4f textColor) {
         this.textColor = textColor;
     }

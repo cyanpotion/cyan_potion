@@ -35,16 +35,32 @@ import org.joml.Vector3f;
  * .size.x logically.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Circle extends AbstractShape {
+    /**
+     * <p>Constructor for Circle.</p>
+     *
+     * @param entity    a {@link com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity} object.
+     * @param centerPos a {@link org.joml.Vector3f} object.
+     * @param size      a {@link org.joml.Vector3f} object.
+     */
     public Circle(AbstractEntity entity, Vector3f centerPos, Vector3f size) {
         super(entity, centerPos, size);
     }
 
+    /**
+     * <p>Constructor for Circle.</p>
+     *
+     * @param circle a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.Circle} object.
+     */
     public Circle(Circle circle) {
         super(circle);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean ifIn(Vector3f point) {
         if (point.z != this.getCenterPos().z) {
@@ -56,6 +72,9 @@ public class Circle extends AbstractShape {
         return tmpX * tmpX + tmpY * tmpY <= this.getSize().x * this.getSize().x / 4;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;

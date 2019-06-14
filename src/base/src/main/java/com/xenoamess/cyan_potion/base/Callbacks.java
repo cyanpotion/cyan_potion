@@ -36,7 +36,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <p>Callbacks class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public final class Callbacks {
     private static final Logger LOGGER =
@@ -45,6 +48,11 @@ public final class Callbacks {
 
     private final GameManager gameManager;
 
+    /**
+     * <p>Constructor for Callbacks.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public Callbacks(GameManager gameManager) {
         this.gameManager = gameManager;
     }
@@ -147,70 +155,155 @@ public final class Callbacks {
             };
 
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
 
+    /**
+     * <p>Getter for the field <code>windowCloseCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWWindowCloseCallbackI} object.
+     */
     public GLFWWindowCloseCallbackI getWindowCloseCallback() {
         return windowCloseCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>windowCloseCallback</code>.</p>
+     *
+     * @param windowCloseCallback a {@link org.lwjgl.glfw.GLFWWindowCloseCallbackI} object.
+     */
     public void setWindowCloseCallback(GLFWWindowCloseCallbackI windowCloseCallback) {
         this.windowCloseCallback = windowCloseCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>keyCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
+     */
     public GLFWKeyCallbackI getKeyCallback() {
         return keyCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>keyCallback</code>.</p>
+     *
+     * @param keyCallback a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
+     */
     public void setKeyCallback(GLFWKeyCallbackI keyCallback) {
         this.keyCallback = keyCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>joystickCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWJoystickCallbackI} object.
+     */
     public GLFWJoystickCallbackI getJoystickCallback() {
         return joystickCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>joystickCallback</code>.</p>
+     *
+     * @param joystickCallback a {@link org.lwjgl.glfw.GLFWJoystickCallbackI} object.
+     */
     public void setJoystickCallback(GLFWJoystickCallbackI joystickCallback) {
         this.joystickCallback = joystickCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>mouseButtonCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
+     */
     public GLFWMouseButtonCallbackI getMouseButtonCallback() {
         return mouseButtonCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>mouseButtonCallback</code>.</p>
+     *
+     * @param mouseButtonCallback a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
+     */
     public void setMouseButtonCallback(GLFWMouseButtonCallbackI mouseButtonCallback) {
         this.mouseButtonCallback = mouseButtonCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>scrollCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWScrollCallbackI} object.
+     */
     public GLFWScrollCallbackI getScrollCallback() {
         return scrollCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>scrollCallback</code>.</p>
+     *
+     * @param scrollCallback a {@link org.lwjgl.glfw.GLFWScrollCallbackI} object.
+     */
     public void setScrollCallback(GLFWScrollCallbackI scrollCallback) {
         this.scrollCallback = scrollCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>windowSizeCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWWindowSizeCallbackI} object.
+     */
     public GLFWWindowSizeCallbackI getWindowSizeCallback() {
         return windowSizeCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>windowSizeCallback</code>.</p>
+     *
+     * @param windowSizeCallback a {@link org.lwjgl.glfw.GLFWWindowSizeCallbackI} object.
+     */
     public void setWindowSizeCallback(GLFWWindowSizeCallbackI windowSizeCallback) {
         this.windowSizeCallback = windowSizeCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>charCallback</code>.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWCharCallbackI} object.
+     */
     public GLFWCharCallbackI getCharCallback() {
         return charCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>charCallback</code>.</p>
+     *
+     * @param charCallback a {@link org.lwjgl.glfw.GLFWCharCallbackI} object.
+     */
     public void setCharCallback(GLFWCharCallbackI charCallback) {
         this.charCallback = charCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUserStatsCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUserStatsCallback} object.
+     */
     public SteamUserStatsCallback getSteamUserStatsCallback() {
         return steamUserStatsCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUserStatsCallback</code>.</p>
+     *
+     * @param steamUserStatsCallback a {@link com.codedisaster.steamworks.SteamUserStatsCallback} object.
+     */
     public void setSteamUserStatsCallback(SteamUserStatsCallback steamUserStatsCallback) {
         this.steamUserStatsCallback = steamUserStatsCallback;
     }
