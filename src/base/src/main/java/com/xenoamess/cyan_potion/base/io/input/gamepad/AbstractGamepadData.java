@@ -22,28 +22,41 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
-import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.events.Event;
-import net.jcip.annotations.GuardedBy;
-
-import java.util.function.Function;
-
+import com.xenoamess.cyan_potion.base.GameWindow;
 
 /**
  * @author XenoAmess
  */
-@FunctionalInterface
-public interface EventProcessor extends Function<Event, Event> {
-    /**
-     * the method must be thread safe.
-     *
-     * @param event the event that being processed.
-     * @return the event that generated due to processing the event.
-     * @see Event#apply(GameManager)
-     */
-    @Override
-    @GuardedBy("GameManager")
-    Event apply(Event event);
+public abstract class AbstractGamepadData {
+
+    private final AbstractGamepadDevice gamepadDevice;
+
+    public AbstractGamepadData(AbstractGamepadDevice gamepadDevice) {
+        this.gamepadDevice = gamepadDevice;
+    }
+
+    public AbstractGamepadDevice getGamepadDevice() {
+        return this.gamepadDevice;
+    }
+
+    public abstract void updateGamepadStatus(GameWindow gameWindow);
+
+    public abstract void reset();
+
+    public void update(GameWindow gameWindow) {
+        AbstractGamepadDevice gamepadDeviceLocal = this.getGamepadDevice();
+        if (gamepadDeviceLocal != null) {
+            gamepadDeviceLocal.update();
+        }
+
+        if (gamepadDeviceLocal == null || !gamepadDeviceLocal.isConnected()) {
+            this.reset();
+        } else {
+            updateGamepadStatus(gameWindow);
+        }
+    }
+
+
 }

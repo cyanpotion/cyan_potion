@@ -22,35 +22,28 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import net.jcip.annotations.GuardedBy;
+
+import java.util.function.Function;
+
 
 /**
  * @author XenoAmess
  */
-public class MainThreadEventProcessor implements EventProcessor {
-    public GameManager gameManager;
-    public EventProcessor processor;
-
-    public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
-        this.gameManager = gameManager;
-        this.processor = processor;
-    }
-
-    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
-        this.gameManager = gameWindowComponent.getGameWindow().getGameManager();
-        this.processor = processor;
-    }
-
+@FunctionalInterface
+public interface EventProcessor extends Function<Event, Event> {
+    /**
+     * the method must be thread safe.
+     *
+     * @param event the event that being processed.
+     * @return the event that generated due to processing the event.
+     * @see Event#apply(GameManager)
+     */
     @Override
-    public Event apply(Event event) {
-        if (Thread.currentThread().getId() != 1) {
-            this.gameManager.delayMainThreadEventProcess(this, event);
-            return null;
-        }
-        return this.processor.apply(event);
-    }
+    @GuardedBy("GameManager")
+    Event apply(Event event);
 }

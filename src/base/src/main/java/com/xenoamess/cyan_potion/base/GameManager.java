@@ -33,11 +33,11 @@ import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
-import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -473,7 +473,7 @@ public class GameManager implements AutoCloseable {
         final AbstractGameWindowComponent logo =
                 AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
                         getString(this.dataCenter.getCommonSettings(), STRING_LOGO_CLASS_NAME,
-                                "com.xenoamess.cyan_potion.base.gameWindowComponents.Logo"));
+                                "com.xenoamess.cyan_potion.base.game_window_components.Logo"));
         logo.addToGameWindowComponentTree(null);
     }
 

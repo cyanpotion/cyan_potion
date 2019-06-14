@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.key;
 
 import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
-import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadData;
 import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;

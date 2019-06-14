@@ -22,41 +22,35 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.io.input.Gamepad;
+package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
-import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 
 /**
  * @author XenoAmess
  */
-public abstract class AbstractGamepadData {
+public class MainThreadEventProcessor implements EventProcessor {
+    public GameManager gameManager;
+    public EventProcessor processor;
 
-    private final AbstractGamepadDevice gamepadDevice;
-
-    public AbstractGamepadData(AbstractGamepadDevice gamepadDevice) {
-        this.gamepadDevice = gamepadDevice;
+    public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
+        this.gameManager = gameManager;
+        this.processor = processor;
     }
 
-    public AbstractGamepadDevice getGamepadDevice() {
-        return this.gamepadDevice;
+    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
+        this.gameManager = gameWindowComponent.getGameWindow().getGameManager();
+        this.processor = processor;
     }
 
-    public abstract void updateGamepadStatus(GameWindow gameWindow);
-
-    public abstract void reset();
-
-    public void update(GameWindow gameWindow) {
-        AbstractGamepadDevice gamepadDeviceLocal = this.getGamepadDevice();
-        if (gamepadDeviceLocal != null) {
-            gamepadDeviceLocal.update();
+    @Override
+    public Event apply(Event event) {
+        if (Thread.currentThread().getId() != 1) {
+            this.gameManager.delayMainThreadEventProcess(this, event);
+            return null;
         }
-
-        if (gamepadDeviceLocal == null || !gamepadDeviceLocal.isConnected()) {
-            this.reset();
-        } else {
-            updateGamepadStatus(gameWindow);
-        }
+        return this.processor.apply(event);
     }
-
-
 }

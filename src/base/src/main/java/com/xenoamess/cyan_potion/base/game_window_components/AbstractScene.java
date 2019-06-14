@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Bindable;

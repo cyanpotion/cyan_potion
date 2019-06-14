@@ -23,9 +23,9 @@
  */
 
 /**
- * Package to hold controllable game window component classes.
+ * Package to hold game window component classes.
  *
  * @since 0.140.0
  */
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components;
 

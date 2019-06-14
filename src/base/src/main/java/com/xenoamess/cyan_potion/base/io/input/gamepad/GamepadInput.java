@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.io.input.Gamepad;
+package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import com.codedisaster.steamworks.SteamController;
 import com.codedisaster.steamworks.SteamControllerHandle;

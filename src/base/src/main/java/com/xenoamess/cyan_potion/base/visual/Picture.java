@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.Area;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;

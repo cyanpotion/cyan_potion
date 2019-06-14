@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
@@ -110,7 +110,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                         AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
                                 getString(this.getGameWindow().getGameManager().getDataCenter().getCommonSettings(),
                                         "titleClassName",
-                                        "com.xenoamess.cyan_potion.base.gameWindowComponents.TitleExample"));
+                                        "com.xenoamess.cyan_potion.base.game_window_components.TitleExample"));
 
                 title.addToGameWindowComponentTree(null);
                 title.enlargeAsFullWindow();

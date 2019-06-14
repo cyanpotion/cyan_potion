@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components;
 
 
 import com.xenoamess.commons.as_final_field.AsFinalField;

@@ -40,8 +40,8 @@ import java.util.function.Function;
  * @author XenoAmess
  * @see com.xenoamess.cyan_potion.base.GameManager#eventListAdd(Event)
  * @see com.xenoamess.cyan_potion.base.GameManager#solveEvents()
- * @see com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree#process(Event)
- * @see com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent#process(Event)
+ * @see com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree#process(Event)
+ * @see com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent#process(Event)
  */
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {

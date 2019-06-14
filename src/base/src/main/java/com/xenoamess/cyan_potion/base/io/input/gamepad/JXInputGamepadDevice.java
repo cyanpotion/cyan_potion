@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.io.input.Gamepad;
+package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;

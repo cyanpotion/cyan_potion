@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;

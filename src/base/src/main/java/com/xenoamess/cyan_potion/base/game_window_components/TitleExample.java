@@ -22,15 +22,15 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents;
+package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
