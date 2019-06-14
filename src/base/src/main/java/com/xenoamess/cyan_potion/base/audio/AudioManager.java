@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import org.joml.Vector3f;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,8 +62,8 @@ public class AudioManager implements AutoCloseable {
 
     private final Map<String, Source> specialSources = new ConcurrentHashMap<>();
 
-    private final Set<Source> unusedSources = new HashSet<>();
-    private final Set<Source> usedSources = new HashSet<>();
+    private final Set<Source> unusedSources = ConcurrentHashMap.newKeySet();
+    private final Set<Source> usedSources = ConcurrentHashMap.newKeySet();
 
 
     private long openalDevice = -1;
@@ -101,9 +102,7 @@ public class AudioManager implements AutoCloseable {
         this.setListenerPosition(new Vector3f(0, 0, 0));
         this.setListenerVelocity(new Vector3f(0, 0, 0));
 
-        for (int i = 0; i < INITIAL_TEMP_SOURCES_NUM; i++) {
-            getUnusedSources().add(new Source());
-        }
+        this.getUnusedSources().addAll(Arrays.asList(Arraysx.fillNewSelf(new Source[INITIAL_TEMP_SOURCES_NUM])));
     }
 
     /**
@@ -251,7 +250,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @return a {@link java.util.Map} object.
      */
-    public Map<String, Source> getSpecialSources() {
+    private Map<String, Source> getSpecialSources() {
         return specialSources;
     }
 
@@ -260,7 +259,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @return a {@link java.util.Set} object.
      */
-    public Set<Source> getUnusedSources() {
+    private Set<Source> getUnusedSources() {
         return unusedSources;
     }
 
@@ -269,7 +268,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @return a {@link java.util.Set} object.
      */
-    public Set<Source> getUsedSources() {
+    private Set<Source> getUsedSources() {
         return usedSources;
     }
 
