@@ -74,7 +74,6 @@ public class ResourceManager implements AutoCloseable {
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceType resourceType
      * @param loader       a {@link java.util.function.Function} object.
-     * @param <T>          a T object.
      */
     public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
@@ -87,7 +86,6 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceType resourceType
-     * @param <T>          a T object.
      * @return return
      */
     public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
@@ -104,7 +102,6 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param fullResourceURI fullResourceURI
      * @param t               a T object.
-     * @param <T>             a T object.
      */
     public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
         if (StringUtils.isBlank(fullResourceURI)) {
@@ -157,7 +154,6 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param shortenResourceURI shortenResourceURI
      * @param t                  a T object.
-     * @param <T>                a T object.
      */
     public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
         ConcurrentHashMap<String, T> resourceURIMap =
@@ -174,7 +170,6 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass             a {@link java.lang.Class} object.
      * @param shortenResourceURI shortenResourceURI
-     * @param <T>                a T object.
      * @return a T object.
      */
     public <T> T getResourceFromShortenURI(Class<T> tClass,
@@ -194,7 +189,6 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass             a {@link java.lang.Class} object.
      * @param shortenResourceURI shortenResourceURI
-     * @param <T>                a T object.
      * @return a boolean.
      */
     public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass,

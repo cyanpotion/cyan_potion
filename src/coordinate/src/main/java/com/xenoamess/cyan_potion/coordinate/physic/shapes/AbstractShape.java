@@ -96,8 +96,6 @@ public abstract class AbstractShape implements Area {
      * @param k     a K object.
      * @param v     a V object.
      * @param rough a boolean.
-     * @param <K>   a K object.
-     * @param <V>   a V object.
      * @return return
      */
     public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
@@ -262,7 +260,6 @@ public abstract class AbstractShape implements Area {
      * <p>copy.</p>
      *
      * @param source a T object.
-     * @param <T>    a T object.
      * @return a T object.
      */
     public static <T extends AbstractShape> T copy(T source) {
