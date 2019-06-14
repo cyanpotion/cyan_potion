@@ -40,7 +40,7 @@ import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 
 /**
- * Utitlity class for loading wavefiles.
+ * Utility class for loading wave files.
  *
  * @author Brian Matzon brian@matzon.dk
  * @version $Revision: 2286 $
@@ -64,23 +64,23 @@ public class WaveData {
     /**
      * sample rate of data
      */
-    public final int samplerate;
+    public final int sampleRate;
 
     /**
      * Creates a new WaveData
      *
-     * @param data       actual wavedata
+     * @param data       actual wave data
      * @param format     format of wave data
-     * @param samplerate sample rate of data
+     * @param sampleRate sample rate of data
      */
-    private WaveData(ByteBuffer data, int format, int samplerate) {
+    private WaveData(ByteBuffer data, int format, int sampleRate) {
         this.data = data;
         this.format = format;
-        this.samplerate = samplerate;
+        this.sampleRate = sampleRate;
     }
 
     /**
-     * Disposes the wavedata
+     * Disposes the WaveData
      */
     public void dispose() {
         data.clear();
@@ -90,7 +90,7 @@ public class WaveData {
      * Creates a WaveData container from the specified url
      *
      * @param path URL to file
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(URL path) {
         WaveData res = null;
@@ -99,7 +99,7 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(path.openStream())));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(URL path) fails", path, e);
+            LOGGER.warn("WaveData.create(URL path) fails:{}", path, e);
         }
         return res;
     }
@@ -108,24 +108,24 @@ public class WaveData {
      * Creates a WaveData container from the specified in the classpath
      *
      * @param path path to file (relative, and in classpath)
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(String path) {
         return create(WaveData.class.getClassLoader().getResource(path));
     }
 
     /**
-     * Creates a WaveData container from the specified inputstream
+     * Creates a WaveData container from the specified InputStream
      *
      * @param inputStream InputStream to read from
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(InputStream inputStream) {
         WaveData res = null;
         try {
             res = create(AudioSystem.getAudioInputStream(inputStream));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(InputStream inputStream) fails", inputStream, e);
+            LOGGER.warn("WaveData.create(InputStream inputStream) fails:{}", inputStream, e);
         }
         return res;
     }
@@ -134,7 +134,7 @@ public class WaveData {
      * Creates a WaveData container from the specified bytes
      *
      * @param buffer array of bytes containing the complete wave file
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(byte[] buffer) {
         WaveData res = null;
@@ -143,24 +143,24 @@ public class WaveData {
                     AudioSystem.getAudioInputStream(
                             new BufferedInputStream(new ByteArrayInputStream(buffer))));
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(byte[] buffer) fails", buffer, e);
+            LOGGER.warn("WaveData.create(byte[] buffer) fails:{}", buffer, e);
         }
         return res;
 
     }
 
     /**
-     * Creates a WaveData container from the specified ByetBuffer.
+     * Creates a WaveData container from the specified ByteBuffer.
      * If the buffer is backed by an array, it will be used directly,
      * else the contents of the buffer will be copied using get(byte[]).
      *
      * @param buffer ByteBuffer containing sound file
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(ByteBuffer buffer) {
         WaveData res = null;
         try {
-            byte[] bytes = null;
+            byte[] bytes;
             if (buffer.hasArray()) {
                 bytes = buffer.array();
             } else {
@@ -169,7 +169,7 @@ public class WaveData {
             }
             res = create(bytes);
         } catch (Exception e) {
-            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails", buffer, e);
+            LOGGER.warn("WaveData.create(ByteBuffer buffer) fails:{}", buffer, e);
 
         }
         return res;
@@ -179,14 +179,14 @@ public class WaveData {
      * Creates a WaveData container from the specified stream
      *
      * @param ais AudioInputStream to read from
-     * @return WaveData containing data, or null if a failure occured
+     * @return WaveData containing data, or null if a failure occurred
      */
     public static WaveData create(AudioInputStream ais) {
         //get format of data
         AudioFormat audioformat = ais.getFormat();
 
         // get channels
-        int channels = 0;
+        int channels;
         if (audioformat.getChannels() == 1) {
             if (audioformat.getSampleSizeInBits() == 8) {
                 channels = AL10.AL_FORMAT_MONO8;
@@ -213,7 +213,7 @@ public class WaveData {
                         * (int) ais.getFrameLength()
                         * audioformat.getSampleSizeInBits()
                         / 8];
-        int read = 0;
+        int read;
         int total = 0;
 
         try {
@@ -225,7 +225,7 @@ public class WaveData {
             return null;
         }
 
-        //insert data into bytebuffer
+        //insert data into ByteBuffer
         ByteBuffer buffer = convertAudioBytes(buf,
                 audioformat.getSampleSizeInBits() == 16);
 
@@ -246,9 +246,9 @@ public class WaveData {
     /**
      * Convert the audio bytes into the stream
      *
-     * @param audioBytes   The audio byts
+     * @param audioBytes   The audio bytes
      * @param twoBytesData True if we using double byte data
-     * @return The byte bufer of data
+     * @return The byte buffer of data
      */
     private static ByteBuffer convertAudioBytes(byte[] audioBytes,
                                                 boolean twoBytesData) {

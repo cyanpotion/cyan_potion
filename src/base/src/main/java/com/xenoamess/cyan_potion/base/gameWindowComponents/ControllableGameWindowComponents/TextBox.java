@@ -66,8 +66,8 @@ public class TextBox extends AbstractControllableGameWindowComponent {
 
         Font font = Font.getCurrentFont();
 
-        float scaley = font.getScale(realCharHeight);
-        float scalex = scaley;
+        float scaleY = font.getScale(realCharHeight);
+        float scaleX = scaleY;
 
         font.bind();
 
@@ -78,16 +78,16 @@ public class TextBox extends AbstractControllableGameWindowComponent {
         font.getXb().put(0, lineStartPosX);
         font.getYb().put(0, lineStartPosY);
 
-        font.getChardata().position(0);
+        font.getCharData().position(0);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
 
         glBegin(GL_QUADS);
 
-        float lastxReal = lineStartPosX;
-        float lastyReal = lineStartPosY;
-        float lastxShould = lineStartPosX;
-        float lastyShould = lineStartPosY;
+        float lastXReal = lineStartPosX;
+        float lastYReal = lineStartPosY;
+        float lastXShould = lineStartPosX;
+        float lastYShould = lineStartPosY;
 
         for (int i = 0; i < this.getContentString().length(); i++) {
             if (this.getTextColor() != null) {
@@ -98,10 +98,10 @@ public class TextBox extends AbstractControllableGameWindowComponent {
             if (this.getContentString().charAt(i) == '\n') {
                 lineStartPosX = realLeftTopPosX;
                 lineStartPosY += realCharHeight;
-                lastxReal = lineStartPosX;
-                lastyReal = lineStartPosY;
-                lastxShould = lineStartPosX;
-                lastyShould = lineStartPosY;
+                lastXReal = lineStartPosX;
+                lastYReal = lineStartPosY;
+                lastXShould = lineStartPosX;
+                lastYShould = lineStartPosY;
                 font.getXb().put(0, lineStartPosX);
                 font.getYb().put(0, lineStartPosY);
                 continue;
@@ -109,36 +109,36 @@ public class TextBox extends AbstractControllableGameWindowComponent {
 
             if (Character.isWhitespace(this.getContentString().charAt(i))) {
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
                         this.getContentString().charAt(i),
                         font.getXb(), font.getYb(), font.getQ(), false);
 
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
-                float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
-                float spaceUpToCharShould = font.getQ().y0() - lastyShould;
-                float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-                float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
+                float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
+                float spaceUpToCharShould = font.getQ().y0() - lastYShould;
+                float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+                float nowY0 = lineStartPosY + spaceUpToCharShould * scaleY;
 
                 Font.drawBoxTC(
-                        nowx0, nowy0 + realCharHeight * 0.8f,
-                        nowx0 + charWidthShould * scalex,
-                        nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
+                        nowX0, nowY0 + realCharHeight * 0.8f,
+                        nowX0 + charWidthShould * scaleX,
+                        nowY0 + charHeightShould * scaleY + realCharHeight * 0.8f,
                         font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
                         font.getQ().t1()
                 );
 
-                lastxReal = nowx0 + charWidthShould * scalex;
-                lastyReal = lineStartPosY;
-                lastxShould = font.getQ().x1();
-                lastyShould = lineStartPosY;
+                lastXReal = nowX0 + charWidthShould * scaleX;
+                lastYReal = lineStartPosY;
+                lastXShould = font.getQ().x1();
+                lastYShould = lineStartPosY;
                 continue;
             }
 
-            float lastxRealBak = lastxReal;
-            float lastyRealBak = lastyReal;
-            float lastxShouldBak = lastxShould;
-            float lastyShouldBak = lastyShould;
+            float lastXRealBak = lastXReal;
+            float lastYRealBak = lastYReal;
+            float lastXShouldBak = lastXShould;
+            float lastYShouldBak = lastYShould;
             float xbBak = font.getXb().get(0);
             float ybBak = font.getYb().get(0);
             int ti;
@@ -149,38 +149,38 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                     break;
                 }
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
                         nowChar,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
-                float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
-                float spaceUpToCharShould = font.getQ().y0() - lastyShould;
-                float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-                float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
+                float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
+                float spaceUpToCharShould = font.getQ().y0() - lastYShould;
+                float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+                float nowY0 = lineStartPosY + spaceUpToCharShould * scaleY;
 
-                lastxReal = nowx0 + charWidthShould * scalex;
-                lastyReal = lineStartPosY;
-                lastxShould = font.getQ().x1();
-                lastyShould = lineStartPosY;
+                lastXReal = nowX0 + charWidthShould * scaleX;
+                lastYReal = lineStartPosY;
+                lastXShould = font.getQ().x1();
+                lastYShould = lineStartPosY;
             }
 
-            boolean ifChangeLine = lastxReal > lineStartPosX + realWidth;
+            boolean ifChangeLine = lastXReal > lineStartPosX + realWidth;
 
-            lastxReal = lastxRealBak;
-            lastyReal = lastyRealBak;
-            lastxShould = lastxShouldBak;
-            lastyShould = lastyShouldBak;
+            lastXReal = lastXRealBak;
+            lastYReal = lastYRealBak;
+            lastXShould = lastXShouldBak;
+            lastYShould = lastYShouldBak;
             font.getXb().put(0, xbBak);
             font.getYb().put(0, ybBak);
 
             if (ifChangeLine) {
                 lineStartPosX = realLeftTopPosX;
                 lineStartPosY += realCharHeight;
-                lastxReal = lineStartPosX;
-                lastyReal = lineStartPosY;
-                lastxShould = lineStartPosX;
-                lastyShould = lineStartPosY;
+                lastXReal = lineStartPosX;
+                lastYReal = lineStartPosY;
+                lastXShould = lineStartPosX;
+                lastYShould = lineStartPosY;
                 font.getXb().put(0, lineStartPosX);
                 font.getYb().put(0, lineStartPosY);
             }
@@ -191,28 +191,28 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                     break;
                 }
                 stbtt_GetPackedQuad(
-                        font.getChardata(), Font.BITMAP_W, Font.BITMAP_H,
+                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
                         nowChar,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
-                float spaceLeftToCharShould = font.getQ().x0() - lastxShould;
-                float spaceUpToCharShould = font.getQ().y0() - lastyShould;
-                float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-                float nowy0 = lineStartPosY + spaceUpToCharShould * scaley;
+                float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
+                float spaceUpToCharShould = font.getQ().y0() - lastYShould;
+                float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+                float nowY0 = lineStartPosY + spaceUpToCharShould * scaleY;
 
                 Font.drawBoxTC(
-                        nowx0, nowy0 + realCharHeight * 0.8f,
-                        nowx0 + charWidthShould * scalex,
-                        nowy0 + charHeightShould * scaley + realCharHeight * 0.8f,
+                        nowX0, nowY0 + realCharHeight * 0.8f,
+                        nowX0 + charWidthShould * scaleX,
+                        nowY0 + charHeightShould * scaleY + realCharHeight * 0.8f,
                         font.getQ().s0(), font.getQ().t0(), font.getQ().s1(),
                         font.getQ().t1()
                 );
 
-                lastxReal = nowx0 + charWidthShould * scalex;
-                lastyReal = lineStartPosY;
-                lastxShould = font.getQ().x1();
-                lastyShould = lineStartPosY;
+                lastXReal = nowX0 + charWidthShould * scaleX;
+                lastYReal = lineStartPosY;
+                lastXShould = font.getQ().x1();
+                lastYShould = lineStartPosY;
             }
 
             i = ti - 1;

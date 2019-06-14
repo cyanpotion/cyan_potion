@@ -105,7 +105,7 @@ public class Texture extends AbstractResource implements Bindable {
     @Override
     public void bind(int sampler) {
         super.bind(sampler);
-        if ((this.getGlTexture2DInt() == -1) != (!this.isInMemory())) {
+        if ((this.getGlTexture2DInt() == -1) == (this.isInMemory())) {
             throw new TextureStateDisorderException(this);
         }
 
@@ -177,7 +177,7 @@ public class Texture extends AbstractResource implements Bindable {
         try {
             bufferedImage = ImageIO.read(FileUtil.getFile(resourceFilePath));
         } catch (IOException e) {
-            LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails", fullResourceURI, e);
+            LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", fullResourceURI, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();

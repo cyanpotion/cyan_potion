@@ -31,6 +31,8 @@ import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import org.joml.Vector3f;
 
+import java.util.Objects;
+
 /**
  * @author XenoAmess
  */
@@ -69,6 +71,7 @@ public abstract class AbstractEntity implements Area {
             this.getShape().register();
         }
     }
+
 
     public AbstractEntityScene getScene() {
         return scene;
@@ -116,5 +119,21 @@ public abstract class AbstractEntity implements Area {
     @Override
     public float getHeight() {
         return this.getSize().y();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AbstractEntity)) {
+            return false;
+        }
+        AbstractEntity that = (AbstractEntity) o;
+        return Objects.equals(getScene(), that.getScene()) &&
+                Objects.equals(getCenterPos(), that.getCenterPos()) &&
+                Objects.equals(getSize(), that.getSize()) &&
+                Objects.equals(getShape(), that.getShape()) &&
+                Objects.equals(getPicture(), that.getPicture());
     }
 }

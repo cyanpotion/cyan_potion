@@ -41,7 +41,7 @@ public class CodePluginManager {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CodePluginManager.class);
 
-    private EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
+    private final EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
             new EnumMap<>(CodePluginPosition.class);
 
     public CodePluginManager() {
@@ -64,7 +64,8 @@ public class CodePluginManager {
                         res = (Function<GameManager, Void>) field.get(null);
                     }
                 } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                    LOGGER.error("getCodePluginFunctionFromString(String codePluginString) fails", codePluginString, e);
+                    LOGGER.error("getCodePluginFunctionFromString(String codePluginString) fails:{}",
+                            codePluginString, e);
                 }
                 break;
             default:

@@ -26,12 +26,12 @@ package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTreeNode;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
@@ -309,21 +309,12 @@ public class World extends AbstractEntityScene {
 
         for (StaticEntity staticEntity : this.getStaticEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.get(Math.round(staticEntity.getCenterPos().z));
-            if (entities == null) {
-                entities = new ArrayList<>();
-                layerToEntities.put(Math.round(staticEntity.getCenterPos().z)
-                        , entities);
-            }
+                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getCenterPos().z), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.get(Math.round(dynamicEntity.getCenterPos().z));
-            if (entities == null) {
-                entities = new ArrayList<>();
-                layerToEntities.put(Math.round(dynamicEntity.getCenterPos().z), entities);
-            }
+                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getCenterPos().z), k -> new ArrayList<>());
             entities.add(dynamicEntity);
         }
 

@@ -22,15 +22,10 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
-
-import com.xenoamess.cyan_potion.base.events.Event;
-
-
 /**
- * @author XenoAmess
+ * Package to hold shape relation judge classes.
+ *
+ * @since 0.140.0
  */
-@FunctionalInterface
-public interface Callback {
-    Event invoke(Event e);
-}
+package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudges;
+

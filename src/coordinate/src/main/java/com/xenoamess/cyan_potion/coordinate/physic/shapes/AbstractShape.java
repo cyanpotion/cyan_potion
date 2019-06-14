@@ -29,7 +29,7 @@ import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers.ShapeRelationJudger;
+import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudges.ShapeRelationJudge;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;
@@ -39,10 +39,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
@@ -61,8 +58,8 @@ public abstract class AbstractShape implements Area {
     private Vector3f size;
 
 
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudger>
-            shapeRelationJudgers = new ConcurrentHashMap<>();
+    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
+            shapeRelationJudges = new ConcurrentHashMap<>();
 
     public AbstractShape(AbstractEntity entity, Vector3f centerPos,
                          Vector3f size) {
@@ -99,7 +96,7 @@ public abstract class AbstractShape implements Area {
             try {
                 res = (ShapeRelation) method.invoke(k, v, rough);
             } catch (IllegalAccessException | InvocationTargetException e) {
-                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fails:", e);
             }
         }
         if (res != RELATION_UNDEFINED) {
@@ -124,7 +121,7 @@ public abstract class AbstractShape implements Area {
                     res = RELATION_INNER;
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
-                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fail", e);
+                LOGGER.error("AbstractShape.relation(K k, V v, boolean rough) fails:", e);
             }
         }
         if (res != RELATION_UNDEFINED) {
@@ -133,12 +130,12 @@ public abstract class AbstractShape implements Area {
 
         //if cannot find the relation function in it,then goto
 
-        ShapeRelationJudger shapeComparator =
-                getShapeRelationJudgers().get(
+        ShapeRelationJudge shapeComparator =
+                getShapeRelationJudges().get(
                         new ImmutablePair(k.getClass(), v.getClass()));
         if (shapeComparator == null) {
             shapeComparator =
-                    getShapeRelationJudgers().get(
+                    getShapeRelationJudges().get(
                             new ImmutablePair(v.getClass(), k.getClass()));
             if (shapeComparator == null) {
                 return RELATION_UNDEFINED;
@@ -210,7 +207,7 @@ public abstract class AbstractShape implements Area {
     }
 
     public static <T extends AbstractShape> T copy(T source) {
-        T res = null;
+        T res;
         try {
             Constructor<? extends AbstractShape> constructor =
                     source.getClass().getDeclaredConstructor(source.getClass());
@@ -308,12 +305,7 @@ public abstract class AbstractShape implements Area {
                 oldBoxes.remove(au);
             } else {
                 Set<AbstractShape> shapes =
-                        this.getEntity().getScene().getBoxToShapeMap().get(au);
-                if (shapes == null) {
-                    shapes = new HashSet<>();
-                    this.getEntity().getScene().getBoxToShapeMap().put(au,
-                            shapes);
-                }
+                        this.getEntity().getScene().getBoxToShapeMap().computeIfAbsent(au, k -> new HashSet<>());
                 shapes.add(this);
             }
         }
@@ -345,13 +337,17 @@ public abstract class AbstractShape implements Area {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return super.equals(object);
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AbstractShape)) {
+            return false;
+        }
+        AbstractShape that = (AbstractShape) o;
+        return Objects.equals(getEntity(), that.getEntity()) &&
+                Objects.equals(getCenterPos(), that.getCenterPos()) &&
+                Objects.equals(getSize(), that.getSize());
     }
 
     public AbstractEntity getEntity() {
@@ -378,13 +374,13 @@ public abstract class AbstractShape implements Area {
         this.size = size;
     }
 
-    public static Map<ImmutablePair<Class, Class>, ShapeRelationJudger> getShapeRelationJudgers() {
-        return shapeRelationJudgers;
+    public static Map<ImmutablePair<Class, Class>, ShapeRelationJudge> getShapeRelationJudges() {
+        return shapeRelationJudges;
     }
 
-    public static void setShapeRelationJudgers(Map<ImmutablePair<Class,
-            Class>, ShapeRelationJudger> shapeRelationJudgers) {
-        AbstractShape.shapeRelationJudgers = shapeRelationJudgers;
+    public static void setShapeRelationJudges(Map<ImmutablePair<Class,
+            Class>, ShapeRelationJudge> shapeRelationJudges) {
+        AbstractShape.shapeRelationJudges = shapeRelationJudges;
     }
 
     @Override

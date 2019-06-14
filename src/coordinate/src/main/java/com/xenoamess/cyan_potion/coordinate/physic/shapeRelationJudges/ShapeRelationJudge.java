@@ -22,25 +22,15 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudges;
 
-import com.xenoamess.cyan_potion.base.GameManager;
-import net.jcip.annotations.GuardedBy;
-
-import java.util.function.Function;
+import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
+import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 
 /**
  * @author XenoAmess
  */
-public interface EventProcessor extends Function<Event, Event> {
-    /**
-     * the method must be thread safe.
-     *
-     * @param event the event that being processed.
-     * @return the event that generated due to processing the event.
-     * @see Event#apply(GameManager)
-     */
-    @Override
-    @GuardedBy("GameManager")
-    Event apply(Event event);
+public interface ShapeRelationJudge<K extends AbstractShape,
+        V extends AbstractShape> {
+    ShapeRelation relation(K k, V v, boolean rough);
 }

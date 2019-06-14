@@ -26,11 +26,11 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
+import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
-import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -122,32 +122,32 @@ public class Logo extends AbstractGameWindowComponent {
 
         float t =
                 (float) (this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis());
-        float pscale;
+        float pScale;
         float dynamicTime = 500f;
         float stayTime = 2000f;
         float fadeTime = 1000f;
         float seg = 0.6f;
         if (t < seg * dynamicTime) {
-            pscale = t / seg / dynamicTime;
+            pScale = t / seg / dynamicTime;
         } else if (t < (1 - (1 - seg) / 2) * dynamicTime) {
-            pscale = t / seg / dynamicTime;
+            pScale = t / seg / dynamicTime;
         } else if (t < dynamicTime) {
-            pscale =
+            pScale =
                     ((1 - (1 - seg) / 2) * 2 * dynamicTime - t) / seg / dynamicTime;
         } else {
-            pscale = 1;
+            pScale = 1;
         }
 
         if (t < dynamicTime + stayTime) {
-            this.logoPicture.setWidth(480 * (pscale + 1));
-            this.logoPicture.setHeight(60 * (pscale + 1));
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
+            this.logoPicture.setWidth(480 * (pScale + 1));
+            this.logoPicture.setHeight(60 * (pScale + 1));
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
         } else {
-            pscale = (1 - (t - dynamicTime - stayTime) / fadeTime);
-            if (pscale < 0) {
-                pscale = 0;
+            pScale = (1 - (t - dynamicTime - stayTime) / fadeTime);
+            if (pScale < 0) {
+                pScale = 0;
             }
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pscale));
+            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
         }
         this.logoPicture.draw(getGameWindow());
     }

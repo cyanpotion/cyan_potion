@@ -76,7 +76,7 @@ public class GameMapJson implements Serializable {
 
 
     /*
-     * parralax
+     * parallax
      */
 
     public boolean parallaxLoopX;
@@ -102,7 +102,7 @@ public class GameMapJson implements Serializable {
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
         } catch (IOException e) {
-            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fail", objectMapper
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}", objectMapper
                     , gameMapFile, e);
         }
         return res;

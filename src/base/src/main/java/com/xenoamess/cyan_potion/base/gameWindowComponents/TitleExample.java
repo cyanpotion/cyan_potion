@@ -27,17 +27,17 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents;
 import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Callback;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.InputBox;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -74,9 +74,9 @@ public class TitleExample extends AbstractGameWindowComponent {
         getControllableGameWindowComponents().add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
             {
                 this.registerOnMouseEnterAreaCallback(
-                        new Callback() {
+                        new EventProcessor() {
                             @Override
-                            public Event invoke(Event event) {
+                            public Event apply(Event event) {
                                 if (getState() >= 0 && getState() <= 4) {
                                     setState(index);
                                 }
@@ -96,7 +96,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             }
 
 
-            int index = 1;
+            final int index = 1;
 
             @Override
             public void draw() {
@@ -117,9 +117,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }
@@ -138,7 +138,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    int index = 2;
+                    final int index = 2;
 
                     @Override
                     public void draw() {
@@ -158,9 +158,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }
@@ -179,7 +179,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    int index = 3;
+                    final int index = 3;
 
                     @Override
                     public void draw() {
@@ -199,9 +199,9 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new Callback() {
+                                new EventProcessor() {
                                     @Override
-                                    public Event invoke(Event event) {
+                                    public Event apply(Event event) {
                                         if (getState() >= 0 && getState() <= 4) {
                                             setState(index);
                                         }
@@ -220,7 +220,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    int index = 4;
+                    final int index = 4;
 
                     @Override
                     public void draw() {
@@ -280,20 +280,12 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                     break;
                 case Keymap.XENOAMESS_KEY_UP:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        lastState();
-                    }
-                    break;
-                case Keymap.XENOAMESS_KEY_DOWN:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        nextState();
-                    }
-                    break;
                 case Keymap.XENOAMESS_KEY_LEFT:
                     if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         lastState();
                     }
                     break;
+                case Keymap.XENOAMESS_KEY_DOWN:
                 case Keymap.XENOAMESS_KEY_RIGHT:
                     if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
                         nextState();
@@ -357,11 +349,10 @@ public class TitleExample extends AbstractGameWindowComponent {
     ) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
         getControllableGameWindowComponents().forEach(
-                (AbstractControllableGameWindowComponent controllableGameWindowComponent) -> {
-                    controllableGameWindowComponent.addToGameWindowComponentTree(
-                            TitleExample.this.getGameWindowComponentTreeNode()
-                    );
-                }
+                (AbstractControllableGameWindowComponent controllableGameWindowComponent)
+                        -> controllableGameWindowComponent.addToGameWindowComponentTree(
+                        TitleExample.this.getGameWindowComponentTreeNode()
+                )
         );
     }
 
@@ -403,8 +394,6 @@ public class TitleExample extends AbstractGameWindowComponent {
                 setState(-101);
                 break;
             case -2:
-                setState(-201);
-                break;
             case -3:
                 setState(-201);
                 break;
@@ -431,7 +420,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getGameWindow().getLogicWindowWidth() / 2F,
                     this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
-                    0, new Vector4f(1, 1, 1, 1F), "校准文本Ugna");
+                    0, new Vector4f(1, 1, 1, 1F), "校准文本BeEf");
         }
     }
 

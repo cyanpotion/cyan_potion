@@ -68,7 +68,7 @@ public class Font extends AbstractResource {
     public static final float SCALE = 36.0f;
 
     private int fontTexture;
-    private STBTTPackedchar.Buffer chardata = null;
+    private STBTTPackedchar.Buffer charData = null;
 
     @AsFinalField
     private static Font defaultFont = null;
@@ -97,7 +97,7 @@ public class Font extends AbstractResource {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
-    public static final Function<GameManager, Void> PUT_FONT_LOADER_TTFFILE = (GameManager gameManager) -> {
+    public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, "ttfFile",
                 (Font font) -> {
                     font.loadAsTtfFileFont(font.getFullResourceURI());
@@ -121,7 +121,7 @@ public class Font extends AbstractResource {
 
     public void loadBitmap(String resourceFilePath) {
         ByteBuffer bitmapLocal;
-        STBTTPackedchar.Buffer chardataLocal =
+        STBTTPackedchar.Buffer charDataLocal =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
@@ -129,10 +129,10 @@ public class Font extends AbstractResource {
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
-            chardataLocal.position(p);
+            charDataLocal.position(p);
             stbtt_PackSetOversampling(pc, 1, 1);
-            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, chardataLocal);
-            chardataLocal.clear();
+            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, charDataLocal);
+            charDataLocal.clear();
             stbtt_PackEnd(pc);
             if (TEST_PRINT_FONT_BMP) {
                 stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
@@ -140,8 +140,8 @@ public class Font extends AbstractResource {
             }
 
             this.bitmap = bitmapLocal;
-            this.setChardata(chardataLocal);
-            this.setMemorySize(chardataLocal.capacity());
+            this.setCharData(charDataLocal);
+            this.setMemorySize(charDataLocal.capacity());
         }
     }
 
@@ -187,7 +187,7 @@ public class Font extends AbstractResource {
     private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
     private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);
 
-//    public void drawText(float x, float y, float scalex, float scaley,
+//    public void drawText(float x, float y, float scaleX, float scaleY,
 //    float characterSpace, Vector4f color, String text) {
 //
 //        this.bind();
@@ -195,8 +195,8 @@ public class Font extends AbstractResource {
 //        xb.put(0, x);
 //        yb.put(0, y);
 //
-////        chardata.position(font * MAX_NUM);
-//        chardata.position(0 * MAX_NUM);
+////        charData.position(font * MAX_NUM);
+//        charData.position(0 * MAX_NUM);
 //        glEnable(GL_TEXTURE_2D);
 //        glBindTexture(GL_TEXTURE_2D, fontTexture);
 //
@@ -205,40 +205,40 @@ public class Font extends AbstractResource {
 //        }
 //
 //        glBegin(GL_QUADS);
-//        float lastx_ = x;
-//        float lasty_ = y;
-//        float lastx_Should = x;
-//        float lasty_Should = y;
+//        float lastX_ = x;
+//        float lastY_ = y;
+//        float lastX_Should = x;
+//        float lastY_Should = y;
 //        for (int i = 0; i < text.length(); i++) {
-//            stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt
+//            stbtt_GetPackedQuad(charData, BITMAP_W, BITMAP_H, text.charAt
 //            (i), xb, yb, q, false);
 ////            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:"
 // + q.y0() + " y1:" + q.y1());
 //            float charWidthShould = q.x1() - q.x0();
 //            float charHeightShould = q.y1() - q.y0();
-//            float spaceLeftToCharShould = q.x0() - lastx_Should;
-//            float spaceUpToCharShould = q.y0() - lasty_Should;
-//            float nowx0 = lastx_ + spaceLeftToCharShould * scalex;
-////            float nowy0 = lasty_ + spaceUpToCharShould * scaley;
-//            float nowy0 = y;
+//            float spaceLeftToCharShould = q.x0() - lastX_Should;
+//            float spaceUpToCharShould = q.y0() - lastY_Should;
+//            float nowX0 = lastX_ + spaceLeftToCharShould * scaleX;
+////            float nowY0 = lastY_ + spaceUpToCharShould * scaleY;
+//            float nowY0 = y;
 ////            LOGGER.debug(charWidthShould + " " + charHeightShould +
-// " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowx0 + "
-// " + nowy0);
+// " " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " + nowX0 + "
+// " + nowY0);
 //            drawBoxTC(
-//                    nowx0, nowy0, nowx0 + charWidthShould * scalex, nowy0 +
-//                    charHeightShould * scaley,
+//                    nowX0, nowY0, nowX0 + charWidthShould * scaleX, nowY0 +
+//                    charHeightShould * scaleY,
 ////                    q.x0(), q.y0(), q.x1(), q.y1(),
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
-//            lastx_ = nowx0 + charWidthShould * scalex;
-//            lasty_ = y;
-//            lastx_Should = q.x1();
-//            lasty_Should = y;
+//            lastX_ = nowX0 + charWidthShould * scaleX;
+//            lastY_ = y;
+//            lastX_Should = q.x1();
+//            lastY_Should = y;
 //        }
 //        glEnd();
 //    }
 
-    public void drawText(float x, float y, float scalex, float scaley,
+    public void drawText(float x, float y, float scaleX, float scaleY,
                          float height, float characterSpace, Vector4f color,
                          String text) {
 
@@ -248,8 +248,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x);
         getYb().put(0, y);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -258,12 +258,12 @@ public class Font extends AbstractResource {
         }
 
         glBegin(GL_QUADS);
-        float lastxReal = x;
-        float lastyReal = y;
-        float lastxShould = x;
-        float lastyShould = y;
+        float lastXReal = x;
+        float lastYReal = y;
+        float lastXShould = x;
+        float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
@@ -271,26 +271,26 @@ public class Font extends AbstractResource {
 //            q.t0() + " t1:" + q.t1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
-            float spaceLeftToCharShould = getQ().x0() - lastxShould;
-            float spaceUpToCharShould = getQ().y0() - lastyShould;
-            float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-            float nowy0 = lastyReal + spaceUpToCharShould * scaley;
-//            float nowy0 = y;
+            float spaceLeftToCharShould = getQ().x0() - lastXShould;
+            float spaceUpToCharShould = getQ().y0() - lastYShould;
+            float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+            float nowY0 = lastYReal + spaceUpToCharShould * scaleY;
+//            float nowY0 = y;
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowx0 + " " + nowy0);
+//            nowX0 + " " + nowY0);
 
             drawBoxTC(
-                    nowx0, nowy0 + height * 0.8f,
-                    nowx0 + charWidthShould * scalex,
-                    nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowX0, nowY0 + height * 0.8f,
+                    nowX0 + charWidthShould * scaleX,
+                    nowY0 + charHeightShould * scaleY + height * 0.8f,
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
-            lastxReal = nowx0 + charWidthShould * scalex;
-            lastyReal = y;
-            lastxShould = getQ().x1();
-            lastyShould = y;
+            lastXReal = nowX0 + charWidthShould * scaleX;
+            lastYReal = y;
+            lastXShould = getQ().x1();
+            lastYShould = y;
         }
         glEnd();
     }
@@ -303,8 +303,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x1);
         getYb().put(0, y1);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -313,49 +313,49 @@ public class Font extends AbstractResource {
         }
 
         glBegin(GL_QUADS);
-        float lastxReal = x1;
-        float lastyReal = y1;
-        float lastxShould = x1;
-        float lastyShould = y1;
+        float lastXReal = x1;
+        float lastYReal = y1;
+        float lastXShould = x1;
+        float lastYShould = y1;
 
         float x3 = Float.MIN_VALUE;
         float y3 = Float.MIN_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
-            float spaceLeftToCharShould = getQ().x0() - lastxShould;
-            float spaceUpToCharShould = getQ().y0() - lastyShould;
-            float nowx0 = lastxReal + spaceLeftToCharShould;
-            float nowy0 = y1;
+            float spaceLeftToCharShould = getQ().x0() - lastXShould;
+            float spaceUpToCharShould = getQ().y0() - lastYShould;
+            float nowX0 = lastXReal + spaceLeftToCharShould;
+            float nowY0 = y1;
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowx0 + " " + nowy0);
+//            nowX0 + " " + nowY0);
 //            drawBoxTC(
-//                    nowx0, nowy0, nowx0 + charWidthShould * 1, nowy0 +
+//                    nowX0, nowY0, nowX0 + charWidthShould * 1, nowY0 +
 //                    charHeightShould * 1,
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
-            x3 = Math.max(x3, nowx0 + charWidthShould);
-            y3 = Math.max(y3, nowy0 + charHeightShould);
-            lastxReal = nowx0 + charWidthShould * 1;
-            lastyReal = y1;
-            lastxShould = getQ().x1();
-            lastyShould = y1;
+            x3 = Math.max(x3, nowX0 + charWidthShould);
+            y3 = Math.max(y3, nowY0 + charHeightShould);
+            lastXReal = nowX0 + charWidthShould * 1;
+            lastYReal = y1;
+            lastXShould = getQ().x1();
+            lastYShould = y1;
         }
         glEnd();
-        float scalex = width / (x3 - x1);
-        float scaley = height / (y3 - y1);
+        float scaleX = width / (x3 - x1);
+        float scaleY = height / (y3 - y1);
         if (width < 0) {
-            scalex = scaley;
+            scaleX = scaleY;
         } else if (height < 0) {
-            scaley = scalex;
+            scaleY = scaleX;
         }
-        drawText(x1, y1, scalex, scaley, height, characterSpace, color, text);
+        drawText(x1, y1, scaleX, scaleY, height, characterSpace, color, text);
     }
 
     private float maxCharHeight = -1;
@@ -365,7 +365,7 @@ public class Font extends AbstractResource {
             this.bind();
             getXb().put(0, 0);
             getYb().put(0, 0);
-            getChardata().position(0 * MAX_NUM);
+            getCharData().position(0 * MAX_NUM);
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -375,16 +375,16 @@ public class Font extends AbstractResource {
             float y3 = Float.MIN_VALUE;
             String text =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            float ymin = Float.MAX_VALUE;
-            float ymax = Float.MIN_VALUE;
+            float minY = Float.MAX_VALUE;
+            float maxY = Float.MIN_VALUE;
 
-            for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
-                        text.charAt(i), getXb(), getYb(), getQ(), false);
-                ymin = Math.min(ymin, getQ().y0());
-                ymax = Math.max(ymax, getQ().y1());
+            for (char chr : text.toCharArray()) {
+                stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
+                        chr, getXb(), getYb(), getQ(), false);
+                minY = Math.min(minY, getQ().y0());
+                maxY = Math.max(maxY, getQ().y1());
             }
-            maxCharHeight = ymax - ymin;
+            maxCharHeight = maxY - minY;
         }
         return maxCharHeight;
     }
@@ -406,10 +406,10 @@ public class Font extends AbstractResource {
                                            Vector4f color, String text) {
 
         this.bind();
-        float scaley = this.getScale(height);
-        float scalex = scaley;
+        float scaleY = this.getScale(height);
+        float scaleX = scaleY;
 
-//        drawText(x1, y1, scalex, scaley, characterSpace, color, text);
+//        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
 
         float x = x1;
         float y = y1;
@@ -417,8 +417,8 @@ public class Font extends AbstractResource {
         getXb().put(0, x);
         getYb().put(0, y);
 
-//        chardata.position(font * MAX_NUM);
-        getChardata().position(0 * MAX_NUM);
+//        charData.position(font * MAX_NUM);
+        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
@@ -427,36 +427,36 @@ public class Font extends AbstractResource {
         }
 
         glBegin(GL_QUADS);
-        float lastxReal = x;
-        float lastyReal = y;
-        float lastxShould = x;
-        float lastyShould = y;
+        float lastXReal = x;
+        float lastYReal = y;
+        float lastXShould = x;
+        float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getChardata(), BITMAP_W, BITMAP_H,
+            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
                     text.charAt(i), getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
-            float spaceLeftToCharShould = getQ().x0() - lastxShould;
-            float spaceUpToCharShould = getQ().y0() - lastyShould;
-            float nowx0 = lastxReal + spaceLeftToCharShould * scalex;
-            float nowy0 = y + spaceUpToCharShould * scaley;
+            float spaceLeftToCharShould = getQ().x0() - lastXShould;
+            float spaceUpToCharShould = getQ().y0() - lastYShould;
+            float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+            float nowY0 = y + spaceUpToCharShould * scaleY;
 
-            if (xMax > 0 && nowx0 > xMax) {
+            if (xMax > 0 && nowX0 > xMax) {
                 break;
             }
-            if (yMax > 0 && nowy0 > yMax) {
+            if (yMax > 0 && nowY0 > yMax) {
                 break;
             }
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowx0 + " " + nowy0);
+//            nowX0 + " " + nowY0);
 
             drawBoxTC(
-                    nowx0, nowy0 + height * 0.8f,
-                    nowx0 + charWidthShould * scalex,
-                    nowy0 + charHeightShould * scaley + height * 0.8f,
+                    nowX0, nowY0 + height * 0.8f,
+                    nowX0 + charWidthShould * scaleX,
+                    nowY0 + charHeightShould * scaleY + height * 0.8f,
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
 
@@ -464,17 +464,17 @@ public class Font extends AbstractResource {
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
 //                    q.s0(), q.t0(), q.s1(), q.t1()
 //            );
-            lastxReal = nowx0 + charWidthShould * scalex;
-            lastyReal = y;
-            lastxShould = getQ().x1();
-            lastyShould = y;
+            lastXReal = nowX0 + charWidthShould * scaleX;
+            lastYReal = y;
+            lastXShould = getQ().x1();
+            lastYShould = y;
         }
         glEnd();
     }
 
     @Override
     public void forceClose() {
-        getChardata().close();
+        getCharData().close();
 
         MemoryUtil.memFree(getYb());
         MemoryUtil.memFree(getXb());
@@ -490,8 +490,8 @@ public class Font extends AbstractResource {
         return fontTexture;
     }
 
-    public STBTTPackedchar.Buffer getChardata() {
-        return chardata;
+    public STBTTPackedchar.Buffer getCharData() {
+        return charData;
     }
 
     public static Font getDefaultFont() {
@@ -539,8 +539,8 @@ public class Font extends AbstractResource {
         this.fontTexture = fontTexture;
     }
 
-    public void setChardata(STBTTPackedchar.Buffer chardata) {
-        this.chardata = chardata;
+    public void setCharData(STBTTPackedchar.Buffer charData) {
+        this.charData = charData;
     }
 
 }

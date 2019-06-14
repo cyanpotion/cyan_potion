@@ -27,9 +27,9 @@ package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWind
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -71,45 +71,45 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         Event res = mouseButtonEvent;
         this.gainFocus();
         isMouseButtonLeftPressing = true;
-        if (onMouseButtonLeftDownCallback != null) {
-            res = onMouseButtonLeftDownCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonLeftDownEventProcessor != null) {
+            res = onMouseButtonLeftDownEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
 
-    private Callback onMouseButtonLeftDownCallback;
+    protected EventProcessor onMouseButtonLeftDownEventProcessor;
 
-    public void registerOnMouseButtonLeftDownCallback(Callback callback) {
-        this.onMouseButtonLeftDownCallback = callback;
+    public void registerOnMouseButtonLeftDownCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonLeftDownEventProcessor = eventProcessor;
     }
 
     protected final Event onMouseButtonLeftUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonLeftPressing = false;
-        if (onMouseButtonLeftUpCallback != null) {
-            res = onMouseButtonLeftUpCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonLeftUpEventProcessor != null) {
+            res = onMouseButtonLeftUpEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
-    private Callback onMouseButtonLeftUpCallback;
+    protected EventProcessor onMouseButtonLeftUpEventProcessor;
 
-    public void registerOnMouseButtonLeftUpCallback(Callback callback) {
-        this.onMouseButtonLeftUpCallback = callback;
+    public void registerOnMouseButtonLeftUpCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonLeftUpEventProcessor = eventProcessor;
     }
 
     protected final Event onMouseButtonLeftPressing() {
-        if (onMouseButtonLeftPressingCallback != null) {
-            return onMouseButtonLeftPressingCallback.invoke(null);
+        if (onMouseButtonLeftPressingEventProcessor != null) {
+            return onMouseButtonLeftPressingEventProcessor.apply(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonLeftPressingCallback;
+    protected EventProcessor onMouseButtonLeftPressingEventProcessor;
 
-    public void registerOnMouseButtonLeftPressingCallback(Callback callback) {
-        this.onMouseButtonLeftPressingCallback = callback;
+    public void registerOnMouseButtonLeftPressingCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonLeftPressingEventProcessor = eventProcessor;
     }
 
 
@@ -118,45 +118,45 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     protected final Event onMouseButtonRightDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = true;
-        if (onMouseButtonRightDownCallback != null) {
-            res = onMouseButtonRightDownCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonRightDownEventProcessor != null) {
+            res = onMouseButtonRightDownEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
-    private Callback onMouseButtonRightDownCallback;
+    protected EventProcessor onMouseButtonRightDownEventProcessor;
 
-    public void registerOnMouseButtonRightDownCallback(Callback callback) {
-        this.onMouseButtonRightDownCallback = callback;
+    public void registerOnMouseButtonRightDownCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonRightDownEventProcessor = eventProcessor;
     }
 
 
     protected final Event onMouseButtonRightUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonRightPressing = false;
-        if (onMouseButtonRightUpCallback != null) {
-            res = onMouseButtonRightUpCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonRightUpEventProcessor != null) {
+            res = onMouseButtonRightUpEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
-    private Callback onMouseButtonRightUpCallback;
+    protected EventProcessor onMouseButtonRightUpEventProcessor;
 
-    public void registerOnMouseButtonRightUpCallback(Callback callback) {
-        this.onMouseButtonRightUpCallback = callback;
+    public void registerOnMouseButtonRightUpCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonRightUpEventProcessor = eventProcessor;
     }
 
     protected final Event onMouseButtonRightPressing() {
-        if (onMouseButtonRightPressiongCallback != null) {
-            return onMouseButtonRightPressiongCallback.invoke(null);
+        if (onMouseButtonRightPressingEventProcessor != null) {
+            return onMouseButtonRightPressingEventProcessor.apply(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonRightPressiongCallback;
+    protected EventProcessor onMouseButtonRightPressingEventProcessor;
 
-    public void registerOnMouseButtonRightPressiongCallback(Callback callback) {
-        this.onMouseButtonRightPressiongCallback = callback;
+    public void registerOnMouseButtonRightPressingCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonRightPressingEventProcessor = eventProcessor;
     }
 
 
@@ -165,45 +165,45 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     protected final Event onMouseButtonMiddleDown(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = true;
-        if (onMouseButtonMiddleDownCallback != null) {
-            res = onMouseButtonMiddleDownCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonMiddleDownEventProcessor != null) {
+            res = onMouseButtonMiddleDownEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
-    private Callback onMouseButtonMiddleDownCallback;
+    protected EventProcessor onMouseButtonMiddleDownEventProcessor;
 
-    public void registerOnMouseButtonMiddleDownCallback(Callback callback) {
-        this.onMouseButtonMiddleDownCallback = callback;
+    public void registerOnMouseButtonMiddleDownCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonMiddleDownEventProcessor = eventProcessor;
     }
 
 
     protected final Event onMouseButtonMiddleUp(MouseButtonEvent mouseButtonEvent) {
         Event res = mouseButtonEvent;
         isMouseButtonMiddlePressing = false;
-        if (onMouseButtonMiddleUpCallback != null) {
-            res = onMouseButtonMiddleUpCallback.invoke(mouseButtonEvent);
+        if (onMouseButtonMiddleUpEventProcessor != null) {
+            res = onMouseButtonMiddleUpEventProcessor.apply(mouseButtonEvent);
         }
         return res;
     }
 
-    private Callback onMouseButtonMiddleUpCallback;
+    protected EventProcessor onMouseButtonMiddleUpEventProcessor;
 
-    public void registerOnMouseButtonMiddleUpCallback(Callback callback) {
-        this.onMouseButtonMiddleUpCallback = callback;
+    public void registerOnMouseButtonMiddleUpCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonMiddleUpEventProcessor = eventProcessor;
     }
 
     protected final Event onMouseButtonMiddlePressing() {
-        if (onMouseButtonMiddlePressiongCallback != null) {
-            return onMouseButtonMiddlePressiongCallback.invoke(null);
+        if (onMouseButtonMiddlePressingEventProcessor != null) {
+            return onMouseButtonMiddlePressingEventProcessor.apply(null);
         }
         return null;
     }
 
-    private Callback onMouseButtonMiddlePressiongCallback;
+    protected EventProcessor onMouseButtonMiddlePressingEventProcessor;
 
-    public void registerOnMouseButtonMiddlePressiongCallback(Callback callback) {
-        this.onMouseButtonMiddlePressiongCallback = callback;
+    public void registerOnMouseButtonMiddlePressingCallback(EventProcessor eventProcessor) {
+        this.onMouseButtonMiddlePressingEventProcessor = eventProcessor;
     }
 
     public void gainFocus() {
@@ -216,16 +216,16 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
     protected final Event onGainFocus() {
         Event res = null;
-        if (onGainFocusCallback != null) {
-            res = onGainFocusCallback.invoke(null);
+        if (onGainFocusEventProcessor != null) {
+            res = onGainFocusEventProcessor.apply(null);
         }
         return res;
     }
 
-    private Callback onGainFocusCallback;
+    protected EventProcessor onGainFocusEventProcessor;
 
-    public void registerOnGainFocusCallback(Callback callback) {
-        this.onGainFocusCallback = callback;
+    public void registerOnGainFocusCallback(EventProcessor eventProcessor) {
+        this.onGainFocusEventProcessor = eventProcessor;
     }
 
     protected final Event onLoseFocus() {
@@ -233,45 +233,45 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         this.isMouseButtonMiddlePressing = false;
         this.isMouseButtonRightPressing = false;
         Event res = null;
-        if (onLoseFocusCallback != null) {
-            res = onLoseFocusCallback.invoke(null);
+        if (onLoseFocusEventProcessor != null) {
+            res = onLoseFocusEventProcessor.apply(null);
         }
         return res;
     }
 
-    private Callback onLoseFocusCallback;
+    protected EventProcessor onLoseFocusEventProcessor;
 
-    public void registerOnLoseFocusCallback(Callback callback) {
-        this.onLoseFocusCallback = callback;
+    public void registerOnLoseFocusCallback(EventProcessor eventProcessor) {
+        this.onLoseFocusEventProcessor = eventProcessor;
     }
 
 
     protected final Event onMouseEnterArea() {
         Event res = null;
-        if (onMouseEnterAreaCallback != null) {
-            res = onMouseEnterAreaCallback.invoke(null);
+        if (onMouseEnterAreaEventProcessor != null) {
+            res = onMouseEnterAreaEventProcessor.apply(null);
         }
         return res;
     }
 
-    private Callback onMouseEnterAreaCallback;
+    protected EventProcessor onMouseEnterAreaEventProcessor;
 
-    public void registerOnMouseEnterAreaCallback(Callback callback) {
-        this.onMouseEnterAreaCallback = callback;
+    public void registerOnMouseEnterAreaCallback(EventProcessor eventProcessor) {
+        this.onMouseEnterAreaEventProcessor = eventProcessor;
     }
 
     protected final Event onMouseLeaveArea() {
         Event res = null;
-        if (onMouseLeaveAreaCallback != null) {
-            res = onMouseLeaveAreaCallback.invoke(null);
+        if (onMouseLeaveAreaEventProcessor != null) {
+            res = onMouseLeaveAreaEventProcessor.apply(null);
         }
         return res;
     }
 
-    private Callback onMouseLeaveAreaCallback;
+    protected EventProcessor onMouseLeaveAreaEventProcessor;
 
-    public void registerOnMouseLeaveAreaCallback(Callback callback) {
-        this.onMouseLeaveAreaCallback = callback;
+    public void registerOnMouseLeaveAreaCallback(EventProcessor eventProcessor) {
+        this.onMouseLeaveAreaEventProcessor = eventProcessor;
     }
 
     public Event processMouseEnterAreaAndLeaveArea() {

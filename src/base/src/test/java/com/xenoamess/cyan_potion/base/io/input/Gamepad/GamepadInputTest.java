@@ -55,10 +55,10 @@ public class GamepadInputTest {
         }
         assert (devices != null);
         LOGGER.debug("devices count : " + devices.length);
-        int nowi = 0;
+        int nowI = 0;
         for (int i = 0; i < devices.length; i++) {
             if (devices[i].isConnected()) {
-                nowi = i;
+                nowI = i;
             }
         }
 
@@ -67,9 +67,9 @@ public class GamepadInputTest {
         // Retrieve the device for player 1
 
         try {
-            device = XInputDevice.getDeviceFor(nowi);
+            device = XInputDevice.getDeviceFor(nowI);
         } catch (XInputNotLoadedException e) {
-            LOGGER.error("XInputDevice.getDeviceFor(nowi) returns null", nowi, e);
+            LOGGER.error("XInputDevice.getDeviceFor(nowI) returns null:{}", nowI, e);
         }
         assert (device != null);
 

@@ -25,9 +25,9 @@
 package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
 
 

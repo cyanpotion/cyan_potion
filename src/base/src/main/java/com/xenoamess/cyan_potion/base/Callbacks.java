@@ -25,7 +25,8 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.codedisaster.steamworks.*;
-import com.xenoamess.cyan_potion.base.events.*;
+import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;

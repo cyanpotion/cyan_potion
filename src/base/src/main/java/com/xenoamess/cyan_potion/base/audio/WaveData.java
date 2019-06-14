@@ -59,7 +59,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     /**
      * Creates a new WaveData
      *
-     * @param data       actual wavedata
+     * @param data       actual wave data
      * @param format     format of wave data
      * @param sampleRate sample rate of data
      */
@@ -161,7 +161,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
                     com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtil.getFile(resourceFilePath).toURI().toURL());
             this.bake(slickWaveData.data, slickWaveData.format,
-                    slickWaveData.samplerate);
+                    slickWaveData.sampleRate);
         } catch (Exception e) {
             this.readVorbis(FileUtil.getFile(resourceFilePath));
         }

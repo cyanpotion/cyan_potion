@@ -44,38 +44,38 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float size
     ) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size, size);
+        this.drawBindableAbsolute(camera, scale, bindable, posX, posY, size, size);
     }
 
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float size,
                                      Vector4f colorScale) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, size, size, colorScale);
+        this.drawBindableAbsolute(camera, scale, bindable, posX, posY, size, size, colorScale);
     }
 
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float width,
                                      float height) {
-        this.drawBindableAbsolute(camera, scale, bindable, posx, posy, width, height, new Vector4f(1, 1, 1, 1));
+        this.drawBindableAbsolute(camera, scale, bindable, posX, posY, width, height, new Vector4f(1, 1, 1, 1));
     }
 
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float width,
                                      float height,
                                      Vector4f colorScale) {
@@ -83,8 +83,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                 camera,
                 scale,
                 bindable,
-                posx,
-                posy,
+                posX,
+                posY,
                 width,
                 height,
                 Model.COMMON_MODEL,
@@ -95,8 +95,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float width,
                                      float height,
                                      Model model,
@@ -105,8 +105,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                 camera,
                 scale,
                 bindable,
-                posx,
-                posy,
+                posX,
+                posY,
                 width,
                 height,
                 Model.COMMON_MODEL,
@@ -118,8 +118,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,
-                                     float posx,
-                                     float posy,
+                                     float posX,
+                                     float posY,
                                      float width,
                                      float height,
                                      Model model,
@@ -127,8 +127,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float rotateRadius) {
         this.getGameWindow().drawBindableRelative(
                 bindable,
-                (posx - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F,
-                (posy - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F,
+                (posX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F,
+                (posY - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F,
                 width * scale,
                 height * scale,
                 model,

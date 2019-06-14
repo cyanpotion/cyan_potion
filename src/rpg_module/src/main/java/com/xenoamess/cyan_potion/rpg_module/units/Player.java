@@ -52,14 +52,4 @@ public class Player extends Unit {
         super(scene, centerPos, size, walkingAnimation4DirsURI,
                 resourceManager);
     }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return super.equals(object);
-    }
 }

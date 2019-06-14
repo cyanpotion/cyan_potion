@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.base.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -51,10 +52,10 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         this.gameWindowComponent = gameWindowComponent;
         this.getGameWindowComponent().setGameWindowComponentTreeNode(this);
         if (this.getParent() != null) {
-            this.getGameWindowComponentTree().getLeafNodes().remove(this.getParent());
-            this.getGameWindowComponentTree().getLeafNodes().add(this);
+            this.getGameWindowComponentTree().leafNodesRemove(this.getParent());
+            this.getGameWindowComponentTree().leafNodesAdd(this);
 
-            this.getParent().getChildren().add(this);
+            this.getParent().childrenAdd(this);
             this.depth = this.getParent().getDepth() + 1;
         } else {
             this.depth = 0;
@@ -65,7 +66,7 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     @Override
     public void close() {
         ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<>(getChildren());
+                new ArrayList<>(childrenCopy());
 
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.close();
@@ -73,45 +74,43 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
 
         this.getGameWindowComponent().close();
 
-
-        getGameWindowComponentTree().getLeafNodes().remove(this);
+        getGameWindowComponentTree().leafNodesRemove(this);
 
         if (getParent() != null) {
-            getParent().getChildren().remove(this);
-            if (getParent().getChildren().isEmpty()) {
-                getGameWindowComponentTree().getLeafNodes().add(getParent());
+            getParent().childrenRemove(this);
+            if (getParent().childrenCopy().isEmpty()) {
+                getGameWindowComponentTree().leafNodesAdd(getParent());
             }
         }
     }
 
-
     public void update() {
         ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<>(getChildren());
-        for (GameWindowComponentTreeNode au : tmpSons) {
-            au.update();
-        }
+                new ArrayList<>(childrenCopy());
+        tmpSons.parallelStream().forEach(GameWindowComponentTreeNode::update);
         this.getGameWindowComponent().update();
     }
 
     public void draw() {
         this.getGameWindowComponent().draw();
         ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<>(getChildren());
+                new ArrayList<>(childrenCopy());
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.draw();
         }
     }
 
     public boolean process(final Set<Event> res, final Event event) {
-        boolean flag0 = false;
-        for (GameWindowComponentTreeNode au : this.getChildren()) {
-            if (au.process(res, event)) {
-                flag0 = true;
-            }
-        }
+        boolean[] flag0 = new boolean[1];
+        flag0[0] = false;
 
-        if (flag0) {
+        this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {
+            if (au.process(res, event)) {
+                flag0[0] = true;
+            }
+        });
+
+        if (flag0[0]) {
             return true;
         } else {
             Event resEvent = this.getGameWindowComponent().process(event);
@@ -130,31 +129,46 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     }
 
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
-        GameWindowComponentTreeNode res = null;
         if (this.getGameWindowComponent() == gameWindowComponent) {
             return this;
         }
-        for (GameWindowComponentTreeNode au : this.getChildren()) {
-            res = au.findNode(gameWindowComponent);
-            if (res != null) {
-                return res;
+
+        final GameWindowComponentTreeNode[] res = new GameWindowComponentTreeNode[1];
+
+        this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode gameWindowComponentTreeNode) -> {
+            if (res[0] != null) {
+                return;
             }
-        }
-        return res;
+            GameWindowComponentTreeNode tmp = gameWindowComponentTreeNode.findNode(gameWindowComponent);
+            if (tmp != null) {
+                res[0] = tmp;
+            }
+        });
+        return res[0];
     }
 
-    public GameWindowComponentTreeNode findNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        GameWindowComponentTreeNode res = null;
+    /**
+     * this function is used to detect if param gameWindowComponentTreeNode is in the child tree of this node.
+     *
+     * @param gameWindowComponentTreeNode
+     * @return gameWindowComponentTreeNode if be there,
+     */
+    public boolean childrenTreeContains(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         if (this == gameWindowComponentTreeNode) {
-            return this;
+            return true;
         }
-        for (GameWindowComponentTreeNode au : this.getChildren()) {
-            res = au.findNode(gameWindowComponentTreeNode);
-            if (res != null) {
-                return res;
+        boolean flag0[] = new boolean[1];
+        flag0[0] = false;
+
+        this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {
+            if (flag0[0]) {
+                return;
             }
-        }
-        return res;
+            if (au.childrenTreeContains(gameWindowComponentTreeNode)) {
+                flag0[0] = true;
+            }
+        });
+        return flag0[0];
     }
 
 
@@ -169,31 +183,50 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
     }
 
     public boolean deleteNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        GameWindowComponentTreeNode res = findNode(gameWindowComponentTreeNode);
-        if (res == null) {
-            return false;
-        } else {
-            res.close();
+        if (childrenTreeContains(gameWindowComponentTreeNode)) {
+            gameWindowComponentTreeNode.close();
             return true;
         }
+        return false;
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return super.equals(object);
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GameWindowComponentTreeNode)) {
+            return false;
+        }
+        GameWindowComponentTreeNode that = (GameWindowComponentTreeNode) o;
+        return getDepth() == that.getDepth() &&
+                Objects.equals(getGameWindowComponentTree(), that.getGameWindowComponentTree()) &&
+                Objects.equals(getParent(), that.getParent()) &&
+                Objects.equals(getGameWindowComponent(), that.getGameWindowComponent());
     }
 
     public AbstractGameWindowComponent getGameWindowComponent() {
         return this.gameWindowComponent;
     }
 
-    public List<GameWindowComponentTreeNode> getChildren() {
-        return this.children;
+    public List<GameWindowComponentTreeNode> childrenCopy() {
+        List<GameWindowComponentTreeNode> res;
+        synchronized (this.children) {
+            res = new ArrayList<>(this.children);
+        }
+        return res;
+    }
+
+    public void childrenAdd(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        synchronized (this.children) {
+            this.children.add(gameWindowComponentTreeNode);
+        }
+    }
+
+    public void childrenRemove(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        synchronized (this.children) {
+            this.children.remove(gameWindowComponentTreeNode);
+        }
     }
 
     public GameWindowComponentTree getGameWindowComponentTree() {

@@ -22,10 +22,35 @@
  * SOFTWARE.
  */
 
-/**
- * Package to hold shape relation judger classes.
- *
- * @since 0.140.0
- */
-package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudgers;
+package com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents;
 
+import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+
+/**
+ * @author XenoAmess
+ */
+public class MainThreadEventProcessor implements EventProcessor {
+    public GameManager gameManager;
+    public EventProcessor processor;
+
+    public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
+        this.gameManager = gameManager;
+        this.processor = processor;
+    }
+
+    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
+        this.gameManager = gameWindowComponent.getGameWindow().getGameManager();
+        this.processor = processor;
+    }
+
+    @Override
+    public Event apply(Event event) {
+        if (Thread.currentThread().getId() != 1) {
+            this.gameManager.delayMainThreadEventProcess(this, event);
+            return null;
+        }
+        return this.processor.apply(event);
+    }
+}

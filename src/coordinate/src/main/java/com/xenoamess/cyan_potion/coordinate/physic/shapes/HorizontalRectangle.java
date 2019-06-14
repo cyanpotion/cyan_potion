@@ -97,21 +97,21 @@ public class HorizontalRectangle extends AbstractShape {
         float thisMinY = this.minY();
         float thisMaxY = this.maxY();
 
-        float tmpx = target.getCenterPos().x;
-        float tmpy = target.getCenterPos().y;
-        if (tmpx < thisMinX) {
-            tmpx = thisMinX;
-        } else if (tmpx > thisMaxX) {
-            tmpx = thisMaxX;
+        float tmpX = target.getCenterPos().x;
+        float tmpY = target.getCenterPos().y;
+        if (tmpX < thisMinX) {
+            tmpX = thisMinX;
+        } else if (tmpX > thisMaxX) {
+            tmpX = thisMaxX;
         }
 
-        if (tmpy < thisMinY) {
-            tmpy = thisMinY;
-        } else if (tmpy > thisMaxY) {
-            tmpy = thisMaxY;
+        if (tmpY < thisMinY) {
+            tmpY = thisMinY;
+        } else if (tmpY > thisMaxY) {
+            tmpY = thisMaxY;
         }
 
-        if (target.ifIn(new Vector3f(tmpx, tmpy, this.getCenterPos().z))) {
+        if (target.ifIn(new Vector3f(tmpX, tmpY, this.getCenterPos().z))) {
             return ShapeRelation.RELATION_NO_COLLIDE;
         } else {
             if (rough) {

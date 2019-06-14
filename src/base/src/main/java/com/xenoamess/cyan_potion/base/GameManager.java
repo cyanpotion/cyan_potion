@@ -34,6 +34,7 @@ import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
 import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
@@ -49,6 +50,7 @@ import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
@@ -80,7 +83,7 @@ public class GameManager implements AutoCloseable {
             new ConcurrentLinkedDeque<>();
 
     @AsFinalField
-    private ConsoleThread consoleThread;
+    private ConsoleThread consoleThread = null;
     @AsFinalField
     private GameWindow gameWindow = null;
     private final Callbacks callbacks = new Callbacks(this);
@@ -167,9 +170,9 @@ public class GameManager implements AutoCloseable {
 
         if (getBoolean(this.getDataCenter().getSpecialSettings(),
                 STRING_NO_CONSOLE_THREAD)) {
-            asFinalFieldSet(this, "consoleThread", null);
+            this.setConsoleThread(null);
         } else {
-            asFinalFieldSet(this, "consoleThread", new ConsoleThread(this));
+            this.setConsoleThread(new ConsoleThread(this));
         }
         if (getConsoleThread() != null) {
             getConsoleThread().start();
@@ -341,9 +344,7 @@ public class GameManager implements AutoCloseable {
                 if (!SteamAPI.init()) {
                     throw new SteamException("Steamworks initialization error");
                 }
-                asFinalFieldSet(
-                        this,
-                        "steamUserStats",
+                this.setSteamUserStats(
                         new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback())
                 );
                 this.getDataCenter().setRunWithSteam(true);
@@ -420,8 +421,7 @@ public class GameManager implements AutoCloseable {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                asFinalFieldSet(this, "gameWindow",
-                        this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
+                setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
@@ -542,10 +542,17 @@ public class GameManager implements AutoCloseable {
         this.close();
     }
 
-    protected void solveEvents() {
+    private final ConcurrentLinkedQueue<ImmutablePair<EventProcessor, Event>>
+            mainThreadEventProcessPairs = new ConcurrentLinkedQueue<>();
+
+    public void delayMainThreadEventProcess(EventProcessor eventProcessor, Event event) {
+        mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
+    }
+
+    public void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
-            /**
+            /*
              * notice that newEventList must be a thread safe collection.
              */
             final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();
@@ -562,14 +569,23 @@ public class GameManager implements AutoCloseable {
                 }
             });
 
-            mainThreadEvents.stream().forEach(event -> {
+            mainThreadEvents.forEach(event -> {
                 Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
                 }
             });
+
+            mainThreadEventProcessPairs.forEach((ImmutablePair<EventProcessor, Event> pair) -> {
+                Event res = pair.left.apply(pair.right);
+                if (res != null && res != pair.right) {
+                    newEventList.add(res);
+                }
+            });
+            mainThreadEventProcessPairs.clear();
+
             this.getEventList().clear();
-            this.getEventList().addAll(newEventList);
+            this.getEventList().addAll(newEventList.stream().distinct().collect(Collectors.toList()));
         }
     }
 
@@ -609,8 +625,16 @@ public class GameManager implements AutoCloseable {
         return consoleThread;
     }
 
+    public void setConsoleThread(ConsoleThread consoleThread) {
+        asFinalFieldSet(this, "consoleThread", consoleThread);
+    }
+
     public GameWindow getGameWindow() {
         return gameWindow;
+    }
+
+    public void setGameWindow(GameWindow gameWindow) {
+        asFinalFieldSet(this, "gameWindow", gameWindow);
     }
 
     public Callbacks getCallbacks() {
@@ -619,6 +643,10 @@ public class GameManager implements AutoCloseable {
 
     public SteamUserStats getSteamUserStats() {
         return steamUserStats;
+    }
+
+    public void setSteamUserStats(SteamUserStats steamUserStats) {
+        asFinalFieldSet(this, "steamUserStats", steamUserStats);
     }
 
     public DataCenter getDataCenter() {

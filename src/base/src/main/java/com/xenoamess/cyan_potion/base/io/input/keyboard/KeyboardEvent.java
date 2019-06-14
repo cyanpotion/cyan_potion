@@ -101,8 +101,6 @@ public class KeyboardEvent implements Event {
                 getAction(), getMods());
         switch (getAction()) {
             case GLFW_RELEASE:
-                gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_KEY, getKey()));
-                break;
             case GLFW_PRESS:
                 gameManager.getKeymap().keyFlipRaw(new Key(Key.TYPE_KEY, getKey()));
                 break;
