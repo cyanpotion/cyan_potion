@@ -157,7 +157,7 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         if (this == gameWindowComponentTreeNode) {
             return true;
         }
-        boolean flag0[] = new boolean[1];
+        boolean[] flag0 = new boolean[1];
         flag0[0] = false;
 
         this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {

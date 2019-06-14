@@ -199,7 +199,8 @@ public class GameSystemJson implements Serializable {
             res = objectMapper.readValue(getGameSystemJsonFile,
                     GameSystemJson.class);
         } catch (IOException e) {
-            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile)) fails:{},{}",
+            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile)) " +
+                            "fails:{},{}",
                     objectMapper, getGameSystemJsonFile, e);
         }
         return res;

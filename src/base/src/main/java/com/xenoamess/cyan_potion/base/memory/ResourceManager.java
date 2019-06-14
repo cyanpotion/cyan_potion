@@ -99,7 +99,8 @@ public class ResourceManager implements AutoCloseable {
             resourceClass =
                     this.getClass().getClassLoader().loadClass(resourceClassName);
         } catch (ClassNotFoundException e) {
-            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null:{},{}", fullResourceURI,
+            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null:{},{}",
+                    fullResourceURI,
                     resourceClassName, e);
         }
         if (resourceClass == null) {

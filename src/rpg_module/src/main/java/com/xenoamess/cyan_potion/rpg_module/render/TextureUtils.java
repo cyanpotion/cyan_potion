@@ -141,7 +141,8 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getURL(tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) fails:{},{}",
+            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) " +
+                            "fails:{},{}",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -574,7 +575,8 @@ public class TextureUtils {
             bufferedImage =
                     ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) fails:{},{}",
+            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) " +
+                            "fails:{},{}",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);

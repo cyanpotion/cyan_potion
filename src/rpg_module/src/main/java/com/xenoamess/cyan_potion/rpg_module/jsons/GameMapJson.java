@@ -102,7 +102,8 @@ public class GameMapJson implements Serializable {
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
         } catch (IOException e) {
-            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}", objectMapper
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}",
+                    objectMapper
                     , gameMapFile, e);
         }
         return res;
