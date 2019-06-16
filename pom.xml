@@ -1490,7 +1490,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>update-properties</goal>
                         </goals>
