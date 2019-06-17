@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.audio;
 import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 
+import static org.lwjgl.openal.AL10.*;
+
 /**
  * <p>Source class.</p>
  *
@@ -42,10 +44,21 @@ public class Source implements AutoCloseable {
      */
     public Source() {
         this.setAlSourceInt(AL10.alGenSources());
+        this.clean();
+    }
+
+    /**
+     * <p>Constructor for Source.</p>
+     */
+    public void clean() {
+        this.stop();
         this.setVolume(1);
         this.setPitch(1);
         this.setPosition(new Vector3f(0, 0, 0));
         this.setVelocity(new Vector3f(0, 0, 0));
+        this.setRelative(true);
+        this.setRollOffFactor(0.0f);
+        this.setLooping(false);
     }
 
     /**
@@ -58,6 +71,14 @@ public class Source implements AutoCloseable {
         this.currentWaveData.load();
         AL10.alSourcei(this.getAlSourceInt(), AL10.AL_BUFFER,
                 waveData.getAlBufferInt());
+    }
+
+    public void setRelative(boolean ifRelative) {
+        alSourcei(this.getAlSourceInt(), AL10.AL_SOURCE_RELATIVE, ifRelative ? AL_TRUE : AL_FALSE);
+    }
+
+    public void setRollOffFactor(float rollOffFactor) {
+        alSourcef(this.getAlSourceInt(), AL10.AL_ROLLOFF_FACTOR, rollOffFactor);
     }
 
     /**
@@ -85,7 +106,7 @@ public class Source implements AutoCloseable {
      */
     public void setLooping(boolean looping) {
         AL10.alSourcei(this.getAlSourceInt(), AL10.AL_LOOPING, looping ?
-                AL10.AL_TRUE : AL10.AL_FALSE);
+                AL_TRUE : AL10.AL_FALSE);
     }
 
     /**
@@ -166,7 +187,7 @@ public class Source implements AutoCloseable {
     /**
      * <p>play.</p>
      */
-    protected void play() {
+    public void play() {
         this.setCurrentWaveData(this.getCurrentWaveData());
         AL10.alSourcePlay(this.getAlSourceInt());
     }
@@ -220,7 +241,6 @@ public class Source implements AutoCloseable {
         return this.getAlSourceInt();
     }
 
-
     /**
      * <p>Getter for the field <code>alSourceInt</code>.</p>
      *
@@ -239,6 +259,7 @@ public class Source implements AutoCloseable {
         this.alSourceInt = alSourceInt;
     }
 
+
     /**
      * <p>Getter for the field <code>currentWaveData</code>.</p>
      *
@@ -247,4 +268,6 @@ public class Source implements AutoCloseable {
     public WaveData getCurrentWaveData() {
         return currentWaveData;
     }
+
+
 }

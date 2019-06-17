@@ -304,10 +304,10 @@ public class ResourceManager implements AutoCloseable {
             LOGGER.debug("suggestGc at totalMemorySize : {}", this.getTotalMemorySize());
         }
         if (this.getTotalMemorySize() <= TOTAL_MEMORY_SIZE_START_POINT) {
-            LOGGER.debug("refuse gc");
             return;
         }
 
+        LOGGER.debug("apply gc");
         this.forceGc();
         LOGGER.debug("after forceGc totalMemorySize changed to : {}", this.getTotalMemorySize());
     }

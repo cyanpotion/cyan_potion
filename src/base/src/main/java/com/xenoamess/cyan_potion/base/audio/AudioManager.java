@@ -35,20 +35,20 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
 
 /**
- * <p>AudioManager class.</p>
+ * AudioManager class.
+ * Audios Manager is manager class of some SE audio.
  *
  * @author XenoAmess
  * @version 0.143.0
+ * @see #useSource()
+ * @see #useSource(WaveData)
  */
 public class AudioManager implements AutoCloseable {
     private static final Logger LOGGER =
@@ -65,10 +65,8 @@ public class AudioManager implements AutoCloseable {
     private final Set<Source> unusedSources = ConcurrentHashMap.newKeySet();
     private final Set<Source> usedSources = ConcurrentHashMap.newKeySet();
 
-
     private long openalDevice = -1;
     private long openalContext = -1;
-
     private Vector3f listenerPosition = null;
     private Vector3f listenerVelocity = null;
 
@@ -147,11 +145,21 @@ public class AudioManager implements AutoCloseable {
     }
 
     /**
-     * <p>getUnusedSource.</p>
+     * Get an unused source, and then delete it from unused sources,
+     * then add it to used sources, clean it, then return it.
+     * <p>
+     * Notice that Sources in AudioManager are auto-managed, and will be re-used when it stop playing,
+     * so please never try to hold any reference to the returned Source.
+     * <p>
+     * Notice that please play the Source get from the function immediately,(before the next gc()),
+     * or it might be reused.
+     * <p>
+     * When you want to run some sound effect(short, not looping), then use this.
+     * When you want a full control of the source, then you shall create Source by your own.
      *
-     * @return return
+     * @return the source that we will use.
      */
-    protected Source getUnusedSource() {
+    public Source useSource() {
         if (getUnusedSources().isEmpty()) {
             this.gc();
         }
@@ -160,57 +168,85 @@ public class AudioManager implements AutoCloseable {
             LOGGER.debug("Audio source exhausted! Current num : {}",
                     this.getUsedSources().size());
         }
-        return getUnusedSources().iterator().next();
+        Iterator<Source> sourceIterator = getUnusedSources().iterator();
+        Source source = sourceIterator.next();
+        sourceIterator.remove();
+        getUsedSources().add(source);
+        source.clean();
+        return source;
+    }
+
+
+    /**
+     * Get an unused source, and then delete it from unused sources,
+     * then add it to used sources, clean it, then return it.
+     * <p>
+     * Notice that Sources in AudioManager are auto-managed, and will be re-used when it stop playing,
+     * so please never try to hold any reference to the returned Source.
+     * <p>
+     * Notice that please play the Source get from the function immediately,(before the next gc()),
+     * or it might be reused.
+     * <p>
+     * When you want to run some sound effect(short, not looping), then use this.
+     * When you want a full control of the source, then you shall create Source by your own.
+     *
+     * @return the source that we will use.
+     */
+    public Source useSource(WaveData waveData) {
+        Source source = this.useSource();
+        source.setCurrentWaveData(waveData);
+        return source;
     }
 
     /**
-     * <p>playNew.</p>
+     * Get an unused source, and then delete it from unused sources,
+     * then add it to used sources, clean it, then play it, then return it.
+     * <p>
+     * Notice that Sources in AudioManager are auto-managed, and will be re-used when it stop playing,
+     * so please never try to hold any reference to the returned Source.
+     * <p>
+     * Notice that please play the Source get from the function immediately,(before the next gc()),
+     * or it might be reused.
+     * <p>
+     * When you want to run some sound effect(short, not looping), then use this.
+     * When you want a full control of the source, then you shall create Source by your own.
      *
-     * @param waveData waveData
+     * @return the source that we will use.
      */
-    public void playNew(WaveData waveData) {
-        Source audioSource = this.getUnusedSource();
-        getUnusedSources().remove(audioSource);
-        getUsedSources().add(audioSource);
-        audioSource.play(waveData);
+    public Source playSource(WaveData waveData) {
+        Source source = this.useSource(waveData);
+        source.play();
+        return source;
     }
 
     /**
-     * <p>resume.</p>
-     *
-     * @param waveData waveData
+     * pause all playing sources.
      */
-    public void resume(WaveData waveData) {
+    public void pauseAll() {
         for (Source au : getUsedSources()) {
-            if (au.getCurrentWaveData() == waveData && au.isPaused()) {
-                au.play();
-            }
-        }
-    }
-
-    /**
-     * <p>pause.</p>
-     *
-     * @param waveData waveData
-     */
-    public void pause(WaveData waveData) {
-        for (Source au : getUsedSources()) {
-            if (au.getCurrentWaveData() == waveData && au.isPlaying()) {
+            if (au.isPlaying()) {
                 au.pause();
             }
         }
     }
 
     /**
-     * <p>stop.</p>
-     *
-     * @param waveData waveData
+     * resume all paused sources.
      */
-    public void stop(WaveData waveData) {
+    public void resumeAll() {
         for (Source au : getUsedSources()) {
-            if (au.getCurrentWaveData() == waveData && (au.isPlaying() || au.isPaused())) {
-                au.stop();
+            if (au.isPaused()) {
+                au.play();
             }
+        }
+    }
+
+    /**
+     * stop all sources.
+     */
+    public void stopAll() {
+        for (Source au : getUsedSources()) {
+            au.stop();
         }
     }
 

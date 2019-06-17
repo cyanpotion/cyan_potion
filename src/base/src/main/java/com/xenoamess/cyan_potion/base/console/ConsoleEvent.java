@@ -62,7 +62,7 @@ public class ConsoleEvent implements Event {
         //TODO should add some real console methods here.
         // If anyone do have any idea about how it shall design,
         // please just open issue. Thx.
-        LOGGER.info(getCommand());
+        LOGGER.debug("ConsoleEvent : command:{}", this.getCommand());
         return new HashSet<>();
     }
 

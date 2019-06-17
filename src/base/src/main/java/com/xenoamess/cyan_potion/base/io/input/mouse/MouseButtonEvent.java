@@ -27,12 +27,16 @@ package com.xenoamess.cyan_potion.base.io.input.mouse;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -205,5 +209,25 @@ public class MouseButtonEvent implements Event {
      */
     public int getMods() {
         return mods;
+    }
+
+    public Collection<KeyModEnum> getModEnums() {
+        return KeyModEnum.getModEnumsByValue(this.getMods());
+    }
+
+    @Override
+    public String toString() {
+        //notice that scancode is ignored by this engine(at this version.)
+        //because we want to make it multi-platform.
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("MouseButtonEvent toString():{key:");
+        stringBuilder.append(MouseButtonKeyEnum.getStringByValue(this.key));
+        stringBuilder.append(",action:");
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(",mods:");
+        stringBuilder.append(this.getModEnums());
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }

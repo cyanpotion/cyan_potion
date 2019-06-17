@@ -48,7 +48,7 @@ public class ForceEntrance {
         GameManager gameManager = new GameManager(argsMap);
         try {
             gameManager.getDataCenter().setPatchSettingsTree(
-                    X8lTree.loadFromString("<commonSettings runWithSteam=0>>"));
+                    X8lTree.loadFromString("<commonSettings runWithSteam=0>><debug>>"));
         } catch (IOException e) {
             e.printStackTrace();
         }

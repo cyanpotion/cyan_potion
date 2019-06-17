@@ -27,11 +27,14 @@ package com.xenoamess.cyan_potion.base.io.input.keyboard;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -112,8 +115,8 @@ public class KeyboardEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("KeyboardEvent : {} {} {} {}", getKey(), getScancode(),
-                getAction(), getMods());
+        LOGGER.debug("KeyboardEvent : key:{} scancode:{} action:{} modes:{}\ntoString():{}", getKey(), getScancode(),
+                getAction(), getMods(), this.toString());
         switch (getAction()) {
             case GLFW_RELEASE:
             case GLFW_PRESS:
@@ -470,5 +473,25 @@ public class KeyboardEvent implements Event {
      */
     public int getMods() {
         return mods;
+    }
+
+    public Collection<KeyModEnum> getModEnums() {
+        return KeyModEnum.getModEnumsByValue(this.getMods());
+    }
+
+    @Override
+    public String toString() {
+        //notice that scancode is ignored by this engine(at this version.)
+        //because we want to make it multi-platform.
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("KeyboardEvent toString():{key:");
+        stringBuilder.append(KeyboardKeyEnum.getStringByValue(this.key));
+        stringBuilder.append(",action:");
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(",mods:");
+        stringBuilder.append(this.getModEnums());
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }
