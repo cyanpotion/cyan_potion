@@ -1,5 +1,5 @@
 call mvn clean deploy -Dmaven.javadoc.skip=false
-call mvn sonar:sonar -Dsonar.projectKey=cyanpotion_cyan_potion -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.log.level=DEBUG -Dsonar.sources=src/main/ -Dsonar.language=java -Dsonar.java.source=1.8 -Dsonar.sourceEncoding=UTF-8 -Dsonar.java.binaries=target/classes/ -Dsonar.java.test.binaries=target/test-classes/ -Dsonar.tests=src/test/ -Dsonar.java.coveragePlugin=jacoco -Dsonar.jacoco.reportPaths=target/jacoco.exec -Dsonar.junit.reportPaths=target/surefire-reports/ -Dsonar.login=133240d1ee4abeaa8b7ba1ef36cab1a2b789ddcb
+call mvn sonar:sonar -Dsonar.projectKey=cyanpotion_cyan_potion -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.log.level=DEBUG -Dsonar.language=java -Dsonar.java.source=1.8 -Dsonar.sourceEncoding=UTF-8 -Dsonar.login=133240d1ee4abeaa8b7ba1ef36cab1a2b789ddcb
 cd ./src/
 cd ./base/
 call mvn clean deploy -Dmaven.javadoc.skip=false
