@@ -22,31 +22,25 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.cyan_potion_demo;
-
-import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.x8l.X8lTree;
-
-import java.util.Map;
+package com.xenoamess.cyan_potion.base;import com.xenoamess.commons.version.Version;
 
 /**
- * <p>ForceEntrance class.</p>
+ * A version class that represent a package's version.
+ * It will read the /VERSION/${package name of this class}.VERSION file
+ * That file is a template and shall be replaced and filled by maven when
+ * start up.
+ * However if the file is not found then VERSION will be VERSION_MISSING,
+ * And a waring message will be write to System.err
+ * <p>
+ * See pom of this project for more information.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.6.0
  */
-public class ForceEntrance {
+public class PackageVersion {
+
     /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
+     * current version of this component.
      */
-    public static void main(String[] args) {
-        Map<String, String> argsMap = GameManager.generateArgsMap(args);
-        argsMap.put("SettingFilePath", "/settings/RpgModuleDemoSettings.x8l");
-        GameManager gameManager = new GameManager(argsMap);
-        gameManager.getDataCenter().setPatchSettingsTree(
-                X8lTree.loadFromString("<commonSettings runWithSteam=0>><debug>>"));
-        gameManager.startup();
-    }
+    public static final Version VERSION = Version.loadPackageVersion(com.xenoamess.commons.PackageVersion.class);
 }

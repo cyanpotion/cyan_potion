@@ -161,7 +161,7 @@ public class GameManager implements AutoCloseable {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
         LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("cyan_potion engine version : {}", Version.VERSION);
+        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
     }
 
     /**
