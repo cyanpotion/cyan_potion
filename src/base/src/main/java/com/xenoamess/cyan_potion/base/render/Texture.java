@@ -24,9 +24,10 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.opengl.GL13;
@@ -219,7 +220,9 @@ public class Texture extends AbstractResource implements Bindable {
         } catch (IOException e) {
             LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", fullResourceURI, e);
         }
-        assert (bufferedImage != null);
+
+
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(bufferedImage);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,
