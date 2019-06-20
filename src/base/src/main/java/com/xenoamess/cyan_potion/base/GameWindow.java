@@ -251,6 +251,8 @@ public class GameWindow implements AutoCloseable, Area {
         glfwSetWindowSizeCallback(getWindow(),
                 this.getGameManager().getCallbacks().getWindowSizeCallback());
 
+        glfwSetDropCallback(getWindow(), this.getGameManager().getCallbacks().getDropCallback());
+
         if (!isFullScreen()) {
             // make the window be at the center of the screen.
             int[] pWidth = new int[1];
