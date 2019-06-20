@@ -60,7 +60,6 @@ public class FileUtil {
     /**
      * Resize buffer.
      * Do never use this to resize a buffer from MemUtil,
-     * because If you do this I guess you can't use the MemUtil Buffer right.
      * If you want to resize MemUtil's Buffer, please learn about it first.
      *
      * @param buffer      old buffer to resize
