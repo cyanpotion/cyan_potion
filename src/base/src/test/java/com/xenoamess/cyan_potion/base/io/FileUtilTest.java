@@ -27,13 +27,14 @@ package com.xenoamess.cyan_potion.base.io;
 import com.xenoamess.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * @author XenoAmess
  */
 public class FileUtilTest {
     @Test
     public void test() {
-        boolean success = true;
         System.out.println(FileUtils.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
         System.out.println(FileUtils.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
         System.out.println(FileUtils.createFolderIfAbsent("/b/b/b/b/").getAbsolutePath());
@@ -46,19 +47,18 @@ public class FileUtilTest {
         System.out.println(FileUtils.createFileIfAbsent("d").getAbsolutePath());
         try {
             System.out.println(FileUtils.createFileIfAbsent("/d/").getAbsolutePath());
-            success = false;
+            assertTrue(false);
         } catch (IllegalArgumentException e) {
             System.out.println("should have exception here:");
             e.printStackTrace();
         }
-        assert (success);
+
         try {
             System.out.println(FileUtils.createFileIfAbsent("/a/").getAbsolutePath());
-            success = false;
+            assertTrue(false);
         } catch (IllegalArgumentException e) {
             System.out.println("should have exception here:");
             e.printStackTrace();
         }
-        assert (success);
     }
 }
