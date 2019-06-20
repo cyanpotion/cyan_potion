@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.audio;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException;
 import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.openal.AL10;
@@ -169,7 +169,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param resourceFile resourceFile
      */
     public void readVorbis(File resourceFile) {
-        ByteBuffer vorbis = FileUtil.loadFileBuffer(resourceFile, true);
+        ByteBuffer vorbis = FileUtils.loadFileBuffer(resourceFile, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
     }
@@ -180,11 +180,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         String resourceFilePath = resourceFileURIStrings[1];
         try {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
-                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtil.getFile(resourceFilePath).toURI().toURL());
+                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtils.getFile(resourceFilePath).toURI().toURL());
             this.bake(slickWaveData.data, slickWaveData.format,
                     slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(FileUtil.getFile(resourceFilePath));
+            this.readVorbis(FileUtils.getFile(resourceFilePath));
         }
     }
 

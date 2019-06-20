@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io;
 
+import com.xenoamess.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -33,18 +34,18 @@ public class FileUtilTest {
     @Test
     public void test() {
         boolean success = true;
-        System.out.println(FileUtil.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
-        System.out.println(FileUtil.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
-        System.out.println(FileUtil.createFolderIfAbsent("/b/b/b/b/").getAbsolutePath());
-        System.out.println(FileUtil.getFile("/"));
-//        System.out.println(FileUtil.createFolderIfAbsent("/").getAbsolutePath());
-        System.out.println(FileUtil.createFileIfAbsent("/c/c/c/c").getAbsolutePath());
-        System.out.println(FileUtil.createFileIfAbsent("/a/a/a/a/d").getAbsolutePath());
-        System.out.println(FileUtil.createFileIfAbsent("/a/a/a/a/d").getAbsolutePath());
-        System.out.println(FileUtil.createFileIfAbsent("/d").getAbsolutePath());
-        System.out.println(FileUtil.createFileIfAbsent("d").getAbsolutePath());
+        System.out.println(FileUtils.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
+        System.out.println(FileUtils.createFolderIfAbsent("/a/a/a/a").getAbsolutePath());
+        System.out.println(FileUtils.createFolderIfAbsent("/b/b/b/b/").getAbsolutePath());
+        System.out.println(FileUtils.getFile("/"));
+//        System.out.println(FileUtils.createFolderIfAbsent("/").getAbsolutePath());
+        System.out.println(FileUtils.createFileIfAbsent("/c/c/c/c").getAbsolutePath());
+        System.out.println(FileUtils.createFileIfAbsent("/a/a/a/a/d").getAbsolutePath());
+        System.out.println(FileUtils.createFileIfAbsent("/a/a/a/a/d").getAbsolutePath());
+        System.out.println(FileUtils.createFileIfAbsent("/d").getAbsolutePath());
+        System.out.println(FileUtils.createFileIfAbsent("d").getAbsolutePath());
         try {
-            System.out.println(FileUtil.createFileIfAbsent("/d/").getAbsolutePath());
+            System.out.println(FileUtils.createFileIfAbsent("/d/").getAbsolutePath());
             success = false;
         } catch (IllegalArgumentException e) {
             System.out.println("should have exception here:");
@@ -52,7 +53,7 @@ public class FileUtilTest {
         }
         assert (success);
         try {
-            System.out.println(FileUtil.createFileIfAbsent("/a/").getAbsolutePath());
+            System.out.println(FileUtils.createFileIfAbsent("/a/").getAbsolutePath());
             success = false;
         } catch (IllegalArgumentException e) {
             System.out.println("should have exception here:");

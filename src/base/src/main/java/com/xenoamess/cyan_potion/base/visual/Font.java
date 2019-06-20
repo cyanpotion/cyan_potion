@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.visual;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -151,7 +151,7 @@ public class Font extends AbstractResource {
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
-                    FileUtil.loadFileBuffer(FileUtil.getFile(resourceFilePath), true);
+                    FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;

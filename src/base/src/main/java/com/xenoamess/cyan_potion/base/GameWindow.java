@@ -24,10 +24,10 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.commons.areas.Area;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -271,7 +271,7 @@ public class GameWindow implements AutoCloseable, Area {
         glfwSwapInterval(1);
 
         String iconFilePath =
-                FileUtil.getURI(this.getGameManager().getDataCenter().getIconFilePath()).getPath();
+                FileUtils.getURI(this.getClass(), this.getGameManager().getDataCenter().getIconFilePath()).getPath();
 
         if (DataCenter.isWindows() && iconFilePath.startsWith("/")) {
             iconFilePath = iconFilePath.substring(1);

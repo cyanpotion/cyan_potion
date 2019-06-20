@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base.render;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.opengl.GL13;
@@ -215,7 +215,7 @@ public class Texture extends AbstractResource implements Bindable {
         final String resourceFilePath = resourceFileURIStrings[1];
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(FileUtil.getFile(resourceFilePath));
+            bufferedImage = ImageIO.read(FileUtils.getFile(resourceFilePath));
         } catch (IOException e) {
             LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", fullResourceURI, e);
         }

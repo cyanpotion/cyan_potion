@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.lwjgl.system.MemoryUtil;
@@ -72,7 +72,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        final URI file = FileUtil.getURI(walkingTexturesFilepath);
+        final URI file = FileUtils.getURI(TextureUtils.class, walkingTexturesFilepath);
 
         try {
             bufferedImage = ImageIO.read(new File(file));
@@ -154,7 +154,7 @@ public class TextureUtils {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage =
-                    ImageIO.read(FileUtil.getURL(tilesetTexturesFilepath));
+                    ImageIO.read(FileUtils.getURL(TextureUtils.class, tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) " +
                             "fails:{},{}",
@@ -594,7 +594,7 @@ public class TextureUtils {
 
         try {
             bufferedImage =
-                    ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
+                    ImageIO.read(FileUtils.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) " +
                             "fails:{},{}",
@@ -742,7 +742,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
+            bufferedImage = ImageIO.read(FileUtils.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
                             "String tilesetTexturesFilepath, int columnNum) fails:{},{},{},{}",

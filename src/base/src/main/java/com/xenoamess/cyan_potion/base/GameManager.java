@@ -29,6 +29,7 @@ import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
 import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -36,7 +37,6 @@ import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
@@ -259,7 +259,7 @@ public class GameManager implements AutoCloseable {
     protected void loadSettingTree() {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
-        File globalSettingsFile = FileUtil.getFile(settingFilePath);
+        File globalSettingsFile = FileUtils.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
@@ -356,9 +356,9 @@ public class GameManager implements AutoCloseable {
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
-            multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath()));
+            multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath())) " +
+            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath())) " +
                     "fails", e);
             System.exit(1);
         }
