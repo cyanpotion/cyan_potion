@@ -27,18 +27,14 @@ package com.xenoamess.cyan_potion.base;
 import com.codedisaster.steamworks.*;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
+import com.xenoamess.cyan_potion.base.io.DropFilesEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
-import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.*;
-import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.lwjgl.system.MemoryUtil.memByteBufferNT1;
-import static org.lwjgl.system.MemoryUtil.memPointerBuffer;
 
 /**
  * <p>Callbacks class.</p>
@@ -159,26 +155,11 @@ public final class Callbacks {
                 }
             };
 
-    private GLFWDropCallbackI dropCallback = new GLFWDropCallbackI() {
-
-        /**
-         * Will be called when one or more dragged files are dropped on the window.
-         *
-         * @param window the window that received the event
-         * @param count  the number of dropped files
-         * @param names  pointer to the array of UTF-8 encoded path names of the dropped files
-         */
-        @Override
-        public void invoke(long window, int count, long names) {
-            //TODO implement it.
-            System.out.println(window + " " + count + " " + names);
-
-            PointerBuffer nameBuffer = memPointerBuffer(names, count);
-            for (int i = 0; i < count; i++) {
-                System.out.format("\t%d: %s%n", i + 1, MemoryUtil.memUTF8(memByteBufferNT1(nameBuffer.get(i))));
-            }
-        }
-    };
+    private GLFWDropCallbackI dropCallback =
+            (long window, int count, long names) -> {
+                Event event = new DropFilesEvent(window, count, names);
+                getGameManager().eventListAdd(event);
+            };
 
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
