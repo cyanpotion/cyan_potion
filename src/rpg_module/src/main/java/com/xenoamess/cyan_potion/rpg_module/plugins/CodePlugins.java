@@ -35,11 +35,15 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.*;
  * This Class's contents are used by reflection and don't delete it if you don't know about the plugin mechanism here.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class CodePlugins {
     private CodePlugins() {
     }
 
+    /**
+     * Constant <code>PLUGIN_RPG_MODULE_TEXTURE_LOADERS</code>
+     */
     public static final Function<GameManager, Void> PLUGIN_RPG_MODULE_TEXTURE_LOADERS = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, "characters",
                 (Texture texture) -> {

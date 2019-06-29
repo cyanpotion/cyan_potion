@@ -30,7 +30,10 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 
 /**
+ * <p>GameManagerConfig class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameManagerConfig {
 
@@ -40,6 +43,12 @@ public class GameManagerConfig {
     private GameManagerConfig() {
     }
 
+    /**
+     * <p>getBoolean.</p>
+     *
+     * @param value value
+     * @return a boolean.
+     */
     public static boolean getBoolean(String value) {
         /*
          * if value is null or empty, we think that it have no value part,
@@ -63,11 +72,26 @@ public class GameManagerConfig {
         }
     }
 
+    /**
+     * <p>getBoolean.</p>
+     *
+     * @param settingMap settingMap
+     * @param key        a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean getBoolean(final Map<String, String> settingMap,
                                      final String key) {
         return getBoolean(settingMap, key, false);
     }
 
+    /**
+     * <p>getBoolean.</p>
+     *
+     * @param settingMap   a {@link java.util.Map} object.
+     * @param key          a {@link java.lang.String} object.
+     * @param defaultValue a boolean.
+     * @return a boolean.
+     */
     public static boolean getBoolean(final Map<String, String> settingMap,
                                      final String key, boolean defaultValue) {
         assert (settingMap != null);
@@ -78,11 +102,26 @@ public class GameManagerConfig {
         return getBoolean(settingMap.get(key));
     }
 
+    /**
+     * <p>getString.</p>
+     *
+     * @param settingMap settingMap
+     * @param key        a {@link java.lang.String} object.
+     * @return return
+     */
     public static String getString(final Map<String, String> settingMap,
                                    final String key) {
         return getString(settingMap, key, null);
     }
 
+    /**
+     * <p>getString.</p>
+     *
+     * @param settingMap   a {@link java.util.Map} object.
+     * @param key          a {@link java.lang.String} object.
+     * @param defaultValue defaultValue
+     * @return return
+     */
     public static String getString(final Map<String, String> settingMap,
                                    final String key,
                                    final String defaultValue) {

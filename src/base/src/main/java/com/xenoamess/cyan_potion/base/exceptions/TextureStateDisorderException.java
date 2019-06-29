@@ -27,9 +27,17 @@ package com.xenoamess.cyan_potion.base.exceptions;
 import com.xenoamess.cyan_potion.base.render.Texture;
 
 /**
+ * <p>TextureStateDisorderException class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class TextureStateDisorderException extends RuntimeException {
+    /**
+     * <p>Constructor for TextureStateDisorderException.</p>
+     *
+     * @param texture texture
+     */
     public TextureStateDisorderException(Texture texture) {
         super("Texture state chaos : getGlTexture2DInt: " + texture.getGlTexture2DInt() + ", isInMemory: " + texture.isInMemory() + ", getFullResourceURI: " + texture.getFullResourceURI() + ";");
     }

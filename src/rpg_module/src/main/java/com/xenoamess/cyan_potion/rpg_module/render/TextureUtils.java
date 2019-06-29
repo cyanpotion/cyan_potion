@@ -24,9 +24,9 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.lwjgl.system.MemoryUtil;
@@ -44,7 +44,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * <p>TextureUtils class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class TextureUtils {
     private static final Logger LOGGER =
@@ -54,6 +57,12 @@ public class TextureUtils {
 
     }
 
+    /**
+     * <p>loadAsWalkingTexture.</p>
+     *
+     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param resourceFileURIString resourceFileURIString
+     */
     public static void loadAsWalkingTexture(Texture texture, String resourceFileURIString) {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final int peopleIndex = Integer.parseInt(resourceFileURIStrings[3]);
@@ -63,7 +72,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        final URI file = FileUtil.getURI(walkingTexturesFilepath);
+        final URI file = FileUtils.getURI(TextureUtils.class, walkingTexturesFilepath);
 
         try {
             bufferedImage = ImageIO.read(new File(file));
@@ -118,6 +127,12 @@ public class TextureUtils {
     }
 
 
+    /**
+     * <p>loadAsTilesetTextures8.</p>
+     *
+     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param resourceFileURIString resourceFileURIString
+     */
     public static void loadAsTilesetTextures8(Texture texture, String resourceFileURIString) {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final String resourceType = resourceFileURIStrings[2];
@@ -139,9 +154,10 @@ public class TextureUtils {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage =
-                    ImageIO.read(FileUtil.getURL(tilesetTexturesFilepath));
+                    ImageIO.read(FileUtils.getURL(TextureUtils.class, tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) fails:{},{}",
+            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) " +
+                            "fails:{},{}",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -563,6 +579,12 @@ public class TextureUtils {
         }
     }
 
+    /**
+     * <p>loadAsTilesetTexturesA2.</p>
+     *
+     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param resourceFileURIString resourceFileURIString
+     */
     public static void loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) {
         String[] resourceFileURIStrings = resourceFileURIString.split(":");
         final String tilesetTexturesFilepath = resourceFileURIStrings[1];
@@ -572,9 +594,10 @@ public class TextureUtils {
 
         try {
             bufferedImage =
-                    ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
+                    ImageIO.read(FileUtils.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) fails:{},{}",
+            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) " +
+                            "fails:{},{}",
                     texture, resourceFileURIString, e);
         }
         assert (bufferedImage != null);
@@ -620,6 +643,13 @@ public class TextureUtils {
     }
 
 
+    /**
+     * <p>getWalkingTextures.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param walkingTexturesFilepath walkingTexturesFilepath
+     * @return return
+     */
     public static List<List<Texture>> getWalkingTextures(ResourceManager resourceManager,
                                                          String walkingTexturesFilepath) {
         final List<List<Texture>> res = new ArrayList<>();
@@ -642,6 +672,13 @@ public class TextureUtils {
     }
 
 
+    /**
+     * <p>getTilesetTexturesA2.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param tilesetTexturesFilepath tilesetTexturesFilepath
+     * @return return
+     */
     public static List<Texture> getTilesetTexturesA2(ResourceManager resourceManager, String tilesetTexturesFilepath) {
         final List<Texture> res = new LinkedList<>();
 
@@ -654,28 +691,58 @@ public class TextureUtils {
         return res;
     }
 
+    /**
+     * <p>getTilesetTexturesA5.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param tilesetTexturesFilepath tilesetTexturesFilepath
+     * @return return
+     */
     public static List<Texture> getTilesetTexturesA5(ResourceManager resourceManager, String tilesetTexturesFilepath) {
         return getTilesetTextures8(resourceManager, "A5",
                 tilesetTexturesFilepath, 1);
     }
 
+    /**
+     * <p>getTilesetTexturesB.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param tilesetTexturesFilepath tilesetTexturesFilepath
+     * @return return
+     */
     public static List<Texture> getTilesetTexturesB(ResourceManager resourceManager, String tilesetTexturesFilepath) {
         return getTilesetTextures8(resourceManager, "B",
                 tilesetTexturesFilepath, 2);
     }
 
+    /**
+     * <p>getTilesetTexturesC.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param tilesetTexturesFilepath tilesetTexturesFilepath
+     * @return return
+     */
     public static List<Texture> getTilesetTexturesC(ResourceManager resourceManager, String tilesetTexturesFilepath) {
         return getTilesetTextures8(resourceManager, "C",
                 tilesetTexturesFilepath, 2);
     }
 
+    /**
+     * <p>getTilesetTextures8.</p>
+     *
+     * @param resourceManager         a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param resourceType            a {@link java.lang.String} object.
+     * @param tilesetTexturesFilepath tilesetTexturesFilepath
+     * @param columnNum               a int.
+     * @return return
+     */
     public static List<Texture> getTilesetTextures8(ResourceManager resourceManager, String resourceType, String
             tilesetTexturesFilepath, int columnNum) {
         final List<Texture> res = new ArrayList<>();
 
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(FileUtil.getFile(tilesetTexturesFilepath));
+            bufferedImage = ImageIO.read(FileUtils.getFile(tilesetTexturesFilepath));
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
                             "String tilesetTexturesFilepath, int columnNum) fails:{},{},{},{}",

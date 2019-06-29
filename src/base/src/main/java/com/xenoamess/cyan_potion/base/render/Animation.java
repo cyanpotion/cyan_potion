@@ -28,7 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>Animation class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Animation implements Bindable {
     private int texturePointer;
@@ -39,11 +42,21 @@ public class Animation implements Bindable {
     private final List<Bindable> frames = new ArrayList<>();
 
 
+    /**
+     * <p>Constructor for Animation.</p>
+     *
+     * @param fps a int.
+     */
     public Animation(int fps) {
         this.setTexturePointer(0);
         this.setFps(1f / fps);
     }
 
+    /**
+     * <p>getCurrentBindable.</p>
+     *
+     * @return return
+     */
     public Bindable getCurrentBindable() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
@@ -61,40 +74,81 @@ public class Animation implements Bindable {
         return getFrames().get(getTexturePointer());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind(int sampler) {
         this.getCurrentBindable().bind(sampler);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void unbind() {
         this.getCurrentBindable().unbind();
     }
 
+    /**
+     * <p>Getter for the field <code>texturePointer</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTexturePointer() {
         return texturePointer;
     }
 
+    /**
+     * <p>Setter for the field <code>texturePointer</code>.</p>
+     *
+     * @param texturePointer a int.
+     */
     public void setTexturePointer(int texturePointer) {
         this.texturePointer = texturePointer;
     }
 
+    /**
+     * <p>Getter for the field <code>lastTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLastTime() {
         return lastTime;
     }
 
+    /**
+     * <p>Setter for the field <code>lastTime</code>.</p>
+     *
+     * @param lastTime a long.
+     */
     public void setLastTime(long lastTime) {
         this.lastTime = lastTime;
     }
 
+    /**
+     * <p>Getter for the field <code>fps</code>.</p>
+     *
+     * @return a float.
+     */
     public float getFps() {
         return fps;
     }
 
+    /**
+     * <p>Setter for the field <code>fps</code>.</p>
+     *
+     * @param fps a float.
+     */
     public void setFps(float fps) {
         this.fps = fps;
     }
 
+    /**
+     * <p>Getter for the field <code>frames</code>.</p>
+     *
+     * @return return
+     */
     public List<Bindable> getFrames() {
         return frames;
     }

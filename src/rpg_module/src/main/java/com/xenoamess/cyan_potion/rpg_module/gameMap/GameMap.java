@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.rpg_module.gameMap;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
@@ -44,7 +44,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * <p>GameMap class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameMap {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
@@ -70,7 +73,7 @@ public class GameMap {
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
-                FileUtil.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                FileUtils.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
     }
@@ -100,34 +103,74 @@ public class GameMap {
 
     }
 
+    /**
+     * <p>Getter for the field <code>world</code>.</p>
+     *
+     * @return return
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * <p>Setter for the field <code>world</code>.</p>
+     *
+     * @param world world
+     */
     public void setWorld(World world) {
         this.world = world;
     }
 
+    /**
+     * <p>Getter for the field <code>gameMapJson</code>.</p>
+     *
+     * @return return
+     */
     public GameMapJson getGameMapJson() {
         return gameMapJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameMapJson</code>.</p>
+     *
+     * @param gameMapJson gameMapJson
+     */
     public void setGameMapJson(GameMapJson gameMapJson) {
         this.gameMapJson = gameMapJson;
     }
 
+    /**
+     * <p>Getter for the field <code>gameMapInfoJson</code>.</p>
+     *
+     * @return return
+     */
     public GameMapInfoJson getGameMapInfoJson() {
         return gameMapInfoJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameMapInfoJson</code>.</p>
+     *
+     * @param gameMapInfoJson gameMapInfoJson
+     */
     public void setGameMapInfoJson(GameMapInfoJson gameMapInfoJson) {
         this.gameMapInfoJson = gameMapInfoJson;
     }
 
+    /**
+     * <p>Getter for the field <code>gameTiles</code>.</p>
+     *
+     * @return return
+     */
     public ArrayList<GameTile> getGameTiles() {
         return gameTiles;
     }
 
+    /**
+     * <p>Getter for the field <code>eventUnits</code>.</p>
+     *
+     * @return return
+     */
     public ArrayList<EventUnit> getEventUnits() {
         return eventUnits;
     }
@@ -199,6 +242,13 @@ public class GameMap {
         }
     }
 
+    /**
+     * <p>getGameMapInfoJsons.</p>
+     *
+     * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param gameMapInfosFile gameMapInfosFile
+     * @return return
+     */
     public static List<GameMapInfoJson> getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile) {
         List<GameMapInfoJson> res = null;
         try {
@@ -215,7 +265,7 @@ public class GameMap {
     static List<GameMap> getGameMaps(World world) {
         List<GameMapInfoJson> gameMapInfoJsons =
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
-                        FileUtil.getFile("/www/data/MapInfos.json"));
+                        FileUtils.getFile("/www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {
@@ -228,6 +278,11 @@ public class GameMap {
         return gameMaps;
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param world world
+     */
     public static void init(World world) {
         //        GameMapInfoJson
         List<GameMap> gameMaps = getGameMaps(world);
@@ -246,18 +301,38 @@ public class GameMap {
         }
     }
 
+    /**
+     * <p>getGameTileset.</p>
+     *
+     * @return return
+     */
     public GameTileset getGameTileset() {
         return this.getWorld().getRpgModuleDataCenter().getGameTileset(this.getGameMapJson().tilesetId);
     }
 
+    /**
+     * <p>getID.</p>
+     *
+     * @return a int.
+     */
     public int getID() {
         return getGameMapInfoJson().getId();
     }
 
+    /**
+     * <p>getHeight.</p>
+     *
+     * @return a int.
+     */
     public int getHeight() {
         return getGameMapJson().height;
     }
 
+    /**
+     * <p>getWidth.</p>
+     *
+     * @return a int.
+     */
     public int getWidth() {
         return getGameMapJson().width;
     }

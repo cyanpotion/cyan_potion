@@ -36,12 +36,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>EventUnit class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class EventUnit extends Unit {
     private EventUnitJson eventUnitJson;
     private List<EventPage> eventPages = new ArrayList<>();
 
+    /**
+     * <p>Constructor for EventUnit.</p>
+     *
+     * @param scene         a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param eventUnitJson eventUnitJson
+     */
     public EventUnit(AbstractEntityScene scene, EventUnitJson eventUnitJson) {
         //todo
         super(scene,
@@ -68,18 +77,38 @@ public class EventUnit extends Unit {
     }
 
 
+    /**
+     * <p>Getter for the field <code>eventUnitJson</code>.</p>
+     *
+     * @return return
+     */
     public EventUnitJson getEventUnitJson() {
         return eventUnitJson;
     }
 
+    /**
+     * <p>Setter for the field <code>eventUnitJson</code>.</p>
+     *
+     * @param eventUnitJson eventUnitJson
+     */
     public void setEventUnitJson(EventUnitJson eventUnitJson) {
         this.eventUnitJson = eventUnitJson;
     }
 
+    /**
+     * <p>Getter for the field <code>eventPages</code>.</p>
+     *
+     * @return return
+     */
     public List<EventPage> getEventPages() {
         return eventPages;
     }
 
+    /**
+     * <p>Setter for the field <code>eventPages</code>.</p>
+     *
+     * @param eventPages eventPages
+     */
     public void setEventPages(List<EventPage> eventPages) {
         this.eventPages = eventPages;
     }

@@ -31,19 +31,35 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * <p>Console class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
 
+    /**
+     * <p>Getter for the field <code>alive</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAlive() {
         return this.alive.get();
     }
 
+    /**
+     * <p>Setter for the field <code>alive</code>.</p>
+     *
+     * @param alive a boolean.
+     */
     public void setAlive(boolean alive) {
         this.alive.set(alive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void run() {
         try (Socket socket = new Socket("localhost", 13888)) {
@@ -69,6 +85,11 @@ public class Console implements Runnable {
         }
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         new Thread(new Console()).start();
     }

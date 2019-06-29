@@ -32,7 +32,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>GrammarMap class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GrammarMap {
     private static final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
@@ -46,11 +49,23 @@ public class GrammarMap {
             new ConcurrentHashMap<>();
 
 
+    /**
+     * <p>getMethodName.</p>
+     *
+     * @param methodNum a int.
+     * @return return
+     */
     public static String getMethodName(int methodNum) {
         checkInit();
         return METHOD_NUM_TO_METHOD_NAME_MAP.get(methodNum);
     }
 
+    /**
+     * <p>getMethodNum.</p>
+     *
+     * @param methodName methodName
+     * @return return
+     */
     public static Integer getMethodNum(String methodName) {
         checkInit();
         return METHOD_NAME_TO_METHOD_NUM_MAP.get(methodName);

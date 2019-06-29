@@ -25,17 +25,45 @@
 package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
+ * <p>Area interface.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public interface Area {
+    /**
+     * <p>getCenterPosX.</p>
+     *
+     * @return a float.
+     */
     float getCenterPosX();
 
+    /**
+     * <p>getCenterPosY.</p>
+     *
+     * @return a float.
+     */
     float getCenterPosY();
 
+    /**
+     * <p>getWidth.</p>
+     *
+     * @return a float.
+     */
     float getWidth();
 
+    /**
+     * <p>getHeight.</p>
+     *
+     * @return a float.
+     */
     float getHeight();
 
+    /**
+     * <p>copyArea.</p>
+     *
+     * @return return
+     */
     default ImmutableArea copyArea() {
         return new ImmutableArea(this);
     }

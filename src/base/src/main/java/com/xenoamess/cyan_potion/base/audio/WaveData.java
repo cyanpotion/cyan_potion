@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.audio;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException;
 import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeException;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.openal.AL10;
@@ -44,7 +44,10 @@ import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.stb.STBVorbis.*;
 
 /**
+ * <p>WaveData class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class WaveData extends AbstractResource implements AutoCloseable {
     private static final Logger LOGGER =
@@ -101,6 +104,14 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     };
 
 
+    /**
+     * <p>alBufferData.</p>
+     *
+     * @param bufferName a int.
+     * @param format     a int.
+     * @param data       a {@link java.nio.Buffer} object.
+     * @param frequency  a int.
+     */
     public static void alBufferData(int bufferName, int format, Buffer data,
                                     int frequency) {
         if (data instanceof ByteBuffer) {
@@ -124,6 +135,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
                 data, this.getSampleRate());
     }
 
+    /**
+     * <p>readVorbis.</p>
+     *
+     * @param vorbis vorbis
+     */
     public void readVorbis(ByteBuffer vorbis) {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
             IntBuffer error = MemoryUtil.memAllocInt(1);
@@ -147,8 +163,13 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>readVorbis.</p>
+     *
+     * @param resourceFile resourceFile
+     */
     public void readVorbis(File resourceFile) {
-        ByteBuffer vorbis = FileUtil.loadFileBuffer(resourceFile, true);
+        ByteBuffer vorbis = FileUtils.loadFileBuffer(resourceFile, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
     }
@@ -159,14 +180,17 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         String resourceFilePath = resourceFileURIStrings[1];
         try {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
-                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtil.getFile(resourceFilePath).toURI().toURL());
+                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtils.getFile(resourceFilePath).toURI().toURL());
             this.bake(slickWaveData.data, slickWaveData.format,
                     slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(FileUtil.getFile(resourceFilePath));
+            this.readVorbis(FileUtils.getFile(resourceFilePath));
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void forceClose() {
         if (this.getAlBufferInt() != -1) {
@@ -177,21 +201,38 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     }
 
 
+    /**
+     * <p>Getter for the field <code>alBufferInt</code>.</p>
+     *
+     * @return a int.
+     */
     public int getAlBufferInt() {
         return alBufferInt;
     }
 
+    /**
+     * <p>Setter for the field <code>alBufferInt</code>.</p>
+     *
+     * @param alBufferInt a int.
+     */
     public void setAlBufferInt(int alBufferInt) {
         this.alBufferInt = alBufferInt;
     }
 
     /**
+     * <p>Getter for the field <code>format</code>.</p>
+     *
      * @return format type of data
      */
     public int getFormat() {
         return format;
     }
 
+    /**
+     * <p>Setter for the field <code>format</code>.</p>
+     *
+     * @param format a int.
+     */
     public void setFormat(int format) {
         this.format = format;
     }
@@ -205,6 +246,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         return sampleRate;
     }
 
+    /**
+     * <p>Setter for the field <code>sampleRate</code>.</p>
+     *
+     * @param sampleRate a int.
+     */
     public void setSampleRate(int sampleRate) {
         this.sampleRate = sampleRate;
     }

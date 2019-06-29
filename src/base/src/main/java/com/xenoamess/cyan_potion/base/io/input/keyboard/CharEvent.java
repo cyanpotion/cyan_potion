@@ -33,7 +33,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
+ * <p>CharEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class CharEvent implements Event {
     private static final Logger LOGGER =
@@ -43,23 +46,42 @@ public class CharEvent implements Event {
     private final int codepoint;
 
 
+    /**
+     * <p>Constructor for CharEvent.</p>
+     *
+     * @param window    a long.
+     * @param codepoint a int.
+     */
     public CharEvent(long window, int codepoint) {
         super();
         this.window = window;
         this.codepoint = codepoint;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("CharEvent : {}", (char) this.getCodepoint());
+        LOGGER.debug("CharEvent : codepoint:{}", (char) this.getCodepoint());
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>codepoint</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCodepoint() {
         return codepoint;
     }

@@ -37,7 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>GameTilesetJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameTilesetJson implements Serializable {
     private static final Logger LOGGER =
@@ -51,6 +54,13 @@ public class GameTilesetJson implements Serializable {
     public ArrayList<String> tilesetNames;
 
 
+    /**
+     * <p>getGameTileSetJsons.</p>
+     *
+     * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param gameTileSetsFile gameTileSetsFile
+     * @return return
+     */
     public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) {
         List<GameTilesetJson> res = new ArrayList<>();
         try {
@@ -58,7 +68,8 @@ public class GameTilesetJson implements Serializable {
                     new TypeReference<List<GameTilesetJson>>() {
                     });
         } catch (IOException e) {
-            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) fails:{},{}",
+            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) " +
+                            "fails:{},{}",
                     objectMapper, gameTileSetsFile, e);
         }
         return res;

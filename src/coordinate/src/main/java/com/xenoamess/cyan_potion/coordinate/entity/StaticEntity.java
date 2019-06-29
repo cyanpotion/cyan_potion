@@ -32,15 +32,30 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 /**
+ * <p>StaticEntity class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class StaticEntity extends AbstractEntity {
 
+    /**
+     * <p>Constructor for StaticEntity.</p>
+     *
+     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos centerPos
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public StaticEntity(AbstractEntityScene scene, Vector3f centerPos,
                         Vector3f size, Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

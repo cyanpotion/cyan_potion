@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -39,7 +39,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
+ * <p>Shader class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Shader implements AutoCloseable {
     private static final Logger LOGGER =
@@ -58,11 +61,16 @@ public class Shader implements AutoCloseable {
     private long lastClearTime = System.currentTimeMillis();
     private final FloatBuffer matrixData = MemoryUtil.memAllocFloat(16);
 
+    /**
+     * <p>Constructor for Shader.</p>
+     *
+     * @param filename filename
+     */
     public Shader(String filename) {
         setProgramObject(glCreateProgram());
 
         setVertexShaderObject(glCreateShader(GL_VERTEX_SHADER));
-        glShaderSource(getVertexShaderObject(), FileUtil.loadFile("/shaders/" + filename + ".vs"));
+        glShaderSource(getVertexShaderObject(), FileUtils.loadFile(this.getClass(), "/shaders/" + filename + ".vs"));
         glCompileShader(getVertexShaderObject());
         if (glGetShaderi(getVertexShaderObject(), GL_COMPILE_STATUS) != 1) {
             LOGGER.error(glGetShaderInfoLog(getVertexShaderObject()));
@@ -70,7 +78,7 @@ public class Shader implements AutoCloseable {
         }
 
         setFragmentShaderObject(glCreateShader(GL_FRAGMENT_SHADER));
-        glShaderSource(getFragmentShaderObject(), FileUtil.loadFile("/shaders/" + filename + ".fs"));
+        glShaderSource(getFragmentShaderObject(), FileUtils.loadFile(this.getClass(), "/shaders/" + filename + ".fs"));
         glCompileShader(getFragmentShaderObject());
         if (glGetShaderi(getFragmentShaderObject(), GL_COMPILE_STATUS) != 1) {
             LOGGER.error(glGetShaderInfoLog(getFragmentShaderObject()));
@@ -95,6 +103,9 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         glDetachShader(getProgramObject(), getVertexShaderObject());
@@ -106,6 +117,12 @@ public class Shader implements AutoCloseable {
     }
 
 
+    /**
+     * <p>iGetUniformLocation.</p>
+     *
+     * @param uniformName uniformName
+     * @return a int.
+     */
     protected int iGetUniformLocation(String uniformName) {
         long nowClearTime = System.currentTimeMillis();
         if (nowClearTime - getLastClearTime() > CLEAR_TIME_MILLIS) {
@@ -121,6 +138,12 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>setUniform.</p>
+     *
+     * @param uniformName uniformName
+     * @param value       a int.
+     */
     public void setUniform(String uniformName, int value) {
         int location = iGetUniformLocation(uniformName);
         if (location != -1) {
@@ -128,6 +151,12 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>setUniform.</p>
+     *
+     * @param uniformName uniformName
+     * @param value       a {@link org.joml.Vector3f} object.
+     */
     public void setUniform(String uniformName, Vector3f value) {
         int location = iGetUniformLocation(uniformName);
         if (location != -1) {
@@ -135,6 +164,12 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>setUniform.</p>
+     *
+     * @param uniformName uniformName
+     * @param value       a {@link org.joml.Vector4f} object.
+     */
     public void setUniform(String uniformName, Vector4f value) {
         int location = iGetUniformLocation(uniformName);
         if (location != -1) {
@@ -143,6 +178,12 @@ public class Shader implements AutoCloseable {
     }
 
 
+    /**
+     * <p>setUniform.</p>
+     *
+     * @param uniformName uniformName
+     * @param value       a {@link org.joml.Matrix4f} object.
+     */
     public void setUniform(String uniformName, Matrix4f value) {
         final int location = iGetUniformLocation(uniformName);
         value.get(getMatrixData());
@@ -151,50 +192,106 @@ public class Shader implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>unbind.</p>
+     */
     public static void unbind() {
         glUseProgram(0);
     }
 
+    /**
+     * <p>bind.</p>
+     */
     public void bind() {
         glUseProgram(getProgramObject());
     }
 
+    /**
+     * <p>Getter for the field <code>programObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getProgramObject() {
         return programObject;
     }
 
+    /**
+     * <p>Setter for the field <code>programObject</code>.</p>
+     *
+     * @param programObject a int.
+     */
     public void setProgramObject(int programObject) {
         this.programObject = programObject;
     }
 
+    /**
+     * <p>Getter for the field <code>vertexShaderObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getVertexShaderObject() {
         return vertexShaderObject;
     }
 
+    /**
+     * <p>Setter for the field <code>vertexShaderObject</code>.</p>
+     *
+     * @param vertexShaderObject a int.
+     */
     public void setVertexShaderObject(int vertexShaderObject) {
         this.vertexShaderObject = vertexShaderObject;
     }
 
+    /**
+     * <p>Getter for the field <code>fragmentShaderObject</code>.</p>
+     *
+     * @return a int.
+     */
     public int getFragmentShaderObject() {
         return fragmentShaderObject;
     }
 
+    /**
+     * <p>Setter for the field <code>fragmentShaderObject</code>.</p>
+     *
+     * @param fragmentShaderObject a int.
+     */
     public void setFragmentShaderObject(int fragmentShaderObject) {
         this.fragmentShaderObject = fragmentShaderObject;
     }
 
+    /**
+     * <p>Getter for the field <code>uniformLocationMap</code>.</p>
+     *
+     * @return return
+     */
     public Map<String, Integer> getUniformLocationMap() {
         return uniformLocationMap;
     }
 
+    /**
+     * <p>Getter for the field <code>lastClearTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLastClearTime() {
         return lastClearTime;
     }
 
+    /**
+     * <p>Setter for the field <code>lastClearTime</code>.</p>
+     *
+     * @param lastClearTime a long.
+     */
     public void setLastClearTime(long lastClearTime) {
         this.lastClearTime = lastClearTime;
     }
 
+    /**
+     * <p>Getter for the field <code>matrixData</code>.</p>
+     *
+     * @return return
+     */
     public FloatBuffer getMatrixData() {
         return matrixData;
     }

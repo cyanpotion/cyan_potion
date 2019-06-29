@@ -32,6 +32,7 @@ package com.xenoamess.cyan_potion.base.events;
  * then we solve the MainThreadEvent s.
  *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public interface MainThreadEvent extends Event {
 }

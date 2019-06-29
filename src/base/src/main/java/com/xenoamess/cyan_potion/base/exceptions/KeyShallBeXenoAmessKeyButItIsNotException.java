@@ -25,9 +25,17 @@
 package com.xenoamess.cyan_potion.base.exceptions;
 
 /**
+ * <p>KeyShallBeXenoAmessKeyButItIsNotException class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class KeyShallBeXenoAmessKeyButItIsNotException extends RuntimeException {
+    /**
+     * <p>Constructor for KeyShallBeXenoAmessKeyButItIsNotException.</p>
+     *
+     * @param message message
+     */
     public KeyShallBeXenoAmessKeyButItIsNotException(String message) {
         super(message);
     }

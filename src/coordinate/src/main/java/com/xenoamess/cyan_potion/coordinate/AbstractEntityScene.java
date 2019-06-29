@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractScene;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.StaticEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
@@ -37,9 +37,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>Abstract AbstractEntityScene class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractEntityScene extends AbstractScene {
+    /**
+     * Constant <code>BOX_SIZE=128</code>
+     */
     public static final int BOX_SIZE = 128;
 
     private final Set<StaticEntity> staticEntitySet = new HashSet<>();
@@ -47,22 +53,47 @@ public abstract class AbstractEntityScene extends AbstractScene {
     private final Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> boxToShapeMap = new ConcurrentHashMap<>();
     private final Map<AbstractShape, Set<AbstractShape>> shapeCollisionSet = new ConcurrentHashMap<>();
 
+    /**
+     * <p>Constructor for AbstractEntityScene.</p>
+     *
+     * @param gameWindow gameWindow
+     */
     public AbstractEntityScene(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>Getter for the field <code>staticEntitySet</code>.</p>
+     *
+     * @return return
+     */
     public Set<StaticEntity> getStaticEntitySet() {
         return staticEntitySet;
     }
 
+    /**
+     * <p>Getter for the field <code>dynamicEntitySet</code>.</p>
+     *
+     * @return return
+     */
     public Set<AbstractDynamicEntity> getDynamicEntitySet() {
         return dynamicEntitySet;
     }
 
+    /**
+     * <p>Getter for the field <code>boxToShapeMap</code>.</p>
+     *
+     * @return return
+     */
     public Map<ImmutablePair<Integer, Integer>, Set<AbstractShape>> getBoxToShapeMap() {
         return boxToShapeMap;
     }
 
+    /**
+     * <p>Getter for the field <code>shapeCollisionSet</code>.</p>
+     *
+     * @return return
+     */
     public Map<AbstractShape, Set<AbstractShape>> getShapeCollisionSet() {
         return shapeCollisionSet;
     }

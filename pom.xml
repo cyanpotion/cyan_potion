@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.142.0</version>
+    <version>0.142.5</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -58,15 +58,15 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.8.1</commonx.version>
-        <multi_language.version>0.43.4</multi_language.version>
-        <x8l.version>0.47.3</x8l.version>
+        <commonx.version>0.9.5</commonx.version>
+        <multi_language.version>0.44.0</multi_language.version>
+        <x8l.version>0.48.0</x8l.version>
         <SDL_GameControllerDB_Util.version>0.1.2
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.5.0-RC1</junit-jupiter.version>
+        <junit-jupiter.version>5.5.0-RC2</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
@@ -1490,9 +1490,28 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>update-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -1560,9 +1579,20 @@
                     <!--                    </javadocExecutable>-->
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
-
 
     <distributionManagement>
         <snapshotRepository>

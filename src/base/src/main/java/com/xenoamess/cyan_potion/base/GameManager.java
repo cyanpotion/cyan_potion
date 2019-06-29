@@ -29,15 +29,15 @@ import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
 import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.ControllableGameWindowComponents.EventProcessor;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.GameWindowComponentTree;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
-import com.xenoamess.cyan_potion.base.io.input.Gamepad.GamepadInput;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -69,12 +69,18 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
+ * <p>GameManager class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
 
+    /**
+     * Constant <code>LINE_SEGMENT="---------------------------------------"{trunked}</code>
+     */
     public static final String LINE_SEGMENT = "----------------------------------------";
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
@@ -106,6 +112,12 @@ public class GameManager implements AutoCloseable {
     private float timeToLastUpdate = 0;
 
 
+    /**
+     * <p>generateArgsMap.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @return return
+     */
     public static Map<String, String> generateArgsMap(String[] args) {
         Map<String, String> res = new LinkedHashMap<>();
         if (args == null) {
@@ -123,6 +135,11 @@ public class GameManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>Constructor for GameManager.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public GameManager(String[] args) {
         super();
         LOGGER.info(LINE_SEGMENT);
@@ -144,19 +161,32 @@ public class GameManager implements AutoCloseable {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
         LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("cyan_potion engine version : {}", Version.VERSION);
+        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
     }
 
+    /**
+     * <p>Constructor for GameManager.</p>
+     */
     public GameManager() {
         this(new String[0]);
     }
 
 
+    /**
+     * <p>Constructor for GameManager.</p>
+     *
+     * @param argsMap argsMap
+     */
     public GameManager(Map<String, String> argsMap) {
         this();
         this.setArgsMap(argsMap);
     }
 
+    /**
+     * <p>eventListAdd.</p>
+     *
+     * @param event event
+     */
     public void eventListAdd(Event event) {
         if (event == null) {
             return;
@@ -179,6 +209,9 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>startup.</p>
+     */
     public void startup() {
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         this.loadSettingTree();
@@ -220,10 +253,13 @@ public class GameManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>loadSettingTree.</p>
+     */
     protected void loadSettingTree() {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
-        File globalSettingsFile = FileUtil.getFile(settingFilePath);
+        File globalSettingsFile = FileUtils.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
@@ -239,6 +275,9 @@ public class GameManager implements AutoCloseable {
         this.getDataCenter().patchGlobalSettingsTree();
     }
 
+    /**
+     * <p>readCommonSettings.</p>
+     */
     protected void readCommonSettings() {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
@@ -274,6 +313,9 @@ public class GameManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>readKeymap.</p>
+     */
     protected void readKeymap() {
         for (ContentNode contentNode :
                 this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
@@ -308,12 +350,15 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>loadText.</p>
+     */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
-            multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath()));
+            multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtil.getFile(this.getDataCenter().getTextFilePath())) " +
+            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath())) " +
                     "fails", e);
             System.exit(1);
         }
@@ -335,6 +380,9 @@ public class GameManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>initSteam.</p>
+     */
     protected void initSteam() {
         this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
                 true));
@@ -388,10 +436,16 @@ public class GameManager implements AutoCloseable {
     }
 
 
+    /**
+     * <p>shutdown.</p>
+     */
     public void shutdown() {
         setAlive(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         this.getGameWindowComponentTree().close();
@@ -416,6 +470,9 @@ public class GameManager implements AutoCloseable {
         this.getScheduledExecutorService().shutdown();
     }
 
+    /**
+     * <p>initGameWindow.</p>
+     */
     protected void initGameWindow() {
         if (this.getGameWindow() == null) {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
@@ -469,14 +526,20 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>setStartingContent.</p>
+     */
     protected void setStartingContent() {
         final AbstractGameWindowComponent logo =
                 AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
                         getString(this.dataCenter.getCommonSettings(), STRING_LOGO_CLASS_NAME,
-                                "com.xenoamess.cyan_potion.base.gameWindowComponents.Logo"));
+                                "com.xenoamess.cyan_potion.base.game_window_components.Logo"));
         logo.addToGameWindowComponentTree(null);
     }
 
+    /**
+     * <p>loopOnce.</p>
+     */
     protected void loopOnce() {
         this.codePluginManager.apply(this, rightBeforeLogicFrame);
         this.codePluginManager.apply(this, rightBeforeSolveEvents);
@@ -493,6 +556,9 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterLogicFrame);
     }
 
+    /**
+     * <p>loop.</p>
+     */
     protected void loop() {
         double timeForFPS = 0;
         int drawFramesForFPS = 0;
@@ -545,10 +611,19 @@ public class GameManager implements AutoCloseable {
     private final ConcurrentLinkedQueue<ImmutablePair<EventProcessor, Event>>
             mainThreadEventProcessPairs = new ConcurrentLinkedQueue<>();
 
+    /**
+     * <p>delayMainThreadEventProcess.</p>
+     *
+     * @param eventProcessor eventProcessor
+     * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public void delayMainThreadEventProcess(EventProcessor eventProcessor, Event event) {
         mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
     }
 
+    /**
+     * <p>solveEvents.</p>
+     */
     public void solveEvents() {
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
@@ -589,16 +664,25 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>update.</p>
+     */
     protected void update() {
         this.getGamepadInput().update(this.getGameWindow());
         getGameWindow().update();
         this.getGameWindowComponentTree().update();
     }
 
+    /**
+     * <p>draw.</p>
+     */
     protected void draw() {
         getGameWindow().draw();
     }
 
+    /**
+     * <p>steamRunCallbacks.</p>
+     */
     protected void steamRunCallbacks() {
         if (this.getDataCenter().isRunWithSteam() && SteamAPI.isSteamRunning()) {
             SteamAPI.runCallbacks();
@@ -613,86 +697,192 @@ public class GameManager implements AutoCloseable {
     /*
      * Getters and Setters
      */
+
+    /**
+     * <p>Getter for the field <code>alive</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAlive() {
         return alive.get();
     }
 
+    /**
+     * <p>Setter for the field <code>alive</code>.</p>
+     *
+     * @param newAlive a boolean.
+     */
     public void setAlive(boolean newAlive) {
         this.alive.set(newAlive);
     }
 
+    /**
+     * <p>Getter for the field <code>consoleThread</code>.</p>
+     *
+     * @return return
+     */
     public ConsoleThread getConsoleThread() {
         return consoleThread;
     }
 
+    /**
+     * <p>Setter for the field <code>consoleThread</code>.</p>
+     *
+     * @param consoleThread consoleThread
+     */
     public void setConsoleThread(ConsoleThread consoleThread) {
         asFinalFieldSet(this, "consoleThread", consoleThread);
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindow</code>.</p>
+     *
+     * @return return
+     */
     public GameWindow getGameWindow() {
         return gameWindow;
     }
 
+    /**
+     * <p>Setter for the field <code>gameWindow</code>.</p>
+     *
+     * @param gameWindow gameWindow
+     */
     public void setGameWindow(GameWindow gameWindow) {
         asFinalFieldSet(this, "gameWindow", gameWindow);
     }
 
+    /**
+     * <p>Getter for the field <code>callbacks</code>.</p>
+     *
+     * @return return
+     */
     public Callbacks getCallbacks() {
         return callbacks;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUserStats</code>.</p>
+     *
+     * @return return
+     */
     public SteamUserStats getSteamUserStats() {
         return steamUserStats;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUserStats</code>.</p>
+     *
+     * @param steamUserStats steamUserStats
+     */
     public void setSteamUserStats(SteamUserStats steamUserStats) {
         asFinalFieldSet(this, "steamUserStats", steamUserStats);
     }
 
+    /**
+     * <p>Getter for the field <code>dataCenter</code>.</p>
+     *
+     * @return return
+     */
     public DataCenter getDataCenter() {
         return dataCenter;
     }
 
+    /**
+     * <p>Getter for the field <code>keymap</code>.</p>
+     *
+     * @return return
+     */
     public Keymap getKeymap() {
         return keymap;
     }
 
+    /**
+     * <p>Getter for the field <code>gamepadInput</code>.</p>
+     *
+     * @return return
+     */
     public GamepadInput getGamepadInput() {
         return gamepadInput;
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindowComponentTree</code>.</p>
+     *
+     * @return return
+     */
     public GameWindowComponentTree getGameWindowComponentTree() {
         return gameWindowComponentTree;
     }
 
+    /**
+     * <p>Getter for the field <code>nowFrameIndex</code>.</p>
+     *
+     * @return a long.
+     */
     public long getNowFrameIndex() {
         return nowFrameIndex;
     }
 
+    /**
+     * <p>Getter for the field <code>argsMap</code>.</p>
+     *
+     * @return return
+     */
     public Map<String, String> getArgsMap() {
         return argsMap;
     }
 
+    /**
+     * <p>Getter for the field <code>audioManager</code>.</p>
+     *
+     * @return return
+     */
     public AudioManager getAudioManager() {
         return audioManager;
     }
 
+    /**
+     * <p>Getter for the field <code>resourceManager</code>.</p>
+     *
+     * @return return
+     */
     public ResourceManager getResourceManager() {
         return resourceManager;
     }
 
+    /**
+     * <p>Getter for the field <code>scheduledExecutorService</code>.</p>
+     *
+     * @return return
+     */
     public ScheduledExecutorService getScheduledExecutorService() {
         return scheduledExecutorService;
     }
 
+    /**
+     * <p>Getter for the field <code>eventList</code>.</p>
+     *
+     * @return return
+     */
     protected ConcurrentLinkedDeque<Event> getEventList() {
         return eventList;
     }
 
+    /**
+     * <p>Setter for the field <code>nowFrameIndex</code>.</p>
+     *
+     * @param nowFrameIndex a long.
+     */
     public void setNowFrameIndex(long nowFrameIndex) {
         this.nowFrameIndex = nowFrameIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>argsMap</code>.</p>
+     *
+     * @param argsMap argsMap
+     */
     public void setArgsMap(Map<String, String> argsMap) {
         this.argsMap = argsMap;
         LOGGER.info(LINE_SEGMENT);
@@ -703,10 +893,20 @@ public class GameManager implements AutoCloseable {
         LOGGER.info(LINE_SEGMENT);
     }
 
+    /**
+     * <p>Getter for the field <code>timeToLastUpdate</code>.</p>
+     *
+     * @return a float.
+     */
     public float getTimeToLastUpdate() {
         return timeToLastUpdate;
     }
 
+    /**
+     * <p>Setter for the field <code>timeToLastUpdate</code>.</p>
+     *
+     * @param timeToLastUpdate a float.
+     */
     public void setTimeToLastUpdate(float timeToLastUpdate) {
         this.timeToLastUpdate = timeToLastUpdate;
     }

@@ -27,16 +27,23 @@ package com.xenoamess.cyan_potion.base.io.input.mouse;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
+ * <p>MouseButtonEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class MouseButtonEvent implements Event {
     private static final Logger LOGGER =
@@ -85,6 +92,14 @@ public class MouseButtonEvent implements Event {
      */
     private final int mods;
 
+    /**
+     * <p>Constructor for MouseButtonEvent.</p>
+     *
+     * @param window a long.
+     * @param button a int.
+     * @param action a int.
+     * @param mods   a int.
+     */
     public MouseButtonEvent(long window, int button, int action, int mods) {
         super();
         this.window = window;
@@ -93,6 +108,9 @@ public class MouseButtonEvent implements Event {
         this.mods = mods;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
@@ -108,30 +126,53 @@ public class MouseButtonEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>getKeyRaw.</p>
+     *
+     * @return return
+     */
     public Key getKeyRaw() {
         return new Key(Key.TYPE_MOUSE, this.getKey());
     }
 
+    /**
+     * <p>getKeyTranslated.</p>
+     *
+     * @param keymap keymap
+     * @return return
+     */
     public Key getKeyTranslated(Keymap keymap) {
         return keymap.get(this.getKeyRaw());
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>key</code>.</p>
+     *
+     * @return a int.
+     */
     public int getKey() {
         return key;
     }
 
     /**
+     * <p>Getter for the field <code>action</code>.</p>
+     *
      * @return action of the MouseButtonEvent
      * The action is one of
-     * {@link GLFW#GLFW_PRESS},
-     * {@link GLFW#GLFW_RELEASE}
+     * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
+     * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
      * <p>
      * notice that mouseButtonEvent's action can NEVER be
-     * {@link GLFW#GLFW_REPEAT},
+     * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
      * @see GLFW
      * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button">GLFW documents</a>
      */
@@ -140,6 +181,8 @@ public class MouseButtonEvent implements Event {
     }
 
     /**
+     * <p>Getter for the field <code>mods</code>.</p>
+     *
      * @return mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use, and not the
      * whole value.
@@ -166,5 +209,25 @@ public class MouseButtonEvent implements Event {
      */
     public int getMods() {
         return mods;
+    }
+
+    public Collection<KeyModEnum> getModEnums() {
+        return KeyModEnum.getModEnumsByValue(this.getMods());
+    }
+
+    @Override
+    public String toString() {
+        //notice that scancode is ignored by this engine(at this version.)
+        //because we want to make it multi-platform.
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("MouseButtonEvent toString():{key:");
+        stringBuilder.append(MouseButtonKeyEnum.getStringByValue(this.key));
+        stringBuilder.append(",action:");
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(",mods:");
+        stringBuilder.append(this.getModEnums());
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }

@@ -25,9 +25,17 @@
 package com.xenoamess.cyan_potion.base;
 
 /**
+ * <p>GameEntrance class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameEntrance {
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         GameManager gameManager = new GameManager(args);
         gameManager.startup();

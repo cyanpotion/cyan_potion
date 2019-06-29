@@ -37,9 +37,15 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 /**
+ * <p>Unit class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Unit extends AbstractDynamicEntity {
+    /**
+     * Constant <code>DEFAULT_UNIT_LAYER=100</code>
+     */
     public static final int DEFAULT_UNIT_LAYER = 100;
 
     private boolean moving = false;
@@ -48,17 +54,43 @@ public class Unit extends AbstractDynamicEntity {
     private int faceDir = 180;
     private boolean canMove = true;
 
+    /**
+     * <p>Constructor for Unit.</p>
+     *
+     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos centerPos
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 Bindable bindable, AbstractShape shape) {
         super(scene, centerPos, size, bindable, shape);
     }
 
+    /**
+     * <p>Constructor for Unit.</p>
+     *
+     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos centerPos
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 Bindable bindable) {
         this(scene, centerPos, size, bindable, new HorizontalRectangle(null,
                 centerPos, size));
     }
 
+    /**
+     * <p>Constructor for Unit.</p>
+     *
+     * @param scene                    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos                a {@link org.joml.Vector3f} object.
+     * @param size                     a {@link org.joml.Vector3f} object.
+     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
+     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
                 String walkingAnimation4DirsURI,
                 ResourceManager resourceManager) {
@@ -67,6 +99,9 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,6 +121,9 @@ public class Unit extends AbstractDynamicEntity {
                 Objects.equals(getMovement(), unit.getMovement());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         if (!this.isCanMove()) {
@@ -119,6 +157,12 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
+    /**
+     * <p>loadWalkingAnimations.</p>
+     *
+     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
+     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public void loadWalkingAnimations(String walkingAnimation4DirsURI,
                                       ResourceManager resourceManager) {
         this.getPicture().setBindable(new WalkingAnimation4Dirs(4, this,
@@ -126,42 +170,92 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
+    /**
+     * <p>isMoving.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isMoving() {
         return moving;
     }
 
+    /**
+     * <p>Setter for the field <code>moving</code>.</p>
+     *
+     * @param moving a boolean.
+     */
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
 
+    /**
+     * <p>Getter for the field <code>movement</code>.</p>
+     *
+     * @return return
+     */
     public Vector2f getMovement() {
         return movement;
     }
 
+    /**
+     * <p>Setter for the field <code>movement</code>.</p>
+     *
+     * @param movement movement
+     */
     public void setMovement(Vector2f movement) {
         this.movement = movement;
     }
 
+    /**
+     * <p>Getter for the field <code>moveSpeed</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMoveSpeed() {
         return moveSpeed;
     }
 
+    /**
+     * <p>Setter for the field <code>moveSpeed</code>.</p>
+     *
+     * @param moveSpeed a int.
+     */
     public void setMoveSpeed(int moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
 
+    /**
+     * <p>Getter for the field <code>faceDir</code>.</p>
+     *
+     * @return a int.
+     */
     public int getFaceDir() {
         return faceDir;
     }
 
+    /**
+     * <p>Setter for the field <code>faceDir</code>.</p>
+     *
+     * @param faceDir a int.
+     */
     public void setFaceDir(int faceDir) {
         this.faceDir = faceDir;
     }
 
+    /**
+     * <p>isCanMove.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCanMove() {
         return canMove;
     }
 
+    /**
+     * <p>Setter for the field <code>canMove</code>.</p>
+     *
+     * @param canMove a boolean.
+     */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }

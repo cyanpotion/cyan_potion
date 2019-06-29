@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.key;
 
 import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
-import com.xenoamess.cyan_potion.base.io.input.Gamepad.JXInputGamepadData;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadData;
 import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -43,26 +43,65 @@ import static com.xenoamess.commonx.java.util.concurrent.atomic.AtomicBooleanUti
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
+ * <p>Keymap class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Keymap {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(Keymap.class);
 
+    /**
+     * Constant <code>XENOAMESS_KEY_ESCAPE=GLFW_KEY_ESCAPE</code>
+     */
     public static final int XENOAMESS_KEY_ESCAPE = GLFW_KEY_ESCAPE;
+    /**
+     * Constant <code>XENOAMESS_KEY_ENTER=GLFW_KEY_ENTER</code>
+     */
     public static final int XENOAMESS_KEY_ENTER = GLFW_KEY_ENTER;
+    /**
+     * Constant <code>XENOAMESS_KEY_SPACE=GLFW_KEY_SPACE</code>
+     */
     public static final int XENOAMESS_KEY_SPACE = GLFW_KEY_SPACE;
+    /**
+     * Constant <code>XENOAMESS_KEY_LEFT_SHIFT=GLFW_KEY_LEFT_SHIFT</code>
+     */
     public static final int XENOAMESS_KEY_LEFT_SHIFT = GLFW_KEY_LEFT_SHIFT;
+    /**
+     * Constant <code>XENOAMESS_KEY_RIGHT_SHIFT=GLFW_KEY_RIGHT_SHIFT</code>
+     */
     public static final int XENOAMESS_KEY_RIGHT_SHIFT = GLFW_KEY_RIGHT_SHIFT;
 
+    /**
+     * Constant <code>XENOAMESS_KEY_UP=GLFW_KEY_UP</code>
+     */
     public static final int XENOAMESS_KEY_UP = GLFW_KEY_UP;
+    /**
+     * Constant <code>XENOAMESS_KEY_LEFT=GLFW_KEY_LEFT</code>
+     */
     public static final int XENOAMESS_KEY_LEFT = GLFW_KEY_LEFT;
+    /**
+     * Constant <code>XENOAMESS_KEY_DOWN=GLFW_KEY_DOWN</code>
+     */
     public static final int XENOAMESS_KEY_DOWN = GLFW_KEY_DOWN;
+    /**
+     * Constant <code>XENOAMESS_KEY_RIGHT=GLFW_KEY_RIGHT</code>
+     */
     public static final int XENOAMESS_KEY_RIGHT = GLFW_KEY_RIGHT;
+    /**
+     * Constant <code>XENOAMESS_MOUSE_BUTTON_LEFT=GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_LEFT</code>
+     */
     public static final int XENOAMESS_MOUSE_BUTTON_LEFT =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_LEFT;
+    /**
+     * Constant <code>XENOAMESS_MOUSE_BUTTON_RIGHT=GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_RIGHT</code>
+     */
     public static final int XENOAMESS_MOUSE_BUTTON_RIGHT =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_RIGHT;
+    /**
+     * Constant <code>XENOAMESS_MOUSE_BUTTON_MIDDLE=GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE</code>
+     */
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
 
@@ -79,6 +118,12 @@ public class Keymap {
 
     private final AtomicBoolean[] myKeys = fillNewSelf(new AtomicBoolean[2000]);
 
+    /**
+     * <p>get.</p>
+     *
+     * @param rawKey rawKey
+     * @return return
+     */
     public Key get(Key rawKey) {
         Key res = getKeymap().get(rawKey);
         if (res == null) {
@@ -87,6 +132,13 @@ public class Keymap {
         return res;
     }
 
+    /**
+     * <p>put.</p>
+     *
+     * @param rawInput rawInput
+     * @param myInput  a {@link java.lang.String} object.
+     * @return return
+     */
     public Key put(String rawInput, String myInput) {
         if (rawInput == null || myInput == null) {
             return null;
@@ -129,6 +181,13 @@ public class Keymap {
     }
 
 
+    /**
+     * <p>put.</p>
+     *
+     * @param rawKey rawKey
+     * @param myKey  a {@link com.xenoamess.cyan_potion.base.io.input.key.Key} object.
+     * @return return
+     */
     public Key put(Key rawKey, Key myKey) {
         Key res = getKeymap().put(rawKey, myKey);
         List<Key> rawInputKeys = getKeymapReverse().computeIfAbsent(myKey, k -> new ArrayList<>());
@@ -137,11 +196,21 @@ public class Keymap {
         return res;
     }
 
+    /**
+     * <p>keyFlipRaw.</p>
+     *
+     * @param rawKey rawKey
+     */
     public void keyFlipRaw(Key rawKey) {
         keyFlip(getKeymap().get(rawKey));
         flip(getRawKeys()[rawKey.getType()][rawKey.getKey()]);
     }
 
+    /**
+     * <p>keyFlip.</p>
+     *
+     * @param myKey myKey
+     */
     public void keyFlip(Key myKey) {
         if (myKey == null) {
             return;
@@ -152,6 +221,12 @@ public class Keymap {
         flip(getMyKeys()[myKey.getKey()]);
     }
 
+    /**
+     * <p>isKeyDown.</p>
+     *
+     * @param myKey myKey
+     * @return a boolean.
+     */
     public boolean isKeyDown(Key myKey) {
         if (myKey.getType() != Key.TYPE_XENOAMESS_KEY) {
             throw new KeyShallBeXenoAmessKeyButItIsNotException(myKey.toString());
@@ -159,11 +234,19 @@ public class Keymap {
         return getMyKeys()[myKey.getKey()].get();
     }
 
+    /**
+     * <p>isKeyDownRaw.</p>
+     *
+     * @param rawKey rawKey
+     * @return a boolean.
+     */
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()].get();
     }
 
     /**
+     * <p>Getter for the field <code>keymap</code>.</p>
+     *
      * @return the map to convert raw-key-type to my-key-type
      */
     public Map<Key, Key> getKeymap() {
@@ -171,16 +254,28 @@ public class Keymap {
     }
 
     /**
+     * <p>Getter for the field <code>keymapReverse</code>.</p>
+     *
      * @return the map to convert my-key-type to raw-key-type
      */
     public Map<Key, List> getKeymapReverse() {
         return keymapReverse;
     }
 
+    /**
+     * <p>Getter for the field <code>rawKeys</code>.</p>
+     *
+     * @return an array of {@link java.util.concurrent.atomic.AtomicBoolean} objects.
+     */
     public AtomicBoolean[][] getRawKeys() {
         return rawKeys;
     }
 
+    /**
+     * <p>Getter for the field <code>myKeys</code>.</p>
+     *
+     * @return an array of {@link java.util.concurrent.atomic.AtomicBoolean} objects.
+     */
     public AtomicBoolean[] getMyKeys() {
         return myKeys;
     }

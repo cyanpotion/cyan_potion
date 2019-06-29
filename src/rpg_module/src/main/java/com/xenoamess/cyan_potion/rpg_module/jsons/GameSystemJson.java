@@ -36,7 +36,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * <p>GameSystemJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameSystemJson implements Serializable {
     private static final Logger LOGGER =
@@ -192,6 +195,13 @@ public class GameSystemJson implements Serializable {
     public ArrayList<String> weaponTypes;
     public IntArrayList windowTone;
 
+    /**
+     * <p>getGameSystemJson.</p>
+     *
+     * @param objectMapper          a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param getGameSystemJsonFile getGameSystemJsonFile
+     * @return return
+     */
     public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper,
                                                    File getGameSystemJsonFile) {
         GameSystemJson res = null;
@@ -199,7 +209,8 @@ public class GameSystemJson implements Serializable {
             res = objectMapper.readValue(getGameSystemJsonFile,
                     GameSystemJson.class);
         } catch (IOException e) {
-            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile)) fails:{},{}",
+            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile)) " +
+                            "fails:{},{}",
                     objectMapper, getGameSystemJsonFile, e);
         }
         return res;

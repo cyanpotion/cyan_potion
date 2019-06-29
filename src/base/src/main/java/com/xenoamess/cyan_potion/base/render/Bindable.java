@@ -29,16 +29,30 @@ import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 
 /**
+ * <p>Bindable interface.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public interface Bindable {
 
+    /**
+     * <p>bind.</p>
+     *
+     * @param sampler a int.
+     */
     void bind(int sampler);
 
+    /**
+     * <p>unbind.</p>
+     */
     default void unbind() {
         glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
 
+    /**
+     * <p>bind.</p>
+     */
     default void bind() {
         bind(0);
     }

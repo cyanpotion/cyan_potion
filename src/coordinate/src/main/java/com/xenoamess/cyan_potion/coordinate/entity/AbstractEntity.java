@@ -34,7 +34,10 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 /**
+ * <p>Abstract AbstractEntity class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public abstract class AbstractEntity implements Area {
     private final AbstractEntityScene scene;
@@ -44,6 +47,15 @@ public abstract class AbstractEntity implements Area {
     private Picture picture = new Picture();
 
 
+    /**
+     * <p>Constructor for AbstractEntity.</p>
+     *
+     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos centerPos
+     * @param size      a {@link org.joml.Vector3f} object.
+     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public AbstractEntity(AbstractEntityScene scene, Vector3f centerPos,
                           Vector3f size, Bindable bindable,
                           AbstractShape shape) {
@@ -58,14 +70,27 @@ public abstract class AbstractEntity implements Area {
         this.getPicture().cover(this);
     }
 
+    /**
+     * <p>Getter for the field <code>picture</code>.</p>
+     *
+     * @return return
+     */
     public Picture getPicture() {
         return this.picture;
     }
 
+    /**
+     * <p>draw.</p>
+     *
+     * @param scene scene
+     */
     public void draw(AbstractEntityScene scene) {
         this.getPicture().draw(scene);
     }
 
+    /**
+     * <p>register.</p>
+     */
     public void register() {
         if (this.getShape() != null) {
             this.getShape().register();
@@ -73,54 +98,104 @@ public abstract class AbstractEntity implements Area {
     }
 
 
+    /**
+     * <p>Getter for the field <code>scene</code>.</p>
+     *
+     * @return return
+     */
     public AbstractEntityScene getScene() {
         return scene;
     }
 
+    /**
+     * <p>Getter for the field <code>centerPos</code>.</p>
+     *
+     * @return return
+     */
     public Vector3f getCenterPos() {
         return centerPos;
     }
 
+    /**
+     * <p>Setter for the field <code>centerPos</code>.</p>
+     *
+     * @param centerPos centerPos
+     */
     public void setCenterPos(Vector3f centerPos) {
         this.centerPos = centerPos;
     }
 
+    /**
+     * <p>Getter for the field <code>size</code>.</p>
+     *
+     * @return return
+     */
     public Vector3f getSize() {
         return size;
     }
 
+    /**
+     * <p>Setter for the field <code>size</code>.</p>
+     *
+     * @param size size
+     */
     public void setSize(Vector3f size) {
         this.size = size;
     }
 
+    /**
+     * <p>Getter for the field <code>shape</code>.</p>
+     *
+     * @return return
+     */
     public AbstractShape getShape() {
         return shape;
     }
 
+    /**
+     * <p>Setter for the field <code>shape</code>.</p>
+     *
+     * @param shape shape
+     */
     public void setShape(AbstractShape shape) {
         this.shape = shape;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosX() {
         return this.getCenterPos().x();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getCenterPosY() {
         return this.getCenterPos().y();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getWidth() {
         return this.getSize().x();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getHeight() {
         return this.getSize().y();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

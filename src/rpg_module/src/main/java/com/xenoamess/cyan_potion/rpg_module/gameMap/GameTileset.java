@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.gameMap;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson;
@@ -41,7 +41,10 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>GameTileset class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameTileset {
     private static final Logger LOGGER =
@@ -139,6 +142,12 @@ public class GameTileset {
         }
     }
 
+    /**
+     * <p>getGameTilesetTextureByID.</p>
+     *
+     * @param gameTilesetTextureID a int.
+     * @return return
+     */
     public Texture getGameTilesetTextureByID(int gameTilesetTextureID) {
         return this.getIdTextureMap().get(gameTilesetTextureID);
     }
@@ -146,7 +155,7 @@ public class GameTileset {
 
     static List<GameTileset> getGameTilesets(ResourceManager resourceManager) {
         List<GameTilesetJson> gameTilesetJsons =
-                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtil.getFile("/www/data" +
+                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), FileUtils.getFile("/www/data" +
                         "/Tilesets.json"));
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {
@@ -159,6 +168,11 @@ public class GameTileset {
         return gameTilesets;
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @param world world
+     */
     public static void init(World world) {
         List<GameTileset> gameTilesets =
                 getGameTilesets(world.getGameWindow().getGameManager().getResourceManager());
@@ -184,18 +198,38 @@ public class GameTileset {
     }
 
 
+    /**
+     * <p>Getter for the field <code>gameTilesetJson</code>.</p>
+     *
+     * @return return
+     */
     public GameTilesetJson getGameTilesetJson() {
         return gameTilesetJson;
     }
 
+    /**
+     * <p>Setter for the field <code>gameTilesetJson</code>.</p>
+     *
+     * @param gameTilesetJson gameTilesetJson
+     */
     public void setGameTilesetJson(GameTilesetJson gameTilesetJson) {
         this.gameTilesetJson = gameTilesetJson;
     }
 
+    /**
+     * <p>Getter for the field <code>idTextureMap</code>.</p>
+     *
+     * @return return
+     */
     public Map<Integer, Texture> getIdTextureMap() {
         return idTextureMap;
     }
 
+    /**
+     * <p>Setter for the field <code>idTextureMap</code>.</p>
+     *
+     * @param idTextureMap idTextureMap
+     */
     public void setIdTextureMap(Map<Integer, Texture> idTextureMap) {
         this.idTextureMap = idTextureMap;
     }

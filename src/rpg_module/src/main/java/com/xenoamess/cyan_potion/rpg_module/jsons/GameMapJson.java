@@ -35,7 +35,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * <p>GameMapJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class GameMapJson implements Serializable {
     private static final Logger LOGGER =
@@ -96,13 +99,21 @@ public class GameMapJson implements Serializable {
     public ArrayList<EventUnitJson> events;
 
 
+    /**
+     * <p>getGameMapJson.</p>
+     *
+     * @param objectMapper objectMapper
+     * @param gameMapFile  a {@link java.io.File} object.
+     * @return return
+     */
     public static GameMapJson getGameMapJson(ObjectMapper objectMapper,
                                              File gameMapFile) {
         GameMapJson res = null;
         try {
             res = objectMapper.readValue(gameMapFile, GameMapJson.class);
         } catch (IOException e) {
-            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}", objectMapper
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}",
+                    objectMapper
                     , gameMapFile, e);
         }
         return res;

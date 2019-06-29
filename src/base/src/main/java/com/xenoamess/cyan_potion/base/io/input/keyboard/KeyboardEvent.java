@@ -27,17 +27,23 @@ package com.xenoamess.cyan_potion.base.io.input.keyboard;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
+ * <p>KeyboardEvent class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class KeyboardEvent implements Event {
     private static final Logger LOGGER =
@@ -85,6 +91,15 @@ public class KeyboardEvent implements Event {
      */
     private final int mods;
 
+    /**
+     * <p>Constructor for KeyboardEvent.</p>
+     *
+     * @param window   a long.
+     * @param key      a int.
+     * @param scancode a int.
+     * @param action   a int.
+     * @param mods     a int.
+     */
     public KeyboardEvent(long window, int key, int scancode, int action, int mods) {
         super();
         this.window = window;
@@ -94,11 +109,14 @@ public class KeyboardEvent implements Event {
         this.mods = mods;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("KeyboardEvent : {} {} {} {}", getKey(), getScancode(),
-                getAction(), getMods());
+        LOGGER.debug("KeyboardEvent : key:{} scancode:{} action:{} modes:{}\ntoString():{}", getKey(), getScancode(),
+                getAction(), getMods(), this.toString());
         switch (getAction()) {
             case GLFW_RELEASE:
             case GLFW_PRESS:
@@ -111,14 +129,31 @@ public class KeyboardEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>getKeyRaw.</p>
+     *
+     * @return return
+     */
     public Key getKeyRaw() {
         return new Key(Key.TYPE_KEY, this.getKey());
     }
 
+    /**
+     * <p>getKeyTranslated.</p>
+     *
+     * @param keymap keymap
+     * @return return
+     */
     public Key getKeyTranslated(Keymap keymap) {
         return keymap.get(this.getKeyRaw());
     }
 
+    /**
+     * <p>checkMods.</p>
+     *
+     * @param glfwModArgument a int.
+     * @return a boolean.
+     */
     public boolean checkMods(final int glfwModArgument) {
         return (this.getMods() & glfwModArgument) != 0;
     }
@@ -132,9 +167,6 @@ public class KeyboardEvent implements Event {
      * key input.
      *
      * @return the string that the key refers to
-     * @see
-     * <a href="http://www.glfw.org/docs/latest/group__input.html#ga556239421c6a5a243c66fca28da9f742">GLFW documents</a>
-     * @deprecated
      */
     @Deprecated
     public String translate() {
@@ -370,19 +402,36 @@ public class KeyboardEvent implements Event {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>key</code>.</p>
+     *
+     * @return a int.
+     */
     public int getKey() {
         return key;
     }
 
+    /**
+     * <p>Getter for the field <code>scancode</code>.</p>
+     *
+     * @return a int.
+     */
     public int getScancode() {
         return scancode;
     }
 
     /**
+     * <p>Getter for the field <code>action</code>.</p>
+     *
      * @return action of the KeyboardEvent
      * The action is one of
      * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
@@ -396,6 +445,8 @@ public class KeyboardEvent implements Event {
     }
 
     /**
+     * <p>Getter for the field <code>mods</code>.</p>
+     *
      * @return mods of the KeyboardEvent.
      * notice that this shall be checked for the bit you use sometimes, and
      * not always the whole value.
@@ -422,5 +473,25 @@ public class KeyboardEvent implements Event {
      */
     public int getMods() {
         return mods;
+    }
+
+    public Collection<KeyModEnum> getModEnums() {
+        return KeyModEnum.getModEnumsByValue(this.getMods());
+    }
+
+    @Override
+    public String toString() {
+        //notice that scancode is ignored by this engine(at this version.)
+        //because we want to make it multi-platform.
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("KeyboardEvent toString():{key:");
+        stringBuilder.append(KeyboardKeyEnum.getStringByValue(this.key));
+        stringBuilder.append(",action:");
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(",mods:");
+        stringBuilder.append(this.getModEnums());
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }

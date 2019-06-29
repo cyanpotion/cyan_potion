@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.world;
 
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.gameWindowComponents.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -35,7 +35,10 @@ import org.lwjgl.glfw.GLFW;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * <p>Menu class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Menu extends AbstractGameWindowComponent {
     private final AtomicBoolean show = new AtomicBoolean(false);
@@ -54,11 +57,19 @@ public class Menu extends AbstractGameWindowComponent {
 
     private World world;
 
+    /**
+     * <p>Constructor for Menu.</p>
+     *
+     * @param world world
+     */
     public Menu(World world) {
         super(world.getGameWindow());
         this.setWorld(world);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initProcessors() {
         this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
@@ -80,11 +91,17 @@ public class Menu extends AbstractGameWindowComponent {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         //TODO
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw() {
         if (!getShow()) {
@@ -93,6 +110,9 @@ public class Menu extends AbstractGameWindowComponent {
         this.menuBackGroundPicture.draw(this.getGameWindow());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event process(Event event) {
         if (!getShow()) {
@@ -101,22 +121,47 @@ public class Menu extends AbstractGameWindowComponent {
         return super.process(event);
     }
 
+    /**
+     * <p>Getter for the field <code>show</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getShow() {
         return show.get();
     }
 
+    /**
+     * <p>Setter for the field <code>show</code>.</p>
+     *
+     * @param show a boolean.
+     */
     public void setShow(boolean show) {
         this.show.set(show);
     }
 
+    /**
+     * <p>Getter for the field <code>menuBackGroundTexture</code>.</p>
+     *
+     * @return return
+     */
     public Texture getMenuBackGroundTexture() {
         return menuBackGroundTexture;
     }
 
+    /**
+     * <p>Getter for the field <code>world</code>.</p>
+     *
+     * @return return
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * <p>Setter for the field <code>world</code>.</p>
+     *
+     * @param world world
+     */
     public void setWorld(World world) {
         this.world = world;
     }

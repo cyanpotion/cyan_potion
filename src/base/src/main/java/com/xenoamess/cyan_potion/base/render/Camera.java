@@ -27,15 +27,29 @@ package com.xenoamess.cyan_potion.base.render;
 import org.joml.Vector3f;
 
 /**
+ * <p>Camera class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Camera {
     private final Vector3f position;
 
+    /**
+     * <p>Constructor for Camera.</p>
+     *
+     * @param initX a int.
+     * @param initY a int.
+     */
     public Camera(int initX, int initY) {
         position = new Vector3f(initX, initY, 0);
     }
 
+    /**
+     * <p>Getter for the field <code>position</code>.</p>
+     *
+     * @return return
+     */
     public Vector3f getPosition() {
         return position;
     }

@@ -55,8 +55,11 @@ import static org.lwjgl.glfw.GLFW.glfwSetWindowIcon;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 /**
+ * <p>ImageParser class.</p>
+ *
  * @author ArtemisHD
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ImageParser implements AutoCloseable {
     private static final Logger LOGGER =
@@ -72,11 +75,20 @@ public class ImageParser implements AutoCloseable {
         this.setWidth(width);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         MemoryUtil.memFree(this.getImage());
     }
 
+    /**
+     * <p>loadImage.</p>
+     *
+     * @param path path
+     * @return return
+     */
     public static ImageParser loadImage(String path) {
         ByteBuffer image;
         int width;
@@ -98,6 +110,12 @@ public class ImageParser implements AutoCloseable {
         return new ImageParser(width, height, image);
     }
 
+    /**
+     * <p>getGLFWImage.</p>
+     *
+     * @param path path
+     * @return return
+     */
     public static GLFWImage getGLFWImage(String path) {
         ImageParser imageparser = loadImage(path);
         GLFWImage res = GLFWImage.malloc().set(imageparser.getWidth(),
@@ -106,6 +124,12 @@ public class ImageParser implements AutoCloseable {
         return res;
     }
 
+    /**
+     * <p>setWindowIcon.</p>
+     *
+     * @param window a long.
+     * @param path   a {@link java.lang.String} object.
+     */
     public static void setWindowIcon(long window, String path) {
         try (
                 GLFWImage gameWindowIcon = getGLFWImage(path);
@@ -116,26 +140,56 @@ public class ImageParser implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>image</code>.</p>
+     *
+     * @return return
+     */
     public ByteBuffer getImage() {
         return image;
     }
 
+    /**
+     * <p>Setter for the field <code>image</code>.</p>
+     *
+     * @param image image
+     */
     public void setImage(ByteBuffer image) {
         this.image = image;
     }
 
+    /**
+     * <p>Getter for the field <code>width</code>.</p>
+     *
+     * @return a int.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * <p>Setter for the field <code>width</code>.</p>
+     *
+     * @param width a int.
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * <p>Getter for the field <code>height</code>.</p>
+     *
+     * @return a int.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * <p>Setter for the field <code>height</code>.</p>
+     *
+     * @param height a int.
+     */
     public void setHeight(int height) {
         this.height = height;
     }

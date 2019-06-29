@@ -27,7 +27,10 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 import java.io.Serializable;
 
 /**
+ * <p>ConditionsJson class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class ConditionsJson implements Serializable {
     public int actorId;

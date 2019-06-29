@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.visual;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.io.FileUtil;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -47,7 +47,10 @@ import static org.lwjgl.stb.STBImageWrite.stbi_write_bmp;
 import static org.lwjgl.stb.STBTruetype.*;
 
 /**
+ * <p>Font class.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
 public class Font extends AbstractResource {
     /**
@@ -59,12 +62,30 @@ public class Font extends AbstractResource {
     public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
             "/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
 
+    /**
+     * Constant <code>TEST_PRINT_FONT_BMP=false</code>
+     */
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
+    /**
+     * Constant <code>MAX_NUM=40960</code>
+     */
     public static final int MAX_NUM = 40960;
+    /**
+     * Constant <code>MAX_SIZE=16 * 1024</code>
+     */
     public static final int MAX_SIZE = 16 * 1024;
+    /**
+     * Constant <code>BITMAP_W=MAX_SIZE</code>
+     */
     public static final int BITMAP_W = MAX_SIZE;
+    /**
+     * Constant <code>BITMAP_H=MAX_SIZE</code>
+     */
     public static final int BITMAP_H = MAX_SIZE;
+    /**
+     * Constant <code>SCALE=36.0f</code>
+     */
     public static final float SCALE = 36.0f;
 
     private int fontTexture;
@@ -119,13 +140,18 @@ public class Font extends AbstractResource {
      */
     private ByteBuffer bitmap;
 
+    /**
+     * <p>loadBitmap.</p>
+     *
+     * @param resourceFilePath resourceFilePath
+     */
     public void loadBitmap(String resourceFilePath) {
         ByteBuffer bitmapLocal;
         STBTTPackedchar.Buffer charDataLocal =
                 STBTTPackedchar.malloc(6 * MAX_NUM);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
             ByteBuffer ttf =
-                    FileUtil.loadFileBuffer(FileUtil.getFile(resourceFilePath), true);
+                    FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
@@ -146,6 +172,11 @@ public class Font extends AbstractResource {
     }
 
 
+    /**
+     * <p>init.</p>
+     *
+     * @param gameWindow gameWindow
+     */
     public void init(GameWindow gameWindow) {
         this.setGameWindow(gameWindow);
         this.setFontTexture(glGenTextures());
@@ -157,6 +188,9 @@ public class Font extends AbstractResource {
         MemoryUtil.memFree(this.bitmap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind() {
         super.bind();
@@ -171,6 +205,18 @@ public class Font extends AbstractResource {
     }
 
 
+    /**
+     * <p>drawBoxTC.</p>
+     *
+     * @param x0 a float.
+     * @param y0 a float.
+     * @param x1 a float.
+     * @param y1 a float.
+     * @param s0 a float.
+     * @param t0 a float.
+     * @param s1 a float.
+     * @param t1 a float.
+     */
     public static void drawBoxTC(float x0, float y0, float x1, float y1,
                                  float s0, float t0, float s1, float t1) {
         glTexCoord2f(s0, t0);
@@ -238,6 +284,18 @@ public class Font extends AbstractResource {
 //        glEnd();
 //    }
 
+    /**
+     * <p>drawText.</p>
+     *
+     * @param x              a float.
+     * @param y              a float.
+     * @param scaleX         a float.
+     * @param scaleY         a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawText(float x, float y, float scaleX, float scaleY,
                          float height, float characterSpace, Vector4f color,
                          String text) {
@@ -295,6 +353,17 @@ public class Font extends AbstractResource {
         glEnd();
     }
 
+    /**
+     * <p>drawTextFillAreaLeftTop.</p>
+     *
+     * @param x1             a float.
+     * @param y1             a float.
+     * @param width          a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawTextFillAreaLeftTop(float x1, float y1, float width,
                                         float height, float characterSpace,
                                         Vector4f color, String text) {
@@ -360,6 +429,11 @@ public class Font extends AbstractResource {
 
     private float maxCharHeight = -1;
 
+    /**
+     * <p>Getter for the field <code>maxCharHeight</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMaxCharHeight() {
         if (maxCharHeight == -1) {
             this.bind();
@@ -389,10 +463,26 @@ public class Font extends AbstractResource {
         return maxCharHeight;
     }
 
+    /**
+     * <p>getScale.</p>
+     *
+     * @param height a float.
+     * @return a float.
+     */
     public float getScale(float height) {
         return height / getMaxCharHeight();
     }
 
+    /**
+     * <p>drawTextGivenHeightLeftTop.</p>
+     *
+     * @param x1             a float.
+     * @param y1             a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawTextGivenHeightLeftTop(float x1, float y1, float height,
                                            float characterSpace,
                                            Vector4f color, String text) {
@@ -400,6 +490,18 @@ public class Font extends AbstractResource {
                 characterSpace, color, text);
     }
 
+    /**
+     * <p>drawTextGivenHeightLeftTop.</p>
+     *
+     * @param x1             a float.
+     * @param y1             a float.
+     * @param xMax           a float.
+     * @param yMax           a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     */
     public void drawTextGivenHeightLeftTop(float x1, float y1, float xMax,
                                            float yMax, float height,
                                            float characterSpace,
@@ -472,6 +574,9 @@ public class Font extends AbstractResource {
         glEnd();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void forceClose() {
         getCharData().close();
@@ -486,59 +591,129 @@ public class Font extends AbstractResource {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>fontTexture</code>.</p>
+     *
+     * @return a int.
+     */
     public int getFontTexture() {
         return fontTexture;
     }
 
+    /**
+     * <p>Getter for the field <code>charData</code>.</p>
+     *
+     * @return return
+     */
     public STBTTPackedchar.Buffer getCharData() {
         return charData;
     }
 
+    /**
+     * <p>Getter for the field <code>defaultFont</code>.</p>
+     *
+     * @return return
+     */
     public static Font getDefaultFont() {
         return defaultFont;
     }
 
+    /**
+     * <p>Setter for the field <code>defaultFont</code>.</p>
+     *
+     * @param defaultFont defaultFont
+     */
     public static void setDefaultFont(Font defaultFont) {
         asFinalFieldSet(Font.class, "defaultFont", defaultFont);
     }
 
 
+    /**
+     * <p>Getter for the field <code>currentFont</code>.</p>
+     *
+     * @return return
+     */
     public static synchronized Font getCurrentFont() {
         return currentFont;
     }
 
+    /**
+     * <p>Setter for the field <code>currentFont</code>.</p>
+     *
+     * @param currentFont currentFont
+     */
     public static synchronized void setCurrentFont(Font currentFont) {
         Font.currentFont = currentFont;
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindow</code>.</p>
+     *
+     * @return return
+     */
     public GameWindow getGameWindow() {
         return gameWindow;
     }
 
+    /**
+     * <p>Setter for the field <code>gameWindow</code>.</p>
+     *
+     * @param gameWindow gameWindow
+     */
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
 
+    /**
+     * <p>Setter for the field <code>maxCharHeight</code>.</p>
+     *
+     * @param maxCharHeight a float.
+     */
     public void setMaxCharHeight(float maxCharHeight) {
         this.maxCharHeight = maxCharHeight;
     }
 
+    /**
+     * <p>Getter for the field <code>q</code>.</p>
+     *
+     * @return return
+     */
     public STBTTAlignedQuad getQ() {
         return q;
     }
 
+    /**
+     * <p>Getter for the field <code>xb</code>.</p>
+     *
+     * @return return
+     */
     public FloatBuffer getXb() {
         return xb;
     }
 
+    /**
+     * <p>Getter for the field <code>yb</code>.</p>
+     *
+     * @return return
+     */
     public FloatBuffer getYb() {
         return yb;
     }
 
+    /**
+     * <p>Setter for the field <code>fontTexture</code>.</p>
+     *
+     * @param fontTexture a int.
+     */
     public void setFontTexture(int fontTexture) {
         this.fontTexture = fontTexture;
     }
 
+    /**
+     * <p>Setter for the field <code>charData</code>.</p>
+     *
+     * @param charData charData
+     */
     public void setCharData(STBTTPackedchar.Buffer charData) {
         this.charData = charData;
     }
