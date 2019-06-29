@@ -42,5 +42,5 @@ public class PackageVersion {
     /**
      * current version of this component.
      */
-    public static final Version VERSION = Version.loadPackageVersion(com.xenoamess.commons.PackageVersion.class);
+    public static final Version VERSION = Version.loadPackageVersion(PackageVersion.class);
 }
