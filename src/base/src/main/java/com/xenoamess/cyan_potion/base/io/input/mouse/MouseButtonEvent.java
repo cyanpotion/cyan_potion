@@ -30,7 +30,6 @@ import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -114,8 +113,7 @@ public class MouseButtonEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("MouseButtonEvent : {} {} {}", getKey(), getAction(),
-                getMods());
+        LOGGER.debug(this.toString());
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
             case GLFW.GLFW_PRESS:
@@ -221,10 +219,10 @@ public class MouseButtonEvent implements Event {
         //because we want to make it multi-platform.
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("MouseButtonEvent toString():{key:");
-        stringBuilder.append(MouseButtonKeyEnum.getStringByValue(this.key));
+        stringBuilder.append("MouseButtonEvent:{key:");
+        stringBuilder.append(MouseButtonKeyEnum.getStringByValue(this.getKey()));
         stringBuilder.append(",action:");
-        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
         stringBuilder.append(",mods:");
         stringBuilder.append(this.getModEnums());
         stringBuilder.append("}");

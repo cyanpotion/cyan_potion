@@ -115,8 +115,7 @@ public class KeyboardEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("KeyboardEvent : key:{} scancode:{} action:{} modes:{}\ntoString():{}", getKey(), getScancode(),
-                getAction(), getMods(), this.toString());
+        LOGGER.debug(this.toString());
         switch (getAction()) {
             case GLFW_RELEASE:
             case GLFW_PRESS:
@@ -485,10 +484,10 @@ public class KeyboardEvent implements Event {
         //because we want to make it multi-platform.
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("KeyboardEvent toString():{key:");
-        stringBuilder.append(KeyboardKeyEnum.getStringByValue(this.key));
+        stringBuilder.append("KeyboardEvent:{key:");
+        stringBuilder.append(KeyboardKeyEnum.getStringByValue(this.getKey()));
         stringBuilder.append(",action:");
-        stringBuilder.append(KeyActionEnum.getStringByValue(this.action));
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
         stringBuilder.append(",mods:");
         stringBuilder.append(this.getModEnums());
         stringBuilder.append("}");
