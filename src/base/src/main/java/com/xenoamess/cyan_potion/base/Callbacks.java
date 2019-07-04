@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.143.0
  */
-public final class Callbacks {
+public class Callbacks {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(Callbacks.class);
 
