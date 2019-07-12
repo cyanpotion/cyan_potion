@@ -22,7 +22,9 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base;import com.xenoamess.commons.version.Version;
+package com.xenoamess.cyan_potion.base;
+
+import com.xenoamess.commons.version.Version;
 
 /**
  * A version class that represent a package's version.

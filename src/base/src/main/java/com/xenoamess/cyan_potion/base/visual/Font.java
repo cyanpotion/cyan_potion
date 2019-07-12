@@ -25,9 +25,9 @@
 package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
