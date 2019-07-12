@@ -42,11 +42,11 @@
         <!---->
         <!---->
         <!--libraries versions-->
-        <commons-collections4.version>4.3</commons-collections4.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <eclipse-collections.version>10.0.0.M3</eclipse-collections.version>
+        <eclipse-collections.version>10.0.0</eclipse-collections.version>
         <guava.version>28.0-jre</guava.version>
         <jackson.version>2.9.9</jackson.version>
         <joml.version>1.9.16</joml.version>
@@ -71,7 +71,7 @@
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
