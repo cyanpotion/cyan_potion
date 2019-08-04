@@ -43,7 +43,7 @@ public class GamepadInputTest {
 
     @Test
     public void testGamepadInput() {
-        if (SystemUtils.IS_OS_WINDOWS) {
+        if (!SystemUtils.IS_OS_WINDOWS) {
             return;
         }
 
