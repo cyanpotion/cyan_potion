@@ -351,7 +351,10 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>loadText.</p>
+     * get current language from steam api
+     * then load text structure from text file.
+     * then set text structure's current language as current language from steam api.
+     * all languages are String typed.
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
@@ -381,7 +384,21 @@ public class GameManager implements AutoCloseable {
 
 
     /**
-     * <p>initSteam.</p>
+     * Load runWithSteam from CommonSettings.
+     * if runWithSteam == true,
+     * -- try load steamAPI.
+     * -- if succeed
+     * ---- then start game, and set RunWithSteam be true.
+     * -- else
+     * ---- if DataCenter.ALLOW_RUN_WITHOUT_STEAM is true
+     * ------ then still start the game but RunWithSteam will be false.
+     * ---- else
+     * ------ exit 1
+     * else,
+     * -- if DataCenter.ALLOW_RUN_WITHOUT_STEAM is true,
+     * ---- then still start the game but RunWithSteam will be false.
+     * -- else
+     * ---- exit 1
      */
     protected void initSteam() {
         this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
@@ -399,23 +416,11 @@ public class GameManager implements AutoCloseable {
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
                 this.getDataCenter().setRunWithSteam(false);
-                if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                    LOGGER.warn("SteamAPI.init() fails", e);
-                    LOGGER.warn("Steam load failed but somehow we cannot prevent " +
-                            "you from playing it.");
-                } else {
-                    LOGGER.error("Steam load failed, thus the game shut.");
-                    System.exit(1);
-                }
+                LOGGER.warn("SteamAPI.init() fails", e);
+                shutIfNotAllowRunWithoutSteam();
             }
         } else {
-            if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                LOGGER.warn("Steam load failed but somehow we cannot prevent " +
-                        "you from playing it.");
-            } else {
-                LOGGER.error("Steam load failed, thus the game shut.");
-                System.exit(1);
-            }
+            shutIfNotAllowRunWithoutSteam();
         }
 
         long steamRunCallbacksNanoLong =
@@ -435,9 +440,18 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    private static void shutIfNotAllowRunWithoutSteam() {
+        if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
+            LOGGER.warn("Steam load failed but somehow we cannot prevent " +
+                    "you from playing it.");
+        } else {
+            LOGGER.error("Steam load failed, thus the game shut.");
+            System.exit(1);
+        }
+    }
 
     /**
-     * <p>shutdown.</p>
+     * shutdown.
      */
     public void shutdown() {
         setAlive(false);
@@ -471,21 +485,30 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>initGameWindow.</p>
+     * first fetch the window class name from the getCommonSettings
+     * then this.setGameWindow(gameWindow);
+     * then set the real width and height of this window.
+     * if the width/height is larger than the screen, then it become to width/height of the screen, and the other is scaled.
+     * for example, if scree's width be 1024, height be 800, and real width/height in the config file is 2048/800,
+     * then the real width will be 1024/400.
+     * I think this shall be a precise example.
+     * If you find things not work this way you can just put a bug issue.
      */
     protected void initGameWindow() {
         if (this.getGameWindow() == null) {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                setGameWindow((GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this));
+                GameWindow gameWindow =
+                        (GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this);
+                this.setGameWindow(gameWindow);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
             }
         }
-        getEventList().clear();
 
+//        getEventList().clear();
 
         this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
                 STRING_LOGIC_WINDOW_WIDTH, "1280")));
@@ -527,7 +550,12 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>setStartingContent.</p>
+     * load logoClassName from config.
+     * then load the logo and add it into the componentTree.
+     * this shall be only called once(when starting the game).
+     * this is used like a "made with CyanPotion" or something.(sounds like that one in Unity).
+     * Noticed that unlike "made with Unity", this logo can be removed through overload the functions, and it is legal to do so.
+     * If you want to do that, you shall override this function and related functions in the logo class.
      */
     protected void setStartingContent() {
         final AbstractGameWindowComponent logo =
@@ -538,7 +566,7 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>loopOnce.</p>
+     * one loop frame of the game engine's loop.
      */
     protected void loopOnce() {
         this.codePluginManager.apply(this, rightBeforeLogicFrame);
@@ -557,7 +585,7 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>loop.</p>
+     * the main loop of the game engine.
      */
     protected void loop() {
         double timeForFPS = 0;
@@ -612,7 +640,11 @@ public class GameManager implements AutoCloseable {
             mainThreadEventProcessPairs = new ConcurrentLinkedQueue<>();
 
     /**
-     * <p>delayMainThreadEventProcess.</p>
+     * Due to lwjgl's feature, some functions can only be invoked by main thread.
+     * that is when this come.
+     * when solving an event and finding it contains functions that shall only be called in main thread,
+     * you can just invoke this function to delay it.
+     * it will be dealt with main thread later in this loop frame.
      *
      * @param eventProcessor eventProcessor
      * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.

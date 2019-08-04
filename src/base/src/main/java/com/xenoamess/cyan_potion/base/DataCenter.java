@@ -103,16 +103,6 @@ public class DataCenter {
         return objectMapper;
     }
 
-
-    /**
-     * <p>isWindows.</p>
-     *
-     * @return a boolean.
-     */
-    public static boolean isWindows() {
-        return System.getProperties().getProperty("os.name").toUpperCase().contains("WINDOWS");
-    }
-
     /**
      * <p>Getter for the field <code>globalSettingsTree</code>.</p>
      *

@@ -33,6 +33,7 @@ import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import org.apache.commons.lang.SystemUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -275,7 +276,7 @@ public class GameWindow implements AutoCloseable, Area {
         String iconFilePath =
                 FileUtils.getURI(this.getClass(), this.getGameManager().getDataCenter().getIconFilePath()).getPath();
 
-        if (DataCenter.isWindows() && iconFilePath.startsWith("/")) {
+        if (SystemUtils.IS_OS_WINDOWS && iconFilePath.startsWith("/")) {
             iconFilePath = iconFilePath.substring(1);
         }
 
@@ -529,15 +530,6 @@ public class GameWindow implements AutoCloseable, Area {
         this.bindGlViewportToFullWindow();
         this.getGameManager().getGameWindowComponentTree().draw();
         glfwSwapBuffers(getWindow());
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return the window handle
-     */
-    public long getWindow() {
-        return window;
     }
 
     /**
@@ -951,6 +943,17 @@ public class GameWindow implements AutoCloseable, Area {
      */
     public void bindGlViewportToFullWindow() {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
+    }
+
+    //--- getters and setters ---
+
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return the window handle
+     */
+    public long getWindow() {
+        return window;
     }
 
     /**
