@@ -59,10 +59,9 @@
         <!---->
         <!--home made libraries versions-->
         <commonx.version>0.9.5</commonx.version>
-        <multi_language.version>0.44.0</multi_language.version>
-        <x8l.version>0.48.0</x8l.version>
-        <SDL_GameControllerDB_Util.version>0.1.2
-        </SDL_GameControllerDB_Util.version>
+        <multi_language.version>0.44.1</multi_language.version>
+        <x8l.version>0.48.1</x8l.version>
+        <SDL_GameControllerDB_Util.version>1.0.1</SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
