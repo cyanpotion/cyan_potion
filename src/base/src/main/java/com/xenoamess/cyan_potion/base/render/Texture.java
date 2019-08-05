@@ -148,7 +148,7 @@ public class Texture extends AbstractResource implements Bindable {
         this.setHeight(height);
         generate(byteBuffer);
 
-        this.setMemorySize(width * height * 4);
+        this.setMemorySize(1L * width * height * 4);
         this.getResourceManager().load(this);
     }
 
@@ -193,7 +193,7 @@ public class Texture extends AbstractResource implements Bindable {
         generate(byteBuffer);
         MemoryUtil.memFree(byteBuffer);
 
-        this.setMemorySize(singleWidth * singleHeight * 4);
+        this.setMemorySize(1L * singleWidth * singleHeight * 4);
         this.getResourceManager().load(this);
     }
 
