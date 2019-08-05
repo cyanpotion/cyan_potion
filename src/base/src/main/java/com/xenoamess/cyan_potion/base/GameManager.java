@@ -488,7 +488,8 @@ public class GameManager implements AutoCloseable {
      * first fetch the window class name from the getCommonSettings
      * then this.setGameWindow(gameWindow);
      * then set the real width and height of this window.
-     * if the width/height is larger than the screen, then it become to width/height of the screen, and the other is scaled.
+     * if the width/height is larger than the screen, then it become to width/height of the screen, and the other is
+     * scaled.
      * for example, if scree's width be 1024, height be 800, and real width/height in the config file is 2048/800,
      * then the real width will be 1024/400.
      * I think this shall be a precise example.
@@ -554,7 +555,8 @@ public class GameManager implements AutoCloseable {
      * then load the logo and add it into the componentTree.
      * this shall be only called once(when starting the game).
      * this is used like a "made with CyanPotion" or something.(sounds like that one in Unity).
-     * Noticed that unlike "made with Unity", this logo can be removed through overload the functions, and it is legal to do so.
+     * Noticed that unlike "made with Unity", this logo can be removed through overload the functions, and it is
+     * legal to do so.
      * If you want to do that, you shall override this function and related functions in the logo class.
      */
     protected void setStartingContent() {
