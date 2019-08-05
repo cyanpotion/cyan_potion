@@ -133,8 +133,8 @@ public class Unit extends AbstractDynamicEntity {
             setMoving(true);
             setFaceDir(getFaceDir(getMovement().x, getMovement().y));
 
-            if (this.getPicture().getBindable() instanceof WalkingAnimation4Dirs) {
-                ((WalkingAnimation4Dirs) this.getPicture().getBindable()).setFaceDir(getFaceDir());
+            if (this.getPicture() instanceof WalkingAnimation4Dirs) {
+                ((WalkingAnimation4Dirs) this.getPicture()).setFaceDir(getFaceDir());
             }
 
             if (getMovement().length() > getMoveSpeed()) {
@@ -165,7 +165,7 @@ public class Unit extends AbstractDynamicEntity {
      */
     public void loadWalkingAnimations(String walkingAnimation4DirsURI,
                                       ResourceManager resourceManager) {
-        this.getPicture().setBindable(new WalkingAnimation4Dirs(4, this,
+        this.setPicture(new WalkingAnimation4Dirs(4, this,
                 walkingAnimation4DirsURI, resourceManager));
     }
 
