@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.coordinate.entity;
 
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
@@ -39,7 +39,7 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractEntity implements Area {
+public abstract class AbstractEntity implements AbstractArea {
     private final AbstractEntityScene scene;
     private Vector3f centerPos;
     private Vector3f size;

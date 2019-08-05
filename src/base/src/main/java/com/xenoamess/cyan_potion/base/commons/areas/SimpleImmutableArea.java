@@ -30,7 +30,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class ImmutableArea implements Area {
+public class SimpleImmutableArea implements AbstractImmutableArea {
     private final float centerPosX;
     private final float centerPosY;
     private final float width;
@@ -39,13 +39,13 @@ public class ImmutableArea implements Area {
     /**
      * <p>Constructor for ImmutableArea.</p>
      *
-     * @param area area
+     * @param abstractArea area
      */
-    public ImmutableArea(Area area) {
-        this.centerPosX = area.getCenterPosX();
-        this.centerPosY = area.getCenterPosY();
-        this.width = area.getWidth();
-        this.height = area.getHeight();
+    public SimpleImmutableArea(AbstractArea abstractArea) {
+        this.centerPosX = abstractArea.getCenterPosX();
+        this.centerPosY = abstractArea.getCenterPosY();
+        this.width = abstractArea.getWidth();
+        this.height = abstractArea.getHeight();
     }
 
     /**
@@ -56,50 +56,11 @@ public class ImmutableArea implements Area {
      * @param width      a float.
      * @param height     a float.
      */
-    public ImmutableArea(float centerPosX, float centerPosY, float width, float height) {
+    public SimpleImmutableArea(float centerPosX, float centerPosY, float width, float height) {
         this.centerPosX = centerPosX;
         this.centerPosY = centerPosY;
         this.width = width;
         this.height = height;
-    }
-
-    /**
-     * <p>generateImmutableArea.</p>
-     *
-     * @param centerPosX a float.
-     * @param centerPosY a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @return return
-     */
-    public static ImmutableArea generateImmutableArea(
-            float centerPosX, float centerPosY, float width, float height) {
-        return new ImmutableArea(centerPosX, centerPosY, width, height);
-    }
-
-    /**
-     * <p>generateImmutableArea.</p>
-     *
-     * @param area area
-     * @return return
-     */
-    public static ImmutableArea generateImmutableArea(
-            Area area) {
-        return new ImmutableArea(area);
-    }
-
-    /**
-     * <p>generateImmutableAreaFromLeftTop.</p>
-     *
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param width       a float.
-     * @param height      a float.
-     * @return return
-     */
-    public static ImmutableArea generateImmutableAreaFromLeftTop(
-            float leftTopPosX, float leftTopPosY, float width, float height) {
-        return new ImmutableArea(leftTopPosX + width / 2F, leftTopPosY + height / 2F, width, height);
     }
 
     /**

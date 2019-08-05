@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable, Area {
+public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 

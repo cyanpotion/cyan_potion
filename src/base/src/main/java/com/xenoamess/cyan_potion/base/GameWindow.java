@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -58,7 +58,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindow implements AutoCloseable, Area {
+public class GameWindow implements AutoCloseable, AbstractArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
