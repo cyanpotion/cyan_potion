@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractArea {
+public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
 
@@ -309,6 +309,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      *
      * @param width a float.
      */
+    @Override
     public void setWidth(float width) {
         this.width = width;
     }
@@ -338,10 +339,27 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCenterPosX(float newCenterPosX) {
+        this.setLeftTopPosX(newCenterPosX - this.getWidth() / 2F);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCenterPosY(float newCenterPosY) {
+        this.setLeftTopPosY(newCenterPosY - this.getHeight() / 2F);
+    }
+
+    /**
      * <p>Setter for the field <code>height</code>.</p>
      *
      * @param height a float.
      */
+    @Override
     public void setHeight(float height) {
         this.height = height;
     }

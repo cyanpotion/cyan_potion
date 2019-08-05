@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -58,7 +58,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindow implements AutoCloseable, AbstractArea {
+public class GameWindow implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
@@ -1211,5 +1211,45 @@ public class GameWindow implements AutoCloseable, AbstractArea {
     @Override
     public float getHeight() {
         return this.getLogicWindowHeight();
+    }
+
+    /**
+     * <p>Setter for the field <code>centerPosX</code>.</p>
+     *
+     * @param centerPosX a float.
+     */
+    @Override
+    public void setCenterPosX(float centerPosX) {
+        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    }
+
+    /**
+     * <p>Setter for the field <code>centerPosY</code>.</p>
+     *
+     * @param centerPosY a float.
+     */
+    @Override
+    public void setCenterPosY(float centerPosY) {
+        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    }
+
+    /**
+     * <p>Setter for the field <code>width</code>.</p>
+     *
+     * @param width a float.
+     */
+    @Override
+    public void setWidth(float width) {
+        this.setLogicWindowWidth((int) width);
+    }
+
+    /**
+     * <p>Setter for the field <code>height</code>.</p>
+     *
+     * @param height a float.
+     */
+    @Override
+    public void setHeight(float height) {
+        this.setLogicWindowHeight((int) height);
     }
 }
