@@ -145,20 +145,12 @@ public class ConsoleThread extends Thread {
             final ExecutorService executorService =
                     Executors.newCachedThreadPool();
             while (!this.isInterrupted()) {
-                try {
-                    final Socket socket = serverSocket.accept();
-                    executorService.execute(new ConsoleTalkThread(socket,
-                            this));
-                } catch (Exception e) {
-                    LOGGER.error("ConsoleThread socket fails:", e);
-                }
+                newConsoleTalkThread(serverSocket, executorService);
             }
             executorService.shutdown();
-
         } catch (IOException e) {
             LOGGER.error("ConsoleThread serverSocket fails:", e);
         }
-
     }
 
     /**
@@ -168,5 +160,15 @@ public class ConsoleThread extends Thread {
      */
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    private void newConsoleTalkThread(ServerSocket serverSocket, ExecutorService executorService) {
+        try {
+            final Socket socket = serverSocket.accept();
+            executorService.execute(new ConsoleTalkThread(socket,
+                    this));
+        } catch (Exception e) {
+            LOGGER.error("ConsoleThread socket fails:", e);
+        }
     }
 }
