@@ -73,7 +73,7 @@ public class Console implements Runnable {
      */
     @Override
     public void run() {
-        try (Socket socket = new Socket("localhost", 13888)) {
+        try (Socket socket = new Socket("localhost", this.consolePort)) {
             OutputStream os = null;
             while (os == null) {
                 try {
