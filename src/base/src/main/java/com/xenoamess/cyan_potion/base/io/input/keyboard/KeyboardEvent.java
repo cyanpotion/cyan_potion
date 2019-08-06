@@ -168,6 +168,7 @@ public class KeyboardEvent implements Event {
      * key input.
      *
      * @return the string that the key refers to
+     * @deprecated
      */
     @Deprecated
     public String translate() {
