@@ -420,32 +420,35 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
 
     /**
      * glfw joysticks can work but can only accept buttons
-     * but cannot set vibrations.'
+     * but cannot set vibrations.
      * thus this is not used and become deprecated.
+     *
+     * @since 0.142.7
+     * @deprecated
      */
     @Deprecated
     public static void testGlfwJoyStick() {
         boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
         if (present) {
-            LOGGER.debug("GLFW_JOYSTICK_1 present : " + present);
-            LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : " +
+            LOGGER.debug("GLFW_JOYSTICK_1 present : {}", present);
+            LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : {}",
                     glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
             FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
             LOGGER.debug("axes : ");
-            LOGGER.debug("0 : " + axes.get(0));
-            LOGGER.debug("1 : " + axes.get(1));
-            LOGGER.debug("2 : " + axes.get(2));
-            LOGGER.debug("3 : " + axes.get(3));
+            LOGGER.debug("0 : {}", axes.get(0));
+            LOGGER.debug("1 : {}", axes.get(1));
+            LOGGER.debug("2 : {}", axes.get(2));
+            LOGGER.debug("3 : {}", axes.get(3));
 
             ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
             LOGGER.debug("buttons : ");
             for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
-                LOGGER.debug(i + " : " + buttons.get(i));
+                LOGGER.debug("{} : {}", i, buttons.get(i));
             }
             String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-            LOGGER.debug("GLFW_JOYSTICK_1 name : " + name);
+            LOGGER.debug("GLFW_JOYSTICK_1 name : {}", name);
             ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
-            LOGGER.debug("hats : " + hats.get(0));
+            LOGGER.debug("hats : {}" + hats.get(0));
         }
     }
 
