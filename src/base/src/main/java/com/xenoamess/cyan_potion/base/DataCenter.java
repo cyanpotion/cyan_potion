@@ -94,7 +94,9 @@ public class DataCenter {
     public static ObjectMapper getObjectMapper() {
         /*
          * lazy init.
-         * don't sync here because it will not cause big trouble if we have multiple objectMappers.
+         * we don't synchronize here,
+         * because it will not cause any big trouble,
+         * even if we have multiple objectMappers running at the same time.
          */
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
