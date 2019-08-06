@@ -34,6 +34,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 /**
  * @author XenoAmess
  */
@@ -53,7 +55,7 @@ public class GamepadInputTest {
         } catch (XInputNotLoadedException e) {
             LOGGER.error("XInputDevice.getAllDevices() fails", e);
         }
-        assert (devices != null);
+        assertNotNull(devices);
         LOGGER.debug("devices count : " + devices.length);
         int nowI = 0;
         for (int i = 0; i < devices.length; i++) {
@@ -71,7 +73,7 @@ public class GamepadInputTest {
         } catch (XInputNotLoadedException e) {
             LOGGER.error("XInputDevice.getDeviceFor(nowI) returns null:{}", nowI, e);
         }
-        assert (device != null);
+        assertNotNull(device);
 
         int nxt = 0;
 

@@ -65,7 +65,7 @@ public class CharEvent implements Event {
     @GuardedBy("gameManager")
     public Set<Event> apply(GameManager gameManager) {
         if (gameManager.getDataCenter().isDebug()) {
-            LOGGER.debug("{}", this.toString());
+            LOGGER.debug("{}", this);
         }
         return gameManager.getGameWindowComponentTree().process(this);
     }

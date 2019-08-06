@@ -63,7 +63,7 @@ public class ConsoleEvent implements Event {
         // If anyone do have any idea about how it shall design,
         // please just open issue. Thx.
         if (gameManager.getDataCenter().isDebug()) {
-            LOGGER.debug("{}", this.toString());
+            LOGGER.debug("{}", this);
         }
         return new HashSet<>();
     }

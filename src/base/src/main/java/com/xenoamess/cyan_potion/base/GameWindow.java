@@ -448,7 +448,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
             String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
             LOGGER.debug("GLFW_JOYSTICK_1 name : {}", name);
             ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
-            LOGGER.debug("hats : {}" + hats.get(0));
+            LOGGER.debug("hats : {}", hats.get(0));
         }
     }
 

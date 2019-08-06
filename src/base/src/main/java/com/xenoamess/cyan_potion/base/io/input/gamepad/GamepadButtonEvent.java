@@ -90,7 +90,7 @@ public class GamepadButtonEvent implements Event {
     public Set<Event> apply(GameManager gameManager) {
         if (getAction() != GLFW.GLFW_REPEAT) {
             if (gameManager.getDataCenter().isDebug()) {
-                LOGGER.debug("{}", this.toString());
+                LOGGER.debug("{}", this);
             }
         }
         switch (getAction()) {
