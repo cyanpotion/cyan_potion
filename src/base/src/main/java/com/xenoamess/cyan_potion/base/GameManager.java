@@ -111,6 +111,7 @@ public class GameManager implements AutoCloseable {
 
     private float timeToLastUpdate = 0;
 
+    private boolean canRender = false;
 
     /**
      * <p>generateArgsMap.</p>
@@ -500,16 +501,16 @@ public class GameManager implements AutoCloseable {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                GameWindow gameWindow =
+                GameWindow localGameWindow =
                         (GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this);
-                this.setGameWindow(gameWindow);
+                this.setGameWindow(localGameWindow);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
             }
         }
 
-//        getEventList().clear();
+        getEventList().clear();
 
         this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
                 STRING_LOGIC_WINDOW_WIDTH, "1280")));
@@ -598,8 +599,6 @@ public class GameManager implements AutoCloseable {
         int timerForSteamCallback = 0;
 
         while (getAlive()) {
-            boolean canRender = false;
-
             long time2 = System.currentTimeMillis();
             double passed = (time2 - time) / 1000.0;
             time = time2;
@@ -610,17 +609,17 @@ public class GameManager implements AutoCloseable {
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
                 unprocessed -= DataCenter.FRAME_CAP;
-                canRender = true;
+                setCanRender(true);
                 this.loopOnce();
             }
 
             this.setTimeToLastUpdate((float) unprocessed);
             unprocessed = 0;
-            canRender = true;
+            setCanRender(true);
             this.loopOnce();
 
 
-            if (canRender) {
+            if (isCanRender()) {
                 draw();
 
                 {//draw frame FPS calculate.
@@ -943,5 +942,13 @@ public class GameManager implements AutoCloseable {
      */
     public void setTimeToLastUpdate(float timeToLastUpdate) {
         this.timeToLastUpdate = timeToLastUpdate;
+    }
+
+    public boolean isCanRender() {
+        return canRender;
+    }
+
+    public void setCanRender(boolean canRender) {
+        this.canRender = canRender;
     }
 }

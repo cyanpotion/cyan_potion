@@ -51,10 +51,6 @@ public class Menu extends AbstractGameWindowComponent {
 
     private final Picture menuBackGroundPicture = new Picture(menuBackGroundTexture);
 
-    {
-        menuBackGroundPicture.cover(this.getGameWindow());
-    }
-
     private World world;
 
     /**
@@ -65,6 +61,7 @@ public class Menu extends AbstractGameWindowComponent {
     public Menu(World world) {
         super(world.getGameWindow());
         this.setWorld(world);
+        menuBackGroundPicture.cover(this.getGameWindow());
     }
 
     /**
