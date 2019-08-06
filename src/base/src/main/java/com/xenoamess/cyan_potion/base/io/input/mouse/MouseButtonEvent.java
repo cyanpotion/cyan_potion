@@ -113,7 +113,9 @@ public class MouseButtonEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("{}", this.toString());
+        if (gameManager.getDataCenter().isDebug()) {
+            LOGGER.debug("{}", this.toString());
+        }
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
             case GLFW.GLFW_PRESS:

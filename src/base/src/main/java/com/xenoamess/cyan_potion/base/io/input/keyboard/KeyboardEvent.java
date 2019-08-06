@@ -115,7 +115,9 @@ public class KeyboardEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("{}", this.toString());
+        if (gameManager.getDataCenter().isDebug()) {
+            LOGGER.debug("{}", this.toString());
+        }
         switch (getAction()) {
             case GLFW_RELEASE:
             case GLFW_PRESS:

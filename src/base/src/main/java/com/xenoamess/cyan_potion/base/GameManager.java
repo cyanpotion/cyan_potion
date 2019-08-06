@@ -596,7 +596,6 @@ public class GameManager implements AutoCloseable {
 
         long time = System.currentTimeMillis();
         double unprocessed = 0;
-        int timerForSteamCallback = 0;
 
         while (getAlive()) {
             long time2 = System.currentTimeMillis();

@@ -89,7 +89,9 @@ public class GamepadButtonEvent implements Event {
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
         if (getAction() != GLFW.GLFW_REPEAT) {
-            LOGGER.debug("{}", this.toString());
+            if (gameManager.getDataCenter().isDebug()) {
+                LOGGER.debug("{}", this.toString());
+            }
         }
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
