@@ -32,7 +32,9 @@ package com.xenoamess.cyan_potion.base;
  */
 public class GameEntrance {
     /**
-     * <p>main.</p>
+     * default entrance of the game engine.
+     * notice that it is not required to enter it here.
+     * you can write a similar function yourself.
      *
      * @param args an array of {@link java.lang.String} objects.
      */

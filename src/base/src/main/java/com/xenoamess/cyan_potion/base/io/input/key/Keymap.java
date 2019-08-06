@@ -26,8 +26,9 @@ package com.xenoamess.cyan_potion.base.io.input.key;
 
 import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadData;
-import org.apache.commons.lang3.NotImplementedException;
-import org.lwjgl.glfw.GLFW;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,37 +146,49 @@ public class Keymap {
         }
         Integer rawInputI = null;
         Integer myInputI = null;
-        try {
-            Field field = GLFW.class.getField(rawInput);
-            field.setAccessible(true);
-            rawInputI = (Integer) field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            LOGGER.debug("Keymap.put(String rawInput, String myInput) fails:{},{}", rawInput, myInput, e);
+        int type = -1;
+
+        if (rawInputI == null) {
+            try {
+                rawInputI = KeyboardKeyEnum.valueOf(rawInput).value;
+                type = Key.TYPE_KEY;
+            } catch (Exception e) {
+                LOGGER.debug("rawInput {} is not a Keyboard key.", rawInputI);
+            }
+        }
+        if (rawInputI == null) {
+            try {
+                rawInputI = MouseButtonKeyEnum.valueOf(rawInput).value;
+                type = Key.TYPE_MOUSE;
+            } catch (Exception e) {
+                LOGGER.debug("rawInput {} is not a MouseButton key.", rawInputI);
+            }
+        }
+        if (rawInputI == null) {
+            try {
+                rawInputI = JXInputGamepadKeyEnum.valueOf(rawInput).value;
+                type = Key.TYPE_GAMEPAD;
+            } catch (Exception e) {
+                LOGGER.debug("rawInput {} is not a JXInputGamepad key.", rawInputI);
+            }
         }
         if (rawInputI == null) {
             return null;
         }
+
+
         try {
             Field field = Keymap.class.getField(myInput);
             myInputI = (Integer) field.get(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            LOGGER.debug("Keymap.put(String rawInput, String myInput) fails:{},{}", rawInput, myInput, e);
+            LOGGER.debug("myInputI {} not in class Keymap.", myInputI);
         }
+
 
         if (myInputI == null) {
             return null;
         }
 
-        int type;
-
-        if (rawInput.startsWith("GLFW_KEY")) {
-            type = Key.TYPE_KEY;
-        } else if (rawInput.startsWith("GLFW_MOUSE_BUTTON")) {
-            type = Key.TYPE_MOUSE;
-        } else {
-            throw new NotImplementedException("if you want to implement Joystick you should add" +
-                    " it here");
-        }
         return put(new Key(type, rawInputI), new Key(Key.TYPE_XENOAMESS_KEY,
                 myInputI));
     }

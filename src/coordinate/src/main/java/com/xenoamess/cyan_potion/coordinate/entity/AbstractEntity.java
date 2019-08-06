@@ -24,8 +24,9 @@
 
 package com.xenoamess.cyan_potion.coordinate.entity;
 
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.render.Bindable;
+import com.xenoamess.cyan_potion.base.visual.AbstractPicture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
@@ -39,12 +40,12 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractEntity implements Area {
+public abstract class AbstractEntity implements AbstractMutableArea {
     private final AbstractEntityScene scene;
     private Vector3f centerPos;
     private Vector3f size;
     private AbstractShape shape;
-    private Picture picture = new Picture();
+    private AbstractPicture picture = new Picture();
 
 
     /**
@@ -66,7 +67,7 @@ public abstract class AbstractEntity implements Area {
         if (this.getShape() != null) {
             this.getShape().setEntity(this);
         }
-        this.getPicture().setBindable(bindable);
+        this.setPicture(new Picture(bindable));
         this.getPicture().cover(this);
     }
 
@@ -75,8 +76,16 @@ public abstract class AbstractEntity implements Area {
      *
      * @return return
      */
-    public Picture getPicture() {
+    public AbstractPicture getPicture() {
         return this.picture;
+    }
+
+    /**
+     * <p>Getter for the field <code>picture</code>.</p>
+     *
+     */
+    public void setPicture(AbstractPicture picture) {
+        this.picture = picture;
     }
 
     /**
@@ -181,6 +190,22 @@ public abstract class AbstractEntity implements Area {
      * {@inheritDoc}
      */
     @Override
+    public void setCenterPosX(float newCenterPosX) {
+        this.getCenterPos().x = newCenterPosX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCenterPosY(float newCenterPosY) {
+        this.getCenterPos().y = newCenterPosY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public float getWidth() {
         return this.getSize().x();
     }
@@ -191,6 +216,22 @@ public abstract class AbstractEntity implements Area {
     @Override
     public float getHeight() {
         return this.getSize().y();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setWidth(float newWidth) {
+        this.getSize().x = newWidth;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHeight(float newHeight) {
+        this.getSize().y = newHeight;
     }
 
     /**

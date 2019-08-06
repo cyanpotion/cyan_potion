@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
+import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -88,8 +89,7 @@ public class GamepadButtonEvent implements Event {
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
         if (getAction() != GLFW.GLFW_REPEAT) {
-            LOGGER.debug("GamepadButtonEvent : {} {} {}", getKey(),
-                    getAction(), getGamepadDevice());
+            LOGGER.debug(this.toString());
         }
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
@@ -148,5 +148,18 @@ public class GamepadButtonEvent implements Event {
      */
     public AbstractGamepadDevice getGamepadDevice() {
         return gamepadDevice;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("GamepadButtonEvent:{key:");
+        stringBuilder.append(JXInputGamepadKeyEnum.getStringByValue(this.getKey()));
+        stringBuilder.append(",action:");
+        stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
+        stringBuilder.append(",gamepadDevice:");
+        stringBuilder.append(this.getGamepadDevice());
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }

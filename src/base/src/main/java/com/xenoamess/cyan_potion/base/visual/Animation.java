@@ -22,7 +22,9 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.render;
+package com.xenoamess.cyan_potion.base.visual;
+
+import com.xenoamess.cyan_potion.base.render.Bindable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +35,13 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Animation implements Bindable {
+public class Animation extends AbstractPicture {
     private int texturePointer;
 
     private long lastTime = System.currentTimeMillis();
     private float fps;
 
-    private final List<Bindable> frames = new ArrayList<>();
+    private final List<AbstractPicture> frames = new ArrayList<>();
 
 
     /**
@@ -53,11 +55,11 @@ public class Animation implements Bindable {
     }
 
     /**
-     * <p>getCurrentBindable.</p>
+     * <p>getCurrentPicture.</p>
      *
      * @return return
      */
-    public Bindable getCurrentBindable() {
+    public AbstractPicture getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
         elapsedTime /= 1000;
@@ -75,19 +77,13 @@ public class Animation implements Bindable {
     }
 
     /**
-     * {@inheritDoc}
+     * <p>getCurrentBindable.</p>
+     *
+     * @return return
      */
     @Override
-    public void bind(int sampler) {
-        this.getCurrentBindable().bind(sampler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void unbind() {
-        this.getCurrentBindable().unbind();
+    public Bindable getCurrentBindable() {
+        return this.getCurrentPicture().getCurrentBindable();
     }
 
     /**
@@ -149,7 +145,7 @@ public class Animation implements Bindable {
      *
      * @return return
      */
-    public List<Bindable> getFrames() {
+    public List<AbstractPicture> getFrames() {
         return frames;
     }
 }

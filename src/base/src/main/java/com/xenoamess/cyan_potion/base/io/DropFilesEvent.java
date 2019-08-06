@@ -67,8 +67,7 @@ public class DropFilesEvent implements Event {
      */
     @Override
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug("DropFilesEvent : count:{} names:{} \ntoString():{}", getCount(), getNames(),
-                this.toString());
+        LOGGER.debug(this.toString());
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
@@ -78,16 +77,21 @@ public class DropFilesEvent implements Event {
         //because we want to make it multi-platform.
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("DropFilesEvent toString():{");
+        stringBuilder.append("DropFilesEvent:{");
         stringBuilder.append("count:");
         stringBuilder.append(this.getCount());
         stringBuilder.append(",names:");
         stringBuilder.append(this.getNames());
         stringBuilder.append(",names:");
         PointerBuffer nameBuffer = memPointerBuffer(getNames(), getCount());
+        stringBuilder.append('[');
         for (int i = 0; i < getCount(); i++) {
-            System.out.format("\t%d: %s%n", i + 1, memUTF8(memByteBufferNT1(nameBuffer.get(i))));
+            stringBuilder.append(i);
+            stringBuilder.append(":");
+            stringBuilder.append(memUTF8(memByteBufferNT1(nameBuffer.get(i))));
+            stringBuilder.append(',');
         }
+        stringBuilder.append(']');
         stringBuilder.append("}");
         return stringBuilder.toString();
     }

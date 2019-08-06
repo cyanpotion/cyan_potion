@@ -30,7 +30,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class MutableArea implements Area {
+public class SimpleMutableArea implements AbstractMutableArea {
     private float centerPosX;
     private float centerPosY;
     private float width;
@@ -39,13 +39,13 @@ public class MutableArea implements Area {
     /**
      * <p>Constructor for MutableArea.</p>
      *
-     * @param area area
+     * @param abstractArea area
      */
-    public MutableArea(Area area) {
-        this.setCenterPosX(area.getCenterPosX());
-        this.setCenterPosY(area.getCenterPosY());
-        this.setWidth(area.getWidth());
-        this.setHeight(area.getHeight());
+    public SimpleMutableArea(AbstractArea abstractArea) {
+        this.setCenterPosX(abstractArea.getCenterPosX());
+        this.setCenterPosY(abstractArea.getCenterPosY());
+        this.setWidth(abstractArea.getWidth());
+        this.setHeight(abstractArea.getHeight());
     }
 
     /**
@@ -56,50 +56,11 @@ public class MutableArea implements Area {
      * @param width      a float.
      * @param height     a float.
      */
-    public MutableArea(float centerPosX, float centerPosY, float width, float height) {
+    public SimpleMutableArea(float centerPosX, float centerPosY, float width, float height) {
         this.centerPosX = centerPosX;
         this.centerPosY = centerPosY;
         this.width = width;
         this.height = height;
-    }
-
-    /**
-     * <p>generateMutableArea.</p>
-     *
-     * @param centerPosX a float.
-     * @param centerPosY a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @return return
-     */
-    public static MutableArea generateMutableArea(
-            float centerPosX, float centerPosY, float width, float height) {
-        return new MutableArea(centerPosX, centerPosY, width, height);
-    }
-
-    /**
-     * <p>generateMutableArea.</p>
-     *
-     * @param area area
-     * @return return
-     */
-    public static MutableArea generateMutableArea(
-            Area area) {
-        return new MutableArea(area);
-    }
-
-    /**
-     * <p>generateMutableAreaFromLeftTop.</p>
-     *
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param width       a float.
-     * @param height      a float.
-     * @return return
-     */
-    public static MutableArea generateMutableAreaFromLeftTop(
-            float leftTopPosX, float leftTopPosY, float width, float height) {
-        return new MutableArea(leftTopPosX + width / 2F, leftTopPosY + height / 2F, width, height);
     }
 
     /**
@@ -139,6 +100,7 @@ public class MutableArea implements Area {
      *
      * @param centerPosX a float.
      */
+    @Override
     public void setCenterPosX(float centerPosX) {
         this.centerPosX = centerPosX;
     }
@@ -148,6 +110,7 @@ public class MutableArea implements Area {
      *
      * @param centerPosY a float.
      */
+    @Override
     public void setCenterPosY(float centerPosY) {
         this.centerPosY = centerPosY;
     }
@@ -157,6 +120,7 @@ public class MutableArea implements Area {
      *
      * @param width a float.
      */
+    @Override
     public void setWidth(float width) {
         this.width = width;
     }
@@ -166,6 +130,7 @@ public class MutableArea implements Area {
      *
      * @param height a float.
      */
+    @Override
     public void setHeight(float height) {
         this.height = height;
     }

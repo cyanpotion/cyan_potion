@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
@@ -50,7 +50,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractShape implements Area {
+public abstract class AbstractShape implements AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
@@ -520,6 +520,22 @@ public abstract class AbstractShape implements Area {
      * {@inheritDoc}
      */
     @Override
+    public void setCenterPosX(float newCenterPosX) {
+        this.getCenterPos().x = newCenterPosX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCenterPosY(float newCenterPosY) {
+        this.getCenterPos().y = newCenterPosY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public float getWidth() {
         return this.getSize().x();
     }
@@ -531,4 +547,21 @@ public abstract class AbstractShape implements Area {
     public float getHeight() {
         return this.getSize().y();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setWidth(float newWidth) {
+        this.getSize().x = newWidth;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHeight(float newHeight) {
+        this.getSize().y = newHeight;
+    }
+
 }

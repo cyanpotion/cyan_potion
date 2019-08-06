@@ -26,13 +26,14 @@ package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
-import com.xenoamess.cyan_potion.base.commons.areas.Area;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import org.apache.commons.lang.SystemUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -57,7 +58,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindow implements AutoCloseable, Area {
+public class GameWindow implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
@@ -275,7 +276,7 @@ public class GameWindow implements AutoCloseable, Area {
         String iconFilePath =
                 FileUtils.getURI(this.getClass(), this.getGameManager().getDataCenter().getIconFilePath()).getPath();
 
-        if (DataCenter.isWindows() && iconFilePath.startsWith("/")) {
+        if (SystemUtils.IS_OS_WINDOWS && iconFilePath.startsWith("/")) {
             iconFilePath = iconFilePath.substring(1);
         }
 
@@ -529,15 +530,6 @@ public class GameWindow implements AutoCloseable, Area {
         this.bindGlViewportToFullWindow();
         this.getGameManager().getGameWindowComponentTree().draw();
         glfwSwapBuffers(getWindow());
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return the window handle
-     */
-    public long getWindow() {
-        return window;
     }
 
     /**
@@ -953,6 +945,17 @@ public class GameWindow implements AutoCloseable, Area {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
     }
 
+    //--- getters and setters ---
+
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return the window handle
+     */
+    public long getWindow() {
+        return window;
+    }
+
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
@@ -1208,5 +1211,45 @@ public class GameWindow implements AutoCloseable, Area {
     @Override
     public float getHeight() {
         return this.getLogicWindowHeight();
+    }
+
+    /**
+     * <p>Setter for the field <code>centerPosX</code>.</p>
+     *
+     * @param centerPosX a float.
+     */
+    @Override
+    public void setCenterPosX(float centerPosX) {
+        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    }
+
+    /**
+     * <p>Setter for the field <code>centerPosY</code>.</p>
+     *
+     * @param centerPosY a float.
+     */
+    @Override
+    public void setCenterPosY(float centerPosY) {
+        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    }
+
+    /**
+     * <p>Setter for the field <code>width</code>.</p>
+     *
+     * @param width a float.
+     */
+    @Override
+    public void setWidth(float width) {
+        this.setLogicWindowWidth((int) width);
+    }
+
+    /**
+     * <p>Setter for the field <code>height</code>.</p>
+     *
+     * @param height a float.
+     */
+    @Override
+    public void setHeight(float height) {
+        this.setLogicWindowHeight((int) height);
     }
 }
