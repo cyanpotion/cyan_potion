@@ -88,10 +88,8 @@ public class GamepadButtonEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        if (getAction() != GLFW.GLFW_REPEAT) {
-            if (gameManager.getDataCenter().isDebug()) {
-                LOGGER.debug("{}", this);
-            }
+        if (gameManager.getDataCenter().isDebug() && getAction() != GLFW.GLFW_REPEAT) {
+            LOGGER.debug("{}", this);
         }
         switch (getAction()) {
             case GLFW.GLFW_RELEASE:
