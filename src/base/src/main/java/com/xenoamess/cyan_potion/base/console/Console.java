@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.console;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -38,6 +40,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
+    private int consolePort;
+
+    public Console() {
+        this(DataCenter.DEFAULT_CONSOLE_PORT);
+    }
+
+    public Console(int consolePort) {
+        this.consolePort = consolePort;
+    }
 
     /**
      * <p>Getter for the field <code>alive</code>.</p>
@@ -85,12 +96,26 @@ public class Console implements Runnable {
         }
     }
 
+    public static int getConsolePort(String[] args) {
+        int res = DataCenter.DEFAULT_CONSOLE_PORT;
+        try {
+            if (args.length >= 1) {
+                res = Integer.parseInt(args[0]);
+            }
+        } catch (NumberFormatException e) {
+            res = DataCenter.DEFAULT_CONSOLE_PORT;
+        }
+
+        return res;
+    }
+
+
     /**
      * <p>main.</p>
      *
      * @param args an array of {@link java.lang.String} objects.
      */
     public static void main(String[] args) {
-        new Thread(new Console()).start();
+        new Thread(new Console(getConsolePort(args))).start();
     }
 }

@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.console;
 
-import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,7 +140,7 @@ public class ConsoleThread extends Thread {
     @Override
     public void run() {
         try (ServerSocket serverSocket =
-                     new ServerSocket(DataCenter.CONSOLE_PORT)) {
+                     new ServerSocket(this.getGameManager().getDataCenter().getConsolePort())) {
             final ExecutorService executorService =
                     Executors.newCachedThreadPool();
             while (!this.isInterrupted()) {

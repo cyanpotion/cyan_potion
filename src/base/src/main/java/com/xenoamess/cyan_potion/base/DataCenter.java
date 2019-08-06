@@ -47,10 +47,9 @@ public class DataCenter {
     public static final boolean ALLOW_RUN_WITHOUT_STEAM = true;
     private boolean runWithSteam = true;
 
-    /**
-     * Constant <code>CONSOLE_PORT=13888</code>
-     */
-    public static final int CONSOLE_PORT = 13888;
+    public static final int DEFAULT_CONSOLE_PORT = 13888;
+    private int consolePort = DEFAULT_CONSOLE_PORT;
+
     /**
      * Constant <code>FRAME_CAP=1 / 60.0</code>
      */
@@ -298,5 +297,16 @@ public class DataCenter {
      */
     public void patchGlobalSettingsTree() {
         this.getGlobalSettingsTree().append(this.getPatchSettingsTree());
+    }
+
+    /**
+     * Constant <code>CONSOLE_PORT=13888</code>
+     */
+    public int getConsolePort() {
+        return consolePort;
+    }
+
+    public void setConsolePort(int consolePort) {
+        this.consolePort = consolePort;
     }
 }
