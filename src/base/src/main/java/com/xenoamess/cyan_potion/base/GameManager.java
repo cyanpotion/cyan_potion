@@ -37,7 +37,7 @@ import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
-import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -99,7 +99,7 @@ public class GameManager implements AutoCloseable {
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
     private final Keymap keymap = new Keymap();
-    private final GamepadInput gamepadInput = new GamepadInput();
+    private final GamepadInputManager gamepadInputManager = new GamepadInputManager();
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
@@ -235,7 +235,10 @@ public class GameManager implements AutoCloseable {
         this.getAudioManager().init();
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
-        this.getGamepadInput().init(this);
+        this.codePluginManager.apply(this, rightBeforeGamepadInputManagerInit);
+        this.getGamepadInputManager().init(this);
+        this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
+
         this.setStartingContent();
         final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -471,7 +474,7 @@ public class GameManager implements AutoCloseable {
 
         this.getGameWindow().close();
         this.getAudioManager().close();
-
+        this.getGamepadInputManager().close();
         setAlive(false);
 
         if (getConsoleThread() != null) {
@@ -700,7 +703,7 @@ public class GameManager implements AutoCloseable {
      * <p>update.</p>
      */
     protected void update() {
-        this.getGamepadInput().update(this.getGameWindow());
+        this.getGamepadInputManager().update(this.getGameWindow());
         getGameWindow().update();
         this.getGameWindowComponentTree().update();
     }
@@ -834,8 +837,8 @@ public class GameManager implements AutoCloseable {
      *
      * @return return
      */
-    public GamepadInput getGamepadInput() {
-        return gamepadInput;
+    public GamepadInputManager getGamepadInputManager() {
+        return gamepadInputManager;
     }
 
     /**

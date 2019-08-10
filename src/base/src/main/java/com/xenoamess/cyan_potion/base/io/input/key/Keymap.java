@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.io.input.key;
 import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadData;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.JamepadGamepadKeyEnum;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum;
 import org.slf4j.Logger;
@@ -167,6 +168,14 @@ public class Keymap {
         if (rawInputI == null) {
             try {
                 rawInputI = JXInputGamepadKeyEnum.valueOf(rawInput).value;
+                type = Key.TYPE_GAMEPAD;
+            } catch (Exception e) {
+                LOGGER.debug("rawInput {} is not a JXInputGamepad key.", rawInputI);
+            }
+        }
+        if (rawInputI == null) {
+            try {
+                rawInputI = JamepadGamepadKeyEnum.valueOf(rawInput).value;
                 type = Key.TYPE_GAMEPAD;
             } catch (Exception e) {
                 LOGGER.debug("rawInput {} is not a JXInputGamepad key.", rawInputI);

@@ -48,6 +48,10 @@ public class DataCenter {
     private boolean runWithSteam = true;
 
     public static final int DEFAULT_CONSOLE_PORT = 13888;
+
+    /**
+     * the port used to receive console commands.
+     */
     private int consolePort = DEFAULT_CONSOLE_PORT;
 
     /**
@@ -58,6 +62,19 @@ public class DataCenter {
      * Constant <code>SCALE=2</code>
      */
     public static final int SCALE = 2;
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    private boolean usingJXInput = false;
 
     private X8lTree globalSettingsTree;
     private X8lTree patchSettingsTree;
@@ -302,13 +319,46 @@ public class DataCenter {
     }
 
     /**
-     * Constant <code>CONSOLE_PORT=13888</code>
+     * the port used to receive console commands.
      */
     public int getConsolePort() {
         return consolePort;
     }
 
+    /**
+     * the port used to receive console commands.
+     */
     public void setConsolePort(int consolePort) {
         this.consolePort = consolePort;
+    }
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    public boolean isUsingJXInput() {
+        return usingJXInput;
+    }
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    public void setUsingJXInput(boolean usingJXInput) {
+        this.usingJXInput = usingJXInput;
     }
 }

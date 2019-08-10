@@ -39,12 +39,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * @author XenoAmess
  */
-public class GamepadInputTest {
+public class GamepadInputManagerTest {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(GamepadInputTest.class);
+            LoggerFactory.getLogger(GamepadInputManagerTest.class);
 
     @Test
-    public void testGamepadInput() {
+    public void testXInput() {
         if (!SystemUtils.IS_OS_WINDOWS) {
             return;
         }
@@ -133,7 +133,6 @@ public class GamepadInputTest {
             LOGGER.debug("" + axes.lt);
             LOGGER.debug("" + axes.rt);
             LOGGER.debug("" + axes.dpad);
-
         }
     }
 }

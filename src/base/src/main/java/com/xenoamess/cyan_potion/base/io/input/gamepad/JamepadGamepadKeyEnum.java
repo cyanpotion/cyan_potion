@@ -27,35 +27,36 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import java.util.Arrays;
 
 /**
+ * Notice that this class is a duplicate of JXInputGamepadKeyEnum.
+ * But for convenience, we just split them.
+ *
  * @author XenoAmess
- * @see JXInputGamepadDevice
- * @deprecated
+ * @see JXInputGamepadKeyEnum
  */
-@Deprecated
-public enum JXInputGamepadKeyEnum {
-    JXINPUT_KEY_A(0),
-    JXINPUT_KEY_B(1),
-    JXINPUT_KEY_X(2),
-    JXINPUT_KEY_Y(3),
-    JXINPUT_KEY_BACK(4),
-    JXINPUT_KEY_START(5),
-    JXINPUT_KEY_LB(6),
-    JXINPUT_KEY_RB(7),
-    JXINPUT_KEY_L(8),
-    JXINPUT_KEY_R(9),
-    JXINPUT_KEY_UP(10),
-    JXINPUT_KEY_DOWN(11),
-    JXINPUT_KEY_LEFT(12),
-    JXINPUT_KEY_RIGHT(13),
-    JXINPUT_KEY_GUIDE(14),
-    JXINPUT_KEY_UNKNOWN(15),
-    JXINPUT_KEY_LT(16),
-    JXINPUT_KEY_RT(17);
+public enum JamepadGamepadKeyEnum {
+    JAMEPAD_KEY_A(0),
+    JAMEPAD_KEY_B(1),
+    JAMEPAD_KEY_X(2),
+    JAMEPAD_KEY_Y(3),
+    JAMEPAD_KEY_BACK(4),
+    JAMEPAD_KEY_START(5),
+    JAMEPAD_KEY_LB(6),
+    JAMEPAD_KEY_RB(7),
+    JAMEPAD_KEY_L(8),
+    JAMEPAD_KEY_R(9),
+    JAMEPAD_KEY_UP(10),
+    JAMEPAD_KEY_DOWN(11),
+    JAMEPAD_KEY_LEFT(12),
+    JAMEPAD_KEY_RIGHT(13),
+    JAMEPAD_KEY_GUIDE(14),
+    JAMEPAD_KEY_UNKNOWN(15),
+    JAMEPAD_KEY_LT(16),
+    JAMEPAD_KEY_RT(17);
 
     public final int value;
-    public static final JXInputGamepadKeyEnum[] values = generateValues();
+    public static final JamepadGamepadKeyEnum[] values = generateValues();
 
-    JXInputGamepadKeyEnum(int value) {
+    JamepadGamepadKeyEnum(int value) {
         this.value = value;
     }
 
@@ -64,11 +65,11 @@ public enum JXInputGamepadKeyEnum {
     }
 
 
-    public static JXInputGamepadKeyEnum getByValue(int value) {
+    public static JamepadGamepadKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
         }
-        return JXINPUT_KEY_UNKNOWN;
+        return JAMEPAD_KEY_UNKNOWN;
     }
 
     public static String getStringByValue(int value) {
@@ -76,9 +77,9 @@ public enum JXInputGamepadKeyEnum {
     }
 
     private static final int maxValue() {
-        JXInputGamepadKeyEnum[] rawValues = values();
+        JamepadGamepadKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
-        for (JXInputGamepadKeyEnum au : rawValues) {
+        for (JamepadGamepadKeyEnum au : rawValues) {
             if (maxValue < au.value) {
                 maxValue = au.value;
             }
@@ -86,11 +87,11 @@ public enum JXInputGamepadKeyEnum {
         return maxValue;
     }
 
-    private static final JXInputGamepadKeyEnum[] generateValues() {
-        JXInputGamepadKeyEnum[] res = new JXInputGamepadKeyEnum[maxValue() + 1];
-        Arrays.fill(res, JXINPUT_KEY_UNKNOWN);
+    private static final JamepadGamepadKeyEnum[] generateValues() {
+        JamepadGamepadKeyEnum[] res = new JamepadGamepadKeyEnum[maxValue() + 1];
+        Arrays.fill(res, JAMEPAD_KEY_UNKNOWN);
 
-        for (JXInputGamepadKeyEnum au : values()) {
+        for (JamepadGamepadKeyEnum au : values()) {
             if (au.value >= 0) {
                 res[au.value] = au;
             }
