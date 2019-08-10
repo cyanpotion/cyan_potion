@@ -67,13 +67,13 @@ public class GamepadInputManager implements AutoCloseable {
                 LOGGER.debug("XInputNotLoadedException", e);
             }
         } else {
-            this.jamepadControllerManager = new ControllerManager();
-            jamepadControllerManager.initSDLGamepad();
+            this.setJamepadControllerManager(new ControllerManager());
+            getJamepadControllerManager().initSDLGamepad();
 
-            int jamepadDeviceNum = jamepadControllerManager.getNumControllers();
+            int jamepadDeviceNum = getJamepadControllerManager().getNumControllers();
             for (int i = 0; i < jamepadDeviceNum; i++) {
                 AbstractGamepadDevice jamepadGamepadDevice =
-                        new JamepadGamepadDevice(this.jamepadControllerManager, i);
+                        new JamepadGamepadDevice(this.getJamepadControllerManager(), i);
                 getGamepadDatas().add(new JamepadGamepadData(jamepadGamepadDevice));
             }
         }
@@ -90,8 +90,8 @@ public class GamepadInputManager implements AutoCloseable {
 
     @Override
     public void close() {
-        if (jamepadControllerManager != null) {
-            jamepadControllerManager.quitSDLGamepad();
+        if (getJamepadControllerManager() != null) {
+            getJamepadControllerManager().quitSDLGamepad();
         }
     }
 
@@ -104,8 +104,8 @@ public class GamepadInputManager implements AutoCloseable {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
             gamepadData.update(gameWindow);
         }
-        if (jamepadControllerManager != null) {
-            jamepadControllerManager.update();
+        if (getJamepadControllerManager() != null) {
+            getJamepadControllerManager().update();
         }
     }
 
@@ -118,4 +118,11 @@ public class GamepadInputManager implements AutoCloseable {
         return gamepadDatas;
     }
 
+    public ControllerManager getJamepadControllerManager() {
+        return jamepadControllerManager;
+    }
+
+    public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
+        this.jamepadControllerManager = jamepadControllerManager;
+    }
 }
