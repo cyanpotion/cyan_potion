@@ -22,42 +22,41 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.io.input.mouse;
+package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import java.util.Arrays;
 
 /**
+ * Notice that this class is a duplicate of JXInputGamepadKeyEnum.
+ * But for convenience, we just split them.
+ *
  * @author XenoAmess
+ * @see JXInputGamepadKeyEnum
  */
-public enum MouseButtonKeyEnum {
-    /**
-     * GLFW_MOUSE_BUTTON_LEFT   = GLFW_MOUSE_BUTTON_1,
-     */
-    GLFW_MOUSE_BUTTON_1(0),
-    /**
-     * GLFW_MOUSE_BUTTON_RIGHT  =GLFW_MOUSE_BUTTON_2,
-     */
-    GLFW_MOUSE_BUTTON_2(1),
-    /**
-     * GLFW_MOUSE_BUTTON_MIDDLE =GLFW_MOUSE_BUTTON_3;
-     */
-    GLFW_MOUSE_BUTTON_3(2),
-
-    GLFW_MOUSE_BUTTON_4(3),
-
-    GLFW_MOUSE_BUTTON_5(4),
-
-    GLFW_MOUSE_BUTTON_6(5),
-
-    GLFW_MOUSE_BUTTON_7(6),
-
-    GLFW_MOUSE_BUTTON_8(7);
-
+public enum JamepadGamepadKeyEnum {
+    JAMEPAD_KEY_A(0),
+    JAMEPAD_KEY_B(1),
+    JAMEPAD_KEY_X(2),
+    JAMEPAD_KEY_Y(3),
+    JAMEPAD_KEY_BACK(4),
+    JAMEPAD_KEY_START(5),
+    JAMEPAD_KEY_LB(6),
+    JAMEPAD_KEY_RB(7),
+    JAMEPAD_KEY_L(8),
+    JAMEPAD_KEY_R(9),
+    JAMEPAD_KEY_UP(10),
+    JAMEPAD_KEY_DOWN(11),
+    JAMEPAD_KEY_LEFT(12),
+    JAMEPAD_KEY_RIGHT(13),
+    JAMEPAD_KEY_GUIDE(14),
+    JAMEPAD_KEY_UNKNOWN(15),
+    JAMEPAD_KEY_LT(16),
+    JAMEPAD_KEY_RT(17);
 
     public final int value;
-    public static final MouseButtonKeyEnum[] values = generateValues();
+    public static final JamepadGamepadKeyEnum[] values = generateValues();
 
-    MouseButtonKeyEnum(int value) {
+    JamepadGamepadKeyEnum(int value) {
         this.value = value;
     }
 
@@ -66,11 +65,11 @@ public enum MouseButtonKeyEnum {
     }
 
 
-    public static MouseButtonKeyEnum getByValue(int value) {
+    public static JamepadGamepadKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
         }
-        return GLFW_MOUSE_BUTTON_1;
+        return JAMEPAD_KEY_UNKNOWN;
     }
 
     public static String getStringByValue(int value) {
@@ -78,9 +77,9 @@ public enum MouseButtonKeyEnum {
     }
 
     private static final int maxValue() {
-        MouseButtonKeyEnum[] rawValues = values();
+        JamepadGamepadKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
-        for (MouseButtonKeyEnum au : rawValues) {
+        for (JamepadGamepadKeyEnum au : rawValues) {
             if (maxValue < au.value) {
                 maxValue = au.value;
             }
@@ -88,17 +87,16 @@ public enum MouseButtonKeyEnum {
         return maxValue;
     }
 
-    private static final MouseButtonKeyEnum[] generateValues() {
-        MouseButtonKeyEnum[] res = new MouseButtonKeyEnum[maxValue() + 1];
-        Arrays.fill(res, GLFW_MOUSE_BUTTON_1);
+    private static final JamepadGamepadKeyEnum[] generateValues() {
+        JamepadGamepadKeyEnum[] res = new JamepadGamepadKeyEnum[maxValue() + 1];
+        Arrays.fill(res, JAMEPAD_KEY_UNKNOWN);
 
-        for (MouseButtonKeyEnum au : values()) {
+        for (JamepadGamepadKeyEnum au : values()) {
             if (au.value >= 0) {
                 res[au.value] = au;
             }
         }
         return res;
     }
-
 
 }

@@ -47,6 +47,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -413,30 +415,43 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public void pollEvents() {
         glfwPollEvents();
-
-//        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-//        if (present) {
-//            LOGGER.debug("GLFW_JOYSTICK_1 present : " + present);
-//            LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : " +
-//                    glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
-//            FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
-//            LOGGER.debug("axes : ");
-//            LOGGER.debug("0 : " + axes.get(0));
-//            LOGGER.debug("1 : " + axes.get(1));
-//            LOGGER.debug("2 : " + axes.get(2));
-//            LOGGER.debug("3 : " + axes.get(3));
-//
-//            ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
-//            LOGGER.debug("buttons : ");
-//            for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
-//                LOGGER.debug(i + " : " + buttons.get(i));
-//            }
-//            String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-//            LOGGER.debug("GLFW_JOYSTICK_1 name : " + name);
-//            ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
-//            LOGGER.debug("hats : " + hats.get(0));
-//        }
+//        testGlfwJoyStick();
     }
+
+    /**
+     * glfw joysticks can work but can only accept buttons
+     * but cannot set vibrations.
+     * thus this is not used and become deprecated.
+     *
+     * @since 0.142.7
+     * @deprecated
+     */
+    @Deprecated
+    public static void testGlfwJoyStick() {
+        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+        if (present) {
+            LOGGER.debug("GLFW_JOYSTICK_1 present : {}", present);
+            LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : {}",
+                    glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
+            FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
+            LOGGER.debug("axes : ");
+            LOGGER.debug("0 : {}", axes.get(0));
+            LOGGER.debug("1 : {}", axes.get(1));
+            LOGGER.debug("2 : {}", axes.get(2));
+            LOGGER.debug("3 : {}", axes.get(3));
+
+            ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
+            LOGGER.debug("buttons : ");
+            for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
+                LOGGER.debug("{} : {}", i, buttons.get(i));
+            }
+            String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
+            LOGGER.debug("GLFW_JOYSTICK_1 name : {}", name);
+            ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
+            LOGGER.debug("hats : {}", hats.get(0));
+        }
+    }
+
 
     /**
      * <p>changeFullScreen.</p>
@@ -821,7 +836,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      */
     public void drawText(Font font, float x, float y, float scaleX,
-                         float scaleY, float characterSpace, Vector4f
+                         float scaleY, float height, float characterSpace, Vector4f
                                  color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
@@ -830,7 +845,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         }
 
         font.bind();
-        font.drawText(x, y, scaleX, scaleY, 0, characterSpace, color, text);
+        font.drawText(x, y, scaleX, scaleY, height, characterSpace, color, text);
     }
 
     /**
@@ -890,12 +905,13 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param x       a float.
      * @param y       a float.
      * @param scaleXy a float.
+     * @param height  a float.
      * @param color   a {@link org.joml.Vector4f} object.
      * @param text    a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy,
+    public void drawText(Font font, float x, float y, float scaleXy, float height,
                          Vector4f color, String text) {
-        this.drawText(font, x, y, scaleXy, scaleXy, 0, color, text);
+        this.drawText(font, x, y, scaleXy, scaleXy, 0, height, color, text);
     }
 
     /**
@@ -907,7 +923,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param scaleXy a float.
      * @param text    a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy,
+    public void drawText(Font font, float x, float y, float scaleXy, float height,
                          String text) {
         this.drawText(font, x, y, scaleXy, null, text);
     }
@@ -921,9 +937,21 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param color color
      * @param text  a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, Vector4f color,
+    public void drawText(Font font, float x, float y, float height, Vector4f color,
                          String text) {
-        this.drawText(font, x, y, 1f, color, text);
+        this.drawText(font, x, y, 1f, height, color, text);
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font font
+     * @param x    a float.
+     * @param y    a float.
+     * @param text text
+     */
+    public void drawText(Font font, float x, float y, float height, String text) {
+        this.drawText(font, x, y, height, null, text);
     }
 
     /**
@@ -935,7 +963,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text text
      */
     public void drawText(Font font, float x, float y, String text) {
-        this.drawText(font, x, y, 1f, text);
+        this.drawText(font, x, y, 30, text);
     }
 
     /**

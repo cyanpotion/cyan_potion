@@ -28,6 +28,7 @@ import com.codedisaster.steamworks.SteamController;
 import com.codedisaster.steamworks.SteamControllerHandle;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import com.studiohartman.jamepad.ControllerManager;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import org.slf4j.Logger;
@@ -41,10 +42,12 @@ import java.util.ArrayList;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GamepadInput {
+public class GamepadInputManager implements AutoCloseable {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(GamepadInput.class);
+            LoggerFactory.getLogger(GamepadInputManager.class);
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
+
+    private ControllerManager jamepadControllerManager = null;
 
     /**
      * <p>init.</p>
@@ -52,15 +55,27 @@ public class GamepadInput {
      * @param gameManager gameManager
      */
     public void init(GameManager gameManager) {
-        try {
-            int jXInputDeviceNum = XInputDevice.getAllDevices().length;
-            for (int i = 0; i < jXInputDeviceNum; i++) {
-                AbstractGamepadDevice jXInputGamepadDevice =
-                        new JXInputGamepadDevice(i);
-                getGamepadDatas().add(new JXInputGamepadData(jXInputGamepadDevice));
+        if (gameManager.getDataCenter().isUsingJXInput()) {
+            try {
+                int jXInputDeviceNum = XInputDevice.getAllDevices().length;
+                for (int i = 0; i < jXInputDeviceNum; i++) {
+                    AbstractGamepadDevice jXInputGamepadDevice =
+                            new JXInputGamepadDevice(i);
+                    getGamepadDatas().add(new JXInputGamepadData(jXInputGamepadDevice));
+                }
+            } catch (XInputNotLoadedException e) {
+                LOGGER.debug("XInputNotLoadedException", e);
             }
-        } catch (XInputNotLoadedException e) {
-            LOGGER.debug("XInputNotLoadedException", e);
+        } else {
+            this.setJamepadControllerManager(new ControllerManager());
+            getJamepadControllerManager().initSDLGamepad();
+
+            int jamepadDeviceNum = getJamepadControllerManager().getNumControllers();
+            for (int i = 0; i < jamepadDeviceNum; i++) {
+                AbstractGamepadDevice jamepadGamepadDevice =
+                        new JamepadGamepadDevice(this.getJamepadControllerManager(), i);
+                getGamepadDatas().add(new JamepadGamepadData(jamepadGamepadDevice));
+            }
         }
 
         if (gameManager.getDataCenter().isRunWithSteam()) {
@@ -73,6 +88,13 @@ public class GamepadInput {
         }
     }
 
+    @Override
+    public void close() {
+        if (getJamepadControllerManager() != null) {
+            getJamepadControllerManager().quitSDLGamepad();
+        }
+    }
+
     /**
      * <p>update.</p>
      *
@@ -81,6 +103,9 @@ public class GamepadInput {
     public void update(GameWindow gameWindow) {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
             gamepadData.update(gameWindow);
+        }
+        if (getJamepadControllerManager() != null) {
+            getJamepadControllerManager().update();
         }
     }
 
@@ -93,4 +118,11 @@ public class GamepadInput {
         return gamepadDatas;
     }
 
+    public ControllerManager getJamepadControllerManager() {
+        return jamepadControllerManager;
+    }
+
+    public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
+        this.jamepadControllerManager = jamepadControllerManager;
+    }
 }

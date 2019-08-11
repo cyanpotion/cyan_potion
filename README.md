@@ -34,15 +34,15 @@ Many codes related to animation/display have not been completed yet.
 
 The event system is also very rudimentary.
 
-Design of the scripting system has only just begun. (not in this branch)
-
-And no books/documents for the inner logic for now.
+And no much materials for the inner logic for now.
 
 Demo
 ----------
 Here is the [demo](https://github.com/cyanpotion/cyan_potion/tree/develop/src/demo).
 
 (The demo is actually for cyan_potion_rpg_module, but I guess this counts.)
+
+![image](src/demo/demo.gif)
 
 You can also take a look at [this](https://store.steampowered.com/app/999030/).
 

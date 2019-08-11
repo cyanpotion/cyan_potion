@@ -47,10 +47,13 @@ public class DataCenter {
     public static final boolean ALLOW_RUN_WITHOUT_STEAM = true;
     private boolean runWithSteam = true;
 
+    public static final int DEFAULT_CONSOLE_PORT = 13888;
+
     /**
-     * Constant <code>CONSOLE_PORT=13888</code>
+     * the port used to receive console commands.
      */
-    public static final int CONSOLE_PORT = 13888;
+    private int consolePort = DEFAULT_CONSOLE_PORT;
+
     /**
      * Constant <code>FRAME_CAP=1 / 60.0</code>
      */
@@ -59,6 +62,19 @@ public class DataCenter {
      * Constant <code>SCALE=2</code>
      */
     public static final int SCALE = 2;
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    private boolean usingJXInput = false;
 
     private X8lTree globalSettingsTree;
     private X8lTree patchSettingsTree;
@@ -95,7 +111,9 @@ public class DataCenter {
     public static ObjectMapper getObjectMapper() {
         /*
          * lazy init.
-         * don't sync here because it will not cause big trouble if we have multiple objectMappers.
+         * we don't synchronize here,
+         * because it will not cause any big trouble,
+         * even if we have multiple objectMappers running at the same time.
          */
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
@@ -298,5 +316,49 @@ public class DataCenter {
      */
     public void patchGlobalSettingsTree() {
         this.getGlobalSettingsTree().append(this.getPatchSettingsTree());
+    }
+
+    /**
+     * the port used to receive console commands.
+     */
+    public int getConsolePort() {
+        return consolePort;
+    }
+
+    /**
+     * the port used to receive console commands.
+     */
+    public void setConsolePort(int consolePort) {
+        this.consolePort = consolePort;
+    }
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    public boolean isUsingJXInput() {
+        return usingJXInput;
+    }
+
+    /**
+     * If true, then will use JXInput
+     * (using DirectX directly, but can only run in windows.)
+     * to deal with controller.
+     * <p>
+     * If false, then will use Jamepad
+     * (using SDL, can run on multi-platforms.)
+     * to deal with controller.
+     * <p>
+     * At default it is set to false, meaing we just use Jamepad.
+     */
+    public void setUsingJXInput(boolean usingJXInput) {
+        this.usingJXInput = usingJXInput;
     }
 }

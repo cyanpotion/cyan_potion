@@ -26,7 +26,6 @@ package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import org.joml.Vector3f;
 import org.lwjgl.openal.*;
 import org.lwjgl.system.MemoryUtil;
@@ -52,7 +51,7 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  */
 public class AudioManager implements AutoCloseable {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(CharEvent.class);
+            LoggerFactory.getLogger(AudioManager.class);
     /**
      * Constant <code>INITIAL_TEMP_SOURCES_NUM=128</code>
      */

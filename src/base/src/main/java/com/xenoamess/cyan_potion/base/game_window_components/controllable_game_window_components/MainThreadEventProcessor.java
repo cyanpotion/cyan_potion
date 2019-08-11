@@ -35,8 +35,8 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
  * @version 0.143.0
  */
 public class MainThreadEventProcessor implements EventProcessor {
-    public GameManager gameManager;
-    public EventProcessor processor;
+    private GameManager gameManager;
+    private EventProcessor processor;
 
     /**
      * <p>Constructor for MainThreadEventProcessor.</p>
@@ -45,8 +45,8 @@ public class MainThreadEventProcessor implements EventProcessor {
      * @param processor   processor
      */
     public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
-        this.gameManager = gameManager;
-        this.processor = processor;
+        this.setGameManager(gameManager);
+        this.setProcessor(processor);
     }
 
     /**
@@ -56,8 +56,8 @@ public class MainThreadEventProcessor implements EventProcessor {
      * @param processor           processor
      */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
-        this.gameManager = gameWindowComponent.getGameWindow().getGameManager();
-        this.processor = processor;
+        this.setGameManager(gameWindowComponent.getGameWindow().getGameManager());
+        this.setProcessor(processor);
     }
 
     /**
@@ -66,9 +66,25 @@ public class MainThreadEventProcessor implements EventProcessor {
     @Override
     public Event apply(Event event) {
         if (Thread.currentThread().getId() != 1) {
-            this.gameManager.delayMainThreadEventProcess(this, event);
+            this.getGameManager().delayMainThreadEventProcess(this, event);
             return null;
         }
-        return this.processor.apply(event);
+        return this.getProcessor().apply(event);
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
+    public EventProcessor getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(EventProcessor processor) {
+        this.processor = processor;
     }
 }

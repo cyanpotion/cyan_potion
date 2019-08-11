@@ -115,7 +115,9 @@ public class KeyboardEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        LOGGER.debug(this.toString());
+        if (gameManager.getDataCenter().isDebug()) {
+            LOGGER.debug("{}", this);
+        }
         switch (getAction()) {
             case GLFW_RELEASE:
             case GLFW_PRESS:
@@ -166,6 +168,7 @@ public class KeyboardEvent implements Event {
      * key input.
      *
      * @return the string that the key refers to
+     * @deprecated
      */
     @Deprecated
     public String translate() {

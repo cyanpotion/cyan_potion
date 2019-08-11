@@ -37,7 +37,7 @@ import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
-import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInput;
+import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -99,7 +99,7 @@ public class GameManager implements AutoCloseable {
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
     private final Keymap keymap = new Keymap();
-    private final GamepadInput gamepadInput = new GamepadInput();
+    private final GamepadInputManager gamepadInputManager = new GamepadInputManager();
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
@@ -111,6 +111,7 @@ public class GameManager implements AutoCloseable {
 
     private float timeToLastUpdate = 0;
 
+    private boolean canRender = false;
 
     /**
      * <p>generateArgsMap.</p>
@@ -234,7 +235,10 @@ public class GameManager implements AutoCloseable {
         this.getAudioManager().init();
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
-        this.getGamepadInput().init(this);
+        this.codePluginManager.apply(this, rightBeforeGamepadInputManagerInit);
+        this.getGamepadInputManager().init(this);
+        this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
+
         this.setStartingContent();
         final String defaultFontResourceURI =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -470,7 +474,7 @@ public class GameManager implements AutoCloseable {
 
         this.getGameWindow().close();
         this.getAudioManager().close();
-
+        this.getGamepadInputManager().close();
         setAlive(false);
 
         if (getConsoleThread() != null) {
@@ -500,16 +504,16 @@ public class GameManager implements AutoCloseable {
             String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
                     STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
             try {
-                GameWindow gameWindow =
+                GameWindow localGameWindow =
                         (GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this);
-                this.setGameWindow(gameWindow);
+                this.setGameWindow(localGameWindow);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
             }
         }
 
-//        getEventList().clear();
+        getEventList().clear();
 
         this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
                 STRING_LOGIC_WINDOW_WIDTH, "1280")));
@@ -595,11 +599,8 @@ public class GameManager implements AutoCloseable {
 
         long time = System.currentTimeMillis();
         double unprocessed = 0;
-        int timerForSteamCallback = 0;
 
         while (getAlive()) {
-            boolean canRender = false;
-
             long time2 = System.currentTimeMillis();
             double passed = (time2 - time) / 1000.0;
             time = time2;
@@ -610,17 +611,17 @@ public class GameManager implements AutoCloseable {
             while (unprocessed >= DataCenter.FRAME_CAP) {
                 this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
                 unprocessed -= DataCenter.FRAME_CAP;
-                canRender = true;
+                setCanRender(true);
                 this.loopOnce();
             }
 
             this.setTimeToLastUpdate((float) unprocessed);
             unprocessed = 0;
-            canRender = true;
+            setCanRender(true);
             this.loopOnce();
 
 
-            if (canRender) {
+            if (isCanRender()) {
                 draw();
 
                 {//draw frame FPS calculate.
@@ -702,7 +703,7 @@ public class GameManager implements AutoCloseable {
      * <p>update.</p>
      */
     protected void update() {
-        this.getGamepadInput().update(this.getGameWindow());
+        this.getGamepadInputManager().update(this.getGameWindow());
         getGameWindow().update();
         this.getGameWindowComponentTree().update();
     }
@@ -836,8 +837,8 @@ public class GameManager implements AutoCloseable {
      *
      * @return return
      */
-    public GamepadInput getGamepadInput() {
-        return gamepadInput;
+    public GamepadInputManager getGamepadInputManager() {
+        return gamepadInputManager;
     }
 
     /**
@@ -943,5 +944,13 @@ public class GameManager implements AutoCloseable {
      */
     public void setTimeToLastUpdate(float timeToLastUpdate) {
         this.timeToLastUpdate = timeToLastUpdate;
+    }
+
+    public boolean isCanRender() {
+        return canRender;
+    }
+
+    public void setCanRender(boolean canRender) {
+        this.canRender = canRender;
     }
 }

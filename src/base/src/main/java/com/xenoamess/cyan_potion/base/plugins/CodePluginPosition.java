@@ -43,6 +43,9 @@ public enum CodePluginPosition {
     rightBeforeAudioManagerInit,
     rightAfterAudioManagerInit,
 
+    rightBeforeGamepadInputManagerInit,
+    rightAfterGamepadInputManagerInit,
+
     rightBeforeLogicFrame,
     rightAfterLogicFrame,
 

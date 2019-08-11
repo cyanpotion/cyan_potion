@@ -104,7 +104,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             }
 
 
-            final int index = 1;
+            static final int index = 1;
 
             @Override
             public void draw() {
@@ -146,7 +146,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    final int index = 2;
+                    static final int index = 2;
 
                     @Override
                     public void draw() {
@@ -187,7 +187,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    final int index = 3;
+                    static final int index = 3;
 
                     @Override
                     public void draw() {
@@ -228,7 +228,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    final int index = 4;
+                    static final int index = 4;
 
                     @Override
                     public void draw() {
