@@ -73,18 +73,21 @@ public abstract class AbstractEntity implements AbstractMutableArea {
 
     /**
      * <p>Getter for the field <code>picture</code>.</p>
+     */
+    public void setPicture(AbstractPicture picture) {
+        this.picture = picture;
+        if (this.picture != null) {
+            this.picture.cover(this);
+        }
+    }
+
+    /**
+     * <p>Getter for the field <code>picture</code>.</p>
      *
      * @return return
      */
     public AbstractPicture getPicture() {
         return this.picture;
-    }
-
-    /**
-     * <p>Getter for the field <code>picture</code>.</p>
-     */
-    public void setPicture(AbstractPicture picture) {
-        this.picture = picture;
     }
 
     /**
