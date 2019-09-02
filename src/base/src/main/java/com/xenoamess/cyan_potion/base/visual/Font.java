@@ -177,10 +177,10 @@ public class Font extends AbstractResource {
                 stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
                 STBTTPackedchar.Buffer charDataLocal =
                         STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
-                charDataLocal.position(i == 0 ? 32 : 0);
+                charDataLocal.position(0);
                 charDataLocal.limit(EACH_CHAR_NUM);
                 stbtt_PackSetOversampling(pc, 1, 1);
-                stbtt_PackFontRange(pc, ttf, 0, SCALE, i == 0 ? 32 : i * EACH_CHAR_NUM, charDataLocal);
+                stbtt_PackFontRange(pc, ttf, 0, SCALE, i * EACH_CHAR_NUM, charDataLocal);
 
                 stbtt_PackEnd(pc);
                 if (TEST_PRINT_FONT_BMP) {
@@ -345,6 +345,9 @@ public class Font extends AbstractResource {
         float lastXShould = x;
         float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) < 32) {
+                continue;
+            }
             glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
             glBegin(GL_QUADS);
             stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
@@ -415,6 +418,9 @@ public class Font extends AbstractResource {
         float y3 = Float.MIN_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) < 32) {
+                continue;
+            }
             glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
             glBegin(GL_QUADS);
             stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
@@ -557,6 +563,9 @@ public class Font extends AbstractResource {
         float lastXShould = x;
         float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) < 32) {
+                continue;
+            }
             glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
             glBegin(GL_QUADS);
             stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,

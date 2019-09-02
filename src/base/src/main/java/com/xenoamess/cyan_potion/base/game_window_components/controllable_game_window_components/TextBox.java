@@ -119,7 +119,9 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 font.getYb().put(0, lineStartPosY);
                 continue;
             }
-
+            if (this.getContentString().charAt(i) < 32) {
+                continue;
+            }
             if (Character.isWhitespace(this.getContentString().charAt(i))) {
                 glEnd();
                 glBindTexture(GL_TEXTURE_2D,
@@ -166,6 +168,9 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 if (Character.isWhitespace(nowChar)) {
                     break;
                 }
+                if (nowChar < 32) {
+                    continue;
+                }
                 glEnd();
                 glBindTexture(GL_TEXTURE_2D,
                         font.getFontTextures().getPrimitive(nowChar / EACH_CHAR_NUM));
@@ -211,6 +216,9 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 char nowChar = this.getContentString().charAt(ti);
                 if (Character.isWhitespace(nowChar)) {
                     break;
+                }
+                if (nowChar < 32) {
+                    continue;
                 }
                 glEnd();
                 glBindTexture(GL_TEXTURE_2D,

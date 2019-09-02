@@ -416,6 +416,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             float lastXShould = x;
             float lastYShould = y;
             for (int i = 0; i < text.length(); i++) {
+                if (text.charAt(i) < 32) {
+                    continue;
+                }
                 glEnd();
                 glBindTexture(GL_TEXTURE_2D,
                         font.getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
@@ -520,6 +523,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                     lastXReal = x;
 
                     for (int i2 = 0; i2 < line.length(); i2++) {
+                        if (text.charAt(i2) < 32) {
+                            continue;
+                        }
                         glEnd();
                         glBindTexture(GL_TEXTURE_2D,
                                 font.getFontTextures().getPrimitive(text.charAt(i2) / EACH_CHAR_NUM));
