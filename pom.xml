@@ -47,9 +47,9 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <dom4j.version>2.1.1</dom4j.version>
         <eclipse-collections.version>10.0.0</eclipse-collections.version>
-        <guava.version>28.0-jre</guava.version>
-        <jackson.version>2.10.0.pr1</jackson.version>
-        <joml.version>1.9.16</joml.version>
+        <guava.version>28.1-jre</guava.version>
+        <jackson.version>2.10.0.pr2</jackson.version>
+        <joml.version>1.9.17</joml.version>
         <log4j.version>2.12.1</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>2.0.0-alpha0</slf4j.version>
