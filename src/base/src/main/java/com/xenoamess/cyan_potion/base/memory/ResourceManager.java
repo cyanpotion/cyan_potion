@@ -60,8 +60,8 @@ public class ResourceManager implements AutoCloseable {
         return maxTextureSize;
     }
 
-    public void init() {
-        this.getMaxTextureSize();
+    public void setMaxTextureSize(long maxTextureSize) {
+        this.maxTextureSize = maxTextureSize;
     }
 
     /**
