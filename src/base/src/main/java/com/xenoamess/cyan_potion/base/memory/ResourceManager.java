@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import static org.lwjgl.opengl.GL11.glGetIntegerv;
+
 /**
  * <p>ResourceManager class.</p>
  *
@@ -45,6 +48,21 @@ import java.util.function.Function;
 public class ResourceManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
+
+    private long maxTextureSize = 0;
+
+    public long getMaxTextureSize() {
+        if (maxTextureSize == 0) {
+            int[] maxTextureSizeArray = new int[1];
+            glGetIntegerv(GL11.GL_MAX_TEXTURE_SIZE, maxTextureSizeArray);
+            maxTextureSize = 1L * maxTextureSizeArray[0] * maxTextureSizeArray[0];
+        }
+        return maxTextureSize;
+    }
+
+    public void init() {
+        this.getMaxTextureSize();
+    }
 
     /**
      * Constant <code>TOTAL_MEMORY_SIZE_LIMIT_POINT=8L * 1024 * 1024 * 1024</code>

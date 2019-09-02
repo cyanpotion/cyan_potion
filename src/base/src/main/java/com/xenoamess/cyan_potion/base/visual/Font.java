@@ -28,6 +28,7 @@ import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.exceptions.ResourceSizeLargerThanGlMaxTextureSize;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -158,9 +159,10 @@ public class Font extends AbstractResource {
             ByteBuffer ttf =
                     FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-            if (BITMAP_W * BITMAP_H > GL_MAX_TEXTURE_SIZE) {
-                LOGGER.error("GL_MAX_TEXTURE_SIZE is {} but need {}", GL_MAX_TEXTURE_SIZE, BITMAP_W * BITMAP_H);
-            }
+            this.setMemorySize(1L * BITMAP_W * BITMAP_H);
+
+            ResourceSizeLargerThanGlMaxTextureSize.check(this);
+
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
             charDataLocal.position(p);

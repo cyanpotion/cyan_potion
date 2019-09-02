@@ -231,6 +231,8 @@ public class GameManager implements AutoCloseable {
         this.initGameWindow();
         this.codePluginManager.apply(this, rightAfterGameWindowInit);
 
+        this.resourceManager.init();
+
         this.codePluginManager.apply(this, rightBeforeAudioManagerInit);
         this.getAudioManager().init();
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
