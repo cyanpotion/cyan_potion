@@ -26,7 +26,6 @@ package com.xenoamess.cyan_potion.base.exceptions;
 
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 
@@ -37,14 +36,18 @@ import java.lang.reflect.Field;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class ResourceSizeLargerThanGlMaxTextureSize extends RuntimeException {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSize.class);
-
+public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
+    //    private static final Logger LOGGER =
+//            LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
+    public static final boolean STRICT = false;
 
     public static void check(AbstractResource resource) {
         if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
-            throw new ResourceSizeLargerThanGlMaxTextureSize(resource);
+            ResourceSizeLargerThanGlMaxTextureSizeException result =
+                    new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
+            if (STRICT) {
+                throw result;
+            }
         }
     }
 
@@ -59,7 +62,7 @@ public class ResourceSizeLargerThanGlMaxTextureSize extends RuntimeException {
      *
      * @param resource resource checked
      */
-    public ResourceSizeLargerThanGlMaxTextureSize(AbstractResource resource) {
+    public ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize());
         try {
             Field loggerField = resource.getClass().getDeclaredField("LOGGER");

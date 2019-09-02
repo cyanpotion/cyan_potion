@@ -26,9 +26,10 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
+import com.xenoamess.commons.primitive.iterators.IntIterator;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.exceptions.ResourceSizeLargerThanGlMaxTextureSize;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -42,6 +43,8 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
@@ -73,29 +76,40 @@ public class Font extends AbstractResource {
      */
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
+//    /**
+//     * Constant <code>MAX_NUM=40960</code>
+//     */
+//    public static final int MAX_NUM = 40960;
     /**
-     * Constant <code>MAX_NUM=40960</code>
+     * size of each font pic.
      */
-    public static final int MAX_NUM = 40960;
+    public static final int EACH_SIZE = 1024;
+//    public static final int EACH_SIZE = 1024 * 16;
     /**
-     * Constant <code>MAX_SIZE=16 * 1024</code>
+     * num of characters on each font pic.
      */
-    public static final int MAX_SIZE = 16 * 1024;
+    public static final int EACH_CHAR_NUM = 1024;
+//    public static final int EACH_CHAR_NUM = 65536;
+    /**
+     * num of characters on each font pic.
+     */
+    public static final int PIC_NUM = ((int) (Character.MAX_VALUE) + 1) / EACH_CHAR_NUM;
+//    public static final int PIC_NUM = ((int) (100000) / EACH_CHAR_NUM);
     /**
      * Constant <code>BITMAP_W=MAX_SIZE</code>
      */
-    public static final int BITMAP_W = MAX_SIZE;
+    public static final int BITMAP_W = EACH_SIZE;
     /**
      * Constant <code>BITMAP_H=MAX_SIZE</code>
      */
-    public static final int BITMAP_H = MAX_SIZE;
+    public static final int BITMAP_H = EACH_SIZE;
     /**
      * Constant <code>SCALE=36.0f</code>
      */
     public static final float SCALE = 36.0f;
 
-    private int fontTexture;
-    private STBTTPackedchar.Buffer charData = null;
+    private final IntArrayList fontTextures = new IntArrayList();
+    private final List<STBTTPackedchar.Buffer> charDatas = new ArrayList<>();
 
     @AsFinalField
     private static Font defaultFont = null;
@@ -144,7 +158,7 @@ public class Font extends AbstractResource {
      * this buffer will be freed after init(),
      * so please does never use it after that.
      */
-    private ByteBuffer bitmap;
+    private List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
 
     /**
      * <p>loadBitmap.</p>
@@ -152,32 +166,32 @@ public class Font extends AbstractResource {
      * @param resourceFilePath resourceFilePath
      */
     public void loadBitmap(String resourceFilePath) {
-        ByteBuffer bitmapLocal;
-        STBTTPackedchar.Buffer charDataLocal =
-                STBTTPackedchar.malloc(6 * MAX_NUM);
+        ByteBuffer ttf =
+                FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
+        this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            ByteBuffer ttf =
-                    FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
-            bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-            this.setMemorySize(1L * BITMAP_W * BITMAP_H);
+//            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
-            ResourceSizeLargerThanGlMaxTextureSize.check(this);
+            for (int i = 0; i < PIC_NUM; i++) {
+                ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+                stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
+                STBTTPackedchar.Buffer charDataLocal =
+                        STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
+                charDataLocal.position(0);
+                charDataLocal.limit(EACH_CHAR_NUM);
+                stbtt_PackSetOversampling(pc, 1, 1);
+                stbtt_PackFontRange(pc, ttf, 0, SCALE, i * EACH_CHAR_NUM, charDataLocal);
 
-            stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
-            int p = 32;
-            charDataLocal.position(p);
-            stbtt_PackSetOversampling(pc, 1, 1);
-            stbtt_PackFontRange(pc, ttf, 0, SCALE, 32, charDataLocal);
-            charDataLocal.clear();
-            stbtt_PackEnd(pc);
-            if (TEST_PRINT_FONT_BMP) {
-                stbi_write_bmp("font_texture.bmp", BITMAP_W, BITMAP_H, 1,
-                        bitmapLocal);
+                stbtt_PackEnd(pc);
+                if (TEST_PRINT_FONT_BMP) {
+                    stbi_write_bmp("font_texture" + i + ".bmp", BITMAP_W, BITMAP_H, 1,
+                            bitmapLocal);
+                }
+
+                this.bitmaps.add(bitmapLocal);
+                this.getCharDatas().add(charDataLocal);
             }
-
-            this.bitmap = bitmapLocal;
-            this.setCharData(charDataLocal);
-            this.setMemorySize(charDataLocal.capacity());
+//            this.setMemorySize(charDataLocal.capacity());
         }
     }
 
@@ -189,13 +203,17 @@ public class Font extends AbstractResource {
      */
     public void init(GameWindow gameWindow) {
         this.setGameWindow(gameWindow);
-        this.setFontTexture(glGenTextures());
-        glBindTexture(GL_TEXTURE_2D, getFontTexture());
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0,
-                GL_ALPHA, GL_UNSIGNED_BYTE, this.bitmap);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        MemoryUtil.memFree(this.bitmap);
+
+        for (int i = 0; i < PIC_NUM; i++) {
+            int nowTextureIndex = glGenTextures();
+            this.getFontTextures().addPrimitive(nowTextureIndex);
+            glBindTexture(GL_TEXTURE_2D, nowTextureIndex);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0,
+                    GL_ALPHA, GL_UNSIGNED_BYTE, this.bitmaps.get(i));
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            MemoryUtil.memFree(this.bitmaps.get(i));
+        }
     }
 
     /**
@@ -316,23 +334,23 @@ public class Font extends AbstractResource {
         getXb().put(0, x);
         getYb().put(0, y);
 
-//        charData.position(font * MAX_NUM);
-        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
         if (color != null) {
             glColor4f(color.x, color.y, color.z, color.w);
         }
 
-        glBegin(GL_QUADS);
         float lastXReal = x;
         float lastYReal = y;
         float lastXShould = x;
         float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
-                    text.charAt(i), getXb(), getYb(), getQ(), false);
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+            glBegin(GL_QUADS);
+            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+//            stbtt_GetPackedQuad(getCharDatas().get(0), BITMAP_W, BITMAP_H,
+//                    150, getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
 //            LOGGER.debug("s0:" + q.s0() + " s1:" + q.s1() + " t0:" +
@@ -359,8 +377,8 @@ public class Font extends AbstractResource {
             lastYReal = y;
             lastXShould = getQ().x1();
             lastYShould = y;
+            glEnd();
         }
-        glEnd();
     }
 
     /**
@@ -382,16 +400,12 @@ public class Font extends AbstractResource {
         getXb().put(0, x1);
         getYb().put(0, y1);
 
-//        charData.position(font * MAX_NUM);
-        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
         if (color != null) {
             glColor4f(color.x, color.y, color.z, color.w);
         }
 
-        glBegin(GL_QUADS);
         float lastXReal = x1;
         float lastYReal = y1;
         float lastXShould = x1;
@@ -401,8 +415,10 @@ public class Font extends AbstractResource {
         float y3 = Float.MIN_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
-                    text.charAt(i), getXb(), getYb(), getQ(), false);
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+            glBegin(GL_QUADS);
+            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
@@ -425,8 +441,8 @@ public class Font extends AbstractResource {
             lastYReal = y1;
             lastXShould = getQ().x1();
             lastYShould = y1;
+            glEnd();
         }
-        glEnd();
         float scaleX = width / (x3 - x1);
         float scaleY = height / (y3 - y1);
         if (width < 0) {
@@ -449,9 +465,8 @@ public class Font extends AbstractResource {
             this.bind();
             getXb().put(0, 0);
             getYb().put(0, 0);
-            getCharData().position(0 * MAX_NUM);
             glEnable(GL_TEXTURE_2D);
-            glBindTexture(GL_TEXTURE_2D, getFontTexture());
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().get(0));
 
 //            glBegin(GL_QUADS);
 
@@ -463,8 +478,9 @@ public class Font extends AbstractResource {
             float maxY = Float.MIN_VALUE;
 
             for (char chr : text.toCharArray()) {
-                stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
-                        chr, getXb(), getYb(), getQ(), false);
+                glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(chr / EACH_CHAR_NUM));
+                stbtt_GetPackedQuad(getCharDatas().get(chr / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                        chr % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
                 minY = Math.min(minY, getQ().y0());
                 maxY = Math.max(maxY, getQ().y1());
             }
@@ -530,22 +546,21 @@ public class Font extends AbstractResource {
         getYb().put(0, y);
 
 //        charData.position(font * MAX_NUM);
-        getCharData().position(0 * MAX_NUM);
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, getFontTexture());
 
         if (color != null) {
             glColor4f(color.x, color.y, color.z, color.w);
         }
 
-        glBegin(GL_QUADS);
         float lastXReal = x;
         float lastYReal = y;
         float lastXShould = x;
         float lastYShould = y;
         for (int i = 0; i < text.length(); i++) {
-            stbtt_GetPackedQuad(getCharData(), BITMAP_W, BITMAP_H,
-                    text.charAt(i), getXb(), getYb(), getQ(), false);
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+            glBegin(GL_QUADS);
+            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getQ().x1() - getQ().x0();
@@ -580,8 +595,9 @@ public class Font extends AbstractResource {
             lastYReal = y;
             lastXShould = getQ().x1();
             lastYShould = y;
+            glEnd();
         }
-        glEnd();
+
     }
 
     /**
@@ -589,35 +605,29 @@ public class Font extends AbstractResource {
      */
     @Override
     public void forceClose() {
-        getCharData().close();
-
+        for (STBTTPackedchar.Buffer au : this.getCharDatas()) {
+            au.close();
+        }
+        MemoryUtil.memFree(getXb());
         MemoryUtil.memFree(getYb());
         MemoryUtil.memFree(getXb());
         getQ().free();
 
-        if (this.getFontTexture() != 0) {
-            glDeleteTextures(this.getFontTexture());
-            this.setFontTexture(0);
+        IntIterator it = this.getFontTextures().iterator();
+        while (it.hasNext()) {
+            glDeleteTextures(it.next());
         }
+        this.getFontTextures().clear();
     }
 
-    /**
-     * <p>Getter for the field <code>fontTexture</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getFontTexture() {
-        return fontTexture;
-    }
-
-    /**
-     * <p>Getter for the field <code>charData</code>.</p>
-     *
-     * @return return
-     */
-    public STBTTPackedchar.Buffer getCharData() {
-        return charData;
-    }
+//    /**
+//     * <p>Getter for the field <code>fontTexture</code>.</p>
+//     *
+//     * @return a int.
+//     */
+//    public int getFontTexture() {
+//        return fontTexture;
+//    }
 
     /**
      * <p>Getter for the field <code>defaultFont</code>.</p>
@@ -710,22 +720,20 @@ public class Font extends AbstractResource {
         return yb;
     }
 
-    /**
-     * <p>Setter for the field <code>fontTexture</code>.</p>
-     *
-     * @param fontTexture a int.
-     */
-    public void setFontTexture(int fontTexture) {
-        this.fontTexture = fontTexture;
+//    /**
+//     * <p>Setter for the field <code>fontTexture</code>.</p>
+//     *
+//     * @param fontTexture a int.
+//     */
+//    public void setFontTexture(int fontTexture) {
+//        this.fontTexture = fontTexture;
+//    }
+
+    public IntArrayList getFontTextures() {
+        return fontTextures;
     }
 
-    /**
-     * <p>Setter for the field <code>charData</code>.</p>
-     *
-     * @param charData charData
-     */
-    public void setCharData(STBTTPackedchar.Buffer charData) {
-        this.charData = charData;
+    public List<STBTTPackedchar.Buffer> getCharDatas() {
+        return charDatas;
     }
-
 }
