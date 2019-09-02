@@ -36,6 +36,8 @@ import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
 import org.lwjgl.stb.STBTTPackedchar;
 import org.lwjgl.system.MemoryUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -53,6 +55,9 @@ import static org.lwjgl.stb.STBTruetype.*;
  * @version 0.143.0
  */
 public class Font extends AbstractResource {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Font.class);
+
     /**
      * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
      * file.
@@ -153,6 +158,9 @@ public class Font extends AbstractResource {
             ByteBuffer ttf =
                     FileUtils.loadFileBuffer(FileUtils.getFile(resourceFilePath), true);
             bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+            if (BITMAP_W * BITMAP_H > GL_MAX_TEXTURE_SIZE) {
+                LOGGER.error("GL_MAX_TEXTURE_SIZE is {} but need {}", GL_MAX_TEXTURE_SIZE, BITMAP_W * BITMAP_H);
+            }
             stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
             int p = 32;
             charDataLocal.position(p);

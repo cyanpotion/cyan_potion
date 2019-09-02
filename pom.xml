@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.143.0</version>
+    <version>0.143.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -51,7 +51,7 @@
         <jackson.version>2.10.0.pr1</jackson.version>
         <joml.version>1.9.16</joml.version>
         <log4j.version>2.12.1</log4j.version>
-        <lwjgl.version>3.2.2</lwjgl.version>
+        <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>2.0.0-alpha0</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
         <JXInput.version>1.0.0</JXInput.version>
