@@ -177,10 +177,10 @@ public class Font extends AbstractResource {
                 stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
                 STBTTPackedchar.Buffer charDataLocal =
                         STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
-                charDataLocal.position(0);
+                charDataLocal.position(i == 0 ? 32 : 0);
                 charDataLocal.limit(EACH_CHAR_NUM);
                 stbtt_PackSetOversampling(pc, 1, 1);
-                stbtt_PackFontRange(pc, ttf, 0, SCALE, i * EACH_CHAR_NUM, charDataLocal);
+                stbtt_PackFontRange(pc, ttf, 0, SCALE, i == 0 ? 32 : i * EACH_CHAR_NUM, charDataLocal);
 
                 stbtt_PackEnd(pc);
                 if (TEST_PRINT_FONT_BMP) {
