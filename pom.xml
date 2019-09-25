@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.143.2</version>
+    <version>0.144.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -48,7 +48,7 @@
         <dom4j.version>2.1.1</dom4j.version>
         <eclipse-collections.version>10.0.0</eclipse-collections.version>
         <guava.version>28.1-jre</guava.version>
-        <jackson.version>2.10.0.pr2</jackson.version>
+        <jackson.version>2.10.0.pr3</jackson.version>
         <joml.version>1.9.17</joml.version>
         <log4j.version>2.12.1</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
@@ -59,15 +59,14 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.9.5</commonx.version>
+        <commonx.version>0.9.6</commonx.version>
         <multi_language.version>0.44.2</multi_language.version>
         <x8l.version>0.48.2</x8l.version>
-        <SDL_GameControllerDB_Util.version>1.1.20190809
-        </SDL_GameControllerDB_Util.version>
+        <SDL_GameControllerDB_Util.version>1.1.20190925</SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.5.1</junit-jupiter.version>
+        <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
