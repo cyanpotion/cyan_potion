@@ -24,8 +24,11 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.xenoamess.cyan_potion.base.events.Event;
 import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
+
+import java.util.Collection;
 
 import static org.lwjgl.openal.AL10.*;
 
@@ -38,6 +41,7 @@ import static org.lwjgl.openal.AL10.*;
 public class Source implements AutoCloseable {
     private int alSourceInt = -1;
     private WaveData currentWaveData = null;
+    private Event playOverEvent = null;
 
     /**
      * <p>Constructor for Source.</p>
@@ -46,6 +50,7 @@ public class Source implements AutoCloseable {
         this.setAlSourceInt(AL10.alGenSources());
         this.clean();
     }
+
 
     /**
      * <p>Constructor for Source.</p>
@@ -59,6 +64,7 @@ public class Source implements AutoCloseable {
         this.setRelative(true);
         this.setRollOffFactor(0.0f);
         this.setLooping(false);
+        this.setPlayOverEvent(null);
     }
 
     /**
@@ -182,6 +188,45 @@ public class Source implements AutoCloseable {
     public void play(WaveData waveData) {
         this.setCurrentWaveData(waveData);
         this.play();
+    }
+
+    public Event getPlayOverEvent() {
+        return playOverEvent;
+    }
+
+    public void setPlayOverEvent(Event playOverEvent) {
+        this.playOverEvent = playOverEvent;
+    }
+
+    static class MultiWaveDataPlayThread implements Runnable {
+        private final Source source;
+        private final Collection<WaveData> waveDatas;
+
+        public MultiWaveDataPlayThread(Source source, Collection<WaveData> waveDatas) {
+            this.source = source;
+            this.waveDatas = waveDatas;
+        }
+
+        @Override
+        public void run() {
+            for (WaveData waveData : waveDatas) {
+                this.source.clean();
+                this.source.play(waveData);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                while (this.source.isPlaying()) {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            this.source.clean();
+        }
     }
 
     /**

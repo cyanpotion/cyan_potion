@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
 
+import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
@@ -92,9 +93,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
         font.getXb().put(0, lineStartPosX);
         font.getYb().put(0, lineStartPosY);
 
-        font.getCharData().position(0);
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
 
         glBegin(GL_QUADS);
 
@@ -120,11 +119,18 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 font.getYb().put(0, lineStartPosY);
                 continue;
             }
-
+            if (this.getContentString().charAt(i) < 32) {
+                continue;
+            }
             if (Character.isWhitespace(this.getContentString().charAt(i))) {
+                glEnd();
+                glBindTexture(GL_TEXTURE_2D,
+                        font.getFontTextures().getPrimitive(this.getContentString().charAt(i) / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
                 stbtt_GetPackedQuad(
-                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
-                        this.getContentString().charAt(i),
+                        font.getCharDatas().get(this.getContentString().charAt(i) / EACH_CHAR_NUM), Font.BITMAP_W,
+                        Font.BITMAP_H,
+                        this.getContentString().charAt(i) % EACH_CHAR_NUM,
                         font.getXb(), font.getYb(), font.getQ(), false);
 
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
@@ -162,9 +168,16 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 if (Character.isWhitespace(nowChar)) {
                     break;
                 }
+                if (nowChar < 32) {
+                    continue;
+                }
+                glEnd();
+                glBindTexture(GL_TEXTURE_2D,
+                        font.getFontTextures().getPrimitive(nowChar / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
                 stbtt_GetPackedQuad(
-                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
-                        nowChar,
+                        font.getCharDatas().get(nowChar / EACH_CHAR_NUM), Font.BITMAP_W, Font.BITMAP_H,
+                        nowChar % EACH_CHAR_NUM,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -204,9 +217,16 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 if (Character.isWhitespace(nowChar)) {
                     break;
                 }
+                if (nowChar < 32) {
+                    continue;
+                }
+                glEnd();
+                glBindTexture(GL_TEXTURE_2D,
+                        font.getFontTextures().getPrimitive(nowChar / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
                 stbtt_GetPackedQuad(
-                        font.getCharData(), Font.BITMAP_W, Font.BITMAP_H,
-                        nowChar,
+                        font.getCharDatas().get(nowChar / EACH_CHAR_NUM), Font.BITMAP_W, Font.BITMAP_H,
+                        nowChar % EACH_CHAR_NUM,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();

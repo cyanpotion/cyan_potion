@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.Event;
 import org.joml.Vector3f;
 import org.lwjgl.openal.*;
 import org.lwjgl.system.MemoryUtil;
@@ -102,6 +103,10 @@ public class AudioManager implements AutoCloseable {
         this.getUnusedSources().addAll(Arrays.asList(Arraysx.fillNewSelf(new Source[INITIAL_TEMP_SOURCES_NUM])));
     }
 
+    public void update() {
+        this.gc();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -138,6 +143,7 @@ public class AudioManager implements AutoCloseable {
             }
         }
         for (Source au : deletedSource) {
+            this.getGameManager().eventListAdd(au.getPlayOverEvent());
             getUnusedSources().add(au);
             getUsedSources().remove(au);
         }
@@ -213,9 +219,55 @@ public class AudioManager implements AutoCloseable {
      * @return the source that we will use.
      */
     public Source playSource(WaveData waveData) {
+        return this.playSource(waveData, null);
+    }
+
+    /**
+     * Get an unused source, and then delete it from unused sources,
+     * then add it to used sources, clean it, then play it, then return it.
+     * <p>
+     * Notice that Sources in AudioManager are auto-managed, and will be re-used when it stop playing,
+     * so please never try to hold any reference to the returned Source.
+     * <p>
+     * Notice that please play the Source get from the function immediately,(before the next gc()),
+     * or it might be reused.
+     * <p>
+     * When you want to run some sound effect(short, not looping), then use this.
+     * When you want a full control of the source, then you shall create Source by your own.
+     *
+     * @return the source that we will use.
+     */
+    public Source playSource(WaveData waveData, Event playOverEvent) {
         Source source = this.useSource(waveData);
+        source.setPlayOverEvent(playOverEvent);
         source.play();
         return source;
+    }
+
+    public void play(WaveData waveData) {
+        this.play(waveData, null);
+    }
+
+    public void play(WaveData waveData, Event playOverEvent) {
+        PlayAudioEvent playAudioEvent = new PlayAudioEvent(this, waveData, playOverEvent);
+        this.play(playAudioEvent);
+    }
+
+    public void play(List<WaveData> waveDatas) {
+        if (waveDatas == null || waveDatas.isEmpty()) {
+            return;
+        }
+        WaveData[] waveDatasArray = new WaveData[waveDatas.size()];
+        waveDatas.toArray(waveDatasArray);
+        PlayAudioEvent playAudioEvent = null;
+        for (int i = waveDatasArray.length - 1; i >= 0; i--) {
+            playAudioEvent = new PlayAudioEvent(this, waveDatasArray[i], playAudioEvent);
+        }
+        this.play(playAudioEvent);
+    }
+
+    public void play(PlayAudioEvent playAudioEvent) {
+        this.getGameManager().eventListAdd(playAudioEvent);
     }
 
     /**

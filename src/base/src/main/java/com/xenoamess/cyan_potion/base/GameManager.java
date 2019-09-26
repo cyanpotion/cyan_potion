@@ -706,6 +706,7 @@ public class GameManager implements AutoCloseable {
         this.getGamepadInputManager().update(this.getGameWindow());
         getGameWindow().update();
         this.getGameWindowComponentTree().update();
+        this.getAudioManager().update();
     }
 
     /**

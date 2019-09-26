@@ -33,6 +33,7 @@ import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
+import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
@@ -403,23 +404,27 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             font.getXb().put(0, x);
             font.getYb().put(0, y);
 
-            font.getCharData().position(0);
             glEnable(GL_TEXTURE_2D);
-            glBindTexture(GL_TEXTURE_2D, font.getFontTexture());
 
             if (this.getTextColor() != null) {
                 glColor4f(this.getTextColor().x, this.getTextColor().y,
                         this.getTextColor().z, this.getTextColor().w);
             }
-
             glBegin(GL_QUADS);
             float lastXReal = x;
             float lastYReal = y;
             float lastXShould = x;
             float lastYShould = y;
             for (int i = 0; i < text.length(); i++) {
-                stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W,
-                        Font.BITMAP_H, text.charAt(i), font.getXb(),
+                if (text.charAt(i) < 32) {
+                    continue;
+                }
+                glEnd();
+                glBindTexture(GL_TEXTURE_2D,
+                        font.getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
+                stbtt_GetPackedQuad(font.getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), Font.BITMAP_W,
+                        Font.BITMAP_H, text.charAt(i) % EACH_CHAR_NUM, font.getXb(),
                         font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -518,9 +523,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                     lastXReal = x;
 
                     for (int i2 = 0; i2 < line.length(); i2++) {
-
-                        stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W
-                                , Font.BITMAP_H, text.charAt(i2),
+                        if (text.charAt(i2) < 32) {
+                            continue;
+                        }
+                        glEnd();
+                        glBindTexture(GL_TEXTURE_2D,
+                                font.getFontTextures().getPrimitive(text.charAt(i2) / EACH_CHAR_NUM));
+                        glBegin(GL_QUADS);
+                        stbtt_GetPackedQuad(font.getCharDatas().get(text.charAt(i2) / EACH_CHAR_NUM), Font.BITMAP_W
+                                , Font.BITMAP_H, text.charAt(i2) % EACH_CHAR_NUM,
                                 font.getXb(), font.getYb(), font.getQ(), false);
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
@@ -597,8 +608,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0)) {
                 glColor4f(getInsertColor().x(), getInsertColor().y(),
                         getInsertColor().z(), getInsertColor().w());
-                stbtt_GetPackedQuad(font.getCharData(), Font.BITMAP_W,
-                        Font.BITMAP_H, '|', font.getXb(), font.getYb(),
+                glEnd();
+                glBindTexture(GL_TEXTURE_2D,
+                        font.getFontTextures().getPrimitive('|' / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
+                stbtt_GetPackedQuad(font.getCharDatas().get('|' / EACH_CHAR_NUM), Font.BITMAP_W,
+                        Font.BITMAP_H, '|' % EACH_CHAR_NUM, font.getXb(), font.getYb(),
                         font.getQ(), false);
                 Font.drawBoxTC(
                         insPosX0, insPosY0 - (insPosY1 - insPosY0) / 4,
