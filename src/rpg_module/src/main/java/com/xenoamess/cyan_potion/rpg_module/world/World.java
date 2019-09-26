@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
@@ -131,7 +132,7 @@ public class World extends AbstractEntityScene {
         {
             this.setRpgModuleDataCenter(new RpgModuleDataCenter(this));
 
-            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), FileUtils.getFile("/www/data/System.json")));
+            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), AbstractResource.getFile("/www/data/System.json")));
             LOGGER.debug("GameSystemJson.INIT(this.gameManager)");
             GameTileset.init(this);
             LOGGER.debug("GameTileset.INIT(this.gameManager)");

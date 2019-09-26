@@ -180,11 +180,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         String resourceFilePath = resourceFileURIStrings[1];
         try {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
-                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(FileUtils.getFile(resourceFilePath).toURI().toURL());
+                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(AbstractResource.getFile(resourceFilePath).toURI().toURL());
             this.bake(slickWaveData.data, slickWaveData.format,
                     slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(FileUtils.getFile(resourceFilePath));
+            this.readVorbis(AbstractResource.getFile(resourceFilePath));
         }
     }
 

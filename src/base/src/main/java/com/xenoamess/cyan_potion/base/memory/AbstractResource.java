@@ -24,11 +24,13 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
@@ -152,6 +154,24 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * <p>forceClose.</p>
      */
     protected abstract void forceClose();
+
+    public static File getFile(String path) {
+        File res;
+        if (path.startsWith("[absolute]")) {
+            res = new File(decodeAbsolutePath(path));
+        } else {
+            res = FileUtils.getFile(path);
+        }
+        return res;
+    }
+
+    public static String encodeAbsolutePath(String absolutePath) {
+        return "[absolute]" + absolutePath.replace(":/", "//");
+    }
+
+    public static String decodeAbsolutePath(String encodedPath) {
+        return encodedPath.replace("[absolute]", "").replace("//", ":/");
+    }
 
 
     /**

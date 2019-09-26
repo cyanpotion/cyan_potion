@@ -29,7 +29,6 @@ import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -39,6 +38,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponent
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -263,7 +263,7 @@ public class GameManager implements AutoCloseable {
     protected void loadSettingTree() {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
-        File globalSettingsFile = FileUtils.getFile(settingFilePath);
+        File globalSettingsFile = AbstractResource.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
@@ -363,27 +363,34 @@ public class GameManager implements AutoCloseable {
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
-            multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath()));
+            multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath())) " +
+            LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
+                    ".getTextFilePath())) " +
                     "fails", e);
             System.exit(1);
         }
 
-        this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
-        String language = getString(
+        MultiLanguageStructure multiLanguageStructure = multiLanguageUtil.parse();
+
+        String settingLanguage = getString(
                 this.getDataCenter().getCommonSettings(),
                 STRING_LANGUAGE,
-                MultiLanguageStructure.ENGLISH);
+                "");
+        String steamLanguage = "";
         if (this.getDataCenter().isRunWithSteam()) {
-            language = new SteamApps().getCurrentGameLanguage();
+            steamLanguage = new SteamApps().getCurrentGameLanguage();
         }
-        if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
-            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
-            LOGGER.error("We will have to use english instead here.");
-            language = MultiLanguageStructure.ENGLISH;
-            this.getDataCenter().getTextStructure().setCurrentLanguage(language);
+
+        if (!multiLanguageStructure.setCurrentLanguage(steamLanguage)) {
+            if (!multiLanguageStructure.setCurrentLanguage(settingLanguage)) {
+                LOGGER.error("Lack language : {} . Please change the [language] in settings.", settingLanguage);
+                LOGGER.error("We will have to use english instead here.");
+                multiLanguageStructure.setCurrentLanguage(MultiLanguageStructure.ENGLISH);
+            }
         }
+
+        this.getDataCenter().setTextStructure(multiLanguageStructure);
     }
 
 
