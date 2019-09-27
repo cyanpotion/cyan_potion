@@ -686,9 +686,10 @@ public class GameManager implements AutoCloseable {
                     charEvents.add((CharEvent) event);
                 }
             }
-            charEvents.sort(Comparator.comparingLong(CharEvent::getId));
-            this.getEventList().add(new TextEvent(this.getGameWindow().getWindow(), charEvents));
-
+            if (!charEvents.isEmpty()) {
+                charEvents.sort(Comparator.comparingLong(CharEvent::getId));
+                this.getEventList().add(new TextEvent(this.getGameWindow().getWindow(), charEvents));
+            }
             for (Event event : this.getEventList()) {
                 if (event instanceof MainThreadEvent) {
                     mainThreadEvents.add((MainThreadEvent) event);
