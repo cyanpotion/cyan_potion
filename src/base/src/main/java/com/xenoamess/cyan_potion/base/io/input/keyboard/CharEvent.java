@@ -36,9 +36,10 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Char Event.
  * Event to deal with input characters in glfw.
- * Notice that in most cases your GameWindowComponent does not need to handle this type of Event
+ * Notice that in most cases your GameWindowComponent does not need to handle this type of Event directly
  * (although you still can.)
- * I have made a wrapper Event class named TextEvent. You can handle that directly.
+ * I have made a wrapper Event class named TextEvent. You shall handle that Event.
+ * That will always make things easier for both of us.
  *
  * @author XenoAmess
  * @version 0.143.0
