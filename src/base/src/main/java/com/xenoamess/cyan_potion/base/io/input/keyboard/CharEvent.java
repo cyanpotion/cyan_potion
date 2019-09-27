@@ -26,26 +26,32 @@ package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * <p>CharEvent class.</p>
+ * Char Event.
+ * Event to deal with input characters in glfw.
+ * Notice that in most cases your GameWindowComponent does not need to handle this type of Event
+ * (although you still can.)
+ * I have made a wrapper Event class named TextEvent. You can handle that directly.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
-public class CharEvent implements MainThreadEvent {
+public class CharEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
 
     private final long window;
     private final int codepoint;
 
+    private static AtomicLong currentId = new AtomicLong(0L);
+    private long id;
 
     /**
      * <p>Constructor for CharEvent.</p>
@@ -57,6 +63,13 @@ public class CharEvent implements MainThreadEvent {
         super();
         this.window = window;
         this.codepoint = codepoint;
+        synchronized (currentId) {
+            this.id = currentId.getAndAdd(1L);
+        }
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     /**
@@ -92,7 +105,7 @@ public class CharEvent implements MainThreadEvent {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("KeyboardEvent:{codepoint:");
+        stringBuilder.append("CharEvent:{codepoint:");
         stringBuilder.append((char) this.getCodepoint());
         stringBuilder.append("}");
         return stringBuilder.toString();

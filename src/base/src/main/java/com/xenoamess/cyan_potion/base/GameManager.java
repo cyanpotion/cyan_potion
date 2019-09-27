@@ -38,6 +38,8 @@ import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponent
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -59,8 +61,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -85,8 +91,8 @@ public class GameManager implements AutoCloseable {
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
-    private final ConcurrentLinkedDeque<Event> eventList =
-            new ConcurrentLinkedDeque<>();
+    private final List<Event> eventList =
+            new ArrayList<>();
 
     @AsFinalField
     private ConsoleThread consoleThread = null;
@@ -672,31 +678,41 @@ public class GameManager implements AutoCloseable {
             /*
              * notice that newEventList must be a thread safe collection.
              */
-            final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();
+            final Collection<MainThreadEvent> mainThreadEvents = new ArrayList<>();
             final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
+            final List<CharEvent> charEvents = new ArrayList<>();
+            for (Event event : this.getEventList()) {
+                if (event instanceof CharEvent) {
+                    charEvents.add((CharEvent) event);
+                }
+            }
+            charEvents.sort(Comparator.comparingLong(CharEvent::getId));
+            this.getEventList().add(new TextEvent(this.getGameWindow().getWindow(), charEvents));
 
-            this.getEventList().stream().forEach(event -> {
+            for (Event event : this.getEventList()) {
                 if (event instanceof MainThreadEvent) {
                     mainThreadEvents.add((MainThreadEvent) event);
                 }
-            });
+            }
+
 
             this.getEventList().parallelStream().forEach(event -> {
                 if (event instanceof MainThreadEvent) {
-                    return;
-                }
-                Set<Event> res = event.apply(GameManager.this);
-                if (res != null) {
-                    newEventList.addAll(res);
+                    //do nothing
+                } else {
+                    Set<Event> res = event.apply(GameManager.this);
+                    if (res != null) {
+                        newEventList.addAll(res);
+                    }
                 }
             });
 
-            mainThreadEvents.forEach(event -> {
+            for (Event event : mainThreadEvents) {
                 Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
                 }
-            });
+            }
 
             mainThreadEventProcessPairs.forEach((ImmutablePair<EventProcessor, Event> pair) -> {
                 Event res = pair.left.apply(pair.right);
@@ -913,7 +929,7 @@ public class GameManager implements AutoCloseable {
      *
      * @return return
      */
-    protected ConcurrentLinkedDeque<Event> getEventList() {
+    protected List<Event> getEventList() {
         return eventList;
     }
 
