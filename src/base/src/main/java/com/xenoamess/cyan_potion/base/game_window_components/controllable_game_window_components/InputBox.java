@@ -279,7 +279,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                     return event;
                                 }
                                 TextEvent textEvent = (TextEvent) event;
-                                this.insertString("" + textEvent.getContentString());
+                                this.insertString(textEvent.getContentString());
                                 return null;
                             }
                         }
