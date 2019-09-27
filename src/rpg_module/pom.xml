@@ -6,7 +6,7 @@
     <parent>
         <artifactId>cyan_potion</artifactId>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <version>0.144.3-SNAPSHOT</version>
+        <version>0.144.3</version>
     </parent>
     <artifactId>cyan_potion_rpg_module</artifactId>
     <version>${project.parent.version}</version>
