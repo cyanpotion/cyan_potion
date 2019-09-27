@@ -675,9 +675,14 @@ public class GameManager implements AutoCloseable {
             final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();
             final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
 
-            this.getEventList().parallelStream().forEach(event -> {
+            this.getEventList().stream().forEach(event -> {
                 if (event instanceof MainThreadEvent) {
                     mainThreadEvents.add((MainThreadEvent) event);
+                }
+            });
+
+            this.getEventList().parallelStream().forEach(event -> {
+                if (event instanceof MainThreadEvent) {
                     return;
                 }
                 Set<Event> res = event.apply(GameManager.this);

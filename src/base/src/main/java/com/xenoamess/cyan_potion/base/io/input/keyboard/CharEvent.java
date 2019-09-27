@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class CharEvent implements Event {
+public class CharEvent implements MainThreadEvent {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
 
