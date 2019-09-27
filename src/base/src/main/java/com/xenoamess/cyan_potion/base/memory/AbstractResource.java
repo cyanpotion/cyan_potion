@@ -166,7 +166,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     }
 
     public static String encodeAbsolutePath(String absolutePath) {
-        return "[absolute]" + absolutePath.replace(":/", "//");
+        return "[absolute]" + absolutePath.replace("\\", "/").replace(":/", "//");
     }
 
     public static String decodeAbsolutePath(String encodedPath) {
