@@ -26,8 +26,8 @@ package com.xenoamess.cyan_potion.rpg_module.gameMap;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
@@ -73,7 +73,7 @@ public class GameMap {
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
-                FileUtils.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                AbstractResource.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
     }
@@ -265,7 +265,7 @@ public class GameMap {
     static List<GameMap> getGameMaps(World world) {
         List<GameMapInfoJson> gameMapInfoJsons =
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
-                        FileUtils.getFile("/www/data/MapInfos.json"));
+                        AbstractResource.getFile("/www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {

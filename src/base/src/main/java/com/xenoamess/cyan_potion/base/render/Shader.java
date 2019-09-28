@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -70,7 +71,12 @@ public class Shader implements AutoCloseable {
         setProgramObject(glCreateProgram());
 
         setVertexShaderObject(glCreateShader(GL_VERTEX_SHADER));
-        glShaderSource(getVertexShaderObject(), FileUtils.loadFile(this.getClass(), "/shaders/" + filename + ".vs"));
+        glShaderSource(getVertexShaderObject(),
+                FileUtils.loadFile(AbstractResource.getFile(
+                        "/shaders/" + filename + ".vs"
+                        )
+                )
+        );
         glCompileShader(getVertexShaderObject());
         if (glGetShaderi(getVertexShaderObject(), GL_COMPILE_STATUS) != 1) {
             LOGGER.error(glGetShaderInfoLog(getVertexShaderObject()));
@@ -78,7 +84,11 @@ public class Shader implements AutoCloseable {
         }
 
         setFragmentShaderObject(glCreateShader(GL_FRAGMENT_SHADER));
-        glShaderSource(getFragmentShaderObject(), FileUtils.loadFile(this.getClass(), "/shaders/" + filename + ".fs"));
+        glShaderSource(getFragmentShaderObject(),
+                FileUtils.loadFile(AbstractResource.getFile("/shaders/" + filename + ".fs"
+                        )
+                )
+        );
         glCompileShader(getFragmentShaderObject());
         if (glGetShaderi(getFragmentShaderObject(), GL_COMPILE_STATUS) != 1) {
             LOGGER.error(glGetShaderInfoLog(getFragmentShaderObject()));

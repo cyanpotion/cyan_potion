@@ -29,7 +29,6 @@ import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -39,6 +38,9 @@ import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponent
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -59,8 +61,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -85,8 +91,8 @@ public class GameManager implements AutoCloseable {
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
-    private final ConcurrentLinkedDeque<Event> eventList =
-            new ConcurrentLinkedDeque<>();
+    private final List<Event> eventList =
+            new ArrayList<>();
 
     @AsFinalField
     private ConsoleThread consoleThread = null;
@@ -263,7 +269,7 @@ public class GameManager implements AutoCloseable {
     protected void loadSettingTree() {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
 
-        File globalSettingsFile = FileUtils.getFile(settingFilePath);
+        File globalSettingsFile = AbstractResource.getFile(settingFilePath);
 
         LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
 
@@ -363,27 +369,34 @@ public class GameManager implements AutoCloseable {
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
-            multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath()));
+            multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter().getTextFilePath()));
         } catch (IOException e) {
-            LOGGER.error("multiLanguageUtil.loadFromMerge(FileUtils.getFile(this.getDataCenter().getTextFilePath())) " +
+            LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
+                    ".getTextFilePath())) " +
                     "fails", e);
             System.exit(1);
         }
 
-        this.getDataCenter().setTextStructure(multiLanguageUtil.parse());
-        String language = getString(
+        MultiLanguageStructure multiLanguageStructure = multiLanguageUtil.parse();
+
+        String settingLanguage = getString(
                 this.getDataCenter().getCommonSettings(),
                 STRING_LANGUAGE,
-                MultiLanguageStructure.ENGLISH);
+                "");
+        String steamLanguage = "";
         if (this.getDataCenter().isRunWithSteam()) {
-            language = new SteamApps().getCurrentGameLanguage();
+            steamLanguage = new SteamApps().getCurrentGameLanguage();
         }
-        if (!this.getDataCenter().getTextStructure().setCurrentLanguage(language)) {
-            LOGGER.error("Lack language : {} . Please change the [language] in settings.", language);
-            LOGGER.error("We will have to use english instead here.");
-            language = MultiLanguageStructure.ENGLISH;
-            this.getDataCenter().getTextStructure().setCurrentLanguage(language);
+
+        if (!multiLanguageStructure.setCurrentLanguage(steamLanguage)) {
+            if (!multiLanguageStructure.setCurrentLanguage(settingLanguage)) {
+                LOGGER.error("Lack language : {} . Please change the [language] in settings.", settingLanguage);
+                LOGGER.error("We will have to use english instead here.");
+                multiLanguageStructure.setCurrentLanguage(MultiLanguageStructure.ENGLISH);
+            }
         }
+
+        this.getDataCenter().setTextStructure(multiLanguageStructure);
     }
 
 
@@ -665,26 +678,42 @@ public class GameManager implements AutoCloseable {
             /*
              * notice that newEventList must be a thread safe collection.
              */
-            final Collection<MainThreadEvent> mainThreadEvents = new ConcurrentLinkedQueue<>();
+            final Collection<MainThreadEvent> mainThreadEvents = new ArrayList<>();
             final Collection<Event> newEventList = new ConcurrentLinkedQueue<>();
+            final List<CharEvent> charEvents = new ArrayList<>();
+            for (Event event : this.getEventList()) {
+                if (event instanceof CharEvent) {
+                    charEvents.add((CharEvent) event);
+                }
+            }
+            if (!charEvents.isEmpty()) {
+                charEvents.sort(Comparator.comparingLong(CharEvent::getId));
+                this.getEventList().add(new TextEvent(this.getGameWindow().getWindow(), charEvents));
+            }
+            for (Event event : this.getEventList()) {
+                if (event instanceof MainThreadEvent) {
+                    mainThreadEvents.add((MainThreadEvent) event);
+                }
+            }
+
 
             this.getEventList().parallelStream().forEach(event -> {
                 if (event instanceof MainThreadEvent) {
-                    mainThreadEvents.add((MainThreadEvent) event);
-                    return;
-                }
-                Set<Event> res = event.apply(GameManager.this);
-                if (res != null) {
-                    newEventList.addAll(res);
+                    //do nothing
+                } else {
+                    Set<Event> res = event.apply(GameManager.this);
+                    if (res != null) {
+                        newEventList.addAll(res);
+                    }
                 }
             });
 
-            mainThreadEvents.forEach(event -> {
+            for (Event event : mainThreadEvents) {
                 Set<Event> res = event.apply(GameManager.this);
                 if (res != null) {
                     newEventList.addAll(res);
                 }
-            });
+            }
 
             mainThreadEventProcessPairs.forEach((ImmutablePair<EventProcessor, Event> pair) -> {
                 Event res = pair.left.apply(pair.right);
@@ -901,7 +930,7 @@ public class GameManager implements AutoCloseable {
      *
      * @return return
      */
-    protected ConcurrentLinkedDeque<Event> getEventList() {
+    protected List<Event> getEventList() {
         return eventList;
     }
 

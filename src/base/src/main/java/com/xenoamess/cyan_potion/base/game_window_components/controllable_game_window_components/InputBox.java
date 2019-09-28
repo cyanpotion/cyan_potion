@@ -27,8 +27,8 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.ClipboardUtil;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -270,7 +270,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 )
         );
 
-        this.registerProcessor(CharEvent.class.getCanonicalName(),
+        this.registerProcessor(TextEvent.class.getCanonicalName(),
                 new MainThreadEventProcessor(
                         this,
                         event -> {
@@ -278,8 +278,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                 if (!this.isInFocusNow()) {
                                     return event;
                                 }
-                                CharEvent charEvent = (CharEvent) event;
-                                this.insertString("" + (char) charEvent.getCodepoint());
+                                TextEvent textEvent = (TextEvent) event;
+                                this.insertString(textEvent.getContentString());
                                 return null;
                             }
                         }

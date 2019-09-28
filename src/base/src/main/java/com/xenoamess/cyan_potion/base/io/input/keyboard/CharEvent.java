@@ -31,9 +31,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * <p>CharEvent class.</p>
+ * Char Event.
+ * Event to deal with input characters in glfw.
+ * Notice that in most cases your GameWindowComponent does not need to handle this type of Event directly
+ * (although you still can.)
+ * I have made a wrapper Event class named TextEvent. You shall handle that Event.
+ * That will always make things easier for both of us.
  *
  * @author XenoAmess
  * @version 0.143.0
@@ -45,6 +51,8 @@ public class CharEvent implements Event {
     private final long window;
     private final int codepoint;
 
+    private static AtomicLong currentId = new AtomicLong(0L);
+    private long id;
 
     /**
      * <p>Constructor for CharEvent.</p>
@@ -56,6 +64,13 @@ public class CharEvent implements Event {
         super();
         this.window = window;
         this.codepoint = codepoint;
+        synchronized (currentId) {
+            this.id = currentId.getAndAdd(1L);
+        }
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     /**
@@ -91,7 +106,7 @@ public class CharEvent implements Event {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("KeyboardEvent:{codepoint:");
+        stringBuilder.append("CharEvent:{codepoint:");
         stringBuilder.append((char) this.getCodepoint());
         stringBuilder.append("}");
         return stringBuilder.toString();
