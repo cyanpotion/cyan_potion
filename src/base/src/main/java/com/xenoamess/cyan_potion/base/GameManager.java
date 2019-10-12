@@ -277,10 +277,9 @@ public class GameManager implements AutoCloseable {
         try {
             globalSettingsTree = X8lTree.loadFromFile(globalSettingsFile);
         } catch (IOException e) {
-            LOGGER.error("X8lTree.loadFromFile(globalSettingsFile) fails " +
+            throw new IllegalArgumentException("X8lTree.loadFromFile(globalSettingsFile) fails " +
                     ": ", e);
         }
-        assert (globalSettingsTree != null);
         this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
         this.getDataCenter().patchGlobalSettingsTree();
     }
