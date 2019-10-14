@@ -96,7 +96,7 @@ public class CyanPotionURLConnection extends URLConnection {
     //TODO
     public AbstractResource getContent() throws IOException {
         String path = url.getPath();
-        url.getProtocol()
+        url.getProtocol();
         return null;
     }
 
