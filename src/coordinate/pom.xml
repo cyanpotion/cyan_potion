@@ -6,7 +6,7 @@
     <parent>
         <artifactId>cyan_potion</artifactId>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <version>0.144.4-SNAPSHOT</version>
+        <version>0.144.8-SNAPSHOT</version>
     </parent>
     <artifactId>cyan_potion_coordinate</artifactId>
     <version>${project.parent.version}</version>

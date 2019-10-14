@@ -167,7 +167,7 @@ public class Font extends AbstractResource {
      */
     public void loadBitmap(String resourceFilePath) {
         ByteBuffer ttf =
-                FileUtils.loadFileBuffer(AbstractResource.getFile(resourceFilePath), true);
+                FileUtils.loadBuffer(AbstractResource.getFile(resourceFilePath), true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
 //            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
