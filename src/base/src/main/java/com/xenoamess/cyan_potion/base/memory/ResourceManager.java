@@ -40,7 +40,9 @@ import java.util.function.Function;
 import static org.lwjgl.opengl.GL11.glGetIntegerv;
 
 /**
- * <p>ResourceManager class.</p>
+ * //TODO
+ * This class is not stable yet.
+ * Will be removed or modified in future.
  *
  * @author XenoAmess
  * @version 0.143.0
@@ -85,6 +87,8 @@ public class ResourceManager implements AutoCloseable {
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
+
+//    FileSystemManager fsManager = VFS.getManager();
 
     /**
      * <p>putResourceLoader.</p>
@@ -361,6 +365,8 @@ public class ResourceManager implements AutoCloseable {
         this.getInMemoryResources().addAll(newInMemoryResources);
     }
 
+
+    //getters and setters
 
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
