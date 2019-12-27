@@ -29,7 +29,6 @@ public class PlayAudioEvent implements MainThreadEvent {
     private boolean looping;
     private Event playOverEvent;
 
-
     /**
      * <p>Constructor for Source.</p>
      */

@@ -131,7 +131,7 @@ public class AudioManager implements AutoCloseable {
     }
 
     /**
-     * <p>gc.</p>
+     * since gc must not happened in solveEvents(), so it is safe to do eventListAdd().
      */
     public void gc() {
         ArrayList<Source> deletedSource = new ArrayList<>();
@@ -244,18 +244,17 @@ public class AudioManager implements AutoCloseable {
         return source;
     }
 
-    public void play(WaveData waveData) {
-        this.play(waveData, null);
+    public PlayAudioEvent generatePlayAudioEvent(WaveData waveData) {
+        return this.generatePlayAudioEvent(waveData, null);
     }
 
-    public void play(WaveData waveData, Event playOverEvent) {
-        PlayAudioEvent playAudioEvent = new PlayAudioEvent(this, waveData, playOverEvent);
-        this.play(playAudioEvent);
+    public PlayAudioEvent generatePlayAudioEvent(WaveData waveData, Event playOverEvent) {
+        return new PlayAudioEvent(this, waveData, playOverEvent);
     }
 
-    public void play(List<WaveData> waveDatas) {
+    public PlayAudioEvent generatePlayAudioEvent(List<WaveData> waveDatas) {
         if (waveDatas == null || waveDatas.isEmpty()) {
-            return;
+            return null;
         }
         WaveData[] waveDatasArray = new WaveData[waveDatas.size()];
         waveDatas.toArray(waveDatasArray);
@@ -263,9 +262,19 @@ public class AudioManager implements AutoCloseable {
         for (int i = waveDatasArray.length - 1; i >= 0; i--) {
             playAudioEvent = new PlayAudioEvent(this, waveDatasArray[i], playAudioEvent);
         }
-        this.play(playAudioEvent);
+        return playAudioEvent;
     }
 
+    /**
+     * add the playAudioEvent to eventList.
+     * (It will play itself when apply().
+     * Notice that you should only use this outside solveEvents() function.
+     * If you are in solveEvents() and you wanna play it, you can just make some way to return this playAudioEvent as
+     * a result
+     * of some event, but never add it directly.
+     *
+     * @param playAudioEvent
+     */
     public void play(PlayAudioEvent playAudioEvent) {
         this.getGameManager().eventListAdd(playAudioEvent);
     }
