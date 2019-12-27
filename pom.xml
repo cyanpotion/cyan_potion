@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.144.9-SNAPSHOT</version>
+    <version>0.144.10-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -48,15 +48,15 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-vfs2.version>2.4.1</commons-vfs2.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <eclipse-collections.version>10.0.0</eclipse-collections.version>
-        <guava.version>28.1-jre</guava.version>
-        <jackson.version>2.10.0.pr3</jackson.version>
+        <eclipse-collections.version>10.1.0</eclipse-collections.version>
+        <guava.version>28.2-jre</guava.version>
+        <jackson.version>2.10.1</jackson.version>
         <joml.version>1.9.19</joml.version>
-        <log4j.version>2.12.1</log4j.version>
+        <log4j.version>2.13.0</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>2.0.0-alpha1</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
-        <JXInput.version>1.0.0rc1</JXInput.version>
+        <JXInput.version>1.0.0</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <!---->
         <!---->
@@ -71,14 +71,14 @@
         <junit-jupiter.version>5.6.0-M1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
