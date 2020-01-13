@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -82,6 +83,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * <p>init.</p>
      */
+    @MainThreadOnly
     public void init() {
         this.close();
 
@@ -111,6 +113,7 @@ public class AudioManager implements AutoCloseable {
      * {@inheritDoc}
      */
     @Override
+    @MainThreadOnly
     public void close() {
         getUnusedSources().clear();
         getUsedSources().clear();
@@ -132,8 +135,9 @@ public class AudioManager implements AutoCloseable {
 
     /**
      * since gc must not happened in solveEvents(), so it is safe to do eventListAdd().
+     * (now we can even do eventListAdd() in solveEvents() so this tip can be just ignored)
      */
-    public void gc() {
+    public synchronized void gc() {
         ArrayList<Source> deletedSource = new ArrayList<>();
         for (Source au : getUsedSources()) {
             if (au.isStopped()) {
@@ -164,7 +168,8 @@ public class AudioManager implements AutoCloseable {
      *
      * @return the source that we will use.
      */
-    public Source useSource() {
+    @MainThreadOnly
+    public synchronized Source useSource() {
         if (getUnusedSources().isEmpty()) {
             this.gc();
         }
@@ -197,13 +202,16 @@ public class AudioManager implements AutoCloseable {
      *
      * @return the source that we will use.
      */
-    public Source useSource(WaveData waveData) {
+    @MainThreadOnly
+    public synchronized Source useSource(WaveData waveData) {
         Source source = this.useSource();
         source.setCurrentWaveData(waveData);
         return source;
     }
 
     /**
+     * just use playWaveData(WaveData waveData) instead.
+     * ----------
      * Get an unused source, and then delete it from unused sources,
      * then add it to used sources, clean it, then play it, then return it.
      * <p>
@@ -218,11 +226,15 @@ public class AudioManager implements AutoCloseable {
      *
      * @return the source that we will use.
      */
-    public Source playSource(WaveData waveData) {
+    @MainThreadOnly
+    @Deprecated
+    public synchronized Source playSource(WaveData waveData) {
         return this.playSource(waveData, null);
     }
 
     /**
+     * just use playWaveData(WaveData waveData, Event playOverEvent) instead.
+     * ----------
      * Get an unused source, and then delete it from unused sources,
      * then add it to used sources, clean it, then play it, then return it.
      * <p>
@@ -237,11 +249,21 @@ public class AudioManager implements AutoCloseable {
      *
      * @return the source that we will use.
      */
-    public Source playSource(WaveData waveData, Event playOverEvent) {
+    @MainThreadOnly
+    @Deprecated
+    public synchronized Source playSource(WaveData waveData, Event playOverEvent) {
         Source source = this.useSource(waveData);
         source.setPlayOverEvent(playOverEvent);
         source.play();
         return source;
+    }
+
+    public void playWaveData(WaveData waveData) {
+        this.playWaveData(waveData, null);
+    }
+
+    public void playWaveData(WaveData waveData, Event playOverEvent) {
+        this.play(this.generatePlayAudioEvent(waveData, playOverEvent));
     }
 
     public PlayAudioEvent generatePlayAudioEvent(WaveData waveData) {
@@ -268,10 +290,6 @@ public class AudioManager implements AutoCloseable {
     /**
      * add the playAudioEvent to eventList.
      * (It will play itself when apply().
-     * Notice that you should only use this outside solveEvents() function.
-     * If you are in solveEvents() and you wanna play it, you can just make some way to return this playAudioEvent as
-     * a result
-     * of some event, but never add it directly.
      *
      * @param playAudioEvent
      */
@@ -279,9 +297,11 @@ public class AudioManager implements AutoCloseable {
         this.getGameManager().eventListAdd(playAudioEvent);
     }
 
+
     /**
      * pause all playing sources.
      */
+    @MainThreadOnly
     public void pauseAll() {
         for (Source au : getUsedSources()) {
             if (au.isPlaying()) {
@@ -293,6 +313,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * resume all paused sources.
      */
+    @MainThreadOnly
     public void resumeAll() {
         for (Source au : getUsedSources()) {
             if (au.isPaused()) {
@@ -304,6 +325,7 @@ public class AudioManager implements AutoCloseable {
     /**
      * stop all sources.
      */
+    @MainThreadOnly
     public void stopAll() {
         for (Source au : getUsedSources()) {
             au.stop();
@@ -315,6 +337,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @param listenerPosition listenerPosition
      */
+    @MainThreadOnly
     public void setListenerPosition(Vector3f listenerPosition) {
         this.listenerPosition = new Vector3f(listenerPosition);
         AL10.alListener3f(AL10.AL_POSITION, this.listenerPosition.x,

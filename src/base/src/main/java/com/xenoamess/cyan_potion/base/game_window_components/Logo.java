@@ -66,7 +66,7 @@ public class Logo extends AbstractGameWindowComponent {
 
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
-        this.getGameWindow().getGameManager().getAudioManager().playSource(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
+        this.getGameWindow().getGameManager().getAudioManager().playWaveData(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
         this.logoPicture = new Picture(this.logoTexture);
         this.logoPicture.setCenter(this.getGameWindow());
         this.logoPicture.moveY(-50 * 2);

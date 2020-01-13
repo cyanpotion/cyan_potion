@@ -1,5 +1,6 @@
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
@@ -10,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
+ * it is a little complex.
+ * if this.source==null, then will get a source from AudioManager.
+ * if this.waveData==null, then will use source.getCurrentWaveData() as waveData
+ *
  * @author XenoAmess
  */
 public class PlayAudioEvent implements MainThreadEvent {
@@ -18,7 +23,8 @@ public class PlayAudioEvent implements MainThreadEvent {
 
     private AudioManager audioManager;
 
-    private WaveData waveData;
+    private final WaveData waveData;
+    private final Source source;
 
     private float volume;
     private float pitch;
@@ -27,32 +33,51 @@ public class PlayAudioEvent implements MainThreadEvent {
     private boolean relative;
     private float rollOffFactor;
     private boolean looping;
+
     private Event playOverEvent;
 
     /**
      * <p>Constructor for Source.</p>
      */
     public void init() {
-        this.setWaveData(null);
-        this.setVolume(1);
-        this.setPitch(1);
-        this.setPosition(new Vector3f(0, 0, 0));
-        this.setVelocity(new Vector3f(0, 0, 0));
-        this.setRelative(true);
-        this.setRollOffFactor(0.0f);
-        this.setLooping(false);
-        this.setPlayOverEvent(null);
+        if (getSource() == null) {
+            this.setVolume(1);
+            this.setPitch(1);
+            this.setPosition(new Vector3f(0, 0, 0));
+            this.setVelocity(new Vector3f(0, 0, 0));
+            this.setRelative(true);
+            this.setRollOffFactor(0.0f);
+            this.setLooping(false);
+        } else {
+            this.setVolume(source.getVolume());
+            this.setPitch(source.getPitch());
+            this.setPosition(source.getPosition());
+            this.setVelocity(source.getVelocity());
+            this.setRelative(source.getRelative());
+            this.setRollOffFactor(source.getRollOffFactor());
+            this.setLooping(source.getLooping());
+        }
     }
 
+
     public PlayAudioEvent(AudioManager audioManager, WaveData waveData) {
-        this.init();
-        this.setAudioManager(audioManager);
-        this.setWaveData(waveData);
+        this(audioManager, waveData, null);
     }
 
     public PlayAudioEvent(AudioManager audioManager, WaveData waveData, Event playOverEvent) {
-        this(audioManager, waveData);
+        this(audioManager, null, waveData, null);
+    }
+
+    public PlayAudioEvent(AudioManager audioManager, Source source, Event playOverEvent) {
+        this(audioManager, source, null, null);
+    }
+
+    public PlayAudioEvent(AudioManager audioManager, Source source, WaveData waveData, Event playOverEvent) {
+        this.setAudioManager(audioManager);
+        this.source = source;
+        this.waveData = waveData;
         this.setPlayOverEvent(playOverEvent);
+        this.init();
     }
 
     /**
@@ -61,12 +86,18 @@ public class PlayAudioEvent implements MainThreadEvent {
      * @param gameManager
      */
     @Override
+    @MainThreadOnly
     public Set<Event> apply(GameManager gameManager) {
         if (gameManager.getDataCenter().isDebug()) {
             LOGGER.debug("{}", this);
         }
-        Source source = this.getAudioManager().useSource();
-        source.setCurrentWaveData(this.getWaveData());
+        Source source;
+        if (this.getSource() == null) {
+            source = this.getAudioManager().useSource();
+        } else {
+            source = this.getSource();
+        }
+
         source.setVolume(this.getVolume());
         source.setPitch(this.getPitch());
         source.setPosition(this.getPosition());
@@ -74,17 +105,21 @@ public class PlayAudioEvent implements MainThreadEvent {
         source.setRelative(this.isRelative());
         source.setRollOffFactor(this.getRollOffFactor());
         source.setLooping(this.isLooping());
+
+        if (this.waveData != null) {
+            source.setCurrentWaveData(this.waveData);
+        }
         source.setPlayOverEvent(this.getPlayOverEvent());
         source.play();
         return null;
     }
 
-    public WaveData getWaveData() {
-        return waveData;
+    public Source getSource() {
+        return source;
     }
 
-    public void setWaveData(WaveData waveData) {
-        this.waveData = waveData;
+    public WaveData getWaveData() {
+        return waveData;
     }
 
     public float getVolume() {

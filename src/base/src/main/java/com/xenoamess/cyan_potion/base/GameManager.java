@@ -93,8 +93,9 @@ public class GameManager implements AutoCloseable {
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
-    private final List<Event> eventList =
-            new ArrayList<>();
+    private final List<Event> eventList = new ArrayList<>();
+    private final List<Event> eventListCache = new ArrayList<>();
+    private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
 
     @AsFinalField
     private ConsoleThread consoleThread = null;
@@ -200,8 +201,16 @@ public class GameManager implements AutoCloseable {
         if (event == null) {
             return;
         }
-        synchronized (getEventList()) {
-            getEventList().add(event);
+        if (!ifSolvingEventList.get()) {
+            List<Event> eventList;
+            synchronized (eventList = getEventList()) {
+                eventList.add(event);
+            }
+        } else {
+            List<Event> eventListCache;
+            synchronized (eventListCache = getEventListCache()) {
+                eventListCache.add(event);
+            }
         }
     }
 
@@ -683,6 +692,8 @@ public class GameManager implements AutoCloseable {
      * <p>solveEvents.</p>
      */
     public void solveEvents() {
+        ifSolvingEventList.set(true);
+
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
             /*
@@ -734,8 +745,16 @@ public class GameManager implements AutoCloseable {
             mainThreadEventProcessPairs.clear();
 
             this.getEventList().clear();
+
+            synchronized (this.getEventListCache()) {
+                this.getEventList().addAll(this.getEventListCache());
+                this.getEventListCache().clear();
+            }
+
             this.getEventList().addAll(newEventList.stream().distinct().collect(Collectors.toList()));
         }
+
+        ifSolvingEventList.set(false);
     }
 
     /**
@@ -944,6 +963,10 @@ public class GameManager implements AutoCloseable {
         return eventList;
     }
 
+    protected List<Event> getEventListCache() {
+        return eventListCache;
+    }
+
     /**
      * <p>Setter for the field <code>nowFrameIndex</code>.</p>
      *
@@ -993,4 +1016,5 @@ public class GameManager implements AutoCloseable {
     public void setCanRender(boolean canRender) {
         this.canRender = canRender;
     }
+
 }
