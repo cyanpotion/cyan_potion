@@ -22,8 +22,15 @@ public class PlayAudioEvent implements MainThreadEvent {
             LoggerFactory.getLogger(MainThreadEvent.class);
 
     private AudioManager audioManager;
-
+    /**
+     * the WaveData that will be played.
+     * if this.waveData==null then will play this.source.waveData instead.
+     */
     private final WaveData waveData;
+    /**
+     * source.
+     * if null then will invoke this.getAudioManager().useSource() and grab an unused source and use it.
+     */
     private final Source source;
 
     private float volume;
@@ -34,6 +41,12 @@ public class PlayAudioEvent implements MainThreadEvent {
     private float rollOffFactor;
     private boolean looping;
 
+    /**
+     * an event that will be inserted into the eventList (by source)
+     * when this WaveData is played over.
+     *
+     * @see Source#getPlayOverEvent()
+     */
     private Event playOverEvent;
 
     /**

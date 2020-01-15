@@ -55,20 +55,43 @@ public class AudioManager implements AutoCloseable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(AudioManager.class);
     /**
-     * Constant <code>INITIAL_TEMP_SOURCES_NUM=128</code>
+     * Initial used Source s' num.
      */
     public static final int INITIAL_TEMP_SOURCES_NUM = 128;
 
+    /**
+     * GameManager
+     */
     private final GameManager gameManager;
 
+    /**
+     * Well sometimes we just want to map some sources to some name and get them by name and reuse them.
+     * For example we can cache a "BGM" and a specific Source object into this map,
+     * Then use "BGM" to get this Source.
+     * It is really quite boring and can be done in a more elegant way.
+     * So I'm just wondering if we shall delete it?
+     */
     private final Map<String, Source> specialSources = new ConcurrentHashMap<>();
 
+    /**
+     * Unused sources.
+     */
     private final Set<Source> unusedSources = ConcurrentHashMap.newKeySet();
+    /**
+     * Used sources.
+     */
     private final Set<Source> usedSources = ConcurrentHashMap.newKeySet();
 
     private long openalDevice = -1;
     private long openalContext = -1;
+    /**
+     * Position of the listener.
+     */
     private Vector3f listenerPosition = null;
+
+    /**
+     * Velocity of the listener.
+     */
     private Vector3f listenerVelocity = null;
 
     /**
@@ -349,6 +372,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @param listenerVelocity listenerVelocity
      */
+    @MainThreadOnly
     public void setListenerVelocity(Vector3f listenerVelocity) {
         this.listenerVelocity = new Vector3f(listenerVelocity);
         AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x,

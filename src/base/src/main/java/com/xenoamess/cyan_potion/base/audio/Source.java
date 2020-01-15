@@ -40,6 +40,11 @@ import static org.lwjgl.openal.AL10.*;
 public class Source implements AutoCloseable {
     private int alSourceInt = -1;
     private WaveData currentWaveData = null;
+
+    /**
+     * an event that will be inserted into the eventList (by source)
+     * when this WaveData is played over.
+     */
     private Event playOverEvent = null;
 
     private float volume;
