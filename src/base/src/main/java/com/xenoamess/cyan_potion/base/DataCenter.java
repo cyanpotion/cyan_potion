@@ -40,8 +40,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DataCenter {
 
-    public static final String MAIN_THREAD_NAME = Thread.currentThread().getName();
-    public static final long MAIN_THREAD_ID = Thread.currentThread().getId();
+    public static final String MAIN_THREAD_NAME = "main";
+    public static final long MAIN_THREAD_ID = 1;
 
     public static boolean ifMainThread() {
         return Thread.currentThread().getId() == MAIN_THREAD_ID;

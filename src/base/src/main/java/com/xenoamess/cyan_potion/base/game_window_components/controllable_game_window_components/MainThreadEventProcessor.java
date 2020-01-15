@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
@@ -65,7 +66,7 @@ public class MainThreadEventProcessor implements EventProcessor {
      */
     @Override
     public Event apply(Event event) {
-        if (Thread.currentThread().getId() != 1) {
+        if (!DataCenter.ifMainThread()) {
             this.getGameManager().delayMainThreadEventProcess(this, event);
             return null;
         }

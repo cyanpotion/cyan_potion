@@ -69,10 +69,13 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>createGameWindowComponentFromClassName.</p>
+     * create an instance of gameWindowComponentClassName class.
+     * this class must be subclass of AbstractGameWindowComponent
+     * and must have a public constructor of [AbstractGameWindowComponent(GameWindow)].
+     * otherwise the engine will exit directly.
      *
      * @param gameWindow                   a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param gameWindowComponentClassName gameWindowComponentClassName
+     * @param gameWindowComponentClassName name of the class.
      * @return return
      */
     public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
@@ -92,7 +95,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
 
 
     /**
-     * <p>init.</p>
+     * set leftTopPosX, leftTopPosY, width, height one by one.
+     * and then return this.
      *
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
@@ -202,7 +206,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>addToGameWindowComponentTree.</p>
+     * if gameWindowComponentTreeNode == null, then will create a new Node from the tree.
+     * otherwise, will create a node as gameWindowComponentTreeNode's child to contain this.
      *
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
