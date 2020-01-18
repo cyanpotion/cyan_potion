@@ -72,7 +72,7 @@ public class Shader implements AutoCloseable {
 
         setVertexShaderObject(glCreateShader(GL_VERTEX_SHADER));
         glShaderSource(getVertexShaderObject(),
-                FileUtils.loadFile(AbstractResource.getFile(
+                FileUtils.loadString(AbstractResource.getFile(
                         "/shaders/" + filename + ".vs"
                         )
                 )
@@ -85,7 +85,7 @@ public class Shader implements AutoCloseable {
 
         setFragmentShaderObject(glCreateShader(GL_FRAGMENT_SHADER));
         glShaderSource(getFragmentShaderObject(),
-                FileUtils.loadFile(AbstractResource.getFile("/shaders/" + filename + ".fs"
+                FileUtils.loadString(AbstractResource.getFile("/shaders/" + filename + ".fs"
                         )
                 )
         );

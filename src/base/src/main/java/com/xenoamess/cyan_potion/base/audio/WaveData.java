@@ -169,7 +169,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param resourceFile resourceFile
      */
     public void readVorbis(File resourceFile) {
-        ByteBuffer vorbis = FileUtils.loadFileBuffer(resourceFile, true);
+        ByteBuffer vorbis = FileUtils.loadBuffer(resourceFile, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
     }

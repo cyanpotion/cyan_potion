@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.144.3</version>
+    <version>0.145.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -36,6 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8
         </project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -45,39 +46,39 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <eclipse-collections.version>10.0.0</eclipse-collections.version>
-        <guava.version>28.1-jre</guava.version>
-        <jackson.version>2.10.0.pr3</jackson.version>
-        <joml.version>1.9.17</joml.version>
-        <log4j.version>2.12.1</log4j.version>
+        <eclipse-collections.version>10.1.0</eclipse-collections.version>
+        <guava.version>28.2-jre</guava.version>
+        <jackson.version>2.10.2</jackson.version>
+        <joml.version>1.9.20</joml.version>
+        <log4j.version>2.13.0</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
-        <slf4j.version>2.0.0-alpha0</slf4j.version>
+        <slf4j.version>2.0.0-alpha1</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
-        <JXInput.version>1.0.0</JXInput.version>
+        <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.9.7</commonx.version>
-        <multi_language.version>0.44.3</multi_language.version>
-        <x8l.version>0.48.2</x8l.version>
-        <SDL_GameControllerDB_Util.version>1.1.20190925
-        </SDL_GameControllerDB_Util.version>
+        <commonx.version>0.10.2</commonx.version>
+        <multi_language.version>0.45.0</multi_language.version>
+        <x8l.version>0.49.0</x8l.version>
+        <SDL_GameControllerDB_Util.version>1.1.20200115</SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.5.2</junit-jupiter.version>
+        <junit-jupiter.version>5.6.0-RC1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
@@ -141,6 +142,19 @@
                                         </dependency>
                                     </dependencies>
                                 </property>
+                                <property>
+                                    <name>commons-vfs2.version</name>
+                                    <dependencies>
+                                        <dependency>
+                                            <groupId>org.apache.commons
+                                            </groupId>
+                                            <artifactId>commons-vfs2
+                                            </artifactId>
+                                        </dependency>
+                                    </dependencies>
+                                </property>
+
+
                                 <property>
                                     <name>dom4j.version</name>
                                     <dependencies>
@@ -605,7 +619,7 @@
                                     <name>JXInput.version</name>
                                     <dependencies>
                                         <dependency>
-                                            <groupId>com.github.StrikerX3
+                                            <groupId>com.xenoamess
                                             </groupId>
                                             <artifactId>JXInput</artifactId>
                                         </dependency>
@@ -615,7 +629,7 @@
                                     <name>Jamepad.version</name>
                                     <dependencies>
                                         <dependency>
-                                            <groupId>com.github.WilliamAHartman
+                                            <groupId>com.xenoamess
                                             </groupId>
                                             <artifactId>Jamepad</artifactId>
                                         </dependency>
@@ -881,10 +895,10 @@
             <id>central</id>
             <url>http://central.maven.org/maven2/</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
+        <!--        <repository>-->
+        <!--            <id>jitpack.io</id>-->
+        <!--            <url>https://jitpack.io</url>-->
+        <!--        </repository>-->
     </repositories>
 
 
@@ -1291,6 +1305,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2</artifactId>
+            <version>${commons-vfs2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
         </dependency>
@@ -1337,12 +1356,12 @@
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.StrikerX3</groupId>
+            <groupId>com.xenoamess</groupId>
             <artifactId>JXInput</artifactId>
             <version>${JXInput.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.WilliamAHartman</groupId>
+            <groupId>com.xenoamess</groupId>
             <artifactId>Jamepad</artifactId>
             <version>${Jamepad.version}</version>
         </dependency>
@@ -1408,13 +1427,13 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
@@ -1554,6 +1573,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

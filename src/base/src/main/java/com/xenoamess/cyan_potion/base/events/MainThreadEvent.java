@@ -24,6 +24,11 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
+import com.xenoamess.cyan_potion.base.GameManager;
+
+import java.util.Set;
+
 /**
  * Event that must be applied by main thread due to some reasons,
  * for Example, some native invoke for glfw or opengl by lwjgl.
@@ -35,4 +40,10 @@ package com.xenoamess.cyan_potion.base.events;
  * @version 0.143.0
  */
 public interface MainThreadEvent extends Event {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @MainThreadOnly
+    Set<Event> apply(GameManager gameManager);
 }

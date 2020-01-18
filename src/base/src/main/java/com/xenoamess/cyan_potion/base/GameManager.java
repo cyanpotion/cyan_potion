@@ -29,6 +29,7 @@ import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
 import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleThread;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -40,6 +41,7 @@ import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
+import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
@@ -91,8 +93,9 @@ public class GameManager implements AutoCloseable {
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
-    private final List<Event> eventList =
-            new ArrayList<>();
+    private final List<Event> eventList = new ArrayList<>();
+    private final List<Event> eventListCache = new ArrayList<>();
+    private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
 
     @AsFinalField
     private ConsoleThread consoleThread = null;
@@ -198,8 +201,16 @@ public class GameManager implements AutoCloseable {
         if (event == null) {
             return;
         }
-        synchronized (getEventList()) {
-            getEventList().add(event);
+        if (!ifSolvingEventList.get()) {
+            List<Event> eventList;
+            synchronized (eventList = getEventList()) {
+                eventList.add(event);
+            }
+        } else {
+            List<Event> eventListCache;
+            synchronized (eventListCache = getEventListCache()) {
+                eventListCache.add(event);
+            }
         }
     }
 
@@ -216,17 +227,26 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    public void registerCyanPotionURLStreamHandlerFactory() {
+        try {
+            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
+            factorySet.register(new CyanPotionURLStreamHandlerFactory());
+        } catch (IllegalAccessException e) {
+            throw new Error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
+        }
+    }
+
     /**
      * <p>startup.</p>
      */
     public void startup() {
+        this.registerCyanPotionURLStreamHandlerFactory();
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         this.loadSettingTree();
         this.readCommonSettings();
         this.readKeymap();
         this.initSteam();
         this.loadText();
-
         setAlive(true);
         this.initConsoleThread();
 
@@ -275,12 +295,11 @@ public class GameManager implements AutoCloseable {
 
         X8lTree globalSettingsTree = null;
         try {
-            globalSettingsTree = X8lTree.loadFromFile(globalSettingsFile);
+            globalSettingsTree = X8lTree.load(globalSettingsFile);
         } catch (IOException e) {
-            LOGGER.error("X8lTree.loadFromFile(globalSettingsFile) fails " +
+            throw new IllegalArgumentException("X8lTree.loadFromFile(globalSettingsFile) fails " +
                     ": ", e);
         }
-        assert (globalSettingsTree != null);
         this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
         this.getDataCenter().patchGlobalSettingsTree();
     }
@@ -673,6 +692,8 @@ public class GameManager implements AutoCloseable {
      * <p>solveEvents.</p>
      */
     public void solveEvents() {
+        ifSolvingEventList.set(true);
+
         getGameWindow().pollEvents();
         synchronized (this.getEventList()) {
             /*
@@ -724,8 +745,16 @@ public class GameManager implements AutoCloseable {
             mainThreadEventProcessPairs.clear();
 
             this.getEventList().clear();
+
+            synchronized (this.getEventListCache()) {
+                this.getEventList().addAll(this.getEventListCache());
+                this.getEventListCache().clear();
+            }
+
             this.getEventList().addAll(newEventList.stream().distinct().collect(Collectors.toList()));
         }
+
+        ifSolvingEventList.set(false);
     }
 
     /**
@@ -934,6 +963,10 @@ public class GameManager implements AutoCloseable {
         return eventList;
     }
 
+    protected List<Event> getEventListCache() {
+        return eventListCache;
+    }
+
     /**
      * <p>Setter for the field <code>nowFrameIndex</code>.</p>
      *
@@ -983,4 +1016,5 @@ public class GameManager implements AutoCloseable {
     public void setCanRender(boolean canRender) {
         this.canRender = canRender;
     }
+
 }

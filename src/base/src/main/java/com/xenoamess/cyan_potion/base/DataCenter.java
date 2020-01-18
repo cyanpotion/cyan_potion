@@ -40,6 +40,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DataCenter {
 
+    public static final String MAIN_THREAD_NAME = "main";
+    public static final long MAIN_THREAD_ID = 1;
+
+    public static boolean ifMainThread() {
+        return Thread.currentThread().getId() == MAIN_THREAD_ID;
+    }
+
     private boolean debug = false;
     /**
      * Constant <code>ALLOW_RUN_WITHOUT_STEAM=true</code>

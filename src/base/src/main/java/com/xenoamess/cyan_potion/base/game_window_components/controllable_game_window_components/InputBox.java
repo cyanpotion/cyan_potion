@@ -46,7 +46,11 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * @version 0.143.0
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
-    private long slashTime = 1000L;
+    /**
+     * the time everytime slash shines.
+     */
+    private long cursorShineTime = 1000L;
+
     private String contentString = "";
     private int nowInsertPos = 0;
     private int nowSelectStartPos = -1;
@@ -57,7 +61,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     private Vector4f textColor = new Vector4f(1, 1, 1, 1);
     private Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
-    private Vector4f insertColor = new Vector4f(1f, 1f, 1f, 1);
+    private Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
 
 
     /**
@@ -605,9 +609,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 }
             }
 
-            if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getSlashTime()) % 2 == 0)) {
-                glColor4f(getInsertColor().x(), getInsertColor().y(),
-                        getInsertColor().z(), getInsertColor().w());
+            if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getCursorShineTime()) % 2 == 0)) {
+                glColor4f(getCursorColor().x(), getCursorColor().y(),
+                        getCursorColor().z(), getCursorColor().w());
                 glEnd();
                 glBindTexture(GL_TEXTURE_2D,
                         font.getFontTextures().getPrimitive('|' / EACH_CHAR_NUM));
@@ -641,17 +645,17 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @return a long.
      */
-    public long getSlashTime() {
-        return slashTime;
+    public long getCursorShineTime() {
+        return cursorShineTime;
     }
 
     /**
      * <p>Setter for the field <code>slashTime</code>.</p>
      *
-     * @param slashTime a long.
+     * @param cursorShineTime a long.
      */
-    public void setSlashTime(long slashTime) {
-        this.slashTime = slashTime;
+    public void setCursorShineTime(long cursorShineTime) {
+        this.cursorShineTime = cursorShineTime;
     }
 
     /**
@@ -785,17 +789,17 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getInsertColor() {
-        return insertColor;
+    public Vector4f getCursorColor() {
+        return cursorColor;
     }
 
     /**
      * <p>Setter for the field <code>insertColor</code>.</p>
      *
-     * @param insertColor insertColor
+     * @param cursorColor insertColor
      */
-    public void setInsertColor(Vector4f insertColor) {
-        this.insertColor = insertColor;
+    public void setCursorColor(Vector4f cursorColor) {
+        this.cursorColor = cursorColor;
     }
 
 }

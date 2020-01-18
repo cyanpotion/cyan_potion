@@ -1,0 +1,9 @@
+{
+  "ignore": [
+    "pom.xml",
+    "package-info.java"
+  ],
+  "filters": [
+    ".java"
+  ]
+}

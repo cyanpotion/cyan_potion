@@ -38,6 +38,7 @@ import org.lwjgl.glfw.GLFW;
  * @author XenoAmess
  * @version 0.143.0
  */
+
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     private boolean active = true;
     private boolean visible = true;
