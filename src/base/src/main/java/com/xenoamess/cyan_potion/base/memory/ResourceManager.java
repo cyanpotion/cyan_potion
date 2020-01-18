@@ -25,7 +25,10 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.impl.StandardFileSystemManager;
 import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,17 @@ public class ResourceManager implements AutoCloseable {
             LoggerFactory.getLogger(ResourceManager.class);
 
     private long maxTextureSize = 0;
+
+    private static final StandardFileSystemManager fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
+
+    {
+        fileSystemManager.setLogger(null);
+        try {
+            fileSystemManager.init();
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+        }
+    }
 
     public long getMaxTextureSize() {
         if (maxTextureSize == 0) {
@@ -120,134 +134,103 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
-     * <p>putResourceWithFullURI.</p>
-     *
-     * @param fullResourceURI fullResourceURI
-     * @param t               a T object.
-     */
-    public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
-        if (StringUtils.isBlank(fullResourceURI)) {
-            throw (new Error("putResourceWithURI : fullResourceURI is null or" +
-                    " Empty"));
-        }
-
-        LOGGER.debug("putResource {}", fullResourceURI);
-
-        this.putResourceWithShortenURI(fullResourceURI.substring(fullResourceURI.indexOf(':') + 1), t);
-    }
-
-    /**
-     * <p>getResourceFromFullURI.</p>
-     *
-     * @param fullResourceURI fullResourceURI
-     * @return return
-     */
-    public Object getResourceFromFullURI(String fullResourceURI) {
-        if (StringUtils.isBlank(fullResourceURI)) {
-            return null;
-        }
-
-        if (this.gameManager.getDataCenter().isDebug()) {
-            LOGGER.debug("putResource {}", fullResourceURI);
-        }
-
-        int indexOfColon = fullResourceURI.indexOf(':');
-        String resourceClassName = fullResourceURI.substring(0, indexOfColon);
-        Class resourceClass = null;
-
-        try {
-            resourceClass =
-                    this.getClass().getClassLoader().loadClass(resourceClassName);
-        } catch (ClassNotFoundException e) {
-            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null:{},{}",
-                    fullResourceURI,
-                    resourceClassName, e);
-        }
-        if (resourceClass == null) {
-            return null;
-        }
-
-        return this.getResourceFromShortenURI(resourceClass,
-                fullResourceURI.substring(indexOfColon + 1));
-    }
-
-    /**
      * <p>putResourceWithShortenURI.</p>
      *
-     * @param shortenResourceURI shortenResourceURI
-     * @param t                  a T object.
+     * @param resourceInfo resourceInfo
+     * @param t            a T object.
      */
-    public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
-        ConcurrentHashMap<String, T> resourceURIMap =
+    public <T> void putResource(ResourceInfo resourceInfo, T t) {
+        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(t.getClass());
         if (resourceURIMap == null) {
             resourceURIMap = new ConcurrentHashMap<>(100);
             getDefaultResourcesURIMap().put(t.getClass(), resourceURIMap);
         }
-        resourceURIMap.put(shortenResourceURI, t);
+        resourceURIMap.put(resourceInfo, t);
     }
 
     /**
      * <p>getResourceFromShortenURI.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceInfo resourceInfo
      * @return a T object.
      */
-    public <T> T getResourceFromShortenURI(Class<T> tClass,
-                                           String shortenResourceURI) {
+    public <T> T getResource(Class<T> tClass,
+                             ResourceInfo resourceInfo) {
 
-        ConcurrentHashMap<String, T> resourceURIMap =
+        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return null;
         } else {
-            return resourceURIMap.get(shortenResourceURI);
+            return resourceURIMap.get(resourceInfo);
         }
     }
 
     /**
      * <p>ifExistResourceFromShortenURI.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param resourceInfo resourceInfo
      * @return a boolean.
      */
-    public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass,
-                                                     String shortenResourceURI) {
+    public boolean ifExistResource(ResourceInfo resourceInfo) {
 
-        ConcurrentHashMap<String, T> resourceURIMap =
-                getDefaultResourcesURIMap().get(tClass);
+        ConcurrentHashMap resourceURIMap =
+                getDefaultResourcesURIMap().get(resourceInfo.getClass());
         if (resourceURIMap == null) {
             return false;
         } else {
-            return resourceURIMap.containsKey(shortenResourceURI);
+            return resourceURIMap.containsKey(resourceInfo);
         }
     }
 
     /**
      * <p>fetchResourceWithShortenURI.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceInfo resourceInfo
      * @return a T object.
      */
-    public <T extends AbstractResource> T fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI) {
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo resourceInfo) {
         T res = null;
-        if (this.ifExistResourceFromShortenURI(tClass, shortenResourceURI)) {
-            res = this.getResourceFromShortenURI(tClass, shortenResourceURI);
+        if (this.ifExistResource(resourceInfo)) {
+            res = this.getResource(tClass, resourceInfo);
         } else {
             try {
                 res = tClass.getDeclaredConstructor(ResourceManager.class,
                         String.class).newInstance(this,
-                        tClass.getCanonicalName() + ":" + shortenResourceURI);
-                this.putResourceWithShortenURI(shortenResourceURI, res);
+                        resourceInfo);
+                this.putResource(resourceInfo, res);
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI)" +
-                        " fails:{},{}", tClass, shortenResourceURI, e);
+                LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, ResourceInfo resourceInfo)" +
+                        " fails:{},{}", tClass, resourceInfo, e);
             }
         }
         return res;
+    }
+
+
+    /**
+     * <p>fetchResourceWithShortenURI.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @return a T object.
+     */
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, FileObject fileObject, String... values) {
+        ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObject, values);
+        return fetchResource(tClass, resourceInfo);
+    }
+
+    /**
+     * <p>fetchResourceWithShortenURI.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @return a T object.
+     */
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+        ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObjectString, values);
+        return fetchResource(tClass, resourceInfo);
     }
 
     /**
@@ -420,5 +403,9 @@ public class ResourceManager implements AutoCloseable {
      */
     public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourcesURIMap() {
         return defaultResourcesURIMap;
+    }
+
+    public static FileSystemManager getFileSystemManager() {
+        return fileSystemManager;
     }
 }

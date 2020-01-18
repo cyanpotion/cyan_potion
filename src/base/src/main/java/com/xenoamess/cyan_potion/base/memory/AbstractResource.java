@@ -45,7 +45,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
             LoggerFactory.getLogger(AbstractResource.class);
 
     private final ResourceManager resourceManager;
-    private final String fullResourceURI;
+    private final ResourceInfo resourceInfo;
     private long memorySize;
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
     private long lastUsedFrameIndex;
@@ -57,12 +57,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param fullResourceURI full Resource URI
+     * @param resourceInfo    Resource Json
      * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
-    public AbstractResource(ResourceManager resourceManager, String fullResourceURI) {
+    public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
-        this.fullResourceURI = fullResourceURI;
+        this.resourceInfo = resourceInfo;
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.getResourceManager().load(this);
 
         LOGGER.debug("loadResource {}, time {}, memory {}",
-                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getResourceInfo(), this.getLastUsedFrameIndex(),
                 this.getMemorySize());
         if (this.getMemorySize() == 0) {
             LOGGER.warn("this.memorySize shows 0 here. potential track error?");
@@ -114,7 +114,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.getResourceManager().close(this);
 
         LOGGER.debug("closeResource {}, time {}, memory {}",
-                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getResourceInfo(), this.getLastUsedFrameIndex(),
                 this.getMemorySize());
 //        this.inMemory = false;
     }
@@ -122,30 +122,30 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     /**
      * <p>fetchResourceWithShortenURI.</p>
      *
-     * @param shortenResourceURI shortenResourceURI
+     * @param resourceInfo resourceInfo
      * @return return
      */
-    public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
-        return this.getResourceManager().fetchResourceWithShortenURI(this.getClass(),
-                shortenResourceURI);
+    public AbstractResource fetchResourceWithShortenURI(ResourceInfo resourceInfo) {
+        return this.getResourceManager().fetchResource(this.getClass(),
+                resourceInfo);
     }
 
     /**
      * force to reload this resource.
      * using loaders registered in this.getResourceManager() .
      *
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     public void forceLoad() {
         final String[] resourceFileURIStrings =
-                this.getFullResourceURI().split(":");
+                this.getResourceInfo().values;
         final String resourceFilePath = resourceFileURIStrings[1];
         final String resourceType = resourceFileURIStrings[2];
 
         Function loader =
                 this.getResourceManager().getResourceLoader(this.getClass(), resourceType);
         if (loader == null) {
-            throw new URITypeNotDefinedException(this.getFullResourceURI());
+            throw new URITypeNotDefinedException(this.getResourceInfo());
         }
         loader.apply(this);
     }
@@ -184,12 +184,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     }
 
     /**
-     * <p>Getter for the field <code>fullResourceURI</code>.</p>
+     * <p>Getter for the field <code>resourceJson</code>.</p>
      *
      * @return return
      */
-    public String getFullResourceURI() {
-        return fullResourceURI;
+    public ResourceInfo getResourceInfo() {
+        return resourceInfo;
     }
 
     /**

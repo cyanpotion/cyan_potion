@@ -29,7 +29,9 @@ import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException;
 import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeException;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import org.apache.commons.vfs2.FileObject;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryUtil;
@@ -37,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.InputStream;
 import java.nio.*;
 import java.util.function.Function;
 
@@ -82,11 +85,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param fullResourceURI full Resource URI
+     * @param resourceInfo    resourceInfo
      * @see ResourceManager
      */
-    public WaveData(ResourceManager resourceManager, String fullResourceURI) {
-        super(resourceManager, fullResourceURI);
+    public WaveData(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+        super(resourceManager, resourceInfo);
     }
 
     /**
@@ -96,7 +99,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     public static final Function<GameManager, Void> PUT_WAVEDATA_LOADER_MUSIC = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(WaveData.class, "music",
                 (WaveData waveData) -> {
-                    waveData.loadAsMusicWaveData(waveData.getFullResourceURI());
+                    waveData.loadAsMusicWaveData(waveData.getResourceInfo());
                     return null;
                 }
         );
@@ -168,24 +171,40 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param resourceFile resourceFile
      */
+    @Deprecated
     public void readVorbis(File resourceFile) {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFile, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
     }
 
+    /**
+     * <p>readVorbis.</p>
+     *
+     * @param resourceFileObject resourceFileObject
+     */
+    public void readVorbis(FileObject resourceFileObject) {
+        ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
+        readVorbis(vorbis);
+        MemoryUtil.memFree(vorbis);
+    }
 
-    private void loadAsMusicWaveData(String fullResourceURI) {
-        String[] resourceFileURIStrings = fullResourceURI.split(":");
-        String resourceFilePath = resourceFileURIStrings[1];
+
+    private void loadAsMusicWaveData(ResourceInfo resourceInfo) {
+        FileObject resourceFileObject = resourceInfo.fileObject;
+
+
         try {
+            InputStream inputStream = resourceFileObject.getContent().getInputStream();
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
-                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(AbstractResource.getFile(resourceFilePath).toURI().toURL());
-            this.bake(slickWaveData.data, slickWaveData.format,
-                    slickWaveData.sampleRate);
+                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(
+                            inputStream
+                    );
+            this.bake(slickWaveData.data, slickWaveData.format, slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(AbstractResource.getFile(resourceFilePath));
+            this.readVorbis(resourceFileObject);
         }
+
     }
 
     /**

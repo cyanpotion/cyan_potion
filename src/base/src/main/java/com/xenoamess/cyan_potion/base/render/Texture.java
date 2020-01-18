@@ -24,11 +24,11 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
@@ -86,7 +86,7 @@ public class Texture extends AbstractResource implements Bindable {
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_PICTURE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, "picture",
                 (Texture texture) -> {
-                    texture.loadAsPictureTexture(texture.getFullResourceURI());
+                    texture.loadAsPictureTexture(texture.getResourceInfo());
                     return null;
                 }
         );
@@ -100,11 +100,11 @@ public class Texture extends AbstractResource implements Bindable {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param fullResourceURI full Resource URI
+     * @param resourceInfo    resource info
      * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
      */
-    public Texture(ResourceManager resourceManager, String fullResourceURI) {
-        super(resourceManager, fullResourceURI);
+    public Texture(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+        super(resourceManager, resourceInfo);
     }
 
 
@@ -209,16 +209,14 @@ public class Texture extends AbstractResource implements Bindable {
     /**
      * <p>loadAsPictureTexture.</p>
      *
-     * @param fullResourceURI fullResourceURI
+     * @param resourceInfo resourceInfo
      */
-    public void loadAsPictureTexture(String fullResourceURI) {
-        String[] resourceFileURIStrings = fullResourceURI.split(":");
-        final String resourceFilePath = resourceFileURIStrings[1];
+    public void loadAsPictureTexture(ResourceInfo resourceInfo) {
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(AbstractResource.getFile(resourceFilePath));
+            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
         } catch (IOException e) {
-            LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", fullResourceURI, e);
+            LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", resourceInfo, e);
         }
 
 

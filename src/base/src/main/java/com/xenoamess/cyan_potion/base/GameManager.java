@@ -43,6 +43,7 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -266,13 +267,13 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
 
         this.setStartingContent();
-        final String defaultFontResourceURI =
+        final String defaultFontResourceJsonString =
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_RESOURCE_URI,
                         Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
 
-        if (!StringUtils.isBlank(defaultFontResourceURI)) {
-            Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
+        if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
+            Font.setDefaultFont(this.resourceManager.fetchResource(Font.class, ResourceInfo.of(defaultFontResourceJsonString)));
             this.getScheduledExecutorService().execute(() -> {
                 Font.getDefaultFont().load();
                 Font.setCurrentFont(Font.getDefaultFont());

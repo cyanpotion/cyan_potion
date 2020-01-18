@@ -47,31 +47,31 @@ public class CodePlugins {
     public static final Function<GameManager, Void> PLUGIN_RPG_MODULE_TEXTURE_LOADERS = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, "characters",
                 (Texture texture) -> {
-                    loadAsWalkingTexture(texture, texture.getFullResourceURI());
+                    loadAsWalkingTexture(texture);
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "A5",
                 (Texture texture) -> {
-                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
+                    loadAsTilesetTextures8(texture);
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "B",
                 (Texture texture) -> {
-                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
+                    loadAsTilesetTextures8(texture);
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "C",
                 (Texture texture) -> {
-                    loadAsTilesetTextures8(texture, texture.getFullResourceURI());
+                    loadAsTilesetTextures8(texture);
                     return null;
                 }
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, "A2",
                 (Texture texture) -> {
-                    loadAsTilesetTexturesA2(texture, texture.getFullResourceURI());
+                    loadAsTilesetTexturesA2(texture);
                     return null;
                 }
         );

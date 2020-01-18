@@ -44,9 +44,10 @@ public class Menu extends AbstractGameWindowComponent {
     private final AtomicBoolean show = new AtomicBoolean(false);
     private final Texture menuBackGroundTexture =
             this.getGameWindow().getGameManager().getResourceManager().
-                    fetchResourceWithShortenURI(
+                    fetchResource(
                             Texture.class,
-                            "/www/img/pictures/menuBackGround.png:picture"
+                            "picture",
+                            "/www/img/pictures/menuBackGround.png"
                     );
 
     private final Picture menuBackGroundPicture = new Picture(menuBackGroundTexture);

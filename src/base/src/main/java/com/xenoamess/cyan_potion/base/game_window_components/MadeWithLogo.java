@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -46,9 +47,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
-                    fetchResourceWithShortenURI(
+                    fetchResource(
                             Texture.class,
-                            "/www/img/pictures/madewith.png:picture"
+                            new ResourceInfo(Texture.class, "picture", "/www/img/pictures/madewith.png")
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
@@ -68,7 +69,15 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.logoPicture.cover(this.getGameWindow());
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
-        this.getGameWindow().getGameManager().getAudioManager().playWaveData(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/madewith.ogg:music"));
+        this.getGameWindow().getGameManager().getAudioManager().playWaveData(
+                this.getGameWindow().getGameManager().getResourceManager().fetchResource(
+                        WaveData.class,
+                        new ResourceInfo(
+                                WaveData.class, "music",
+                                "/www/audio/se/madewith.ogg"
+                        )
+                )
+        );
     }
 
     /**

@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
@@ -44,9 +45,13 @@ import static org.lwjgl.opengl.GL11.*;
 public class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
-                    fetchResourceWithShortenURI(
+                    fetchResource(
                             Texture.class,
-                            "/www/img/pictures/logo.png:picture"
+                            new ResourceInfo(
+                                    Texture.class,
+                                    "picture",
+                                    "/www/img/pictures/logo.png"
+                            )
                     );
 
     private final Picture logoPicture;
@@ -66,7 +71,16 @@ public class Logo extends AbstractGameWindowComponent {
 
         this.lifeTime = lifeTime;
         this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
-        this.getGameWindow().getGameManager().getAudioManager().playWaveData(this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(WaveData.class, "/www/audio/se/logo.ogg:music"));
+        this.getGameWindow().getGameManager().getAudioManager().playWaveData(
+                this.getGameWindow().getGameManager().getResourceManager().fetchResource(
+                        WaveData.class,
+                        new ResourceInfo(
+                                WaveData.class,
+                                "music",
+                                "/www/audio/se/logo.ogg"
+                        )
+                )
+        );
         this.logoPicture = new Picture(this.logoTexture);
         this.logoPicture.setCenter(this.getGameWindow());
         this.logoPicture.moveY(-50 * 2);
