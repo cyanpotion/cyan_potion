@@ -123,11 +123,7 @@ public class Texture extends AbstractResource implements Bindable {
     @Override
     public void bind(int sampler) {
         super.bind(sampler);
-        if ((this.getGlTexture2DInt() == -1) && (this.isInMemory())) {
-            throw new TextureStateDisorderException(this);
-        }
-
-        if ((this.getGlTexture2DInt() != -1) && (!this.isInMemory())) {
+        if ((this.getGlTexture2DInt() == -1) == (this.isInMemory())) {
             throw new TextureStateDisorderException(this);
         }
 
