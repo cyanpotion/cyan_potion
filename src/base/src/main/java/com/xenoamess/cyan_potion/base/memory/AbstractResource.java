@@ -137,25 +137,6 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      */
     protected abstract void forceClose();
 
-//    public static File getFile(String path) {
-//        File res;
-//        if (path.startsWith("[absolute]")) {
-//            res = new File(decodeAbsolutePath(path));
-//        } else {
-//            res = FileUtils.getFile(path);
-//        }
-//        return res;
-//    }
-//
-//    public static String encodeAbsolutePath(String absolutePath) {
-//        return "[absolute]" + absolutePath.replace("\\", "/").replace(":/", "//");
-//    }
-//
-//    public static String decodeAbsolutePath(String encodedPath) {
-//        return encodedPath.replace("[absolute]", "").replace("//", ":/");
-//    }
-
-
     /**
      * <p>Getter for the field <code>resourceManager</code>.</p>
      *
