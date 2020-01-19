@@ -10,13 +10,18 @@ import org.joml.Vector4f;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractPicture implements AbstractMutableArea {
+public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     private float centerPosX;
     private float centerPosY;
     private float width;
     private float height;
     private Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
+
+    @Override
+    public void bind(int sampler) {
+        this.getCurrentBindable().bind();
+    }
 
     /**
      * <p>draw.</p>
