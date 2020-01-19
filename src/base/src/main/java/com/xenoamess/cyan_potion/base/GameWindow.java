@@ -27,13 +27,14 @@ package com.xenoamess.cyan_potion.base;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -47,6 +48,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.Objects;
@@ -275,11 +278,13 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         // Enable v-sync
         glfwSwapInterval(1);
 
-        String iconFilePath =
-                AbstractResource.getFile(this.getGameManager().getDataCenter().getIconFilePath()).getAbsolutePath();
-
-        if (SystemUtils.IS_OS_WINDOWS && iconFilePath.startsWith("/")) {
-            iconFilePath = iconFilePath.substring(1);
+        String iconFilePath = null;
+        try {
+            FileObject iconFileObject = ResourceManager.getFileObject(this.getGameManager().getDataCenter().getIconFilePath());
+            iconFilePath = new File(iconFileObject.getURL().toURI()).getAbsolutePath();
+        } catch (FileSystemException | URISyntaxException e) {
+            LOGGER.error("load icon fails : {}", this.getGameManager().getDataCenter().getIconFilePath(), e);
+            e.printStackTrace();
         }
 
         ImageParser.setWindowIcon(getWindow(), iconFilePath);

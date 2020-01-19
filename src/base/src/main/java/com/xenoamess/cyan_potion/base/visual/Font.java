@@ -71,7 +71,7 @@ public class Font extends AbstractResource {
      * @see com.xenoamess.cyan_potion.base.GameManager
      */
     public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
-            "/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
+            "resources/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
 
     /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
@@ -129,7 +129,7 @@ public class Font extends AbstractResource {
      *
      * @param resourceManager resource Manager
      * @param resourJson      resour Json
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     public Font(ResourceManager resourceManager, ResourceInfo resourJson) {
         super(resourceManager, resourJson);

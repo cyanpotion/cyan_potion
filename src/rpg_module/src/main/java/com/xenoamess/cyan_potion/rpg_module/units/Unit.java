@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.units;
 
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
@@ -85,17 +86,17 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene                    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos                a {@link org.joml.Vector3f} object.
-     * @param size                     a {@link org.joml.Vector3f} object.
-     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
-     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos                         a {@link org.joml.Vector3f} object.
+     * @param size                              a {@link org.joml.Vector3f} object.
+     * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
+     * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
     public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                String walkingAnimation4DirsURI,
+                ResourceInfo walkingAnimation4DirsResourceInfo,
                 ResourceManager resourceManager) {
         this(scene, centerPos, size, null);
-        this.loadWalkingAnimations(walkingAnimation4DirsURI, resourceManager);
+        this.loadWalkingAnimations(walkingAnimation4DirsResourceInfo, resourceManager);
     }
 
 
@@ -157,16 +158,28 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
+//    /**
+//     * <p>loadWalkingAnimations.</p>
+//     *
+//     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
+//     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+//     */
+//    public void loadWalkingAnimations(String walkingAnimation4DirsURI,
+//                                      ResourceManager resourceManager) {
+//        this.setPicture(new WalkingAnimation4Dirs(4, this,
+//                walkingAnimation4DirsURI, resourceManager));
+//    }
+
     /**
      * <p>loadWalkingAnimations.</p>
      *
-     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
-     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
+     * @param resourceManager                   resourceManager
      */
-    public void loadWalkingAnimations(String walkingAnimation4DirsURI,
+    public void loadWalkingAnimations(ResourceInfo walkingAnimation4DirsResourceInfo,
                                       ResourceManager resourceManager) {
         this.setPicture(new WalkingAnimation4Dirs(4, this,
-                walkingAnimation4DirsURI, resourceManager));
+                walkingAnimation4DirsResourceInfo, resourceManager));
     }
 
 

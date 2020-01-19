@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.units;
 
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
@@ -69,16 +70,16 @@ public class Player extends Unit {
     /**
      * <p>Constructor for Player.</p>
      *
-     * @param scene                    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos                a {@link org.joml.Vector3f} object.
-     * @param size                     a {@link org.joml.Vector3f} object.
-     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
-     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPos                         a {@link org.joml.Vector3f} object.
+     * @param size                              a {@link org.joml.Vector3f} object.
+     * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
+     * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
     public Player(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                  String walkingAnimation4DirsURI,
+                  ResourceInfo walkingAnimation4DirsResourceInfo,
                   ResourceManager resourceManager) {
-        super(scene, centerPos, size, walkingAnimation4DirsURI,
+        super(scene, centerPos, size, walkingAnimation4DirsResourceInfo,
                 resourceManager);
     }
 }

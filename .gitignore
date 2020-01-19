@@ -43,7 +43,7 @@ replay_pid*
 
 /lwjgl3-master/
 
-/resources
+#/resources
 
 /run_build.lnk
 /test*

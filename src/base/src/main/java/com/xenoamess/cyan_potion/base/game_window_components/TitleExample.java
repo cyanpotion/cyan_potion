@@ -58,7 +58,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     fetchResource(
                             Texture.class,
                             "picture",
-                            "/www/img/pictures/saveSlot.png"
+                            "resources/www/img/pictures/saveSlot.png"
                     );
 
     private final Picture saveSlotPicture = new Picture(saveSlotTexture);
@@ -74,7 +74,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     new ResourceInfo(
                             Texture.class,
                             "picture",
-                            "/www/img/pictures/saveStar.png"
+                            "resources/www/img/pictures/saveStar.png"
                     )
             );
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
@@ -255,7 +255,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                         Texture.class,
                         "picture",
-                        "/www/img/pictures/saveSlot.png"
+                        "resources/www/img/pictures/saveSlot.png"
                 );
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);

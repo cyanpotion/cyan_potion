@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
@@ -33,7 +34,11 @@ import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -56,15 +61,43 @@ public class ResourceManager implements AutoCloseable {
 
     private long maxTextureSize = 0;
 
-    private static final StandardFileSystemManager fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
+    private static StandardFileSystemManager fileSystemManager;
 
-    {
+    static {
+        fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
         fileSystemManager.setLogger(null);
         try {
             fileSystemManager.init();
+            fileSystemManager.setBaseFile(new File(System.getProperty("user.dir")));
         } catch (FileSystemException e) {
-            e.printStackTrace();
+            LOGGER.error("cannot init ResourceManager.fileSystemManager", e);
         }
+    }
+
+    public static FileObject getFileObject(String fileString) {
+        FileObject result = null;
+        try {
+            result = getFileSystemManager().resolveFile(fileString);
+        } catch (FileSystemException e) {
+            LOGGER.error("getFileObject(String fileString) fails: {}", fileString, e);
+        }
+        return result;
+    }
+
+    public static String loadString(String fileString) {
+        String result = "";
+        result = loadString(getFileObject(fileString));
+        return result;
+    }
+
+    public static String loadString(FileObject fileObject) {
+        String result = "";
+        try (InputStream inputStream = fileObject.getContent().getInputStream()) {
+            result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            LOGGER.error("loadString(FileObject fileObject) fails: {}", fileObject, e);
+        }
+        return result;
     }
 
     public long getMaxTextureSize() {
@@ -150,6 +183,16 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
+     * <p>putResourceWithShortenURI.</p>
+     *
+     * @param resourceInfoJson resourceInfo
+     * @param t                a T object.
+     */
+    public <T> void putResource(String resourceInfoJson, T t) {
+        this.putResource(ResourceInfo.of(resourceInfoJson), t);
+    }
+
+    /**
      * <p>getResourceFromShortenURI.</p>
      *
      * @param tClass       a {@link java.lang.Class} object.
@@ -169,6 +212,18 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
+     * <p>getResourceFromShortenURI.</p>
+     *
+     * @param tClass           a {@link java.lang.Class} object.
+     * @param resourceInfoJson resourceInfo
+     * @return a T object.
+     */
+    public <T> T getResource(Class<T> tClass,
+                             String resourceInfoJson) {
+        return this.getResource(tClass, ResourceInfo.of(resourceInfoJson));
+    }
+
+    /**
      * <p>ifExistResourceFromShortenURI.</p>
      *
      * @param resourceInfo resourceInfo
@@ -177,7 +232,7 @@ public class ResourceManager implements AutoCloseable {
     public boolean ifExistResource(ResourceInfo resourceInfo) {
 
         ConcurrentHashMap resourceURIMap =
-                getDefaultResourcesURIMap().get(resourceInfo.getClass());
+                getDefaultResourcesURIMap().get(resourceInfo.resourceClass);
         if (resourceURIMap == null) {
             return false;
         } else {
@@ -186,7 +241,18 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
-     * <p>fetchResourceWithShortenURI.</p>
+     * <p>ifExistResourceFromShortenURI.</p>
+     *
+     * @param resourceInfoJson resourceInfoJson
+     * @return a boolean.
+     */
+    public boolean ifExistResource(String resourceInfoJson) {
+        return this.ifExistResource(ResourceInfo.of(resourceInfoJson));
+    }
+
+
+    /**
+     * <p>fetchResource.</p>
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceInfo resourceInfo
@@ -199,39 +265,40 @@ public class ResourceManager implements AutoCloseable {
         } else {
             try {
                 res = tClass.getDeclaredConstructor(ResourceManager.class,
-                        String.class).newInstance(this,
+                        resourceInfo.getClass()).newInstance(this,
                         resourceInfo);
                 this.putResource(resourceInfo, res);
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, ResourceInfo resourceInfo)" +
+                LOGGER.debug("ResourceManager.fetchResource(Class<T> tClass, ResourceInfo resourceInfo)" +
                         " fails:{},{}", tClass, resourceInfo, e);
             }
         }
         return res;
     }
 
-
     /**
-     * <p>fetchResourceWithShortenURI.</p>
+     * <p>fetchResource.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
+     * @param tClass           a {@link java.lang.Class} object.
+     * @param resourceInfoJson resource Info Json String
      * @return a T object.
      */
-    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, FileObject fileObject, String... values) {
-        ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObject, values);
-        return fetchResource(tClass, resourceInfo);
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
+        return this.fetchResource(tClass, ResourceInfo.of(resourceInfoJson));
     }
 
     /**
-     * <p>fetchResourceWithShortenURI.</p>
+     * <p>fetchResource.</p>
      *
      * @param tClass a {@link java.lang.Class} object.
      * @return a T object.
      */
-    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+    public <T extends AbstractResource> T
+    fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
         ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObjectString, values);
-        return fetchResource(tClass, resourceInfo);
+        return this.fetchResource(tClass, resourceInfo);
     }
+
 
     /**
      * {@inheritDoc}

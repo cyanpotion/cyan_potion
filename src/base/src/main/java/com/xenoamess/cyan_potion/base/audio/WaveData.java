@@ -38,7 +38,6 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.InputStream;
 import java.nio.*;
 import java.util.function.Function;
@@ -164,18 +163,6 @@ public class WaveData extends AbstractResource implements AutoCloseable {
                     AL_FORMAT_STEREO16, info.sample_rate());
             MemoryUtil.memFree(pcm);
         }
-    }
-
-    /**
-     * <p>readVorbis.</p>
-     *
-     * @param resourceFile resourceFile
-     */
-    @Deprecated
-    public void readVorbis(File resourceFile) {
-        ByteBuffer vorbis = FileUtils.loadBuffer(resourceFile, true);
-        readVorbis(vorbis);
-        MemoryUtil.memFree(vorbis);
     }
 
     /**

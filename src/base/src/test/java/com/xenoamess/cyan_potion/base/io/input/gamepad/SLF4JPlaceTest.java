@@ -7,5 +7,6 @@ public class SLF4JPlaceTest {
 //        org.slf4j.spi.LocationAwareLogger
         System.out.println(loader.getResource("org/slf4j/spi/LocationAwareLogger.class"));
 //        org.apache.commons.vfs2.VFS.getManager
+//        WebdavFileProvider
     }
 }

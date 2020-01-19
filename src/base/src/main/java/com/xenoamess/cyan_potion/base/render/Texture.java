@@ -101,7 +101,7 @@ public class Texture extends AbstractResource implements Bindable {
      *
      * @param resourceManager resource Manager
      * @param resourceInfo    resource info
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     public Texture(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         super(resourceManager, resourceInfo);
@@ -123,7 +123,11 @@ public class Texture extends AbstractResource implements Bindable {
     @Override
     public void bind(int sampler) {
         super.bind(sampler);
-        if ((this.getGlTexture2DInt() == -1) == (this.isInMemory())) {
+        if ((this.getGlTexture2DInt() == -1) && (this.isInMemory())) {
+            throw new TextureStateDisorderException(this);
+        }
+
+        if ((this.getGlTexture2DInt() != -1) && (!this.isInMemory())) {
             throw new TextureStateDisorderException(this);
         }
 

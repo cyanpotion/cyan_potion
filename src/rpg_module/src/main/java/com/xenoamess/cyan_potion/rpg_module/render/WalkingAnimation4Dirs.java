@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.render;
 
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.AbstractPicture;
@@ -64,27 +65,24 @@ public class WalkingAnimation4Dirs extends Animation {
      *
      * @param fps             a int.
      * @param unit            a {@link com.xenoamess.cyan_potion.rpg_module.units.Unit} object.
-     * @param resourceURI     a {@link java.lang.String} object.
+     * @param resourceInfo    resourceInfo.
      * @param resourceManager resourceManager
      */
-    public WalkingAnimation4Dirs(int fps, Unit unit, String resourceURI,
+    public WalkingAnimation4Dirs(int fps, Unit unit, ResourceInfo resourceInfo,
                                  ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
-
-        String[] resourceFileURIStrings = resourceURI.split(":");
-        String resourceFilePath = resourceFileURIStrings[0];
-        String resourceType = resourceFileURIStrings[1];
-        switch (resourceType) {
+        String resourceFilePath = resourceInfo.fileString;
+        switch (resourceInfo.type) {
             case "characters":
-                int peopleIndex = Integer.parseInt(resourceFileURIStrings[2]);
+                int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
                 List<Texture> walkingTextures =
                         TextureUtils.getWalkingTextures(resourceManager,
                                 resourceFilePath).get(peopleIndex);
                 this.initPictures(this.buildPictures(walkingTextures));
                 break;
             default:
-                throw new URITypeNotDefinedException(resourceURI);
+                throw new URITypeNotDefinedException(resourceInfo);
         }
     }
 

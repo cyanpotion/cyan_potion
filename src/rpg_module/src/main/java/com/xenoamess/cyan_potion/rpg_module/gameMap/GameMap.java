@@ -27,16 +27,17 @@ package com.xenoamess.cyan_potion.rpg_module.gameMap;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
+import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class GameMap {
     private final ArrayList<EventUnit> eventUnits = new ArrayList<>();
 
     private static String gameMapInfoNameToGameMapJsonURI(String gameMapInfoName) {
-        return "/www/data/" + gameMapInfoName + ".json";
+        return "resources/www/data/" + gameMapInfoName + ".json";
     }
 
     private GameMap(World world, GameMapInfoJson gameMapInfoJson) {
@@ -73,7 +74,7 @@ public class GameMap {
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
-                AbstractResource.getFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                ResourceManager.getFileObject(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
     }
@@ -249,14 +250,14 @@ public class GameMap {
      * @param gameMapInfosFile gameMapInfosFile
      * @return return
      */
-    public static List<GameMapInfoJson> getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile) {
+    public static List<GameMapInfoJson> getGameMapInfoJsons(ObjectMapper objectMapper, FileObject gameMapInfosFile) {
         List<GameMapInfoJson> res = null;
-        try {
-            res = objectMapper.readValue(gameMapInfosFile,
+        try (InputStream inputStream = gameMapInfosFile.getContent().getInputStream()) {
+            res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameMapInfoJson>>() {
                     });
         } catch (IOException e) {
-            LOGGER.error("GameMap.getGameMapInfoJsons(ObjectMapper objectMapper, File gameMapInfosFile):{},{}",
+            LOGGER.error("GameMap.getGameMapInfoJsons(ObjectMapper objectMapper, FileObject gameMapInfosFile):{},{}",
                     objectMapper, gameMapInfosFile, e);
         }
         return res;
@@ -265,7 +266,7 @@ public class GameMap {
     static List<GameMap> getGameMaps(World world) {
         List<GameMapInfoJson> gameMapInfoJsons =
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
-                        AbstractResource.getFile("/www/data/MapInfos.json"));
+                        ResourceManager.getFileObject("resources/www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {

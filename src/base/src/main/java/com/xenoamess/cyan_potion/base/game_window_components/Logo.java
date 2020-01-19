@@ -50,7 +50,7 @@ public class Logo extends AbstractGameWindowComponent {
                             new ResourceInfo(
                                     Texture.class,
                                     "picture",
-                                    "/www/img/pictures/logo.png"
+                                    "resources/www/img/pictures/logo.png"
                             )
                     );
 
@@ -77,7 +77,7 @@ public class Logo extends AbstractGameWindowComponent {
                         new ResourceInfo(
                                 WaveData.class,
                                 "music",
-                                "/www/audio/se/logo.ogg"
+                                "resources/www/audio/se/logo.ogg"
                         )
                 )
         );

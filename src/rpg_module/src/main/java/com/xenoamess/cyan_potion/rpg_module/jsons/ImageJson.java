@@ -60,7 +60,7 @@ public class ImageJson implements Serializable {
             return resourceManager.fetchResource(
                     Texture.class,
                     "characters",
-                    "/www/img/characters/" + this.characterName + ".png",
+                    "resources/www/img/characters/" + this.characterName + ".png",
                     Integer.toString(this.characterIndex),
                     Integer.toString(tmp)
             );

@@ -14,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Objects;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
@@ -29,7 +27,7 @@ class ResourceJsonSerializer extends JsonSerializer<ResourceInfo> {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(value.resourceClass.getCanonicalName());
         jsonGenerator.writeString(value.type);
-        jsonGenerator.writeString(value.fileObject.getURL().toString());
+        jsonGenerator.writeString(value.fileString);
         for (String string : value.values) {
             jsonGenerator.writeString(string);
         }
@@ -49,23 +47,26 @@ class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
             return null;
         }
         ArrayNode arrayNode = (ArrayNode) node;
-        ResourceInfo resourceInfo = new ResourceInfo();
+
         int len = arrayNode.size();
         if (len == 0) {
             return null;
         }
+        Class resourceInfoResourceClass = null;
         try {
-            resourceInfo.resourceClass = ResourceInfo.class.getClassLoader().loadClass(arrayNode.get(0).asText());
+            resourceInfoResourceClass = ResourceInfo.class.getClassLoader().loadClass(arrayNode.get(0).asText());
         } catch (ClassNotFoundException e) {
             LOGGER.error("cannot find class {}", arrayNode.get(0).asText(), e);
         }
-        resourceInfo.type = arrayNode.get(1).asText();
-        resourceInfo.fileObject = ResourceManager.getFileSystemManager().resolveFile(arrayNode.get(2).asText());
-        resourceInfo.values = new String[len - 3];
-        for (int i = 1; i < len; i++) {
-            resourceInfo.values[i - 1] = arrayNode.get(i).asText();
+
+        String resourceInfoType = arrayNode.get(1).asText();
+        String resourceInfoFileString = arrayNode.get(2).asText();
+        String[] resourceInfoValues = new String[len - 3];
+        for (int i = 3; i < len; i++) {
+            resourceInfoValues[i - 3] = arrayNode.get(i).asText();
         }
-        return resourceInfo;
+
+        return new ResourceInfo(resourceInfoResourceClass, resourceInfoType, resourceInfoFileString, resourceInfoValues);
     }
 }
 
@@ -74,23 +75,13 @@ class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
 public class ResourceInfo {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
-    public Class resourceClass;
-    public String type;
+    public final Class resourceClass;
+    public final String type;
+    public final String fileString;
     public FileObject fileObject;
-    public String[] values;
+    public final String[] values;
 
-    public ResourceInfo() {
-    }
-
-    public ResourceInfo(Class resourceClass,
-                        String type,
-                        FileObject fileObject,
-                        String... values) {
-        this.resourceClass = resourceClass;
-        this.type = type;
-        this.fileObject = fileObject;
-        this.values = values;
-    }
+    private String toString;
 
     public ResourceInfo(Class resourceClass,
                         String type,
@@ -98,12 +89,19 @@ public class ResourceInfo {
                         String... values) {
         this.resourceClass = resourceClass;
         this.type = type;
+        this.fileString = fileObjectString;
         try {
-            this.fileObject = ResourceManager.getFileSystemManager().resolveFile(fileObjectString);
+            this.fileObject = ResourceManager.getFileSystemManager().resolveFile(this.fileString);
         } catch (FileSystemException e) {
             e.printStackTrace();
         }
         this.values = values;
+
+        try {
+            this.toString = getObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("toString() fails, {},{}", this.resourceClass, this.values, e);
+        }
     }
 
     public static ResourceInfo of(String json) {
@@ -118,45 +116,41 @@ public class ResourceInfo {
 
     @Override
     public String toString() {
-        String string = "";
-        try {
-            string = getObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("toString() fails, {},{}", this.resourceClass, this.values, e);
-        }
-        return string;
+        return toString;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
         if (this == obj) {
             return true;
+        }
+        if (obj == null) {
+            return false;
         }
         if (!(obj instanceof ResourceInfo)) {
             return false;
         }
-        ResourceInfo resourceInfo = (ResourceInfo) obj;
-
-        if (!Objects.equals(this.resourceClass, resourceInfo.resourceClass)) {
-            return false;
-        }
-
-        if (!Objects.equals(this.type, resourceInfo.type)) {
-            return false;
-        }
-
-        if (!Objects.equals(this.fileObject, resourceInfo.fileObject)) {
-            return false;
-        }
-
-        return Arrays.equals(this.values, resourceInfo.values);
+        return toString.equals(obj.toString());
+//        ResourceInfo resourceInfo = (ResourceInfo) obj;
+//
+//        if (!Objects.equals(this.resourceClass, resourceInfo.resourceClass)) {
+//            return false;
+//        }
+//
+//        if (!Objects.equals(this.type, resourceInfo.type)) {
+//            return false;
+//        }
+//
+//        if (!Objects.equals(this.fileString, resourceInfo.fileString)) {
+//            return false;
+//        }
+//
+//        return Arrays.equals(this.values, resourceInfo.values);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(resourceClass, type, fileObject, values);
+        return this.toString().hashCode();
     }
+
 }
