@@ -57,10 +57,13 @@ public class ImageJson implements Serializable {
         } else {
             int tmp = ((this.direction >> 1) - 1) * 3;
             tmp += this.pattern;
-            return resourceManager.fetchResourceWithShortenURI(Texture.class,
-                    "/www/img/characters/" + this.characterName + ".png" +
-                            ":" + "characters" + ":" + this.characterIndex +
-                            ":" + tmp);
+            return resourceManager.fetchResource(
+                    Texture.class,
+                    "characters",
+                    "resources/www/img/characters/" + this.characterName + ".png",
+                    Integer.toString(this.characterIndex),
+                    Integer.toString(tmp)
+            );
         }
     }
 }

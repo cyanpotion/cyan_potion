@@ -27,11 +27,12 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
+import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -203,13 +204,12 @@ public class GameSystemJson implements Serializable {
      * @return return
      */
     public static GameSystemJson getGameSystemJson(ObjectMapper objectMapper,
-                                                   File getGameSystemJsonFile) {
+                                                   FileObject getGameSystemJsonFile) {
         GameSystemJson res = null;
-        try {
-            res = objectMapper.readValue(getGameSystemJsonFile,
-                    GameSystemJson.class);
+        try (InputStream inputStream = getGameSystemJsonFile.getContent().getInputStream()) {
+            res = objectMapper.readValue(inputStream, GameSystemJson.class);
         } catch (IOException e) {
-            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, File getGameSystemJsonFile)) " +
+            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, FileObject getGameSystemJsonFile)) " +
                             "fails:{},{}",
                     objectMapper, getGameSystemJsonFile, e);
         }

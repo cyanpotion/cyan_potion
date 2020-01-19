@@ -39,7 +39,7 @@ public class TextureStateDisorderException extends RuntimeException {
      * @param texture texture
      */
     public TextureStateDisorderException(Texture texture) {
-        super("Texture state chaos : getGlTexture2DInt: " + texture.getGlTexture2DInt() + ", isInMemory: " + texture.isInMemory() + ", getFullResourceURI: " + texture.getFullResourceURI() + ";");
+        super("Texture state chaos : getGlTexture2DInt: " + texture.getGlTexture2DInt() + ", isInMemory: " + texture.isInMemory() + ", getResourceJson: " + texture.getResourceInfo() + ";");
     }
 
 

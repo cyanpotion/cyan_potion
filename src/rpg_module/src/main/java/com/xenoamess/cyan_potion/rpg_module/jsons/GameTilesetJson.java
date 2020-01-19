@@ -27,11 +27,12 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
+import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +58,21 @@ public class GameTilesetJson implements Serializable {
     /**
      * <p>getGameTileSetJsons.</p>
      *
-     * @param objectMapper     a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
-     * @param gameTileSetsFile gameTileSetsFile
+     * @param objectMapper           a {@link com.fasterxml.jackson.databind.ObjectMapper} object.
+     * @param gameTileSetsFileObject gameTileSetsFileObject
      * @return return
      */
-    public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) {
+    public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, FileObject gameTileSetsFileObject) {
         List<GameTilesetJson> res = new ArrayList<>();
-        try {
-            res = objectMapper.readValue(gameTileSetsFile,
+        try (InputStream inputStream = gameTileSetsFileObject.getContent().getInputStream()) {
+            res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameTilesetJson>>() {
-                    });
+                    }
+            );
         } catch (IOException e) {
-            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, File gameTileSetsFile) " +
+            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, FileObject gameTileSetsFileObject) " +
                             "fails:{},{}",
-                    objectMapper, gameTileSetsFile, e);
+                    objectMapper, gameTileSetsFileObject, e);
         }
         return res;
     }

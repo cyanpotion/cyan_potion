@@ -24,13 +24,11 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
@@ -45,7 +43,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
             LoggerFactory.getLogger(AbstractResource.class);
 
     private final ResourceManager resourceManager;
-    private final String fullResourceURI;
+    private final ResourceInfo resourceInfo;
     private long memorySize;
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
     private long lastUsedFrameIndex;
@@ -57,12 +55,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param fullResourceURI full Resource URI
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @param resourceInfo    Resource Json
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public AbstractResource(ResourceManager resourceManager, String fullResourceURI) {
+    public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
-        this.fullResourceURI = fullResourceURI;
+        this.resourceInfo = resourceInfo;
     }
 
     /**
@@ -86,10 +84,10 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.getResourceManager().load(this);
 
         LOGGER.debug("loadResource {}, time {}, memory {}",
-                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getResourceInfo(), this.getLastUsedFrameIndex(),
                 this.getMemorySize());
         if (this.getMemorySize() == 0) {
-            LOGGER.warn("this.memorySize shows 0 here. potential track error?");
+            LOGGER.warn("this.memorySize shows 0 here. potential track error? : {}", this.resourceInfo);
         }
         this.setInMemory(true);
     }
@@ -114,38 +112,22 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.getResourceManager().close(this);
 
         LOGGER.debug("closeResource {}, time {}, memory {}",
-                this.getFullResourceURI(), this.getLastUsedFrameIndex(),
+                this.getResourceInfo(), this.getLastUsedFrameIndex(),
                 this.getMemorySize());
 //        this.inMemory = false;
-    }
-
-    /**
-     * <p>fetchResourceWithShortenURI.</p>
-     *
-     * @param shortenResourceURI shortenResourceURI
-     * @return return
-     */
-    public AbstractResource fetchResourceWithShortenURI(String shortenResourceURI) {
-        return this.getResourceManager().fetchResourceWithShortenURI(this.getClass(),
-                shortenResourceURI);
     }
 
     /**
      * force to reload this resource.
      * using loaders registered in this.getResourceManager() .
      *
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     public void forceLoad() {
-        final String[] resourceFileURIStrings =
-                this.getFullResourceURI().split(":");
-        final String resourceFilePath = resourceFileURIStrings[1];
-        final String resourceType = resourceFileURIStrings[2];
-
         Function loader =
-                this.getResourceManager().getResourceLoader(this.getClass(), resourceType);
+                this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().type);
         if (loader == null) {
-            throw new URITypeNotDefinedException(this.getFullResourceURI());
+            throw new URITypeNotDefinedException(this.getResourceInfo());
         }
         loader.apply(this);
     }
@@ -154,25 +136,6 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * <p>forceClose.</p>
      */
     protected abstract void forceClose();
-
-    public static File getFile(String path) {
-        File res;
-        if (path.startsWith("[absolute]")) {
-            res = new File(decodeAbsolutePath(path));
-        } else {
-            res = FileUtils.getFile(path);
-        }
-        return res;
-    }
-
-    public static String encodeAbsolutePath(String absolutePath) {
-        return "[absolute]" + absolutePath.replace("\\", "/").replace(":/", "//");
-    }
-
-    public static String decodeAbsolutePath(String encodedPath) {
-        return encodedPath.replace("[absolute]", "").replace("//", ":/");
-    }
-
 
     /**
      * <p>Getter for the field <code>resourceManager</code>.</p>
@@ -184,12 +147,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     }
 
     /**
-     * <p>Getter for the field <code>fullResourceURI</code>.</p>
+     * <p>Getter for the field <code>resourceJson</code>.</p>
      *
      * @return return
      */
-    public String getFullResourceURI() {
-        return fullResourceURI;
+    public ResourceInfo getResourceInfo() {
+        return resourceInfo;
     }
 
     /**

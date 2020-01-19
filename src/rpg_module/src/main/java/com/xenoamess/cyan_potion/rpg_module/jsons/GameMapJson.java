@@ -26,11 +26,12 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
+import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -102,19 +103,19 @@ public class GameMapJson implements Serializable {
     /**
      * <p>getGameMapJson.</p>
      *
-     * @param objectMapper objectMapper
-     * @param gameMapFile  a {@link java.io.File} object.
+     * @param objectMapper      objectMapper
+     * @param gameMapFileObject gameMapFileObject
      * @return return
      */
     public static GameMapJson getGameMapJson(ObjectMapper objectMapper,
-                                             File gameMapFile) {
+                                             FileObject gameMapFileObject) {
         GameMapJson res = null;
-        try {
-            res = objectMapper.readValue(gameMapFile, GameMapJson.class);
+        try (InputStream inputStream = gameMapFileObject.getContent().getInputStream()) {
+            res = objectMapper.readValue(inputStream, GameMapJson.class);
         } catch (IOException e) {
-            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, File gameMapFile) fails:{},{}",
+            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, FileObject gameMapFileObject) fails:{},{}",
                     objectMapper
-                    , gameMapFile, e);
+                    , gameMapFileObject, e);
         }
         return res;
     }

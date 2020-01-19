@@ -24,9 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.gameMap;
 
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson;
@@ -56,7 +54,7 @@ public class GameTileset {
     private Map<Integer, Texture> idTextureMap = new ConcurrentHashMap<>();
 
     private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
-        return "/www/img/tilesets/" + gameMapInfoName + ".png";
+        return "resources/www/img/tilesets/" + gameMapInfoName + ".png";
     }
 
     private GameTileset(ResourceManager resourceManager,
@@ -156,8 +154,10 @@ public class GameTileset {
 
     static List<GameTileset> getGameTilesets(ResourceManager resourceManager) {
         List<GameTilesetJson> gameTilesetJsons =
-                GameTilesetJson.getGameTileSetJsons(DataCenter.getObjectMapper(), AbstractResource.getFile("/www/data" +
-                        "/Tilesets.json"));
+                GameTilesetJson.getGameTileSetJsons(
+                        DataCenter.getObjectMapper(),
+                        ResourceManager.getFileObject("resources/www/data/Tilesets.json")
+                );
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {
             if (au == null) {

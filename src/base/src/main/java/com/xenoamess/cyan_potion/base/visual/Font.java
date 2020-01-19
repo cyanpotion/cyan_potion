@@ -31,8 +31,10 @@ import com.xenoamess.commons.primitive.iterators.IntIterator;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
+import org.apache.commons.vfs2.FileObject;
 import org.joml.Vector4f;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
@@ -69,7 +71,7 @@ public class Font extends AbstractResource {
      * @see com.xenoamess.cyan_potion.base.GameManager
      */
     public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
-            "/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
+            "resources/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
 
     /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
@@ -126,11 +128,11 @@ public class Font extends AbstractResource {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param fullResourceURI full Resource URI
-     * @see ResourceManager#fetchResourceWithShortenURI(Class, String)
+     * @param resourJson      resour Json
+     * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public Font(ResourceManager resourceManager, String fullResourceURI) {
-        super(resourceManager, fullResourceURI);
+    public Font(ResourceManager resourceManager, ResourceInfo resourJson) {
+        super(resourceManager, resourJson);
     }
 
 
@@ -141,17 +143,15 @@ public class Font extends AbstractResource {
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, "ttfFile",
                 (Font font) -> {
-                    font.loadAsTtfFileFont(font.getFullResourceURI());
+                    font.loadAsTtfFileFont(font.getResourceInfo());
                     return null;
                 }
         );
         return null;
     };
 
-    private void loadAsTtfFileFont(String fullResourceURI) {
-        String[] resourceFileURIStrings = fullResourceURI.split(":");
-        String resourceFilePath = resourceFileURIStrings[1];
-        this.loadBitmap(resourceFilePath);
+    private void loadAsTtfFileFont(ResourceInfo resourceInfo) {
+        this.loadBitmap(resourceInfo.fileObject);
     }
 
     /**
@@ -163,11 +163,10 @@ public class Font extends AbstractResource {
     /**
      * <p>loadBitmap.</p>
      *
-     * @param resourceFilePath resourceFilePath
+     * @param fileObject fileObject
      */
-    public void loadBitmap(String resourceFilePath) {
-        ByteBuffer ttf =
-                FileUtils.loadBuffer(AbstractResource.getFile(resourceFilePath), true);
+    public void loadBitmap(FileObject fileObject) {
+        ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
 //            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);

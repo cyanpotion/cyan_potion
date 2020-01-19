@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.rpg_module.render;
 
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import org.lwjgl.system.MemoryUtil;
@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -59,25 +59,22 @@ public class TextureUtils {
     /**
      * <p>loadAsWalkingTexture.</p>
      *
-     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
-     * @param resourceFileURIString resourceFileURIString
+     * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsWalkingTexture(Texture texture, String resourceFileURIString) {
-        String[] resourceFileURIStrings = resourceFileURIString.split(":");
-        final int peopleIndex = Integer.parseInt(resourceFileURIStrings[3]);
-        final int textureIndex = Integer.parseInt(resourceFileURIStrings[4]);
+    public static void loadAsWalkingTexture(Texture texture) {
+        ResourceInfo resourceInfo = texture.getResourceInfo();
 
-        final String walkingTexturesFilepath = resourceFileURIStrings[1];
+        final int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
+        final int textureIndex = Integer.parseInt(resourceInfo.values[1]);
+
 
         BufferedImage bufferedImage = null;
 
-        final File file = AbstractResource.getFile(walkingTexturesFilepath);
-
         try {
-            bufferedImage = ImageIO.read(file);
+            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, String resourceFileURIString) fails:{},{}",
-                    texture, resourceFileURIString, e);
+            LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
+                    texture, resourceInfo, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
@@ -106,9 +103,13 @@ public class TextureUtils {
                 nowPosX = startPosX;
                 for (int j = 0; j < 3; j++) {
                     final Texture nowTexture =
-                            texture.getResourceManager().fetchResourceWithShortenURI(texture.getClass(),
-                                    walkingTexturesFilepath + ":characters:" + k + ":" + (i * 3 + j));
-
+                            texture.getResourceManager().fetchResource(
+                                    texture.getClass(),
+                                    "characters",
+                                    texture.getResourceInfo().fileString,
+                                    Integer.toString(k),
+                                    Integer.toString(i * 3 + j)
+                            );
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
                                 entireWidth, entireHeight, nowPosX, nowPosY,
@@ -129,13 +130,11 @@ public class TextureUtils {
     /**
      * <p>loadAsTilesetTextures8.</p>
      *
-     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
-     * @param resourceFileURIString resourceFileURIString
+     * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsTilesetTextures8(Texture texture, String resourceFileURIString) {
-        String[] resourceFileURIStrings = resourceFileURIString.split(":");
-        final String resourceType = resourceFileURIStrings[2];
-        final String tilesetTexturesFilepath = resourceFileURIStrings[1];
+    public static void loadAsTilesetTextures8(Texture texture) {
+        ResourceInfo resourceInfo = texture.getResourceInfo();
+        final String resourceType = resourceInfo.type;
         int columnNum;
         switch (resourceType) {
             case "A5":
@@ -146,18 +145,18 @@ public class TextureUtils {
                 columnNum = 2;
                 break;
             default:
-                throw new URITypeNotDefinedException(texture.getFullResourceURI());
+                throw new URITypeNotDefinedException(texture.getResourceInfo());
         }
 
 
         BufferedImage bufferedImage = null;
         try {
             bufferedImage =
-                    ImageIO.read(AbstractResource.getFile(tilesetTexturesFilepath));
+                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture, String resourceFileURIString) " +
+            LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture) " +
                             "fails:{},{}",
-                    texture, resourceFileURIString, e);
+                    texture, resourceInfo, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
@@ -181,8 +180,24 @@ public class TextureUtils {
                 nowPosX = startPosX;
                 for (int j = 0; j < 8; j++) {
                     final Texture nowTexture =
-                            texture.getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                                    tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j));
+                            texture.getResourceManager().fetchResource(
+                                    Texture.class,
+                                    resourceType,
+                                    resourceInfo.fileString,
+                                    Integer.toString(k),
+                                    Integer.toString(i * 8 + j)
+                            );
+                    if (texture.getResourceManager().getGameManager().getDataCenter().isDebug()) {
+                        if (nowTexture.getResourceInfo().equals(texture.getResourceInfo())) {
+                            if (nowTexture != texture) {
+                                boolean a = nowTexture.getResourceInfo().equals(texture.getResourceInfo());
+                                boolean b = nowTexture.getResourceInfo().hashCode() == texture.getResourceInfo().hashCode();
+                                LOGGER.error("get two different Texture object for one same resourceInfo");
+                                System.exit(1);
+                            }
+                        }
+                    }
+
                     if (!nowTexture.isInMemory()) {
                         nowTexture.bake(singleWidth, singleHeight,
                                 entireWidth, entireHeight, nowPosX, nowPosY,
@@ -202,13 +217,18 @@ public class TextureUtils {
     }
 
 
-    private static void loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String resourceFilePath,
+    private static void loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
                                                          int kk, int ti, int singleSingleWidth, int singleSingleHeight,
                                                          int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
                                                          int[] pixelsRaws3) {
         final Texture nowTexture =
-                resourceManager.fetchResourceWithShortenURI(Texture.class,
-                        resourceFilePath + ":" + "A2" + ":" + kk + ":" + ti);
+                resourceManager.fetchResource(
+                        Texture.class,
+                        "A2",
+                        fileString,
+                        Integer.toString(kk),
+                        Integer.toString(ti)
+                );
         if ((nowTexture.getGlTexture2DInt() == -1) == (nowTexture.isInMemory())) {
             throw new TextureStateDisorderException(nowTexture);
         }
@@ -260,7 +280,7 @@ public class TextureUtils {
     }
 
     private static void loadTilesetTexturesA2Single(ResourceManager resourceManager,
-                                                    String resourceFilePath, int kk, int singleWidth,
+                                                    String fileString, int kk, int singleWidth,
                                                     int singleHeight, int entireWidth,
                                                     int entireHeight, int startWidth,
                                                     int startHeight, int[] pixelsRaw) {
@@ -289,289 +309,289 @@ public class TextureUtils {
             int ti = 0;
             //0
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[18],
                     pixelsRaws[15], pixelsRaws[14]);
             ti++;
             //1
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[18],
                     pixelsRaws[15], pixelsRaws[14]);
             ti++;
             //2
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[4],
                     pixelsRaws[15], pixelsRaws[14]);
             ti++;
             //3
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[4],
                     pixelsRaws[15], pixelsRaws[14]);
             ti++;
             //4
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[18],
                     pixelsRaws[15], pixelsRaws[8]);
             ti++;
             //5
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[18],
                     pixelsRaws[15], pixelsRaws[8]);
             ti++;
             //6
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[4],
                     pixelsRaws[15], pixelsRaws[8]);
             ti++;
             //7
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[4],
                     pixelsRaws[15], pixelsRaws[8]);
             ti++;
             //8
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[18],
                     pixelsRaws[7], pixelsRaws[14]);
             ti++;
             //9
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[18],
                     pixelsRaws[7], pixelsRaws[14]);
             ti++;
             //10
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[4],
                     pixelsRaws[7], pixelsRaws[14]);
             ti++;
             //11
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[4],
                     pixelsRaws[7], pixelsRaws[14]);
             ti++;
             //12
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[18],
                     pixelsRaws[7], pixelsRaws[8]);
             ti++;
             //13
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[18],
                     pixelsRaws[7], pixelsRaws[8]);
             ti++;
             //14
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[4],
                     pixelsRaws[7], pixelsRaws[8]);
             ti++;
             //15
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[4],
                     pixelsRaws[7], pixelsRaws[8]);
             ti++;
             //16
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[18],
                     pixelsRaws[13], pixelsRaws[14]);
             ti++;
             //17
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[4],
                     pixelsRaws[13], pixelsRaws[14]);
             ti++;
             //18
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[18],
                     pixelsRaws[13], pixelsRaws[8]);
             ti++;
             //19
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[4],
                     pixelsRaws[13], pixelsRaws[8]);
             ti++;
             //20
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[10],
                     pixelsRaws[15], pixelsRaws[14]);
             ti++;
             //21
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[10],
                     pixelsRaws[15], pixelsRaws[8]);
             ti++;
             //22
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[10],
                     pixelsRaws[7], pixelsRaws[14]);
             ti++;
             //23
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[10],
                     pixelsRaws[7], pixelsRaws[8]);
             ti++;
             //24
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[20],
                     pixelsRaws[15], pixelsRaws[16]);
             ti++;
             //25
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[20],
                     pixelsRaws[7], pixelsRaws[16]);
             ti++;
             //26
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[20],
                     pixelsRaws[15], pixelsRaws[16]);
             ti++;
             //27
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[20],
                     pixelsRaws[7], pixelsRaws[16]);
             ti++;
             //28
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[18],
                     pixelsRaws[23], pixelsRaws[22]);
             ti++;
             //29
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[18],
                     pixelsRaws[23], pixelsRaws[22]);
             ti++;
             //30
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[4],
                     pixelsRaws[23], pixelsRaws[22]);
             ti++;
             //31
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[4],
                     pixelsRaws[23], pixelsRaws[22]);
             ti++;
             //32
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[20],
                     pixelsRaws[13], pixelsRaws[16]);
             ti++;
             //33
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[10],
                     pixelsRaws[23], pixelsRaws[22]);
             ti++;
             //34
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[9], pixelsRaws[10],
                     pixelsRaws[13], pixelsRaws[14]);
             ti++;
             //35
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[9], pixelsRaws[10],
                     pixelsRaws[13], pixelsRaws[8]);
             ti++;
             //36
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[12],
                     pixelsRaws[15], pixelsRaws[16]);
             ti++;
             //37
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[12],
                     pixelsRaws[7], pixelsRaws[16]);
             ti++;
             //38
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[19], pixelsRaws[20],
                     pixelsRaws[23], pixelsRaws[24]);
             ti++;
             //39
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[3], pixelsRaws[20],
                     pixelsRaws[23], pixelsRaws[24]);
             ti++;
             //40
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[18],
                     pixelsRaws[21], pixelsRaws[22]);
             ti++;
             //41
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[4],
                     pixelsRaws[21], pixelsRaws[22]);
             ti++;
             //42
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[9], pixelsRaws[12],
                     pixelsRaws[13], pixelsRaws[16]);
             ti++;
             //43
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[9], pixelsRaws[10],
                     pixelsRaws[21], pixelsRaws[22]);
             ti++;
             //44
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[17], pixelsRaws[20],
                     pixelsRaws[21], pixelsRaws[24]);
             ti++;
             //45
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[11], pixelsRaws[12],
                     pixelsRaws[23], pixelsRaws[24]);
             ti++;
             //46
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[9], pixelsRaws[12],
                     pixelsRaws[21], pixelsRaws[24]);
             ti++;
             //47
             loadTilesetTextureA2SingleSingle(resourceManager,
-                    resourceFilePath, kk, ti, singleSingleWidth,
+                    fileString, kk, ti, singleSingleWidth,
                     singleSingleHeight, pixelsRaws[1], pixelsRaws[2],
                     pixelsRaws[5], pixelsRaws[6]);
             ti++;
@@ -581,23 +601,20 @@ public class TextureUtils {
     /**
      * <p>loadAsTilesetTexturesA2.</p>
      *
-     * @param texture               a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
-     * @param resourceFileURIString resourceFileURIString
+     * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) {
-        String[] resourceFileURIStrings = resourceFileURIString.split(":");
-        final String tilesetTexturesFilepath = resourceFileURIStrings[1];
-        final String resourceType = resourceFileURIStrings[2];
+    public static void loadAsTilesetTexturesA2(Texture texture) {
+        ResourceInfo resourceInfo = texture.getResourceInfo();
 
         BufferedImage bufferedImage = null;
 
         try {
             bufferedImage =
-                    ImageIO.read(AbstractResource.getFile(tilesetTexturesFilepath));
+                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
         } catch (IOException e) {
-            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, String resourceFileURIString) " +
+            LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, ResourceInfo resourceInfo) " +
                             "fails:{},{}",
-                    texture, resourceFileURIString, e);
+                    texture, resourceInfo, e);
         }
         assert (bufferedImage != null);
         final int entireWidth = bufferedImage.getWidth();
@@ -619,10 +636,15 @@ public class TextureUtils {
 
             for (int ti = 0; ti < 48; ti++) {
                 final Texture nowTexture =
-                        texture.getResourceManager().fetchResourceWithShortenURI(texture.getClass(),
-                                tilesetTexturesFilepath + ":" + "A2" + ":" + k + ":" + ti);
+                        texture.getResourceManager().fetchResource(
+                                texture.getClass(),
+                                "A2",
+                                texture.getResourceInfo().fileString,
+                                Integer.toString(k),
+                                Integer.toString(ti)
+                        );
                 if (!nowTexture.isInMemory()) {
-                    loadTilesetTexturesA2Single(texture.getResourceManager(), tilesetTexturesFilepath,
+                    loadTilesetTexturesA2Single(texture.getResourceManager(), resourceInfo.fileString,
                             k, singleWidth, singleHeight, entireWidth, entireHeight, startPosX, startPosY, pixelsRaw);
                     break;
                 }
@@ -659,8 +681,13 @@ public class TextureUtils {
 
                 for (int j = 0; j < 3; j++) {
                     Texture nowTexture =
-                            resourceManager.fetchResourceWithShortenURI(Texture.class, walkingTexturesFilepath +
-                                    ":characters:" + k + ":" + (i * 3 + j));
+                            resourceManager.fetchResource(
+                                    Texture.class,
+                                    "characters",
+                                    walkingTexturesFilepath,
+                                    Integer.toString(k),
+                                    Integer.toString(i * 3 + j)
+                            );
                     nowTextures.add(nowTexture);
                 }
             }
@@ -683,8 +710,15 @@ public class TextureUtils {
 
         for (int k = 0; k < 32; k++) {
             for (int ti = 0; ti < 48; ti++) {
-                res.add(resourceManager.fetchResourceWithShortenURI(Texture.class, tilesetTexturesFilepath + ":" +
-                        "A2" + ":" + k + ":" + ti));
+                res.add(
+                        resourceManager.fetchResource(
+                                Texture.class,
+                                "A2",
+                                tilesetTexturesFilepath,
+                                Integer.toString(k),
+                                Integer.toString(ti)
+                        )
+                );
             }
         }
         return res;
@@ -740,8 +774,9 @@ public class TextureUtils {
         final List<Texture> res = new ArrayList<>();
 
         BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(AbstractResource.getFile(tilesetTexturesFilepath));
+
+        try (InputStream inputStream = ResourceManager.getFileObject(tilesetTexturesFilepath).getContent().getInputStream()) {
+            bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +
                             "String tilesetTexturesFilepath, int columnNum) fails:{},{},{},{}",
@@ -756,8 +791,15 @@ public class TextureUtils {
         for (int k = 0; k < columnNum; k++) {
             for (int i = 0; i < entireHeight / singleHeight; i++) {
                 for (int j = 0; j < 8; j++) {
-                    res.add(resourceManager.fetchResourceWithShortenURI(Texture.class,
-                            tilesetTexturesFilepath + ":" + resourceType + ":" + k + ":" + (i * 8 + j)));
+                    res.add(
+                            resourceManager.fetchResource(
+                                    Texture.class,
+                                    resourceType,
+                                    tilesetTexturesFilepath,
+                                    Integer.toString(k),
+                                    Integer.toString(i * 8 + j)
+                            )
+                    );
                 }
             }
         }

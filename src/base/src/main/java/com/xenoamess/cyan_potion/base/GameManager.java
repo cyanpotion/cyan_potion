@@ -42,7 +42,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -60,8 +60,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.*;
@@ -266,13 +266,13 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
 
         this.setStartingContent();
-        final String defaultFontResourceURI =
+        final String defaultFontResourceJsonString =
                 getString(this.getDataCenter().getCommonSettings(),
                         STRING_DEFAULT_FONT_RESOURCE_URI,
                         Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
 
-        if (!StringUtils.isBlank(defaultFontResourceURI)) {
-            Font.setDefaultFont(this.resourceManager.fetchResourceWithShortenURI(Font.class, defaultFontResourceURI));
+        if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
+            Font.setDefaultFont(this.resourceManager.fetchResource(Font.class, ResourceInfo.of(defaultFontResourceJsonString)));
             this.getScheduledExecutorService().execute(() -> {
                 Font.getDefaultFont().load();
                 Font.setCurrentFont(Font.getDefaultFont());
@@ -287,17 +287,15 @@ public class GameManager implements AutoCloseable {
      * <p>loadSettingTree.</p>
      */
     protected void loadSettingTree() {
-        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "/settings/DefaultSettings.x8l");
+        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
 
-        File globalSettingsFile = AbstractResource.getFile(settingFilePath);
-
-        LOGGER.debug("SettingsFilePath : {}", globalSettingsFile.getAbsolutePath());
+        LOGGER.debug("SettingsFilePath : {}", settingFilePath);
 
         X8lTree globalSettingsTree = null;
         try {
-            globalSettingsTree = X8lTree.load(globalSettingsFile);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("X8lTree.loadFromFile(globalSettingsFile) fails " +
+            globalSettingsTree = X8lTree.load(ResourceManager.loadString(settingFilePath));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("X8lTree.loadString(settingFilePath) fails " +
                     ": ", e);
         }
         this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
@@ -336,9 +334,9 @@ public class GameManager implements AutoCloseable {
         this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
         this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
-                STRING_TEXT_FILE_PATH, "/text/text.x8l"));
+                STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
         this.getDataCenter().setIconFilePath(getString(this.getDataCenter().getCommonSettings(),
-                STRING_ICON_FILE_PATH, "/www/icon/icon.png"));
+                STRING_ICON_FILE_PATH, "resources/www/icon/icon.png"));
     }
 
 
@@ -387,8 +385,8 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try {
-            multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter().getTextFilePath()));
+        try (InputStream inputStream = ResourceManager.getFileObject(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
+            multiLanguageUtil.loadFromMerge(inputStream);
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
                     ".getTextFilePath())) " +

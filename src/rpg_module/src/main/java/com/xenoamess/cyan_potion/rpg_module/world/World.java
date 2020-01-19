@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.rpg_module.world;
 
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
@@ -32,7 +31,8 @@ import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
@@ -44,6 +44,7 @@ import com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap;
 import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile;
 import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
+import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
 import org.joml.Matrix4f;
@@ -132,7 +133,7 @@ public class World extends AbstractEntityScene {
         {
             this.setRpgModuleDataCenter(new RpgModuleDataCenter(this));
 
-            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), AbstractResource.getFile("/www/data/System.json")));
+            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), ResourceManager.getFileObject("resources/www/data/System.json")));
             LOGGER.debug("GameSystemJson.INIT(this.gameManager)");
             GameTileset.init(this);
             LOGGER.debug("GameTileset.INIT(this.gameManager)");
@@ -171,7 +172,12 @@ public class World extends AbstractEntityScene {
                     new Vector3f(RpgModuleDataCenter.TILE_SIZE,
                             RpgModuleDataCenter.TILE_SIZE,
                             Unit.DEFAULT_UNIT_LAYER),
-                    "/www/img/characters/r2c_male_test.png:characters:0",
+                    new ResourceInfo(
+                            WalkingAnimation4Dirs.class,
+                            "characters",
+                            "resources/www/img/characters/r2c_male_test.png",
+                            "0"
+                    ),
                     this.getGameWindow().getGameManager().getResourceManager()));
             this.getPlayer().register();
             getDynamicEntitySet().add(getPlayer());

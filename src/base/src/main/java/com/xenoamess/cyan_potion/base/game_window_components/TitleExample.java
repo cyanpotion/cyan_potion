@@ -35,6 +35,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -54,9 +55,10 @@ import static org.lwjgl.opengl.GL11.*;
 public class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveSlotTexture =
             this.getGameWindow().getGameManager().getResourceManager().
-                    fetchResourceWithShortenURI(
+                    fetchResource(
                             Texture.class,
-                            "/www/img/pictures/saveSlot.png:picture"
+                            "picture",
+                            "resources/www/img/pictures/saveSlot.png"
                     );
 
     private final Picture saveSlotPicture = new Picture(saveSlotTexture);
@@ -67,8 +69,14 @@ public class TitleExample extends AbstractGameWindowComponent {
     }
 
     private final Texture saveStarTexture =
-            this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                    "/www/img/pictures/saveStar.png:picture");
+            this.getGameWindow().getGameManager().getResourceManager().fetchResource(
+                    Texture.class,
+                    new ResourceInfo(
+                            Texture.class,
+                            "picture",
+                            "resources/www/img/pictures/saveStar.png"
+                    )
+            );
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
             new ArrayList<>();
 
@@ -244,8 +252,11 @@ public class TitleExample extends AbstractGameWindowComponent {
                 });
 
         Texture texture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResourceWithShortenURI(Texture.class,
-                        "/www/img/pictures/saveSlot.png:picture");
+                this.getGameWindow().getGameManager().getResourceManager().fetchResource(
+                        Texture.class,
+                        "picture",
+                        "resources/www/img/pictures/saveSlot.png"
+                );
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);
         InputBox inputBox = new InputBox(gameWindow);

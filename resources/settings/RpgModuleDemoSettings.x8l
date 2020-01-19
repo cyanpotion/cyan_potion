@@ -1,11 +1,11 @@
 <commonSettings
     titleTextID=0
-    textFilePath=/text/text.x8l
+    textFilePath=resources/text/text.x8l
     language=english
     gameWindowClassName=com.xenoamess.cyan_potion.base.GameWindow
     titleClassName=com.xenoamess.cyan_potion.rpg_module.world.World
     runWithSteam=1
-    defaultFontResourceURI=/www/fonts/SourceHanSans-Normal.ttc:ttfFile
+    defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
 >>
 <views
     logicWindowWidth=1280

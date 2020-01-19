@@ -93,7 +93,6 @@ class ConsoleTalkThread implements Runnable {
  * If you don't need this feature, you can just change config to not to start
  * the thread.
  * <p>
- * <p>
  * A thread to deal with console input.
  * Console input is designed to be used when debug.
  * When the GameManager init,it will start a ConsoleThread.

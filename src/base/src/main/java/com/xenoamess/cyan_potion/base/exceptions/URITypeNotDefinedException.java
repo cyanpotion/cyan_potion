@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.exceptions;
 
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 
 /**
  * This exception is thrown when we fail to parse a uri somewhere.
@@ -43,5 +44,9 @@ public class URITypeNotDefinedException extends RuntimeException {
      */
     public URITypeNotDefinedException(String message) {
         super(message);
+    }
+
+    public URITypeNotDefinedException(ResourceInfo resourceInfo) {
+        this(resourceInfo.toString());
     }
 }

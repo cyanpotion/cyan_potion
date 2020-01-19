@@ -25,12 +25,20 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.cyan_potion.base.GameManager;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.impl.StandardFileSystemManager;
 import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -52,6 +60,45 @@ public class ResourceManager implements AutoCloseable {
             LoggerFactory.getLogger(ResourceManager.class);
 
     private long maxTextureSize = 0;
+
+    private static StandardFileSystemManager fileSystemManager;
+
+    static {
+        fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
+        fileSystemManager.setLogger(null);
+        try {
+            fileSystemManager.init();
+            fileSystemManager.setBaseFile(new File(System.getProperty("user.dir")));
+        } catch (FileSystemException e) {
+            LOGGER.error("cannot init ResourceManager.fileSystemManager", e);
+        }
+    }
+
+    public static FileObject getFileObject(String fileString) {
+        FileObject result = null;
+        try {
+            result = getFileSystemManager().resolveFile(fileString);
+        } catch (FileSystemException e) {
+            LOGGER.error("getFileObject(String fileString) fails: {}", fileString, e);
+        }
+        return result;
+    }
+
+    public static String loadString(String fileString) {
+        String result = "";
+        result = loadString(getFileObject(fileString));
+        return result;
+    }
+
+    public static String loadString(FileObject fileObject) {
+        String result = "";
+        try (InputStream inputStream = fileObject.getContent().getInputStream()) {
+            result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            LOGGER.error("loadString(FileObject fileObject) fails: {}", fileObject, e);
+        }
+        return result;
+    }
 
     public long getMaxTextureSize() {
         if (maxTextureSize == 0) {
@@ -120,135 +167,138 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
-     * <p>putResourceWithFullURI.</p>
-     *
-     * @param fullResourceURI fullResourceURI
-     * @param t               a T object.
-     */
-    public <T> void putResourceWithFullURI(String fullResourceURI, T t) {
-        if (StringUtils.isBlank(fullResourceURI)) {
-            throw (new Error("putResourceWithURI : fullResourceURI is null or" +
-                    " Empty"));
-        }
-
-        LOGGER.debug("putResource {}", fullResourceURI);
-
-        this.putResourceWithShortenURI(fullResourceURI.substring(fullResourceURI.indexOf(':') + 1), t);
-    }
-
-    /**
-     * <p>getResourceFromFullURI.</p>
-     *
-     * @param fullResourceURI fullResourceURI
-     * @return return
-     */
-    public Object getResourceFromFullURI(String fullResourceURI) {
-        if (StringUtils.isBlank(fullResourceURI)) {
-            return null;
-        }
-
-        if (this.gameManager.getDataCenter().isDebug()) {
-            LOGGER.debug("putResource {}", fullResourceURI);
-        }
-
-        int indexOfColon = fullResourceURI.indexOf(':');
-        String resourceClassName = fullResourceURI.substring(0, indexOfColon);
-        Class resourceClass = null;
-
-        try {
-            resourceClass =
-                    this.getClass().getClassLoader().loadClass(resourceClassName);
-        } catch (ClassNotFoundException e) {
-            LOGGER.info("this.getClass().getClassLoader().loadClass(resourceClassName) return null:{},{}",
-                    fullResourceURI,
-                    resourceClassName, e);
-        }
-        if (resourceClass == null) {
-            return null;
-        }
-
-        return this.getResourceFromShortenURI(resourceClass,
-                fullResourceURI.substring(indexOfColon + 1));
-    }
-
-    /**
      * <p>putResourceWithShortenURI.</p>
      *
-     * @param shortenResourceURI shortenResourceURI
-     * @param t                  a T object.
+     * @param resourceInfo resourceInfo
+     * @param t            a T object.
      */
-    public <T> void putResourceWithShortenURI(String shortenResourceURI, T t) {
-        ConcurrentHashMap<String, T> resourceURIMap =
+    public <T> void putResource(ResourceInfo resourceInfo, T t) {
+        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(t.getClass());
         if (resourceURIMap == null) {
             resourceURIMap = new ConcurrentHashMap<>(100);
             getDefaultResourcesURIMap().put(t.getClass(), resourceURIMap);
         }
-        resourceURIMap.put(shortenResourceURI, t);
+        resourceURIMap.put(resourceInfo, t);
+    }
+
+    /**
+     * <p>putResourceWithShortenURI.</p>
+     *
+     * @param resourceInfoJson resourceInfo
+     * @param t                a T object.
+     */
+    public <T> void putResource(String resourceInfoJson, T t) {
+        this.putResource(ResourceInfo.of(resourceInfoJson), t);
     }
 
     /**
      * <p>getResourceFromShortenURI.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceInfo resourceInfo
      * @return a T object.
      */
-    public <T> T getResourceFromShortenURI(Class<T> tClass,
-                                           String shortenResourceURI) {
+    public <T> T getResource(Class<T> tClass,
+                             ResourceInfo resourceInfo) {
 
-        ConcurrentHashMap<String, T> resourceURIMap =
+        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(tClass);
         if (resourceURIMap == null) {
             return null;
         } else {
-            return resourceURIMap.get(shortenResourceURI);
+            return resourceURIMap.get(resourceInfo);
+        }
+    }
+
+    /**
+     * <p>getResourceFromShortenURI.</p>
+     *
+     * @param tClass           a {@link java.lang.Class} object.
+     * @param resourceInfoJson resourceInfo
+     * @return a T object.
+     */
+    public <T> T getResource(Class<T> tClass,
+                             String resourceInfoJson) {
+        return this.getResource(tClass, ResourceInfo.of(resourceInfoJson));
+    }
+
+    /**
+     * <p>ifExistResourceFromShortenURI.</p>
+     *
+     * @param resourceInfo resourceInfo
+     * @return a boolean.
+     */
+    public boolean ifExistResource(ResourceInfo resourceInfo) {
+
+        ConcurrentHashMap resourceURIMap =
+                getDefaultResourcesURIMap().get(resourceInfo.resourceClass);
+        if (resourceURIMap == null) {
+            return false;
+        } else {
+            return resourceURIMap.containsKey(resourceInfo);
         }
     }
 
     /**
      * <p>ifExistResourceFromShortenURI.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param resourceInfoJson resourceInfoJson
      * @return a boolean.
      */
-    public <T> boolean ifExistResourceFromShortenURI(Class<T> tClass,
-                                                     String shortenResourceURI) {
-
-        ConcurrentHashMap<String, T> resourceURIMap =
-                getDefaultResourcesURIMap().get(tClass);
-        if (resourceURIMap == null) {
-            return false;
-        } else {
-            return resourceURIMap.containsKey(shortenResourceURI);
-        }
+    public boolean ifExistResource(String resourceInfoJson) {
+        return this.ifExistResource(ResourceInfo.of(resourceInfoJson));
     }
 
+
     /**
-     * <p>fetchResourceWithShortenURI.</p>
+     * <p>fetchResource.</p>
      *
-     * @param tClass             a {@link java.lang.Class} object.
-     * @param shortenResourceURI shortenResourceURI
+     * @param tClass       a {@link java.lang.Class} object.
+     * @param resourceInfo resourceInfo
      * @return a T object.
      */
-    public <T extends AbstractResource> T fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI) {
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo resourceInfo) {
         T res = null;
-        if (this.ifExistResourceFromShortenURI(tClass, shortenResourceURI)) {
-            res = this.getResourceFromShortenURI(tClass, shortenResourceURI);
+        if (this.ifExistResource(resourceInfo)) {
+            res = this.getResource(tClass, resourceInfo);
         } else {
             try {
                 res = tClass.getDeclaredConstructor(ResourceManager.class,
-                        String.class).newInstance(this,
-                        tClass.getCanonicalName() + ":" + shortenResourceURI);
-                this.putResourceWithShortenURI(shortenResourceURI, res);
+                        resourceInfo.getClass()).newInstance(this,
+                        resourceInfo);
+                this.putResource(resourceInfo, res);
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                LOGGER.debug("ResourceManager.fetchResourceWithShortenURI(Class<T> tClass, String shortenResourceURI)" +
-                        " fails:{},{}", tClass, shortenResourceURI, e);
+                LOGGER.debug("ResourceManager.fetchResource(Class<T> tClass, ResourceInfo resourceInfo)" +
+                        " fails:{},{}", tClass, resourceInfo, e);
             }
         }
         return res;
     }
+
+    /**
+     * <p>fetchResource.</p>
+     *
+     * @param tClass           a {@link java.lang.Class} object.
+     * @param resourceInfoJson resource Info Json String
+     * @return a T object.
+     */
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
+        return this.fetchResource(tClass, ResourceInfo.of(resourceInfoJson));
+    }
+
+    /**
+     * <p>fetchResource.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @return a T object.
+     */
+    public <T extends AbstractResource> T
+    fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+        ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObjectString, values);
+        return this.fetchResource(tClass, resourceInfo);
+    }
+
 
     /**
      * {@inheritDoc}
@@ -420,5 +470,9 @@ public class ResourceManager implements AutoCloseable {
      */
     public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourcesURIMap() {
         return defaultResourcesURIMap;
+    }
+
+    public static FileSystemManager getFileSystemManager() {
+        return fileSystemManager;
     }
 }
