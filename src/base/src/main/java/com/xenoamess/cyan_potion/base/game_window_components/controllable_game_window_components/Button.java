@@ -44,8 +44,17 @@ public class Button extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for Button.</p>
      *
-     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture buttonTexture
+     * @param gameWindow gameWindow
+     */
+    public Button(GameWindow gameWindow) {
+        this(gameWindow, null);
+    }
+
+    /**
+     * <p>Constructor for Button.</p>
+     *
+     * @param gameWindow     gameWindow
+     * @param buttonBindable picture of the button
      */
     public Button(GameWindow gameWindow, Bindable buttonBindable) {
         this(gameWindow, buttonBindable, null);
@@ -54,9 +63,9 @@ public class Button extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for Button.</p>
      *
-     * @param gameWindow     a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonBindable button Bindable.
-     * @param buttonText     a {@link java.lang.String} object.
+     * @param gameWindow     gameWindow
+     * @param buttonBindable picture of the button
+     * @param buttonText     text of the button
      */
     public Button(GameWindow gameWindow, Bindable buttonBindable,
                   String buttonText) {
