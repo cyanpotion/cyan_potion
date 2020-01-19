@@ -29,7 +29,8 @@ import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 
 /**
- * <p>Bindable interface.</p>
+ * Bindable is something who can bind.
+ * It is usually a kind of resource, a picture or something else that once bind, it can draw to something.
  *
  * @author XenoAmess
  * @version 0.143.0

@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
@@ -47,21 +47,21 @@ public class Button extends AbstractControllableGameWindowComponent {
      * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
      * @param buttonTexture buttonTexture
      */
-    public Button(GameWindow gameWindow, Texture buttonTexture) {
-        this(gameWindow, buttonTexture, null);
+    public Button(GameWindow gameWindow, Bindable buttonBindable) {
+        this(gameWindow, buttonBindable, null);
     }
 
     /**
      * <p>Constructor for Button.</p>
      *
-     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture buttonTexture
-     * @param buttonText    a {@link java.lang.String} object.
+     * @param gameWindow     a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param buttonBindable button Bindable.
+     * @param buttonText     a {@link java.lang.String} object.
      */
-    public Button(GameWindow gameWindow, Texture buttonTexture,
+    public Button(GameWindow gameWindow, Bindable buttonBindable,
                   String buttonText) {
         super(gameWindow);
-        this.buttonPicture.setBindable(buttonTexture);
+        this.buttonPicture.setBindable(buttonBindable);
         this.setButtonText(buttonText);
     }
 
