@@ -72,10 +72,10 @@ class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
 
 @JsonSerialize(using = ResourceJsonSerializer.class)
 @JsonDeserialize(using = ResourceJsonDeserializer.class)
-public class ResourceInfo {
+public class ResourceInfo<T extends AbstractResource> {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
-    public final Class resourceClass;
+    public final Class<T> resourceClass;
     public final String type;
     public final String fileString;
     public FileObject fileObject;
@@ -83,7 +83,7 @@ public class ResourceInfo {
 
     private String toString;
 
-    public ResourceInfo(Class resourceClass,
+    public ResourceInfo(Class<T> resourceClass,
                         String type,
                         String fileObjectString,
                         String... values) {
@@ -102,6 +102,10 @@ public class ResourceInfo {
         } catch (JsonProcessingException e) {
             LOGGER.error("toString() fails, {},{}", this.resourceClass, this.values, e);
         }
+    }
+
+    public T fetchResource(ResourceManager resourceManager) {
+        return resourceManager.fetchResource(this);
     }
 
     public static ResourceInfo of(String json) {

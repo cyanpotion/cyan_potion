@@ -201,7 +201,7 @@ public class ResourceManager implements AutoCloseable {
      */
     public <T> T getResource(Class<T> tClass,
                              ResourceInfo resourceInfo) {
-
+        assert (tClass == resourceInfo.resourceClass);
         ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
                 getDefaultResourcesURIMap().get(tClass);
         if (resourceURIMap == null) {
@@ -209,6 +209,16 @@ public class ResourceManager implements AutoCloseable {
         } else {
             return resourceURIMap.get(resourceInfo);
         }
+    }
+
+    /**
+     * <p>getResourceFromShortenURI.</p>
+     *
+     * @param resourceInfo resourceInfo
+     * @return a T object.
+     */
+    public <T> T getResource(ResourceInfo resourceInfo) {
+        return (T) this.getResource(resourceInfo.resourceClass, resourceInfo);
     }
 
     /**
@@ -259,6 +269,7 @@ public class ResourceManager implements AutoCloseable {
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo resourceInfo) {
+        assert (tClass == resourceInfo.resourceClass);
         T res = null;
         if (this.ifExistResource(resourceInfo)) {
             res = this.getResource(tClass, resourceInfo);
@@ -274,6 +285,16 @@ public class ResourceManager implements AutoCloseable {
             }
         }
         return res;
+    }
+
+    /**
+     * <p>fetchResource.</p>
+     *
+     * @param resourceInfo resourceInfo
+     * @return a T object.
+     */
+    public <T extends AbstractResource> T fetchResource(ResourceInfo<T> resourceInfo) {
+        return this.fetchResource(resourceInfo.resourceClass, resourceInfo);
     }
 
     /**
