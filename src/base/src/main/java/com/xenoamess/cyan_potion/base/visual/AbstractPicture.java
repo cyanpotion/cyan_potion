@@ -20,7 +20,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
 
     @Override
     public void bind(int sampler) {
-        this.getCurrentBindable().bind();
+        this.getCurrentBindable().bind(sampler);
     }
 
     /**

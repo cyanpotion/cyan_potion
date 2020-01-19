@@ -37,7 +37,7 @@ import org.joml.Vector4f;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Button extends AbstractControllableGameWindowComponent {
+public class Button extends AbstractControllableGameWindowComponent implements Bindable {
     private final Picture buttonPicture = new Picture();
     private String buttonText;
 
@@ -72,6 +72,11 @@ public class Button extends AbstractControllableGameWindowComponent {
         super(gameWindow);
         this.buttonPicture.setBindable(buttonBindable);
         this.setButtonText(buttonText);
+    }
+
+    @Override
+    public void bind(int sampler) {
+        this.buttonPicture.bind(sampler);
     }
 
     /**
@@ -116,5 +121,4 @@ public class Button extends AbstractControllableGameWindowComponent {
     public void setButtonText(String buttonText) {
         this.buttonText = buttonText;
     }
-
 }
