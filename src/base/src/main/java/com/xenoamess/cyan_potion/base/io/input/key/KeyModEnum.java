@@ -104,7 +104,7 @@ public enum KeyModEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         KeyModEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (KeyModEnum au : rawValues) {
@@ -115,7 +115,7 @@ public enum KeyModEnum {
         return maxValue;
     }
 
-    private static final KeyModEnum[] generateValues() {
+    private static KeyModEnum[] generateValues() {
         KeyModEnum[] res = new KeyModEnum[maxValue() + 1];
         Arrays.fill(res, GLFW_MOD_NORMAL);
 

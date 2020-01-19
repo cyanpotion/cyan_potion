@@ -76,7 +76,7 @@ public enum JamepadGamepadKeyEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         JamepadGamepadKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (JamepadGamepadKeyEnum au : rawValues) {
@@ -87,7 +87,7 @@ public enum JamepadGamepadKeyEnum {
         return maxValue;
     }
 
-    private static final JamepadGamepadKeyEnum[] generateValues() {
+    private static JamepadGamepadKeyEnum[] generateValues() {
         JamepadGamepadKeyEnum[] res = new JamepadGamepadKeyEnum[maxValue() + 1];
         Arrays.fill(res, JAMEPAD_KEY_UNKNOWN);
 

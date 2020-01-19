@@ -26,9 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
@@ -90,14 +88,11 @@ public class TitleExample extends AbstractGameWindowComponent {
         getControllableGameWindowComponents().add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
             {
                 this.registerOnMouseEnterAreaCallback(
-                        new EventProcessor() {
-                            @Override
-                            public Event apply(Event event) {
-                                if (getState() >= 0 && getState() <= 4) {
-                                    setState(index);
-                                }
-                                return null;
+                        event -> {
+                            if (getState() >= 0 && getState() <= 4) {
+                                setState(index);
                             }
+                            return null;
                         }
                 );
 
@@ -133,14 +128,11 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new EventProcessor() {
-                                    @Override
-                                    public Event apply(Event event) {
-                                        if (getState() >= 0 && getState() <= 4) {
-                                            setState(index);
-                                        }
-                                        return null;
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(index);
                                     }
+                                    return null;
                                 }
                         );
 
@@ -174,14 +166,11 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new EventProcessor() {
-                                    @Override
-                                    public Event apply(Event event) {
-                                        if (getState() >= 0 && getState() <= 4) {
-                                            setState(index);
-                                        }
-                                        return null;
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(index);
                                     }
+                                    return null;
                                 }
                         );
 
@@ -215,14 +204,11 @@ public class TitleExample extends AbstractGameWindowComponent {
                 add(new AbstractControllableGameWindowComponent(this.getGameWindow()) {
                     {
                         this.registerOnMouseEnterAreaCallback(
-                                new EventProcessor() {
-                                    @Override
-                                    public Event apply(Event event) {
-                                        if (getState() >= 0 && getState() <= 4) {
-                                            setState(index);
-                                        }
-                                        return null;
+                                event -> {
+                                    if (getState() >= 0 && getState() <= 4) {
+                                        setState(index);
                                     }
+                                    return null;
                                 }
                         );
 

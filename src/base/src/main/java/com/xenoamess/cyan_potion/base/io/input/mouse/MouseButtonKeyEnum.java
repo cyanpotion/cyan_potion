@@ -77,7 +77,7 @@ public enum MouseButtonKeyEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         MouseButtonKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (MouseButtonKeyEnum au : rawValues) {
@@ -88,7 +88,7 @@ public enum MouseButtonKeyEnum {
         return maxValue;
     }
 
-    private static final MouseButtonKeyEnum[] generateValues() {
+    private static MouseButtonKeyEnum[] generateValues() {
         MouseButtonKeyEnum[] res = new MouseButtonKeyEnum[maxValue() + 1];
         Arrays.fill(res, GLFW_MOUSE_BUTTON_1);
 
