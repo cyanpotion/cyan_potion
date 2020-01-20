@@ -682,7 +682,7 @@ public class GameManager implements AutoCloseable {
      * @param eventProcessor eventProcessor
      * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
-    public void delayMainThreadEventProcess(EventProcessor eventProcessor, Event event) {
+    public <T extends Event> void delayMainThreadEventProcess(EventProcessor<T> eventProcessor, T event) {
         mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
     }
 
