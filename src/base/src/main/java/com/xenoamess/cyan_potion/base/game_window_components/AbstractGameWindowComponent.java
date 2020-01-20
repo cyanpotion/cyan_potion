@@ -31,6 +31,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -283,6 +284,20 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      */
     public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
+    }
+
+    //shortcuts
+
+    public GameManager getGameManager() {
+        return this.getGameWindow().getGameManager();
+    }
+
+    public ResourceManager getResourceManager() {
+        return this.getGameWindow().getGameManager().getResourceManager();
+    }
+
+    public DataCenter getDataCenter() {
+        return this.getGameWindow().getGameManager().getDataCenter();
     }
 
     /**

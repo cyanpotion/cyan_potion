@@ -978,6 +978,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
     }
 
+    //shortcuts
+
+    public ResourceManager getResourceManager() {
+        return this.getGameManager().getResourceManager();
+    }
+
+    public DataCenter getDataCenter() {
+        return this.getGameManager().getDataCenter();
+    }
+
     //--- getters and setters ---
 
     /**
