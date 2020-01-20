@@ -25,10 +25,10 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.ClipboardUtil;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -79,31 +79,28 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     @Override
     public void initProcessors() {
         super.initProcessors();
-
-        this.registerOnMouseButtonLeftDownCallback(
-                new MainThreadEventProcessor(
-                        this,
-                        (Event event) -> {
-                            int clickIndex =
-                                    InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
-                                            InputBox.this.getGameWindow().getMousePosY(), false, null);
-                            setNowSelectStartPos(clickIndex);
-                            setNowSelectEndPos(clickIndex);
-                            setNowInsertPos(clickIndex);
-                            InputBox.this.slashStartTime = System.currentTimeMillis();
-                            return null;
-                        }
-                )
+        this.registerOnMouseButtonLeftDownCallback(new MainThreadEventProcessor<MouseButtonEvent>(
+                this,
+                (MouseButtonEvent event) -> {
+                    int clickIndex =
+                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
+                                    InputBox.this.getGameWindow().getMousePosY(), false, null);
+                    setNowSelectStartPos(clickIndex);
+                    setNowSelectEndPos(clickIndex);
+                    setNowInsertPos(clickIndex);
+                    InputBox.this.slashStartTime = System.currentTimeMillis();
+                    return null;
+                })
         );
 
         this.registerOnMouseLeaveAreaCallback(
-                (Event event) -> InputBox.this.onMouseButtonLeftUp(null)
+                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(null)
         );
 
         this.registerOnMouseButtonLeftUpCallback(
-                new MainThreadEventProcessor(
+                new MainThreadEventProcessor<MouseButtonEvent>(
                         this,
-                        (Event event) -> {
+                        (MouseButtonEvent event) -> {
                             if (getNowSelectStartPos() < 0) {
                                 return null;
                             }
@@ -130,9 +127,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
         this.registerOnMouseButtonLeftPressingCallback(
-                new MainThreadEventProcessor(
+                new MainThreadEventProcessor<MouseButtonEvent>(
                         this,
-                        (Event event) -> {
+                        (MouseButtonEvent event) -> {
                             if (getNowSelectStartPos() == -1) {
                                 return null;
                             }
@@ -145,15 +142,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 )
         );
 
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
-                new MainThreadEventProcessor(
+        this.registerProcessor(KeyboardEvent.class,
+                new MainThreadEventProcessor<KeyboardEvent>(
                         this,
-                        event -> {
+                        (KeyboardEvent keyboardEvent) -> {
                             synchronized (InputBox.this) {
                                 if (!this.isInFocusNow()) {
-                                    return event;
+                                    return keyboardEvent;
                                 }
-                                KeyboardEvent keyboardEvent = (KeyboardEvent) event;
                                 this.slashStartTime = System.currentTimeMillis();
 
                                 if (keyboardEvent.getAction() == GLFW_PRESS || keyboardEvent.getAction() == GLFW_REPEAT) {
@@ -274,15 +270,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 )
         );
 
-        this.registerProcessor(TextEvent.class.getCanonicalName(),
-                new MainThreadEventProcessor(
+        this.registerProcessor(TextEvent.class,
+                new MainThreadEventProcessor<TextEvent>(
                         this,
-                        event -> {
+                        (TextEvent textEvent) -> {
                             synchronized (InputBox.this) {
                                 if (!this.isInFocusNow()) {
-                                    return event;
+                                    return textEvent;
                                 }
-                                TextEvent textEvent = (TextEvent) event;
                                 this.insertString(textEvent.getContentString());
                                 return null;
                             }

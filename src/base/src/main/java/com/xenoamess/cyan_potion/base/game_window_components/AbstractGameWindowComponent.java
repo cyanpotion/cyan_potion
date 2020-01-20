@@ -165,9 +165,20 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * @param eventType eventType
      * @param processor eventType
      */
-    public void registerProcessor(String eventType,
-                                  EventProcessor processor) {
+    public <T extends Event> void registerProcessor(String eventType,
+                                                    EventProcessor<T> processor) {
         this.getClassNameToProcessorMap().put(eventType, processor);
+    }
+
+    /**
+     * <p>registerProcessor.</p>
+     *
+     * @param eventClass eventClass
+     * @param processor  eventType
+     */
+    public <T extends Event> void registerProcessor(Class<T> eventClass,
+                                                    EventProcessor<T> processor) {
+        this.getClassNameToProcessorMap().put(eventClass.getCanonicalName(), processor);
     }
 
     /**

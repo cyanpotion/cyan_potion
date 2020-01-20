@@ -101,9 +101,8 @@ public class Logo extends AbstractGameWindowComponent {
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
-                event -> {
-                    KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+        this.registerProcessor(KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
@@ -111,14 +110,14 @@ public class Logo extends AbstractGameWindowComponent {
                             this.setAlive(false);
                             break;
                         default:
-                            return event;
+                            return keyboardEvent;
                     }
                     return null;
                 }
         );
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
-                event -> {
+        this.registerProcessor(MouseButtonEvent.class,
+                (MouseButtonEvent event) -> {
                     this.setAlive(false);
                     return null;
                 }

@@ -259,58 +259,56 @@ public class TitleExample extends AbstractGameWindowComponent {
      */
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
-            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
-            if (keyboardEvent.getAction() != GLFW.GLFW_PRESS) {
-                return event;
-            }
-            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                case Keymap.XENOAMESS_KEY_ESCAPE:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        if (getState() >= 0 && getState() <= 4) {
-                            setState(4);
-                        } else if (getState() == -101) {
-                            setState(1);
-                        } else if (getState() == -102) {
-                            setState(2);
-                        } else if (getState() == -103) {
-                            setState(3);
-                        } else if (getState() == -104) {
-                            setState(4);
-                        }
+        this.registerProcessor(KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
+                    if (keyboardEvent.getAction() != GLFW.GLFW_PRESS) {
+                        return keyboardEvent;
                     }
-                    break;
-                case Keymap.XENOAMESS_KEY_ENTER:
-                    if (getState() >= 0 && getState() <= 4) {
-                        this.setState(-this.getState());
-                    } else if (getState() == -101) {
-                        setState(-102);
+                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                        case Keymap.XENOAMESS_KEY_ESCAPE:
+                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
+                                if (getState() >= 0 && getState() <= 4) {
+                                    setState(4);
+                                } else if (getState() == -101) {
+                                    setState(1);
+                                } else if (getState() == -102) {
+                                    setState(2);
+                                } else if (getState() == -103) {
+                                    setState(3);
+                                } else if (getState() == -104) {
+                                    setState(4);
+                                }
+                            }
+                            break;
+                        case Keymap.XENOAMESS_KEY_ENTER:
+                            if (getState() >= 0 && getState() <= 4) {
+                                this.setState(-this.getState());
+                            } else if (getState() == -101) {
+                                setState(-102);
+                            }
+                            break;
+                        case Keymap.XENOAMESS_KEY_UP:
+                        case Keymap.XENOAMESS_KEY_LEFT:
+                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
+                                lastState();
+                            }
+                            break;
+                        case Keymap.XENOAMESS_KEY_DOWN:
+                        case Keymap.XENOAMESS_KEY_RIGHT:
+                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
+                                nextState();
+                            }
+                            break;
+                        default:
+                            return keyboardEvent;
                     }
-                    break;
-                case Keymap.XENOAMESS_KEY_UP:
-                case Keymap.XENOAMESS_KEY_LEFT:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        lastState();
-                    }
-                    break;
-                case Keymap.XENOAMESS_KEY_DOWN:
-                case Keymap.XENOAMESS_KEY_RIGHT:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS) {
-                        nextState();
-                    }
-                    break;
-                default:
-                    return event;
-            }
-            return null;
-        });
+                    return null;
+                });
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
-                event -> {
-                    MouseButtonEvent mouseButtonEvent =
-                            (MouseButtonEvent) event;
+        this.registerProcessor(MouseButtonEvent.class,
+                (MouseButtonEvent mouseButtonEvent) -> {
                     if (mouseButtonEvent.getAction() != GLFW.GLFW_PRESS) {
-                        return event;
+                        return mouseButtonEvent;
                     }
                     switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
@@ -332,15 +330,13 @@ public class TitleExample extends AbstractGameWindowComponent {
                             }
                             break;
                         default:
-                            return event;
+                            return mouseButtonEvent;
                     }
                     return null;
                 });
 
-        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
-                event -> {
-                    MouseScrollEvent mouseScrollEvent =
-                            (MouseScrollEvent) event;
+        this.registerProcessor(MouseScrollEvent.class,
+                (MouseScrollEvent mouseScrollEvent) -> {
                     if (mouseScrollEvent.getYoffset() < 0) {
                         nextState();
                     } else {
@@ -348,7 +344,8 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                     this.setAlive(false);
                     return null;
-                });
+                }
+        );
     }
 
     /**

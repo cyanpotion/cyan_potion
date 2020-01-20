@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
@@ -48,6 +49,14 @@ import static org.lwjgl.glfw.GLFW.*;
 public class KeyboardEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(KeyboardEvent.class);
+
+    private static class EmptyKeyboardEvent extends KeyboardEvent implements EmptyEvent {
+        public EmptyKeyboardEvent() {
+            super(0, 0, 0, 0, 0);
+        }
+    }
+
+    public static final KeyboardEvent EMPTY = new EmptyKeyboardEvent();
 
     private final long window;
     private final int key;

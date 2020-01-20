@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.mouse;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
@@ -41,6 +42,14 @@ import java.util.Set;
 public class MouseScrollEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(MouseScrollEvent.class);
+
+    private static class EmptyMouseScrollEvent extends MouseScrollEvent implements EmptyEvent {
+        public EmptyMouseScrollEvent() {
+            super(0, 0, 0);
+        }
+    }
+
+    public static final MouseScrollEvent EMPTY = new EmptyMouseScrollEvent();
 
     private final long window;
     private final double xoffset;

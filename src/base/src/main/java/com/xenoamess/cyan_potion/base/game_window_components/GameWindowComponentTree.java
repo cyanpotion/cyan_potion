@@ -130,9 +130,8 @@ public class GameWindowComponentTree implements AutoCloseable {
 
                     @Override
                     public void initProcessors() {
-                        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
-                                event -> {
-                                    KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+                        this.registerProcessor(KeyboardEvent.class,
+                                (KeyboardEvent keyboardEvent) -> {
                                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                                         case Keymap.XENOAMESS_KEY_ENTER:
                                             if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
@@ -143,9 +142,8 @@ public class GameWindowComponentTree implements AutoCloseable {
                                             return null;
                                     }
                                 });
-                        this.registerProcessor(WindowResizeEvent.class.getCanonicalName(),
-                                event -> {
-                                    WindowResizeEvent windowResizeEvent = (WindowResizeEvent) event;
+                        this.registerProcessor(WindowResizeEvent.class,
+                                (WindowResizeEvent windowResizeEvent) -> {
                                     this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
                                     this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
                                     return null;

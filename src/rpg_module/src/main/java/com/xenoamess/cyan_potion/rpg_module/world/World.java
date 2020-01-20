@@ -193,23 +193,24 @@ public class World extends AbstractEntityScene {
      */
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
-            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
-            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                case Keymap.XENOAMESS_KEY_ESCAPE:
-                    if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.getMods() == 0) {
-                        this.getMenu().setShow(true);
+        this.registerProcessor(
+                KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
+                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                        case Keymap.XENOAMESS_KEY_ESCAPE:
+                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.getMods() == 0) {
+                                this.getMenu().setShow(true);
+                            }
+                            return null;
+                        default:
+                            return keyboardEvent;
                     }
-                    return null;
-                default:
-                    return event;
-            }
-        });
-        this.registerProcessor(MouseScrollEvent.class.getCanonicalName(),
-                event -> {
+                }
+        );
+        this.registerProcessor(
+                MouseScrollEvent.class,
+                (MouseScrollEvent mouseScrollEvent) -> {
                     float newScale = this.getScale();
-                    MouseScrollEvent mouseScrollEvent =
-                            (MouseScrollEvent) event;
                     if (mouseScrollEvent.getYoffset() > 0) {
                         newScale += 0.1;
                     } else if (mouseScrollEvent.getYoffset() < 0) {
@@ -223,7 +224,8 @@ public class World extends AbstractEntityScene {
                     }
                     this.changeScale(newScale);
                     return null;
-                });
+                }
+        );
     }
 
     /**

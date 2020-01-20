@@ -95,22 +95,24 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
-            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
-            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                case Keymap.XENOAMESS_KEY_ESCAPE:
-                case Keymap.XENOAMESS_KEY_ENTER:
-                case Keymap.XENOAMESS_KEY_SPACE:
-                    this.setAlive(false);
-                    break;
-                default:
-                    return event;
-            }
-            return null;
-        });
+        this.registerProcessor(
+                KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
+                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                        case Keymap.XENOAMESS_KEY_ESCAPE:
+                        case Keymap.XENOAMESS_KEY_ENTER:
+                        case Keymap.XENOAMESS_KEY_SPACE:
+                            this.setAlive(false);
+                            break;
+                        default:
+                            return keyboardEvent;
+                    }
+                    return null;
+                });
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
-                event -> {
+        this.registerProcessor(
+                MouseButtonEvent.class,
+                (MouseButtonEvent event) -> {
                     this.setAlive(false);
                     return null;
                 }

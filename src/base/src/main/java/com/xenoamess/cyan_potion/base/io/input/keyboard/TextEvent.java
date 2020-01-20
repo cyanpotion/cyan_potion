@@ -1,8 +1,10 @@
 package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import net.jcip.annotations.GuardedBy;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,14 @@ import java.util.Set;
 public class TextEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(TextEvent.class);
+
+    private static class EmptyTextEvent extends TextEvent implements EmptyEvent {
+        public EmptyTextEvent() {
+            super(0, StringUtils.EMPTY);
+        }
+    }
+
+    public static final TextEvent EMPTY = new EmptyTextEvent();
 
     private final long window;
     private final String contentString;
