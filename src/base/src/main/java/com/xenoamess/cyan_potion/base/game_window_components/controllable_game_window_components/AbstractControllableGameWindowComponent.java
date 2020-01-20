@@ -615,6 +615,9 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     @Override
     public void update() {
+        if (!this.isActive()) {
+            return;
+        }
         Event processMouseEnterAreaAndLeaveAreaEvent =
                 this.processMouseEnterAreaAndLeaveArea();
         if (processMouseEnterAreaAndLeaveAreaEvent != null) {
