@@ -1,6 +1,8 @@
 package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
+ * Utility class for Area.
+ *
  * @author XenoAmess
  */
 public class Areas {
@@ -8,7 +10,7 @@ public class Areas {
     }
 
     /**
-     * <p>generateImmutableArea.</p>
+     * generate a SimpleImmutableArea from center position.
      *
      * @param centerPosX a float.
      * @param centerPosY a float.
@@ -16,24 +18,24 @@ public class Areas {
      * @param height     a float.
      * @return return
      */
-    public static SimpleImmutableArea generateImmutableArea(
+    public static SimpleImmutableArea generateImmutableAreaFromArea(
             float centerPosX, float centerPosY, float width, float height) {
-        return new SimpleImmutableArea(centerPosX, centerPosY, width, height);
+        return new SimpleImmutableArea(centerPosX - height / 2F, centerPosY - height / 2F, width, height);
     }
 
     /**
-     * <p>generateImmutableArea.</p>
+     * generate a SimpleImmutableArea from area.
      *
      * @param abstractArea area
      * @return return
      */
-    public static SimpleImmutableArea generateImmutableArea(
+    public static SimpleImmutableArea generateImmutableAreaFromArea(
             AbstractArea abstractArea) {
         return new SimpleImmutableArea(abstractArea);
     }
 
     /**
-     * <p>generateImmutableAreaFromLeftTop.</p>
+     * generate a SimpleImmutableArea from left top position.
      *
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
@@ -43,11 +45,11 @@ public class Areas {
      */
     public static SimpleImmutableArea generateImmutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {
-        return new SimpleImmutableArea(leftTopPosX + width / 2F, leftTopPosY + height / 2F, width, height);
+        return new SimpleImmutableArea(leftTopPosX, leftTopPosY, width, height);
     }
 
     /**
-     * <p>generateMutableArea.</p>
+     * generate a SimpleMutableArea from center position.
      *
      * @param centerPosX a float.
      * @param centerPosY a float.
@@ -55,24 +57,24 @@ public class Areas {
      * @param height     a float.
      * @return return
      */
-    public static SimpleMutableArea generateMutableArea(
+    public static SimpleMutableArea generateMutableAreaFromArea(
             float centerPosX, float centerPosY, float width, float height) {
-        return new SimpleMutableArea(centerPosX, centerPosY, width, height);
+        return new SimpleMutableArea(centerPosX - height / 2F, centerPosY - width / 2F, width, height);
     }
 
     /**
-     * <p>generateMutableArea.</p>
+     * generate a SimpleMutableArea from area.
      *
      * @param abstractArea area
      * @return return
      */
-    public static SimpleMutableArea generateMutableArea(
+    public static SimpleMutableArea generateMutableAreaFromArea(
             AbstractArea abstractArea) {
         return new SimpleMutableArea(abstractArea);
     }
 
     /**
-     * <p>generateMutableAreaFromLeftTop.</p>
+     * generate a SimpleMutableArea from left top position.
      *
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
@@ -82,6 +84,6 @@ public class Areas {
      */
     public static SimpleMutableArea generateMutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {
-        return new SimpleMutableArea(leftTopPosX + width / 2F, leftTopPosY + height / 2F, width, height);
+        return new SimpleMutableArea(leftTopPosX, leftTopPosY, width, height);
     }
 }

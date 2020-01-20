@@ -1218,16 +1218,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosX() {
-        return this.getLogicWindowWidth() / 2F;
+    public float getLeftTopPosX() {
+        return 0;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosY() {
-        return this.getLogicWindowHeight() / 2F;
+    public float getLeftTopPosY() {
+        return 0;
     }
 
     /**
@@ -1252,7 +1252,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param centerPosX a float.
      */
     @Override
-    public void setCenterPosX(float centerPosX) {
+    public void setLeftTopPosX(float centerPosX) {
         throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
     }
 
@@ -1262,7 +1262,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param centerPosY a float.
      */
     @Override
-    public void setCenterPosY(float centerPosY) {
+    public void setLeftTopPosY(float centerPosY) {
         throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
     }
 

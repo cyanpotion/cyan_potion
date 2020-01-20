@@ -10,19 +10,27 @@ public interface AbstractMutableArea extends AbstractArea {
         return true;
     }
 
+    void setLeftTopPosX(float leftTopPosX);
+
+    void setLeftTopPosY(float leftTopPosY);
+
     /**
      * <p>Setter for the field <code>centerPosX</code>.</p>
      *
      * @param newCenterPosX a float.
      */
-    void setCenterPosX(float newCenterPosX);
+    default void setCenterPosX(float newCenterPosX) {
+        this.setLeftTopPosX(newCenterPosX - this.getWidth() / 2F);
+    }
 
     /**
      * <p>Setter for the field <code>centerPosY</code>.</p>
      *
      * @param newCenterPosY a float.
      */
-    void setCenterPosY(float newCenterPosY);
+    default void setCenterPosY(float newCenterPosY) {
+        this.setLeftTopPosY(newCenterPosY - this.getHeight() / 2F);
+    }
 
     /**
      * <p>setSize.</p>
@@ -33,6 +41,17 @@ public interface AbstractMutableArea extends AbstractArea {
     default void setSize(float width, float height) {
         this.setWidth(width);
         this.setHeight(height);
+    }
+
+    /**
+     * <p>setCenterPos.</p>
+     *
+     * @param leftTopPosX a float.
+     * @param leftTopPoxY a float.
+     */
+    default void setLeftTopPos(float leftTopPosX, float leftTopPoxY) {
+        this.setLeftTopPosX(leftTopPosX);
+        this.setLeftTopPosY(leftTopPoxY);
     }
 
     /**
@@ -72,8 +91,8 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param abstractArea area
      */
     default void cover(AbstractArea abstractArea) {
-        this.setCenter(abstractArea);
         this.setSize(abstractArea);
+        this.setCenter(abstractArea);
     }
 
     /**
@@ -103,26 +122,6 @@ public interface AbstractMutableArea extends AbstractArea {
      */
     default void moveY(float centerMovementY) {
         this.setCenterPosY(this.getCenterPosY() + centerMovementY);
-    }
-
-    /**
-     * <p>moveTo.</p>
-     *
-     * @param newCenterPosX a float.
-     * @param newCenterPosY a float.
-     */
-    default void moveTo(float newCenterPosX, float newCenterPosY) {
-        this.setCenterPos(newCenterPosX, newCenterPosY);
-    }
-
-    /**
-     * <p>moveToLeftTop.</p>
-     *
-     * @param newLeftTopPosX a float.
-     * @param newLeftTopPosY a float.
-     */
-    default void moveToLeftTop(float newLeftTopPosX, float newLeftTopPosY) {
-        this.setCenterPos(newLeftTopPosX + this.getWidth() / 2F, newLeftTopPosY + this.getHeight() / 2F);
     }
 
     /**

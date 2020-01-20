@@ -328,38 +328,6 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosX() {
-        return this.getLeftTopPosX() + this.getWidth() / 2F;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosY() {
-        return this.getLeftTopPosY() + this.getHeight() / 2F;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosX(float newCenterPosX) {
-        this.setLeftTopPosX(newCenterPosX - this.getWidth() / 2F);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosY(float newCenterPosY) {
-        this.setLeftTopPosY(newCenterPosY - this.getHeight() / 2F);
-    }
-
-    /**
      * <p>Setter for the field <code>height</code>.</p>
      *
      * @param height a float.

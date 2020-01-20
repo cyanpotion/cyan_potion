@@ -70,13 +70,13 @@ public class Button extends AbstractControllableGameWindowComponent implements B
     public Button(GameWindow gameWindow, Bindable buttonBindable,
                   String buttonText) {
         super(gameWindow);
-        this.buttonPicture.setBindable(buttonBindable);
+        this.getButtonPicture().setBindable(buttonBindable);
         this.setButtonText(buttonText);
     }
 
     @Override
     public void bind(int sampler) {
-        this.buttonPicture.bind(sampler);
+        this.getButtonPicture().bind(sampler);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Button extends AbstractControllableGameWindowComponent implements B
     @Override
     public void update() {
         super.update();
-        this.buttonPicture.cover(this);
+        this.getButtonPicture().cover(this);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Button extends AbstractControllableGameWindowComponent implements B
      */
     @Override
     public void ifVisibleThenDraw() {
-        this.buttonPicture.draw(this.getGameWindow());
+        this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getLeftTopPosX() + this.getWidth() / 2,
@@ -120,5 +120,9 @@ public class Button extends AbstractControllableGameWindowComponent implements B
      */
     public void setButtonText(String buttonText) {
         this.buttonText = buttonText;
+    }
+
+    public Picture getButtonPicture() {
+        return buttonPicture;
     }
 }

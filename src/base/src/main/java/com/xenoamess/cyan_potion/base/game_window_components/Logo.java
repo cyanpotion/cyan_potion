@@ -184,6 +184,8 @@ public class Logo extends AbstractGameWindowComponent {
         if (t < dynamicTime + stayTime) {
             this.logoPicture.setWidth(480 * (pScale + 1) / 1280f * width);
             this.logoPicture.setHeight(60 * (pScale + 1) / 1024f * height);
+            this.logoPicture.setCenter(this.getGameWindow());
+            this.logoPicture.moveY(-50 * 2);
             this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
         } else {
             pScale = (1 - (t - dynamicTime - stayTime) / fadeTime);

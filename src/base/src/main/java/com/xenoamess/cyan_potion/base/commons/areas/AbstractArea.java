@@ -39,18 +39,26 @@ public interface AbstractArea {
     boolean ifMutable();
 
     /**
-     * <p>getCenterPosX.</p>
+     * <p>getLeftTopPosX.</p>
      *
      * @return a float.
      */
-    float getCenterPosX();
+    float getLeftTopPosX();
 
     /**
-     * <p>getCenterPosY.</p>
+     * <p>getLeftTopPosY.</p>
      *
      * @return a float.
      */
-    float getCenterPosY();
+    float getLeftTopPosY();
+
+    default float getCenterPosX() {
+        return this.getLeftTopPosX() + this.getWidth() / 2F;
+    }
+
+    default float getCenterPosY() {
+        return this.getLeftTopPosY() + this.getHeight() / 2F;
+    }
 
     /**
      * <p>getWidth.</p>

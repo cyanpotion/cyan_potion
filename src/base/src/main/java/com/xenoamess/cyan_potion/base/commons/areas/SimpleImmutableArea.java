@@ -25,14 +25,18 @@
 package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
- * <p>ImmutableArea class.</p>
+ * a simple immutable area class
+ * must create it from Areas.
  *
  * @author XenoAmess
  * @version 0.143.0
+ * @see Areas#generateImmutableAreaFromArea(AbstractArea)
+ * @see Areas#generateImmutableAreaFromLeftTop(float, float, float, float)
+ * @see Areas#generateImmutableAreaFromArea(float, float, float, float)
  */
-public class SimpleImmutableArea implements AbstractImmutableArea {
-    private final float centerPosX;
-    private final float centerPosY;
+public final class SimpleImmutableArea implements AbstractImmutableArea {
+    private final float leftTopPosX;
+    private final float leftTopPosY;
     private final float width;
     private final float height;
 
@@ -41,9 +45,9 @@ public class SimpleImmutableArea implements AbstractImmutableArea {
      *
      * @param abstractArea area
      */
-    public SimpleImmutableArea(AbstractArea abstractArea) {
-        this.centerPosX = abstractArea.getCenterPosX();
-        this.centerPosY = abstractArea.getCenterPosY();
+    SimpleImmutableArea(AbstractArea abstractArea) {
+        this.leftTopPosX = abstractArea.getLeftTopPosX();
+        this.leftTopPosY = abstractArea.getLeftTopPosY();
         this.width = abstractArea.getWidth();
         this.height = abstractArea.getHeight();
     }
@@ -51,14 +55,14 @@ public class SimpleImmutableArea implements AbstractImmutableArea {
     /**
      * <p>Constructor for ImmutableArea.</p>
      *
-     * @param centerPosX a float.
-     * @param centerPosY a float.
-     * @param width      a float.
-     * @param height     a float.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
      */
-    public SimpleImmutableArea(float centerPosX, float centerPosY, float width, float height) {
-        this.centerPosX = centerPosX;
-        this.centerPosY = centerPosY;
+    SimpleImmutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
+        this.leftTopPosX = leftTopPosX;
+        this.leftTopPosY = leftTopPosY;
         this.width = width;
         this.height = height;
     }
@@ -67,16 +71,16 @@ public class SimpleImmutableArea implements AbstractImmutableArea {
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosX() {
-        return this.centerPosX;
+    public float getLeftTopPosX() {
+        return this.leftTopPosX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosY() {
-        return this.centerPosY;
+    public float getLeftTopPosY() {
+        return this.leftTopPosY;
     }
 
     /**
