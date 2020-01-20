@@ -30,8 +30,6 @@ import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
 
-import static org.lwjgl.opengl.GL11.glColor4f;
-
 
 /**
  * <p>Button class.</p>
@@ -44,7 +42,6 @@ public class Button extends AbstractControllableGameWindowComponent implements B
     private String buttonText;
     /**
      * color of the buttonText drawn.
-     * if textColor==null, then do not assign color before draw (use last color).
      */
     private Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
@@ -102,15 +99,11 @@ public class Button extends AbstractControllableGameWindowComponent implements B
     public void ifVisibleThenDraw() {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
-            if (this.getTextColor() != null) {
-                glColor4f(this.getTextColor().x, this.getTextColor().y,
-                        this.getTextColor().z, this.getTextColor().w);
-            }
             this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
                     this.getLeftTopPosX() + this.getWidth() / 2,
                     this.getLeftTopPosY() + this.getHeight() / 2,
                     this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
-                    0, new Vector4f(1, 1, 0, 1), this.getButtonText());
+                    0, this.getTextColor(), this.getButtonText());
         }
     }
 
