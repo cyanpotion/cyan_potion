@@ -916,7 +916,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public void drawText(Font font, float x, float y, float scaleXy, float height,
                          Vector4f color, String text) {
-        this.drawText(font, x, y, scaleXy, scaleXy, 0, height, color, text);
+        this.drawText(font, x, y, scaleXy, scaleXy, height, 0, color, text);
     }
 
     /**
