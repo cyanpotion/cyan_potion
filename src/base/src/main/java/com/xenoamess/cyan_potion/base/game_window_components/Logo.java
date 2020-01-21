@@ -32,7 +32,6 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
-import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -185,13 +184,13 @@ public class Logo extends AbstractGameWindowComponent {
             this.logoPicture.setHeight(60 * (pScale + 1) / 1024f * height);
             this.logoPicture.setCenter(this.getGameWindow());
             this.logoPicture.moveY(-50 * 2);
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
+            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
         } else {
             pScale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pScale < 0) {
                 pScale = 0;
             }
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
+            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
         }
         this.logoPicture.draw(getGameWindow());
     }

@@ -15,7 +15,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     private float leftTopPosY;
     private float width;
     private float height;
-    private Vector4f colorScale = new Vector4f(1, 1, 1, 1);
+    private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
 
     @Override
@@ -177,15 +177,6 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      */
     public Vector4f getColorScale() {
         return colorScale;
-    }
-
-    /**
-     * <p>Setter for the field <code>colorScale</code>.</p>
-     *
-     * @param colorScale colorScale
-     */
-    public void setColorScale(Vector4f colorScale) {
-        this.colorScale = colorScale;
     }
 
     /**

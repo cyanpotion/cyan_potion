@@ -33,7 +33,6 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
-import org.joml.Vector4f;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static org.lwjgl.opengl.GL11.*;
@@ -167,7 +166,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        this.logoPicture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
+        this.logoPicture.getColorScale().set(1, colorScale, colorScale, 1);
         this.logoPicture.draw(getGameWindow());
     }
 
