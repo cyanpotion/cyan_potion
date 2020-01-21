@@ -57,7 +57,7 @@ public enum KeyActionEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         KeyActionEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (KeyActionEnum au : rawValues) {
@@ -68,7 +68,7 @@ public enum KeyActionEnum {
         return maxValue;
     }
 
-    private static final KeyActionEnum[] generateValues() {
+    private static KeyActionEnum[] generateValues() {
         KeyActionEnum[] res = new KeyActionEnum[maxValue() + 1];
         Arrays.fill(res, GLFW_REPEAT);
 

@@ -51,8 +51,8 @@ public class CharEvent implements Event {
     private final long window;
     private final int codepoint;
 
-    private static AtomicLong currentId = new AtomicLong(0L);
-    private long id;
+    private static final AtomicLong currentId = new AtomicLong(0L);
+    private final long id;
 
     /**
      * <p>Constructor for CharEvent.</p>

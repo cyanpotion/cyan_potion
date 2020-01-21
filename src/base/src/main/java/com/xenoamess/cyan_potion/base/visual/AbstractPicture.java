@@ -10,13 +10,21 @@ import org.joml.Vector4f;
 /**
  * @author XenoAmess
  */
-public abstract class AbstractPicture implements AbstractMutableArea {
-    private float centerPosX;
-    private float centerPosY;
+public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
+    private float leftTopPosX;
+    private float leftTopPosY;
     private float width;
     private float height;
-    private Vector4f colorScale = new Vector4f(1, 1, 1, 1);
+    private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
+
+    @Override
+    public void bind(int sampler) {
+        Bindable bindable = this.getCurrentBindable();
+        if (bindable != null) {
+            bindable.bind(sampler);
+        }
+    }
 
     /**
      * <p>draw.</p>
@@ -91,39 +99,39 @@ public abstract class AbstractPicture implements AbstractMutableArea {
     //--- getters and setters ---
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosX() {
-        return centerPosX;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPosX</code>.</p>
+     * <p>Getter for the field <code>leftTopPosX</code>.</p>
      *
-     * @param centerPosX a float.
+     * @return a float.
      */
-    @Override
-    public void setCenterPosX(float centerPosX) {
-        this.centerPosX = centerPosX;
+    public float getLeftTopPosX() {
+        return leftTopPosX;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosY() {
-        return centerPosY;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPosY</code>.</p>
+     * <p>Setter for the field <code>leftTopPosX</code>.</p>
      *
-     * @param centerPosY a float.
+     * @param leftTopPosX a float.
      */
-    @Override
-    public void setCenterPosY(float centerPosY) {
-        this.centerPosY = centerPosY;
+    public void setLeftTopPosX(float leftTopPosX) {
+        this.leftTopPosX = leftTopPosX;
+    }
+
+    /**
+     * <p>Getter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @return a float.
+     */
+    public float getLeftTopPosY() {
+        return leftTopPosY;
+    }
+
+    /**
+     * <p>Setter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @param leftTopPosY a float.
+     */
+    public void setLeftTopPosY(float leftTopPosY) {
+        this.leftTopPosY = leftTopPosY;
     }
 
     /**
@@ -169,15 +177,6 @@ public abstract class AbstractPicture implements AbstractMutableArea {
      */
     public Vector4f getColorScale() {
         return colorScale;
-    }
-
-    /**
-     * <p>Setter for the field <code>colorScale</code>.</p>
-     *
-     * @param colorScale colorScale
-     */
-    public void setColorScale(Vector4f colorScale) {
-        this.colorScale = colorScale;
     }
 
     /**

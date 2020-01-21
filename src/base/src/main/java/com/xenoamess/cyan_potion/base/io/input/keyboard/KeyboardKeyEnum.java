@@ -175,7 +175,7 @@ public enum KeyboardKeyEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         KeyboardKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (KeyboardKeyEnum au : rawValues) {
@@ -186,7 +186,7 @@ public enum KeyboardKeyEnum {
         return maxValue;
     }
 
-    private static final KeyboardKeyEnum[] generateValues() {
+    private static KeyboardKeyEnum[] generateValues() {
         KeyboardKeyEnum[] res = new KeyboardKeyEnum[maxValue() + 1];
         Arrays.fill(res, GLFW_KEY_UNKNOWN);
 

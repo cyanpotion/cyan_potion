@@ -25,14 +25,18 @@
 package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
- * <p>MutableArea class.</p>
+ * a simple mutable area class
+ * must create it from Areas.
  *
  * @author XenoAmess
  * @version 0.143.0
+ * @see Areas#generateMutableAreaFromArea(AbstractArea)
+ * @see Areas#generateMutableAreaFromLeftTop(float, float, float, float)
+ * @see Areas#generateMutableAreaFromArea(float, float, float, float)
  */
-public class SimpleMutableArea implements AbstractMutableArea {
-    private float centerPosX;
-    private float centerPosY;
+public final class SimpleMutableArea implements AbstractMutableArea {
+    private float leftTopPosX;
+    private float leftTopPosY;
     private float width;
     private float height;
 
@@ -41,24 +45,21 @@ public class SimpleMutableArea implements AbstractMutableArea {
      *
      * @param abstractArea area
      */
-    public SimpleMutableArea(AbstractArea abstractArea) {
-        this.setCenterPosX(abstractArea.getCenterPosX());
-        this.setCenterPosY(abstractArea.getCenterPosY());
-        this.setWidth(abstractArea.getWidth());
-        this.setHeight(abstractArea.getHeight());
+    SimpleMutableArea(AbstractArea abstractArea) {
+        this.cover(abstractArea);
     }
 
     /**
      * <p>Constructor for MutableArea.</p>
      *
-     * @param centerPosX a float.
-     * @param centerPosY a float.
-     * @param width      a float.
-     * @param height     a float.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
      */
-    public SimpleMutableArea(float centerPosX, float centerPosY, float width, float height) {
-        this.centerPosX = centerPosX;
-        this.centerPosY = centerPosY;
+    SimpleMutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
+        this.leftTopPosX = leftTopPosX;
+        this.leftTopPosY = leftTopPosY;
         this.width = width;
         this.height = height;
     }
@@ -67,16 +68,16 @@ public class SimpleMutableArea implements AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosX() {
-        return this.centerPosX;
+    public float getLeftTopPosX() {
+        return this.leftTopPosX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosY() {
-        return this.centerPosY;
+    public float getLeftTopPosY() {
+        return this.leftTopPosY;
     }
 
     /**
@@ -98,21 +99,15 @@ public class SimpleMutableArea implements AbstractMutableArea {
     /**
      * <p>Setter for the field <code>centerPosX</code>.</p>
      *
-     * @param centerPosX a float.
+     * @param leftTopPosX a float.
      */
-    @Override
-    public void setCenterPosX(float centerPosX) {
-        this.centerPosX = centerPosX;
+    public void setLeftTopPosX(float leftTopPosX) {
+        this.leftTopPosX = leftTopPosX;
     }
 
-    /**
-     * <p>Setter for the field <code>centerPosY</code>.</p>
-     *
-     * @param centerPosY a float.
-     */
     @Override
-    public void setCenterPosY(float centerPosY) {
-        this.centerPosY = centerPosY;
+    public void setLeftTopPosY(float leftTopPosY) {
+        this.leftTopPosY = leftTopPosY;
     }
 
     /**

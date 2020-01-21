@@ -72,9 +72,7 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
                     resource.getResourceManager().getMaxTextureSize(),
                     resource.getMemorySize()
             );
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
+        } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }

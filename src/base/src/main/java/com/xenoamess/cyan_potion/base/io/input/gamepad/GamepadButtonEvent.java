@@ -154,7 +154,7 @@ public class GamepadButtonEvent implements Event {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("GamepadButtonEvent:{key:");
-        stringBuilder.append(JXInputGamepadKeyEnum.getStringByValue(this.getKey()));
+        stringBuilder.append(JamepadGamepadKeyEnum.getStringByValue(this.getKey()));
         stringBuilder.append(",action:");
         stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
         stringBuilder.append(",gamepadDevice:");

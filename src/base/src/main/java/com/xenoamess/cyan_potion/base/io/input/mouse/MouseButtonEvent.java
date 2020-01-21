@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.mouse;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
@@ -47,6 +48,14 @@ import java.util.Set;
 public class MouseButtonEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(MouseButtonEvent.class);
+
+    private static class EmptyMouseButtonEvent extends MouseButtonEvent implements EmptyEvent {
+        public EmptyMouseButtonEvent() {
+            super(0, 0, 0, 0);
+        }
+    }
+
+    public static final MouseButtonEvent EMPTY = new EmptyMouseButtonEvent();
 
     private final long window;
     private final int key;

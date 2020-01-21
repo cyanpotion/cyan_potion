@@ -38,7 +38,7 @@ import java.util.function.Function;
  * @version 0.143.0
  */
 @FunctionalInterface
-public interface EventProcessor extends Function<Event, Event> {
+public interface EventProcessor<T extends Event> extends Function<T, Event> {
     /**
      * {@inheritDoc}
      * <p>
@@ -48,5 +48,5 @@ public interface EventProcessor extends Function<Event, Event> {
      */
     @Override
     @GuardedBy("GameManager")
-    Event apply(Event event);
+    Event apply(T event);
 }

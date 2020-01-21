@@ -30,14 +30,15 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 
 /**
- * <p>MainThreadEventProcessor class.</p>
+ * MainThreadEventProcessor class is not a class for MainThreadEvent,
+ * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
-public class MainThreadEventProcessor implements EventProcessor {
+public class MainThreadEventProcessor<T extends Event> implements EventProcessor<T> {
     private GameManager gameManager;
-    private EventProcessor processor;
+    private EventProcessor<T> processor;
 
     /**
      * <p>Constructor for MainThreadEventProcessor.</p>
@@ -45,7 +46,7 @@ public class MainThreadEventProcessor implements EventProcessor {
      * @param gameManager gameManager
      * @param processor   processor
      */
-    public MainThreadEventProcessor(GameManager gameManager, EventProcessor processor) {
+    public MainThreadEventProcessor(GameManager gameManager, EventProcessor<T> processor) {
         this.setGameManager(gameManager);
         this.setProcessor(processor);
     }
@@ -56,21 +57,9 @@ public class MainThreadEventProcessor implements EventProcessor {
      * @param gameWindowComponent gameWindowComponent
      * @param processor           processor
      */
-    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor processor) {
+    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<T> processor) {
         this.setGameManager(gameWindowComponent.getGameWindow().getGameManager());
         this.setProcessor(processor);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Event apply(Event event) {
-        if (!DataCenter.ifMainThread()) {
-            this.getGameManager().delayMainThreadEventProcess(this, event);
-            return null;
-        }
-        return this.getProcessor().apply(event);
     }
 
     public GameManager getGameManager() {
@@ -81,11 +70,20 @@ public class MainThreadEventProcessor implements EventProcessor {
         this.gameManager = gameManager;
     }
 
-    public EventProcessor getProcessor() {
+    public EventProcessor<T> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(EventProcessor processor) {
+    public void setProcessor(EventProcessor<T> processor) {
         this.processor = processor;
+    }
+
+    @Override
+    public Event apply(T event) {
+        if (!DataCenter.ifMainThread()) {
+            this.getGameManager().delayMainThreadEventProcess(this, event);
+            return null;
+        }
+        return this.getProcessor().apply(event);
     }
 }

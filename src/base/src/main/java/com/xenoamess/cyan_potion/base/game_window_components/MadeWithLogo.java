@@ -33,7 +33,6 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
-import org.joml.Vector4f;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static org.lwjgl.opengl.GL11.*;
@@ -95,22 +94,24 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(), event -> {
-            KeyboardEvent keyboardEvent = (KeyboardEvent) event;
-            switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                case Keymap.XENOAMESS_KEY_ESCAPE:
-                case Keymap.XENOAMESS_KEY_ENTER:
-                case Keymap.XENOAMESS_KEY_SPACE:
-                    this.setAlive(false);
-                    break;
-                default:
-                    return event;
-            }
-            return null;
-        });
+        this.registerProcessor(
+                KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
+                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                        case Keymap.XENOAMESS_KEY_ESCAPE:
+                        case Keymap.XENOAMESS_KEY_ENTER:
+                        case Keymap.XENOAMESS_KEY_SPACE:
+                            this.setAlive(false);
+                            break;
+                        default:
+                            return keyboardEvent;
+                    }
+                    return null;
+                });
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
-                event -> {
+        this.registerProcessor(
+                MouseButtonEvent.class,
+                (MouseButtonEvent event) -> {
                     this.setAlive(false);
                     return null;
                 }
@@ -165,7 +166,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        this.logoPicture.setColorScale(new Vector4f(1, colorScale, colorScale, 1));
+        this.logoPicture.getColorScale().set(1, colorScale, colorScale, 1);
         this.logoPicture.draw(getGameWindow());
     }
 

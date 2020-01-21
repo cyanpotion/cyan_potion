@@ -75,7 +75,7 @@ public enum JXInputGamepadKeyEnum {
         return getByValue(value).name();
     }
 
-    private static final int maxValue() {
+    private static int maxValue() {
         JXInputGamepadKeyEnum[] rawValues = values();
         int maxValue = rawValues[0].value;
         for (JXInputGamepadKeyEnum au : rawValues) {
@@ -86,7 +86,7 @@ public enum JXInputGamepadKeyEnum {
         return maxValue;
     }
 
-    private static final JXInputGamepadKeyEnum[] generateValues() {
+    private static JXInputGamepadKeyEnum[] generateValues() {
         JXInputGamepadKeyEnum[] res = new JXInputGamepadKeyEnum[maxValue() + 1];
         Arrays.fill(res, JXINPUT_KEY_UNKNOWN);
 

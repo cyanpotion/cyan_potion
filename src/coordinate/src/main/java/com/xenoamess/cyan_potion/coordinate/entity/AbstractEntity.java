@@ -204,6 +204,26 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         this.getCenterPos().y = newCenterPosY;
     }
 
+    @Override
+    public float getLeftTopPosX() {
+        return this.getCenterPosX() - getWidth() / 2F;
+    }
+
+    @Override
+    public float getLeftTopPosY() {
+        return this.getCenterPosY() - getHeight() / 2F;
+    }
+
+    @Override
+    public void setLeftTopPosX(float newLeftTopPosX) {
+        this.setCenterPosX(newLeftTopPosX + getWidth() / 2);
+    }
+
+    @Override
+    public void setLeftTopPosY(float newLeftTopPosY) {
+        this.setCenterPosY(newLeftTopPosY + getHeight() / 2);
+    }
+
     /**
      * {@inheritDoc}
      */

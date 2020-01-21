@@ -829,146 +829,164 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
 
 
     /**
-     * <p>drawText.</p>
-     *
-     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x              a float.
-     * @param y              a float.
-     * @param scaleX         a float.
-     * @param scaleY         a float.
-     * @param characterSpace a float.
-     * @param color          a {@link org.joml.Vector4f} object.
-     * @param text           a {@link java.lang.String} object.
-     */
-    public void drawText(Font font, float x, float y, float scaleX,
-                         float scaleY, float height, float characterSpace, Vector4f
-                                 color, String text) {
-        x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        if (font == null) {
-            font = Font.getDefaultFont();
-        }
-
-        font.bind();
-        font.drawText(x, y, scaleX, scaleY, height, characterSpace, color, text);
-    }
-
-    /**
      * <p>drawTextFillAreaLeftTop.</p>
      *
      * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x1             a float.
-     * @param y1             a float.
+     * @param leftTopPosX    a float.
+     * @param leftTopPosX    a float.
      * @param width          a float.
      * @param height         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public void drawTextFillAreaLeftTop(Font font, float x1, float y1,
-                                        float width, float height,
-                                        float characterSpace, Vector4f color,
-                                        String text) {
-        x1 = x1 / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        y1 = y1 / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+    public Font.DrawTextStruct drawTextFillAreaLeftTop(Font font, float leftTopPosX, float leftTopPosY,
+                                                       float width, float height,
+                                                       float characterSpace, Vector4f color,
+                                                       String text) {
+        leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
-        height =
-                height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
-        if (font == null) {
-            font = Font.getDefaultFont();
-        }
-        font.bind();
-        font.drawTextFillAreaLeftTop(x1, y1, width, height, characterSpace,
-                color, text);
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setWidthHeight(width, height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
     }
 
     /**
      * <p>drawTextFillArea.</p>
      *
      * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x1             a float.
-     * @param y1             a float.
+     * @param centerPosX     a float.
+     * @param centerPosY     a float.
      * @param width          a float.
      * @param height         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public void drawTextFillArea(Font font, float x1, float y1, float width,
-                                 float height,
-                                 float characterSpace, Vector4f color,
-                                 String text) {
-        this.drawTextFillAreaLeftTop(font, x1 - width / 2, y1 - height / 2,
-                width, height, characterSpace, color, text);
+    public Font.DrawTextStruct drawTextFillAreaCenter(Font font, float centerPosX, float centerPosY, float width,
+                                                      float height,
+                                                      float characterSpace, Vector4f color,
+                                                      String text) {
+        centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setCenterPosXY(centerPosX, centerPosY);
+        drawTextStruct.setWidthHeight(width, height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
     }
 
 
     /**
      * <p>drawText.</p>
      *
-     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x       a float.
-     * @param y       a float.
-     * @param scaleXy a float.
-     * @param height  a float.
-     * @param color   a {@link org.joml.Vector4f} object.
-     * @param text    a {@link java.lang.String} object.
+     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param height      a float.
+     * @param color       a {@link org.joml.Vector4f} object.
+     * @param text        a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy, float height,
-                         Vector4f color, String text) {
-        this.drawText(font, x, y, scaleXy, scaleXy, 0, height, color, text);
+    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height,
+                                               Vector4f color, String text) {
+        return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, 0, color, text);
     }
 
     /**
      * <p>drawText.</p>
      *
-     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x       a float.
-     * @param y       a float.
-     * @param scaleXy a float.
-     * @param text    a {@link java.lang.String} object.
+     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param height      a float.
+     * @param color       a {@link org.joml.Vector4f} object.
+     * @param text        a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy, float height,
-                         String text) {
-        this.drawText(font, x, y, scaleXy, null, text);
+    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, float characterSpace,
+                                               Vector4f color, String text) {
+        leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setHeight(height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
     }
 
     /**
      * <p>drawText.</p>
      *
-     * @param font  a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x     a float.
-     * @param y     a float.
-     * @param color color
-     * @param text  a {@link java.lang.String} object.
+     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param height      a float.
+     * @param color       a {@link org.joml.Vector4f} object.
+     * @param text        a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float height, Vector4f color,
-                         String text) {
-        this.drawText(font, x, y, 1f, height, color, text);
+    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY,
+                                               float width, float height, float characterSpace,
+                                               Vector4f color, String text) {
+        leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setWidth(width);
+        drawTextStruct.setHeight(height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
     }
 
     /**
      * <p>drawText.</p>
      *
-     * @param font font
-     * @param x    a float.
-     * @param y    a float.
-     * @param text text
+     * @param font        font
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param text        text
      */
-    public void drawText(Font font, float x, float y, float height, String text) {
-        this.drawText(font, x, y, height, null, text);
+    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, String text) {
+        return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, new Vector4f(1, 1, 1, 1), text);
     }
 
     /**
      * <p>drawText.</p>
      *
-     * @param font font
-     * @param x    a float.
-     * @param y    a float.
-     * @param text text
+     * @param font        font
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param text        text
      */
-    public void drawText(Font font, float x, float y, String text) {
-        this.drawText(font, x, y, 30, text);
+    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, String text) {
+        return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, 30, text);
     }
 
     /**
@@ -976,6 +994,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public void bindGlViewportToFullWindow() {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
+    }
+
+    //shortcuts
+
+    public ResourceManager getResourceManager() {
+        return this.getGameManager().getResourceManager();
+    }
+
+    public DataCenter getDataCenter() {
+        return this.getGameManager().getDataCenter();
     }
 
     //--- getters and setters ---
@@ -1218,16 +1246,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosX() {
-        return this.getLogicWindowWidth() / 2F;
+    public float getLeftTopPosX() {
+        return 0;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosY() {
-        return this.getLogicWindowHeight() / 2F;
+    public float getLeftTopPosY() {
+        return 0;
     }
 
     /**
@@ -1252,7 +1280,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param centerPosX a float.
      */
     @Override
-    public void setCenterPosX(float centerPosX) {
+    public void setLeftTopPosX(float centerPosX) {
         throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
     }
 
@@ -1262,7 +1290,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param centerPosY a float.
      */
     @Override
-    public void setCenterPosY(float centerPosY) {
+    public void setLeftTopPosY(float centerPosY) {
         throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
     }
 

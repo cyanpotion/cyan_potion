@@ -32,7 +32,6 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
-import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -101,9 +100,8 @@ public class Logo extends AbstractGameWindowComponent {
     @SuppressWarnings("Duplicates")
     @Override
     public void initProcessors() {
-        this.registerProcessor(KeyboardEvent.class.getCanonicalName(),
-                event -> {
-                    KeyboardEvent keyboardEvent = (KeyboardEvent) event;
+        this.registerProcessor(KeyboardEvent.class,
+                (KeyboardEvent keyboardEvent) -> {
                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
@@ -111,14 +109,14 @@ public class Logo extends AbstractGameWindowComponent {
                             this.setAlive(false);
                             break;
                         default:
-                            return event;
+                            return keyboardEvent;
                     }
                     return null;
                 }
         );
 
-        this.registerProcessor(MouseButtonEvent.class.getCanonicalName(),
-                event -> {
+        this.registerProcessor(MouseButtonEvent.class,
+                (MouseButtonEvent event) -> {
                     this.setAlive(false);
                     return null;
                 }
@@ -184,13 +182,15 @@ public class Logo extends AbstractGameWindowComponent {
         if (t < dynamicTime + stayTime) {
             this.logoPicture.setWidth(480 * (pScale + 1) / 1280f * width);
             this.logoPicture.setHeight(60 * (pScale + 1) / 1024f * height);
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
+            this.logoPicture.setCenter(this.getGameWindow());
+            this.logoPicture.moveY(-50 * 2);
+            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
         } else {
             pScale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pScale < 0) {
                 pScale = 0;
             }
-            this.logoPicture.setColorScale(new Vector4f(1, 1, 1, pScale));
+            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
         }
         this.logoPicture.draw(getGameWindow());
     }

@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
@@ -37,32 +37,50 @@ import org.joml.Vector4f;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Button extends AbstractControllableGameWindowComponent {
+public class Button extends AbstractControllableGameWindowComponent implements Bindable {
     private final Picture buttonPicture = new Picture();
     private String buttonText;
+    /**
+     * color of the buttonText drawn.
+     */
+    private Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
     /**
      * <p>Constructor for Button.</p>
      *
-     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture buttonTexture
+     * @param gameWindow gameWindow
      */
-    public Button(GameWindow gameWindow, Texture buttonTexture) {
-        this(gameWindow, buttonTexture, null);
+    public Button(GameWindow gameWindow) {
+        this(gameWindow, null);
     }
 
     /**
      * <p>Constructor for Button.</p>
      *
-     * @param gameWindow    a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param buttonTexture buttonTexture
-     * @param buttonText    a {@link java.lang.String} object.
+     * @param gameWindow     gameWindow
+     * @param buttonBindable picture of the button
      */
-    public Button(GameWindow gameWindow, Texture buttonTexture,
+    public Button(GameWindow gameWindow, Bindable buttonBindable) {
+        this(gameWindow, buttonBindable, null);
+    }
+
+    /**
+     * <p>Constructor for Button.</p>
+     *
+     * @param gameWindow     gameWindow
+     * @param buttonBindable picture of the button
+     * @param buttonText     text of the button
+     */
+    public Button(GameWindow gameWindow, Bindable buttonBindable,
                   String buttonText) {
         super(gameWindow);
-        this.buttonPicture.setBindable(buttonTexture);
+        this.getButtonPicture().setBindable(buttonBindable);
         this.setButtonText(buttonText);
+    }
+
+    @Override
+    public void bind(int sampler) {
+        this.getButtonPicture().bind(sampler);
     }
 
     /**
@@ -71,7 +89,7 @@ public class Button extends AbstractControllableGameWindowComponent {
     @Override
     public void update() {
         super.update();
-        this.buttonPicture.cover(this);
+        this.getButtonPicture().cover(this);
     }
 
     /**
@@ -79,13 +97,13 @@ public class Button extends AbstractControllableGameWindowComponent {
      */
     @Override
     public void ifVisibleThenDraw() {
-        this.buttonPicture.draw(this.getGameWindow());
+        this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
-            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
+            this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
                     this.getLeftTopPosX() + this.getWidth() / 2,
                     this.getLeftTopPosY() + this.getHeight() / 2,
                     this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
-                    0, new Vector4f(1, 1, 0, 1), this.getButtonText());
+                    0, this.getTextColor(), this.getButtonText());
         }
     }
 
@@ -108,4 +126,25 @@ public class Button extends AbstractControllableGameWindowComponent {
         this.buttonText = buttonText;
     }
 
+    public Picture getButtonPicture() {
+        return buttonPicture;
+    }
+
+    /**
+     * <p>Getter for the field <code>textColor</code>.</p>
+     *
+     * @return return
+     */
+    public Vector4f getTextColor() {
+        return textColor;
+    }
+
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param textColor textColor
+     */
+    public void setTextColor(Vector4f textColor) {
+        this.textColor = textColor;
+    }
 }
