@@ -121,6 +121,277 @@ public class Font extends AbstractResource {
 
     private GameWindow gameWindow;
 
+    public static class DrawTextStruct {
+        private Font font = Font.defaultFont;
+        private float leftTopPosX = -1;
+        private float leftTopPosY = -1;
+        private float centerPosX = -1;
+        private float centerPosY = -1;
+        private float width = -1;
+        private float height = -1;
+        private float scaleX = -1;
+        private float scaleY = -1;
+        private float characterSpace = 0;
+        private Vector4f color = new Vector4f(1, 1, 1, 1);
+        private String text = "";
+
+        public DrawTextStruct() {
+
+        }
+
+        public DrawTextStruct(DrawTextStruct drawTextStruct) {
+            this.font = drawTextStruct.font;
+            this.leftTopPosX = drawTextStruct.leftTopPosX;
+            this.leftTopPosY = drawTextStruct.leftTopPosY;
+            this.centerPosX = drawTextStruct.centerPosX;
+            this.centerPosY = drawTextStruct.centerPosY;
+            this.width = drawTextStruct.width;
+            this.height = drawTextStruct.height;
+            this.scaleX = drawTextStruct.scaleX;
+            this.scaleY = drawTextStruct.scaleY;
+            this.characterSpace = drawTextStruct.characterSpace;
+            if (drawTextStruct.color != null) {
+                this.color.set(drawTextStruct.color);
+            } else {
+                this.color = null;
+            }
+            this.text = drawTextStruct.text;
+        }
+
+        public void setLeftTopPosXY(float leftTopPosX, float leftTopPosY) {
+            this.setLeftTopPosX(leftTopPosX);
+            this.setLeftTopPosY(leftTopPosY);
+        }
+
+        public void setCenterPosXY(float centerPosX, float centerPosY) {
+            this.setCenterPosX(centerPosX);
+            this.setCenterPosY(centerPosY);
+        }
+
+        public void setWidthHeight(float width, float height) {
+            this.setWidth(width);
+            this.setHeight(height);
+        }
+
+        public void setScaleXY(float scaleX, float scaleY) {
+            this.setScaleX(scaleX);
+            this.setScaleY(scaleY);
+        }
+
+//        public void bakeScaleXY() {
+//            if (getScaleX() < 0) {
+//                setScaleX(getScaleY());
+//            } else if (getScaleY() < 0) {
+//                setScaleY(getScaleX());
+//            }
+//        }
+
+        public void bakePosXY() {
+            if (getLeftTopPosX() >= 0 && getLeftTopPosY() >= 0) {
+                setCenterPosX(getLeftTopPosX() + getWidth() / 2f);
+                setCenterPosY(getLeftTopPosY() + getHeight() / 2f);
+            } else if (getCenterPosX() >= 0 && getCenterPosY() >= 0) {
+                setLeftTopPosX(getCenterPosX() - getWidth() / 2f);
+                setLeftTopPosY(getCenterPosY() - getHeight() / 2f);
+            } else {
+                throw new RuntimeException("all pos <0");
+            }
+        }
+
+        public void calculateScaleXYFromWidthHeight() {
+            assert (this.width >= 0);
+            assert (this.height >= 0);
+            assert (this.text != null);
+
+            this.getFont().bind();
+            font.getXb().put(0, 0);
+            font.getYb().put(0, 0);
+
+            glEnable(GL_TEXTURE_2D);
+
+            float lastXReal = 0;
+            float lastYReal = 0;
+            float lastXShould = 0;
+            float lastYShould = 0;
+
+            float x3 = Float.MIN_VALUE;
+            float y3 = Float.MIN_VALUE;
+
+            for (int i = 0; i < this.text.length(); i++) {
+                if (this.text.charAt(i) < 32) {
+                    continue;
+                }
+                glBindTexture(GL_TEXTURE_2D, font.getFontTextures().getPrimitive(this.text.charAt(i) / EACH_CHAR_NUM));
+                glBegin(GL_QUADS);
+                stbtt_GetPackedQuad(font.getCharDatas().get(this.text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                        this.text.charAt(i) % EACH_CHAR_NUM, font.getXb(), font.getYb(), font.getQ(), false);
+//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+//            q.y0() + " y1:" + q.y1());
+                float charWidthShould = font.getQ().x1() - font.getQ().x0();
+                float charHeightShould = font.getQ().y1() - font.getQ().y0();
+                float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
+                float spaceUpToCharShould = font.getQ().y0() - lastYShould;
+                float nowX0 = lastXReal + spaceLeftToCharShould;
+                float nowY0 = 0;
+//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
+//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+//            nowX0 + " " + nowY0);
+//            drawBoxTC(
+//                    nowX0, nowY0, nowX0 + charWidthShould * 1, nowY0 +
+//                    charHeightShould * 1,
+//                    q.s0(), q.t0(), q.s1(), q.t1()
+//            );
+                x3 = Math.max(x3, nowX0 + charWidthShould);
+                y3 = Math.max(y3, nowY0 + charHeightShould);
+                lastXReal = nowX0 + charWidthShould * 1;
+                lastYReal = 0;
+                lastXShould = font.getQ().x1();
+                lastYShould = 0;
+                glEnd();
+            }
+            float scaleX = this.width / (x3 - 0);
+            float scaleY = this.height / (y3 - 0);
+            this.setScaleXY(scaleX, scaleY);
+        }
+
+        public void bake() {
+            if (this.scaleX >= 0 && this.scaleY >= 0 && this.height >= 0) {
+                //do nothing
+            } else if (this.scaleX >= 0 && this.scaleY >= 0) {
+                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
+                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
+                drawTextStruct.leftTopPosX = 0;
+                drawTextStruct.leftTopPosY = 0;
+                font.drawTextLeftTop(drawTextStruct);
+                this.width = drawTextStruct.width;
+                this.height = drawTextStruct.height;
+            } else if (this.width >= 0 && this.height >= 0) {
+                this.calculateScaleXYFromWidthHeight();
+            } else if (this.height >= 0) {
+                float scaleXY = font.getScale(this.height);
+                this.setScaleXY(scaleXY, scaleXY);
+                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
+                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
+                drawTextStruct.leftTopPosX = 0;
+                drawTextStruct.leftTopPosY = 0;
+                font.drawTextLeftTop(drawTextStruct);
+                this.width = drawTextStruct.width;
+            }
+
+            this.bakePosXY();
+        }
+
+        public void draw() {
+            if (leftTopPosX < 0 || leftTopPosY < 0 || centerPosX < 0 || centerPosY < 0 || scaleX < 0 || scaleY < 0 || characterSpace < 0 || text == null || height < 0) {
+                this.bake();
+                if (leftTopPosX < 0 || leftTopPosY < 0 || centerPosX < 0 || centerPosY < 0 || scaleX < 0 || scaleY < 0 || characterSpace < 0 || text == null || height < 0) {
+                    throw new RuntimeException("font still cannot draw after bake");
+                }
+            }
+            this.font.drawTextLeftTop(this);
+        }
+
+        public float getLeftTopPosX() {
+            return leftTopPosX;
+        }
+
+        public void setLeftTopPosX(float leftTopPosX) {
+            this.leftTopPosX = leftTopPosX;
+        }
+
+        public float getLeftTopPosY() {
+            return leftTopPosY;
+        }
+
+        public void setLeftTopPosY(float leftTopPosY) {
+            this.leftTopPosY = leftTopPosY;
+        }
+
+        public float getCenterPosX() {
+            return centerPosX;
+        }
+
+        public void setCenterPosX(float centerPosX) {
+            this.centerPosX = centerPosX;
+        }
+
+        public float getCenterPosY() {
+            return centerPosY;
+        }
+
+        public void setCenterPosY(float centerPosY) {
+            this.centerPosY = centerPosY;
+        }
+
+        public float getWidth() {
+            return width;
+        }
+
+        public void setWidth(float width) {
+            this.width = width;
+        }
+
+        public float getHeight() {
+            return height;
+        }
+
+        public void setHeight(float height) {
+            this.height = height;
+        }
+
+        public float getScaleX() {
+            return scaleX;
+        }
+
+        public void setScaleX(float scaleX) {
+            this.scaleX = scaleX;
+        }
+
+        public float getScaleY() {
+            return scaleY;
+        }
+
+        public void setScaleY(float scaleY) {
+            this.scaleY = scaleY;
+        }
+
+        public Vector4f getColor() {
+            return color;
+        }
+
+        public void setColor(Vector4f color) {
+            this.color = color;
+        }
+
+        public float getCharacterSpace() {
+            return characterSpace;
+        }
+
+        public void setCharacterSpace(float characterSpace) {
+            this.characterSpace = characterSpace;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public Font getFont() {
+            return font;
+        }
+
+        public void setFont(Font font) {
+            if (font == null) {
+                font = Font.defaultFont;
+            }
+            this.font = font;
+        }
+
+    }
+
     /**
      * !!!NOTICE!!!
      * <p>
@@ -314,42 +585,63 @@ public class Font extends AbstractResource {
     /**
      * <p>drawText.</p>
      *
-     * @param x              a float.
-     * @param y              a float.
+     * @param leftTopPosX    a float.
+     * @param leftTopPosY    a float.
      * @param scaleX         a float.
      * @param scaleY         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public void drawText(float x, float y, float scaleX, float scaleY,
-                         float characterSpace, Vector4f color,
-                         String text) {
+    public DrawTextStruct drawTextLeftTop(
+            float leftTopPosX,
+            float leftTopPosY,
+            float scaleX,
+            float scaleY,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
+        DrawTextStruct drawTextStruct = new DrawTextStruct();
+        drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setScaleXY(scaleX, scaleY);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
+    }
 
-//        STBTTFontinfo fontInfo = STBTTFontinfo.create();
+    /**
+     * <p>drawText.</p>
+     *
+     * @param drawTextStruct drawStruct.
+     * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4f, String)
+     */
+    public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
         this.bind();
 
-        getXb().put(0, x);
-        getYb().put(0, y);
+        getXb().put(0, drawTextStruct.leftTopPosX);
+        getYb().put(0, drawTextStruct.leftTopPosY);
 
         glEnable(GL_TEXTURE_2D);
 
-        if (color != null) {
-            glColor4f(color.x, color.y, color.z, color.w);
+        if (drawTextStruct.color != null) {
+            glColor4f(drawTextStruct.color.x, drawTextStruct.color.y, drawTextStruct.color.z, drawTextStruct.color.w);
         }
 
-        float lastXReal = x;
-        float lastYReal = y;
-        float lastXShould = x;
-        float lastYShould = y;
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) < 32) {
+        float lastXReal = drawTextStruct.leftTopPosX;
+        float lastYReal = drawTextStruct.leftTopPosY;
+        float lastXShould = drawTextStruct.leftTopPosX;
+        float lastYShould = drawTextStruct.leftTopPosY;
+        for (int i = 0; i < drawTextStruct.text.length(); i++) {
+            if (drawTextStruct.text.charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(drawTextStruct.text.charAt(i) / EACH_CHAR_NUM));
             glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+            stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                    drawTextStruct.text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
 //            stbtt_GetPackedQuad(getCharDatas().get(0), BITMAP_W, BITMAP_H,
 //                    150, getXb(), getYb(), getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
@@ -360,101 +652,59 @@ public class Font extends AbstractResource {
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastXShould;
             float spaceUpToCharShould = getQ().y0() - lastYShould;
-            float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
-            float nowY0 = lastYReal + spaceUpToCharShould * scaleY;
+            float nowX0 = lastXReal + spaceLeftToCharShould * drawTextStruct.scaleX;
+            float nowY0 = lastYReal + spaceUpToCharShould * drawTextStruct.scaleY;
 //            float nowY0 = y;
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
 //            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
 //            nowX0 + " " + nowY0);
 
             drawBoxTC(
-                    nowX0, nowY0,
-                    nowX0 + charWidthShould * scaleX,
-                    nowY0 + charHeightShould * scaleY,
+                    nowX0, nowY0 + drawTextStruct.height * 0.8f,
+                    nowX0 + charWidthShould * drawTextStruct.scaleX,
+                    nowY0 + charHeightShould * drawTextStruct.scaleY + drawTextStruct.height * 0.8f,
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
-            lastXReal = nowX0 + charWidthShould * scaleX;
-            lastYReal = y;
-            lastXShould = getQ().x1() + characterSpace;
-            lastYShould = y;
+            lastXReal = nowX0 + charWidthShould * drawTextStruct.scaleX;
+            lastYReal = drawTextStruct.leftTopPosY;
+            lastXShould = getQ().x1() + drawTextStruct.characterSpace;
+            lastYShould = drawTextStruct.leftTopPosY;
             glEnd();
         }
+        drawTextStruct.setWidthHeight(lastXReal - drawTextStruct.leftTopPosX, lastYReal - drawTextStruct.leftTopPosY);
+        drawTextStruct.bake();
+        return drawTextStruct;
     }
 
     /**
      * <p>drawTextFillAreaLeftTop.</p>
      *
-     * @param x1             a float.
-     * @param y1             a float.
+     * @param leftTopPosX    a float.
+     * @param leftTopPosY    a float.
      * @param width          a float.
      * @param height         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public void drawTextFillAreaLeftTop(float x1, float y1, float width,
-                                        float height, float characterSpace,
-                                        Vector4f color, String text) {
-
-        this.bind();
-        getXb().put(0, x1);
-        getYb().put(0, y1);
-
-        glEnable(GL_TEXTURE_2D);
-
-        if (color != null) {
-            glColor4f(color.x, color.y, color.z, color.w);
-        }
-
-        float lastXReal = x1;
-        float lastYReal = y1;
-        float lastXShould = x1;
-        float lastYShould = y1;
-
-        float x3 = Float.MIN_VALUE;
-        float y3 = Float.MIN_VALUE;
-
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) < 32) {
-                continue;
-            }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
-            glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
-            float charWidthShould = getQ().x1() - getQ().x0();
-            float charHeightShould = getQ().y1() - getQ().y0();
-            float spaceLeftToCharShould = getQ().x0() - lastXShould;
-            float spaceUpToCharShould = getQ().y0() - lastYShould;
-            float nowX0 = lastXReal + spaceLeftToCharShould;
-            float nowY0 = y1;
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowX0 + " " + nowY0);
-//            drawBoxTC(
-//                    nowX0, nowY0, nowX0 + charWidthShould * 1, nowY0 +
-//                    charHeightShould * 1,
-//                    q.s0(), q.t0(), q.s1(), q.t1()
-//            );
-            x3 = Math.max(x3, nowX0 + charWidthShould);
-            y3 = Math.max(y3, nowY0 + charHeightShould);
-            lastXReal = nowX0 + charWidthShould * 1;
-            lastYReal = y1;
-            lastXShould = getQ().x1();
-            lastYShould = y1;
-            glEnd();
-        }
-        float scaleX = width / (x3 - x1);
-        float scaleY = height / (y3 - y1);
-        if (width < 0) {
-            scaleX = scaleY;
-        } else if (height < 0) {
-            scaleY = scaleX;
-        }
-        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
+    public DrawTextStruct drawTextFillAreaLeftTop(
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
+        DrawTextStruct drawTextStruct = new DrawTextStruct();
+        drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setWidthHeight(width, height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
     }
 
     private float maxCharHeight = -1;
@@ -503,109 +753,109 @@ public class Font extends AbstractResource {
         return height / getMaxCharHeight();
     }
 
-    /**
-     * <p>drawTextGivenHeightLeftTop.</p>
-     *
-     * @param x1             a float.
-     * @param y1             a float.
-     * @param height         a float.
-     * @param characterSpace a float.
-     * @param color          a {@link org.joml.Vector4f} object.
-     * @param text           a {@link java.lang.String} object.
-     */
-    public void drawTextGivenHeightLeftTop(float x1, float y1, float height,
-                                           float characterSpace,
-                                           Vector4f color, String text) {
-        this.drawTextGivenHeightLeftTop(x1, y1, -1, -1, height,
-                characterSpace, color, text);
-    }
+//    /**
+//     * <p>drawTextGivenHeightLeftTop.</p>
+//     *
+//     * @param x1             a float.
+//     * @param y1             a float.
+//     * @param height         a float.
+//     * @param characterSpace a float.
+//     * @param color          a {@link org.joml.Vector4f} object.
+//     * @param text           a {@link java.lang.String} object.
+//     */
+//    public void drawTextGivenHeightLeftTop(float x1, float y1, float height,
+//                                           float characterSpace,
+//                                           Vector4f color, String text) {
+//        this.drawTextGivenHeightLeftTop(x1, y1, -1, -1, height,
+//                characterSpace, color, text);
+//    }
 
-    /**
-     * <p>drawTextGivenHeightLeftTop.</p>
-     *
-     * @param x1             a float.
-     * @param y1             a float.
-     * @param xMax           a float.
-     * @param yMax           a float.
-     * @param height         a float.
-     * @param characterSpace a float.
-     * @param color          a {@link org.joml.Vector4f} object.
-     * @param text           a {@link java.lang.String} object.
-     */
-    public void drawTextGivenHeightLeftTop(float x1, float y1, float xMax,
-                                           float yMax, float height,
-                                           float characterSpace,
-                                           Vector4f color, String text) {
-
-        this.bind();
-        float scaleY = this.getScale(height);
-        float scaleX = scaleY;
-
-//        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
-
-        float x = x1;
-        float y = y1;
-
-        getXb().put(0, x);
-        getYb().put(0, y);
-
-//        charData.position(font * MAX_NUM);
-        glEnable(GL_TEXTURE_2D);
-
-        if (color != null) {
-            glColor4f(color.x, color.y, color.z, color.w);
-        }
-
-        float lastXReal = x;
-        float lastYReal = y;
-        float lastXShould = x;
-        float lastYShould = y;
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) < 32) {
-                continue;
-            }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
-            glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
-            float charWidthShould = getQ().x1() - getQ().x0();
-            float charHeightShould = getQ().y1() - getQ().y0();
-            float spaceLeftToCharShould = getQ().x0() - lastXShould;
-            float spaceUpToCharShould = getQ().y0() - lastYShould;
-            float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
-            float nowY0 = y + spaceUpToCharShould * scaleY;
-
-            if (xMax > 0 && nowX0 > xMax) {
-                break;
-            }
-            if (yMax > 0 && nowY0 > yMax) {
-                break;
-            }
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowX0 + " " + nowY0);
-
-            drawBoxTC(
-                    nowX0, nowY0 + height * 0.8f,
-                    nowX0 + charWidthShould * scaleX,
-                    nowY0 + charHeightShould * scaleY + height * 0.8f,
-                    getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
-            );
-
+//    /**
+//     * <p>drawTextGivenHeightLeftTop.</p>
+//     *
+//     * @param x1             a float.
+//     * @param y1             a float.
+//     * @param xMax           a float.
+//     * @param yMax           a float.
+//     * @param height         a float.
+//     * @param characterSpace a float.
+//     * @param color          a {@link org.joml.Vector4f} object.
+//     * @param text           a {@link java.lang.String} object.
+//     */
+//    public void drawTextGivenHeightLeftTop(float x1, float y1, float xMax,
+//                                           float yMax, float height,
+//                                           float characterSpace,
+//                                           Vector4f color, String text) {
+//
+//        this.bind();
+//        float scaleY = this.getScale(height);
+//        float scaleX = scaleY;
+//
+////        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
+//
+//        float x = x1;
+//        float y = y1;
+//
+//        getXb().put(0, x);
+//        getYb().put(0, y);
+//
+////        charData.position(font * MAX_NUM);
+//        glEnable(GL_TEXTURE_2D);
+//
+//        if (color != null) {
+//            glColor4f(color.x, color.y, color.z, color.w);
+//        }
+//
+//        float lastXReal = x;
+//        float lastYReal = y;
+//        float lastXShould = x;
+//        float lastYShould = y;
+//        for (int i = 0; i < text.length(); i++) {
+//            if (text.charAt(i) < 32) {
+//                continue;
+//            }
+//            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(text.charAt(i) / EACH_CHAR_NUM));
+//            glBegin(GL_QUADS);
+//            stbtt_GetPackedQuad(getCharDatas().get(text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+//                    text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+////            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
+////            q.y0() + " y1:" + q.y1());
+//            float charWidthShould = getQ().x1() - getQ().x0();
+//            float charHeightShould = getQ().y1() - getQ().y0();
+//            float spaceLeftToCharShould = getQ().x0() - lastXShould;
+//            float spaceUpToCharShould = getQ().y0() - lastYShould;
+//            float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+//            float nowY0 = y + spaceUpToCharShould * scaleY;
+//
+//            if (xMax > 0 && nowX0 > xMax) {
+//                break;
+//            }
+//            if (yMax > 0 && nowY0 > yMax) {
+//                break;
+//            }
+////            LOGGER.debug(charWidthShould + " " + charHeightShould + "
+////            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
+////            nowX0 + " " + nowY0);
+//
 //            drawBoxTC(
-//                    q.x0(), q.y0(), q.x1(), q.y1(),
-//                    q.s0(), q.t0(), q.s1(), q.t1()
+//                    nowX0, nowY0 + height * 0.8f,
+//                    nowX0 + charWidthShould * scaleX,
+//                    nowY0 + charHeightShould * scaleY + height * 0.8f,
+//                    getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
 //            );
-            lastXReal = nowX0 + charWidthShould * scaleX;
-            lastYReal = y;
-            lastXShould = getQ().x1();
-            lastYShould = y;
-            glEnd();
-        }
-
-    }
+//
+////            drawBoxTC(
+////                    q.x0(), q.y0(), q.x1(), q.y1(),
+////                    q.s0(), q.t0(), q.s1(), q.t1()
+////            );
+//            lastXReal = nowX0 + charWidthShould * scaleX;
+//            lastYReal = y;
+//            lastXShould = getQ().x1();
+//            lastYShould = y;
+//            glEnd();
+//        }
+//
+//    }
 
     /**
      * {@inheritDoc}
@@ -617,7 +867,6 @@ public class Font extends AbstractResource {
         }
         MemoryUtil.memFree(getXb());
         MemoryUtil.memFree(getYb());
-        MemoryUtil.memFree(getXb());
         getQ().free();
 
         IntIterator it = this.getFontTextures().iterator();

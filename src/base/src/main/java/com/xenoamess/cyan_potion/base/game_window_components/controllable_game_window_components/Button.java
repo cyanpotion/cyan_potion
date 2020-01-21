@@ -99,7 +99,7 @@ public class Button extends AbstractControllableGameWindowComponent implements B
     public void ifVisibleThenDraw() {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
-            this.getGameWindow().drawTextFillArea(Font.getCurrentFont(),
+            this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
                     this.getLeftTopPosX() + this.getWidth() / 2,
                     this.getLeftTopPosY() + this.getHeight() / 2,
                     this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
