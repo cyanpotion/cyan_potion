@@ -841,7 +841,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      */
     public void drawText(Font font, float x, float y, float scaleX,
-                         float scaleY, float height, float characterSpace, Vector4f
+                         float scaleY, float characterSpace, Vector4f
                                  color, String text) {
         x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
@@ -850,7 +850,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         }
 
         font.bind();
-        font.drawText(x, y, scaleX, scaleY, height, characterSpace, color, text);
+        font.drawText(x, y, scaleX, scaleY, characterSpace, color, text);
     }
 
     /**
@@ -906,45 +906,36 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     /**
      * <p>drawText.</p>
      *
-     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x       a float.
-     * @param y       a float.
-     * @param scaleXy a float.
-     * @param height  a float.
-     * @param color   a {@link org.joml.Vector4f} object.
-     * @param text    a {@link java.lang.String} object.
+     * @param font   a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x      a float.
+     * @param y      a float.
+     * @param height a float.
+     * @param color  a {@link org.joml.Vector4f} object.
+     * @param text   a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy, float height,
+    public void drawText(Font font, float x, float y, float height,
                          Vector4f color, String text) {
-        this.drawText(font, x, y, scaleXy, scaleXy, height, 0, color, text);
+        this.drawText(font, x, y, height, 0, color, text);
     }
 
     /**
      * <p>drawText.</p>
      *
-     * @param font    a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x       a float.
-     * @param y       a float.
-     * @param scaleXy a float.
-     * @param text    a {@link java.lang.String} object.
+     * @param font   a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param x      a float.
+     * @param y      a float.
+     * @param height a float.
+     * @param color  a {@link org.joml.Vector4f} object.
+     * @param text   a {@link java.lang.String} object.
      */
-    public void drawText(Font font, float x, float y, float scaleXy, float height,
-                         String text) {
-        this.drawText(font, x, y, scaleXy, null, text);
-    }
-
-    /**
-     * <p>drawText.</p>
-     *
-     * @param font  a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param x     a float.
-     * @param y     a float.
-     * @param color color
-     * @param text  a {@link java.lang.String} object.
-     */
-    public void drawText(Font font, float x, float y, float height, Vector4f color,
-                         String text) {
-        this.drawText(font, x, y, 1f, height, color, text);
+    public void drawText(Font font, float x, float y, float height, float characterSpace,
+                         Vector4f color, String text) {
+        x = x / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        y = y / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        if (font == null) {
+            font = Font.getDefaultFont();
+        }
+        font.drawTextGivenHeightLeftTop(x, y, height, characterSpace, color, text);
     }
 
     /**

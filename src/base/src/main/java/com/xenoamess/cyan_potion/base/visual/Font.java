@@ -318,13 +318,12 @@ public class Font extends AbstractResource {
      * @param y              a float.
      * @param scaleX         a float.
      * @param scaleY         a float.
-     * @param height         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
      */
     public void drawText(float x, float y, float scaleX, float scaleY,
-                         float height, float characterSpace, Vector4f color,
+                         float characterSpace, Vector4f color,
                          String text) {
 
 //        STBTTFontinfo fontInfo = STBTTFontinfo.create();
@@ -369,15 +368,15 @@ public class Font extends AbstractResource {
 //            nowX0 + " " + nowY0);
 
             drawBoxTC(
-                    nowX0, nowY0 + height * 0.8f,
+                    nowX0, nowY0,
                     nowX0 + charWidthShould * scaleX,
-                    nowY0 + charHeightShould * scaleY + height * 0.8f,
+                    nowY0 + charHeightShould * scaleY,
 //                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
             lastXReal = nowX0 + charWidthShould * scaleX;
             lastYReal = y;
-            lastXShould = getQ().x1();
+            lastXShould = getQ().x1() + characterSpace;
             lastYShould = y;
             glEnd();
         }
@@ -455,7 +454,7 @@ public class Font extends AbstractResource {
         } else if (height < 0) {
             scaleY = scaleX;
         }
-        drawText(x1, y1, scaleX, scaleY, height, characterSpace, color, text);
+        drawText(x1, y1, scaleX, scaleY, characterSpace, color, text);
     }
 
     private float maxCharHeight = -1;

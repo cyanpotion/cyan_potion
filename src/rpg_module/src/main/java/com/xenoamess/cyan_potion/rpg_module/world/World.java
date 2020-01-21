@@ -397,7 +397,7 @@ public class World extends AbstractEntityScene {
             }
         }
 
-        this.getGameWindow().drawText(null, 10, 30, 50, "DEMO");
+        this.getGameWindow().drawText(null, 10, 10, 50, "DEMO");
 //        this.getGameWindow().drawTextFillAreaLeftTop(null, 500, 500, 100, 20, 0, null, "DEMO");
     }
 
