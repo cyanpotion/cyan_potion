@@ -129,7 +129,7 @@ public class ResourceManager implements AutoCloseable {
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
             2L * 1024 * 1024 * 1024;
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
@@ -358,7 +358,7 @@ public class ResourceManager implements AutoCloseable {
      * @param gameManager gameManager
      */
     public ResourceManager(GameManager gameManager) {
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
     /**
@@ -446,15 +446,6 @@ public class ResourceManager implements AutoCloseable {
      */
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameManager</code>.</p>
-     *
-     * @param gameManager gameManager
-     */
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     /**

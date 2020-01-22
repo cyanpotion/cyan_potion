@@ -95,7 +95,7 @@ public class DataCenter {
 
     private MultiLanguageStructure textStructure;
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
     private String titleTextID;
 
     /**
@@ -104,7 +104,7 @@ public class DataCenter {
      * @param gameManager gameManager
      */
     public DataCenter(GameManager gameManager) {
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
     @AsFinalField
@@ -235,15 +235,6 @@ public class DataCenter {
      */
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameManager</code>.</p>
-     *
-     * @param gameManager gameManager
-     */
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     /**

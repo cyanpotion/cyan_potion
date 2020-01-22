@@ -67,7 +67,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     /**
      * <p>Constructor for GameWindow.</p>
@@ -76,7 +76,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public GameWindow(GameManager gameManager) {
         super();
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
     private long window;
@@ -1024,15 +1024,6 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameManager</code>.</p>
-     *
-     * @param gameManager gameManager
-     */
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     /**

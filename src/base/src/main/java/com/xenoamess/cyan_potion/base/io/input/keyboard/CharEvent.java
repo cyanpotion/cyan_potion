@@ -60,12 +60,13 @@ public class CharEvent implements Event {
         }
     }
 
+    private static final AtomicLong currentId = new AtomicLong(0L);
     public static final CharEvent EMPTY = new CharEvent.EmptyCharEvent();
 
     private final long window;
     private final int codepoint;
 
-    private static final AtomicLong currentId = new AtomicLong(0L);
+
     private final long id;
 
     /**

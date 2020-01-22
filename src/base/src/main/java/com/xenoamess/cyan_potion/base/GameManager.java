@@ -46,6 +46,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
+import com.xenoamess.cyan_potion.base.runtime.RuntimeManager;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -115,6 +116,8 @@ public class GameManager implements AutoCloseable {
 
     private final AudioManager audioManager = new AudioManager(this);
     private final ResourceManager resourceManager = new ResourceManager(this);
+    private final RuntimeManager runtimeManager = new RuntimeManager(this);
+
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(4);
 

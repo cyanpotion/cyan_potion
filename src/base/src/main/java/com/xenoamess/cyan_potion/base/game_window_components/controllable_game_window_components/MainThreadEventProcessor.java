@@ -37,7 +37,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
  * @version 0.143.0
  */
 public class MainThreadEventProcessor<T extends Event> implements EventProcessor<T> {
-    private GameManager gameManager;
+    private final GameManager gameManager;
     private EventProcessor<T> processor;
 
     /**
@@ -47,7 +47,7 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param processor   processor
      */
     public MainThreadEventProcessor(GameManager gameManager, EventProcessor<T> processor) {
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
         this.setProcessor(processor);
     }
 
@@ -58,16 +58,11 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param processor           processor
      */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<T> processor) {
-        this.setGameManager(gameWindowComponent.getGameWindow().getGameManager());
-        this.setProcessor(processor);
+        this(gameWindowComponent.getGameWindow().getGameManager(), processor);
     }
 
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     public EventProcessor<T> getProcessor() {
