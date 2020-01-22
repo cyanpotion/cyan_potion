@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import org.joml.Vector3f;
@@ -44,6 +45,19 @@ import java.util.Set;
 public class PlayAudioEvent implements MainThreadEvent {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(MainThreadEvent.class);
+
+    private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {
+        public EmptyPlayAudioEvent() {
+            super(null, null, null, null);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final PlayAudioEvent EMPTY = new PlayAudioEvent.EmptyPlayAudioEvent();
 
     private AudioManager audioManager;
     /**

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import org.lwjgl.PointerBuffer;
 import org.slf4j.Logger;
@@ -47,6 +48,19 @@ public class DropFilesEvent implements Event {
     private final long window;
     private final int count;
     private final long names;
+
+    private static class EmptyDropFilesEvent extends DropFilesEvent implements EmptyEvent {
+        public EmptyDropFilesEvent() {
+            super(0, 0, 0);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final DropFilesEvent EMPTY = new DropFilesEvent.EmptyDropFilesEvent();
 
     /**
      * <p>Constructor for DropFilesEvent.</p>

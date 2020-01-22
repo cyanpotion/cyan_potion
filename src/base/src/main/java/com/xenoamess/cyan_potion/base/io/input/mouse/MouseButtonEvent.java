@@ -53,6 +53,11 @@ public class MouseButtonEvent implements Event {
         public EmptyMouseButtonEvent() {
             super(0, 0, 0, 0);
         }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
     }
 
     public static final MouseButtonEvent EMPTY = new EmptyMouseButtonEvent();

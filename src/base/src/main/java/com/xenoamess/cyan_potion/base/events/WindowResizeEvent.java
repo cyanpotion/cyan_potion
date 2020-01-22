@@ -41,6 +41,19 @@ public class WindowResizeEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(WindowResizeEvent.class);
 
+    private static class EmptyWindowResizeEvent extends WindowResizeEvent implements EmptyEvent {
+        public EmptyWindowResizeEvent() {
+            super(0, 0, 0);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final WindowResizeEvent EMPTY = new WindowResizeEvent.EmptyWindowResizeEvent();
+
     private final long window;
     private final int width;
     private final int height;

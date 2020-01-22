@@ -47,7 +47,8 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
 
-    Event EMPTY = (EmptyEvent) gameManager -> null;
+    Event EMPTY = new EmptyEvent() {
+    };
 
     /**
      * {@inheritDoc}

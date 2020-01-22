@@ -47,6 +47,11 @@ public class MouseScrollEvent implements Event {
         public EmptyMouseScrollEvent() {
             super(0, 0, 0);
         }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
     }
 
     public static final MouseScrollEvent EMPTY = new EmptyMouseScrollEvent();

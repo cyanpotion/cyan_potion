@@ -24,8 +24,16 @@
 
 package com.xenoamess.cyan_potion.base.events;
 
+import com.xenoamess.cyan_potion.base.GameManager;
+
+import java.util.Set;
+
 public interface EmptyEvent extends Event {
     static boolean isNullOrEmpty(Event event) {
         return event == null || event instanceof EmptyEvent;
+    }
+
+    default Set<Event> apply(GameManager gameManager) {
+        return null;
     }
 }

@@ -49,6 +49,11 @@ public class TextEvent implements Event {
         public EmptyTextEvent() {
             super(0, StringUtils.EMPTY);
         }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
     }
 
     public static final TextEvent EMPTY = new EmptyTextEvent();

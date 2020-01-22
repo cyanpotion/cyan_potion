@@ -54,6 +54,11 @@ public class KeyboardEvent implements Event {
         public EmptyKeyboardEvent() {
             super(0, 0, 0, 0, 0);
         }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
     }
 
     public static final KeyboardEvent EMPTY = new EmptyKeyboardEvent();

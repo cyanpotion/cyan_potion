@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.console;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,19 @@ import java.util.Set;
 public class ConsoleEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleEvent.class);
+
+    private static class EmptyConsoleEvent extends ConsoleEvent implements EmptyEvent {
+        public EmptyConsoleEvent() {
+            super("");
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final ConsoleEvent EMPTY = new ConsoleEvent.EmptyConsoleEvent();
 
     private final String command;
 

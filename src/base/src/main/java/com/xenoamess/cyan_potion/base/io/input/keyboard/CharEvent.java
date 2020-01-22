@@ -53,6 +53,11 @@ public class CharEvent implements Event {
         public EmptyCharEvent() {
             super(0, 0);
         }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
     }
 
     public static final CharEvent EMPTY = new CharEvent.EmptyCharEvent();

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
@@ -44,6 +45,19 @@ import java.util.Set;
 public class GamepadButtonEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GamepadButtonEvent.class);
+
+    private static class EmptyGamepadButtonEvent extends GamepadButtonEvent implements EmptyEvent {
+        public EmptyGamepadButtonEvent() {
+            super(0, 0, 0, null);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final EmptyGamepadButtonEvent EMPTY = new GamepadButtonEvent.EmptyGamepadButtonEvent();
 
     private final long window;
     private final int key;
