@@ -199,8 +199,7 @@ public class Font extends AbstractResource {
         }
 
         public void calculateScaleXYFromWidthHeight() {
-            assert (this.width >= 0);
-            assert (this.height >= 0);
+            assert (this.width >= 0 || this.height >= 0);
             assert (this.text != null);
 
             this.getFont().bind();
@@ -252,6 +251,7 @@ public class Font extends AbstractResource {
             float scaleX = this.width / (x3 - 0);
             float scaleY = this.height / (y3 - 0);
             this.setScaleXY(scaleX, scaleY);
+            this.bakePosXY();
         }
 
         public void bake() {
@@ -265,18 +265,24 @@ public class Font extends AbstractResource {
                 font.drawTextLeftTop(drawTextStruct);
                 this.width = drawTextStruct.width;
                 this.height = drawTextStruct.height;
-            } else if (this.width >= 0 && this.height >= 0) {
+            } else if (this.width >= 0 || this.height >= 0) {
                 this.calculateScaleXYFromWidthHeight();
-            } else if (this.height >= 0) {
-                float scaleXY = font.getScale(this.height);
-                this.setScaleXY(scaleXY, scaleXY);
-                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
-                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
-                drawTextStruct.leftTopPosX = 0;
-                drawTextStruct.leftTopPosY = 0;
-                font.drawTextLeftTop(drawTextStruct);
-                this.width = drawTextStruct.width;
             }
+//            } else if (this.width >= 0 && this.height >= 0) {
+//                this.calculateScaleXYFromWidthHeight();
+//            } else if (this.height >= 0) {
+//                float scaleXY = font.getScale(this.height);
+//                this.setScaleXY(scaleXY, scaleXY);
+//                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
+//                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
+//                drawTextStruct.leftTopPosX = 0;
+//                drawTextStruct.leftTopPosY = 0;
+//                font.drawTextLeftTop(drawTextStruct);
+//                this.width = drawTextStruct.width;
+//            } else {
+//                this.calculateScaleXYFromWidthHeight();
+//            }
+
 
             this.bakePosXY();
         }
