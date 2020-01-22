@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -75,6 +76,10 @@ public class ResourceManager implements AutoCloseable {
     }
 
     public static FileObject getFileObject(String fileString) {
+        return resolveFile(fileString);
+    }
+
+    public static FileObject resolveFile(String fileString) {
         FileObject result = null;
         try {
             result = getFileSystemManager().resolveFile(fileString);
@@ -96,6 +101,16 @@ public class ResourceManager implements AutoCloseable {
             result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             LOGGER.error("loadString(FileObject fileObject) fails: {}", fileObject, e);
+        }
+        return result;
+    }
+
+    public static File toFile(FileObject fileObject) {
+        File result = null;
+        try {
+            result = new File(fileObject.getURL().toURI());
+        } catch (URISyntaxException | FileSystemException e) {
+            LOGGER.error("this FileObject cannot be transformed to a File", e);
         }
         return result;
     }
