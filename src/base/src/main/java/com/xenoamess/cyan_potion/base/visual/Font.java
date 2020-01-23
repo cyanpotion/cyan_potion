@@ -248,10 +248,14 @@ public class Font extends AbstractResource {
                 lastYShould = 0;
                 glEnd();
             }
-            float scaleX = this.width / (x3 - 0);
-            float scaleY = this.height / (y3 - 0);
+            float scaleX = this.width < 0 ? -1 : this.width / (x3 - 0);
+            float scaleY = this.height < 0 ? -1 : this.height / (y3 - 0);
+            if (scaleX < 0) {
+                scaleX = scaleY;
+            } else if (scaleY < 0) {
+                scaleY = scaleX;
+            }
             this.setScaleXY(scaleX, scaleY);
-            this.bakePosXY();
         }
 
         public void bake() {
