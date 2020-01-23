@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
+import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
@@ -107,7 +108,7 @@ public class ResourceManager implements AutoCloseable {
     public static File toFile(FileObject fileObject) {
         File result = null;
         try {
-            result = new File(fileObject.getName().getPathDecoded());
+            result = FileUtils.toFile(fileObject);
         } catch (FileSystemException e) {
             LOGGER.error("this FileObject cannot be transformed to a File", e);
         }
