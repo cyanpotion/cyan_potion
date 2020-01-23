@@ -30,7 +30,7 @@ package com.xenoamess.cyan_potion.base.exceptions;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class FailedToOpenOggVorbisFileException extends RuntimeException {
+public class FailedToOpenOggVorbisFileException extends Exception {
     /**
      * <p>Constructor for FailedToOpenOggVorbisFileException.</p>
      *

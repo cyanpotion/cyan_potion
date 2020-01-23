@@ -142,7 +142,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param vorbis vorbis
      */
-    public void readVorbis(ByteBuffer vorbis) {
+    public void readVorbis(ByteBuffer vorbis) throws FailedToOpenOggVorbisFileException {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
             IntBuffer error = MemoryUtil.memAllocInt(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
@@ -170,7 +170,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param resourceFileObject resourceFileObject
      */
-    public void readVorbis(FileObject resourceFileObject) {
+    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
@@ -189,7 +189,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
                     );
             this.bake(slickWaveData.data, slickWaveData.format, slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(resourceFileObject);
+            try {
+                this.readVorbis(resourceFileObject);
+            } catch (FailedToOpenOggVorbisFileException ex) {
+                LOGGER.error("failed to open ogg vorbis file:{}", resourceInfo, ex);
+            }
         }
 
     }
