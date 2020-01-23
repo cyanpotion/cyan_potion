@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.148.5</version>
+    <version>0.148.7</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -46,7 +46,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-vfs2.version>2.4</commons-vfs2.version>
+        <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <dom4j.version>2.1.1</dom4j.version>
         <eclipse-collections.version>10.1.0</eclipse-collections.version>
         <guava.version>28.2-jre</guava.version>
@@ -61,7 +61,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.10.6</commonx.version>
+        <commonx.version>0.10.7</commonx.version>
         <multi_language.version>0.45.1</multi_language.version>
         <x8l.version>0.49.0</x8l.version>
         <SDL_GameControllerDB_Util.version>1.1.20200115</SDL_GameControllerDB_Util.version>
@@ -261,12 +261,6 @@
                                             </groupId>
                                             <artifactId>log4j-bom</artifactId>
                                             <type>pom</type>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>org.apache.logging.log4j
-                                            </groupId>
-                                            <artifactId>log4j-slf4j-impl
-                                            </artifactId>
                                         </dependency>
                                     </dependencies>
                                 </property>
@@ -839,7 +833,6 @@
                             </properties>
                             <excludes>
                                 <exclude>org.slf4j:*</exclude>
-                                <exclude>org.apache.commons:commons-vfs2</exclude>
                             </excludes>
                         </configuration>
                         <executions>
@@ -1344,6 +1337,16 @@
             <groupId>com.xenoamess</groupId>
             <artifactId>commonx</artifactId>
             <version>${commonx.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -1434,11 +1437,6 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
             <version>${SDL_GameControllerDB_Util.version}</version>
@@ -1462,11 +1460,6 @@
             <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>versions-maven-plugin</artifactId>
-            <version>${versions-maven-plugin.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections-api</artifactId>
             <version>${eclipse-collections.version}</version>
@@ -1475,6 +1468,44 @@
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections</artifactId>
             <version>${eclipse-collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2-jackrabbit1</artifactId>
+            <version>${commons-vfs2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2-jackrabbit2</artifactId>
+            <version>${commons-vfs2.version}</version>
         </dependency>
     </dependencies>
 

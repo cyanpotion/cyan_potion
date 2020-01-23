@@ -62,10 +62,10 @@ public class ResourceManager implements AutoCloseable {
 
     private long maxTextureSize = 0;
 
-    private static StandardFileSystemManager fileSystemManager;
+    private static final StandardFileSystemManager fileSystemManager = loadFileSystemManager();
 
-    static {
-        fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
+    private static StandardFileSystemManager loadFileSystemManager() {
+        StandardFileSystemManager fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
         fileSystemManager.setLogger(null);
         try {
             fileSystemManager.init();
@@ -73,6 +73,7 @@ public class ResourceManager implements AutoCloseable {
         } catch (FileSystemException e) {
             LOGGER.error("cannot init ResourceManager.fileSystemManager", e);
         }
+        return fileSystemManager;
     }
 
     public static FileObject getFileObject(String fileString) {
