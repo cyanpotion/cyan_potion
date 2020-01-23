@@ -22,21 +22,20 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.exceptions;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.VFS;
+import org.junit.jupiter.api.Test;
 
-/**
- * <p>FailedToOpenOggVorbisFileException class.</p>
- *
- * @author XenoAmess
- * @version 0.143.0
- */
-public class FailedToOpenOggVorbisFileException extends Exception {
-    /**
-     * <p>Constructor for FailedToOpenOggVorbisFileException.</p>
-     *
-     * @param message message
-     */
-    public FailedToOpenOggVorbisFileException(String message) {
-        super(message);
+public class FileManagerTest {
+    @Test
+    public void test() {
+        System.out.println(org.apache.commons.httpclient.HttpClient.class);
+        System.out.println(org.apache.jackrabbit.webdav.client.methods.DavMethod.class);
+        try {
+            VFS.getManager();
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+        }
     }
+
 }

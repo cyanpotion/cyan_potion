@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryUtil;
@@ -142,7 +143,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param vorbis vorbis
      */
-    public void readVorbis(ByteBuffer vorbis) {
+    public void readVorbis(ByteBuffer vorbis) throws FailedToOpenOggVorbisFileException {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
             IntBuffer error = MemoryUtil.memAllocInt(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
@@ -170,7 +171,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param resourceFileObject resourceFileObject
      */
-    public void readVorbis(FileObject resourceFileObject) {
+    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException, FileSystemException {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
@@ -189,7 +190,11 @@ public class WaveData extends AbstractResource implements AutoCloseable {
                     );
             this.bake(slickWaveData.data, slickWaveData.format, slickWaveData.sampleRate);
         } catch (Exception e) {
-            this.readVorbis(resourceFileObject);
+            try {
+                this.readVorbis(resourceFileObject);
+            } catch (FailedToOpenOggVorbisFileException | FileSystemException ex) {
+                LOGGER.error("failed to open ogg vorbis file : {}", resourceInfo, ex);
+            }
         }
 
     }

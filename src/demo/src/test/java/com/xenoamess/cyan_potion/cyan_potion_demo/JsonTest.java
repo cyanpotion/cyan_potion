@@ -80,6 +80,5 @@ public class JsonTest {
             String json = mapper.writeValueAsString(jsonNode);
             System.out.println(json);
         }
-
     }
 }
