@@ -38,7 +38,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -108,8 +107,8 @@ public class ResourceManager implements AutoCloseable {
     public static File toFile(FileObject fileObject) {
         File result = null;
         try {
-            result = new File(fileObject.getURL().toURI());
-        } catch (URISyntaxException | FileSystemException e) {
+            result = new File(fileObject.getName().getPathDecoded());
+        } catch (FileSystemException e) {
             LOGGER.error("this FileObject cannot be transformed to a File", e);
         }
         return result;
