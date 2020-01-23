@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,11 @@ public class KeyboardEvent implements Event {
     private static class EmptyKeyboardEvent extends KeyboardEvent implements EmptyEvent {
         public EmptyKeyboardEvent() {
             super(0, 0, 0, 0, 0);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
         }
     }
 

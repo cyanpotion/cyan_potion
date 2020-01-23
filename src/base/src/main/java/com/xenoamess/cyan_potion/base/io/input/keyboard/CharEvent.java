@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.input.keyboard;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
@@ -48,10 +49,24 @@ public class CharEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
 
+    private static class EmptyCharEvent extends CharEvent implements EmptyEvent {
+        public EmptyCharEvent() {
+            super(0, 0);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    private static final AtomicLong currentId = new AtomicLong(0L);
+    public static final CharEvent EMPTY = new CharEvent.EmptyCharEvent();
+
     private final long window;
     private final int codepoint;
 
-    private static final AtomicLong currentId = new AtomicLong(0L);
+
     private final long id;
 
     /**

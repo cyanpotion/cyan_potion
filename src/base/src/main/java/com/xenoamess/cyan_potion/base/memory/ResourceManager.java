@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,6 +75,10 @@ public class ResourceManager implements AutoCloseable {
     }
 
     public static FileObject getFileObject(String fileString) {
+        return resolveFile(fileString);
+    }
+
+    public static FileObject resolveFile(String fileString) {
         FileObject result = null;
         try {
             result = getFileSystemManager().resolveFile(fileString);
@@ -96,6 +100,16 @@ public class ResourceManager implements AutoCloseable {
             result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             LOGGER.error("loadString(FileObject fileObject) fails: {}", fileObject, e);
+        }
+        return result;
+    }
+
+    public static File toFile(FileObject fileObject) {
+        File result = null;
+        try {
+            result = new File(fileObject.getName().getPathDecoded());
+        } catch (FileSystemException e) {
+            LOGGER.error("this FileObject cannot be transformed to a File", e);
         }
         return result;
     }
@@ -129,7 +143,7 @@ public class ResourceManager implements AutoCloseable {
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
             2L * 1024 * 1024 * 1024;
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
     private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
@@ -358,7 +372,7 @@ public class ResourceManager implements AutoCloseable {
      * @param gameManager gameManager
      */
     public ResourceManager(GameManager gameManager) {
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
     /**
@@ -446,15 +460,6 @@ public class ResourceManager implements AutoCloseable {
      */
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameManager</code>.</p>
-     *
-     * @param gameManager gameManager
-     */
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     /**

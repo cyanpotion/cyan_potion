@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -199,8 +199,7 @@ public class Font extends AbstractResource {
         }
 
         public void calculateScaleXYFromWidthHeight() {
-            assert (this.width >= 0);
-            assert (this.height >= 0);
+            assert (this.width >= 0 || this.height >= 0);
             assert (this.text != null);
 
             this.getFont().bind();
@@ -249,9 +248,17 @@ public class Font extends AbstractResource {
                 lastYShould = 0;
                 glEnd();
             }
-            float scaleX = this.width / (x3 - 0);
-            float scaleY = this.height / (y3 - 0);
+            float scaleX = this.width < 0 ? -1 : this.width / (x3 - 0);
+            float scaleY = this.height < 0 ? -1 : this.height / (y3 - 0);
+            if (scaleX < 0) {
+                scaleX = scaleY;
+            } else if (scaleY < 0) {
+                scaleY = scaleX;
+            }
             this.setScaleXY(scaleX, scaleY);
+            if (this.height < 0) {
+                this.height = this.width / x3 * y3;
+            }
         }
 
         public void bake() {
@@ -265,18 +272,24 @@ public class Font extends AbstractResource {
                 font.drawTextLeftTop(drawTextStruct);
                 this.width = drawTextStruct.width;
                 this.height = drawTextStruct.height;
-            } else if (this.width >= 0 && this.height >= 0) {
+            } else if (this.width >= 0 || this.height >= 0) {
                 this.calculateScaleXYFromWidthHeight();
-            } else if (this.height >= 0) {
-                float scaleXY = font.getScale(this.height);
-                this.setScaleXY(scaleXY, scaleXY);
-                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
-                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
-                drawTextStruct.leftTopPosX = 0;
-                drawTextStruct.leftTopPosY = 0;
-                font.drawTextLeftTop(drawTextStruct);
-                this.width = drawTextStruct.width;
             }
+//            } else if (this.width >= 0 && this.height >= 0) {
+//                this.calculateScaleXYFromWidthHeight();
+//            } else if (this.height >= 0) {
+//                float scaleXY = font.getScale(this.height);
+//                this.setScaleXY(scaleXY, scaleXY);
+//                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
+//                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
+//                drawTextStruct.leftTopPosX = 0;
+//                drawTextStruct.leftTopPosY = 0;
+//                font.drawTextLeftTop(drawTextStruct);
+//                this.width = drawTextStruct.width;
+//            } else {
+//                this.calculateScaleXYFromWidthHeight();
+//            }
+
 
             this.bakePosXY();
         }

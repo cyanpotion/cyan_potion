@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,6 @@ import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -48,8 +47,6 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.Objects;
@@ -67,7 +64,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     /**
      * <p>Constructor for GameWindow.</p>
@@ -76,7 +73,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public GameWindow(GameManager gameManager) {
         super();
-        this.setGameManager(gameManager);
+        this.gameManager = gameManager;
     }
 
     private long window;
@@ -279,14 +276,8 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glfwSwapInterval(1);
 
         String iconFilePath = null;
-        try {
-            FileObject iconFileObject = ResourceManager.getFileObject(this.getGameManager().getDataCenter().getIconFilePath());
-            iconFilePath = new File(iconFileObject.getURL().toURI()).getAbsolutePath();
-        } catch (FileSystemException | URISyntaxException e) {
-            LOGGER.error("load icon fails : {}", this.getGameManager().getDataCenter().getIconFilePath(), e);
-            e.printStackTrace();
-        }
-
+        FileObject iconFileObject = ResourceManager.getFileObject(this.getGameManager().getDataCenter().getIconFilePath());
+        iconFilePath = ResourceManager.toFile(iconFileObject).getAbsolutePath();
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
     }
@@ -1024,15 +1015,6 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public GameManager getGameManager() {
         return gameManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameManager</code>.</p>
-     *
-     * @param gameManager gameManager
-     */
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
     }
 
     /**

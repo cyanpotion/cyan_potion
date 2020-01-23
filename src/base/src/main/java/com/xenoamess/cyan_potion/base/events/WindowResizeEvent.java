@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,19 @@ import java.util.Set;
 public class WindowResizeEvent implements Event {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(WindowResizeEvent.class);
+
+    private static class EmptyWindowResizeEvent extends WindowResizeEvent implements EmptyEvent {
+        public EmptyWindowResizeEvent() {
+            super(0, 0, 0);
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    public static final WindowResizeEvent EMPTY = new WindowResizeEvent.EmptyWindowResizeEvent();
 
     private final long window;
     private final int width;

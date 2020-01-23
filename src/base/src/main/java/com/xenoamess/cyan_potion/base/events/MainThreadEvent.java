@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,19 @@ import java.util.Set;
  * @version 0.143.0
  */
 public interface MainThreadEvent extends Event {
+    class EmptyMainThreadEvent implements MainThreadEvent, EmptyEvent {
+        public EmptyMainThreadEvent() {
+            super();
+        }
+
+        @Override
+        public Set<Event> apply(GameManager gameManager) {
+            return null;
+        }
+    }
+
+    MainThreadEvent EMPTY = new MainThreadEvent.EmptyMainThreadEvent();
+
     /**
      * {@inheritDoc}
      */

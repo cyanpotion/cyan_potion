@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 XenoAmess
+ * Copyright (c) 2020 XenoAmess
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,10 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
+
+    Event EMPTY = new EmptyEvent() {
+    };
+
     /**
      * {@inheritDoc}
      */
