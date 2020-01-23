@@ -35,11 +35,9 @@ public class TestSpace {
     public void test() {
         File file1 = ResourceManager.toFile(ResourceManager.resolveFile("resources/test/1 1"));
         Assertions.assertNotNull(file1);
-        Assertions.assertTrue(file1.isFile());
         System.out.println(file1.getAbsolutePath());
         File file2 = ResourceManager.toFile(ResourceManager.resolveFile("resources/test/好"));
         Assertions.assertNotNull(file2);
-        Assertions.assertTrue(file1.isFile());
         System.out.println(file2.getAbsolutePath());
     }
 }
