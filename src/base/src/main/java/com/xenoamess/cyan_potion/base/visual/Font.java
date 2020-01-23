@@ -256,6 +256,9 @@ public class Font extends AbstractResource {
                 scaleY = scaleX;
             }
             this.setScaleXY(scaleX, scaleY);
+            if (this.height < 0) {
+                this.height = this.width / x3 * y3;
+            }
         }
 
         public void bake() {
