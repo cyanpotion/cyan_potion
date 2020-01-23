@@ -22,8 +22,7 @@
  * SOFTWARE.
  */
 
-import org.apache.commons.vfs2.FileSystemException;
-import org.apache.commons.vfs2.VFS;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.junit.jupiter.api.Test;
 
 public class FileManagerTest {
@@ -31,11 +30,7 @@ public class FileManagerTest {
     public void test() {
         System.out.println(org.apache.commons.httpclient.HttpClient.class);
         System.out.println(org.apache.jackrabbit.webdav.client.methods.DavMethod.class);
-        try {
-            VFS.getManager();
-        } catch (FileSystemException e) {
-            e.printStackTrace();
-        }
+        ResourceManager.getFileSystemManager();
     }
 
 }
