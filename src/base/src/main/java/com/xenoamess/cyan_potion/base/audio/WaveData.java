@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryUtil;
@@ -170,7 +171,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      *
      * @param resourceFileObject resourceFileObject
      */
-    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException {
+    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException, FileSystemException {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
@@ -191,8 +192,8 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         } catch (Exception e) {
             try {
                 this.readVorbis(resourceFileObject);
-            } catch (FailedToOpenOggVorbisFileException ex) {
-                LOGGER.error("failed to open ogg vorbis file:{}", resourceInfo, ex);
+            } catch (FailedToOpenOggVorbisFileException | FileSystemException ex) {
+                LOGGER.error("failed to open ogg vorbis file : {}", resourceInfo, ex);
             }
         }
 
