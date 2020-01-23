@@ -19,7 +19,7 @@
     </licenses>
     <developers>
         <developer>
-            <name>Jin Xu</name>
+            <name>XenoAmess</name>
             <email>xenoamess@gmail.com</email>
             <organization>XenoAmess</organization>
             <url>https://github.com/xenoamess</url>
@@ -1475,11 +1475,6 @@
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections</artifactId>
             <version>${eclipse-collections.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.11</version>
         </dependency>
     </dependencies>
 
