@@ -108,7 +108,7 @@ public class DataCenter {
     }
 
     @AsFinalField
-    private static ObjectMapper objectMapper = null;
+    private static ObjectMapper objectMapper;
 
     /**
      * <p>Getter for the field <code>objectMapper</code>.</p>

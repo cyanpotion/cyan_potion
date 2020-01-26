@@ -99,12 +99,12 @@ public class GameManager implements AutoCloseable {
     private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
 
     @AsFinalField
-    private ConsoleThread consoleThread = null;
+    private ConsoleThread consoleThread;
     @AsFinalField
-    private GameWindow gameWindow = null;
+    private GameWindow gameWindow;
     private final Callbacks callbacks = new Callbacks(this);
     @AsFinalField
-    private SteamUserStats steamUserStats = null;
+    private SteamUserStats steamUserStats;
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
@@ -147,6 +147,23 @@ public class GameManager implements AutoCloseable {
         return res;
     }
 
+    /**
+     * <p>generateArgsArray.</p>
+     *
+     * @param argsMap argsMap.
+     * @return return
+     */
+    public static String[] generateArgsArray(Map<String, String> argsMap) {
+        ArrayList<String> res = new ArrayList<>();
+        if (argsMap == null) {
+            return res.toArray(new String[0]);
+        }
+        for (Map.Entry<String, String> au : argsMap.entrySet()) {
+            res.add(au.getKey() + '=' + au.getValue());
+        }
+        return res.toArray(new String[0]);
+    }
+
 
     /**
      * <p>Constructor for GameManager.</p>
@@ -154,27 +171,7 @@ public class GameManager implements AutoCloseable {
      * @param args an array of {@link java.lang.String} objects.
      */
     public GameManager(String[] args) {
-        super();
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("New game start at time : {}", new Date());
-        this.setArgsMap(generateArgsMap(args));
-
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("Args : ->");
-        for (Map.Entry entry : this.getArgsMap().entrySet()) {
-            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
-        }
-        LOGGER.info(LINE_SEGMENT);
-
-        LOGGER.info("Platform : ->");
-        Properties properties = System.getProperties();
-        for (Map.Entry entry : properties.entrySet()) {
-            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
-        }
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
+        this(generateArgsMap(args));
     }
 
     /**
@@ -191,8 +188,27 @@ public class GameManager implements AutoCloseable {
      * @param argsMap argsMap
      */
     public GameManager(Map<String, String> argsMap) {
-        this();
+        super();
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("New game start at time : {}", new Date());
         this.setArgsMap(argsMap);
+
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("Args : ->");
+        for (Map.Entry entry : this.getArgsMap().entrySet()) {
+            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
+        }
+        LOGGER.info(LINE_SEGMENT);
+
+        LOGGER.info("Platform : ->");
+        Properties properties = System.getProperties();
+        for (Map.Entry entry : properties.entrySet()) {
+            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
+        }
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
     }
 
     /**
@@ -243,6 +259,11 @@ public class GameManager implements AutoCloseable {
      * <p>startup.</p>
      */
     public void startup() {
+        if (this.getAlive()) {
+            return;
+        }
+        setAlive(true);
+
         this.registerCyanPotionURLStreamHandlerFactory();
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         this.loadSettingTree();
@@ -250,7 +271,7 @@ public class GameManager implements AutoCloseable {
         this.readKeymap();
         this.initSteam();
         this.loadText();
-        setAlive(true);
+
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
@@ -576,7 +597,7 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
-        this.getGameWindowComponentTree().init(this.getGameWindow());
+        this.getGameWindowComponentTree().init(gameWindow);
         this.getGameWindow().init();
 
 
