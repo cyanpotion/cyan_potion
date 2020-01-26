@@ -150,7 +150,6 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     @Override
     public void close() {
         this.setAlive(false);
-        //TODO
     }
 
     private final Map<String, EventProcessor> classNameToProcessorMap = new ConcurrentHashMap<>();

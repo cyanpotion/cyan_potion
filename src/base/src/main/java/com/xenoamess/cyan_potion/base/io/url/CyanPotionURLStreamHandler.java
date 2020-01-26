@@ -30,9 +30,7 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 /**
- * //TODO
- * This class is not stable yet.
- * Will be removed or modified in future.
+ * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
  */

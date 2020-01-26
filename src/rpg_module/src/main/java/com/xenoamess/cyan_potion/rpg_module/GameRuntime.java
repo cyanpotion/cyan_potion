@@ -41,10 +41,7 @@ public class GameRuntime {
     private final IntArrayList runtimeIntegerVariables = new IntArrayList();
 
 
-    //TODO
-    //maybe it would be better to write an Item class and an Actor class to
-    // do this.
-    //emmmmmmm
+    //TODO maybe it would be better to write an Item class and an Actor class to do this. emmmmmmm
 
     /**
      * <p>Constructor for GameRuntime.</p>

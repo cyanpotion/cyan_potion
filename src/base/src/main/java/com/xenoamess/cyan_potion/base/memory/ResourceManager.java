@@ -49,9 +49,7 @@ import java.util.function.Function;
 import static org.lwjgl.opengl.GL11.glGetIntegerv;
 
 /**
- * //TODO
- * This class is not stable yet.
- * Will be removed or modified in future.
+ * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
  * @version 0.143.0

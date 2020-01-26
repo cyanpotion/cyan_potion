@@ -36,6 +36,8 @@ import java.net.UnknownServiceException;
 import static com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandler.assureProtocolBeProtocolCyanPotion;
 
 /**
+ * TODO This class is not stable yet. Will be removed or modified in future.
+ *
  * @author XenoAmess
  */
 public class CyanPotionURLConnection extends URLConnection {
