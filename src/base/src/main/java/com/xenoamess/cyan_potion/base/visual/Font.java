@@ -187,6 +187,9 @@ public class Font extends AbstractResource {
 //        }
 
         public void bakePosXY() {
+            assert (this.width >= 0);
+            assert (this.height >= 0);
+
             if (getLeftTopPosX() >= 0 && getLeftTopPosY() >= 0) {
                 setCenterPosX(getLeftTopPosX() + getWidth() / 2f);
                 setCenterPosY(getLeftTopPosY() + getHeight() / 2f);
@@ -258,6 +261,9 @@ public class Font extends AbstractResource {
             this.setScaleXY(scaleX, scaleY);
             if (this.height < 0) {
                 this.height = this.width / x3 * y3;
+            }
+            if (this.width < 0) {
+                this.width = this.height / y3 * x3;
             }
         }
 
