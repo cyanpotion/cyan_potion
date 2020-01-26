@@ -47,6 +47,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.runtime.RuntimeManager;
+import com.xenoamess.cyan_potion.base.runtime.SaveManager;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -117,6 +118,7 @@ public class GameManager implements AutoCloseable {
     private final AudioManager audioManager = new AudioManager(this);
     private final ResourceManager resourceManager = new ResourceManager(this);
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
+    private final SaveManager saveManager = new SaveManager(this);
 
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(4);
@@ -289,6 +291,8 @@ public class GameManager implements AutoCloseable {
         this.getGamepadInputManager().init(this);
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
 
+        this.getSaveManager().init();
+
         this.setStartingContent();
         final String defaultFontResourceJsonString =
                 getString(this.getDataCenter().getCommonSettings(),
@@ -357,6 +361,10 @@ public class GameManager implements AutoCloseable {
 
         this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
+        this.getDataCenter().setGameName(getString(this.getDataCenter().getCommonSettings(),
+                STRING_GAME_NAME, "nameless"));
+        this.getDataCenter().setGameVersion(getString(this.getDataCenter().getCommonSettings(),
+                STRING_GAME_VERSION, "1.0"));
         this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
         this.getDataCenter().setIconFilePath(getString(this.getDataCenter().getCommonSettings(),
@@ -1039,4 +1047,11 @@ public class GameManager implements AutoCloseable {
         this.canRender = canRender;
     }
 
+    public RuntimeManager getRuntimeManager() {
+        return runtimeManager;
+    }
+
+    public SaveManager getSaveManager() {
+        return saveManager;
+    }
 }

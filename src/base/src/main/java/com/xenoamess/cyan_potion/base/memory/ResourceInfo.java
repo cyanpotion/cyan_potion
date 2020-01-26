@@ -41,7 +41,7 @@ import java.io.IOException;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
-class ResourceJsonSerializer extends JsonSerializer<ResourceInfo> {
+class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
     @Override
     public void serialize(ResourceInfo value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
@@ -59,9 +59,9 @@ class ResourceJsonSerializer extends JsonSerializer<ResourceInfo> {
     }
 }
 
-class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
+class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(ResourceJsonDeserializer.class);
+            LoggerFactory.getLogger(ResourceInfoDeserializer.class);
 
     @Override
     public ResourceInfo deserialize(JsonParser jp, DeserializationContext ctxt)
@@ -94,8 +94,8 @@ class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
     }
 }
 
-@JsonSerialize(using = ResourceJsonSerializer.class)
-@JsonDeserialize(using = ResourceJsonDeserializer.class)
+@JsonSerialize(using = ResourceInfoSerializer.class)
+@JsonDeserialize(using = ResourceInfoDeserializer.class)
 public class ResourceInfo<T extends AbstractResource> {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);

@@ -24,16 +24,48 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
-import org.apache.commons.lang3.NotImplementedException;
+import com.xenoamess.cyan_potion.base.GameManager;
 
-//TODO
 public class SaveManager {
-    public <T extends RuntimeVariableStruct> void save(T runtimeVariableStruct, RuntimeVariableStructSaver<T> runtimeVariableStructSaver) {
-        throw new NotImplementedException("");
+    private GameManager gameManager;
+
+    public SaveManager(GameManager gameManager) {
+        this.setGameManager(gameManager);
     }
 
-    public <T extends RuntimeVariableStruct> T load(RuntimeVariableStructSaver<T> runtimeVariableStructSaver) {
-        throw new NotImplementedException("");
+    private static final int saveFileMaxNum = 1000;
+
+    private SaveFileObject currentSaveFileObject;
+
+    public SaveFileObject getSaveFileObject(int index) {
+        String saveFolderPath = System.getProperty("user.home") + "/cyan_potion/" + this.getGameManager().getDataCenter().getGameName() + "/" + index + "/";
+        SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
+        return saveFileObject;
     }
 
+    public void init() {
+        this.pickCurrentSaveFileObject(0);
+    }
+
+    public SaveFileObject pickCurrentSaveFileObject(int index) {
+        SaveFileObject result = getSaveFileObject(index);
+        setCurrentSaveFileObject(result);
+        return result;
+    }
+
+    public SaveFileObject getCurrentSaveFileObject() {
+        return currentSaveFileObject;
+    }
+
+    public void setCurrentSaveFileObject(SaveFileObject currentSaveFileObject) {
+        this.currentSaveFileObject = currentSaveFileObject;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 }

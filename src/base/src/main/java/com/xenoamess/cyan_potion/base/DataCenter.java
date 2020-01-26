@@ -97,6 +97,8 @@ public class DataCenter {
 
     private final GameManager gameManager;
     private String titleTextID;
+    private String gameName;
+    private String gameVersion;
 
     /**
      * <p>Constructor for DataCenter.</p>
@@ -358,5 +360,21 @@ public class DataCenter {
      */
     public void setUsingJXInput(boolean usingJXInput) {
         this.usingJXInput = usingJXInput;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameVersion() {
+        return gameVersion;
+    }
+
+    public void setGameVersion(String gameVersion) {
+        this.gameVersion = gameVersion;
     }
 }

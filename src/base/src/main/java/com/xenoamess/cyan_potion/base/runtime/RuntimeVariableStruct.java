@@ -24,7 +24,39 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
-//TODO
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.xenoamess.cyan_potion.base.DataCenter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class RuntimeVariableStruct {
-    public abstract void save(RuntimeVariableStructSaver runtimeVariableStructSaver);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(RuntimeManager.class);
+
+    RuntimeVariableStruct() {
+
+    }
+
+    public void fill(RuntimeVariableStruct runtimeVariableStruct) {
+        assert (runtimeVariableStruct != null);
+        assert (runtimeVariableStruct.getClass().equals(this.getClass()));
+        this.loadFromString(runtimeVariableStruct.saveToString());
+    }
+
+    public String saveToString() {
+        String res = "";
+        try {
+            res = DataCenter.getObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("cannot toString", e);
+        }
+        return res;
+    }
+
+    public abstract void loadFromString(String string);
+
+    @Override
+    public String toString() {
+        return this.saveToString();
+    }
 }

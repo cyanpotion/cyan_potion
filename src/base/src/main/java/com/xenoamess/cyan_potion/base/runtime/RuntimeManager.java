@@ -25,10 +25,19 @@
 package com.xenoamess.cyan_potion.base.runtime;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-//TODO
+import java.util.ArrayList;
+import java.util.List;
+
 public class RuntimeManager {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(RuntimeManager.class);
+
     private final GameManager gameManager;
+
+    private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();
 
     /**
      * <p>Constructor for DataCenter.</p>
@@ -41,6 +50,55 @@ public class RuntimeManager {
 
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    public <T extends RuntimeVariableStruct> void registerRuntimeVariableStruct(
+            T runtimeVariableStruct
+    ) {
+        runtimeVariableStructList.add(runtimeVariableStruct);
+    }
+
+    /**
+     * Load index'th save file.
+     * Notice that you can always add new RuntimeVariableStruct to your game, as well as you make sure every of them are registered.
+     * But:
+     * 1. you can't change the order they add.
+     * 2. you can't delete some of the RuntimeVariableStruct in runtimeVariableStructList
+     * 3. all RuntimeVariableStructs MUST be added to runtimeVariableStructList before you load a save file.
+     *
+     * @param index
+     */
+    public void load(int index) {
+        List<RuntimeVariableStruct> runtimeVariableStructList = gameManager.getSaveManager().pickCurrentSaveFileObject(index).load();
+        for (int i = 0; i < runtimeVariableStructList.size(); i++) {
+            this.runtimeVariableStructList.get(i).fill(runtimeVariableStructList.get(i));
+        }
+    }
+
+    public void load() {
+        List<RuntimeVariableStruct> runtimeVariableStructList = gameManager.getSaveManager().getCurrentSaveFileObject().load();
+        for (int i = 0; i < runtimeVariableStructList.size(); i++) {
+            this.runtimeVariableStructList.get(i).fill(runtimeVariableStructList.get(i));
+        }
+    }
+
+
+    /**
+     * Save into index'th save file.
+     * Notice that you can always add new RuntimeVariableStruct to your game, as well as you make sure every of them are registered.
+     * But:
+     * 1. you can't change the order they add.
+     * 2. you can't delete some of the RuntimeVariableStruct in runtimeVariableStructList
+     * 3. all RuntimeVariableStructs MUST be added to runtimeVariableStructList before you load a save file.
+     *
+     * @param index
+     */
+    public void save(int index) {
+        gameManager.getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
+    }
+
+    public void save() {
+        gameManager.getSaveManager().getCurrentSaveFileObject().save(this.runtimeVariableStructList);
     }
 
 }
