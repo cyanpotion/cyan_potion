@@ -114,7 +114,7 @@ public class Font extends AbstractResource {
     private final List<STBTTPackedchar.Buffer> charDatas = new ArrayList<>();
 
     @AsFinalField
-    private static Font defaultFont = null;
+    private static final Font defaultFont = null;
 
     private static Font currentFont;
 
@@ -442,7 +442,7 @@ public class Font extends AbstractResource {
      * this buffer will be freed after init(),
      * so please does never use it after that.
      */
-    private List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
+    private final List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
 
     /**
      * <p>loadBitmap.</p>
@@ -685,7 +685,7 @@ public class Font extends AbstractResource {
             lastYShould = drawTextStruct.leftTopPosY;
             glEnd();
         }
-        drawTextStruct.setWidthHeight(lastXReal - drawTextStruct.leftTopPosX, lastYReal - drawTextStruct.leftTopPosY);
+        drawTextStruct.setWidth(lastXReal - drawTextStruct.leftTopPosX);
         drawTextStruct.bake();
         return drawTextStruct;
     }
