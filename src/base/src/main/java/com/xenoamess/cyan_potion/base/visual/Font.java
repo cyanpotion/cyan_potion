@@ -114,7 +114,7 @@ public class Font extends AbstractResource {
     private final List<STBTTPackedchar.Buffer> charDatas = new ArrayList<>();
 
     @AsFinalField
-    private static Font defaultFont = null;
+    private static Font defaultFont;
 
     private static Font currentFont;
 
