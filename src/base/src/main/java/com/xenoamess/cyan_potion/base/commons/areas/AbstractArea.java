@@ -60,6 +60,73 @@ public interface AbstractArea {
         return this.getLeftTopPosY() + this.getHeight() / 2F;
     }
 
+
+    default float getLeftPosX() {
+        return this.getLeftTopPosX();
+    }
+
+    default float getRightPosX() {
+        return this.getLeftPosX() + this.getWidth();
+    }
+
+    default float getTopPosY() {
+        return this.getLeftTopPosY();
+    }
+
+    default float getBottomPosY() {
+        return this.getTopPosY() + this.getHeight();
+    }
+
+
+    default float getLeftBottomPosX() {
+        return this.getLeftPosX();
+    }
+
+    default float getLeftBottomPosY() {
+        return this.getBottomPosY();
+    }
+
+    default float getRightTopPosX() {
+        return this.getRightPosX();
+    }
+
+    default float getRightTopPosY() {
+        return this.getTopPosY();
+    }
+
+    default float getRightBottomPosX() {
+        return this.getRightPosX();
+    }
+
+    default float getRightBottomPosY() {
+        return this.getBottomPosY();
+    }
+
+    default float getLeftCenterPosX() {
+        return this.getLeftPosX();
+    }
+
+    default float getLeftCenterPosY() {
+        return this.getCenterPosY();
+    }
+
+    default float getCenterTopPosX() {
+        return this.getCenterPosX();
+    }
+
+    default float getCenterTopPosY() {
+        return this.getTopPosY();
+    }
+
+    default float getCenterBottomPosX() {
+        return this.getCenterPosX();
+    }
+
+    default float getCenterBottomPosY() {
+        return this.getBottomPosY();
+    }
+
+
     /**
      * <p>getWidth.</p>
      *
