@@ -122,7 +122,7 @@ public class Font extends AbstractResource {
     private GameWindow gameWindow;
 
     public static class DrawTextStruct {
-        private Font font = Font.defaultFont;
+        private Font font = Font.currentFont;
         private float leftTopPosX = -1;
         private float leftTopPosY = -1;
         private float centerPosX = -1;
@@ -398,7 +398,7 @@ public class Font extends AbstractResource {
 
         public void setFont(Font font) {
             if (font == null) {
-                font = Font.defaultFont;
+                font = Font.currentFont;
             }
             this.font = font;
         }
