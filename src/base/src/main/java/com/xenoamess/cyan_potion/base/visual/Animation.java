@@ -77,9 +77,7 @@ public class Animation extends AbstractPicture {
     }
 
     /**
-     * <p>getCurrentBindable.</p>
-     *
-     * @return return
+     * {@inheritDoc}
      */
     @Override
     public Bindable getCurrentBindable() {
