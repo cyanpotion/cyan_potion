@@ -27,10 +27,10 @@ package com.xenoamess.cyan_potion.base.runtime;
 import com.xenoamess.cyan_potion.base.GameManager;
 
 /**
- * SaveManager.
+ * SaveManager
  * A manager class for saving and loading, and other save file operations.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.148.8
  */
 public class SaveManager {

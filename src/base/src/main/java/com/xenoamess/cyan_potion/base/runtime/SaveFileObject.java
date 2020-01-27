@@ -48,7 +48,7 @@ import java.util.List;
  * path+status is a file that contains some infos of this save file.
  * other files with number name, they are json file containing data.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.148.8
  * @see SaveFileObjectStatus
  * @see SaveFileContent

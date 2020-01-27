@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * EmptyEvent means an Event which contains nothing meaningful in it.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.148.8
  */
 public interface EmptyEvent extends Event {

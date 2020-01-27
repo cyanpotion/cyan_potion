@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * and several RuntimeVariableStructs are acceptable,
  * if you wanna add a whole new module like dlc or something you can add it.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.148.8
  */
 public abstract class RuntimeVariableStruct {

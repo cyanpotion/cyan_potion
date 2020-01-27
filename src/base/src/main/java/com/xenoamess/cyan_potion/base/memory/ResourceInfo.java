@@ -106,7 +106,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * There will be one and only resource instance linked to each ResourceInfo instance.
  * equal ResourceInfo instances are linked to a same resource instance.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.148.8
  */
 @JsonSerialize(using = ResourceInfoSerializer.class)
