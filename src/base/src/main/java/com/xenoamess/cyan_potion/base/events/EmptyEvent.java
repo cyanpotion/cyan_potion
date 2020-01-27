@@ -47,6 +47,8 @@ public interface EmptyEvent extends Event {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * do nothing
      *
      * @param gameManager don't care

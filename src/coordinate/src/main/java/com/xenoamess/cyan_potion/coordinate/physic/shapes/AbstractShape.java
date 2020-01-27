@@ -95,9 +95,11 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>relation.</p>
      *
-     * @param k     a K object.
-     * @param v     a V object.
-     * @param rough a boolean.
+     * @param k     shape.
+     * @param v     another shape.
+     * @param rough if rough.
+     * @param <K>   shape class.
+     * @param <V>   another shape class.
      * @return return
      */
     public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
@@ -261,8 +263,9 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>copy.</p>
      *
-     * @param source a T object.
-     * @return a T object.
+     * @param source source shape.
+     * @param <T>    shape class.
+     * @return copied shape
      */
     public static <T extends AbstractShape> T copy(T source) {
         T res;

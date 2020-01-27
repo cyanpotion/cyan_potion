@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ * <p>ResourceSizeLargerThanGlMaxTextureSizeException class.</p>
+ *
  * @author XenoAmess
  * @version 0.143.0
  * @see ResourceSizeLargerThanGlMaxTextureSizeException#check

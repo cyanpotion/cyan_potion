@@ -79,6 +79,7 @@ public abstract class RuntimeVariableStruct {
      *
      * @param string      json string
      * @param classObject class of the RuntimeVariableStruct
+     * @param <T>         class of the RuntimeVariableStruct
      * @return a {@link java.lang.Object} object.
      */
     public static <T extends RuntimeVariableStruct> T loadFromString(String string, Class<T> classObject) {
@@ -95,6 +96,7 @@ public abstract class RuntimeVariableStruct {
      * save a RuntimeVariableStruct to a String
      *
      * @param runtimeVariableStruct the struct you wanna save.
+     * @param <T>                   class of the RuntimeVariableStruct
      * @return json string
      */
     public static <T extends RuntimeVariableStruct> String saveToString(T runtimeVariableStruct) {

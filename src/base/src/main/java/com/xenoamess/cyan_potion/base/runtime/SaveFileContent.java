@@ -160,7 +160,7 @@ class SaveFileContent {
     /**
      * <p>Getter for the field <code>runtimeVariableStructList</code>.</p>
      *
-     * @return a {@link java.util.List} object.
+     * @param runtimeVariableStructList a {@link java.util.List} object.
      */
     public void setRuntimeVariableStructList(List<RuntimeVariableStruct> runtimeVariableStructList) {
         this.runtimeVariableStructList.clear();

@@ -226,5 +226,4 @@ public class ResourceInfo<T extends AbstractResource> {
     public int hashCode() {
         return this.toString().hashCode();
     }
-
 }

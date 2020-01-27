@@ -146,6 +146,8 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
 
     /**
      * {@inheritDoc}
+     *
+     * @return a float.
      */
     public float getLeftTopPosY() {
         return leftTopPosY;

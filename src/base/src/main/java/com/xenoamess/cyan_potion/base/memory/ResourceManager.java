@@ -187,26 +187,70 @@ public class ResourceManager implements AutoCloseable {
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Void>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
+    /**
+     * <p>defaultResourcesURIMapGet.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    a T object.
+     * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
+     */
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapGet(Class<T> tClass) {
         return (ConcurrentHashMap) defaultResourcesURIMap.get(tClass);
     }
 
+    /**
+     * <p>defaultResourcesURIMapPut.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
+     * @param <T>    a T object.
+     * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
+     */
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapPut(Class<T> tClass, ConcurrentHashMap<ResourceInfo<T>, T> map) {
         return defaultResourcesURIMap.put(tClass, (ConcurrentHashMap) map);
     }
 
+    /**
+     * <p>defaultResourcesURIMapContainsKey.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    a T object.
+     * @return a boolean.
+     */
     protected <T extends AbstractResource> boolean defaultResourcesURIMapContainsKey(Class<T> tClass) {
         return defaultResourcesURIMap.containsKey(tClass);
     }
 
+    /**
+     * <p>defaultResourcesLoaderMapGet.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    a T object.
+     * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
+     */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapGet(Class<T> tClass) {
         return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
     }
 
+    /**
+     * <p>defaultResourcesLoaderMapPut.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
+     * @param <T>    a T object.
+     * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
+     */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Void>> map) {
         return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
 
+    /**
+     * <p>defaultResourcesLoaderMapContainsKey.</p>
+     *
+     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    a T object.
+     * @return a boolean.
+     */
     protected <T extends AbstractResource> boolean defaultResourcesLoaderMapContainsKey(Class<T> tClass) {
         return defaultResourcesLoaderMap.containsKey(tClass);
     }
@@ -295,7 +339,7 @@ public class ResourceManager implements AutoCloseable {
      * <p>getResourceFromShortenURI.</p>
      *
      * @param resourceInfo resourceInfo
-     * @param <T>          a T object.
+     * @param <T>          resourceInfo class
      * @return a T object.
      */
     public <T extends AbstractResource> T getResource(ResourceInfo<T> resourceInfo) {
@@ -307,7 +351,7 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass           a {@link java.lang.Class} object.
      * @param resourceInfoJson resourceInfo
-     * @param <T>              a T object.
+     * @param <T>              resourceInfo class
      * @return a T object.
      */
     public <T extends AbstractResource> T getResource(Class<T> tClass,
@@ -319,6 +363,7 @@ public class ResourceManager implements AutoCloseable {
      * <p>ifExistResourceFromShortenURI.</p>
      *
      * @param resourceInfo resourceInfo
+     * @param <T>          resourceInfo class
      * @return a boolean.
      */
     public <T extends AbstractResource> boolean ifExistResource(ResourceInfo<T> resourceInfo) {
@@ -347,7 +392,7 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceInfo resourceInfo
-     * @param <T>          a T object.
+     * @param <T>          resourceInfo class
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo<T> resourceInfo) {
@@ -373,7 +418,7 @@ public class ResourceManager implements AutoCloseable {
      * <p>fetchResource.</p>
      *
      * @param resourceInfo resourceInfo
-     * @param <T>          a T object.
+     * @param <T>          resourceInfo class
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(ResourceInfo<T> resourceInfo) {
@@ -385,7 +430,7 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass           a {@link java.lang.Class} object.
      * @param resourceInfoJson resource Info Json String
-     * @param <T>              a T object.
+     * @param <T>              resourceInfo class
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
@@ -399,7 +444,7 @@ public class ResourceManager implements AutoCloseable {
      * @param type             a {@link java.lang.String} object.
      * @param fileObjectString a {@link java.lang.String} object.
      * @param values           a {@link java.lang.String} object.
-     * @param <T>              a T object.
+     * @param <T>              resource class
      * @return a T object.
      */
     public <T extends AbstractResource> T
