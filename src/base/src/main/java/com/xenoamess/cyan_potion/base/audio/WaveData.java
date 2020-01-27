@@ -142,6 +142,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * <p>readVorbis.</p>
      *
      * @param vorbis vorbis
+     * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.
      */
     public void readVorbis(ByteBuffer vorbis) throws FailedToOpenOggVorbisFileException {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
@@ -170,6 +171,8 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * <p>readVorbis.</p>
      *
      * @param resourceFileObject resourceFileObject
+     * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.
+     * @throws org.apache.commons.vfs2.FileSystemException                                  if any.
      */
     public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException, FileSystemException {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
