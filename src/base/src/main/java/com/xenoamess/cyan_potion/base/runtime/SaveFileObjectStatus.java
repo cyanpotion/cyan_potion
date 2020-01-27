@@ -27,6 +27,13 @@ package com.xenoamess.cyan_potion.base.runtime;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoamess.cyan_potion.base.DataCenter;
 
+/**
+ * status of SaveFileObject
+ *
+ * @author XenoAmess
+ * @version 0.148.8
+ * @see SaveFileObject
+ */
 public class SaveFileObjectStatus {
     private String version;
     private long lastSaveTime;
@@ -37,9 +44,17 @@ public class SaveFileObjectStatus {
      */
     private int nowIndex = -1;
 
+    /**
+     * <p>Constructor for SaveFileObjectStatus.</p>
+     */
     public SaveFileObjectStatus() {
     }
 
+    /**
+     * <p>Constructor for SaveFileObjectStatus.</p>
+     *
+     * @param saveFileObjectStatus a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObjectStatus} object.
+     */
     public SaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {
         if (saveFileObjectStatus != null) {
             this.version = saveFileObjectStatus.version;
@@ -49,30 +64,63 @@ public class SaveFileObjectStatus {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>lastSaveTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLastSaveTime() {
         return lastSaveTime;
     }
 
+    /**
+     * <p>Setter for the field <code>lastSaveTime</code>.</p>
+     *
+     * @param lastSaveTime a long.
+     */
     public void setLastSaveTime(long lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
 
+    /**
+     * <p>Getter for the field <code>lastLoadTime</code>.</p>
+     *
+     * @return a long.
+     */
     public long getLastLoadTime() {
         return lastLoadTime;
     }
 
+    /**
+     * <p>Setter for the field <code>lastLoadTime</code>.</p>
+     *
+     * @param lastLoadTime a long.
+     */
     public void setLastLoadTime(long lastLoadTime) {
         this.lastLoadTime = lastLoadTime;
     }
 
+    /**
+     * <p>Getter for the field <code>nowIndex</code>.</p>
+     *
+     * @return nowIndex
+     */
     public int getNowIndex() {
         return nowIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>nowIndex</code>.</p>
+     *
+     * @param nowIndex nowIndex
+     */
     public void setNowIndex(int nowIndex) {
         this.nowIndex = nowIndex;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         String result = "null";
@@ -84,10 +132,20 @@ public class SaveFileObjectStatus {
         return result;
     }
 
+    /**
+     * <p>Getter for the field <code>version</code>.</p>
+     *
+     * @return version
+     */
     public String getVersion() {
         return version;
     }
 
+    /**
+     * <p>Setter for the field <code>version</code>.</p>
+     *
+     * @param version version
+     */
     public void setVersion(String version) {
         this.version = version;
     }
