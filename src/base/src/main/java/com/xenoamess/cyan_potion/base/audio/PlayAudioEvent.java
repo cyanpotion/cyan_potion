@@ -110,9 +110,9 @@ public class PlayAudioEvent implements MainThreadEvent {
             this.setPitch(source.getPitch());
             this.setPosition(source.getPosition());
             this.setVelocity(source.getVelocity());
-            this.setRelative(source.getRelative());
+            this.setRelative(source.isRelative());
             this.setRollOffFactor(source.getRollOffFactor());
-            this.setLooping(source.getLooping());
+            this.setLooping(source.isLooping());
         }
     }
 
