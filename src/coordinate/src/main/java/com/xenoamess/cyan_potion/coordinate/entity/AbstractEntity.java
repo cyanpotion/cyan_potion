@@ -35,15 +35,20 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 /**
- * <p>Abstract AbstractEntity class.</p>
+ * Entity means some thing in your game, alive or not.
+ * it can be a tree, a person, a player, or something.
+ * it can have size, have shape, have picture.
+ * But you can also make it dont't have them.
+ * Entity just mean a basic Object in cyan_potion.coordinate
+ * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an Entity.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
 public abstract class AbstractEntity implements AbstractMutableArea {
     private final AbstractEntityScene scene;
-    private Vector3f centerPos;
-    private Vector3f size;
+    private final Vector3f centerPos;
+    private final Vector3f size;
     private AbstractShape shape;
     private AbstractPicture picture = new Picture();
 
@@ -61,8 +66,8 @@ public abstract class AbstractEntity implements AbstractMutableArea {
                           Vector3f size, Bindable bindable,
                           AbstractShape shape) {
         this.scene = scene;
-        this.setCenterPos(new Vector3f(centerPos));
-        this.setSize(new Vector3f(size));
+        this.centerPos = new Vector3f(centerPos);
+        this.size = new Vector3f(size);
         this.setShape(shape);
         if (this.getShape() != null) {
             this.getShape().setEntity(this);
@@ -73,6 +78,8 @@ public abstract class AbstractEntity implements AbstractMutableArea {
 
     /**
      * <p>Getter for the field <code>picture</code>.</p>
+     *
+     * @param picture a {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture} object.
      */
     public void setPicture(AbstractPicture picture) {
         this.picture = picture;
@@ -100,9 +107,9 @@ public abstract class AbstractEntity implements AbstractMutableArea {
     }
 
     /**
-     * <p>register.</p>
+     * register this.shape into the scene if shape exist
      */
-    public void register() {
+    public void registerShape() {
         if (this.getShape() != null) {
             this.getShape().register();
         }
@@ -133,7 +140,9 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      * @param centerPos centerPos
      */
     public void setCenterPos(Vector3f centerPos) {
-        this.centerPos = centerPos;
+        if (centerPos != null) {
+            this.centerPos.set(centerPos);
+        }
     }
 
     /**
@@ -151,7 +160,9 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      * @param size size
      */
     public void setSize(Vector3f size) {
-        this.size = size;
+        if (size != null) {
+            this.size.set(size);
+        }
     }
 
     /**
@@ -204,21 +215,33 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         this.getCenterPos().y = newCenterPosY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getLeftTopPosX() {
         return this.getCenterPosX() - getWidth() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getLeftTopPosY() {
         return this.getCenterPosY() - getHeight() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeftTopPosX(float newLeftTopPosX) {
         this.setCenterPosX(newLeftTopPosX + getWidth() / 2);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeftTopPosY(float newLeftTopPosY) {
         this.setCenterPosY(newLeftTopPosY + getHeight() / 2);
