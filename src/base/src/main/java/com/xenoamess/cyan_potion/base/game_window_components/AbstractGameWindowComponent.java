@@ -75,7 +75,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * @see AbstractGameWindowComponent#registerProcessor(String, EventProcessor)
      * @see AbstractGameWindowComponent#registerProcessor(Class, EventProcessor)
      */
-    private final Map<Class, EventProcessor> eventClassToProcessorMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Event>, EventProcessor<? extends Event>> eventClassToProcessorMap = new ConcurrentHashMap<>();
 
 
     /**
@@ -181,12 +181,10 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      *
      * @param eventType eventType
      * @param processor eventType
-     * @param <T>       a T object.
      */
-    public <T extends Event> void registerProcessor(String eventType,
-                                                    EventProcessor<T> processor) {
+    public <P extends Event> void registerProcessor(String eventType, EventProcessor<P> processor) {
         try {
-            this.getEventClassToProcessorMap().put(Class.forName(eventType), processor);
+            this.eventClassToProcessorMapPut((Class<? extends P>) Class.forName(eventType), processor);
         } catch (ClassNotFoundException e) {
             LOGGER.error("cannot get class : {}", eventType, e);
         }
@@ -200,8 +198,8 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * @param <T>        a T object.
      */
     public <T extends Event> void registerProcessor(Class<T> eventClass,
-                                                    EventProcessor<T> processor) {
-        this.getEventClassToProcessorMap().put(eventClass, processor);
+                                                    EventProcessor<? super T> processor) {
+        this.eventClassToProcessorMapPut(eventClass, processor);
     }
 
     /**
@@ -210,10 +208,10 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * @param eventType eventType
      * @return return
      */
-    public EventProcessor getProcessor(String eventType) {
-        EventProcessor res = null;
+    public <P extends Event> EventProcessor<P> getProcessor(String eventType) {
+        EventProcessor<P> res = null;
         try {
-            res = this.getEventClassToProcessorMap().get(Class.forName(eventType));
+            res = (EventProcessor<P>) this.eventClassToProcessorMapGet((Class<? extends P>) Class.forName(eventType));
         } catch (ClassNotFoundException e) {
             LOGGER.error("cannot get class : {}", eventType, e);
         }
@@ -221,14 +219,21 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>getProcessor.</p>
+     * get processor of class T.
+     * if class T have no processor registered here,
+     * then will try to get from T's super class.
+     * then super super class.
+     * till Event.class.
      *
      * @param eventClass a {@link java.lang.Class} object.
-     * @param <T>        a T object.
      * @return return
      */
-    public <T extends Event> EventProcessor<T> getProcessor(Class<T> eventClass) {
-        return this.getEventClassToProcessorMap().get(eventClass.getCanonicalName());
+    public <T extends Event> EventProcessor<? super T> getProcessor(Class<T> eventClass) {
+        Class<? super T> nowClass = eventClass;
+        while (nowClass != Event.class && !this.getEventClassToProcessorMap().containsKey(nowClass)) {
+            nowClass = nowClass.getSuperclass();
+        }
+        return this.eventClassToProcessorMapGet(eventClass);
     }
 
 
@@ -249,8 +254,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * @see Event#apply(GameManager)
      */
     public <T extends Event> Event process(T event) {
-        EventProcessor<T> processor =
-                this.getProcessor(event.getClass().getCanonicalName());
+        EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
         if (processor != null) {
             return processor.apply(event);
         }
@@ -276,6 +280,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * <p>
      * I'm thinking about deleting this function
      * because I think this function be meaningless.
+     * I asked myself: why not call this.cover(this.getGameWindow()); direcly?
      */
     public void enlargeAsFullWindow() {
         this.cover(this.getGameWindow());
@@ -286,6 +291,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * <p>
      * I'm thinking about deleting this function
      * because I think this function be meaningless.
+     * I asked myself: why not call this.setCenter(this.getGameWindow()); direcly?
      *
      * @see #setCenter(AbstractArea)
      */
@@ -350,8 +356,29 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
         return this.getGameWindow().getGameManager().getDataCenter();
     }
 
-    protected Map<Class, EventProcessor> getEventClassToProcessorMap() {
+    /**
+     * don't use it if not necessary.
+     * just use eventClassToProcessorMapPut , eventClassToProcessorMapGet , eventClassToProcessorMapContainsKey if you can.
+     *
+     * @return
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapPut
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapGet
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapContainsKey
+     */
+    protected Map<Class<? extends Event>, EventProcessor<? extends Event>> getEventClassToProcessorMap() {
         return eventClassToProcessorMap;
+    }
+
+    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(Class<T> tClass, EventProcessor<? super T> eventProcessor) {
+        return (EventProcessor<? super T>) this.getEventClassToProcessorMap().put(tClass, eventProcessor);
+    }
+
+    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapGet(Class<T> tClass) {
+        return (EventProcessor<? super T>) this.getEventClassToProcessorMap().get(tClass);
+    }
+
+    protected <T extends Event> boolean eventClassToProcessorMapContainsKey(Class<T> tClass) {
+        return this.getEventClassToProcessorMap().containsKey(tClass);
     }
 
     /**
