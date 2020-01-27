@@ -40,14 +40,14 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
     /**
-     * if STRICT be true, then will throw ResourceSizeLargerThanGlMaxTextureSizeException if resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()
+     * if STRICT be true, then will throw ResourceSizeLargerThanGlMaxTextureSizeException if resource.getMemorySize() &gt; resource.getResourceManager().getMaxTextureSize()
      * this shall be true only if you are testing,
      * or on some very special use cases.
      */
     public static boolean STRICT = false;
 
     /**
-     * check if resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()
+     * check if resource.getMemorySize() &gt; resource.getResourceManager().getMaxTextureSize()
      * if so, throw ResourceSizeLargerThanGlMaxTextureSizeException.
      * notice that this only work when STRICT==true.
      *

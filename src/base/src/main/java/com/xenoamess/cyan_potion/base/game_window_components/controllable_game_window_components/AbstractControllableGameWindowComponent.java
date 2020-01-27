@@ -41,7 +41,7 @@ import org.lwjgl.glfw.GLFW;
  */
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**
-     * active means this AbstractControllableGameWindowComponent is active and can sole Events & can update.
+     * active means this AbstractControllableGameWindowComponent is active and can sole Events and can update.
      * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not update anymore.
      */
     private boolean active = true;
