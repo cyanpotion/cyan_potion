@@ -37,11 +37,30 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SaveFileObject
+ * SaveFileObject means a save file.
+ * It is a save file from user sight,
+ * but actually is a set of FileObjects in a folder.
+ * we use several files here for backup,
+ * so if user get save file broken we can get a easy repair plan for them.
+ * basically path is the path of the folder, and it is with the last / .
+ * path+status is a file that contains some infos of this save file.
+ * other files with number name, they are json file containing data.
+ *
+ * @author xenoa
+ * @version 0.148.8
+ * @see SaveFileObjectStatus
+ * @see SaveFileContent
+ */
 public class SaveFileObject {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObject.class);
 
-    public static final int saveBackupNum = 10;
+    /**
+     * Constant <code>saveFileObjectNum=10</code>
+     */
+    public static final int saveFileObjectNum = 10;
 
     private final SaveManager saveManager;
     private final String path;
@@ -106,7 +125,7 @@ public class SaveFileObject {
      * @return loaded RuntimeVariableStructList
      */
     public List<RuntimeVariableStruct> load() {
-        if (this.getSaveFileObjectStatus().getNowIndex() == -1) {
+        if (this.getNowIndex() == -1) {
             LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
             return new ArrayList<>();
         }
@@ -125,10 +144,12 @@ public class SaveFileObject {
     /**
      * load to current saveFileObjectStatus.getNowIndex()+1
      * notice that we will first +1 aveFileObjectStatus.getNowIndex(), then save.
-     * so we hold backups of savefile.
+     * so we can leave some backups of save file.
+     *
+     * @param runtimeVariableStructList list of runtimeVariableStruct to save.
      */
     public void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
-        pickNextSaveBackup();
+        pickNextSaveFileObject();
         long time = System.currentTimeMillis();
         this.getSaveFileObjectStatus().setLastSaveTime(time);
         this.getSaveFileObjectStatus().setLastLoadTime(time);
@@ -145,32 +166,67 @@ public class SaveFileObject {
     }
 
     /**
-     * this.getSaveFileObjectStatus().getNowIndex() += 1
+     * this.getNowIndex() += 1
      */
-    protected void pickNextSaveBackup() {
-        int nextIndex = this.getSaveFileObjectStatus().getNowIndex() + 1;
-        if (nextIndex >= saveBackupNum) {
-            nextIndex %= saveBackupNum;
+    protected void pickNextSaveFileObject() {
+        int nextIndex = this.getNowIndex() + 1;
+        if (nextIndex >= saveFileObjectNum) {
+            nextIndex %= saveFileObjectNum;
         }
-        setSaveBackupIndex(nextIndex);
+        setNowIndex(nextIndex);
     }
 
-    protected void setSaveBackupIndex(int index) {
+    /**
+     * set now used fileObject index
+     *
+     * @return now index
+     */
+    protected int getNowIndex() {
+        return this.getSaveFileObjectStatus().getNowIndex();
+    }
+
+
+    /**
+     * get now used fileObject index
+     *
+     * @param index a int.
+     */
+    protected void setNowIndex(int index) {
         this.getSaveFileObjectStatus().setNowIndex(index);
     }
 
+    /**
+     * <p>Getter for the field <code>saveFileObjectStatus</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObjectStatus} object.
+     */
     protected SaveFileObjectStatus getSaveFileObjectStatus() {
         return saveFileObjectStatus;
     }
 
+    /**
+     * <p>Setter for the field <code>saveFileObjectStatus</code>.</p>
+     *
+     * @param saveFileObjectStatus a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObjectStatus} object.
+     */
     protected void setSaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {
         this.saveFileObjectStatus = saveFileObjectStatus;
     }
 
+    /**
+     * <p>Getter for the field <code>path</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     protected String getPath() {
         return path;
     }
 
+    /**
+     * <p>Getter for the field <code>saveManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveManager} object.
+     */
     protected SaveManager getSaveManager() {
         return saveManager;
     }
