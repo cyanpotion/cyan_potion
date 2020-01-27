@@ -42,10 +42,18 @@ public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
     private int consolePort;
 
+    /**
+     * <p>Constructor for Console.</p>
+     */
     public Console() {
         this(DataCenter.DEFAULT_CONSOLE_PORT);
     }
 
+    /**
+     * <p>Constructor for Console.</p>
+     *
+     * @param consolePort a int.
+     */
     public Console(int consolePort) {
         this.consolePort = consolePort;
     }
@@ -96,10 +104,18 @@ public class Console implements Runnable {
         }
     }
 
+    /**
+     * if args[0] is a number, then return it.
+     * otherwise return DataCenter.DEFAULT_CONSOLE_PORT
+     *
+     * @param args args.
+     * @return console port int.
+     * @see DataCenter#DEFAULT_CONSOLE_PORT
+     */
     public static int getConsolePort(String[] args) {
         int res = DataCenter.DEFAULT_CONSOLE_PORT;
         try {
-            if (args.length >= 1) {
+            if (args != null && args.length >= 1) {
                 res = Integer.parseInt(args[0]);
             }
         } catch (NumberFormatException e) {
