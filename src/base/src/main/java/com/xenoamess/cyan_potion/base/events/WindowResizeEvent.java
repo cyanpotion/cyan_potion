@@ -52,6 +52,11 @@ public class WindowResizeEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final WindowResizeEvent EMPTY = new WindowResizeEvent.EmptyWindowResizeEvent();
 
     private final long window;

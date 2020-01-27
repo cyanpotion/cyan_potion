@@ -57,6 +57,11 @@ public class GamepadButtonEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final EmptyGamepadButtonEvent EMPTY = new GamepadButtonEvent.EmptyGamepadButtonEvent();
 
     private final long window;
@@ -164,6 +169,9 @@ public class GamepadButtonEvent implements Event {
         return gamepadDevice;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

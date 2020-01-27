@@ -56,6 +56,11 @@ public class TextEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final TextEvent EMPTY = new EmptyTextEvent();
 
     private final long window;
@@ -83,6 +88,14 @@ public class TextEvent implements Event {
         this(window, getStringFromCharEvents(charEvents));
     }
 
+    /**
+     * get String From a list of CharEvents.
+     * will reorder CharEvents according to id (which means generate order)
+     * then join them and return.
+     *
+     * @param charEvents a {@link java.util.List} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringFromCharEvents(List<CharEvent> charEvents) {
         StringBuilder stringBuilder = new StringBuilder();
         for (CharEvent event : charEvents) {
@@ -122,6 +135,9 @@ public class TextEvent implements Event {
         return contentString;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

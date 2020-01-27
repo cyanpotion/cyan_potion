@@ -46,7 +46,11 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface Event extends Function<GameManager, Set<Event>> {
-
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     Event EMPTY = new EmptyEvent() {
     };
 

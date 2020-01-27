@@ -64,6 +64,8 @@ public class CharEvent implements Event {
 
     /**
      * use this instead of null for safety.
+     *
+     * @see EmptyEvent
      */
     public static final CharEvent EMPTY = new CharEvent.EmptyCharEvent();
 

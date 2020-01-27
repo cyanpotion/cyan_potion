@@ -51,6 +51,11 @@ public interface MainThreadEvent extends Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     MainThreadEvent EMPTY = new MainThreadEvent.EmptyMainThreadEvent();
 
     /**
