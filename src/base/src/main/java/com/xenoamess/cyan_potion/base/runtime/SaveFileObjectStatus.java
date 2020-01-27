@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.runtime;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * status of SaveFileObject
@@ -35,6 +37,9 @@ import com.xenoamess.cyan_potion.base.DataCenter;
  * @see SaveFileObject
  */
 public class SaveFileObjectStatus {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(SaveFileObjectStatus.class);
+
     private String version;
     private long lastSaveTime;
     private long lastLoadTime;
@@ -123,11 +128,11 @@ public class SaveFileObjectStatus {
      */
     @Override
     public String toString() {
-        String result = "null";
+        String result = "{}";
         try {
             result = DataCenter.getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("SaveFileObjectStatus cannot toString() : version={}, lastLoadTime={}, lastSaveTime={}", this.version, this.lastLoadTime, this.lastSaveTime, e);
         }
         return result;
     }

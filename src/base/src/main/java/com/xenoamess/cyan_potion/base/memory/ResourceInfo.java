@@ -33,7 +33,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,7 +116,7 @@ public class ResourceInfo<T extends AbstractResource> {
     public final Class<T> resourceClass;
     public final String type;
     public final String fileString;
-    public FileObject fileObject;
+    public final FileObject fileObject;
     public final String[] values;
 
 
@@ -138,11 +137,7 @@ public class ResourceInfo<T extends AbstractResource> {
         this.resourceClass = resourceClass;
         this.type = type;
         this.fileString = fileObjectString;
-        try {
-            this.fileObject = ResourceManager.getFileSystemManager().resolveFile(this.fileString);
-        } catch (FileSystemException e) {
-            e.printStackTrace();
-        }
+        this.fileObject = ResourceManager.resolveFile(this.fileString);
         this.values = values;
 
         try {
