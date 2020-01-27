@@ -52,9 +52,18 @@ public class RuntimeManager {
         return gameManager;
     }
 
-    public <T extends RuntimeVariableStruct> void registerRuntimeVariableStruct(
-            T runtimeVariableStruct
-    ) {
+    /**
+     * register a RuntimeVariableStruct to RuntimeManager
+     * notice that we will not change the RuntimeVariableStruct instances in runtimeVariableStructList.
+     * so the common use is first you build a RuntimeVariableStruct / RuntimeVariableStructs at somewhere,
+     * then you register it / them into RuntimeManager here.
+     * then you invoke save / load,
+     * and the data in objects in runtimeVariableStructList changes(but the objects will not add / remove)
+     * that is the basic logic of this this functions & this class.
+     *
+     * @param runtimeVariableStruct runtimeVariableStruct
+     */
+    public void registerRuntimeVariableStruct(RuntimeVariableStruct runtimeVariableStruct) {
         runtimeVariableStructList.add(runtimeVariableStruct);
     }
 
@@ -75,6 +84,9 @@ public class RuntimeManager {
         }
     }
 
+    /**
+     * load from the current SaveFileObject.
+     */
     public void load() {
         List<RuntimeVariableStruct> runtimeVariableStructList = gameManager.getSaveManager().getCurrentSaveFileObject().load();
         for (int i = 0; i < runtimeVariableStructList.size(); i++) {
@@ -97,6 +109,9 @@ public class RuntimeManager {
         gameManager.getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
     }
 
+    /**
+     * save into the current SaveFileObject.
+     */
     public void save() {
         gameManager.getSaveManager().getCurrentSaveFileObject().save(this.runtimeVariableStructList);
     }

@@ -33,8 +33,6 @@ public class SaveManager {
         this.setGameManager(gameManager);
     }
 
-    private static final int saveFileMaxNum = 1000;
-
     private SaveFileObject currentSaveFileObject;
 
     public SaveFileObject getSaveFileObject(int index) {

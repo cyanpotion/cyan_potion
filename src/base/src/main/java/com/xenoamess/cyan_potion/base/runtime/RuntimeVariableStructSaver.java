@@ -34,7 +34,9 @@
 //import java.io.ObjectOutputStream;
 //import java.lang.reflect.InvocationTargetException;
 //
-////TODO
+///**
+// * OK,this class got deleted due to design change. lol.
+// */
 //public abstract class RuntimeVariableStructSaver<T extends RuntimeVariableStruct> {
 //    private static final Logger LOGGER =
 //            LoggerFactory.getLogger(GameManager.class);

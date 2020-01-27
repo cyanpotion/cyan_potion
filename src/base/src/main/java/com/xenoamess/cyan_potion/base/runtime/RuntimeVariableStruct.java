@@ -46,26 +46,44 @@ public abstract class RuntimeVariableStruct {
      */
     public abstract void fill(Object object);
 
+    /**
+     * get object from string and fill this.
+     *
+     * @param string
+     */
     public void fill(String string) {
         this.fill(loadFromString(string));
     }
 
+    /**
+     * save this object to a string
+     *
+     * @return
+     */
     public String saveToString() {
         String res = "";
         try {
             res = DataCenter.getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            LOGGER.error("cannot toString", e);
+            LOGGER.error("cannot saveToString : an object of class {}", this.getClass(), e);
         }
         return res;
     }
 
+    /**
+     * get an object from a string.
+     * this function is designed not to be a static function
+     * because static function cannot inherit.
+     *
+     * @param string string
+     * @return
+     */
     public Object loadFromString(String string) {
         Object object = null;
         try {
             object = DataCenter.getObjectMapper().readValue(string, this.getClass());
         } catch (JsonProcessingException e) {
-            LOGGER.error("cannot toString", e);
+            LOGGER.error("cannot loadFromString : string {}", string, e);
         }
         return object;
     }

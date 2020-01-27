@@ -95,6 +95,13 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
     }
 }
 
+/**
+ * SaveFileContent is a class used as a bridge / pojo between json string and saveTime / runtimeVariableStructList
+ * I don't think user have any need to change / invoke this class.
+ * If you wanna store some more information please go build your own RuntimeVariableStruct and register it into ResourceManager.
+ *
+ * @see RuntimeVariableStruct
+ */
 @JsonSerialize(using = SaveFileContentSerializer.class)
 @JsonDeserialize(using = SaveFileContentDeserializer.class)
 class SaveFileContent {
@@ -114,6 +121,9 @@ class SaveFileContent {
         return runtimeVariableStructList;
     }
 
+    /**
+     * @return
+     */
     public long getSaveTime() {
         return saveTime;
     }

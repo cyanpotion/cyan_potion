@@ -31,10 +31,13 @@ public class SaveFileObjectStatus {
     private String version;
     private long lastSaveTime;
     private long lastLoadTime;
-    private int nowIndex;
+    /**
+     * the current used file index of save file object.
+     * if this saveFile is empty then this shall be -1.
+     */
+    private int nowIndex = -1;
 
     public SaveFileObjectStatus() {
-
     }
 
     public SaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {

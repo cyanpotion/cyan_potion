@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SaveFileObject {
@@ -42,10 +43,21 @@ public class SaveFileObject {
 
     public static final int saveBackupNum = 10;
 
-    private SaveManager saveManager;
+    private final SaveManager saveManager;
     private final String path;
     private SaveFileObjectStatus saveFileObjectStatus;
 
+    /**
+     * build a SaveFileObject
+     * if path + "status" does not exist, then create it as
+     * {version:dataCenter.gameVersion,lastSaveTime:now,lastLoadTime:now,nowIndex:-1}
+     * then load from path + "status".
+     * then set path + "status"'s lastLoadTime be now
+     * (this step will not thange the loaded saveFileObjectStatus in memory, just change the file on disk.)
+     *
+     * @param saveManager saveManager
+     * @param path        path
+     */
     public SaveFileObject(SaveManager saveManager, String path) {
         this.saveManager = saveManager;
         this.path = path;
@@ -59,7 +71,7 @@ public class SaveFileObject {
             if (!fileObject.exists()) {
                 try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
                     SaveFileObjectStatus saveFileObjectStatus = new SaveFileObjectStatus();
-                    saveFileObjectStatus.setNowIndex(0);
+                    saveFileObjectStatus.setNowIndex(-1);
                     saveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameVersion());
                     long time = System.currentTimeMillis();
                     saveFileObjectStatus.setLastSaveTime(time);
@@ -77,7 +89,7 @@ public class SaveFileObject {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
-            SaveFileObjectStatus saveFileObjectStatus = new SaveFileObjectStatus(this.saveFileObjectStatus);
+            SaveFileObjectStatus saveFileObjectStatus = new SaveFileObjectStatus(this.getSaveFileObjectStatus());
             saveFileObjectStatus.setLastLoadTime(System.currentTimeMillis());
             DataCenter.getObjectMapper().writeValue(outputStream, saveFileObjectStatus);
         } catch (IOException e) {
@@ -85,8 +97,20 @@ public class SaveFileObject {
         }
     }
 
+    /**
+     * load from current saveFileObjectStatus.getNowIndex()
+     * notice that this function will not change saveFileObjectStatus.getNowIndex() after load.
+     * please make sure the file [path + saveFileObjectStatus.getNowIndex()] really exist and really have saved something.
+     * Otherwise bomb.
+     *
+     * @return loaded RuntimeVariableStructList
+     */
     public List<RuntimeVariableStruct> load() {
-        FileObject fileObject = ResourceManager.resolveFile(path + saveFileObjectStatus.getNowIndex());
+        if (this.getSaveFileObjectStatus().getNowIndex() == -1) {
+            LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
+            return new ArrayList<>();
+        }
+        FileObject fileObject = ResourceManager.resolveFile(getPath() + getSaveFileObjectStatus().getNowIndex());
         SaveFileContent res = null;
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
             res = DataCenter.getObjectMapper().readValue(inputStream, SaveFileContent.class);
@@ -97,12 +121,20 @@ public class SaveFileObject {
         return res.getRuntimeVariableStructList();
     }
 
-    public void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
-        this.saveFileObjectStatus.setLastSaveTime(System.currentTimeMillis());
-        this.saveFileObjectStatus.setLastLoadTime(System.currentTimeMillis());
-        this.saveFileObjectStatus.setVersion(this.saveManager.getGameManager().getDataCenter().getGameVersion());
 
-        FileObject fileObject = ResourceManager.resolveFile(path + saveFileObjectStatus.getNowIndex());
+    /**
+     * load to current saveFileObjectStatus.getNowIndex()+1
+     * notice that we will first +1 aveFileObjectStatus.getNowIndex(), then save.
+     * so we hold backups of savefile.
+     */
+    public void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
+        pickNextSaveBackup();
+        long time = System.currentTimeMillis();
+        this.getSaveFileObjectStatus().setLastSaveTime(time);
+        this.getSaveFileObjectStatus().setLastLoadTime(time);
+        this.getSaveFileObjectStatus().setVersion(this.getSaveManager().getGameManager().getDataCenter().getGameVersion());
+
+        FileObject fileObject = ResourceManager.resolveFile(getPath() + getSaveFileObjectStatus().getNowIndex());
         SaveFileContent saveFileContent = new SaveFileContent();
         saveFileContent.getRuntimeVariableStructList().addAll(runtimeVariableStructList);
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
@@ -110,32 +142,36 @@ public class SaveFileObject {
         } catch (IOException e) {
             LOGGER.error("cannot save SaveFileContent to : {}", fileObject, e);
         }
-        pickNextSaveBackup();
     }
 
-    public void pickNextSaveBackup() {
-        int nextIndex = this.saveFileObjectStatus.getNowIndex() + 1;
+    /**
+     * this.getSaveFileObjectStatus().getNowIndex() += 1
+     */
+    protected void pickNextSaveBackup() {
+        int nextIndex = this.getSaveFileObjectStatus().getNowIndex() + 1;
         if (nextIndex >= saveBackupNum) {
             nextIndex %= saveBackupNum;
         }
         setSaveBackupIndex(nextIndex);
     }
 
-    public void setSaveBackupIndex(int index) {
-        this.saveFileObjectStatus.setNowIndex(index);
+    protected void setSaveBackupIndex(int index) {
+        this.getSaveFileObjectStatus().setNowIndex(index);
     }
 
-
-    public SaveFileObjectStatus getSaveFileObjectStatus() {
+    protected SaveFileObjectStatus getSaveFileObjectStatus() {
         return saveFileObjectStatus;
     }
 
-    public void setSaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {
+    protected void setSaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {
         this.saveFileObjectStatus = saveFileObjectStatus;
     }
 
-    public String getPath() {
+    protected String getPath() {
         return path;
     }
 
+    protected SaveManager getSaveManager() {
+        return saveManager;
+    }
 }
