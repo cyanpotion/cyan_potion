@@ -39,6 +39,7 @@ import static com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandler.a
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public class CyanPotionURLConnection extends URLConnection {
     private String userDir;
@@ -47,7 +48,8 @@ public class CyanPotionURLConnection extends URLConnection {
      * Constructs a URL connection to the specified URL. A connection to
      * the object referenced by the URL is not created.
      *
-     * @param url the specified URL.
+     * @param url     the specified URL.
+     * @param userDir a {@link java.lang.String} object.
      */
     protected CyanPotionURLConnection(String userDir, URL url) {
         super(url);
@@ -58,6 +60,8 @@ public class CyanPotionURLConnection extends URLConnection {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * Opens a communications link to the resource referenced by this
      * URL, if such a connection has not already been established.
      * <p>
@@ -73,8 +77,6 @@ public class CyanPotionURLConnection extends URLConnection {
      * connected, like getContentLength, will implicitly perform the
      * connection, if necessary.
      *
-     * @throws IOException if an I/O error occurs while opening the
-     *                     connection.
      * @see URLConnection#connected
      * @see #getConnectTimeout()
      * @see #setConnectTimeout(int)
@@ -85,17 +87,14 @@ public class CyanPotionURLConnection extends URLConnection {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * Returns an input stream that reads from this open connection.
      * <p>
      * A SocketTimeoutException can be thrown when reading from the
      * returned input stream if the read timeout expires before data
      * is available for read.
      *
-     * @return an input stream that reads from this open connection.
-     * @throws IOException             if an I/O error occurs while
-     *                                 creating the input stream.
-     * @throws UnknownServiceException if the protocol does not support
-     *                                 input.
      * @see #setReadTimeout(int)
      * @see #getReadTimeout()
      */
@@ -105,19 +104,18 @@ public class CyanPotionURLConnection extends URLConnection {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * Returns an output stream that writes to this connection.
-     *
-     * @return an output stream that writes to this connection.
-     * @throws IOException             if an I/O error occurs while
-     *                                 creating the output stream.
-     * @throws UnknownServiceException if the protocol does not support
-     *                                 output.
      */
     @Override
     public OutputStream getOutputStream() throws IOException {
         throw new UnknownServiceException("protocol doesn't support output");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     //TODO
     public AbstractResource getContent() throws IOException {
@@ -127,6 +125,9 @@ public class CyanPotionURLConnection extends URLConnection {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getContent(Class[] classes) throws IOException {
         return this.getContent();

@@ -33,12 +33,21 @@ import java.net.URLStreamHandler;
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public class CyanPotionURLStreamHandler extends URLStreamHandler {
+    /**
+     * Constant <code>PROTOCOL_CYAN_POTION="cyan_potion"</code>
+     */
     public static final String PROTOCOL_CYAN_POTION = "cyan_potion";
 
     private String userDir;
 
+    /**
+     * <p>Constructor for CyanPotionURLStreamHandler.</p>
+     *
+     * @param userDir a {@link java.lang.String} object.
+     */
     public CyanPotionURLStreamHandler(String userDir) {
         this.userDir = userDir;
     }
@@ -52,6 +61,8 @@ public class CyanPotionURLStreamHandler extends URLStreamHandler {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * Opens a connection to the object referenced by the
      * {@code URL} argument.
      * This method should be overridden by a subclass.
@@ -63,11 +74,6 @@ public class CyanPotionURLStreamHandler extends URLStreamHandler {
      * returned will be of that subclass. For example, for HTTP an
      * HttpURLConnection will be returned, and for JAR a
      * JarURLConnection will be returned.
-     *
-     * @param url the URL that this connects to.
-     * @return a {@code URLConnection} object for the {@code URL}.
-     * @throws IOException if an I/O error occurs while opening the
-     *                     connection.
      */
     @Override
     protected URLConnection openConnection(URL url) throws IOException {

@@ -32,15 +32,26 @@ import java.nio.file.Paths;
 import static com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandler.PROTOCOL_CYAN_POTION;
 
 /**
+ * TODO This class is not stable yet. Will be removed or modified in future.
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public class CyanPotionURLStreamHandlerFactory implements URLStreamHandlerFactory {
     private String userDir;
 
+    /**
+     * <p>Constructor for CyanPotionURLStreamHandlerFactory.</p>
+     */
     public CyanPotionURLStreamHandlerFactory() {
         this(generateUserDir());
     }
 
+    /**
+     * <p>Constructor for CyanPotionURLStreamHandlerFactory.</p>
+     *
+     * @param userDir a {@link java.lang.String} object.
+     */
     public CyanPotionURLStreamHandlerFactory(String userDir) {
         this.userDir = userDir;
     }
@@ -54,14 +65,11 @@ public class CyanPotionURLStreamHandlerFactory implements URLStreamHandlerFactor
     private final CyanPotionURLStreamHandler cyanPotionURLStreamHandler = new CyanPotionURLStreamHandler(this.userDir);
 
     /**
+     * {@inheritDoc}
+     * <p>
      * Creates a new {@code URLStreamHandler} instance with the specified
      * protocol.
      *
-     * @param protocol the protocol ("{@code ftp}",
-     *                 "{@code http}", "{@code nntp}", etc.).
-     * @return a {@code URLStreamHandler} for the specific protocol, or {@code
-     * null} if this factory cannot create a handler for the specific
-     * protocol
      * @see URLStreamHandler
      */
     @Override
