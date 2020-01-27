@@ -46,6 +46,10 @@ public abstract class RuntimeVariableStruct {
      */
     public abstract void fill(Object object);
 
+    public void fill(String string) {
+        this.fill(loadFromString(string));
+    }
+
     public String saveToString() {
         String res = "";
         try {
@@ -56,14 +60,14 @@ public abstract class RuntimeVariableStruct {
         return res;
     }
 
-    public void loadFromString(String string) {
+    public Object loadFromString(String string) {
         Object object = null;
         try {
             object = DataCenter.getObjectMapper().readValue(string, this.getClass());
         } catch (JsonProcessingException e) {
             LOGGER.error("cannot toString", e);
         }
-        this.fill(object);
+        return object;
     }
 
     @Override
