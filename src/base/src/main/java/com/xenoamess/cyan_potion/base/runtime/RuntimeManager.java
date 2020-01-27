@@ -31,6 +31,15 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RuntimeManager
+ * A manager class for holding runtimeVariableStructList of RuntimeVariableStructs,
+ * and load/save them
+ * (invoking functions in SaveManager).
+ *
+ * @author XenoAmess
+ * @version 0.148.8
+ */
 public class RuntimeManager {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
@@ -48,6 +57,11 @@ public class RuntimeManager {
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
@@ -75,7 +89,7 @@ public class RuntimeManager {
      * 2. you can't delete some of the RuntimeVariableStruct in runtimeVariableStructList
      * 3. all RuntimeVariableStructs MUST be added to runtimeVariableStructList before you load a save file.
      *
-     * @param index
+     * @param index a int.
      */
     public void load(int index) {
         List<RuntimeVariableStruct> runtimeVariableStructList = gameManager.getSaveManager().pickCurrentSaveFileObject(index).load();
@@ -103,7 +117,7 @@ public class RuntimeManager {
      * 2. you can't delete some of the RuntimeVariableStruct in runtimeVariableStructList
      * 3. all RuntimeVariableStructs MUST be added to runtimeVariableStructList before you load a save file.
      *
-     * @param index
+     * @param index a int.
      */
     public void save(int index) {
         gameManager.getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
