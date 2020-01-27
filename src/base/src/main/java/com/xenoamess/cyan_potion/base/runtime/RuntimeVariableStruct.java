@@ -37,11 +37,14 @@ public abstract class RuntimeVariableStruct {
 
     }
 
-    public void fill(RuntimeVariableStruct runtimeVariableStruct) {
-        assert (runtimeVariableStruct != null);
-        assert (runtimeVariableStruct.getClass().equals(this.getClass()));
-        this.loadFromString(runtimeVariableStruct.saveToString());
-    }
+    /**
+     * fill means copy all things from a object of same class to this.
+     * assert (runtimeVariableStruct != null);
+     * assert (runtimeVariableStruct.getClass().equals(this.getClass()));
+     *
+     * @param object the object you wanna copy from
+     */
+    public abstract void fill(Object object);
 
     public String saveToString() {
         String res = "";
@@ -53,7 +56,15 @@ public abstract class RuntimeVariableStruct {
         return res;
     }
 
-    public abstract void loadFromString(String string);
+    public void loadFromString(String string) {
+        Object object = null;
+        try {
+            object = DataCenter.getObjectMapper().readValue(string, this.getClass());
+        } catch (JsonProcessingException e) {
+            LOGGER.error("cannot toString", e);
+        }
+        this.fill(object);
+    }
 
     @Override
     public String toString() {
