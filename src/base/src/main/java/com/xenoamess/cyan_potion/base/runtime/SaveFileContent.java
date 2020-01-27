@@ -41,6 +41,9 @@ import java.util.List;
 
 
 class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serialize(SaveFileContent value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
@@ -62,6 +65,9 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileContentDeserializer.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SaveFileContent deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
@@ -105,29 +111,76 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
 @JsonSerialize(using = SaveFileContentSerializer.class)
 @JsonDeserialize(using = SaveFileContentDeserializer.class)
 class SaveFileContent {
+    /**
+     * Constant <code>ClassNameString="className"</code>
+     */
     public static final String ClassNameString = "className";
+
+    /**
+     * Constant <code>RuntimeVariableStructString="runtimeVariableStruct"</code>
+     */
     public static final String RuntimeVariableStructString = "runtimeVariableStruct";
+
+    /**
+     * Constant <code>SaveTimeString="saveTime"</code>
+     */
     public static final String SaveTimeString = "saveTime";
+
+    /**
+     * Constant <code>RuntimeVariableStructList="runtimeVariableStructList"</code>
+     */
     public static final String RuntimeVariableStructList = "runtimeVariableStructList";
 
+    /**
+     * saveTime means what time does it saved.
+     */
     private long saveTime;
+
+    /**
+     * runtimeVariableStructList means what to save.
+     */
     private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();
 
+    /**
+     * <p>Constructor for SaveFileContent.</p>
+     */
     public SaveFileContent() {
         this.setSaveTime(System.currentTimeMillis());
     }
 
+    /**
+     * <p>Getter for the field <code>runtimeVariableStructList</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<RuntimeVariableStruct> getRuntimeVariableStructList() {
         return runtimeVariableStructList;
     }
 
     /**
-     * @return
+     * <p>Getter for the field <code>runtimeVariableStructList</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
+    public void setRuntimeVariableStructList(List<RuntimeVariableStruct> runtimeVariableStructList) {
+        this.runtimeVariableStructList.clear();
+        this.runtimeVariableStructList.addAll(runtimeVariableStructList);
+    }
+
+    /**
+     * <p>Getter for the field <code>saveTime</code>.</p>
+     *
+     * @return a long.
      */
     public long getSaveTime() {
         return saveTime;
     }
 
+    /**
+     * <p>Setter for the field <code>saveTime</code>.</p>
+     *
+     * @param saveTime a long.
+     */
     public void setSaveTime(long saveTime) {
         this.saveTime = saveTime;
     }
