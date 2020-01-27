@@ -122,7 +122,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     /**
      * get current bindable of this picture.
      *
-     * @return return
+     * @return the bindable for draw
      */
     public abstract Bindable getCurrentBindable();
 
