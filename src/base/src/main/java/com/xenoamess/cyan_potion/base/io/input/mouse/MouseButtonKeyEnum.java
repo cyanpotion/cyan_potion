@@ -61,10 +61,14 @@ public enum MouseButtonKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    public static final MouseButtonKeyEnum[] values = generateValues();
+    private static final MouseButtonKeyEnum[] values = generateValues();
 
     MouseButtonKeyEnum(int value) {
         this.value = value;
+    }
+
+    public static MouseButtonKeyEnum[] getValues() {
+        return values;
     }
 
     /**
@@ -84,8 +88,8 @@ public enum MouseButtonKeyEnum {
      * @return a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum} object.
      */
     public static MouseButtonKeyEnum getByValue(int value) {
-        if (value >= 0 && value < values.length) {
-            return values[value];
+        if (value >= 0 && value < getValues().length) {
+            return getValues()[value];
         }
         return GLFW_MOUSE_BUTTON_1;
     }

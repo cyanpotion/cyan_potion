@@ -159,10 +159,14 @@ public enum KeyboardKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    public static final KeyboardKeyEnum[] values = generateValues();
+    private static final KeyboardKeyEnum[] values = generateValues();
 
     KeyboardKeyEnum(int value) {
         this.value = value;
+    }
+
+    public static KeyboardKeyEnum[] getValues() {
+        return values;
     }
 
     /**
@@ -182,8 +186,8 @@ public enum KeyboardKeyEnum {
      * @return a {@link com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum} object.
      */
     public static KeyboardKeyEnum getByValue(int value) {
-        if (value >= 0 && value < values.length) {
-            return values[value];
+        if (value >= 0 && value < getValues().length) {
+            return getValues()[value];
         }
         return GLFW_KEY_UNKNOWN;
     }
