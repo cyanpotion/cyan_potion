@@ -28,11 +28,31 @@ import com.xenoamess.cyan_potion.base.GameManager;
 
 import java.util.Set;
 
+/**
+ * EmptyEvent means an Event which contains nothing meaningful in it.
+ *
+ * @author xenoa
+ * @version 0.148.8
+ */
 public interface EmptyEvent extends Event {
+    /**
+     * detect if a Event be null or EmptyEvent.
+     * this is used to detect whether we shall take this Event as an EmptyEvent,
+     *
+     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     * @return a boolean.
+     */
     static boolean isNullOrEmpty(Event event) {
         return event == null || event instanceof EmptyEvent;
     }
 
+    /**
+     * do nothing
+     *
+     * @param gameManager don't care
+     * @return null
+     */
+    @Override
     default Set<Event> apply(GameManager gameManager) {
         return null;
     }
