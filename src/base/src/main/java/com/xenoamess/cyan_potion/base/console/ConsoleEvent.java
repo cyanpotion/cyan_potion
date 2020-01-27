@@ -54,6 +54,9 @@ public class ConsoleEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     */
     public static final ConsoleEvent EMPTY = new ConsoleEvent.EmptyConsoleEvent();
 
     private final String command;
@@ -91,6 +94,9 @@ public class ConsoleEvent implements Event {
         return command;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
