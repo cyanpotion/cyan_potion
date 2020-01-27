@@ -248,6 +248,9 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>registerCyanPotionURLStreamHandlerFactory.</p>
+     */
     public void registerCyanPotionURLStreamHandlerFactory() {
         try {
             URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
@@ -713,8 +716,9 @@ public class GameManager implements AutoCloseable {
      *
      * @param eventProcessor eventProcessor
      * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     * @param <T>            class of the event
      */
-    public <T extends Event> void delayMainThreadEventProcess(EventProcessor<T> eventProcessor, T event) {
+    public <T extends Event> void delayMainThreadEventProcess(EventProcessor<? super T> eventProcessor, T event) {
         mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
     }
 
@@ -993,6 +997,11 @@ public class GameManager implements AutoCloseable {
         return eventList;
     }
 
+    /**
+     * <p>Getter for the field <code>eventListCache</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     protected List<Event> getEventListCache() {
         return eventListCache;
     }
@@ -1039,18 +1048,38 @@ public class GameManager implements AutoCloseable {
         this.timeToLastUpdate = timeToLastUpdate;
     }
 
+    /**
+     * <p>isCanRender.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCanRender() {
         return canRender;
     }
 
+    /**
+     * <p>Setter for the field <code>canRender</code>.</p>
+     *
+     * @param canRender a boolean.
+     */
     public void setCanRender(boolean canRender) {
         this.canRender = canRender;
     }
 
+    /**
+     * <p>Getter for the field <code>runtimeManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.RuntimeManager} object.
+     */
     public RuntimeManager getRuntimeManager() {
         return runtimeManager;
     }
 
+    /**
+     * <p>Getter for the field <code>saveManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveManager} object.
+     */
     public SaveManager getSaveManager() {
         return saveManager;
     }

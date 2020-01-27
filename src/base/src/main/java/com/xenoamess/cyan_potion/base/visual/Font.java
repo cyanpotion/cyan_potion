@@ -611,6 +611,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             float leftTopPosX,
@@ -635,6 +636,7 @@ public class Font extends AbstractResource {
      * <p>drawText.</p>
      *
      * @param drawTextStruct drawStruct.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4f, String)
      */
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
@@ -706,6 +708,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaLeftTop(
             float leftTopPosX,
@@ -1004,10 +1007,20 @@ public class Font extends AbstractResource {
 //        this.fontTexture = fontTexture;
 //    }
 
+    /**
+     * <p>Getter for the field <code>fontTextures</code>.</p>
+     *
+     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList} object.
+     */
     public IntArrayList getFontTextures() {
         return fontTextures;
     }
 
+    /**
+     * <p>Getter for the field <code>charDatas</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<STBTTPackedchar.Buffer> getCharDatas() {
         return charDatas;
     }

@@ -31,6 +31,7 @@ import java.util.Arrays;
  * But for convenience, we just split them.
  *
  * @author XenoAmess
+ * @version 0.148.8
  * @see JXInputGamepadKeyEnum
  */
 public enum JamepadGamepadKeyEnum {
@@ -53,6 +54,9 @@ public enum JamepadGamepadKeyEnum {
     JAMEPAD_KEY_LT(16),
     JAMEPAD_KEY_RT(17);
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final JamepadGamepadKeyEnum[] values = generateValues();
 
@@ -60,11 +64,22 @@ public enum JamepadGamepadKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.JamepadGamepadKeyEnum} object.
+     */
     public static JamepadGamepadKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -72,6 +87,12 @@ public enum JamepadGamepadKeyEnum {
         return JAMEPAD_KEY_UNKNOWN;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

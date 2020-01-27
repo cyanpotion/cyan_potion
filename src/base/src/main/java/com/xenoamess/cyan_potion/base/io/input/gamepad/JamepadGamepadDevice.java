@@ -31,7 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <p>JamepadGamepadDevice class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
     private static final Logger LOGGER =
@@ -41,6 +44,12 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
     private ControllerManager jamepadControllerManager;
     private ControllerState jamepadControllerState;
 
+    /**
+     * <p>Constructor for JamepadGamepadDevice.</p>
+     *
+     * @param jamepadControllerManager  a {@link com.studiohartman.jamepad.ControllerManager} object.
+     * @param jamepadGamepadDeviceIndex a int.
+     */
     public JamepadGamepadDevice(ControllerManager jamepadControllerManager, int jamepadGamepadDeviceIndex) {
         this.setJamepadControllerManager(jamepadControllerManager);
         this.setJamepadGamepadDeviceIndex(jamepadGamepadDeviceIndex);
@@ -48,6 +57,8 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
 
 
     /**
+     * {@inheritDoc}
+     * <p>
      * update of this will be performed in GasmepadInputManager.
      *
      * @see GamepadInputManager#update
@@ -58,9 +69,9 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
     }
 
     /**
-     * <p>isConnected.</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isConnected.</p>
      */
     @Override
     public boolean isConnected() {
@@ -68,10 +79,9 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
     }
 
     /**
-     * <p>setVibration.</p>
+     * {@inheritDoc}
      *
-     * @param leftVibration  a int.
-     * @param rightVibration a int.
+     * <p>setVibration.</p>
      */
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
@@ -83,26 +93,56 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
         );
     }
 
+    /**
+     * <p>Getter for the field <code>jamepadGamepadDeviceIndex</code>.</p>
+     *
+     * @return a int.
+     */
     public int getJamepadGamepadDeviceIndex() {
         return jamepadGamepadDeviceIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>jamepadGamepadDeviceIndex</code>.</p>
+     *
+     * @param jamepadGamepadDeviceIndex a int.
+     */
     public void setJamepadGamepadDeviceIndex(int jamepadGamepadDeviceIndex) {
         this.jamepadGamepadDeviceIndex = jamepadGamepadDeviceIndex;
     }
 
+    /**
+     * <p>Getter for the field <code>jamepadControllerManager</code>.</p>
+     *
+     * @return a {@link com.studiohartman.jamepad.ControllerManager} object.
+     */
     public ControllerManager getJamepadControllerManager() {
         return jamepadControllerManager;
     }
 
+    /**
+     * <p>Setter for the field <code>jamepadControllerManager</code>.</p>
+     *
+     * @param jamepadControllerManager a {@link com.studiohartman.jamepad.ControllerManager} object.
+     */
     public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
         this.jamepadControllerManager = jamepadControllerManager;
     }
 
+    /**
+     * <p>Getter for the field <code>jamepadControllerState</code>.</p>
+     *
+     * @return a {@link com.studiohartman.jamepad.ControllerState} object.
+     */
     public ControllerState getJamepadControllerState() {
         return jamepadControllerState;
     }
 
+    /**
+     * <p>Setter for the field <code>jamepadControllerState</code>.</p>
+     *
+     * @param jamepadControllerState a {@link com.studiohartman.jamepad.ControllerState} object.
+     */
     public void setJamepadControllerState(ControllerState jamepadControllerState) {
         this.jamepadControllerState = jamepadControllerState;
     }
