@@ -26,68 +26,48 @@ package com.xenoamess.cyan_potion.base.exceptions;
 
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import org.slf4j.Logger;
-
-import java.lang.reflect.Field;
+import org.slf4j.LoggerFactory;
 
 
 /**
- * This error will be thrown when the
- *
  * @author XenoAmess
  * @version 0.143.0
+ * @see ResourceSizeLargerThanGlMaxTextureSizeException#check
  */
 public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
-    //    private static final Logger LOGGER =
-//            LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
-    public static final boolean STRICT = false;
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
+    /**
+     * if STRICT be true, then will throw ResourceSizeLargerThanGlMaxTextureSizeException if resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()
+     * this shall be true only if you are testing,
+     * or on some very special use cases.
+     */
+    public static boolean STRICT = false;
 
+    /**
+     * check if resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()
+     * if so, throw ResourceSizeLargerThanGlMaxTextureSizeException.
+     * notice that this only work when STRICT==true.
+     *
+     * @param resource a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     */
     public static void check(AbstractResource resource) {
-        if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
-            ResourceSizeLargerThanGlMaxTextureSizeException result =
-                    new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
-            if (STRICT) {
+        if (STRICT) {
+            if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
+                ResourceSizeLargerThanGlMaxTextureSizeException result =
+                        new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
                 throw result;
             }
         }
     }
-
-//    public static void check(long resourceSize) {
-//        if (resourceSize > MAX_TEXTURE_SIZE) {
-//            throw new ResourceSizeLargerThanGlMaxTextureSize(resourceSize);
-//        }
-//    }
 
     /**
      * <p>Constructor for TextureSizeLargerThanGlMaxTextureSize.</p>
      *
      * @param resource resource checked
      */
-    public ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
-        super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize());
-        try {
-            Field loggerField = resource.getClass().getDeclaredField("LOGGER");
-            loggerField.setAccessible(true);
-            ((Logger) loggerField.get(resource)).error(
-                    "MAX_TEXTURE_SIZE is {} but need {}",
-                    resource.getResourceManager().getMaxTextureSize(),
-                    resource.getMemorySize()
-            );
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+    private ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
+        super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
+        LOGGER.error(this.getMessage(), this);
     }
-
-//    /**
-//     * <p>Constructor for TextureSizeLargerThanGlMaxTextureSize.</p>
-//     *
-//     * @param resourceSize resource size needed
-//     */
-//    public ResourceSizeLargerThanGlMaxTextureSize(long resourceSize) {
-//        super("MAX_TEXTURE_SIZE is " + MAX_TEXTURE_SIZE + " but need " + resourceSize);
-//        LOGGER.error("MAX_TEXTURE_SIZE is {} but need {}",
-//                MAX_TEXTURE_SIZE,
-//                resourceSize
-//        );
-//    }
-
 }
