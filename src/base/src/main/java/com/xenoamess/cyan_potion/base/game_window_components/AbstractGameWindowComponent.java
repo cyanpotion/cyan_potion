@@ -230,8 +230,11 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      */
     public <T extends Event> EventProcessor<? super T> getProcessor(Class<T> eventClass) {
         Class<? super T> nowClass = eventClass;
-        while (nowClass != Event.class && !this.getEventClassToProcessorMap().containsKey(nowClass)) {
+        while (nowClass != null && nowClass != Event.class && !this.getEventClassToProcessorMap().containsKey(nowClass)) {
             nowClass = nowClass.getSuperclass();
+        }
+        if (eventClass == null) {
+            return null;
         }
         return this.eventClassToProcessorMapGet(eventClass);
     }
@@ -370,11 +373,11 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(Class<T> tClass, EventProcessor<? super T> eventProcessor) {
-        return (EventProcessor<? super T>) this.getEventClassToProcessorMap().put(tClass, eventProcessor);
+        return (EventProcessor) this.getEventClassToProcessorMap().put(tClass, eventProcessor);
     }
 
     protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapGet(Class<T> tClass) {
-        return (EventProcessor<? super T>) this.getEventClassToProcessorMap().get(tClass);
+        return (EventProcessor) this.getEventClassToProcessorMap().get(tClass);
     }
 
     protected <T extends Event> boolean eventClassToProcessorMapContainsKey(Class<T> tClass) {

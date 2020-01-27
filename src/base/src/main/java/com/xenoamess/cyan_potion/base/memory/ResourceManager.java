@@ -49,7 +49,8 @@ import java.util.function.Function;
 import static org.lwjgl.opengl.GL11.glGetIntegerv;
 
 /**
- * TODO This class is not stable yet. Will be removed or modified in future.
+ * ResourceManager
+ * manager of resources.
  *
  * @author XenoAmess
  * @version 0.143.0
@@ -74,26 +75,42 @@ public class ResourceManager implements AutoCloseable {
         return fileSystemManager;
     }
 
-    public static FileObject getFileObject(String fileString) {
-        return resolveFile(fileString);
-    }
-
+    /**
+     * get FileObject from a url string.
+     *
+     * @param fileString string to the file.
+     * @return a {@link org.apache.commons.vfs2.FileObject} object.
+     */
     public static FileObject resolveFile(String fileString) {
         FileObject result = null;
         try {
             result = getFileSystemManager().resolveFile(fileString);
         } catch (FileSystemException e) {
-            LOGGER.error("getFileObject(String fileString) fails: {}", fileString, e);
+            LOGGER.error("resolveFile(String fileString) fails: {}", fileString, e);
         }
         return result;
     }
 
+    /**
+     * load the file
+     * and get its content as string
+     * and return the string.
+     *
+     * @param fileString string to the file.
+     * @return content of the file as string.
+     */
     public static String loadString(String fileString) {
-        String result = "";
-        result = loadString(getFileObject(fileString));
-        return result;
+        return loadString(resolveFile(fileString));
     }
 
+    /**
+     * load the file
+     * and get its content as string
+     * and return the string.
+     *
+     * @param fileObject a {@link org.apache.commons.vfs2.FileObject} object.
+     * @return content of the file as string.
+     */
     public static String loadString(FileObject fileObject) {
         String result = "";
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
@@ -104,6 +121,17 @@ public class ResourceManager implements AutoCloseable {
         return result;
     }
 
+    /**
+     * generate a File object from a fileObject object.
+     * I had discussed with vfs's guys and they told me they might add a function to do this.
+     * I might delete this then.
+     * But this is useful for now.
+     * You know sometimes we just need a function like this for something in Swing to work,
+     * for example JFileChooser.
+     *
+     * @param fileObject a {@link org.apache.commons.vfs2.FileObject} object.
+     * @return a {@link java.io.File} object.
+     */
     public static File toFile(FileObject fileObject) {
         File result = null;
         try {
@@ -114,6 +142,11 @@ public class ResourceManager implements AutoCloseable {
         return result;
     }
 
+    /**
+     * <p>Getter for the field <code>maxTextureSize</code>.</p>
+     *
+     * @return a long.
+     */
     public long getMaxTextureSize() {
         if (maxTextureSize == 0) {
             int[] maxTextureSizeArray = new int[1];
@@ -123,6 +156,11 @@ public class ResourceManager implements AutoCloseable {
         return maxTextureSize;
     }
 
+    /**
+     * <p>Setter for the field <code>maxTextureSize</code>.</p>
+     *
+     * @param maxTextureSize a long.
+     */
     public void setMaxTextureSize(long maxTextureSize) {
         this.maxTextureSize = maxTextureSize;
     }
@@ -146,10 +184,32 @@ public class ResourceManager implements AutoCloseable {
     private final GameManager gameManager;
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
-    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesURIMap = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Class, ConcurrentHashMap> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Void>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
-//    FileSystemManager fsManager = VFS.getManager();
+    protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapGet(Class<T> tClass) {
+        return (ConcurrentHashMap) defaultResourcesURIMap.get(tClass);
+    }
+
+    protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapPut(Class<T> tClass, ConcurrentHashMap<ResourceInfo<T>, T> map) {
+        return defaultResourcesURIMap.put(tClass, (ConcurrentHashMap) map);
+    }
+
+    protected <T extends AbstractResource> boolean defaultResourcesURIMapContainsKey(Class<T> tClass) {
+        return defaultResourcesURIMap.containsKey(tClass);
+    }
+
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapGet(Class<T> tClass) {
+        return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
+    }
+
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Void>> map) {
+        return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
+    }
+
+    protected <T extends AbstractResource> boolean defaultResourcesLoaderMapContainsKey(Class<T> tClass) {
+        return defaultResourcesLoaderMap.containsKey(tClass);
+    }
 
     /**
      * <p>putResourceLoader.</p>
@@ -157,10 +217,12 @@ public class ResourceManager implements AutoCloseable {
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceType resourceType
      * @param loader       a {@link java.util.function.Function} object.
+     * @param <T>          tClass
      */
-    public <T> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
-        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
-                defaultResourcesLoaderMap.computeIfAbsent(tClass, aClass -> new ConcurrentHashMap<>(8));
+    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
+        ConcurrentHashMap<String, Function<? extends AbstractResource, Void>> resourceLoaderMap =
+                defaultResourcesLoaderMap.computeIfAbsent(
+                        tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
     }
 
@@ -169,11 +231,12 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceType resourceType
+     * @param <T>          tClass
      * @return return
      */
-    public <T> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
+    public <T extends AbstractResource> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
         ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
-                defaultResourcesLoaderMap.get(tClass);
+                defaultResourcesLoaderMapGet(tClass);
         if (resourceLoaderMap == null) {
             return null;
         }
@@ -185,25 +248,27 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param resourceInfo resourceInfo
      * @param t            a T object.
+     * @param <T>          tClass
      */
-    public <T> void putResource(ResourceInfo resourceInfo, T t) {
-        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
-                getDefaultResourcesURIMap().get(t.getClass());
+    public <T extends AbstractResource> void putResource(ResourceInfo<T> resourceInfo, T t) {
+        ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
+                defaultResourcesURIMapGet((Class<T>) t.getClass());
         if (resourceURIMap == null) {
             resourceURIMap = new ConcurrentHashMap<>(100);
-            getDefaultResourcesURIMap().put(t.getClass(), resourceURIMap);
+            defaultResourcesURIMapPut((Class<T>) t.getClass(), resourceURIMap);
         }
         resourceURIMap.put(resourceInfo, t);
     }
 
     /**
-     * <p>putResourceWithShortenURI.</p>
+     * put resource into efaultResourcesURIMap
      *
      * @param resourceInfoJson resourceInfo
-     * @param t                a T object.
+     * @param t                resource
+     * @param <T>              resource class
      */
-    public <T> void putResource(String resourceInfoJson, T t) {
-        this.putResource(ResourceInfo.of(resourceInfoJson), t);
+    public <T extends AbstractResource> void putResource(String resourceInfoJson, T t) {
+        this.putResource((ResourceInfo<T>) ResourceInfo.of(resourceInfoJson), t);
     }
 
     /**
@@ -211,13 +276,14 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceInfo resourceInfo
+     * @param <T>          a T object.
      * @return a T object.
      */
-    public <T> T getResource(Class<T> tClass,
-                             ResourceInfo resourceInfo) {
+    public <T extends AbstractResource> T getResource(Class<T> tClass,
+                                                      ResourceInfo<T> resourceInfo) {
         assert (tClass == resourceInfo.resourceClass);
-        ConcurrentHashMap<ResourceInfo, T> resourceURIMap =
-                getDefaultResourcesURIMap().get(tClass);
+        ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
+                defaultResourcesURIMapGet(tClass);
         if (resourceURIMap == null) {
             return null;
         } else {
@@ -229,10 +295,11 @@ public class ResourceManager implements AutoCloseable {
      * <p>getResourceFromShortenURI.</p>
      *
      * @param resourceInfo resourceInfo
+     * @param <T>          a T object.
      * @return a T object.
      */
-    public <T> T getResource(ResourceInfo resourceInfo) {
-        return (T) this.getResource(resourceInfo.resourceClass, resourceInfo);
+    public <T extends AbstractResource> T getResource(ResourceInfo<T> resourceInfo) {
+        return this.getResource(resourceInfo.resourceClass, resourceInfo);
     }
 
     /**
@@ -240,11 +307,12 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass           a {@link java.lang.Class} object.
      * @param resourceInfoJson resourceInfo
+     * @param <T>              a T object.
      * @return a T object.
      */
-    public <T> T getResource(Class<T> tClass,
-                             String resourceInfoJson) {
-        return this.getResource(tClass, ResourceInfo.of(resourceInfoJson));
+    public <T extends AbstractResource> T getResource(Class<T> tClass,
+                                                      String resourceInfoJson) {
+        return this.getResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
     }
 
     /**
@@ -253,10 +321,9 @@ public class ResourceManager implements AutoCloseable {
      * @param resourceInfo resourceInfo
      * @return a boolean.
      */
-    public boolean ifExistResource(ResourceInfo resourceInfo) {
-
+    public <T extends AbstractResource> boolean ifExistResource(ResourceInfo<T> resourceInfo) {
         ConcurrentHashMap resourceURIMap =
-                getDefaultResourcesURIMap().get(resourceInfo.resourceClass);
+                defaultResourcesURIMapGet(resourceInfo.resourceClass);
         if (resourceURIMap == null) {
             return false;
         } else {
@@ -280,9 +347,10 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass       a {@link java.lang.Class} object.
      * @param resourceInfo resourceInfo
+     * @param <T>          a T object.
      * @return a T object.
      */
-    public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo resourceInfo) {
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo<T> resourceInfo) {
         assert (tClass == resourceInfo.resourceClass);
         T res = null;
         if (this.ifExistResource(resourceInfo)) {
@@ -305,6 +373,7 @@ public class ResourceManager implements AutoCloseable {
      * <p>fetchResource.</p>
      *
      * @param resourceInfo resourceInfo
+     * @param <T>          a T object.
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(ResourceInfo<T> resourceInfo) {
@@ -316,21 +385,26 @@ public class ResourceManager implements AutoCloseable {
      *
      * @param tClass           a {@link java.lang.Class} object.
      * @param resourceInfoJson resource Info Json String
+     * @param <T>              a T object.
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
-        return this.fetchResource(tClass, ResourceInfo.of(resourceInfoJson));
+        return this.fetchResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
     }
 
     /**
      * <p>fetchResource.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
+     * @param tClass           a {@link java.lang.Class} object.
+     * @param type             a {@link java.lang.String} object.
+     * @param fileObjectString a {@link java.lang.String} object.
+     * @param values           a {@link java.lang.String} object.
+     * @param <T>              a T object.
      * @return a T object.
      */
     public <T extends AbstractResource> T
     fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
-        ResourceInfo resourceInfo = new ResourceInfo(tClass, type, fileObjectString, values);
+        ResourceInfo<T> resourceInfo = new ResourceInfo<>(tClass, type, fileObjectString, values);
         return this.fetchResource(tClass, resourceInfo);
     }
 
@@ -340,7 +414,7 @@ public class ResourceManager implements AutoCloseable {
      */
     @Override
     public void close() {
-        closeMap(getDefaultResourcesURIMap());
+        closeMap(defaultResourcesURIMap);
     }
 
     /**
@@ -490,14 +564,10 @@ public class ResourceManager implements AutoCloseable {
     }
 
     /**
-     * <p>Getter for the field <code>defaultResourcesURIMap</code>.</p>
+     * <p>Getter for the field <code>fileSystemManager</code>.</p>
      *
-     * @return return
+     * @return a {@link org.apache.commons.vfs2.FileSystemManager} object.
      */
-    public ConcurrentHashMap<Class, ConcurrentHashMap> getDefaultResourcesURIMap() {
-        return defaultResourcesURIMap;
-    }
-
     public static FileSystemManager getFileSystemManager() {
         return fileSystemManager;
     }
