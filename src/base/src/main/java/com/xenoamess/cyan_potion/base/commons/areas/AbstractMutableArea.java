@@ -25,21 +25,39 @@
 package com.xenoamess.cyan_potion.base.commons.areas;
 
 /**
+ * Mutable Area
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public interface AbstractMutableArea extends AbstractArea {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     default boolean ifMutable() {
         return true;
     }
 
+    /**
+     * <p>setLeftTopPosX.</p>
+     *
+     * @param leftTopPosX a float.
+     */
     void setLeftTopPosX(float leftTopPosX);
 
+    /**
+     * <p>setLeftTopPosY.</p>
+     *
+     * @param leftTopPosY a float.
+     */
     void setLeftTopPosY(float leftTopPosY);
 
     /**
-     * <p>Setter for the field <code>centerPosX</code>.</p>
+     * set center posX.
+     * notice that this function will calculate center posX from leftTop posX and width.
+     * so make sure your this.getWidth() is correct before you set this.
      *
      * @param newCenterPosX a float.
      */
@@ -48,7 +66,9 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>Setter for the field <code>centerPosY</code>.</p>
+     * set center posY.
+     * notice that this function will calculate center posY from leftTop posY and height.
+     * so make sure your this.getHeight() is correct before you set this.
      *
      * @param newCenterPosY a float.
      */
