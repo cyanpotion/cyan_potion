@@ -78,6 +78,9 @@ public class Button extends AbstractControllableGameWindowComponent implements B
         this.setButtonText(buttonText);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind(int sampler) {
         this.getButtonPicture().bind(sampler);
@@ -126,6 +129,11 @@ public class Button extends AbstractControllableGameWindowComponent implements B
         this.buttonText = buttonText;
     }
 
+    /**
+     * <p>Getter for the field <code>buttonPicture</code>.</p>
+     *
+     * @return this.buttonPicture
+     */
     public Picture getButtonPicture() {
         return buttonPicture;
     }
