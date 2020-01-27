@@ -24,16 +24,93 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
-import org.apache.commons.lang3.NotImplementedException;
+import com.xenoamess.cyan_potion.base.GameManager;
 
-//TODO
+/**
+ * SaveManager
+ * A manager class for saving and loading, and other save file operations.
+ *
+ * @author XenoAmess
+ * @version 0.148.8
+ */
 public class SaveManager {
-    public <T extends RuntimeVariableStruct> void save(T runtimeVariableStruct, RuntimeVariableStructSaver<T> runtimeVariableStructSaver) {
-        throw new NotImplementedException("");
+    private final GameManager gameManager;
+
+    /**
+     * <p>Constructor for SaveManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
+    public SaveManager(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
-    public <T extends RuntimeVariableStruct> T load(RuntimeVariableStructSaver<T> runtimeVariableStructSaver) {
-        throw new NotImplementedException("");
+    private SaveFileObject currentSaveFileObject;
+
+    /**
+     * get SaveFileObject
+     *
+     * @param index save file object index
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
+     */
+    public SaveFileObject getSaveFileObject(int index) {
+        String saveFolderPath = System.getProperty("user.home") + "/cyan_potion/" + this.getGameManager().getDataCenter().getGameName() + "/" + index + "/";
+        SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
+        return saveFileObject;
     }
 
+    /**
+     * pick save file object 0 at start.
+     * some games only have 1 save slot,
+     * and this mechanism can make their life easier.
+     */
+    public void init() {
+        this.pickCurrentSaveFileObject(0);
+    }
+
+    /**
+     * get a SaveFileObject using index,
+     * then set it as default SaveFileObject
+     * then return it.
+     * <p>
+     * this shall be invoked in a save GUI or something,
+     * when you click a save slot,
+     * then you invoke this,
+     * then you call save to save.
+     *
+     * @param index save file object index
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
+     */
+    public SaveFileObject pickCurrentSaveFileObject(int index) {
+        SaveFileObject result = getSaveFileObject(index);
+        setCurrentSaveFileObject(result);
+        return result;
+    }
+
+    /**
+     * get current save file object
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
+     */
+    public SaveFileObject getCurrentSaveFileObject() {
+        return currentSaveFileObject;
+    }
+
+    /**
+     * set current save file object.
+     *
+     * @param currentSaveFileObject a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
+     */
+    protected void setCurrentSaveFileObject(SaveFileObject currentSaveFileObject) {
+        this.currentSaveFileObject = currentSaveFileObject;
+    }
+
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
+    public GameManager getGameManager() {
+        return gameManager;
+    }
 }

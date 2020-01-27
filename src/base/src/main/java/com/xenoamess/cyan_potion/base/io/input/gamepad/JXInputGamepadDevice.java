@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.143.0
  * @see DataCenter#isUsingJXInput()
- * @deprecated
  */
 @Deprecated
 public class JXInputGamepadDevice extends AbstractGamepadDevice {

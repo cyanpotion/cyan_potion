@@ -25,15 +25,19 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 /**
- * //TODO
- * This class is not stable yet.
- * Will be removed or modified in future.
+ * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public abstract class ResourceHandler {
     private ResourceManager resourceManager;
 
+    /**
+     * <p>Constructor for ResourceHandler.</p>
+     *
+     * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public ResourceHandler(ResourceManager resourceManager) {
         this.resourceManager = resourceManager;
     }

@@ -27,13 +27,19 @@ package com.xenoamess.cyan_potion.base.io.input.key;
 import java.util.Arrays;
 
 /**
+ * <p>KeyActionEnum class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public enum KeyActionEnum {
     GLFW_RELEASE(0),
     GLFW_PRESS(1),
     GLFW_REPEAT(2);
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final KeyActionEnum[] values = generateValues();
 
@@ -41,11 +47,22 @@ public enum KeyActionEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum} object.
+     */
     public static KeyActionEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -53,6 +70,12 @@ public enum KeyActionEnum {
         return GLFW_REPEAT;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

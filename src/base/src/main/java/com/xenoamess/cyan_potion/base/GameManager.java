@@ -47,6 +47,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.runtime.RuntimeManager;
+import com.xenoamess.cyan_potion.base.runtime.SaveManager;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -99,12 +100,12 @@ public class GameManager implements AutoCloseable {
     private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
 
     @AsFinalField
-    private ConsoleThread consoleThread = null;
+    private ConsoleThread consoleThread;
     @AsFinalField
-    private GameWindow gameWindow = null;
+    private GameWindow gameWindow;
     private final Callbacks callbacks = new Callbacks(this);
     @AsFinalField
-    private SteamUserStats steamUserStats = null;
+    private SteamUserStats steamUserStats;
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
@@ -117,6 +118,7 @@ public class GameManager implements AutoCloseable {
     private final AudioManager audioManager = new AudioManager(this);
     private final ResourceManager resourceManager = new ResourceManager(this);
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
+    private final SaveManager saveManager = new SaveManager(this);
 
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(4);
@@ -147,6 +149,23 @@ public class GameManager implements AutoCloseable {
         return res;
     }
 
+    /**
+     * <p>generateArgsArray.</p>
+     *
+     * @param argsMap argsMap.
+     * @return return
+     */
+    public static String[] generateArgsArray(Map<String, String> argsMap) {
+        ArrayList<String> res = new ArrayList<>();
+        if (argsMap == null) {
+            return res.toArray(new String[0]);
+        }
+        for (Map.Entry<String, String> au : argsMap.entrySet()) {
+            res.add(au.getKey() + '=' + au.getValue());
+        }
+        return res.toArray(new String[0]);
+    }
+
 
     /**
      * <p>Constructor for GameManager.</p>
@@ -154,27 +173,7 @@ public class GameManager implements AutoCloseable {
      * @param args an array of {@link java.lang.String} objects.
      */
     public GameManager(String[] args) {
-        super();
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("New game start at time : {}", new Date());
-        this.setArgsMap(generateArgsMap(args));
-
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("Args : ->");
-        for (Map.Entry entry : this.getArgsMap().entrySet()) {
-            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
-        }
-        LOGGER.info(LINE_SEGMENT);
-
-        LOGGER.info("Platform : ->");
-        Properties properties = System.getProperties();
-        for (Map.Entry entry : properties.entrySet()) {
-            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
-        }
-        LOGGER.info(LINE_SEGMENT);
-        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
+        this(generateArgsMap(args));
     }
 
     /**
@@ -191,8 +190,27 @@ public class GameManager implements AutoCloseable {
      * @param argsMap argsMap
      */
     public GameManager(Map<String, String> argsMap) {
-        this();
+        super();
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("New game start at time : {}", new Date());
         this.setArgsMap(argsMap);
+
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("Args : ->");
+        for (Map.Entry entry : this.getArgsMap().entrySet()) {
+            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
+        }
+        LOGGER.info(LINE_SEGMENT);
+
+        LOGGER.info("Platform : ->");
+        Properties properties = System.getProperties();
+        for (Map.Entry entry : properties.entrySet()) {
+            LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
+        }
+        LOGGER.info(LINE_SEGMENT);
+        LOGGER.info("cyan_potion engine version : {}", PackageVersion.VERSION);
     }
 
     /**
@@ -230,6 +248,9 @@ public class GameManager implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>registerCyanPotionURLStreamHandlerFactory.</p>
+     */
     public void registerCyanPotionURLStreamHandlerFactory() {
         try {
             URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
@@ -243,6 +264,11 @@ public class GameManager implements AutoCloseable {
      * <p>startup.</p>
      */
     public void startup() {
+        if (this.getAlive()) {
+            return;
+        }
+        setAlive(true);
+
         this.registerCyanPotionURLStreamHandlerFactory();
         this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
         this.loadSettingTree();
@@ -250,7 +276,7 @@ public class GameManager implements AutoCloseable {
         this.readKeymap();
         this.initSteam();
         this.loadText();
-        setAlive(true);
+
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
@@ -267,6 +293,8 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightBeforeGamepadInputManagerInit);
         this.getGamepadInputManager().init(this);
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
+
+        this.getSaveManager().init();
 
         this.setStartingContent();
         final String defaultFontResourceJsonString =
@@ -336,6 +364,10 @@ public class GameManager implements AutoCloseable {
 
         this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
+        this.getDataCenter().setGameName(getString(this.getDataCenter().getCommonSettings(),
+                STRING_GAME_NAME, "nameless"));
+        this.getDataCenter().setGameVersion(getString(this.getDataCenter().getCommonSettings(),
+                STRING_GAME_VERSION, "1.0"));
         this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
                 STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
         this.getDataCenter().setIconFilePath(getString(this.getDataCenter().getCommonSettings(),
@@ -388,7 +420,7 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try (InputStream inputStream = ResourceManager.getFileObject(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
+        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
             multiLanguageUtil.loadFromMerge(inputStream);
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
@@ -576,7 +608,7 @@ public class GameManager implements AutoCloseable {
         }
 
         this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
-        this.getGameWindowComponentTree().init(this.getGameWindow());
+        this.getGameWindowComponentTree().init(gameWindow);
         this.getGameWindow().init();
 
 
@@ -684,8 +716,9 @@ public class GameManager implements AutoCloseable {
      *
      * @param eventProcessor eventProcessor
      * @param event          a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     * @param <T>            class of the event
      */
-    public <T extends Event> void delayMainThreadEventProcess(EventProcessor<T> eventProcessor, T event) {
+    public <T extends Event> void delayMainThreadEventProcess(EventProcessor<? super T> eventProcessor, T event) {
         mainThreadEventProcessPairs.add(new ImmutablePair<>(eventProcessor, event));
     }
 
@@ -964,6 +997,11 @@ public class GameManager implements AutoCloseable {
         return eventList;
     }
 
+    /**
+     * <p>Getter for the field <code>eventListCache</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     protected List<Event> getEventListCache() {
         return eventListCache;
     }
@@ -1010,12 +1048,39 @@ public class GameManager implements AutoCloseable {
         this.timeToLastUpdate = timeToLastUpdate;
     }
 
+    /**
+     * <p>isCanRender.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCanRender() {
         return canRender;
     }
 
+    /**
+     * <p>Setter for the field <code>canRender</code>.</p>
+     *
+     * @param canRender a boolean.
+     */
     public void setCanRender(boolean canRender) {
         this.canRender = canRender;
     }
 
+    /**
+     * <p>Getter for the field <code>runtimeManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.RuntimeManager} object.
+     */
+    public RuntimeManager getRuntimeManager() {
+        return runtimeManager;
+    }
+
+    /**
+     * <p>Getter for the field <code>saveManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveManager} object.
+     */
+    public SaveManager getSaveManager() {
+        return saveManager;
+    }
 }

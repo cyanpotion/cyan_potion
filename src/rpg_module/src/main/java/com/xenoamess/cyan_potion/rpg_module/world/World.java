@@ -115,7 +115,7 @@ public class World extends AbstractEntityScene {
     public void loadGameMap(GameMap gameMap) {
         this.setGameMap(gameMap);
         for (AbstractDynamicEntity au : gameMap.getEventUnits()) {
-            au.register();
+            au.registerShape();
         }
         this.getDynamicEntitySet().addAll(gameMap.getEventUnits());
     }
@@ -133,7 +133,7 @@ public class World extends AbstractEntityScene {
         {
             this.setRpgModuleDataCenter(new RpgModuleDataCenter(this));
 
-            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), ResourceManager.getFileObject("resources/www/data/System.json")));
+            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), ResourceManager.resolveFile("resources/www/data/System.json")));
             LOGGER.debug("GameSystemJson.INIT(this.gameManager)");
             GameTileset.init(this);
             LOGGER.debug("GameTileset.INIT(this.gameManager)");
@@ -179,7 +179,7 @@ public class World extends AbstractEntityScene {
                             "0"
                     ),
                     this.getGameWindow().getGameManager().getResourceManager()));
-            this.getPlayer().register();
+            this.getPlayer().registerShape();
             getDynamicEntitySet().add(getPlayer());
 
             this.getCamera().getPosition().set(this.getPlayer().getCenterPos());

@@ -27,8 +27,9 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.xenoamess.cyan_potion.base.GameWindow;
 
 /**
- * the class will be to deal with Steam Gamepad libs
- * not implemented yet.
+ * TODO the class will be to deal with Steam Gamepad libs
+ * TODO !not implemented yet.!
+ * TODO But really it is not at high priority, as steam controller is not well accepted.
  *
  * @author XenoAmess
  * @version 0.143.0

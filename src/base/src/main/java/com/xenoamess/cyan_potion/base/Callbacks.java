@@ -164,7 +164,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>gameManager</code>.</p>
      *
-     * @return return
+     * @return gameManager
      */
     public GameManager getGameManager() {
         return gameManager;
@@ -173,7 +173,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>windowCloseCallback</code>.</p>
      *
-     * @return return
+     * @return windowCloseCallback
      */
     public GLFWWindowCloseCallbackI getWindowCloseCallback() {
         return windowCloseCallback;
@@ -191,7 +191,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>keyCallback</code>.</p>
      *
-     * @return return
+     * @return keyCallback
      */
     public GLFWKeyCallbackI getKeyCallback() {
         return keyCallback;
@@ -209,7 +209,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>joystickCallback</code>.</p>
      *
-     * @return return
+     * @return joystickCallback
      */
     public GLFWJoystickCallbackI getJoystickCallback() {
         return joystickCallback;
@@ -227,7 +227,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>mouseButtonCallback</code>.</p>
      *
-     * @return return
+     * @return mouseButtonCallback
      */
     public GLFWMouseButtonCallbackI getMouseButtonCallback() {
         return mouseButtonCallback;
@@ -245,7 +245,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>scrollCallback</code>.</p>
      *
-     * @return return
+     * @return scrollCallback
      */
     public GLFWScrollCallbackI getScrollCallback() {
         return scrollCallback;
@@ -263,7 +263,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>windowSizeCallback</code>.</p>
      *
-     * @return return
+     * @return windowSizeCallback
      */
     public GLFWWindowSizeCallbackI getWindowSizeCallback() {
         return windowSizeCallback;
@@ -281,7 +281,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>charCallback</code>.</p>
      *
-     * @return return
+     * @return charCallback
      */
     public GLFWCharCallbackI getCharCallback() {
         return charCallback;
@@ -299,7 +299,7 @@ public class Callbacks {
     /**
      * <p>Getter for the field <code>steamUserStatsCallback</code>.</p>
      *
-     * @return return
+     * @return steamUserStatsCallback
      */
     public SteamUserStatsCallback getSteamUserStatsCallback() {
         return steamUserStatsCallback;
@@ -314,10 +314,20 @@ public class Callbacks {
         this.steamUserStatsCallback = steamUserStatsCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>dropCallback</code>.</p>
+     *
+     * @return dropCallback.
+     */
     public GLFWDropCallbackI getDropCallback() {
         return dropCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>dropCallback</code>.</p>
+     *
+     * @param dropCallback dropCallback
+     */
     public void setDropCallback(GLFWDropCallbackI dropCallback) {
         this.dropCallback = dropCallback;
     }

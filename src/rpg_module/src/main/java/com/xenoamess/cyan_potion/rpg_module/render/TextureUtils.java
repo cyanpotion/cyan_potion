@@ -775,7 +775,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = ResourceManager.getFileObject(tilesetTexturesFilepath).getContent().getInputStream()) {
+        try (InputStream inputStream = ResourceManager.resolveFile(tilesetTexturesFilepath).getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +

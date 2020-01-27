@@ -60,6 +60,11 @@ public class MouseButtonEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final MouseButtonEvent EMPTY = new EmptyMouseButtonEvent();
 
     private final long window;
@@ -225,10 +230,18 @@ public class MouseButtonEvent implements Event {
         return mods;
     }
 
+    /**
+     * <p>getModEnums.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<KeyModEnum> getModEnums() {
         return KeyModEnum.getModEnumsByValue(this.getMods());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         //notice that scancode is ignored by this engine(at this version.)

@@ -45,7 +45,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 
 /**
- * <p>Abstract AbstractShape class.</p>
+ * Shape is a shape of something.
+ * shape is used for calculating collide or something.
+ * every etity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
  * @version 0.143.0
@@ -93,9 +95,11 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>relation.</p>
      *
-     * @param k     a K object.
-     * @param v     a V object.
-     * @param rough a boolean.
+     * @param k     shape.
+     * @param v     another shape.
+     * @param rough if rough.
+     * @param <K>   shape class.
+     * @param <V>   another shape class.
      * @return return
      */
     public static <K extends AbstractShape, V extends AbstractShape> ShapeRelation relation(K k, V v, boolean rough) {
@@ -259,8 +263,9 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>copy.</p>
      *
-     * @param source a T object.
-     * @return a T object.
+     * @param source source shape.
+     * @param <T>    shape class.
+     * @return copied shape
      */
     public static <T extends AbstractShape> T copy(T source) {
         T res;
@@ -532,21 +537,33 @@ public abstract class AbstractShape implements AbstractMutableArea {
         this.getCenterPos().y = newCenterPosY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getLeftTopPosX() {
         return this.getCenterPosX() - getWidth() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getLeftTopPosY() {
         return this.getCenterPosY() - getHeight() / 2F;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeftTopPosX(float newLeftTopPosX) {
         this.setCenterPosX(newLeftTopPosX + getWidth() / 2);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeftTopPosY(float newLeftTopPosY) {
         this.setCenterPosY(newLeftTopPosY + getHeight() / 2);

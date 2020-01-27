@@ -28,6 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
@@ -41,10 +42,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * <p>Abstract AbstractGameWindowComponent class.</p>
+ * AbstractGameWindowComponent class is an ancestor of all GameWindowComponent classes.
+ * If you are implementing a GameWindowComponent, and wanna a easy start,
+ * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
  * @version 0.143.0
+ * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractMutableArea {
     private static final Logger LOGGER =
@@ -58,6 +62,21 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     private float leftTopPosY = 0;
     private float width = -1;
     private float height = -1;
+
+    /**
+     * map of eventClass->processors.
+     * EventProcess must be able to process the event Class.
+     * notice that this eventClassToProcessorMap not works automatically,
+     * and you must get the processor and invoke it by yourself.
+     * you can see examples of this map/these functions about it.
+     *
+     * @see AbstractGameWindowComponent#getProcessor(String)
+     * @see AbstractGameWindowComponent#getProcessor(Class)
+     * @see AbstractGameWindowComponent#registerProcessor(String, EventProcessor)
+     * @see AbstractGameWindowComponent#registerProcessor(Class, EventProcessor)
+     */
+    private final Map<Class<? extends Event>, EventProcessor<? extends Event>> eventClassToProcessorMap = new ConcurrentHashMap<>();
+
 
     /**
      * <p>Constructor for AbstractGameWindowComponent.</p>
@@ -150,10 +169,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     @Override
     public void close() {
         this.setAlive(false);
-        //TODO
     }
-
-    private final Map<String, EventProcessor> classNameToProcessorMap = new ConcurrentHashMap<>();
 
     /**
      * <p>initProcessors.</p>
@@ -163,42 +179,67 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     /**
      * <p>registerProcessor.</p>
      *
-     * @param eventType eventType
-     * @param processor eventType
+     * @param eventClassString eventClassString
+     * @param processor        event processor
+     * @param <P>              event Class
      */
-    public <T extends Event> void registerProcessor(String eventType,
-                                                    EventProcessor<T> processor) {
-        this.getClassNameToProcessorMap().put(eventType, processor);
+    public <P extends Event> void registerProcessor(String eventClassString, EventProcessor<P> processor) {
+        try {
+            this.eventClassToProcessorMapPut((Class<? extends P>) Class.forName(eventClassString), processor);
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("cannot get class : {}", eventClassString, e);
+        }
     }
 
     /**
      * <p>registerProcessor.</p>
      *
-     * @param eventClass eventClass
-     * @param processor  eventType
+     * @param eventClass event class
+     * @param processor  event processor
+     * @param <T>        event class
      */
     public <T extends Event> void registerProcessor(Class<T> eventClass,
-                                                    EventProcessor<T> processor) {
-        this.getClassNameToProcessorMap().put(eventClass.getCanonicalName(), processor);
+                                                    EventProcessor<? super T> processor) {
+        this.eventClassToProcessorMapPut(eventClass, processor);
     }
 
     /**
      * <p>getProcessor.</p>
      *
-     * @param eventType eventType
-     * @return return
+     * @param eventClassString event Class String
+     * @param <P>              event Class
+     * @return EventProcessor
      */
-    public EventProcessor getProcessor(String eventType) {
-        return this.getClassNameToProcessorMap().get(eventType);
+    public <P extends Event> EventProcessor<P> getProcessor(String eventClassString) {
+        EventProcessor<P> res = null;
+        try {
+            res = (EventProcessor<P>) this.eventClassToProcessorMapGet((Class<? extends P>) Class.forName(eventClassString));
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("cannot get class : {}", eventClassString, e);
+        }
+        return res;
     }
 
     /**
-     * <p>getProcessor.</p>
+     * get processor of class T.
+     * if class T have no processor registered here,
+     * then will try to get from T's super class.
+     * then super super class.
+     * till Event.class.
      *
-     * @return return
+     * @param eventClass event class
+     * @param <T>        event class
+     * @return EventProcessor
      */
-    public <T extends Event> EventProcessor<T> getProcessor(Class<T> eventClass) {
-        return this.getClassNameToProcessorMap().get(eventClass.getCanonicalName());
+    public <T extends Event> EventProcessor<? super T> getProcessor(Class<T> eventClass) {
+        Class<? super T> nowClass = eventClass;
+        while (nowClass != null && nowClass != Event.class && !this.getEventClassToProcessorMap().containsKey(nowClass)) {
+            nowClass = nowClass.getSuperclass();
+        }
+        if (eventClass == null) {
+            return null;
+        }
+        return this.eventClassToProcessorMapGet(eventClass);
     }
 
 
@@ -214,12 +255,12 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
      * then it shall return the new event.
      *
      * @param event the old event that is being processed by this Component now.
+     * @param <T>   event class
      * @return the new Event that generated during the processing of the old event.
      * @see Event#apply(GameManager)
      */
     public <T extends Event> Event process(T event) {
-        EventProcessor<T> processor =
-                this.getProcessor(event.getClass().getCanonicalName());
+        EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
         if (processor != null) {
             return processor.apply(event);
         }
@@ -241,21 +282,27 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>enlargeAsFullWindow.</p>
+     * enlarge to full window.
+     * <p>
+     * I'm thinking about deleting this function
+     * because I think this function be meaningless.
+     * I asked myself: why not call this.cover(this.getGameWindow()); direcly?
      */
     public void enlargeAsFullWindow() {
-        this.setLeftTopPosX(0);
-        this.setLeftTopPosY(0);
-        this.setWidth(this.getGameWindow().getLogicWindowWidth());
-        this.setHeight(this.getGameWindow().getLogicWindowHeight());
+        this.cover(this.getGameWindow());
     }
 
     /**
-     * <p>center.</p>
+     * move to center to the gameWindow
+     * <p>
+     * I'm thinking about deleting this function
+     * because I think this function be meaningless.
+     * I asked myself: why not call this.setCenter(this.getGameWindow()); direcly?
+     *
+     * @see #setCenter(AbstractArea)
      */
-    public void center() {
-        this.setLeftTopPosX((this.getGameWindow().getLogicWindowWidth() - this.getWidth()) / 2);
-        this.setLeftTopPosY((this.getGameWindow().getLogicWindowHeight() - this.getHeight()) / 2);
+    public void moveToCenterOfFullWindow() {
+        this.setCenter(this.getGameWindow());
     }
 
 
@@ -288,16 +335,78 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
 
     //shortcuts
 
+    /**
+     * <p>getGameManager.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return this.getGameWindow().getGameManager();
     }
 
+    /**
+     * <p>getResourceManager.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public ResourceManager getResourceManager() {
         return this.getGameWindow().getGameManager().getResourceManager();
     }
 
+    /**
+     * <p>getDataCenter.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
     public DataCenter getDataCenter() {
         return this.getGameWindow().getGameManager().getDataCenter();
+    }
+
+    /**
+     * don't use it if not necessary.
+     * just use eventClassToProcessorMapPut , eventClassToProcessorMapGet , eventClassToProcessorMapContainsKey if you can.
+     *
+     * @return this.eventClassToProcessorMap
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapPut
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapGet
+     * @see AbstractGameWindowComponent#eventClassToProcessorMapContainsKey
+     */
+    protected Map<Class<? extends Event>, EventProcessor<? extends Event>> getEventClassToProcessorMap() {
+        return eventClassToProcessorMap;
+    }
+
+    /**
+     * <p>eventClassToProcessorMapPut.</p>
+     *
+     * @param eventClass     event class
+     * @param eventProcessor event processor
+     * @param <T>            event class
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
+    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(Class<T> eventClass, EventProcessor<? super T> eventProcessor) {
+        return (EventProcessor) this.getEventClassToProcessorMap().put(eventClass, eventProcessor);
+    }
+
+    /**
+     * <p>eventClassToProcessorMapGet.</p>
+     *
+     * @param eventClass event class
+     * @param <T>        event class
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
+    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapGet(Class<T> eventClass) {
+        return (EventProcessor) this.getEventClassToProcessorMap().get(eventClass);
+    }
+
+    /**
+     * <p>eventClassToProcessorMapContainsKey.</p>
+     *
+     * @param eventClass event class
+     * @param <T>        event class
+     * @return a boolean.
+     */
+    protected <T extends Event> boolean eventClassToProcessorMapContainsKey(Class<T> eventClass) {
+        return this.getEventClassToProcessorMap().containsKey(eventClass);
     }
 
     /**
@@ -310,9 +419,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>Setter for the field <code>leftTopPosX</code>.</p>
+     * {@inheritDoc}
      *
-     * @param leftTopPosX a float.
+     * <p>Setter for the field <code>leftTopPosX</code>.</p>
      */
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
@@ -328,9 +437,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>Setter for the field <code>leftTopPosY</code>.</p>
+     * {@inheritDoc}
      *
-     * @param leftTopPosY a float.
+     * <p>Setter for the field <code>leftTopPosY</code>.</p>
      */
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
@@ -345,9 +454,9 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>Setter for the field <code>width</code>.</p>
+     * {@inheritDoc}
      *
-     * @param width a float.
+     * <p>Setter for the field <code>width</code>.</p>
      */
     @Override
     public void setWidth(float width) {
@@ -363,21 +472,12 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     }
 
     /**
-     * <p>Setter for the field <code>height</code>.</p>
+     * {@inheritDoc}
      *
-     * @param height a float.
+     * <p>Setter for the field <code>height</code>.</p>
      */
     @Override
     public void setHeight(float height) {
         this.height = height;
-    }
-
-    /**
-     * <p>Getter for the field <code>classNameToProcessorMap</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, EventProcessor> getClassNameToProcessorMap() {
-        return classNameToProcessorMap;
     }
 }

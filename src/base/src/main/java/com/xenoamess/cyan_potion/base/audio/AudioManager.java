@@ -128,6 +128,9 @@ public class AudioManager implements AutoCloseable {
         this.getUnusedSources().addAll(Arrays.asList(Arraysx.fillNewSelf(new Source[INITIAL_TEMP_SOURCES_NUM])));
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
         this.gc();
     }
@@ -223,6 +226,7 @@ public class AudioManager implements AutoCloseable {
      * When you want to run some sound effect(short, not looping), then use this.
      * When you want a full control of the source, then you shall create Source by your own.
      *
+     * @param waveData the WaveData you wanna play in this source.
      * @return the source that we will use.
      */
     @MainThreadOnly
@@ -247,6 +251,7 @@ public class AudioManager implements AutoCloseable {
      * When you want to run some sound effect(short, not looping), then use this.
      * When you want a full control of the source, then you shall create Source by your own.
      *
+     * @param waveData the WaveData you wanna play.
      * @return the source that we will use.
      */
     @MainThreadOnly
@@ -270,6 +275,8 @@ public class AudioManager implements AutoCloseable {
      * When you want to run some sound effect(short, not looping), then use this.
      * When you want a full control of the source, then you shall create Source by your own.
      *
+     * @param waveData      the WaveData you wanna play.
+     * @param playOverEvent the event that will invoke after the waveData played.
      * @return the source that we will use.
      */
     @MainThreadOnly
@@ -281,22 +288,52 @@ public class AudioManager implements AutoCloseable {
         return source;
     }
 
+    /**
+     * <p>playWaveData.</p>
+     *
+     * @param waveData the WaveData you wanna play.
+     */
     public void playWaveData(WaveData waveData) {
         this.playWaveData(waveData, null);
     }
 
+    /**
+     * <p>playWaveData.</p>
+     *
+     * @param waveData      the WaveData you wanna play.
+     * @param playOverEvent the event that will invoke after the waveData played.
+     */
     public void playWaveData(WaveData waveData, Event playOverEvent) {
         this.play(this.generatePlayAudioEvent(waveData, playOverEvent));
     }
 
+    /**
+     * <p>generatePlayAudioEvent.</p>
+     *
+     * @param waveData the WaveData you wanna play.
+     * @return the generated {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
+     */
     public PlayAudioEvent generatePlayAudioEvent(WaveData waveData) {
         return this.generatePlayAudioEvent(waveData, null);
     }
 
+    /**
+     * <p>generatePlayAudioEvent.</p>
+     *
+     * @param waveData      the WaveData you wanna play.
+     * @param playOverEvent the event that will invoke after the waveData played.
+     * @return the generated {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
+     */
     public PlayAudioEvent generatePlayAudioEvent(WaveData waveData, Event playOverEvent) {
         return new PlayAudioEvent(this, waveData, playOverEvent);
     }
 
+    /**
+     * <p>generatePlayAudioEvent.</p>
+     *
+     * @param waveDatas the WaveData List you wanna play, one by one
+     * @return the generated {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
+     */
     public PlayAudioEvent generatePlayAudioEvent(List<WaveData> waveDatas) {
         if (waveDatas == null || waveDatas.isEmpty()) {
             return null;
@@ -314,7 +351,7 @@ public class AudioManager implements AutoCloseable {
      * add the playAudioEvent to eventList.
      * (It will play itself when apply().
      *
-     * @param playAudioEvent
+     * @param playAudioEvent a {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
      */
     public void play(PlayAudioEvent playAudioEvent) {
         this.getGameManager().eventListAdd(playAudioEvent);

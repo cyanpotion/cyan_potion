@@ -92,21 +92,41 @@ public class Source implements AutoCloseable {
                 waveData.getAlBufferInt());
     }
 
-    public boolean getRelative() {
+    /**
+     * <p>Getter for the field <code>relative</code>.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isRelative() {
         return this.relative;
     }
 
+    /**
+     * <p>Setter for the field <code>relative</code>.</p>
+     *
+     * @param relative a boolean.
+     */
     @MainThreadOnly
     public void setRelative(boolean relative) {
         this.relative = relative;
         alSourcei(this.getAlSourceInt(), AL10.AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
     }
 
+    /**
+     * <p>Getter for the field <code>rollOffFactor</code>.</p>
+     *
+     * @return a float.
+     */
     @MainThreadOnly
     public float getRollOffFactor() {
         return this.rollOffFactor;
     }
 
+    /**
+     * <p>Setter for the field <code>rollOffFactor</code>.</p>
+     *
+     * @param rollOffFactor a float.
+     */
     @MainThreadOnly
     public void setRollOffFactor(float rollOffFactor) {
         this.rollOffFactor = rollOffFactor;
@@ -114,6 +134,11 @@ public class Source implements AutoCloseable {
     }
 
 
+    /**
+     * <p>Getter for the field <code>volume</code>.</p>
+     *
+     * @return a float.
+     */
     public float getVolume() {
         return this.volume;
     }
@@ -129,6 +154,11 @@ public class Source implements AutoCloseable {
         AL10.alSourcef(this.getAlSourceInt(), AL10.AL_GAIN, this.volume);
     }
 
+    /**
+     * <p>Getter for the field <code>pitch</code>.</p>
+     *
+     * @return a float.
+     */
     public float getPitch() {
         return this.pitch;
     }
@@ -144,7 +174,12 @@ public class Source implements AutoCloseable {
         AL10.alSourcef(this.getAlSourceInt(), AL10.AL_PITCH, this.pitch);
     }
 
-    public boolean getLooping() {
+    /**
+     * <p>Getter for the field <code>looping</code>.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isLooping() {
         return this.looping;
     }
 
@@ -160,6 +195,11 @@ public class Source implements AutoCloseable {
                 this.looping ? AL_TRUE : AL10.AL_FALSE);
     }
 
+    /**
+     * <p>Getter for the field <code>position</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getPosition() {
         return this.position;
     }
@@ -176,6 +216,11 @@ public class Source implements AutoCloseable {
                 this.position.x, this.position.y, this.position.z);
     }
 
+    /**
+     * <p>Getter for the field <code>velocity</code>.</p>
+     *
+     * @return a {@link org.joml.Vector3f} object.
+     */
     public Vector3f getVelocity() {
         return velocity;
     }
@@ -253,10 +298,20 @@ public class Source implements AutoCloseable {
         this.play();
     }
 
+    /**
+     * <p>Getter for the field <code>playOverEvent</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public Event getPlayOverEvent() {
         return playOverEvent;
     }
 
+    /**
+     * <p>Setter for the field <code>playOverEvent</code>.</p>
+     *
+     * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public void setPlayOverEvent(Event playOverEvent) {
         this.playOverEvent = playOverEvent;
     }

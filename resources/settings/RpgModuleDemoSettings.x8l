@@ -1,4 +1,6 @@
 <commonSettings
+    gameName=CyanPotionRpgModuleDemo
+    gameVersion=0.148.8-SNAPSHOT
     titleTextID=0
     textFilePath=resources/text/text.x8l
     language=english

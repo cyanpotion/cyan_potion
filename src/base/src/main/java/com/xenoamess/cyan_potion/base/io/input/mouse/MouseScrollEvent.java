@@ -54,6 +54,11 @@ public class MouseScrollEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final MouseScrollEvent EMPTY = new EmptyMouseScrollEvent();
 
     private final long window;

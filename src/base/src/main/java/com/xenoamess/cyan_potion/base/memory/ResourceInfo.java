@@ -41,7 +41,10 @@ import java.io.IOException;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
-class ResourceJsonSerializer extends JsonSerializer<ResourceInfo> {
+class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serialize(ResourceInfo value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
@@ -59,10 +62,13 @@ class ResourceJsonSerializer extends JsonSerializer<ResourceInfo> {
     }
 }
 
-class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
+class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(ResourceJsonDeserializer.class);
+            LoggerFactory.getLogger(ResourceInfoDeserializer.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResourceInfo deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
@@ -94,8 +100,17 @@ class ResourceJsonDeserializer extends JsonDeserializer<ResourceInfo> {
     }
 }
 
-@JsonSerialize(using = ResourceJsonSerializer.class)
-@JsonDeserialize(using = ResourceJsonDeserializer.class)
+/**
+ * ResourceInfo class.
+ * ResourceInfo is used as a URL or something.
+ * There will be one and only resource instance linked to each ResourceInfo instance.
+ * equal ResourceInfo instances are linked to a same resource instance.
+ *
+ * @author XenoAmess
+ * @version 0.148.8
+ */
+@JsonSerialize(using = ResourceInfoSerializer.class)
+@JsonDeserialize(using = ResourceInfoDeserializer.class)
 public class ResourceInfo<T extends AbstractResource> {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
@@ -105,8 +120,17 @@ public class ResourceInfo<T extends AbstractResource> {
     public FileObject fileObject;
     public final String[] values;
 
+
     private String toString;
 
+    /**
+     * <p>Constructor for ResourceInfo.</p>
+     *
+     * @param resourceClass    a {@link java.lang.Class} object.
+     * @param type             a {@link java.lang.String} object.
+     * @param fileObjectString a {@link java.lang.String} object.
+     * @param values           a {@link java.lang.String} object.
+     */
     public ResourceInfo(Class<T> resourceClass,
                         String type,
                         String fileObjectString,
@@ -128,10 +152,22 @@ public class ResourceInfo<T extends AbstractResource> {
         }
     }
 
+    /**
+     * shortcut of resourceManager.fetchResource(this);
+     *
+     * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @return a T object.
+     */
     public T fetchResource(ResourceManager resourceManager) {
         return resourceManager.fetchResource(this);
     }
 
+    /**
+     * build a ResourceInfo instance from a json String.
+     *
+     * @param json json String.
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
+     */
     public static ResourceInfo of(String json) {
         ResourceInfo resourceInfo = null;
         try {
@@ -140,13 +176,20 @@ public class ResourceInfo<T extends AbstractResource> {
             LOGGER.error("getResourceJson(String json) fails, {}", json, e);
         }
         return resourceInfo;
+
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return toString;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -176,9 +219,11 @@ public class ResourceInfo<T extends AbstractResource> {
 //        return Arrays.equals(this.values, resourceInfo.values);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return this.toString().hashCode();
     }
-
 }

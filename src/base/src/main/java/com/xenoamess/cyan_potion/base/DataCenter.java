@@ -40,9 +40,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DataCenter {
 
+    /**
+     * Constant <code>MAIN_THREAD_NAME="main"</code>
+     */
     public static final String MAIN_THREAD_NAME = "main";
+    /**
+     * Constant <code>MAIN_THREAD_ID=1</code>
+     */
     public static final long MAIN_THREAD_ID = 1;
 
+    /**
+     * <p>ifMainThread.</p>
+     *
+     * @return a boolean.
+     */
     public static boolean ifMainThread() {
         return Thread.currentThread().getId() == MAIN_THREAD_ID;
     }
@@ -54,6 +65,9 @@ public class DataCenter {
     public static final boolean ALLOW_RUN_WITHOUT_STEAM = true;
     private boolean runWithSteam = true;
 
+    /**
+     * Constant <code>DEFAULT_CONSOLE_PORT=13888</code>
+     */
     public static final int DEFAULT_CONSOLE_PORT = 13888;
 
     /**
@@ -96,7 +110,29 @@ public class DataCenter {
     private MultiLanguageStructure textStructure;
 
     private final GameManager gameManager;
+
+    /**
+     * ID of title text of game window.
+     * get title text with it from MultiLanguageStructure.
+     *
+     * @see MultiLanguageStructure#getText(String)
+     * @see MultiLanguageStructure#getText(String, String)
+     */
     private String titleTextID;
+
+    /**
+     * Name of the game.
+     * notice that this name is used on save file path(and maybe other similar places),
+     * and shall not be translated
+     * (for different language version of the game can share save folders)
+     */
+    private String gameName;
+
+    /**
+     * version of the game.
+     * this is used to determine save file version.
+     */
+    private String gameVersion;
 
     /**
      * <p>Constructor for DataCenter.</p>
@@ -108,7 +144,7 @@ public class DataCenter {
     }
 
     @AsFinalField
-    private static ObjectMapper objectMapper = null;
+    private static ObjectMapper objectMapper;
 
     /**
      * <p>Getter for the field <code>objectMapper</code>.</p>
@@ -318,6 +354,8 @@ public class DataCenter {
 
     /**
      * the port used to receive console commands.
+     *
+     * @return a int.
      */
     public int getConsolePort() {
         return consolePort;
@@ -325,6 +363,8 @@ public class DataCenter {
 
     /**
      * the port used to receive console commands.
+     *
+     * @param consolePort a int.
      */
     public void setConsolePort(int consolePort) {
         this.consolePort = consolePort;
@@ -340,6 +380,8 @@ public class DataCenter {
      * to deal with controller.
      * <p>
      * At default it is set to false, meaing we just use Jamepad.
+     *
+     * @return a boolean.
      */
     public boolean isUsingJXInput() {
         return usingJXInput;
@@ -355,8 +397,46 @@ public class DataCenter {
      * to deal with controller.
      * <p>
      * At default it is set to false, meaing we just use Jamepad.
+     *
+     * @param usingJXInput a boolean.
      */
     public void setUsingJXInput(boolean usingJXInput) {
         this.usingJXInput = usingJXInput;
+    }
+
+    /**
+     * <p>Getter for the field <code>gameName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
+    public String getGameName() {
+        return gameName;
+    }
+
+    /**
+     * <p>Setter for the field <code>gameName</code>.</p>
+     *
+     * @param gameName a {@link java.lang.String} object.
+     */
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    /**
+     * <p>Getter for the field <code>gameVersion</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
+    public String getGameVersion() {
+        return gameVersion;
+    }
+
+    /**
+     * <p>Setter for the field <code>gameVersion</code>.</p>
+     *
+     * @param gameVersion a {@link java.lang.String} object.
+     */
+    public void setGameVersion(String gameVersion) {
+        this.gameVersion = gameVersion;
     }
 }

@@ -61,6 +61,12 @@ public class CharEvent implements Event {
     }
 
     private static final AtomicLong currentId = new AtomicLong(0L);
+
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final CharEvent EMPTY = new CharEvent.EmptyCharEvent();
 
     private final long window;
@@ -84,6 +90,13 @@ public class CharEvent implements Event {
         }
     }
 
+    /**
+     * id of this CharEvent.
+     * id of each CharEvent shall be unique, so can be used to distinct CharEvent
+     *
+     * @return a long.
+     * @see CharEvent#CharEvent(long, int)
+     */
     public long getId() {
         return this.id;
     }
@@ -118,6 +131,9 @@ public class CharEvent implements Event {
         return codepoint;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

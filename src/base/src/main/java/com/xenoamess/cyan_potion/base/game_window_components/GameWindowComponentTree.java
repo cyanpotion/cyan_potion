@@ -50,7 +50,7 @@ import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFiel
  */
 public class GameWindowComponentTree implements AutoCloseable {
     @AsFinalField
-    private GameWindowComponentTreeNode root = null;
+    private GameWindowComponentTreeNode root;
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
     /**

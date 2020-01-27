@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 
 /**
- * MainThreadEventProcessor class is not a class for MainThreadEvent,
+ * MainThreadEventProcessor class is not a processor class for MainThreadEvent,
  * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
  *
  * @author XenoAmess
@@ -38,7 +38,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
  */
 public class MainThreadEventProcessor<T extends Event> implements EventProcessor<T> {
     private final GameManager gameManager;
-    private EventProcessor<T> processor;
+    private EventProcessor<? super T> processor;
 
     /**
      * <p>Constructor for MainThreadEventProcessor.</p>
@@ -46,7 +46,7 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param gameManager gameManager
      * @param processor   processor
      */
-    public MainThreadEventProcessor(GameManager gameManager, EventProcessor<T> processor) {
+    public MainThreadEventProcessor(GameManager gameManager, EventProcessor<? super T> processor) {
         this.gameManager = gameManager;
         this.setProcessor(processor);
     }
@@ -57,22 +57,40 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param gameWindowComponent gameWindowComponent
      * @param processor           processor
      */
-    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<T> processor) {
+    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<? super T> processor) {
         this(gameWindowComponent.getGameWindow().getGameManager(), processor);
     }
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }
 
-    public EventProcessor<T> getProcessor() {
+    /**
+     * <p>Getter for the field <code>processor</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
+    public EventProcessor<? super T> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(EventProcessor<T> processor) {
+    /**
+     * <p>Setter for the field <code>processor</code>.</p>
+     *
+     * @param processor a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
+     */
+    public void setProcessor(EventProcessor<? super T> processor) {
         this.processor = processor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event apply(T event) {
         if (!DataCenter.ifMainThread()) {

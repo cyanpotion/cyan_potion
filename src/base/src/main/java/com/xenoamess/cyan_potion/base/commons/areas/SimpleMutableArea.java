@@ -97,23 +97,22 @@ public final class SimpleMutableArea implements AbstractMutableArea {
     }
 
     /**
-     * <p>Setter for the field <code>centerPosX</code>.</p>
-     *
-     * @param leftTopPosX a float.
+     * {@inheritDoc}
      */
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
     }
 
     /**
-     * <p>Setter for the field <code>width</code>.</p>
-     *
-     * @param width a float.
+     * {@inheritDoc}
      */
     @Override
     public void setWidth(float width) {
@@ -121,9 +120,7 @@ public final class SimpleMutableArea implements AbstractMutableArea {
     }
 
     /**
-     * <p>Setter for the field <code>height</code>.</p>
-     *
-     * @param height a float.
+     * {@inheritDoc}
      */
     @Override
     public void setHeight(float height) {

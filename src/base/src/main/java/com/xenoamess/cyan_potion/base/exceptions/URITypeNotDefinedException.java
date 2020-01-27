@@ -46,6 +46,11 @@ public class URITypeNotDefinedException extends RuntimeException {
         super(message);
     }
 
+    /**
+     * <p>Constructor for URITypeNotDefinedException.</p>
+     *
+     * @param resourceInfo a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
+     */
     public URITypeNotDefinedException(ResourceInfo resourceInfo) {
         this(resourceInfo.toString());
     }

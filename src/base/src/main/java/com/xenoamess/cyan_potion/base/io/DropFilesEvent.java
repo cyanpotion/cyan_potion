@@ -60,6 +60,11 @@ public class DropFilesEvent implements Event {
         }
     }
 
+    /**
+     * use this instead of null for safety.
+     *
+     * @see EmptyEvent
+     */
     public static final DropFilesEvent EMPTY = new DropFilesEvent.EmptyDropFilesEvent();
 
     /**
@@ -87,6 +92,9 @@ public class DropFilesEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         //notice that scancode is ignored by this engine(at this version.)
@@ -112,14 +120,29 @@ public class DropFilesEvent implements Event {
         return stringBuilder.toString();
     }
 
+    /**
+     * <p>Getter for the field <code>window</code>.</p>
+     *
+     * @return a long.
+     */
     public long getWindow() {
         return window;
     }
 
+    /**
+     * <p>Getter for the field <code>count</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCount() {
         return count;
     }
 
+    /**
+     * <p>Getter for the field <code>names</code>.</p>
+     *
+     * @return a long.
+     */
     public long getNames() {
         return names;
     }

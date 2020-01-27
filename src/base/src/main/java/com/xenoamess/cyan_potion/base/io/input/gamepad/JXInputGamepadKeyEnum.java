@@ -27,9 +27,11 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import java.util.Arrays;
 
 /**
+ * <p>JXInputGamepadKeyEnum class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  * @see JXInputGamepadDevice
- * @deprecated
  */
 @Deprecated
 public enum JXInputGamepadKeyEnum {
@@ -52,6 +54,9 @@ public enum JXInputGamepadKeyEnum {
     JXINPUT_KEY_LT(16),
     JXINPUT_KEY_RT(17);
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final JXInputGamepadKeyEnum[] values = generateValues();
 
@@ -59,11 +64,22 @@ public enum JXInputGamepadKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum} object.
+     */
     public static JXInputGamepadKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -71,6 +87,12 @@ public enum JXInputGamepadKeyEnum {
         return JXINPUT_KEY_UNKNOWN;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

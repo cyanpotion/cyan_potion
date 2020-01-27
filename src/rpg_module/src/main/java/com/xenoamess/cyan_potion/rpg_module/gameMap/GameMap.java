@@ -74,7 +74,7 @@ public class GameMap {
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
-                ResourceManager.getFileObject(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                ResourceManager.resolveFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
     }
@@ -266,7 +266,7 @@ public class GameMap {
     static List<GameMap> getGameMaps(World world) {
         List<GameMapInfoJson> gameMapInfoJsons =
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
-                        ResourceManager.getFileObject("resources/www/data/MapInfos.json"));
+                        ResourceManager.resolveFile("resources/www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {

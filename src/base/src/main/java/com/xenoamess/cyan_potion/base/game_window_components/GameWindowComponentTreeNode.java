@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>GameWindowComponentTreeNode class.</p>
@@ -127,16 +128,15 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
      * @return a boolean.
      */
     public boolean process(final Set<Event> res, final Event event) {
-        boolean[] flag0 = new boolean[1];
-        flag0[0] = false;
+        AtomicBoolean flag0 = new AtomicBoolean(false);
 
         this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {
             if (au.process(res, event)) {
-                flag0[0] = true;
+                flag0.set(true);
             }
         });
 
-        if (flag0[0]) {
+        if (flag0.get()) {
             return true;
         } else {
             Event resEvent = this.getGameWindowComponent().process(event);
@@ -172,14 +172,19 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         }
 
         final GameWindowComponentTreeNode[] res = new GameWindowComponentTreeNode[1];
+        final AtomicBoolean find = new AtomicBoolean(false);
 
         this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode gameWindowComponentTreeNode) -> {
-            if (res[0] != null) {
+            if (find.get()) {
                 return;
             }
             GameWindowComponentTreeNode tmp = gameWindowComponentTreeNode.findNode(gameWindowComponent);
             if (tmp != null) {
-                res[0] = tmp;
+                if (!find.get()) {
+                    res[0] = tmp;
+                    find.set(true);
+                }
+                return;
             }
         });
         return res[0];
@@ -195,18 +200,17 @@ public class GameWindowComponentTreeNode implements AutoCloseable {
         if (this == gameWindowComponentTreeNode) {
             return true;
         }
-        boolean[] flag0 = new boolean[1];
-        flag0[0] = false;
+        AtomicBoolean flag0 = new AtomicBoolean(false);
 
         this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {
-            if (flag0[0]) {
+            if (flag0.get()) {
                 return;
             }
             if (au.childrenTreeContains(gameWindowComponentTreeNode)) {
-                flag0[0] = true;
+                flag0.set(true);
             }
         });
-        return flag0[0];
+        return flag0.get();
     }
 
 

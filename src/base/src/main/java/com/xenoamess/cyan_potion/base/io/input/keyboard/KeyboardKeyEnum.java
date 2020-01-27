@@ -27,7 +27,10 @@ package com.xenoamess.cyan_potion.base.io.input.keyboard;
 import java.util.Arrays;
 
 /**
+ * <p>KeyboardKeyEnum class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public enum KeyboardKeyEnum {
     GLFW_KEY_UNKNOWN(-1),
@@ -152,6 +155,9 @@ public enum KeyboardKeyEnum {
     GLFW_KEY_RIGHT_SUPER(347),
     GLFW_KEY_MENU(348);
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final KeyboardKeyEnum[] values = generateValues();
 
@@ -159,11 +165,22 @@ public enum KeyboardKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum} object.
+     */
     public static KeyboardKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -171,6 +188,12 @@ public enum KeyboardKeyEnum {
         return GLFW_KEY_UNKNOWN;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }
@@ -197,6 +220,4 @@ public enum KeyboardKeyEnum {
         }
         return res;
     }
-
-
 }

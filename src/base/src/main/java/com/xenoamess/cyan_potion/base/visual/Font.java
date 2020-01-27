@@ -114,7 +114,7 @@ public class Font extends AbstractResource {
     private final List<STBTTPackedchar.Buffer> charDatas = new ArrayList<>();
 
     @AsFinalField
-    private static Font defaultFont = null;
+    private static Font defaultFont;
 
     private static Font currentFont;
 
@@ -122,7 +122,7 @@ public class Font extends AbstractResource {
     private GameWindow gameWindow;
 
     public static class DrawTextStruct {
-        private Font font = Font.defaultFont;
+        private Font font = Font.currentFont;
         private float leftTopPosX = -1;
         private float leftTopPosY = -1;
         private float centerPosX = -1;
@@ -187,6 +187,9 @@ public class Font extends AbstractResource {
 //        }
 
         public void bakePosXY() {
+            assert (this.width >= 0);
+            assert (this.height >= 0);
+
             if (getLeftTopPosX() >= 0 && getLeftTopPosY() >= 0) {
                 setCenterPosX(getLeftTopPosX() + getWidth() / 2f);
                 setCenterPosY(getLeftTopPosY() + getHeight() / 2f);
@@ -258,6 +261,9 @@ public class Font extends AbstractResource {
             this.setScaleXY(scaleX, scaleY);
             if (this.height < 0) {
                 this.height = this.width / x3 * y3;
+            }
+            if (this.width < 0) {
+                this.width = this.height / y3 * x3;
             }
         }
 
@@ -398,7 +404,7 @@ public class Font extends AbstractResource {
 
         public void setFont(Font font) {
             if (font == null) {
-                font = Font.defaultFont;
+                font = Font.currentFont;
             }
             this.font = font;
         }
@@ -442,7 +448,7 @@ public class Font extends AbstractResource {
      * this buffer will be freed after init(),
      * so please does never use it after that.
      */
-    private List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
+    private final List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
 
     /**
      * <p>loadBitmap.</p>
@@ -605,6 +611,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             float leftTopPosX,
@@ -629,6 +636,7 @@ public class Font extends AbstractResource {
      * <p>drawText.</p>
      *
      * @param drawTextStruct drawStruct.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4f, String)
      */
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
@@ -685,7 +693,7 @@ public class Font extends AbstractResource {
             lastYShould = drawTextStruct.leftTopPosY;
             glEnd();
         }
-        drawTextStruct.setWidthHeight(lastXReal - drawTextStruct.leftTopPosX, lastYReal - drawTextStruct.leftTopPosY);
+        drawTextStruct.setWidth(lastXReal - drawTextStruct.leftTopPosX);
         drawTextStruct.bake();
         return drawTextStruct;
     }
@@ -700,6 +708,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaLeftTop(
             float leftTopPosX,
@@ -998,10 +1007,20 @@ public class Font extends AbstractResource {
 //        this.fontTexture = fontTexture;
 //    }
 
+    /**
+     * <p>Getter for the field <code>fontTextures</code>.</p>
+     *
+     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList} object.
+     */
     public IntArrayList getFontTextures() {
         return fontTextures;
     }
 
+    /**
+     * <p>Getter for the field <code>charDatas</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<STBTTPackedchar.Buffer> getCharDatas() {
         return charDatas;
     }

@@ -29,7 +29,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * <p>KeyModEnum class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public enum KeyModEnum {
     /**
@@ -71,6 +74,9 @@ public enum KeyModEnum {
      */
     GLFW_MOD_NUM_LOCK(0x20);
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final KeyModEnum[] values = generateValues();
 
@@ -78,11 +84,22 @@ public enum KeyModEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum} object.
+     */
     public static KeyModEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -90,6 +107,12 @@ public enum KeyModEnum {
         return GLFW_MOD_NORMAL;
     }
 
+    /**
+     * <p>getModEnumsByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<KeyModEnum> getModEnumsByValue(int value) {
         Collection<KeyModEnum> res = new ArrayList<>();
         for (KeyModEnum au : KeyModEnum.values()) {
@@ -100,6 +123,12 @@ public enum KeyModEnum {
         return res;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

@@ -150,6 +150,23 @@ public class GameManagerConfig {
     public static final String STRING_TITLE_TEXT_ID = "titleTextID";
 
     /**
+     * The game name.
+     *
+     * @see com.xenoamess.multi_language
+     * @see GameManager
+     */
+    public static final String STRING_GAME_NAME = "gameName";
+
+    /**
+     * The game version.
+     *
+     * @see com.xenoamess.multi_language
+     * @see GameManager
+     */
+    public static final String STRING_GAME_VERSION = "gameVersion";
+
+
+    /**
      * The text file's path
      *
      * @see GameManager

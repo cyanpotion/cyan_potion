@@ -27,7 +27,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * <p>Constructor for Panel.</p>
      *
-     * @param gameWindow        a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param backgroundTexture backgroundTexture
+     * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param backgroundBindable backgroundBindable
      */
-    public Panel(GameWindow gameWindow, Texture backgroundTexture) {
+    public Panel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow);
-        this.backgroundPicture.setBindable(backgroundTexture);
+        this.backgroundPicture.setBindable(backgroundBindable);
     }
 
     /**

@@ -88,6 +88,9 @@ public class GamepadInputManager implements AutoCloseable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         if (getJamepadControllerManager() != null) {
@@ -118,10 +121,20 @@ public class GamepadInputManager implements AutoCloseable {
         return gamepadDatas;
     }
 
+    /**
+     * <p>Getter for the field <code>jamepadControllerManager</code>.</p>
+     *
+     * @return a {@link com.studiohartman.jamepad.ControllerManager} object.
+     */
     public ControllerManager getJamepadControllerManager() {
         return jamepadControllerManager;
     }
 
+    /**
+     * <p>Setter for the field <code>jamepadControllerManager</code>.</p>
+     *
+     * @param jamepadControllerManager a {@link com.studiohartman.jamepad.ControllerManager} object.
+     */
     public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
         this.jamepadControllerManager = jamepadControllerManager;
     }

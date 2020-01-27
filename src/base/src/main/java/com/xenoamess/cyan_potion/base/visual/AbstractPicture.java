@@ -32,7 +32,10 @@ import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
 
 /**
+ * Abstract Picture
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     private float leftTopPosX;
@@ -42,6 +45,9 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bind(int sampler) {
         Bindable bindable = this.getCurrentBindable();
@@ -116,7 +122,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     /**
      * get current bindable of this picture.
      *
-     * @return return
+     * @return the bindable for draw
      */
     public abstract Bindable getCurrentBindable();
 
@@ -132,16 +138,14 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     }
 
     /**
-     * <p>Setter for the field <code>leftTopPosX</code>.</p>
-     *
-     * @param leftTopPosX a float.
+     * {@inheritDoc}
      */
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }
 
     /**
-     * <p>Getter for the field <code>leftTopPosY</code>.</p>
+     * {@inheritDoc}
      *
      * @return a float.
      */
@@ -150,9 +154,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     }
 
     /**
-     * <p>Setter for the field <code>leftTopPosY</code>.</p>
-     *
-     * @param leftTopPosY a float.
+     * {@inheritDoc}
      */
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
@@ -167,9 +169,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     }
 
     /**
-     * <p>Setter for the field <code>width</code>.</p>
-     *
-     * @param width a float.
+     * {@inheritDoc}
      */
     @Override
     public void setWidth(float width) {
@@ -185,9 +185,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     }
 
     /**
-     * <p>Setter for the field <code>height</code>.</p>
-     *
-     * @param height a float.
+     * {@inheritDoc}
      */
     @Override
     public void setHeight(float height) {

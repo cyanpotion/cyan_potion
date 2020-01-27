@@ -276,7 +276,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glfwSwapInterval(1);
 
         String iconFilePath = null;
-        FileObject iconFileObject = ResourceManager.getFileObject(this.getGameManager().getDataCenter().getIconFilePath());
+        FileObject iconFileObject = ResourceManager.resolveFile(this.getGameManager().getDataCenter().getIconFilePath());
         iconFilePath = ResourceManager.toFile(iconFileObject).getAbsolutePath();
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
@@ -420,7 +420,6 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * thus this is not used and become deprecated.
      *
      * @since 0.142.7
-     * @deprecated
      */
     @Deprecated
     public static void testGlfwJoyStick() {
@@ -824,12 +823,13 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      *
      * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
      * @param leftTopPosX    a float.
-     * @param leftTopPosX    a float.
+     * @param leftTopPosY    a float.
      * @param width          a float.
      * @param height         a float.
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextFillAreaLeftTop(Font font, float leftTopPosX, float leftTopPosY,
                                                        float width, float height,
@@ -862,6 +862,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextFillAreaCenter(Font font, float centerPosX, float centerPosY, float width,
                                                       float height,
@@ -893,6 +894,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param height      a float.
      * @param color       a {@link org.joml.Vector4f} object.
      * @param text        a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height,
                                                Vector4f color, String text) {
@@ -902,12 +904,14 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     /**
      * <p>drawText.</p>
      *
-     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param height      a float.
-     * @param color       a {@link org.joml.Vector4f} object.
-     * @param text        a {@link java.lang.String} object.
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX    a float.
+     * @param leftTopPosY    a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, float characterSpace,
                                                Vector4f color, String text) {
@@ -929,12 +933,15 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     /**
      * <p>drawText.</p>
      *
-     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param height      a float.
-     * @param color       a {@link org.joml.Vector4f} object.
-     * @param text        a {@link java.lang.String} object.
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX    a float.
+     * @param leftTopPosY    a float.
+     * @param width          a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY,
                                                float width, float height, float characterSpace,
@@ -962,7 +969,9 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param font        font
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
+     * @param height      a float.
      * @param text        text
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, String text) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, new Vector4f(1, 1, 1, 1), text);
@@ -975,6 +984,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
      * @param text        text
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
     public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, String text) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, 30, text);
@@ -989,10 +999,20 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
 
     //shortcuts
 
+    /**
+     * <p>getResourceManager.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
     public ResourceManager getResourceManager() {
         return this.getGameManager().getResourceManager();
     }
 
+    /**
+     * <p>getDataCenter.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
     public DataCenter getDataCenter() {
         return this.getGameManager().getDataCenter();
     }
@@ -1257,29 +1277,25 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     }
 
     /**
-     * <p>Setter for the field <code>centerPosX</code>.</p>
-     *
-     * @param centerPosX a float.
+     * {@inheritDoc}
+     * game window's leftTopPosX is fixed to 0, can not change it.
      */
     @Override
-    public void setLeftTopPosX(float centerPosX) {
-        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    public void setLeftTopPosX(float leftTopPosX) {
+        throw new UnsupportedOperationException("do not support setting left top pos for GameWindow.");
     }
 
     /**
-     * <p>Setter for the field <code>centerPosY</code>.</p>
-     *
-     * @param centerPosY a float.
+     * {@inheritDoc}
+     * game window's leftTopPosY is fixed to 0, can not change it.
      */
     @Override
-    public void setLeftTopPosY(float centerPosY) {
-        throw new UnsupportedOperationException("do not support setting center pos for GameWindow.");
+    public void setLeftTopPosY(float leftTopPosY) {
+        throw new UnsupportedOperationException("do not support setting left top pos for GameWindow.");
     }
 
     /**
-     * <p>Setter for the field <code>width</code>.</p>
-     *
-     * @param width a float.
+     * {@inheritDoc}
      */
     @Override
     public void setWidth(float width) {
@@ -1287,9 +1303,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     }
 
     /**
-     * <p>Setter for the field <code>height</code>.</p>
-     *
-     * @param height a float.
+     * {@inheritDoc}
      */
     @Override
     public void setHeight(float height) {
