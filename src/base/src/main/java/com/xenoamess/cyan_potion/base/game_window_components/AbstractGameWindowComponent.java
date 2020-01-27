@@ -64,7 +64,7 @@ public abstract class AbstractGameWindowComponent implements AutoCloseable, Abst
     private float height = -1;
 
     /**
-     * map of eventClass->processors.
+     * map of eventClass to processors.
      * EventProcess must be able to process the event Class.
      * notice that this eventClassToProcessorMap not works automatically,
      * and you must get the processor and invoke it by yourself.

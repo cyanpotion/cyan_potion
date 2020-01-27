@@ -73,7 +73,7 @@ public class RuntimeManager {
      * then you register it / them into RuntimeManager here.
      * then you invoke save / load,
      * and the data in objects in runtimeVariableStructList changes(but the objects will not add / remove)
-     * that is the basic logic of this this functions & this class.
+     * that is the basic logic of this this functions (and this class).
      *
      * @param runtimeVariableStruct runtimeVariableStruct
      */
