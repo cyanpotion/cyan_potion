@@ -33,16 +33,33 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * <p>Abstract AbstractControllableGameWindowComponent class.</p>
+ * Abstract Controllable GameWindow Component
+ * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
-
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
+    /**
+     * active means this AbstractControllableGameWindowComponent is active and can sole Events & can update.
+     * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not update anymore.
+     */
     private boolean active = true;
+
+    /**
+     * visible means this AbstractControllableGameWindowComponent is visible and can draw(actually, can call ifVisibleThenDraw() ).
+     * if visible == false then this AbstractControllableGameWindowComponent does not call ifVisibleThenDraw().
+     */
     private boolean visible = true;
+
+    /**
+     * inFocusNow means this AbstractControllableGameWindowComponent in
+     */
     private boolean inFocusNow = false;
+
+    /**
+     * inFocusNow means this AbstractControllableGameWindowComponent will still in focus in next frame.
+     */
     private boolean willStillInFocus = false;
 
     /**
@@ -649,7 +666,10 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
     /**
-     * <p>ifVisibleThenDraw.</p>
+     * draw function which only invoke this function when this.visible==true
+     *
+     * @see AbstractControllableGameWindowComponent#draw()
+     * @see AbstractControllableGameWindowComponent#visible
      */
     public void ifVisibleThenDraw() {
 
