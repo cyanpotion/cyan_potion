@@ -27,7 +27,10 @@ package com.xenoamess.cyan_potion.base.io.input.mouse;
 import java.util.Arrays;
 
 /**
+ * <p>MouseButtonKeyEnum class.</p>
+ *
  * @author XenoAmess
+ * @version 0.148.8
  */
 public enum MouseButtonKeyEnum {
     /**
@@ -54,6 +57,9 @@ public enum MouseButtonKeyEnum {
     GLFW_MOUSE_BUTTON_8(7);
 
 
+    /**
+     * Constant <code>values</code>
+     */
     public final int value;
     public static final MouseButtonKeyEnum[] values = generateValues();
 
@@ -61,11 +67,22 @@ public enum MouseButtonKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a int.
+     */
     public int getValue() {
         return value;
     }
 
 
+    /**
+     * <p>getByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum} object.
+     */
     public static MouseButtonKeyEnum getByValue(int value) {
         if (value >= 0 && value < values.length) {
             return values[value];
@@ -73,6 +90,12 @@ public enum MouseButtonKeyEnum {
         return GLFW_MOUSE_BUTTON_1;
     }
 
+    /**
+     * <p>getStringByValue.</p>
+     *
+     * @param value a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

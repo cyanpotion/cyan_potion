@@ -54,9 +54,7 @@ public class Picture extends AbstractPicture {
     }
 
     /**
-     * get current bindable of this picture.
-     *
-     * @return return
+     * {@inheritDoc}
      */
     @Override
     public Bindable getCurrentBindable() {
@@ -84,10 +82,20 @@ public class Picture extends AbstractPicture {
                 Objects.equals(getColorScale(), picture.getColorScale());
     }
 
+    /**
+     * <p>Getter for the field <code>bindable</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public Bindable getBindable() {
         return bindable;
     }
 
+    /**
+     * <p>Setter for the field <code>bindable</code>.</p>
+     *
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public void setBindable(Bindable bindable) {
         this.bindable = bindable;
     }
