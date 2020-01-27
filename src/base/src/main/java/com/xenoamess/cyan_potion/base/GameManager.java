@@ -420,7 +420,7 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try (InputStream inputStream = ResourceManager.getFileObject(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
+        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
             multiLanguageUtil.loadFromMerge(inputStream);
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +

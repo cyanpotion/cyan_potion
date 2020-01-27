@@ -276,7 +276,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glfwSwapInterval(1);
 
         String iconFilePath = null;
-        FileObject iconFileObject = ResourceManager.getFileObject(this.getGameManager().getDataCenter().getIconFilePath());
+        FileObject iconFileObject = ResourceManager.resolveFile(this.getGameManager().getDataCenter().getIconFilePath());
         iconFilePath = ResourceManager.toFile(iconFileObject).getAbsolutePath();
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible
