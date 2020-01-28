@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>GamepadInput class.</p>
@@ -117,7 +118,7 @@ public class GamepadInputManager implements AutoCloseable {
      *
      * @return return
      */
-    public ArrayList<AbstractGamepadData> getGamepadDatas() {
+    public List<AbstractGamepadData> getGamepadDatas() {
         return gamepadDatas;
     }
 

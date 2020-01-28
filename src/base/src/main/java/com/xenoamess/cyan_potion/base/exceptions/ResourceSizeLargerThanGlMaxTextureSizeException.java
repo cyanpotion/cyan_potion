@@ -54,9 +54,14 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      * @param resource a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
      */
     public static void check(AbstractResource resource) {
-        if (STRICT) {
-            if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
-                throw new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
+
+        if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
+            ResourceSizeLargerThanGlMaxTextureSizeException exception = new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
+            if (STRICT) {
+                LOGGER.error(exception.getMessage(), exception);
+                throw exception;
+            } else {
+                LOGGER.warn(exception.getMessage(), exception);
             }
         }
     }
@@ -68,6 +73,5 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      */
     private ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
-        LOGGER.error(this.getMessage(), this);
     }
 }

@@ -89,28 +89,28 @@ public class SaveFileObject {
         try {
             if (!fileObject.exists()) {
                 try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
-                    SaveFileObjectStatus saveFileObjectStatus = new SaveFileObjectStatus();
-                    saveFileObjectStatus.setNowIndex(-1);
-                    saveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameVersion());
+                    SaveFileObjectStatus newCreatedSaveFileObjectStatus = new SaveFileObjectStatus();
+                    newCreatedSaveFileObjectStatus.setNowIndex(-1);
+                    newCreatedSaveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameVersion());
                     long time = System.currentTimeMillis();
-                    saveFileObjectStatus.setLastSaveTime(time);
-                    saveFileObjectStatus.setLastLoadTime(time);
-                    DataCenter.getObjectMapper().writeValue(outputStream, saveFileObjectStatus);
+                    newCreatedSaveFileObjectStatus.setLastSaveTime(time);
+                    newCreatedSaveFileObjectStatus.setLastLoadTime(time);
+                    DataCenter.getObjectMapper().writeValue(outputStream, newCreatedSaveFileObjectStatus);
                 }
             }
         } catch (IOException e) {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
-            SaveFileObjectStatus saveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
-            this.setSaveFileObjectStatus(saveFileObjectStatus);
+            SaveFileObjectStatus loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
+            this.setSaveFileObjectStatus(loadedSaveFileObjectStatus);
         } catch (IOException e) {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
-            SaveFileObjectStatus saveFileObjectStatus = new SaveFileObjectStatus(this.getSaveFileObjectStatus());
-            saveFileObjectStatus.setLastLoadTime(System.currentTimeMillis());
-            DataCenter.getObjectMapper().writeValue(outputStream, saveFileObjectStatus);
+            SaveFileObjectStatus beSavedSaveFileObjectStatus = new SaveFileObjectStatus(this.getSaveFileObjectStatus());
+            beSavedSaveFileObjectStatus.setLastLoadTime(System.currentTimeMillis());
+            DataCenter.getObjectMapper().writeValue(outputStream, beSavedSaveFileObjectStatus);
         } catch (IOException e) {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }

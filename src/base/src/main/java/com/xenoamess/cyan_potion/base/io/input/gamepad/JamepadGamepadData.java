@@ -169,9 +169,6 @@ public class JamepadGamepadData extends AbstractGamepadData {
     public boolean guide;
     public boolean unknown;
 
-    //    public int lxRaw, lyRaw;
-    //    public int rxRaw, ryRaw;
-    //    public int ltRaw, rtRaw;
     public float lx, ly;
     public float rx, ry;
     public float lt, rt;
@@ -256,9 +253,6 @@ public class JamepadGamepadData extends AbstractGamepadData {
         this.lThumb = this.rThumb = false;
         this.up = this.down = this.left = this.right = false;
         this.guide = this.unknown = false;
-        //        this.lxRaw = this.lyRaw = 0;
-        //        this.rxRaw = this.ryRaw = 0;
-        //        this.ltRaw = this.rtRaw = 0;
         this.lx = this.ly = 0f;
         this.rx = this.ry = 0f;
         this.lt = this.rt = 0f;

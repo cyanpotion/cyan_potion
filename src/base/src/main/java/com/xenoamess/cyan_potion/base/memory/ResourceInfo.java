@@ -205,21 +205,6 @@ public class ResourceInfo<T extends AbstractResource> {
             return false;
         }
         return toString.equals(obj.toString());
-//        ResourceInfo resourceInfo = (ResourceInfo) obj;
-//
-//        if (!Objects.equals(this.resourceClass, resourceInfo.resourceClass)) {
-//            return false;
-//        }
-//
-//        if (!Objects.equals(this.type, resourceInfo.type)) {
-//            return false;
-//        }
-//
-//        if (!Objects.equals(this.fileString, resourceInfo.fileString)) {
-//            return false;
-//        }
-//
-//        return Arrays.equals(this.values, resourceInfo.values);
     }
 
     /**
