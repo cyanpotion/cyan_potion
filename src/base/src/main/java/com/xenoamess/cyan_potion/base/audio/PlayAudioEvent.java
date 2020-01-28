@@ -174,26 +174,26 @@ public class PlayAudioEvent implements MainThreadEvent {
         if (gameManager.getDataCenter().isDebug()) {
             LOGGER.debug("{}", this);
         }
-        Source source;
+        Source usedSource;
         if (this.getSource() == null) {
-            source = this.getAudioManager().useSource();
+            usedSource = this.getAudioManager().useSource();
         } else {
-            source = this.getSource();
+            usedSource = this.getSource();
         }
 
-        source.setVolume(this.getVolume());
-        source.setPitch(this.getPitch());
-        source.setPosition(this.getPosition());
-        source.setVelocity(this.getVelocity());
-        source.setRelative(this.isRelative());
-        source.setRollOffFactor(this.getRollOffFactor());
-        source.setLooping(this.isLooping());
+        usedSource.setVolume(this.getVolume());
+        usedSource.setPitch(this.getPitch());
+        usedSource.setPosition(this.getPosition());
+        usedSource.setVelocity(this.getVelocity());
+        usedSource.setRelative(this.isRelative());
+        usedSource.setRollOffFactor(this.getRollOffFactor());
+        usedSource.setLooping(this.isLooping());
 
         if (this.waveData != null) {
-            source.setCurrentWaveData(this.waveData);
+            usedSource.setCurrentWaveData(this.waveData);
         }
-        source.setPlayOverEvent(this.getPlayOverEvent());
-        source.play();
+        usedSource.setPlayOverEvent(this.getPlayOverEvent());
+        usedSource.play();
         return null;
     }
 
