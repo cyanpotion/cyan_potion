@@ -56,9 +56,7 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
     public static void check(AbstractResource resource) {
         if (STRICT) {
             if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
-                ResourceSizeLargerThanGlMaxTextureSizeException result =
-                        new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
-                throw result;
+                throw new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
             }
         }
     }

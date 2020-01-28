@@ -78,25 +78,18 @@ public class Font extends AbstractResource {
      */
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
-//    /**
-//     * Constant <code>MAX_NUM=40960</code>
-//     */
-//    public static final int MAX_NUM = 40960;
     /**
      * size of each font pic.
      */
     public static final int EACH_SIZE = 1024;
-//    public static final int EACH_SIZE = 1024 * 16;
     /**
      * num of characters on each font pic.
      */
     public static final int EACH_CHAR_NUM = 1024;
-//    public static final int EACH_CHAR_NUM = 65536;
     /**
      * num of characters on each font pic.
      */
     public static final int PIC_NUM = ((int) (Character.MAX_VALUE) + 1) / EACH_CHAR_NUM;
-//    public static final int PIC_NUM = ((int) (100000) / EACH_CHAR_NUM);
     /**
      * Constant <code>BITMAP_W=MAX_SIZE</code>
      */
@@ -177,14 +170,6 @@ public class Font extends AbstractResource {
             this.setScaleX(scaleX);
             this.setScaleY(scaleY);
         }
-
-//        public void bakeScaleXY() {
-//            if (getScaleX() < 0) {
-//                setScaleX(getScaleY());
-//            } else if (getScaleY() < 0) {
-//                setScaleY(getScaleX());
-//            }
-//        }
 
         public void bakePosXY() {
             assert (this.width >= 0);
@@ -898,15 +883,6 @@ public class Font extends AbstractResource {
         this.getFontTextures().clear();
     }
 
-//    /**
-//     * <p>Getter for the field <code>fontTexture</code>.</p>
-//     *
-//     * @return a int.
-//     */
-//    public int getFontTexture() {
-//        return fontTexture;
-//    }
-
     /**
      * <p>Getter for the field <code>defaultFont</code>.</p>
      *
@@ -997,15 +973,6 @@ public class Font extends AbstractResource {
     public FloatBuffer getYb() {
         return yb;
     }
-
-//    /**
-//     * <p>Setter for the field <code>fontTexture</code>.</p>
-//     *
-//     * @param fontTexture a int.
-//     */
-//    public void setFontTexture(int fontTexture) {
-//        this.fontTexture = fontTexture;
-//    }
 
     /**
      * <p>Getter for the field <code>fontTextures</code>.</p>

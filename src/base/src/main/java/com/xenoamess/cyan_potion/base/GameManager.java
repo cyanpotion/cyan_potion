@@ -256,7 +256,7 @@ public class GameManager implements AutoCloseable {
             URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
             factorySet.register(new CyanPotionURLStreamHandlerFactory());
         } catch (IllegalAccessException e) {
-            throw new Error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
+            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
         }
     }
 

@@ -45,7 +45,7 @@ import java.util.Set;
  */
 public class PlayAudioEvent implements MainThreadEvent {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(MainThreadEvent.class);
+            LoggerFactory.getLogger(PlayAudioEvent.class);
 
     private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {
         public EmptyPlayAudioEvent() {
