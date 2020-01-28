@@ -157,19 +157,6 @@ public class Unit extends AbstractDynamicEntity {
         return (int) res;
     }
 
-
-//    /**
-//     * <p>loadWalkingAnimations.</p>
-//     *
-//     * @param walkingAnimation4DirsURI walkingAnimation4DirsURI
-//     * @param resourceManager          a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
-//     */
-//    public void loadWalkingAnimations(String walkingAnimation4DirsURI,
-//                                      ResourceManager resourceManager) {
-//        this.setPicture(new WalkingAnimation4Dirs(4, this,
-//                walkingAnimation4DirsURI, resourceManager));
-//    }
-
     /**
      * <p>loadWalkingAnimations.</p>
      *
