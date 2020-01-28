@@ -173,7 +173,7 @@ public class World extends AbstractEntityScene {
                     new Vector3f(RpgModuleDataCenter.TILE_SIZE,
                             RpgModuleDataCenter.TILE_SIZE,
                             Unit.DEFAULT_UNIT_LAYER),
-                    new ResourceInfo<>(
+                    new ResourceInfo(
                             WalkingAnimation4Dirs.class,
                             "characters",
                             "resources/www/img/characters/r2c_male_test.png",

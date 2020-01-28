@@ -91,7 +91,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                 this.registerOnMouseEnterAreaCallback(
                         event -> {
                             if (getState() >= 0 && getState() <= 4) {
-                                setState(index);
+                                setState(INDEX);
                             }
                             return null;
                         }
@@ -108,16 +108,16 @@ public class TitleExample extends AbstractGameWindowComponent {
             }
 
 
-            static final int index = 1;
+            static final int INDEX = 1;
 
             @Override
             public void draw() {
-                this.init(-50 + 250 * index, 900, 120, 30);
+                this.init(-50 + 250 * INDEX, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
                             this.getLeftTopPosY(), this.getWidth(),
                             this.getHeight(), 0,
-                            new Vector4f(1, 1, 1, getState() == index ? 1f :
+                            new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                     0.3f), "开始游戏");
                 }
             }
@@ -131,7 +131,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         this.registerOnMouseEnterAreaCallback(
                                 event -> {
                                     if (getState() >= 0 && getState() <= 4) {
-                                        setState(index);
+                                        setState(INDEX);
                                     }
                                     return null;
                                 }
@@ -147,16 +147,16 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    static final int index = 2;
+                    static final int INDEX = 2;
 
                     @Override
                     public void draw() {
-                        this.init(-50 + 250 * index, 900, 120, 30);
+                        this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
                                     this.getLeftTopPosY(), this.getWidth(),
                                     this.getHeight(), 0,
-                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "设置选项");
                         }
                     }
@@ -169,7 +169,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         this.registerOnMouseEnterAreaCallback(
                                 event -> {
                                     if (getState() >= 0 && getState() <= 4) {
-                                        setState(index);
+                                        setState(INDEX);
                                     }
                                     return null;
                                 }
@@ -185,16 +185,16 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    static final int index = 3;
+                    static final int INDEX = 3;
 
                     @Override
                     public void draw() {
-                        this.init(-50 + 250 * index, 900, 120, 30);
+                        this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
                                     this.getLeftTopPosY(), this.getWidth(),
                                     this.getHeight(), 0,
-                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "制作人员");
                         }
                     }
@@ -207,7 +207,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                         this.registerOnMouseEnterAreaCallback(
                                 event -> {
                                     if (getState() >= 0 && getState() <= 4) {
-                                        setState(index);
+                                        setState(INDEX);
                                     }
                                     return null;
                                 }
@@ -223,16 +223,16 @@ public class TitleExample extends AbstractGameWindowComponent {
                         );
                     }
 
-                    static final int index = 4;
+                    static final int INDEX = 4;
 
                     @Override
                     public void draw() {
-                        this.init(-50 + 250 * index, 900, 120, 30);
+                        this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
                                     this.getLeftTopPosY(), this.getWidth(),
                                     this.getHeight(), 0,
-                                    new Vector4f(1, 1, 1, getState() == index ? 1f :
+                                    new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "退出游戏");
                         }
                     }

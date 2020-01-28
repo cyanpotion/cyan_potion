@@ -104,6 +104,14 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * ResourceInfo is used as a URL or something.
  * There will be one and only resource instance linked to each ResourceInfo instance.
  * equal ResourceInfo instances are linked to a same resource instance.
+ * <p>
+ * NOTICE that although we usually make this.resourceClass be a subclass of AbstractResource,
+ * actually it is not a MUST.
+ * in some very extreme examples,
+ * WalkingAnimation4Dirs are also using ResourceInfo,
+ * and it is not subclass of AbstractResource.
+ * <p>
+ * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
  * @version 0.148.8

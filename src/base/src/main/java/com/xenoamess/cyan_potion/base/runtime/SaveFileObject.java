@@ -60,7 +60,7 @@ public class SaveFileObject {
     /**
      * Constant <code>saveFileObjectNum=10</code>
      */
-    public static final int saveFileObjectNum = 10;
+    public static final int SAVE_FILE_OBJECT_NUM = 10;
 
     private final SaveManager saveManager;
     private final String path;
@@ -170,8 +170,8 @@ public class SaveFileObject {
      */
     protected void pickNextSaveFileObject() {
         int nextIndex = this.getNowIndex() + 1;
-        if (nextIndex >= saveFileObjectNum) {
-            nextIndex %= saveFileObjectNum;
+        if (nextIndex >= SAVE_FILE_OBJECT_NUM) {
+            nextIndex %= SAVE_FILE_OBJECT_NUM;
         }
         setNowIndex(nextIndex);
     }

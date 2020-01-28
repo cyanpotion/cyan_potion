@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.io.url;
 
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,7 +84,8 @@ public class CyanPotionURLConnection extends URLConnection {
      */
     @Override
     public void connect() throws IOException {
-
+        //TODO
+        throw new NotImplementedException("connect()");
     }
 
     /**
