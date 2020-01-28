@@ -65,17 +65,17 @@ import java.util.TreeMap;
  */
 public class World extends AbstractEntityScene {
     /**
-     * Constant <code>SCALE="scale"</code>
+     * "scale"
      */
     public static final String STRING_SCALE = "scale";
     private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
-     * Constant <code>MAX_SCALE=10</code>
+     * 10F
      */
-    public static final float MAX_SCALE = 10;
+    public static final float MAX_SCALE = 10F;
     /**
-     * Constant <code>MIN_SCALE=0.01F</code>
+     * 0.01F
      */
     public static final float MIN_SCALE = 0.01F;
 
