@@ -39,12 +39,13 @@ import org.slf4j.LoggerFactory;
 public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
+
     /**
      * if STRICT be true, then will throw ResourceSizeLargerThanGlMaxTextureSizeException if resource.getMemorySize() &gt; resource.getResourceManager().getMaxTextureSize()
      * this shall be true only if you are testing,
      * or on some very special use cases.
      */
-    public static boolean STRICT = false;
+    protected static boolean STRICT = false;
 
     /**
      * check if resource.getMemorySize() &gt; resource.getResourceManager().getMaxTextureSize()
@@ -57,7 +58,7 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
 
         if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
             ResourceSizeLargerThanGlMaxTextureSizeException exception = new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
-            if (STRICT) {
+            if (isSTRICT()) {
                 LOGGER.error(exception.getMessage(), exception);
                 throw exception;
             } else {
@@ -73,5 +74,13 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      */
     private ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
+    }
+
+    public static boolean isSTRICT() {
+        return STRICT;
+    }
+
+    public static void setSTRICT(boolean STRICT) {
+        ResourceSizeLargerThanGlMaxTextureSizeException.STRICT = STRICT;
     }
 }
