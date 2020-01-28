@@ -118,7 +118,7 @@ public class AudioManager implements AutoCloseable {
         }
         ALCCapabilities deviceCaps =
                 ALC.createCapabilities(this.getOpenalDevice());
-        this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(),
+        this.setOpenalContext(ALC10.alcCreateContext(this.getOpenalDevice(),
                 (IntBuffer) null));
         alcSetThreadContext(this.getOpenalContext());
         AL.createCapabilities(deviceCaps);
