@@ -406,17 +406,18 @@ public class Font extends AbstractResource {
      * @param resourJson      resour Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public Font(ResourceManager resourceManager, ResourceInfo resourJson) {
+    public Font(ResourceManager resourceManager, ResourceInfo<Font> resourJson) {
         super(resourceManager, resourJson);
     }
 
+    public static final String STRING_TTF_FILE = "ttfFile";
 
     /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
-        gameManager.getResourceManager().putResourceLoader(Font.class, "ttfFile",
+        gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
                 (Font font) -> {
                     font.loadAsTtfFileFont(font.getResourceInfo());
                     return null;
@@ -425,7 +426,7 @@ public class Font extends AbstractResource {
         return null;
     };
 
-    private void loadAsTtfFileFont(ResourceInfo resourceInfo) {
+    private void loadAsTtfFileFont(ResourceInfo<Font> resourceInfo) {
         this.loadBitmap(resourceInfo.fileObject);
     }
 

@@ -42,6 +42,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -55,7 +56,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
                             Texture.class,
-                            "picture",
+                            STRING_PICTURE,
                             "resources/www/img/pictures/saveSlot.png"
                     );
 
@@ -69,9 +70,9 @@ public class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                     Texture.class,
-                    new ResourceInfo(
+                    new ResourceInfo<>(
                             Texture.class,
-                            "picture",
+                            STRING_PICTURE,
                             "resources/www/img/pictures/saveStar.png"
                     )
             );
@@ -237,21 +238,18 @@ public class TitleExample extends AbstractGameWindowComponent {
                     }
                 });
 
-        Texture texture =
-                this.getGameWindow().getGameManager().getResourceManager().fetchResource(
-                        Texture.class,
-                        "picture",
-                        "resources/www/img/pictures/saveSlot.png"
-                );
+        Texture texture = this.getGameWindow().getGameManager().getResourceManager().fetchResource(
+                Texture.class,
+                STRING_PICTURE,
+                "resources/www/img/pictures/saveSlot.png"
+        );
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);
         InputBox inputBox = new InputBox(gameWindow);
         inputBox.init(150, 150, 500, 500);
         panel.addContent(inputBox);
 
-        getControllableGameWindowComponents().
-
-                add(panel);
+        getControllableGameWindowComponents().add(panel);
     }
 
     /**

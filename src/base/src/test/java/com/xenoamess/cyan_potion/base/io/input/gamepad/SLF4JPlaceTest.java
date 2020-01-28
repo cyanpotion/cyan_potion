@@ -24,13 +24,18 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.net.URL;
 
 public class SLF4JPlaceTest {
 
     @Test
     public void test() {
         ClassLoader loader = SLF4JPlaceTest.class.getClassLoader();
-        System.out.println(loader.getResource("org/slf4j/spi/LocationAwareLogger.class"));
+        URL url = loader.getResource("org/slf4j/spi/LocationAwareLogger.class");
+        Assertions.assertNotNull(url);
+        System.out.println(url);
     }
 }

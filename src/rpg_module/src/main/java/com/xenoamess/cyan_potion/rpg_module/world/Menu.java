@@ -34,6 +34,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
+
 /**
  * <p>Menu class.</p>
  *
@@ -46,7 +48,7 @@ public class Menu extends AbstractGameWindowComponent {
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
                             Texture.class,
-                            "picture",
+                            STRING_PICTURE,
                             "resources/www/img/pictures/menuBackGround.png"
                     );
 

@@ -88,16 +88,17 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param resourceInfo    resourceInfo
      * @see ResourceManager
      */
-    public WaveData(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+    public WaveData(ResourceManager resourceManager, ResourceInfo<WaveData> resourceInfo) {
         super(resourceManager, resourceInfo);
     }
 
+    public static final String STRING_MUSIC = "music";
     /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
     public static final Function<GameManager, Void> PUT_WAVEDATA_LOADER_MUSIC = (GameManager gameManager) -> {
-        gameManager.getResourceManager().putResourceLoader(WaveData.class, "music",
+        gameManager.getResourceManager().putResourceLoader(WaveData.class, STRING_MUSIC,
                 (WaveData waveData) -> {
                     waveData.loadAsMusicWaveData(waveData.getResourceInfo());
                     return null;
@@ -181,7 +182,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
     }
 
 
-    private void loadAsMusicWaveData(ResourceInfo resourceInfo) {
+    private void loadAsMusicWaveData(ResourceInfo<WaveData> resourceInfo) {
         FileObject resourceFileObject = resourceInfo.fileObject;
 
 

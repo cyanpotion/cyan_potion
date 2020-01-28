@@ -33,6 +33,8 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
+import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -46,11 +48,8 @@ public class Logo extends AbstractGameWindowComponent {
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
                             Texture.class,
-                            new ResourceInfo(
-                                    Texture.class,
-                                    "picture",
-                                    "resources/www/img/pictures/logo.png"
-                            )
+                            STRING_PICTURE,
+                            "resources/www/img/pictures/logo.png"
                     );
 
     private final Picture logoPicture;
@@ -73,9 +72,9 @@ public class Logo extends AbstractGameWindowComponent {
         this.getGameWindow().getGameManager().getAudioManager().playWaveData(
                 this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                         WaveData.class,
-                        new ResourceInfo(
+                        new ResourceInfo<>(
                                 WaveData.class,
-                                "music",
+                                STRING_MUSIC,
                                 "resources/www/audio/se/logo.ogg"
                         )
                 )

@@ -95,7 +95,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
             resourceInfoValues[i - 3] = arrayNode.get(i).asText();
         }
 
-        return new ResourceInfo(resourceInfoResourceClass, resourceInfoType, resourceInfoFileString, resourceInfoValues);
+        return new ResourceInfo<>(resourceInfoResourceClass, resourceInfoType, resourceInfoFileString, resourceInfoValues);
     }
 }
 
