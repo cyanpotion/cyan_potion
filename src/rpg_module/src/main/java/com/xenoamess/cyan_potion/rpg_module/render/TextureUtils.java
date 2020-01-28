@@ -187,15 +187,14 @@ public class TextureUtils {
                                     Integer.toString(k),
                                     Integer.toString(i * 8 + j)
                             );
-                    if (texture.getResourceManager().getGameManager().getDataCenter().isDebug()) {
-                        if (nowTexture.getResourceInfo().equals(texture.getResourceInfo())) {
-                            if (nowTexture != texture) {
-                                boolean a = nowTexture.getResourceInfo().equals(texture.getResourceInfo());
-                                boolean b = nowTexture.getResourceInfo().hashCode() == texture.getResourceInfo().hashCode();
-                                LOGGER.error("get two different Texture object for one same resourceInfo");
-                                System.exit(1);
-                            }
-                        }
+                    if (texture.getResourceManager().getGameManager().getDataCenter().isDebug()
+                            && nowTexture.getResourceInfo().equals(texture.getResourceInfo())
+                            && nowTexture != texture
+                    ) {
+                        boolean a = nowTexture.getResourceInfo().equals(texture.getResourceInfo());
+                        boolean b = nowTexture.getResourceInfo().hashCode() == texture.getResourceInfo().hashCode();
+                        LOGGER.error("severe error! get two different Texture object for one same resourceInfo, equals:{}, hashCode:{}", a, b);
+                        System.exit(1);
                     }
 
                     if (!nowTexture.isInMemory()) {

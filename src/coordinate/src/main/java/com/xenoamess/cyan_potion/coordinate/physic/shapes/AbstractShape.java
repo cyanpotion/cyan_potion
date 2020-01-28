@@ -29,7 +29,7 @@ import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudges.ShapeRelationJudge;
+import com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges.ShapeRelationJudge;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;

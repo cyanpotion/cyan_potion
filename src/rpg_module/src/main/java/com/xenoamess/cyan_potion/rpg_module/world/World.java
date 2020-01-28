@@ -40,9 +40,9 @@ import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.StaticEntity;
 import com.xenoamess.cyan_potion.rpg_module.GameRuntime;
 import com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameMap;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameTile;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
@@ -398,7 +398,6 @@ public class World extends AbstractEntityScene {
         }
 
         this.getGameWindow().drawTextLeftTop(null, 10, 30, 50, "DEMO");
-//        this.getGameWindow().drawTextFillAreaLeftTop(null, 500, 500, 100, 20, 0, null, "DEMO");
     }
 
     /**

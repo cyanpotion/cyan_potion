@@ -27,5 +27,5 @@
  *
  * @since 0.140.0
  */
-package com.xenoamess.cyan_potion.coordinate.physic.shapeRelationJudges;
+package com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges;
 

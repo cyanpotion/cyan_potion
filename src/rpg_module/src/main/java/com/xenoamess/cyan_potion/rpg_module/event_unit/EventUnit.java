@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.rpg_module.eventUnit;
+package com.xenoamess.cyan_potion.rpg_module.event_unit;
 
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
