@@ -48,12 +48,12 @@ class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
     public void serialize(SaveFileContent value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeNumberField(SaveFileContent.SaveTimeString, value.getSaveTime());
-        jsonGenerator.writeArrayFieldStart(SaveFileContent.RuntimeVariableStructList);
+        jsonGenerator.writeNumberField(SaveFileContent.STRING_SAVE_TIME, value.getSaveTime());
+        jsonGenerator.writeArrayFieldStart(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT_LIST);
         for (RuntimeVariableStruct runtimeVariableStruct : value.getRuntimeVariableStructList()) {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField(SaveFileContent.ClassNameString, runtimeVariableStruct.getClass().getCanonicalName());
-            jsonGenerator.writeStringField(SaveFileContent.RuntimeVariableStructString, runtimeVariableStruct.saveToString());
+            jsonGenerator.writeStringField(SaveFileContent.STRING_CLASS_NAME, runtimeVariableStruct.getClass().getCanonicalName());
+            jsonGenerator.writeStringField(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT, runtimeVariableStruct.saveToString());
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();
@@ -78,11 +78,11 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
             return null;
         }
 
-        result.setSaveTime(node.get(SaveFileContent.SaveTimeString).asLong());
-        ArrayNode arrayNode = (ArrayNode) node.get(SaveFileContent.RuntimeVariableStructList);
+        result.setSaveTime(node.get(SaveFileContent.STRING_SAVE_TIME).asLong());
+        ArrayNode arrayNode = (ArrayNode) node.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT_LIST);
         for (int i = 0, len = arrayNode.size(); i < len; i++) {
             ObjectNode objectNode = (ObjectNode) arrayNode.get(i);
-            String className = objectNode.get(SaveFileContent.ClassNameString).asText();
+            String className = objectNode.get(SaveFileContent.STRING_CLASS_NAME).asText();
             Class structClass = null;
             try {
                 structClass = Class.forName(className);
@@ -114,22 +114,22 @@ class SaveFileContent {
     /**
      * Constant <code>ClassNameString="className"</code>
      */
-    public static final String ClassNameString = "className";
+    public static final String STRING_CLASS_NAME = "className";
 
     /**
      * Constant <code>RuntimeVariableStructString="runtimeVariableStruct"</code>
      */
-    public static final String RuntimeVariableStructString = "runtimeVariableStruct";
+    public static final String STRING_RUNTIME_VARIABLE_STRUCT = "runtimeVariableStruct";
 
     /**
      * Constant <code>SaveTimeString="saveTime"</code>
      */
-    public static final String SaveTimeString = "saveTime";
+    public static final String STRING_SAVE_TIME = "saveTime";
 
     /**
      * Constant <code>RuntimeVariableStructList="runtimeVariableStructList"</code>
      */
-    public static final String RuntimeVariableStructList = "runtimeVariableStructList";
+    public static final String STRING_RUNTIME_VARIABLE_STRUCT_LIST = "runtimeVariableStructList";
 
     /**
      * saveTime means what time does it saved.

@@ -67,7 +67,7 @@ public class World extends AbstractEntityScene {
     /**
      * Constant <code>SCALE="scale"</code>
      */
-    public static final String SCALE = "scale";
+    public static final String STRING_SCALE = "scale";
     private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
@@ -146,8 +146,8 @@ public class World extends AbstractEntityScene {
 
         this.setScale(DataCenter.SCALE);
 
-        if (this.getGameWindow().getGameManager().getDataCenter().getViews().containsKey(SCALE)) {
-            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(SCALE)));
+        if (this.getGameWindow().getGameManager().getDataCenter().getViews().containsKey(STRING_SCALE)) {
+            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(STRING_SCALE)));
         }
 
         LOGGER.debug("GameManager: {}", this.getGameWindow().getGameManager());
