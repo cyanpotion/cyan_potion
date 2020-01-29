@@ -194,7 +194,7 @@ public class ResourceManager implements AutoCloseable {
     private long totalMemorySize = 0;
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Void>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
     /**
      * <p>defaultResourcesURIMapGet.</p>
@@ -237,7 +237,7 @@ public class ResourceManager implements AutoCloseable {
      * @param <T>    a T object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapGet(Class<T> tClass) {
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapGet(Class<T> tClass) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
     }
 
@@ -249,7 +249,7 @@ public class ResourceManager implements AutoCloseable {
      * @param <T>    a T object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Void>> map) {
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
 
@@ -272,8 +272,8 @@ public class ResourceManager implements AutoCloseable {
      * @param loader       a {@link java.util.function.Function} object.
      * @param <T>          tClass
      */
-    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Void> loader) {
-        ConcurrentHashMap<String, Function<? extends AbstractResource, Void>> resourceLoaderMap =
+    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Boolean> loader) {
+        ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>> resourceLoaderMap =
                 defaultResourcesLoaderMap.computeIfAbsent(
                         tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
@@ -287,8 +287,8 @@ public class ResourceManager implements AutoCloseable {
      * @param <T>          tClass
      * @return return
      */
-    public <T extends AbstractResource> Function<T, Void> getResourceLoader(Class<T> tClass, String resourceType) {
-        ConcurrentHashMap<String, Function<T, Void>> resourceLoaderMap =
+    public <T extends AbstractResource> Function<T, Boolean> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, Function<T, Boolean>> resourceLoaderMap =
                 defaultResourcesLoaderMapGet(tClass);
         if (resourceLoaderMap == null) {
             return null;

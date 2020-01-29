@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.commons.primitive.iterators.IntIterator;
 import com.xenoamess.cyan_potion.base.GameManager;
@@ -403,16 +404,13 @@ public class Font extends AbstractResource {
      */
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
-                (Font font) -> {
-                    font.loadAsTtfFileFont(font.getResourceInfo());
-                    return null;
-                }
+                (Font font) -> font.loadAsTtfFileFont(font.getResourceInfo())
         );
         return null;
     };
 
-    private void loadAsTtfFileFont(ResourceInfo<Font> resourceInfo) {
-        this.loadBitmap(resourceInfo.fileObject);
+    private boolean loadAsTtfFileFont(ResourceInfo<Font> resourceInfo) {
+        return this.loadBitmap(resourceInfo.fileObject);
     }
 
     /**
@@ -426,7 +424,7 @@ public class Font extends AbstractResource {
      *
      * @param fileObject fileObject
      */
-    public void loadBitmap(FileObject fileObject) {
+    public boolean loadBitmap(FileObject fileObject) {
         ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
@@ -452,6 +450,7 @@ public class Font extends AbstractResource {
                 this.getCharDatas().add(charDataLocal);
             }
         }
+        return true;
     }
 
 
@@ -460,6 +459,7 @@ public class Font extends AbstractResource {
      *
      * @param gameWindow gameWindow
      */
+    @MainThreadOnly
     public void init(GameWindow gameWindow) {
         this.setGameWindow(gameWindow);
 
@@ -875,7 +875,6 @@ public class Font extends AbstractResource {
     public static void setDefaultFont(Font defaultFont) {
         asFinalFieldSet(Font.class, "defaultFont", defaultFont);
     }
-
 
     /**
      * <p>Getter for the field <code>currentFont</code>.</p>

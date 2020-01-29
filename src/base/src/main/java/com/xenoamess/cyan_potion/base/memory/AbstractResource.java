@@ -29,6 +29,9 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
@@ -47,6 +50,40 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     private long memorySize;
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
     private long lastUsedFrameIndex;
+
+    /**
+     * get ScheduledExecutorService from gameManager
+     *
+     * @return return
+     */
+    private ScheduledExecutorService getScheduledExecutorService() {
+        return this.getResourceManager().getGameManager().getScheduledExecutorService();
+    }
+
+//    class ResourceLoadFutureTask extends FutureTask<Void> {
+//        public ResourceLoadFutureTask() {
+//            super(
+//                    () -> {
+//                        AbstractResource.this.load();
+//                        return null;
+//                    }
+//            );
+//        }
+//    }
+
+    private FutureTask<Boolean> loadTask;
+
+    protected synchronized void createNewLoadTask() {
+        loadTask = new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf);
+    }
+
+    protected synchronized FutureTask<Boolean> getLoadTask() {
+        return this.loadTask;
+    }
+
+    protected synchronized void destroyLoadTask() {
+        this.loadTask = null;
+    }
 
     /**
      * !!!NOTICE!!!
@@ -71,16 +108,66 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.load();
     }
 
+    /**
+     * start loading this AbstractResource
+     * if the AbstractResource is in memory now, do nothing.
+     * if the AbstractResource is already being loaded, do nothing.
+     *
+     * @return if this function start loading now, then true.
+     * if this function did not start the loading, then false.
+     */
+    public synchronized boolean startLoad() {
+        if (this.inMemory.get()) {
+            return false;
+        }
+        if (this.getLoadTask() != null) {
+            return false;
+        }
+        this.createNewLoadTask();
+        getScheduledExecutorService().execute(this.getLoadTask());
+        return true;
+    }
 
     /**
-     * <p>load.</p>
+     * will wait until load completed(make sure be loaded).
+     *
+     * @return after the function, if this Resource loaded correctly and is in memory, then true.
+     * otherwise if cannot load correctly, then false.
      */
-    public void load() {
+    public synchronized boolean load() {
+        boolean result;
+        if (startLoad()) {
+            try {
+                result = this.getLoadTask().get();
+            } catch (InterruptedException | ExecutionException e) {
+                result = false;
+                LOGGER.debug("load resource by load task failed! Resource:{}", this, e);
+            }
+            if (!result) {
+                result = this.loadByLoadTaskOrSelf();
+                if (!result) {
+                    LOGGER.debug("load resource by self failed! Resource:{}", this);
+                }
+            }
+        } else {
+            result = true;
+        }
+        this.destroyLoadTask();
+        return result;
+    }
+
+    /**
+     * load this Resource.
+     * shall only be invoked by this.loadTask.
+     */
+    protected boolean loadByLoadTaskOrSelf() {
         this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
         if (this.isInMemory()) {
-            return;
+            return true;
         }
-        this.forceLoad();
+        if (!this.forceLoad()) {
+            return false;
+        }
         this.getResourceManager().load(this);
 
         LOGGER.debug("loadResource {}, time {}, memory {}",
@@ -90,12 +177,14 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
             LOGGER.warn("this.memorySize shows 0 here. potential track error? : {}", this.resourceInfo);
         }
         this.setInMemory(true);
+
+        return true;
     }
 
     /**
      * <p>reload.</p>
      */
-    public void reload() {
+    public synchronized void reload() {
         this.close();
         this.load();
     }
@@ -104,7 +193,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * {@inheritDoc}
      */
     @Override
-    public void close() {
+    public synchronized void close() {
         if (!this.isInMemory()) {
             return;
         }
@@ -123,13 +212,12 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      *
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public void forceLoad() {
-        Function loader =
-                this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().type);
+    protected boolean forceLoad() {
+        Function<AbstractResource, Boolean> loader = (Function) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().type);
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }
-        loader.apply(this);
+        return loader.apply(this);
     }
 
     /**
@@ -207,6 +295,11 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      */
     public void setLastUsedFrameIndex(long lastUsedFrameIndex) {
         this.lastUsedFrameIndex = lastUsedFrameIndex;
+    }
+
+    @Override
+    public String toString() {
+        return this.getResourceInfo() == null ? "null" : this.getResourceInfo().toString();
     }
 
 }
