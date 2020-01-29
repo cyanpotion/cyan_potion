@@ -1,8 +1,8 @@
 # cyan_potion
-
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/cyanpotion/cyan_potion.svg?branch=master)](https://travis-ci.org/cyanpotion/cyan_potion)
+[![Total Lines](https://tokei.rs/b1/github/cyanpotion/cyan_potion/)](https://github.com/XAMPPRocky/tokei).
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_base&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_base)
 cyan_potion_base
@@ -35,6 +35,14 @@ Many codes related to animation/display have not been completed yet.
 The event system is also very rudimentary.
 
 And no much materials for the inner logic for now.
+
+Notice about sonar cloud
+----------
+Right now we (or I, exactly) decided just use sonar cloud as code smell detector or something.
+We do not care much about test coverage because it is really hard to write some auto-test for a GUI program,
+and this engine not works very well when there be no window(though it really can work but...).
+We might add some tests when repairing some bug and make sure it not happened again,
+but no plan for adding more tests just for gaining coverage and make the data looks more beautiful now.  
 
 Demo
 ----------
