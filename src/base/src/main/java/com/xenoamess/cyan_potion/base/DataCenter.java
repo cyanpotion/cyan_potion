@@ -106,6 +106,7 @@ public class DataCenter {
 
     private String textFilePath = null;
     private String iconFilePath = null;
+    private String steam_appid = null;
 
     private MultiLanguageStructure textStructure;
 
@@ -438,5 +439,13 @@ public class DataCenter {
      */
     public void setGameVersion(String gameVersion) {
         this.gameVersion = gameVersion;
+    }
+
+    public String getSteam_appid() {
+        return steam_appid;
+    }
+
+    public void setSteam_appid(String steam_appid) {
+        this.steam_appid = steam_appid;
     }
 }

@@ -46,7 +46,7 @@ public class ForceEntrance {
         argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.x8l");
         GameManager gameManager = new GameManager(argsMap);
         gameManager.getDataCenter().setPatchSettingsTree(
-                X8lTree.load("<commonSettings runWithSteam=0>><debug>>"));
+                X8lTree.load("<debug>>"));
         gameManager.startup();
     }
 }

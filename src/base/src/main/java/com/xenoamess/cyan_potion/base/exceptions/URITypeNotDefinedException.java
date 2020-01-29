@@ -33,7 +33,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
  *
  * @author XenoAmess
  * @version 0.143.0
- * @see AbstractResource#forceLoad()
+ * @see AbstractResource#load()
  * @see com.xenoamess.cyan_potion.base.plugins.CodePluginManager#getCodePluginFunctionFromString(String)
  */
 public class URITypeNotDefinedException extends RuntimeException {

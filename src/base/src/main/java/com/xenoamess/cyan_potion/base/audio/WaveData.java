@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException;
 import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeException;
@@ -69,6 +71,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param format     format of wave data
      * @param sampleRate sample rate of data
      */
+    @MainThreadOnly
     public void bake(Buffer data, int format, int sampleRate) {
         this.setFormat(format);
         this.setSampleRate(sampleRate);
@@ -99,10 +102,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      */
     public static final Function<GameManager, Void> PUT_WAVEDATA_LOADER_MUSIC = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(WaveData.class, STRING_MUSIC,
-                (WaveData waveData) -> {
-                    waveData.loadAsMusicWaveData(waveData.getResourceInfo());
-                    return null;
-                }
+                (WaveData waveData) -> waveData.loadAsMusicWaveData(waveData.getResourceInfo())
         );
         return null;
     };
@@ -133,6 +133,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         }
     }
 
+    @MainThreadOnly
     private void generate(Buffer data) {
         this.setAlBufferInt(alGenBuffers());
         alBufferData(this.getAlBufferInt(), this.getFormat(),
@@ -145,6 +146,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
      * @param vorbis vorbis
      * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.
      */
+    @MainThreadOnly
     public void readVorbis(ByteBuffer vorbis) throws FailedToOpenOggVorbisFileException {
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
             IntBuffer error = MemoryUtil.memAllocInt(1);
@@ -181,10 +183,13 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         MemoryUtil.memFree(vorbis);
     }
 
+    @MainThreadOnly
+    private boolean loadAsMusicWaveData(ResourceInfo<WaveData> resourceInfo) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
 
-    private void loadAsMusicWaveData(ResourceInfo<WaveData> resourceInfo) {
         FileObject resourceFileObject = resourceInfo.fileObject;
-
 
         try {
             InputStream inputStream = resourceFileObject.getContent().getInputStream();
@@ -201,6 +206,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             }
         }
 
+        return true;
     }
 
     /**

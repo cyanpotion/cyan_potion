@@ -24,7 +24,9 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
@@ -87,8 +89,7 @@ public class Texture extends AbstractResource implements Bindable {
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_PICTURE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_PICTURE,
                 (Texture texture) -> {
-                    texture.loadAsPictureTexture(texture.getResourceInfo());
-                    return null;
+                    return texture.loadAsPictureTexture(texture.getResourceInfo());
                 }
         );
         return null;
@@ -127,7 +128,6 @@ public class Texture extends AbstractResource implements Bindable {
         if ((this.getGlTexture2DInt() == -1) == (this.isInMemory())) {
             throw new TextureStateDisorderException(this);
         }
-
         if (this.getGlTexture2DInt() == -1) {
             throw new TextureStateDisorderException(this);
         }
@@ -144,6 +144,7 @@ public class Texture extends AbstractResource implements Bindable {
      * @param height     a int.
      * @param byteBuffer byteBuffer
      */
+    @MainThreadOnly
     public void bake(int width, int height, ByteBuffer byteBuffer) {
         this.setWidth(width);
         this.setHeight(height);
@@ -164,6 +165,7 @@ public class Texture extends AbstractResource implements Bindable {
      * @param startHeight  a int.
      * @param pixelsRaw    an array of {@link int} objects.
      */
+    @MainThreadOnly
     public void bake(int singleWidth, int singleHeight, int entireWidth,
                      int entireHeight, int startWidth, int startHeight,
                      int[] pixelsRaw) {
@@ -198,6 +200,7 @@ public class Texture extends AbstractResource implements Bindable {
         this.getResourceManager().load(this);
     }
 
+    @MainThreadOnly
     private void generate(ByteBuffer byteBuffer) {
         this.setGlTexture2DInt(glGenTextures());
         glBindTexture(GL_TEXTURE_2D, this.getGlTexture2DInt());
@@ -212,7 +215,12 @@ public class Texture extends AbstractResource implements Bindable {
      *
      * @param resourceInfo resourceInfo
      */
-    public void loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {
+    @MainThreadOnly
+    public boolean loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
@@ -228,6 +236,8 @@ public class Texture extends AbstractResource implements Bindable {
                 entireHeight, null, 0, entireWidth);
         this.bake(entireWidth, entireHeight, entireWidth, entireHeight, 0, 0,
                 pixelsRaw);
+
+        return true;
     }
 
 

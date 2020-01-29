@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.xenoamess.commons.main_thread_only.MainThreadOnly;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
@@ -61,8 +63,13 @@ public class TextureUtils {
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsWalkingTexture(Texture texture) {
-        ResourceInfo resourceInfo = texture.getResourceInfo();
+    @MainThreadOnly
+    public static boolean loadAsWalkingTexture(Texture texture) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
+        ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
 
         final int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
         final int textureIndex = Integer.parseInt(resourceInfo.values[1]);
@@ -124,6 +131,8 @@ public class TextureUtils {
             }
             startPosX += singleWidth * 3;
         }
+
+        return true;
     }
 
 
@@ -132,7 +141,12 @@ public class TextureUtils {
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsTilesetTextures8(Texture texture) {
+    @MainThreadOnly
+    public static boolean loadAsTilesetTextures8(Texture texture) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
         ResourceInfo resourceInfo = texture.getResourceInfo();
         final String resourceType = resourceInfo.type;
         int columnNum;
@@ -213,13 +227,19 @@ public class TextureUtils {
             startPosY = 0;
             startPosX += entireWidth / columnNum;
         }
+
+        return true;
     }
 
+    @MainThreadOnly
+    private static boolean loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
+                                                            int kk, int ti, int singleSingleWidth, int singleSingleHeight,
+                                                            int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
+                                                            int[] pixelsRaws3) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
 
-    private static void loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
-                                                         int kk, int ti, int singleSingleWidth, int singleSingleHeight,
-                                                         int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
-                                                         int[] pixelsRaws3) {
         final Texture nowTexture =
                 resourceManager.fetchResource(
                         Texture.class,
@@ -232,7 +252,7 @@ public class TextureUtils {
             throw new TextureStateDisorderException(nowTexture);
         }
         if (nowTexture.isInMemory()) {
-            return;
+            return true;
         }
         final ByteBuffer byteBuffer =
                 MemoryUtil.memAlloc(singleSingleWidth * 2 * singleSingleHeight * 2 * 4);
@@ -276,13 +296,20 @@ public class TextureUtils {
                     byteBuffer);
         }
         MemoryUtil.memFree(byteBuffer);
+
+        return true;
     }
 
-    private static void loadTilesetTexturesA2Single(ResourceManager resourceManager,
-                                                    String fileString, int kk, int singleWidth,
-                                                    int singleHeight, int entireWidth,
-                                                    int entireHeight, int startWidth,
-                                                    int startHeight, int[] pixelsRaw) {
+    @MainThreadOnly
+    private static boolean loadTilesetTexturesA2Single(ResourceManager resourceManager,
+                                                       String fileString, int kk, int singleWidth,
+                                                       int singleHeight, int entireWidth,
+                                                       int entireHeight, int startWidth,
+                                                       int startHeight, int[] pixelsRaw) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
         final int singleSingleWidth = singleWidth / 2;
         final int singleSingleHeight = singleHeight / 2;
 
@@ -595,6 +622,8 @@ public class TextureUtils {
                     pixelsRaws[5], pixelsRaws[6]);
             ti++;
         }
+
+        return true;
     }
 
     /**
@@ -602,7 +631,12 @@ public class TextureUtils {
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public static void loadAsTilesetTexturesA2(Texture texture) {
+    @MainThreadOnly
+    public static boolean loadAsTilesetTexturesA2(Texture texture) {
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
         ResourceInfo resourceInfo = texture.getResourceInfo();
 
         BufferedImage bufferedImage = null;
@@ -660,6 +694,8 @@ public class TextureUtils {
                 startPosX = startStartPosX;
             }
         }
+
+        return true;
     }
 
 
