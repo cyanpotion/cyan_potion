@@ -36,6 +36,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * @author XenoAmess
  * @version 0.143.0
  * @see JXInputGamepadDevice
+ * @deprecated
  */
 @Deprecated
 public class JXInputGamepadData extends AbstractGamepadData {

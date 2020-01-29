@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.rpg_module.eventUnitProgramLanguageGrammar;
+package com.xenoamess.cyan_potion.rpg_module.event_unit_program_language_grammar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

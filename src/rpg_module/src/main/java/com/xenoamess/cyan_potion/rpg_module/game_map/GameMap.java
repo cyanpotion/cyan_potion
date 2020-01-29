@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.rpg_module.gameMap;
+package com.xenoamess.cyan_potion.rpg_module.game_map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
-import com.xenoamess.cyan_potion.rpg_module.eventUnit.EventUnit;
+import com.xenoamess.cyan_potion.rpg_module.event_unit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;

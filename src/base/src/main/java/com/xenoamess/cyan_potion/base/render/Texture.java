@@ -79,12 +79,13 @@ public class Texture extends AbstractResource implements Bindable {
     private int height;
 
 
+    public static final String STRING_PICTURE = "picture";
     /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_PICTURE = (GameManager gameManager) -> {
-        gameManager.getResourceManager().putResourceLoader(Texture.class, "picture",
+        gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_PICTURE,
                 (Texture texture) -> {
                     texture.loadAsPictureTexture(texture.getResourceInfo());
                     return null;
@@ -103,7 +104,7 @@ public class Texture extends AbstractResource implements Bindable {
      * @param resourceInfo    resource info
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public Texture(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+    public Texture(ResourceManager resourceManager, ResourceInfo<Texture> resourceInfo) {
         super(resourceManager, resourceInfo);
     }
 
@@ -211,7 +212,7 @@ public class Texture extends AbstractResource implements Bindable {
      *
      * @param resourceInfo resourceInfo
      */
-    public void loadAsPictureTexture(ResourceInfo resourceInfo) {
+    public void loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());

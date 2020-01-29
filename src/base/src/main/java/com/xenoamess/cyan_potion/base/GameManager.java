@@ -223,14 +223,14 @@ public class GameManager implements AutoCloseable {
             return;
         }
         if (!ifSolvingEventList.get()) {
-            List<Event> eventList;
-            synchronized (eventList = getEventList()) {
-                eventList.add(event);
+            List<Event> localEventList = getEventList();
+            synchronized (localEventList) {
+                localEventList.add(event);
             }
         } else {
-            List<Event> eventListCache;
-            synchronized (eventListCache = getEventListCache()) {
-                eventListCache.add(event);
+            List<Event> localEventListCache = getEventListCache();
+            synchronized (localEventListCache) {
+                localEventListCache.add(event);
             }
         }
     }
@@ -256,7 +256,7 @@ public class GameManager implements AutoCloseable {
             URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
             factorySet.register(new CyanPotionURLStreamHandlerFactory());
         } catch (IllegalAccessException e) {
-            throw new Error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
+            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
         }
     }
 

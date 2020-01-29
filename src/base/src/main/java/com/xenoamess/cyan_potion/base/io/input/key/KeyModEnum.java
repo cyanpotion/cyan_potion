@@ -78,10 +78,14 @@ public enum KeyModEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    public static final KeyModEnum[] values = generateValues();
+    private static final KeyModEnum[] values = generateValues();
 
     KeyModEnum(int value) {
         this.value = value;
+    }
+
+    public static KeyModEnum[] getValues() {
+        return values;
     }
 
     /**
@@ -101,8 +105,8 @@ public enum KeyModEnum {
      * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum} object.
      */
     public static KeyModEnum getByValue(int value) {
-        if (value >= 0 && value < values.length) {
-            return values[value];
+        if (value >= 0 && value < getValues().length) {
+            return getValues()[value];
         }
         return GLFW_MOD_NORMAL;
     }

@@ -22,24 +22,26 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.rpg_module.eventUnitProgramLanguageGrammar;
+package com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Test;
+import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
+import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 
 /**
+ * <p>ShapeRelationJudge interface.</p>
+ *
  * @author XenoAmess
+ * @version 0.143.0
  */
-public class GrammarMapTest {
-    @Test
-    public void test() {
-        GrammarMap.getMethodNum("");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i <= 1000; i++) {
-            if (StringUtils.isBlank(GrammarMap.getMethodName(i))) {
-                sb.append("{\"code\":").append(i).append(", \"indent\":0, \"parameters\": []},");
-            }
-        }
-        System.out.println(sb.toString());
-    }
+public interface ShapeRelationJudge<K extends AbstractShape,
+        V extends AbstractShape> {
+    /**
+     * <p>relation.</p>
+     *
+     * @param k     a K object.
+     * @param v     a V object.
+     * @param rough a boolean.
+     * @return return
+     */
+    ShapeRelation relation(K k, V v, boolean rough);
 }

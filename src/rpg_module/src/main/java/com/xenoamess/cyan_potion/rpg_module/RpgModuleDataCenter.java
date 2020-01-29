@@ -24,8 +24,8 @@
 
 package com.xenoamess.cyan_potion.rpg_module;
 
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameMap;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
 

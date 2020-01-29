@@ -30,6 +30,7 @@ import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayLis
 import com.xenoamess.commons.primitive.iterators.IntIterator;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.exceptions.ResourceSizeLargerThanGlMaxTextureSizeException;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
@@ -78,25 +79,18 @@ public class Font extends AbstractResource {
      */
     public static final boolean TEST_PRINT_FONT_BMP = false;
 
-//    /**
-//     * Constant <code>MAX_NUM=40960</code>
-//     */
-//    public static final int MAX_NUM = 40960;
     /**
      * size of each font pic.
      */
     public static final int EACH_SIZE = 1024;
-//    public static final int EACH_SIZE = 1024 * 16;
     /**
      * num of characters on each font pic.
      */
     public static final int EACH_CHAR_NUM = 1024;
-//    public static final int EACH_CHAR_NUM = 65536;
     /**
      * num of characters on each font pic.
      */
     public static final int PIC_NUM = ((int) (Character.MAX_VALUE) + 1) / EACH_CHAR_NUM;
-//    public static final int PIC_NUM = ((int) (100000) / EACH_CHAR_NUM);
     /**
      * Constant <code>BITMAP_W=MAX_SIZE</code>
      */
@@ -178,14 +172,6 @@ public class Font extends AbstractResource {
             this.setScaleY(scaleY);
         }
 
-//        public void bakeScaleXY() {
-//            if (getScaleX() < 0) {
-//                setScaleX(getScaleY());
-//            } else if (getScaleY() < 0) {
-//                setScaleY(getScaleX());
-//            }
-//        }
-
         public void bakePosXY() {
             assert (this.width >= 0);
             assert (this.height >= 0);
@@ -251,14 +237,14 @@ public class Font extends AbstractResource {
                 lastYShould = 0;
                 glEnd();
             }
-            float scaleX = this.width < 0 ? -1 : this.width / (x3 - 0);
-            float scaleY = this.height < 0 ? -1 : this.height / (y3 - 0);
-            if (scaleX < 0) {
-                scaleX = scaleY;
-            } else if (scaleY < 0) {
-                scaleY = scaleX;
+            float calculatedScaleX = this.width < 0 ? -1 : this.width / (x3 - 0);
+            float calculatedScaleY = this.height < 0 ? -1 : this.height / (y3 - 0);
+            if (calculatedScaleX < 0) {
+                calculatedScaleX = calculatedScaleY;
+            } else if (calculatedScaleY < 0) {
+                calculatedScaleY = calculatedScaleX;
             }
-            this.setScaleXY(scaleX, scaleY);
+            this.setScaleXY(calculatedScaleX, calculatedScaleY);
             if (this.height < 0) {
                 this.height = this.width / x3 * y3;
             }
@@ -281,22 +267,6 @@ public class Font extends AbstractResource {
             } else if (this.width >= 0 || this.height >= 0) {
                 this.calculateScaleXYFromWidthHeight();
             }
-//            } else if (this.width >= 0 && this.height >= 0) {
-//                this.calculateScaleXYFromWidthHeight();
-//            } else if (this.height >= 0) {
-//                float scaleXY = font.getScale(this.height);
-//                this.setScaleXY(scaleXY, scaleXY);
-//                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
-//                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
-//                drawTextStruct.leftTopPosX = 0;
-//                drawTextStruct.leftTopPosY = 0;
-//                font.drawTextLeftTop(drawTextStruct);
-//                this.width = drawTextStruct.width;
-//            } else {
-//                this.calculateScaleXYFromWidthHeight();
-//            }
-
-
             this.bakePosXY();
         }
 
@@ -421,17 +391,18 @@ public class Font extends AbstractResource {
      * @param resourJson      resour Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public Font(ResourceManager resourceManager, ResourceInfo resourJson) {
+    public Font(ResourceManager resourceManager, ResourceInfo<Font> resourJson) {
         super(resourceManager, resourJson);
     }
 
+    public static final String STRING_TTF_FILE = "ttfFile";
 
     /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
-        gameManager.getResourceManager().putResourceLoader(Font.class, "ttfFile",
+        gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
                 (Font font) -> {
                     font.loadAsTtfFileFont(font.getResourceInfo());
                     return null;
@@ -440,7 +411,7 @@ public class Font extends AbstractResource {
         return null;
     };
 
-    private void loadAsTtfFileFont(ResourceInfo resourceInfo) {
+    private void loadAsTtfFileFont(ResourceInfo<Font> resourceInfo) {
         this.loadBitmap(resourceInfo.fileObject);
     }
 
@@ -459,7 +430,7 @@ public class Font extends AbstractResource {
         ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-//            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
+            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
             for (int i = 0; i < PIC_NUM; i++) {
                 ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
@@ -480,7 +451,6 @@ public class Font extends AbstractResource {
                 this.bitmaps.add(bitmapLocal);
                 this.getCharDatas().add(charDataLocal);
             }
-//            this.setMemorySize(charDataLocal.capacity());
         }
     }
 
@@ -663,28 +633,18 @@ public class Font extends AbstractResource {
             glBegin(GL_QUADS);
             stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
                     drawTextStruct.text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
-//            stbtt_GetPackedQuad(getCharDatas().get(0), BITMAP_W, BITMAP_H,
-//                    150, getXb(), getYb(), getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
-//            LOGGER.debug("s0:" + q.s0() + " s1:" + q.s1() + " t0:" +
-//            q.t0() + " t1:" + q.t1());
+
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastXShould;
             float spaceUpToCharShould = getQ().y0() - lastYShould;
             float nowX0 = lastXReal + spaceLeftToCharShould * drawTextStruct.scaleX;
             float nowY0 = lastYReal + spaceUpToCharShould * drawTextStruct.scaleY;
-//            float nowY0 = y;
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowX0 + " " + nowY0);
 
             drawBoxTC(
                     nowX0, nowY0 + drawTextStruct.height * 0.8f,
                     nowX0 + charWidthShould * drawTextStruct.scaleX,
                     nowY0 + charHeightShould * drawTextStruct.scaleY + drawTextStruct.height * 0.8f,
-//                    q.x0(), q.y0(), q.x1(), q.y1(),
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
             lastXReal = nowX0 + charWidthShould * drawTextStruct.scaleX;
@@ -898,15 +858,6 @@ public class Font extends AbstractResource {
         this.getFontTextures().clear();
     }
 
-//    /**
-//     * <p>Getter for the field <code>fontTexture</code>.</p>
-//     *
-//     * @return a int.
-//     */
-//    public int getFontTexture() {
-//        return fontTexture;
-//    }
-
     /**
      * <p>Getter for the field <code>defaultFont</code>.</p>
      *
@@ -997,15 +948,6 @@ public class Font extends AbstractResource {
     public FloatBuffer getYb() {
         return yb;
     }
-
-//    /**
-//     * <p>Setter for the field <code>fontTexture</code>.</p>
-//     *
-//     * @param fontTexture a int.
-//     */
-//    public void setFontTexture(int fontTexture) {
-//        this.fontTexture = fontTexture;
-//    }
 
     /**
      * <p>Getter for the field <code>fontTextures</code>.</p>

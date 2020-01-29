@@ -35,6 +35,8 @@ import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
+import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -48,7 +50,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
                             Texture.class,
-                            new ResourceInfo(Texture.class, "picture", "resources/www/img/pictures/madewith.png")
+                            STRING_PICTURE,
+                            "resources/www/img/pictures/madewith.png"
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
@@ -71,8 +74,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.getGameWindow().getGameManager().getAudioManager().playWaveData(
                 this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                         WaveData.class,
-                        new ResourceInfo(
-                                WaveData.class, "music",
+                        new ResourceInfo<>(
+                                WaveData.class, STRING_MUSIC,
                                 "resources/www/audio/se/madewith.ogg"
                         )
                 )

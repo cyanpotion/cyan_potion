@@ -40,9 +40,9 @@ import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.StaticEntity;
 import com.xenoamess.cyan_potion.rpg_module.GameRuntime;
 import com.xenoamess.cyan_potion.rpg_module.RpgModuleDataCenter;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameMap;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTile;
-import com.xenoamess.cyan_potion.rpg_module.gameMap.GameTileset;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameMap;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameTile;
+import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
@@ -65,17 +65,18 @@ import java.util.TreeMap;
  */
 public class World extends AbstractEntityScene {
     /**
-     * Constant <code>SCALE="scale"</code>
+     * "scale"
      */
-    public static final String SCALE = "scale";
+    public static final String STRING_SCALE = "scale";
     private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
-     * Constant <code>MAX_SCALE=10</code>
+     * 10F
      */
-    public static final float MAX_SCALE = 10;
+    public static final float MAX_SCALE = 10F;
+
     /**
-     * Constant <code>MIN_SCALE=0.01F</code>
+     * 0.01F
      */
     public static final float MIN_SCALE = 0.01F;
 
@@ -146,8 +147,8 @@ public class World extends AbstractEntityScene {
 
         this.setScale(DataCenter.SCALE);
 
-        if (this.getGameWindow().getGameManager().getDataCenter().getViews().containsKey(SCALE)) {
-            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(SCALE)));
+        if (this.getGameWindow().getGameManager().getDataCenter().getViews().containsKey(STRING_SCALE)) {
+            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(STRING_SCALE)));
         }
 
         LOGGER.debug("GameManager: {}", this.getGameWindow().getGameManager());
@@ -398,7 +399,6 @@ public class World extends AbstractEntityScene {
         }
 
         this.getGameWindow().drawTextLeftTop(null, 10, 30, 50, "DEMO");
-//        this.getGameWindow().drawTextFillAreaLeftTop(null, 500, 500, 100, 20, 0, null, "DEMO");
     }
 
     /**

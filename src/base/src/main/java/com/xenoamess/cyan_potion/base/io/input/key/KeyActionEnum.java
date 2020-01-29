@@ -41,10 +41,14 @@ public enum KeyActionEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    public static final KeyActionEnum[] values = generateValues();
+    private static final KeyActionEnum[] values = generateValues();
 
     KeyActionEnum(int value) {
         this.value = value;
+    }
+
+    public static KeyActionEnum[] getValues() {
+        return values;
     }
 
     /**
@@ -64,8 +68,8 @@ public enum KeyActionEnum {
      * @return a {@link com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum} object.
      */
     public static KeyActionEnum getByValue(int value) {
-        if (value >= 0 && value < values.length) {
-            return values[value];
+        if (value >= 0 && value < getValues().length) {
+            return getValues()[value];
         }
         return GLFW_REPEAT;
     }

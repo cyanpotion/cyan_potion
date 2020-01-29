@@ -78,9 +78,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     public void initProcessors() {
         this.registerProcessor(
                 MouseButtonEvent.class,
-                (MouseButtonEvent mouseButtonEvent) -> {
-                    return processMouseButtonEvents(mouseButtonEvent);
-                });
+                this::processMouseButtonEvents);
     }
 
     /**

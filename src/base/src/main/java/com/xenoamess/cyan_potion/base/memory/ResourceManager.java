@@ -113,6 +113,9 @@ public class ResourceManager implements AutoCloseable {
      */
     public static String loadString(FileObject fileObject) {
         String result = "";
+        if (fileObject == null) {
+            return result;
+        }
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
             result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -229,7 +232,7 @@ public class ResourceManager implements AutoCloseable {
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapGet(Class<T> tClass) {
-        return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
+        return (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
     }
 
     /**
@@ -241,7 +244,7 @@ public class ResourceManager implements AutoCloseable {
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Void>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Void>> map) {
-        return (ConcurrentHashMap<String, Function<T, Void>>) (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
+        return (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
 
     /**

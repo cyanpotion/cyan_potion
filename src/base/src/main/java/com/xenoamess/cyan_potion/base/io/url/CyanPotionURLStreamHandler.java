@@ -55,7 +55,7 @@ public class CyanPotionURLStreamHandler extends URLStreamHandler {
     static void assureProtocolBeProtocolCyanPotion(URL url) {
         String protocol = url.getProtocol();
         if (!PROTOCOL_CYAN_POTION.equalsIgnoreCase(protocol)) {
-            throw new IllegalArgumentException(String.format("Wrong protocol.\nExpected : %s , Get : %s",
+            throw new IllegalArgumentException(String.format("Wrong protocol : Expected = %s , Get = %s",
                     PROTOCOL_CYAN_POTION, protocol));
         }
     }

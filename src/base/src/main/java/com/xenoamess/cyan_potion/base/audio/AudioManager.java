@@ -118,7 +118,7 @@ public class AudioManager implements AutoCloseable {
         }
         ALCCapabilities deviceCaps =
                 ALC.createCapabilities(this.getOpenalDevice());
-        this.setOpenalContext(ALC11.alcCreateContext(this.getOpenalDevice(),
+        this.setOpenalContext(ALC10.alcCreateContext(this.getOpenalDevice(),
                 (IntBuffer) null));
         alcSetThreadContext(this.getOpenalContext());
         AL.createCapabilities(deviceCaps);
@@ -237,7 +237,7 @@ public class AudioManager implements AutoCloseable {
     }
 
     /**
-     * just use playWaveData(WaveData waveData) instead.
+     * please just use playWaveData(WaveData waveData) instead.
      * ----------
      * Get an unused source, and then delete it from unused sources,
      * then add it to used sources, clean it, then play it, then return it.
@@ -253,6 +253,7 @@ public class AudioManager implements AutoCloseable {
      *
      * @param waveData the WaveData you wanna play.
      * @return the source that we will use.
+     * @deprecated
      */
     @MainThreadOnly
     @Deprecated
@@ -261,7 +262,7 @@ public class AudioManager implements AutoCloseable {
     }
 
     /**
-     * just use playWaveData(WaveData waveData, Event playOverEvent) instead.
+     * please just use playWaveData(WaveData waveData, Event playOverEvent) instead.
      * ----------
      * Get an unused source, and then delete it from unused sources,
      * then add it to used sources, clean it, then play it, then return it.
@@ -278,6 +279,7 @@ public class AudioManager implements AutoCloseable {
      * @param waveData      the WaveData you wanna play.
      * @param playOverEvent the event that will invoke after the waveData played.
      * @return the source that we will use.
+     * @deprecated
      */
     @MainThreadOnly
     @Deprecated

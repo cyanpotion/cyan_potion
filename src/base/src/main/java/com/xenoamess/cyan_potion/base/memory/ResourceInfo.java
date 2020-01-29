@@ -33,7 +33,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +95,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
             resourceInfoValues[i - 3] = arrayNode.get(i).asText();
         }
 
-        return new ResourceInfo(resourceInfoResourceClass, resourceInfoType, resourceInfoFileString, resourceInfoValues);
+        return new ResourceInfo<>(resourceInfoResourceClass, resourceInfoType, resourceInfoFileString, resourceInfoValues);
     }
 }
 
@@ -105,6 +104,14 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * ResourceInfo is used as a URL or something.
  * There will be one and only resource instance linked to each ResourceInfo instance.
  * equal ResourceInfo instances are linked to a same resource instance.
+ * <p>
+ * NOTICE that although we usually make this.resourceClass be a subclass of AbstractResource,
+ * actually it is not a MUST.
+ * in some very extreme examples,
+ * WalkingAnimation4Dirs are also using ResourceInfo,
+ * and it is not subclass of AbstractResource.
+ * <p>
+ * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
  * @version 0.148.8
@@ -117,7 +124,7 @@ public class ResourceInfo<T extends AbstractResource> {
     public final Class<T> resourceClass;
     public final String type;
     public final String fileString;
-    public FileObject fileObject;
+    public final FileObject fileObject;
     public final String[] values;
 
 
@@ -138,11 +145,7 @@ public class ResourceInfo<T extends AbstractResource> {
         this.resourceClass = resourceClass;
         this.type = type;
         this.fileString = fileObjectString;
-        try {
-            this.fileObject = ResourceManager.getFileSystemManager().resolveFile(this.fileString);
-        } catch (FileSystemException e) {
-            e.printStackTrace();
-        }
+        this.fileObject = ResourceManager.resolveFile(this.fileString);
         this.values = values;
 
         try {
@@ -202,21 +205,6 @@ public class ResourceInfo<T extends AbstractResource> {
             return false;
         }
         return toString.equals(obj.toString());
-//        ResourceInfo resourceInfo = (ResourceInfo) obj;
-//
-//        if (!Objects.equals(this.resourceClass, resourceInfo.resourceClass)) {
-//            return false;
-//        }
-//
-//        if (!Objects.equals(this.type, resourceInfo.type)) {
-//            return false;
-//        }
-//
-//        if (!Objects.equals(this.fileString, resourceInfo.fileString)) {
-//            return false;
-//        }
-//
-//        return Arrays.equals(this.values, resourceInfo.values);
     }
 
     /**

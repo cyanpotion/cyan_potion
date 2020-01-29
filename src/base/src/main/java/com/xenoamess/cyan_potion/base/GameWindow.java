@@ -420,6 +420,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * thus this is not used and become deprecated.
      *
      * @since 0.142.7
+     * @deprecated
      */
     @Deprecated
     public static void testGlfwJoyStick() {

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class RuntimeVariableStruct {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(RuntimeManager.class);
+            LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
     RuntimeVariableStruct() {
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.rpg_module.gameMap;
+package com.xenoamess.cyan_potion.rpg_module.game_map;
 
 import com.xenoamess.cyan_potion.base.render.Bindable;
 
