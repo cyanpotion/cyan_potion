@@ -57,6 +57,7 @@ import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.vfs2.FileObject;
 import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,10 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -473,6 +477,7 @@ public class GameManager implements AutoCloseable {
         this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
                 true));
         if (this.getDataCenter().isRunWithSteam()) {
+            this.renewSteam_appid();
             try {
                 SteamAPI.loadLibraries();
                 if (!SteamAPI.init()) {
@@ -516,6 +521,34 @@ public class GameManager implements AutoCloseable {
         } else {
             LOGGER.error("Steam load failed, thus the game shut.");
             System.exit(1);
+        }
+    }
+
+    /**
+     * renew steam_appid.txt
+     * notice that this function shall only be invoked when runWithSteam=true
+     * (runWithSteam is false by default)
+     */
+    protected void renewSteam_appid() {
+        String steam_appid = getString(this.getDataCenter().getCommonSettings(), STRING_STEAM_APPID);
+        FileObject steam_appidFileObject = ResourceManager.resolveFile("steam_appid.txt");
+        if (!StringUtils.isBlank(steam_appid)) {
+            try (OutputStream outputStream = steam_appidFileObject.getContent().getOutputStream();
+                 PrintWriter printWriter = new PrintWriter(outputStream);
+            ) {
+                printWriter.write(steam_appid.trim());
+            } catch (IOException e) {
+                LOGGER.error("write to steam_appid.txt failed!", e);
+            }
+        } else {
+            try {
+                steam_appid = steam_appidFileObject.getContent().getString(StandardCharsets.UTF_8).trim();
+            } catch (IOException e) {
+                LOGGER.error("read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
+            }
+        }
+        if (StringUtils.isBlank(steam_appid)) {
+            LOGGER.error("OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
         }
     }
 

@@ -271,4 +271,13 @@ public class GameManagerConfig {
      */
     public static final String STRING_LOGO_CLASS_NAME = "logoClassName";
 
+    /**
+     * The steam_appid of game.
+     * will load it from settings.
+     * if settings does not describe about this, then will load from steam_appid.txt.
+     *
+     * @see com.xenoamess.multi_language
+     * @see GameManager
+     */
+    public static final String STRING_STEAM_APPID = "steam_appid";
 }

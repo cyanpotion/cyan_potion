@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
@@ -152,9 +153,14 @@ public class ResourceManager implements AutoCloseable {
      */
     public long getMaxTextureSize() {
         if (maxTextureSize == 0) {
-            int[] maxTextureSizeArray = new int[1];
-            glGetIntegerv(GL11.GL_MAX_TEXTURE_SIZE, maxTextureSizeArray);
-            maxTextureSize = 1L * maxTextureSizeArray[0] * maxTextureSizeArray[0];
+            if (DataCenter.ifMainThread()) {
+                int[] maxTextureSizeArray = new int[1];
+                glGetIntegerv(GL11.GL_MAX_TEXTURE_SIZE, maxTextureSizeArray);
+                maxTextureSize = 1L * maxTextureSizeArray[0] * maxTextureSizeArray[0];
+                return maxTextureSize;
+            } else {
+                return Long.MAX_VALUE;
+            }
         }
         return maxTextureSize;
     }
@@ -495,6 +501,7 @@ public class ResourceManager implements AutoCloseable {
      */
     public ResourceManager(GameManager gameManager) {
         this.gameManager = gameManager;
+
     }
 
     /**
