@@ -107,7 +107,7 @@ public class GamepadButtonEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        if (gameManager.getDataCenter().isDebug() && getAction() != GLFW.GLFW_REPEAT) {
+        if (gameManager.getDataCenter().getGameSettings().isDebug() && getAction() != GLFW.GLFW_REPEAT) {
             LOGGER.debug("{}", this);
         }
         switch (getAction()) {

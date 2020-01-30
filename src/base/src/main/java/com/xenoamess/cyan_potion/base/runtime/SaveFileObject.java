@@ -91,7 +91,7 @@ public class SaveFileObject {
                 try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
                     SaveFileObjectStatus newCreatedSaveFileObjectStatus = new SaveFileObjectStatus();
                     newCreatedSaveFileObjectStatus.setNowIndex(-1);
-                    newCreatedSaveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameVersion());
+                    newCreatedSaveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameSettings().getGameVersion());
                     long time = System.currentTimeMillis();
                     newCreatedSaveFileObjectStatus.setLastSaveTime(time);
                     newCreatedSaveFileObjectStatus.setLastLoadTime(time);
@@ -153,7 +153,7 @@ public class SaveFileObject {
         long time = System.currentTimeMillis();
         this.getSaveFileObjectStatus().setLastSaveTime(time);
         this.getSaveFileObjectStatus().setLastLoadTime(time);
-        this.getSaveFileObjectStatus().setVersion(this.getSaveManager().getGameManager().getDataCenter().getGameVersion());
+        this.getSaveFileObjectStatus().setVersion(this.getSaveManager().getGameManager().getDataCenter().getGameSettings().getGameVersion());
 
         FileObject fileObject = ResourceManager.resolveFile(getPath() + getSaveFileObjectStatus().getNowIndex());
         SaveFileContent saveFileContent = new SaveFileContent();

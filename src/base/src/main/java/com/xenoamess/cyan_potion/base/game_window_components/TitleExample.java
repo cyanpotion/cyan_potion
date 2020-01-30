@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
-import com.xenoamess.cyan_potion.base.GameManagerConfig;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
@@ -439,10 +438,14 @@ public class TitleExample extends AbstractGameWindowComponent {
     private void startGame() {
         this.getGameWindowComponentTreeNode().close();
         AbstractGameWindowComponent world =
-                AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
-                        GameManagerConfig.getString(this.getGameWindow().getGameManager().getDataCenter().getCommonSettings(),
-                                "worldClassName",
-                                "com.xenoamess.cyan_potion.rpg_module.world.World"));
+                AbstractGameWindowComponent.createGameWindowComponentFromClassName(
+                        this.getGameWindow(),
+                        this.getGameWindow()
+                                .getGameManager()
+                                .getDataCenter()
+                                .getGameSettings()
+                                .getWorldClassName()
+                );
         world.addToGameWindowComponentTree(null);
         world.enlargeAsFullWindow();
     }

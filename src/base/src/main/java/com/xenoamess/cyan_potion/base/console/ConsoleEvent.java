@@ -81,7 +81,7 @@ public class ConsoleEvent implements Event {
         //TODO should add some real console methods here.
         // If anyone do have any idea about how it shall design,
         // please just open issue. Thx.
-        if (gameManager.getDataCenter().isDebug()) {
+        if (gameManager.getDataCenter().getGameSettings().isDebug()) {
             LOGGER.debug("{}", this);
         }
         return new HashSet<>();

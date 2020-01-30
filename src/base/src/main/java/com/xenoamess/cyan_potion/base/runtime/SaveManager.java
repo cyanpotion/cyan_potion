@@ -54,7 +54,7 @@ public class SaveManager {
      * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
      */
     public SaveFileObject getSaveFileObject(int index) {
-        String saveFolderPath = System.getProperty("user.home") + "/cyan_potion/" + this.getGameManager().getDataCenter().getGameName() + "/" + index + "/";
+        String saveFolderPath = System.getProperty("user.home") + "/cyan_potion/" + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
         SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
         return saveFileObject;
     }

@@ -47,28 +47,25 @@ import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.runtime.RuntimeManager;
 import com.xenoamess.cyan_potion.base.runtime.SaveManager;
+import com.xenoamess.cyan_potion.base.setting_file.SettingFileParsers;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
-import com.xenoamess.x8l.AbstractTreeNode;
 import com.xenoamess.x8l.ContentNode;
-import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.vfs2.FileObject;
-import org.lwjgl.system.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
@@ -78,7 +75,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
-import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
 /**
@@ -119,7 +116,8 @@ public class GameManager implements AutoCloseable {
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    private final ResourceManager resourceManager = new ResourceManager(this);
+    @AsFinalField
+    private ResourceManager resourceManager;
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
     private final SaveManager saveManager = new SaveManager(this);
 
@@ -240,8 +238,7 @@ public class GameManager implements AutoCloseable {
 
     private void initConsoleThread() {
 
-        if (getBoolean(this.getDataCenter().getSpecialSettings(),
-                STRING_NO_CONSOLE_THREAD)) {
+        if (this.getDataCenter().getGameSettings().isNoConsoleThread()) {
             this.setConsoleThread(null);
         } else {
             this.setConsoleThread(new ConsoleThread(this));
@@ -273,16 +270,21 @@ public class GameManager implements AutoCloseable {
         setAlive(true);
 
         this.registerCyanPotionURLStreamHandlerFactory();
-        this.codePluginManager.apply(this, rightBeforeGameManagerStartup);
-        this.loadSettingTree();
-        this.readCommonSettings();
-        this.readKeymap();
+
+        this.initGameSettings();
+
+        this.initKeyMap();
+
+        this.initCodePluginManager();
+
         this.initSteam();
+
         this.loadText();
 
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
+        this.resourceManager = new ResourceManager(this);
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.codePluginManager.apply(this, rightBeforeGameWindowInit);
@@ -300,10 +302,7 @@ public class GameManager implements AutoCloseable {
         this.getSaveManager().init();
 
         this.setStartingContent();
-        final String defaultFontResourceJsonString =
-                getString(this.getDataCenter().getCommonSettings(),
-                        STRING_DEFAULT_FONT_RESOURCE_URI,
-                        Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI);
+        final String defaultFontResourceJsonString = this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
 
         if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
             Font.setDefaultFont(this.resourceManager.fetchResource(Font.class, defaultFontResourceJsonString));
@@ -314,104 +313,46 @@ public class GameManager implements AutoCloseable {
         this.loop();
     }
 
-
     /**
      * <p>loadSettingTree.</p>
      */
-    protected void loadSettingTree() {
+    protected X8lTree loadSettingTree(DataCenter dataCenter) {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
 
         LOGGER.debug("SettingsFilePath : {}", settingFilePath);
 
-        X8lTree globalSettingsTree = null;
+        X8lTree settingsTree = null;
+        FileObject settingFileObject = ResourceManager.resolveFile(settingFilePath);
         try {
-            globalSettingsTree = X8lTree.load(ResourceManager.loadString(settingFilePath));
+            settingsTree = X8lTree.load(settingFileObject);
+            settingsTree.trimForce();
+            ContentNode settingNode = settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
+            settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
         } catch (Exception e) {
-            throw new IllegalArgumentException("X8lTree.loadString(settingFilePath) fails " +
-                    ": ", e);
+            LOGGER.error("X8lTree.loadString(settingFileObject) fails, settingFileObject : {}", settingFileObject, e);
         }
-        this.getDataCenter().setGlobalSettingsTree(globalSettingsTree);
-        this.getDataCenter().patchGlobalSettingsTree();
+        return settingsTree;
     }
 
-    /**
-     * <p>readCommonSettings.</p>
-     */
-    protected void readCommonSettings() {
-        for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "commonSettings")) {
-            this.getDataCenter().getCommonSettings().putAll(contentNode.getAttributes());
-        }
-        for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "specialSettings")) {
-            this.getDataCenter().getSpecialSettings().putAll(contentNode.getAttributes());
-        }
-        for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "views")) {
-            this.getDataCenter().getViews().putAll(contentNode.getAttributes());
-        }
-        for (ContentNode pluginNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "codePlugins"
-                )) {
-            for (ContentNode simplePluginNode : pluginNode.getContentNodesFromChildren()) {
-                this.codePluginManager.putCodePlugin(CodePluginPosition.valueOf(simplePluginNode.getName()),
-                        simplePluginNode.getTextNodesFromChildren(1).get(0).getTextContent());
-            }
-        }
-
-        this.getDataCenter().setTitleTextID(getString(this.getDataCenter().getCommonSettings(),
-                STRING_TITLE_TEXT_ID, ""));
-        this.getDataCenter().setGameName(getString(this.getDataCenter().getCommonSettings(),
-                STRING_GAME_NAME, "nameless"));
-        this.getDataCenter().setGameVersion(getString(this.getDataCenter().getCommonSettings(),
-                STRING_GAME_VERSION, "1.0"));
-        this.getDataCenter().setTextFilePath(getString(this.getDataCenter().getCommonSettings(),
-                STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
-        this.getDataCenter().setIconFilePath(getString(this.getDataCenter().getCommonSettings(),
-                STRING_ICON_FILE_PATH, "resources/www/icon/icon.png"));
+    protected void initGameSettings() {
+        X8lTree settingsTree = this.loadSettingTree(this.getDataCenter());
+        this.getDataCenter().setGameSettings(
+                SettingFileParsers.parse(settingsTree)
+        );
     }
 
-
-    /**
-     * <p>readKeymap.</p>
-     */
-    protected void readKeymap() {
-        for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "keymap")) {
-            if (getBoolean(contentNode.getAttributes(), "using")) {
-                for (AbstractTreeNode au2 : contentNode.getChildren()) {
-                    if (au2 instanceof ContentNode) {
-                        ContentNode contentNode2 = (ContentNode) au2;
-                        if (!contentNode2.getAttributes().isEmpty() && !contentNode2.getChildren().isEmpty()) {
-                            String rawInput = contentNode2.getName();
-                            String myInput = null;
-                            for (AbstractTreeNode au3 : contentNode2.getChildren()) {
-                                if (au3 instanceof TextNode) {
-                                    myInput = ((TextNode) au3).getTextContent();
-                                    break;
-                                }
-                            }
-                            this.getKeymap().put(rawInput, myInput);
-                        }
-                    }
-                }
-            }
-        }
-
-        for (ContentNode contentNode :
-                this.getDataCenter().getGlobalSettingsTree().getRoot().getContentNodesFromChildrenThatNameIs(
-                        "debug")) {
-            boolean debug = getBoolean(contentNode.getAttributes(), "debug");
-            this.dataCenter.setDebug(debug);
-            Configuration.DEBUG.set(debug);
-            Configuration.DEBUG_LOADER.set(debug);
+    protected void initKeyMap() {
+        for (Pair<String, String> entry : this.getDataCenter().getGameSettings().getKeymapSettings()) {
+            this.getKeymap().put(entry.getKey(), entry.getValue());
         }
     }
+
+    protected void initCodePluginManager() {
+        for (Pair<CodePluginPosition, String> entry : this.getDataCenter().getGameSettings().getCodePluginManagerSettings()) {
+            this.codePluginManager.putCodePlugin(entry.getKey(), entry.getValue());
+        }
+    }
+
 
     /**
      * get current language from steam api
@@ -421,7 +362,7 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getTextFilePath()).getContent().getInputStream()) {
+        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getGameSettings().getTextFilePath()).getContent().getInputStream()) {
             multiLanguageUtil.loadFromMerge(inputStream);
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
@@ -432,12 +373,10 @@ public class GameManager implements AutoCloseable {
 
         MultiLanguageStructure multiLanguageStructure = multiLanguageUtil.parse();
 
-        String settingLanguage = getString(
-                this.getDataCenter().getCommonSettings(),
-                STRING_LANGUAGE,
-                "");
+        String settingLanguage = this.getDataCenter().getGameSettings().getSettingLanguage();
+
         String steamLanguage = "";
-        if (this.getDataCenter().isRunWithSteam()) {
+        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
             steamLanguage = new SteamApps().getCurrentGameLanguage();
         }
 
@@ -471,9 +410,7 @@ public class GameManager implements AutoCloseable {
      * ---- exit 1
      */
     protected void initSteam() {
-        this.getDataCenter().setRunWithSteam(getBoolean(this.getDataCenter().getCommonSettings(), "runWithSteam",
-                true));
-        if (this.getDataCenter().isRunWithSteam()) {
+        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
             this.renewSteam_appid();
             try {
                 SteamAPI.loadLibraries();
@@ -483,10 +420,10 @@ public class GameManager implements AutoCloseable {
                 this.setSteamUserStats(
                         new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback())
                 );
-                this.getDataCenter().setRunWithSteam(true);
+                this.getDataCenter().getGameSettings().setRunWithSteam(true);
             } catch (SteamException e) {
                 // Error extracting or loading native libraries
-                this.getDataCenter().setRunWithSteam(false);
+                this.getDataCenter().getGameSettings().setRunWithSteam(false);
                 LOGGER.warn("SteamAPI.init() fails", e);
                 shutIfNotAllowRunWithoutSteam();
             }
@@ -494,16 +431,9 @@ public class GameManager implements AutoCloseable {
             shutIfNotAllowRunWithoutSteam();
         }
 
-        long steamRunCallbacksNanoLong =
-                Long.parseLong(
-                        getString(
-                                this.getDataCenter().getCommonSettings(),
-                                "SteamRunCallbacksTime",
-                                "10000000000"
-                        )
-                );
+        long steamRunCallbacksNanoLong = this.getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
 
-        if (this.getDataCenter().isRunWithSteam()) {
+        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
             this.getScheduledExecutorService().scheduleAtFixedRate(
                     this::steamRunCallbacks,
                     0,
@@ -527,7 +457,7 @@ public class GameManager implements AutoCloseable {
      * (runWithSteam is false by default)
      */
     protected void renewSteam_appid() {
-        String steam_appid = getString(this.getDataCenter().getCommonSettings(), STRING_STEAM_APPID);
+        String steam_appid = this.getDataCenter().getGameSettings().getSteam_appid();
         FileObject steam_appidFileObject = ResourceManager.resolveFile("steam_appid.txt");
         if (!StringUtils.isBlank(steam_appid)) {
             try (OutputStream outputStream = steam_appidFileObject.getContent().getOutputStream();
@@ -576,7 +506,7 @@ public class GameManager implements AutoCloseable {
             getConsoleThread().shutdown();
         }
 
-        if (this.getDataCenter().isRunWithSteam()) {
+        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
             this.getSteamUserStats().dispose();
             SteamAPI.shutdown();
         }
@@ -596,8 +526,7 @@ public class GameManager implements AutoCloseable {
      */
     protected void initGameWindow() {
         if (this.getGameWindow() == null) {
-            String gameWindowClassName = getString(this.getDataCenter().getCommonSettings(),
-                    STRING_GAME_WINDOW_CLASS_NAME, "com.xenoamess.cyan_potion.base.GameWindow");
+            String gameWindowClassName = this.getDataCenter().getGameSettings().getGameWindowClassName();
             try {
                 GameWindow localGameWindow =
                         (GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this);
@@ -610,40 +539,16 @@ public class GameManager implements AutoCloseable {
 
         getEventList().clear();
 
-        this.getGameWindow().setLogicWindowWidth(Integer.parseInt(getString(this.getDataCenter().getViews(),
-                STRING_LOGIC_WINDOW_WIDTH, "1280")));
-        this.getGameWindow().setLogicWindowHeight(Integer.parseInt(getString(this.getDataCenter().getViews(),
-                STRING_LOGIC_WINDOW_HEIGHT, "1024")));
+        this.getGameWindow().setLogicWindowWidth(this.getDataCenter().getGameSettings().getLogicWindowWidth());
+        this.getGameWindow().setLogicWindowHeight(this.getDataCenter().getGameSettings().getLogicWindowHeight());
         this.getGameWindow().setRealWindowWidth(this.getGameWindow().getLogicWindowWidth());
         this.getGameWindow().setRealWindowHeight(this.getGameWindow().getLogicWindowHeight());
 
-        {
-            String tmpString;
-            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_WIDTH)) != null) {
-                getGameWindow().setRealWindowWidth(Integer.parseInt(tmpString));
-                getGameWindow().setRealWindowHeight((int) (1f * getGameWindow().getRealWindowWidth() / getGameWindow().getLogicWindowWidth() * getGameWindow().getRealWindowHeight()));
-            }
-            if ((tmpString = getString(this.getDataCenter().getViews(), STRING_REAL_WINDOW_HEIGHT)) != null) {
-                getGameWindow().setRealWindowHeight(Integer.parseInt(tmpString));
-                getGameWindow().setRealWindowWidth((int) (1f * getGameWindow().getRealWindowHeight() / getGameWindow().getLogicWindowHeight() * getGameWindow().getLogicWindowWidth()));
-            }
-            if (getGameWindow().getRealWindowHeight() > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
-                getGameWindow().setRealWindowHeight((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-                getGameWindow().setRealWindowWidth((int) (1f * getGameWindow().getRealWindowHeight() / getGameWindow().getLogicWindowHeight() * getGameWindow().getLogicWindowWidth()));
-            }
-            if (getGameWindow().getRealWindowWidth() > Toolkit.getDefaultToolkit().getScreenSize().getWidth()) {
-                getGameWindow().setRealWindowWidth((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
-                getGameWindow().setRealWindowHeight((int) (1f * getGameWindow().getRealWindowWidth() / getGameWindow().getLogicWindowWidth() * getGameWindow().getRealWindowHeight()));
-            }
-        }
-
-        this.getGameWindow().setFullScreen(getBoolean(this.getDataCenter().getViews(), STRING_FULL_SCREEN));
+        this.getGameWindow().setFullScreen(this.getDataCenter().getGameSettings().isFullScreen());
         this.getGameWindowComponentTree().init(gameWindow);
         this.getGameWindow().init();
 
-
-        if (getBoolean(this.getDataCenter().getSpecialSettings(),
-                STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT, true)) {
+        if (this.getDataCenter().getGameSettings().isAutoShowGameWindowAfterInit()) {
             this.getGameWindow().showWindow();
             this.getGameWindow().focusWindow();
         }
@@ -660,9 +565,10 @@ public class GameManager implements AutoCloseable {
      */
     protected void setStartingContent() {
         final AbstractGameWindowComponent logo =
-                AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
-                        getString(this.dataCenter.getCommonSettings(), STRING_LOGO_CLASS_NAME,
-                                "com.xenoamess.cyan_potion.base.game_window_components.Logo"));
+                AbstractGameWindowComponent.createGameWindowComponentFromClassName(
+                        this.getGameWindow(),
+                        this.getDataCenter().getGameSettings().getLogoClassName()
+                );
         logo.addToGameWindowComponentTree(null);
     }
 
@@ -842,7 +748,7 @@ public class GameManager implements AutoCloseable {
      * <p>steamRunCallbacks.</p>
      */
     protected void steamRunCallbacks() {
-        if (this.getDataCenter().isRunWithSteam() && SteamAPI.isSteamRunning()) {
+        if (this.getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning()) {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {

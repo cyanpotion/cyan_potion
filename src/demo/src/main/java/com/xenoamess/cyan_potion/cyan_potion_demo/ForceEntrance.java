@@ -25,9 +25,14 @@
 package com.xenoamess.cyan_potion.cyan_potion_demo;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.x8l.X8lTree;
+import com.xenoamess.x8l.dealers.JsonDealer;
+import com.xenoamess.x8l.dealers.XmlDealer;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * <p>ForceEntrance class.</p>
@@ -42,11 +47,34 @@ public class ForceEntrance {
      * @param args an array of {@link java.lang.String} objects.
      */
     public static void main(String[] args) {
+        generateJsonAndXml();
         Map<String, String> argsMap = GameManager.generateArgsMap(args);
-        argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.x8l");
+        switch (new Random().nextInt(3)) {
+            case 0:
+                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.x8l");
+            case 1:
+                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.json");
+            case 2:
+                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.xml");
+        }
         GameManager gameManager = new GameManager(argsMap);
         gameManager.getDataCenter().setPatchSettingsTree(
                 X8lTree.load("<debug>>"));
         gameManager.startup();
+    }
+
+    public static void generateJsonAndXml() {
+        try {
+            final String basePath = "resources/settings/RpgModuleDemoSettings";
+            X8lTree x8lTree = null;
+            x8lTree = X8lTree.load(ResourceManager.resolveFile(basePath + ".x8l"));
+            x8lTree.trimForce();
+            x8lTree.setLanguageDealer(JsonDealer.INSTANCE);
+            X8lTree.save(ResourceManager.resolveFile(basePath + ".json"), x8lTree);
+            x8lTree.setLanguageDealer(XmlDealer.INSTANCE);
+            X8lTree.save(ResourceManager.resolveFile(basePath + ".xml"), x8lTree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

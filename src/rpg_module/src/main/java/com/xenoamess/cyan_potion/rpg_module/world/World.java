@@ -147,8 +147,8 @@ public class World extends AbstractEntityScene {
 
         this.setScale(DataCenter.SCALE);
 
-        if (this.getGameWindow().getGameManager().getDataCenter().getViews().containsKey(STRING_SCALE)) {
-            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getViews().get(STRING_SCALE)));
+        if (this.getGameWindow().getGameManager().getDataCenter().getGameSettings().getViews().containsKey(STRING_SCALE)) {
+            this.changeScale(Float.parseFloat(this.getGameWindow().getGameManager().getDataCenter().getGameSettings().getViews().get(STRING_SCALE)));
         }
 
         LOGGER.debug("GameManager: {}", this.getGameWindow().getGameManager());

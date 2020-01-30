@@ -196,6 +196,17 @@ public class GameManagerConfig {
     public static final String STRING_LANGUAGE = "language";
 
     /**
+     * runWithSteam.
+     */
+    public static final String STRING_RUN_WITH_STEAM = "runWithSteam";
+
+    /**
+     * SteamRunCallbacksTime.
+     */
+    public static final String STRING_STEAM_RUN_CALL_BACKS_TIME = "SteamRunCallbacksTime";
+
+
+    /**
      * The class that start as game window.
      * This class must be derived from GameWindow
      *
@@ -270,6 +281,23 @@ public class GameManagerConfig {
      * @see GameManager
      */
     public static final String STRING_LOGO_CLASS_NAME = "logoClassName";
+
+    /**
+     * The title class
+     *
+     * @see GameWindow
+     * @see GameManager
+     */
+    public static final String STRING_TITLE_CLASS_NAME = "titleClassName";
+
+    /**
+     * The world class
+     *
+     * @see GameWindow
+     * @see GameManager
+     */
+    public static final String STRING_WORLD_CLASS_NAME = "worldClassName";
+
 
     /**
      * The steam_appid of game.
