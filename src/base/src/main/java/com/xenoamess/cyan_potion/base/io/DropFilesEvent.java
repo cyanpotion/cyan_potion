@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -42,7 +43,8 @@ import static org.lwjgl.system.MemoryUtil.*;
  * @version 0.143.0
  */
 public class DropFilesEvent implements Event {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(DropFilesEvent.class);
 
     private final long window;

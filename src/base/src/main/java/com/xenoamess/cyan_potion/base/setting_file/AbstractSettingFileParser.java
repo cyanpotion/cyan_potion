@@ -27,20 +27,47 @@ package com.xenoamess.cyan_potion.base.setting_file;
 import com.xenoamess.commons.version.Version;
 import com.xenoamess.x8l.X8lTree;
 
+/**
+ * <p>Abstract AbstractSettingFileParser class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public abstract class AbstractSettingFileParser {
     private final Version settingFormatVersion;
 
+    /**
+     * <p>Constructor for AbstractSettingFileParser.</p>
+     *
+     * @param settingFormatVersionString a {@link java.lang.String} object.
+     */
     protected AbstractSettingFileParser(String settingFormatVersionString) {
         this(new Version(settingFormatVersionString));
     }
 
+    /**
+     * <p>Constructor for AbstractSettingFileParser.</p>
+     *
+     * @param settingFormatVersion a {@link com.xenoamess.commons.version.Version} object.
+     */
     protected AbstractSettingFileParser(Version settingFormatVersion) {
         this.settingFormatVersion = settingFormatVersion;
     }
 
+    /**
+     * <p>Getter for the field <code>settingFormatVersion</code>.</p>
+     *
+     * @return a {@link com.xenoamess.commons.version.Version} object.
+     */
     public Version getSettingFormatVersion() {
         return settingFormatVersion;
     }
 
+    /**
+     * <p>parse.</p>
+     *
+     * @param x8lTree a {@link com.xenoamess.x8l.X8lTree} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     */
     public abstract GameSettings parse(X8lTree x8lTree);
 }

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,7 +63,8 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
 }
 
 class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfoDeserializer.class);
 
     /**
@@ -119,7 +121,8 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
 @JsonSerialize(using = ResourceInfoSerializer.class)
 @JsonDeserialize(using = ResourceInfoDeserializer.class)
 public class ResourceInfo<T extends AbstractResource> {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
     public final Class<T> resourceClass;
     public final String type;

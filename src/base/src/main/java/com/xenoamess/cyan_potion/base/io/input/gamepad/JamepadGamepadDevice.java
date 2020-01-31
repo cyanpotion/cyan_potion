@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -37,7 +38,8 @@ import org.slf4j.LoggerFactory;
  * @version 0.148.8
  */
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(JamepadGamepadDevice.class);
 
     private int jamepadGamepadDeviceIndex;

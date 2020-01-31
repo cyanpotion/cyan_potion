@@ -52,17 +52,24 @@ public class ForceEntrance {
         switch (new Random().nextInt(3)) {
             case 0:
                 argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.x8l");
+                break;
             case 1:
                 argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.json");
+                break;
             case 2:
                 argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.xml");
+                break;
         }
+        System.out.println(argsMap);
         GameManager gameManager = new GameManager(argsMap);
         gameManager.getDataCenter().setPatchSettingsTree(
                 X8lTree.load("<debug>>"));
         gameManager.startup();
     }
 
+    /**
+     * <p>generateJsonAndXml.</p>
+     */
     public static void generateJsonAndXml() {
         try {
             final String basePath = "resources/settings/RpgModuleDemoSettings";

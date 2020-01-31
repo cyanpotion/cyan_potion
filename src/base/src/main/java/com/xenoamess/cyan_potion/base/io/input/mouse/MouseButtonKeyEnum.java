@@ -67,6 +67,11 @@ public enum MouseButtonKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>values</code>.</p>
+     *
+     * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum} objects.
+     */
     public static MouseButtonKeyEnum[] getValues() {
         return values;
     }

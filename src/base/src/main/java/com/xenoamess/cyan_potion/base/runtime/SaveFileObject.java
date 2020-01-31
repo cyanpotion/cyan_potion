@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileObject;
@@ -54,7 +55,8 @@ import java.util.List;
  * @see SaveFileContent
  */
 public class SaveFileObject {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObject.class);
 
     /**
@@ -65,6 +67,41 @@ public class SaveFileObject {
     private final SaveManager saveManager;
     private final String path;
     private SaveFileObjectStatus saveFileObjectStatus;
+
+    protected synchronized void initStatusFile() {
+        FileObject fileObject = ResourceManager.resolveFile(path + "status");
+        try {
+            if (fileObject.exists()) {
+                return;
+            }
+        } catch (FileSystemException e) {
+            LOGGER.error("cannot create file : {}", fileObject, e);
+        }
+
+        try {
+            fileObject.createFile();
+            try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
+                SaveFileObjectStatus newCreatedSaveFileObjectStatus = new SaveFileObjectStatus();
+                newCreatedSaveFileObjectStatus.setNowIndex(-1);
+                newCreatedSaveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameSettings().getGameVersion());
+                long time = System.currentTimeMillis();
+                newCreatedSaveFileObjectStatus.setLastSaveTime(time);
+                newCreatedSaveFileObjectStatus.setLastLoadTime(time);
+                DataCenter.getObjectMapper().writeValue(outputStream, newCreatedSaveFileObjectStatus);
+            }
+        } catch (IOException e) {
+            LOGGER.error("cannot create file : {}", fileObject, e);
+        }
+    }
+
+    protected synchronized void updateStatusFile() {
+        FileObject fileObject = ResourceManager.resolveFile(path + "status");
+        try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
+            DataCenter.getObjectMapper().writeValue(outputStream, this.getSaveFileObjectStatus());
+        } catch (IOException e) {
+            LOGGER.error("cannot save status file : {}", fileObject, e);
+        }
+    }
 
     /**
      * build a SaveFileObject
@@ -81,26 +118,8 @@ public class SaveFileObject {
         this.saveManager = saveManager;
         this.path = path;
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
-        try {
-            fileObject.createFile();
-        } catch (FileSystemException e) {
-            LOGGER.error("cannot create file : {}", fileObject, e);
-        }
-        try {
-            if (!fileObject.exists()) {
-                try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
-                    SaveFileObjectStatus newCreatedSaveFileObjectStatus = new SaveFileObjectStatus();
-                    newCreatedSaveFileObjectStatus.setNowIndex(-1);
-                    newCreatedSaveFileObjectStatus.setVersion(saveManager.getGameManager().getDataCenter().getGameSettings().getGameVersion());
-                    long time = System.currentTimeMillis();
-                    newCreatedSaveFileObjectStatus.setLastSaveTime(time);
-                    newCreatedSaveFileObjectStatus.setLastLoadTime(time);
-                    DataCenter.getObjectMapper().writeValue(outputStream, newCreatedSaveFileObjectStatus);
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.error("cannot create file : {}", fileObject, e);
-        }
+        this.initStatusFile();
+
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
             SaveFileObjectStatus loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
             this.setSaveFileObjectStatus(loadedSaveFileObjectStatus);
@@ -124,7 +143,7 @@ public class SaveFileObject {
      *
      * @return loaded RuntimeVariableStructList
      */
-    public List<RuntimeVariableStruct> load() {
+    public synchronized List<RuntimeVariableStruct> load() {
         if (this.getNowIndex() == -1) {
             LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
             return new ArrayList<>();
@@ -136,6 +155,7 @@ public class SaveFileObject {
         } catch (IOException e) {
             LOGGER.error("cannot load SaveFileContent from : {}", fileObject, e);
         }
+        updateStatusFile();
         assert res != null;
         return res.getRuntimeVariableStructList();
     }
@@ -148,7 +168,7 @@ public class SaveFileObject {
      *
      * @param runtimeVariableStructList list of runtimeVariableStruct to save.
      */
-    public void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
+    public synchronized void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
         pickNextSaveFileObject();
         long time = System.currentTimeMillis();
         this.getSaveFileObjectStatus().setLastSaveTime(time);
@@ -163,12 +183,13 @@ public class SaveFileObject {
         } catch (IOException e) {
             LOGGER.error("cannot save SaveFileContent to : {}", fileObject, e);
         }
+        updateStatusFile();
     }
 
     /**
      * this.getNowIndex() += 1
      */
-    protected void pickNextSaveFileObject() {
+    protected synchronized void pickNextSaveFileObject() {
         int nextIndex = this.getNowIndex() + 1;
         if (nextIndex >= SAVE_FILE_OBJECT_NUM) {
             nextIndex %= SAVE_FILE_OBJECT_NUM;

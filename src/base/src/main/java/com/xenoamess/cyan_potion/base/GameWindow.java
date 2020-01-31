@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
@@ -61,7 +62,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @version 0.143.0
  */
 public class GameWindow implements AutoCloseable, AbstractMutableArea {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
     private final GameManager gameManager;

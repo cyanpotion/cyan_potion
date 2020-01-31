@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import org.slf4j.Logger;
@@ -37,7 +38,8 @@ import org.slf4j.LoggerFactory;
  * @see SaveFileObject
  */
 public class SaveFileObjectStatus {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObjectStatus.class);
 
     private String version;

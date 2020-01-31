@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.console;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -40,7 +41,8 @@ import java.util.Set;
  * @version 0.143.0
  */
 public class ConsoleEvent implements Event {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleEvent.class);
 
     private static class EmptyConsoleEvent extends ConsoleEvent implements EmptyEvent {

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
@@ -35,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +62,8 @@ class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
 }
 
 class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileContentDeserializer.class);
 
     /**
@@ -90,11 +91,10 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
                 LOGGER.error("RuntimeVariableStruct class not found : {}", className, e);
             }
             RuntimeVariableStruct runtimeVariableStruct = null;
-            try {
-                runtimeVariableStruct = (RuntimeVariableStruct) structClass.getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                LOGGER.error("RuntimeVariableStruct class found but cannot create Instance : {}", className, e);
-            }
+            runtimeVariableStruct = RuntimeVariableStruct.loadFromString(
+                    objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText(),
+                    structClass
+            );
             result.getRuntimeVariableStructList().add(runtimeVariableStruct);
         }
         return result;

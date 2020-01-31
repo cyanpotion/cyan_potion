@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -40,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.function.Function;
 
@@ -54,7 +56,8 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * @version 0.143.0
  */
 public class Texture extends AbstractResource implements Bindable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Texture.class);
 
     /**
@@ -81,6 +84,9 @@ public class Texture extends AbstractResource implements Bindable {
     private int height;
 
 
+    /**
+     * Constant <code>STRING_PICTURE="picture"</code>
+     */
     public static final String STRING_PICTURE = "picture";
     /**
      * !!!NOTICE!!!
@@ -214,6 +220,7 @@ public class Texture extends AbstractResource implements Bindable {
      * <p>loadAsPictureTexture.</p>
      *
      * @param resourceInfo resourceInfo
+     * @return a boolean.
      */
     @MainThreadOnly
     public boolean loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {
@@ -222,8 +229,8 @@ public class Texture extends AbstractResource implements Bindable {
         }
 
         BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+            bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", resourceInfo, e);
         }

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,8 @@ import java.util.List;
  * @version 0.148.8
  */
 public class RuntimeManager {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
 
     private final GameManager gameManager;
@@ -91,20 +93,20 @@ public class RuntimeManager {
      *
      * @param index a int.
      */
-    public void load(int index) {
+    public synchronized void load(int index) {
         List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().pickCurrentSaveFileObject(index).load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
-            this.runtimeVariableStructList.get(i).fill(loadedRuntimeVariableStructList.get(i));
+            this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
     }
 
     /**
      * load from the current SaveFileObject.
      */
-    public void load() {
+    public synchronized void load() {
         List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().getCurrentSaveFileObject().load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
-            this.runtimeVariableStructList.get(i).fill(loadedRuntimeVariableStructList.get(i));
+            this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
     }
 
@@ -119,14 +121,14 @@ public class RuntimeManager {
      *
      * @param index a int.
      */
-    public void save(int index) {
+    public synchronized void save(int index) {
         gameManager.getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
     }
 
     /**
      * save into the current SaveFileObject.
      */
-    public void save() {
+    public synchronized void save() {
         gameManager.getSaveManager().getCurrentSaveFileObject().save(this.runtimeVariableStructList);
     }
 

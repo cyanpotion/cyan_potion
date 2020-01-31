@@ -34,10 +34,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * <p>GameSettings class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public class GameSettings {
 
     private final X8lTree settingTree;
 
+    /**
+     * <p>Constructor for GameSettings.</p>
+     *
+     * @param settingTree a {@link com.xenoamess.x8l.X8lTree} object.
+     */
     public GameSettings(X8lTree settingTree) {
         this.settingTree = settingTree;
     }
@@ -257,14 +268,29 @@ public class GameSettings {
         this.iconFilePath = iconFilePath;
     }
 
+    /**
+     * <p>Getter for the field <code>steam_appid</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSteam_appid() {
         return steam_appid;
     }
 
+    /**
+     * <p>Setter for the field <code>steam_appid</code>.</p>
+     *
+     * @param steam_appid a {@link java.lang.String} object.
+     */
     public void setSteam_appid(String steam_appid) {
         this.steam_appid = steam_appid;
     }
 
+    /**
+     * <p>Getter for the field <code>keymapSettings</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<Pair<String, String>> getKeymapSettings() {
         return keymapSettings;
     }
@@ -288,130 +314,290 @@ public class GameSettings {
     }
 
 
+    /**
+     * <p>isNoConsoleThread.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isNoConsoleThread() {
         return noConsoleThread;
     }
 
+    /**
+     * <p>Setter for the field <code>noConsoleThread</code>.</p>
+     *
+     * @param noConsoleThread a boolean.
+     */
     public void setNoConsoleThread(boolean noConsoleThread) {
         this.noConsoleThread = noConsoleThread;
     }
 
+    /**
+     * <p>Getter for the field <code>defaultFontResourceJsonString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDefaultFontResourceJsonString() {
         return defaultFontResourceJsonString;
     }
 
+    /**
+     * <p>Setter for the field <code>defaultFontResourceJsonString</code>.</p>
+     *
+     * @param defaultFontResourceJsonString a {@link java.lang.String} object.
+     */
     public void setDefaultFontResourceJsonString(String defaultFontResourceJsonString) {
         this.defaultFontResourceJsonString = defaultFontResourceJsonString;
     }
 
+    /**
+     * <p>Getter for the field <code>settingLanguage</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSettingLanguage() {
         return settingLanguage;
     }
 
+    /**
+     * <p>Setter for the field <code>settingLanguage</code>.</p>
+     *
+     * @param settingLanguage a {@link java.lang.String} object.
+     */
     public void setSettingLanguage(String settingLanguage) {
         this.settingLanguage = settingLanguage;
     }
 
+    /**
+     * <p>isRunWithSteam.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isRunWithSteam() {
         return runWithSteam;
     }
 
+    /**
+     * <p>Setter for the field <code>runWithSteam</code>.</p>
+     *
+     * @param runWithSteam a boolean.
+     */
     public void setRunWithSteam(boolean runWithSteam) {
         this.runWithSteam = runWithSteam;
     }
 
+    /**
+     * <p>Getter for the field <code>steamRunCallbacksNanoLong</code>.</p>
+     *
+     * @return a long.
+     */
     public long getSteamRunCallbacksNanoLong() {
         return steamRunCallbacksNanoLong;
     }
 
+    /**
+     * <p>Setter for the field <code>steamRunCallbacksNanoLong</code>.</p>
+     *
+     * @param steamRunCallbacksNanoLong a long.
+     */
     public void setSteamRunCallbacksNanoLong(long steamRunCallbacksNanoLong) {
         this.steamRunCallbacksNanoLong = steamRunCallbacksNanoLong;
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindowClassName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getGameWindowClassName() {
         return gameWindowClassName;
     }
 
+    /**
+     * <p>Setter for the field <code>gameWindowClassName</code>.</p>
+     *
+     * @param gameWindowClassName a {@link java.lang.String} object.
+     */
     public void setGameWindowClassName(String gameWindowClassName) {
         this.gameWindowClassName = gameWindowClassName;
     }
 
+    /**
+     * <p>Getter for the field <code>codePluginManagerSettings</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<Pair<CodePluginPosition, String>> getCodePluginManagerSettings() {
         return codePluginManagerSettings;
     }
 
+    /**
+     * <p>Getter for the field <code>logicWindowWidth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLogicWindowWidth() {
         return logicWindowWidth;
     }
 
+    /**
+     * <p>Setter for the field <code>logicWindowWidth</code>.</p>
+     *
+     * @param logicWindowWidth a int.
+     */
     public void setLogicWindowWidth(int logicWindowWidth) {
         this.logicWindowWidth = logicWindowWidth;
     }
 
+    /**
+     * <p>Getter for the field <code>logicWindowHeight</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLogicWindowHeight() {
         return logicWindowHeight;
     }
 
+    /**
+     * <p>Setter for the field <code>logicWindowHeight</code>.</p>
+     *
+     * @param logicWindowHeight a int.
+     */
     public void setLogicWindowHeight(int logicWindowHeight) {
         this.logicWindowHeight = logicWindowHeight;
     }
 
+    /**
+     * <p>Getter for the field <code>realWindowWidth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getRealWindowWidth() {
         return realWindowWidth;
     }
 
+    /**
+     * <p>Setter for the field <code>realWindowWidth</code>.</p>
+     *
+     * @param realWindowWidth a int.
+     */
     public void setRealWindowWidth(int realWindowWidth) {
         this.realWindowWidth = realWindowWidth;
     }
 
+    /**
+     * <p>Getter for the field <code>realWindowHeight</code>.</p>
+     *
+     * @return a int.
+     */
     public int getRealWindowHeight() {
         return realWindowHeight;
     }
 
+    /**
+     * <p>Setter for the field <code>realWindowHeight</code>.</p>
+     *
+     * @param realWindowHeight a int.
+     */
     public void setRealWindowHeight(int realWindowHeight) {
         this.realWindowHeight = realWindowHeight;
     }
 
+    /**
+     * <p>isFullScreen.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isFullScreen() {
         return fullScreen;
     }
 
+    /**
+     * <p>Setter for the field <code>fullScreen</code>.</p>
+     *
+     * @param fullScreen a boolean.
+     */
     public void setFullScreen(boolean fullScreen) {
         this.fullScreen = fullScreen;
     }
 
+    /**
+     * <p>isAutoShowGameWindowAfterInit.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAutoShowGameWindowAfterInit() {
         return autoShowGameWindowAfterInit;
     }
 
+    /**
+     * <p>Setter for the field <code>autoShowGameWindowAfterInit</code>.</p>
+     *
+     * @param autoShowGameWindowAfterInit a boolean.
+     */
     public void setAutoShowGameWindowAfterInit(boolean autoShowGameWindowAfterInit) {
         this.autoShowGameWindowAfterInit = autoShowGameWindowAfterInit;
     }
 
+    /**
+     * <p>Getter for the field <code>logoClassName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getLogoClassName() {
         return logoClassName;
     }
 
+    /**
+     * <p>Setter for the field <code>logoClassName</code>.</p>
+     *
+     * @param logoClassName a {@link java.lang.String} object.
+     */
     public void setLogoClassName(String logoClassName) {
         this.logoClassName = logoClassName;
     }
 
+    /**
+     * <p>Getter for the field <code>titleClassName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTitleClassName() {
         return titleClassName;
     }
 
+    /**
+     * <p>Setter for the field <code>titleClassName</code>.</p>
+     *
+     * @param titleClassName a {@link java.lang.String} object.
+     */
     public void setTitleClassName(String titleClassName) {
         this.titleClassName = titleClassName;
     }
 
+    /**
+     * <p>Getter for the field <code>worldClassName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getWorldClassName() {
         return worldClassName;
     }
 
+    /**
+     * <p>Setter for the field <code>worldClassName</code>.</p>
+     *
+     * @param worldClassName a {@link java.lang.String} object.
+     */
     public void setWorldClassName(String worldClassName) {
         this.worldClassName = worldClassName;
     }
 
+    /**
+     * <p>Getter for the field <code>settingTree</code>.</p>
+     *
+     * @return a {@link com.xenoamess.x8l.X8lTree} object.
+     */
     public X8lTree getSettingTree() {
         return settingTree;
     }

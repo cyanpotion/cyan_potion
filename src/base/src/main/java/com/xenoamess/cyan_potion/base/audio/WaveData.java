@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -55,7 +56,8 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @version 0.143.0
  */
 public class WaveData extends AbstractResource implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     private int alBufferInt = -1;
@@ -95,6 +97,9 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         super(resourceManager, resourceInfo);
     }
 
+    /**
+     * Constant <code>STRING_MUSIC="music"</code>
+     */
     public static final String STRING_MUSIC = "music";
     /**
      * !!!NOTICE!!!
@@ -191,8 +196,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
         FileObject resourceFileObject = resourceInfo.fileObject;
 
-        try {
-            InputStream inputStream = resourceFileObject.getContent().getInputStream();
+        try (InputStream inputStream = resourceFileObject.getContent().getInputStream()) {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
                     com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(
                             inputStream

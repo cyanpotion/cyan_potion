@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.mouse;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -46,7 +47,8 @@ import java.util.Set;
  * @version 0.143.0
  */
 public class MouseButtonEvent implements Event {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(MouseButtonEvent.class);
 
     private static class EmptyMouseButtonEvent extends MouseButtonEvent implements EmptyEvent {

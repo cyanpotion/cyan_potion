@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
@@ -63,7 +64,8 @@ import static org.lwjgl.stb.STBTruetype.*;
  * @version 0.143.0
  */
 public class Font extends AbstractResource {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
 
     /**
@@ -396,6 +398,9 @@ public class Font extends AbstractResource {
         super(resourceManager, resourJson);
     }
 
+    /**
+     * Constant <code>STRING_TTF_FILE="ttfFile"</code>
+     */
     public static final String STRING_TTF_FILE = "ttfFile";
 
     /**
@@ -423,6 +428,7 @@ public class Font extends AbstractResource {
      * <p>loadBitmap.</p>
      *
      * @param fileObject fileObject
+     * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
         ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);

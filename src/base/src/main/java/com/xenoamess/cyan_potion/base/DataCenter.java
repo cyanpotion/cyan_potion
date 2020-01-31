@@ -232,10 +232,20 @@ public class DataCenter {
         this.usingJXInput = usingJXInput;
     }
 
+    /**
+     * <p>Getter for the field <code>gameSettings</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     */
     public GameSettings getGameSettings() {
         return gameSettings;
     }
 
+    /**
+     * <p>Setter for the field <code>gameSettings</code>.</p>
+     *
+     * @param gameSettings a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     */
     public void setGameSettings(GameSettings gameSettings) {
         this.gameSettings = gameSettings;
     }

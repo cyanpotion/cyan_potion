@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
@@ -52,7 +53,8 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * @see #useSource(WaveData)
  */
 public class AudioManager implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AudioManager.class);
     /**
      * Initial used Source s' num.

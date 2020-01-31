@@ -24,10 +24,13 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 /**
  * RuntimeVariableStruct
@@ -44,34 +47,48 @@ import org.slf4j.LoggerFactory;
  * because migrate for several RuntimeVariableStruct is really really hard and boring.
  * and several RuntimeVariableStructs are acceptable,
  * if you wanna add a whole new module like dlc or something you can add it.
+ * <p>
+ * RuntimeVariableStruct must HAVE a empty constructor.
  *
  * @author XenoAmess
  * @version 0.148.8
  */
-public abstract class RuntimeVariableStruct {
-    private static final Logger LOGGER =
+public abstract class RuntimeVariableStruct implements Serializable {
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
-    RuntimeVariableStruct() {
+    public RuntimeVariableStruct() {
 
     }
 
     /**
-     * fill means copy all things from a object of same class to this.
+     * register this to a runtimeManager
+     * shortcut of RuntimeManager.registerRuntimeVariableStruct(RuntimeVariableStruct)
+     *
+     * @param runtimeManager the runtimeManager to register to
+     * @see RuntimeManager#registerRuntimeVariableStruct(RuntimeVariableStruct)
+     */
+    public void registerTo(RuntimeManager runtimeManager) {
+        runtimeManager.registerRuntimeVariableStruct(this);
+    }
+
+    /**
+     * loadFrom means copy all things from a object of same class to this.
      * assert (runtimeVariableStruct != null);
      * assert (runtimeVariableStruct.getClass().equals(this.getClass()));
      *
      * @param object the object you wanna copy from
      */
-    public abstract void fill(Object object);
+    public abstract void loadFrom(Object object);
 
     /**
      * get object from string and fill this.
      *
      * @param string json string
      */
-    public void fill(String string) {
-        this.fill(loadFromString(string));
+    public void loadFrom(String string) {
+        this.loadFrom(RuntimeVariableStruct.loadFromString(string, this.getClass()));
     }
 
     /**
@@ -121,21 +138,6 @@ public abstract class RuntimeVariableStruct {
      */
     public String saveToString() {
         return RuntimeVariableStruct.saveToString(this);
-    }
-
-    /**
-     * get an object from a string.
-     * this function is designed not to be a static function
-     * because static function cannot inherit.
-     * you can use new XXX().loadFromString(string) to make it generate a XXX class.
-     * just for a shortcut.
-     *
-     * @param string json string
-     * @return the loaded RuntimeVariableStruct
-     * @see RuntimeVariableStruct#loadFromString(String, Class)
-     */
-    public RuntimeVariableStruct loadFromString(String string) {
-        return RuntimeVariableStruct.loadFromString(string, this.getClass());
     }
 
     /**

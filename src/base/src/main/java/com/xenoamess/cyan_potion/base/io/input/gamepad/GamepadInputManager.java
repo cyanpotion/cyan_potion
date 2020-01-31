@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import com.codedisaster.steamworks.SteamController;
 import com.codedisaster.steamworks.SteamControllerHandle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.studiohartman.jamepad.ControllerManager;
@@ -44,7 +45,8 @@ import java.util.List;
  * @version 0.143.0
  */
 public class GamepadInputManager implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
 

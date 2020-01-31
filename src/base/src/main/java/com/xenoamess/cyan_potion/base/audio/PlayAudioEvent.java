@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
@@ -44,7 +45,8 @@ import java.util.Set;
  * @version 0.148.8
  */
 public class PlayAudioEvent implements MainThreadEvent {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(PlayAudioEvent.class);
 
     private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {

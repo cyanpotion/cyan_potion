@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
@@ -51,7 +52,8 @@ import java.util.List;
  * @version 0.143.0
  */
 public class TextureUtils {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
 
     private TextureUtils() {
@@ -62,6 +64,7 @@ public class TextureUtils {
      * <p>loadAsWalkingTexture.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsWalkingTexture(Texture texture) {
@@ -77,8 +80,8 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try {
-            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+            bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
                     texture, resourceInfo, e);
@@ -140,6 +143,7 @@ public class TextureUtils {
      * <p>loadAsTilesetTextures8.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsTilesetTextures8(Texture texture) {
@@ -162,11 +166,11 @@ public class TextureUtils {
                 throw new URITypeNotDefinedException(texture.getResourceInfo());
         }
 
-
         BufferedImage bufferedImage = null;
-        try {
+
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
             bufferedImage =
-                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+                    ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture) " +
                             "fails:{},{}",
@@ -630,6 +634,7 @@ public class TextureUtils {
      * <p>loadAsTilesetTexturesA2.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsTilesetTexturesA2(Texture texture) {
@@ -641,9 +646,9 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try {
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
             bufferedImage =
-                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+                    ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, ResourceInfo resourceInfo) " +
                             "fails:{},{}",

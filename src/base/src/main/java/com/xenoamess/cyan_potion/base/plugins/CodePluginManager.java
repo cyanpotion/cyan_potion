@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.plugins;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import org.slf4j.Logger;
@@ -41,7 +42,8 @@ import java.util.function.Function;
  * @version 0.143.0
  */
 public class CodePluginManager {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(CodePluginManager.class);
 
     private final EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -45,7 +46,8 @@ import static org.lwjgl.opengl.GL20.*;
  * @version 0.143.0
  */
 public class Shader implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Shader.class);
 
     /**

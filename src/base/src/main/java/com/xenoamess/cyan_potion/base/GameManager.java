@@ -28,6 +28,7 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
@@ -61,7 +62,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -85,7 +85,8 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * @version 0.143.0
  */
 public class GameManager implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
 
     /**
@@ -315,6 +316,9 @@ public class GameManager implements AutoCloseable {
 
     /**
      * <p>loadSettingTree.</p>
+     *
+     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @return a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected X8lTree loadSettingTree(DataCenter dataCenter) {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
@@ -327,13 +331,18 @@ public class GameManager implements AutoCloseable {
             settingsTree = X8lTree.load(settingFileObject);
             settingsTree.trimForce();
             ContentNode settingNode = settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
-            settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
+            if (dataCenter.getPatchSettingsTree() != null) {
+                settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
+            }
         } catch (Exception e) {
             LOGGER.error("X8lTree.loadString(settingFileObject) fails, settingFileObject : {}", settingFileObject, e);
         }
         return settingsTree;
     }
 
+    /**
+     * <p>initGameSettings.</p>
+     */
     protected void initGameSettings() {
         X8lTree settingsTree = this.loadSettingTree(this.getDataCenter());
         this.getDataCenter().setGameSettings(
@@ -341,12 +350,18 @@ public class GameManager implements AutoCloseable {
         );
     }
 
+    /**
+     * <p>initKeyMap.</p>
+     */
     protected void initKeyMap() {
         for (Pair<String, String> entry : this.getDataCenter().getGameSettings().getKeymapSettings()) {
             this.getKeymap().put(entry.getKey(), entry.getValue());
         }
     }
 
+    /**
+     * <p>initCodePluginManager.</p>
+     */
     protected void initCodePluginManager() {
         for (Pair<CodePluginPosition, String> entry : this.getDataCenter().getGameSettings().getCodePluginManagerSettings()) {
             this.codePluginManager.putCodePlugin(entry.getKey(), entry.getValue());
@@ -362,8 +377,12 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getGameSettings().getTextFilePath()).getContent().getInputStream()) {
-            multiLanguageUtil.loadFromMerge(inputStream);
+        try {
+            multiLanguageUtil.loadFromMerge(
+                    ResourceManager.resolveFile(
+                            getDataCenter().getGameSettings().getTextFilePath()
+                    )
+            );
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
                     ".getTextFilePath())) " +
