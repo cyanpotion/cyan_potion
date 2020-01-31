@@ -36,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,14 +91,10 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
                 LOGGER.error("RuntimeVariableStruct class not found : {}", className, e);
             }
             RuntimeVariableStruct runtimeVariableStruct = null;
-            try {
-                runtimeVariableStruct = (RuntimeVariableStruct) structClass.getConstructor().newInstance();
-                runtimeVariableStruct.loadFromString(
-                        objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText()
-                );
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                LOGGER.error("RuntimeVariableStruct class found but cannot create Instance : {}", className, e);
-            }
+            runtimeVariableStruct = RuntimeVariableStruct.loadFromString(
+                    objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText(),
+                    structClass
+            );
             result.getRuntimeVariableStructList().add(runtimeVariableStruct);
         }
         return result;

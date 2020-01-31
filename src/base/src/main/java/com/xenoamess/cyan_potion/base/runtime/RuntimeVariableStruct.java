@@ -88,7 +88,7 @@ public abstract class RuntimeVariableStruct implements Serializable {
      * @param string json string
      */
     public void loadFrom(String string) {
-        this.loadFrom(loadFromString(string));
+        this.loadFrom(RuntimeVariableStruct.loadFromString(string, this.getClass()));
     }
 
     /**
@@ -138,21 +138,6 @@ public abstract class RuntimeVariableStruct implements Serializable {
      */
     public String saveToString() {
         return RuntimeVariableStruct.saveToString(this);
-    }
-
-    /**
-     * get an object from a string.
-     * this function is designed not to be a static function
-     * because static function cannot inherit.
-     * you can use new XXX().loadFromString(string) to make it generate a XXX class.
-     * just for a shortcut.
-     *
-     * @param string json string
-     * @return the loaded RuntimeVariableStruct
-     * @see RuntimeVariableStruct#loadFromString(String, Class)
-     */
-    public RuntimeVariableStruct loadFromString(String string) {
-        return RuntimeVariableStruct.loadFromString(string, this.getClass());
     }
 
     /**
