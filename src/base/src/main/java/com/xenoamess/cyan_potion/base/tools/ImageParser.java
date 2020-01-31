@@ -66,6 +66,7 @@ XenoAmess 2018/01/29
 
 package com.xenoamess.cyan_potion.base.tools;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
@@ -86,7 +87,8 @@ import static org.lwjgl.stb.STBImage.stbi_load;
  * @version 0.143.0
  */
 public class ImageParser implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ImageParser.class);
 
     private ByteBuffer image;

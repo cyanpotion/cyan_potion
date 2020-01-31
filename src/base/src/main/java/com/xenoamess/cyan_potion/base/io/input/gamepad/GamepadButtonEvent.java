@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -43,7 +44,8 @@ import java.util.Set;
  * @version 0.143.0
  */
 public class GamepadButtonEvent implements Event {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GamepadButtonEvent.class);
 
     private static class EmptyGamepadButtonEvent extends GamepadButtonEvent implements EmptyEvent {

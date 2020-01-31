@@ -31,6 +31,7 @@
  */
 package com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.lwjgl.openal.AL10;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,8 @@ import java.nio.ShortBuffer;
  * modified by XenoAmess
  */
 public class WaveData {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     /**

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -55,7 +56,8 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * @version 0.143.0
  */
 public class Texture extends AbstractResource implements Bindable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Texture.class);
 
     /**

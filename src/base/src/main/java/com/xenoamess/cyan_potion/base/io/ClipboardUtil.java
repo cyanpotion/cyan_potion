@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,8 @@ import java.awt.datatransfer.Transferable;
  * @version 0.143.0
  */
 public class ClipboardUtil {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ClipboardUtil.class);
 
     /**

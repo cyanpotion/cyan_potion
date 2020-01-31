@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.codedisaster.steamworks.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
 import com.xenoamess.cyan_potion.base.io.DropFilesEvent;
@@ -43,7 +44,8 @@ import org.slf4j.LoggerFactory;
  * @version 0.143.0
  */
 public class Callbacks {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Callbacks.class);
 
 

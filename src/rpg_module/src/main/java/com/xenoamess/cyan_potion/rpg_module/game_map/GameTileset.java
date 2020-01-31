@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.game_map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -46,7 +47,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 0.143.0
  */
 public class GameTileset {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameTileset.class);
 
     private GameTilesetJson gameTilesetJson;

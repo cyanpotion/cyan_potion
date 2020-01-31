@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,8 @@ import java.util.List;
  * @version 0.148.8
  */
 public class RuntimeManager {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
 
     private final GameManager gameManager;

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -36,6 +37,7 @@ import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
  * @version 0.143.0
  */
 public class GameRuntime extends RuntimeVariableStruct {
+    @JsonIgnore
     private transient DataCenter dataCenter;
 
     private final BooleanArrayList runtimeSwitches = new BooleanArrayList();

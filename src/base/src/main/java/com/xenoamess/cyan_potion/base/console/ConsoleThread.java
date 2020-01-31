@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.console;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,8 @@ import java.util.concurrent.Executors;
 
 
 class ConsoleTalkThread implements Runnable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThread.class);
 
     private final Socket socket;
@@ -109,7 +111,8 @@ class ConsoleTalkThread implements Runnable {
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig
  */
 public class ConsoleThread extends Thread {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ConsoleThread.class);
 
     private final GameManager gameManager;

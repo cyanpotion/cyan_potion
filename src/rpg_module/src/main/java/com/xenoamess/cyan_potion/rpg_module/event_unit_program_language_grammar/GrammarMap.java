@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.event_unit_program_language_grammar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 0.143.0
  */
 public class GrammarMap {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
+    @JsonIgnore
+    private static transient final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
 
     private GrammarMap() {
     }

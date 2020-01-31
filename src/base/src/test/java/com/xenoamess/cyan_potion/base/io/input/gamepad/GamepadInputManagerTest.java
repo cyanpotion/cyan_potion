@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.strikerx3.jxinput.XInputAxes;
 import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
@@ -40,7 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @author XenoAmess
  */
 public class GamepadInputManagerTest {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManagerTest.class);
 
     @Test

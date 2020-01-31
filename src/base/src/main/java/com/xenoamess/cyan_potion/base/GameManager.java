@@ -28,6 +28,7 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
 import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamUserStats;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
@@ -84,7 +85,8 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * @version 0.143.0
  */
 public class GameManager implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
 
     /**

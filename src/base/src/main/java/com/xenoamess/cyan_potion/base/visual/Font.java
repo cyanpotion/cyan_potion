@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
@@ -63,7 +64,8 @@ import static org.lwjgl.stb.STBTruetype.*;
  * @version 0.143.0
  */
 public class Font extends AbstractResource {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
 
     /**

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.audio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -55,7 +56,8 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @version 0.143.0
  */
 public class WaveData extends AbstractResource implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     private int alBufferInt = -1;

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.runtime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
@@ -62,7 +63,8 @@ class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
 }
 
 class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SaveFileContentDeserializer.class);
 
     /**

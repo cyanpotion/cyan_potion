@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
@@ -43,7 +44,8 @@ import java.util.ArrayList;
  * @version 0.143.0
  */
 public class GameSystemJson implements Serializable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameSystemJson.class);
 
     static class ShipJson implements Serializable {

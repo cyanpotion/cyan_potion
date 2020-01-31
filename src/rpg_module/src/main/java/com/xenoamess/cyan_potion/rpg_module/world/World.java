@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.world;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
@@ -68,7 +69,8 @@ public class World extends AbstractEntityScene {
      * "scale"
      */
     public static final String STRING_SCALE = "scale";
-    private static final Logger LOGGER = LoggerFactory.getLogger(World.class);
+    @JsonIgnore
+    private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
      * 10F

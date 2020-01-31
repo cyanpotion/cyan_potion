@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.key;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.exceptions.KeyShallBeXenoAmessKeyButItIsNotException;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadData;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum;
@@ -51,7 +52,8 @@ import static org.lwjgl.glfw.GLFW.*;
  * @version 0.143.0
  */
 public class Keymap {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Keymap.class);
 
     /**

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
@@ -53,7 +54,8 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * @version 0.143.0
  */
 public abstract class AbstractShape implements AbstractMutableArea {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
     /**

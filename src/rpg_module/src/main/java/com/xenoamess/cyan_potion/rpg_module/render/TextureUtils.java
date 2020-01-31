@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
@@ -51,7 +52,8 @@ import java.util.List;
  * @version 0.143.0
  */
 public class TextureUtils {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
 
     private TextureUtils() {

@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.game_map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -51,7 +52,8 @@ import java.util.TreeMap;
  * @version 0.143.0
  */
 public class GameMap {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
+    @JsonIgnore
+    private static transient final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
 
     private World world;
 

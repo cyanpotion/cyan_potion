@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
@@ -57,7 +58,8 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * @version 0.143.0
  */
 public class ResourceManager implements AutoCloseable {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
 
     private long maxTextureSize = 0;

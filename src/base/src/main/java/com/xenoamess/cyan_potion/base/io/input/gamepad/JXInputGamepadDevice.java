@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.xenoamess.cyan_potion.base.DataCenter;
@@ -47,7 +48,8 @@ import org.slf4j.LoggerFactory;
  */
 @Deprecated
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(JXInputGamepadDevice.class);
 
     private int jXInputGamepadDeviceIndex;

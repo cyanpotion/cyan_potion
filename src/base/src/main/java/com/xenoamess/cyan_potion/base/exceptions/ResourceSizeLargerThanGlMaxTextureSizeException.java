@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,8 @@ import org.slf4j.LoggerFactory;
  * @see ResourceSizeLargerThanGlMaxTextureSizeException#check
  */
 public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
-    private static final Logger LOGGER =
+    @JsonIgnore
+    private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
 
     /**
