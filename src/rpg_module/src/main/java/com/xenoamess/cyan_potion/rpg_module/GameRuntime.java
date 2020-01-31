@@ -49,6 +49,7 @@ public class GameRuntime extends RuntimeVariableStruct {
     public GameRuntime(DataCenter dataCenter) {
         super();
         this.setDataCenter(dataCenter);
+        this.registerTo(dataCenter.getGameManager().getRuntimeManager());
     }
 
 

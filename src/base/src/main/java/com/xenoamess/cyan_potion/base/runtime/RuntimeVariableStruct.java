@@ -29,6 +29,8 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * RuntimeVariableStruct
  * RuntimeVariableStruct is some struct that stores game datas.
@@ -48,12 +50,23 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.148.8
  */
-public abstract class RuntimeVariableStruct {
+public abstract class RuntimeVariableStruct implements Serializable {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
     public RuntimeVariableStruct() {
 
+    }
+
+    /**
+     * register this to a runtimeManager
+     * shortcut of RuntimeManager.registerRuntimeVariableStruct(RuntimeVariableStruct)
+     *
+     * @param runtimeManager the runtimeManager to register to
+     * @see RuntimeManager#registerRuntimeVariableStruct(RuntimeVariableStruct)
+     */
+    public void registerTo(RuntimeManager runtimeManager) {
+        runtimeManager.registerRuntimeVariableStruct(this);
     }
 
     /**
