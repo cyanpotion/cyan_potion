@@ -331,7 +331,9 @@ public class GameManager implements AutoCloseable {
             settingsTree = X8lTree.load(settingFileObject);
             settingsTree.trimForce();
             ContentNode settingNode = settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
-            settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
+            if (dataCenter.getPatchSettingsTree() != null) {
+                settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
+            }
         } catch (Exception e) {
             LOGGER.error("X8lTree.loadString(settingFileObject) fails, settingFileObject : {}", settingFileObject, e);
         }
