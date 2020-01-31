@@ -95,6 +95,9 @@ public class WaveData extends AbstractResource implements AutoCloseable {
         super(resourceManager, resourceInfo);
     }
 
+    /**
+     * Constant <code>STRING_MUSIC="music"</code>
+     */
     public static final String STRING_MUSIC = "music";
     /**
      * !!!NOTICE!!!

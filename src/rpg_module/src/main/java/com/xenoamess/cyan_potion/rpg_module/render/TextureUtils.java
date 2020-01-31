@@ -62,6 +62,7 @@ public class TextureUtils {
      * <p>loadAsWalkingTexture.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsWalkingTexture(Texture texture) {
@@ -140,6 +141,7 @@ public class TextureUtils {
      * <p>loadAsTilesetTextures8.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsTilesetTextures8(Texture texture) {
@@ -630,6 +632,7 @@ public class TextureUtils {
      * <p>loadAsTilesetTexturesA2.</p>
      *
      * @param texture a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a boolean.
      */
     @MainThreadOnly
     public static boolean loadAsTilesetTexturesA2(Texture texture) {

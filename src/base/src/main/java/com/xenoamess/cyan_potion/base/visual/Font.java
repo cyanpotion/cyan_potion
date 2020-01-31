@@ -396,6 +396,9 @@ public class Font extends AbstractResource {
         super(resourceManager, resourJson);
     }
 
+    /**
+     * Constant <code>STRING_TTF_FILE="ttfFile"</code>
+     */
     public static final String STRING_TTF_FILE = "ttfFile";
 
     /**
@@ -423,6 +426,7 @@ public class Font extends AbstractResource {
      * <p>loadBitmap.</p>
      *
      * @param fileObject fileObject
+     * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
         ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);

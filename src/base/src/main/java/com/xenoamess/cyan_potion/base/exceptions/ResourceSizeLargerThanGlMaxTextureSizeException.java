@@ -76,10 +76,20 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
     }
 
+    /**
+     * <p>isSTRICT.</p>
+     *
+     * @return a boolean.
+     */
     public static boolean isSTRICT() {
         return STRICT;
     }
 
+    /**
+     * <p>setSTRICT.</p>
+     *
+     * @param STRICT a boolean.
+     */
     public static void setSTRICT(boolean STRICT) {
         ResourceSizeLargerThanGlMaxTextureSizeException.STRICT = STRICT;
     }

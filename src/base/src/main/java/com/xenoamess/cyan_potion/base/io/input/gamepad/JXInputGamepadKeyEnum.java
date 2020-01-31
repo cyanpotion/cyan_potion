@@ -65,6 +65,11 @@ public enum JXInputGamepadKeyEnum {
         this.value = value;
     }
 
+    /**
+     * <p>Getter for the field <code>values</code>.</p>
+     *
+     * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum} objects.
+     */
     public static JXInputGamepadKeyEnum[] getValues() {
         return values;
     }

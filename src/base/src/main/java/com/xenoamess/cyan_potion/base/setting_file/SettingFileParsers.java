@@ -32,6 +32,12 @@ import java.util.Map;
 
 import static com.xenoamess.cyan_potion.base.setting_file.SettingFIleParser_0_3_0.version_0_3_0;
 
+/**
+ * <p>SettingFileParsers class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public class SettingFileParsers {
     private static Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
 
@@ -39,19 +45,43 @@ public class SettingFileParsers {
         settingFileParserMap.put(version_0_3_0, new SettingFIleParser_0_3_0());
     }
 
+    /**
+     * <p>getParser.</p>
+     *
+     * @param versionString a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.AbstractSettingFileParser} object.
+     */
     public static AbstractSettingFileParser getParser(String versionString) {
         return getParser(new Version(versionString));
     }
 
+    /**
+     * <p>getParser.</p>
+     *
+     * @param version a {@link com.xenoamess.commons.version.Version} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.AbstractSettingFileParser} object.
+     */
     public static AbstractSettingFileParser getParser(Version version) {
         return settingFileParserMap.get(version);
     }
 
+    /**
+     * <p>parse.</p>
+     *
+     * @param settingTree a {@link com.xenoamess.x8l.X8lTree} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     */
     public static GameSettings parse(X8lTree settingTree) {
         Version version = getVersion(settingTree);
         return getParser(version).parse(settingTree);
     }
 
+    /**
+     * <p>getVersion.</p>
+     *
+     * @param settingTree a {@link com.xenoamess.x8l.X8lTree} object.
+     * @return a {@link com.xenoamess.commons.version.Version} object.
+     */
     public static Version getVersion(X8lTree settingTree) {
         return new Version(
                 settingTree

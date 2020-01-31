@@ -63,6 +63,9 @@ public class ForceEntrance {
         gameManager.startup();
     }
 
+    /**
+     * <p>generateJsonAndXml.</p>
+     */
     public static void generateJsonAndXml() {
         try {
             final String basePath = "resources/settings/RpgModuleDemoSettings";

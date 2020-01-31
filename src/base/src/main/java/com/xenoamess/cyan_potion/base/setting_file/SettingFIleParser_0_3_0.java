@@ -39,13 +39,28 @@ import java.awt.*;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
 
+/**
+ * <p>SettingFIleParser_0_3_0 class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
+    /**
+     * Constant <code>version_0_3_0</code>
+     */
     public static final Version version_0_3_0 = new Version("0.3.0");
 
+    /**
+     * <p>Constructor for SettingFIleParser_0_3_0.</p>
+     */
     protected SettingFIleParser_0_3_0() {
         super(version_0_3_0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameSettings parse(X8lTree settingTree) {
         GameSettings gameSettings = new GameSettings(settingTree);
@@ -62,6 +77,9 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
 
     /**
      * <p>readCommonSettings.</p>
+     *
+     * @param gameSettings a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readCommonSettings(GameSettings gameSettings, X8lTree settingTree) {
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
@@ -102,6 +120,9 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
 
     /**
      * <p>readKeymap.</p>
+     *
+     * @param gameSettings a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readKeymap(GameSettings gameSettings, X8lTree settingTree) {
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
@@ -136,6 +157,9 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
 
     /**
      * <p>readKeymap.</p>
+     *
+     * @param gameSettings a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
+     * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readOthers(GameSettings gameSettings, X8lTree settingTree) {
         gameSettings.setNoConsoleThread(

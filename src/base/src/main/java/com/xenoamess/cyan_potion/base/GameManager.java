@@ -315,6 +315,9 @@ public class GameManager implements AutoCloseable {
 
     /**
      * <p>loadSettingTree.</p>
+     *
+     * @param dataCenter a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     * @return a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected X8lTree loadSettingTree(DataCenter dataCenter) {
         String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
@@ -334,6 +337,9 @@ public class GameManager implements AutoCloseable {
         return settingsTree;
     }
 
+    /**
+     * <p>initGameSettings.</p>
+     */
     protected void initGameSettings() {
         X8lTree settingsTree = this.loadSettingTree(this.getDataCenter());
         this.getDataCenter().setGameSettings(
@@ -341,12 +347,18 @@ public class GameManager implements AutoCloseable {
         );
     }
 
+    /**
+     * <p>initKeyMap.</p>
+     */
     protected void initKeyMap() {
         for (Pair<String, String> entry : this.getDataCenter().getGameSettings().getKeymapSettings()) {
             this.getKeymap().put(entry.getKey(), entry.getValue());
         }
     }
 
+    /**
+     * <p>initCodePluginManager.</p>
+     */
     protected void initCodePluginManager() {
         for (Pair<CodePluginPosition, String> entry : this.getDataCenter().getGameSettings().getCodePluginManagerSettings()) {
             this.codePluginManager.putCodePlugin(entry.getKey(), entry.getValue());

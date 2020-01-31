@@ -81,6 +81,9 @@ public class Texture extends AbstractResource implements Bindable {
     private int height;
 
 
+    /**
+     * Constant <code>STRING_PICTURE="picture"</code>
+     */
     public static final String STRING_PICTURE = "picture";
     /**
      * !!!NOTICE!!!
@@ -214,6 +217,7 @@ public class Texture extends AbstractResource implements Bindable {
      * <p>loadAsPictureTexture.</p>
      *
      * @param resourceInfo resourceInfo
+     * @return a boolean.
      */
     @MainThreadOnly
     public boolean loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {

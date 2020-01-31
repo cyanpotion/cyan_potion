@@ -73,14 +73,25 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
 
     private FutureTask<Boolean> loadTask;
 
+    /**
+     * <p>createNewLoadTask.</p>
+     */
     protected synchronized void createNewLoadTask() {
         loadTask = new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf);
     }
 
+    /**
+     * <p>Getter for the field <code>loadTask</code>.</p>
+     *
+     * @return a {@link java.util.concurrent.FutureTask} object.
+     */
     protected synchronized FutureTask<Boolean> getLoadTask() {
         return this.loadTask;
     }
 
+    /**
+     * <p>destroyLoadTask.</p>
+     */
     protected synchronized void destroyLoadTask() {
         this.loadTask = null;
     }
@@ -159,6 +170,8 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
     /**
      * load this Resource.
      * shall only be invoked by this.loadTask.
+     *
+     * @return a boolean.
      */
     protected boolean loadByLoadTaskOrSelf() {
         this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
@@ -210,6 +223,7 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
      * force to reload this resource.
      * using loaders registered in this.getResourceManager() .
      *
+     * @return a boolean.
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     protected boolean forceLoad() {
@@ -297,6 +311,9 @@ public abstract class AbstractResource implements AutoCloseable, Bindable {
         this.lastUsedFrameIndex = lastUsedFrameIndex;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.getResourceInfo() == null ? "null" : this.getResourceInfo().toString();
