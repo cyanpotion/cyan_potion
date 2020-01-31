@@ -194,8 +194,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
 
         FileObject resourceFileObject = resourceInfo.fileObject;
 
-        try {
-            InputStream inputStream = resourceFileObject.getContent().getInputStream();
+        try (InputStream inputStream = resourceFileObject.getContent().getInputStream()) {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
                     com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(
                             inputStream

@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.function.Function;
 
@@ -226,8 +227,8 @@ public class Texture extends AbstractResource implements Bindable {
         }
 
         BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+            bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", resourceInfo, e);
         }

@@ -61,7 +61,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -374,8 +373,12 @@ public class GameManager implements AutoCloseable {
      */
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
-        try (InputStream inputStream = ResourceManager.resolveFile(getDataCenter().getGameSettings().getTextFilePath()).getContent().getInputStream()) {
-            multiLanguageUtil.loadFromMerge(inputStream);
+        try {
+            multiLanguageUtil.loadFromMerge(
+                    ResourceManager.resolveFile(
+                            getDataCenter().getGameSettings().getTextFilePath()
+                    )
+            );
         } catch (IOException e) {
             LOGGER.error("multiLanguageUtil.loadFromMerge(AbstractResource.getFile(this.getDataCenter()" +
                     ".getTextFilePath())) " +

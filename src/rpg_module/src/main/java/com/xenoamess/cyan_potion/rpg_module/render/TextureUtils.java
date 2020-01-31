@@ -78,8 +78,8 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try {
-            bufferedImage = ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+            bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
                     texture, resourceInfo, e);
@@ -164,11 +164,11 @@ public class TextureUtils {
                 throw new URITypeNotDefinedException(texture.getResourceInfo());
         }
 
-
         BufferedImage bufferedImage = null;
-        try {
+
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
             bufferedImage =
-                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+                    ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTextures8(Texture texture) " +
                             "fails:{},{}",
@@ -644,9 +644,9 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try {
+        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
             bufferedImage =
-                    ImageIO.read(resourceInfo.fileObject.getContent().getInputStream());
+                    ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsTilesetTexturesA2(Texture texture, ResourceInfo resourceInfo) " +
                             "fails:{},{}",
