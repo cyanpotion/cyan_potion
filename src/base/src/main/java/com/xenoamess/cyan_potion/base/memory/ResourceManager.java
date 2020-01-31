@@ -501,7 +501,6 @@ public class ResourceManager implements AutoCloseable {
      */
     public ResourceManager(GameManager gameManager) {
         this.gameManager = gameManager;
-
     }
 
     /**

@@ -24,13 +24,12 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.cyan_potion.base.setting_file.GameSettings;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.x8l.X8lTree;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>DataCenter class.</p>
@@ -58,12 +57,10 @@ public class DataCenter {
         return Thread.currentThread().getId() == MAIN_THREAD_ID;
     }
 
-    private boolean debug = false;
     /**
      * Constant <code>ALLOW_RUN_WITHOUT_STEAM=true</code>
      */
     public static final boolean ALLOW_RUN_WITHOUT_STEAM = true;
-    private boolean runWithSteam = true;
 
     /**
      * Constant <code>DEFAULT_CONSOLE_PORT=13888</code>
@@ -97,43 +94,13 @@ public class DataCenter {
      */
     private boolean usingJXInput = false;
 
-    private X8lTree globalSettingsTree;
     private X8lTree patchSettingsTree;
-    private final Map<String, String> commonSettings = new ConcurrentHashMap<>();
-    private final Map<String, String> specialSettings = new ConcurrentHashMap<>();
-    private final Map<String, String> views = new ConcurrentHashMap<>();
 
-
-    private String textFilePath = null;
-    private String iconFilePath = null;
-    private String steam_appid = null;
 
     private MultiLanguageStructure textStructure;
 
     private final GameManager gameManager;
-
-    /**
-     * ID of title text of game window.
-     * get title text with it from MultiLanguageStructure.
-     *
-     * @see MultiLanguageStructure#getText(String)
-     * @see MultiLanguageStructure#getText(String, String)
-     */
-    private String titleTextID;
-
-    /**
-     * Name of the game.
-     * notice that this name is used on save file path(and maybe other similar places),
-     * and shall not be translated
-     * (for different language version of the game can share save folders)
-     */
-    private String gameName;
-
-    /**
-     * version of the game.
-     * this is used to determine save file version.
-     */
-    private String gameVersion;
+    private GameSettings gameSettings;
 
     /**
      * <p>Constructor for DataCenter.</p>
@@ -160,92 +127,13 @@ public class DataCenter {
          * even if we have multiple objectMappers running at the same time.
          */
         if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
+            ObjectMapper localObjectMapper = new ObjectMapper();
+            localObjectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+            objectMapper = localObjectMapper;
         }
         return objectMapper;
     }
 
-    /**
-     * <p>Getter for the field <code>globalSettingsTree</code>.</p>
-     *
-     * @return return
-     */
-    public X8lTree getGlobalSettingsTree() {
-        return globalSettingsTree;
-    }
-
-    /**
-     * <p>Setter for the field <code>globalSettingsTree</code>.</p>
-     *
-     * @param globalSettingsTree globalSettingsTree
-     */
-    public void setGlobalSettingsTree(X8lTree globalSettingsTree) {
-        this.globalSettingsTree = globalSettingsTree;
-    }
-
-    /**
-     * <p>Getter for the field <code>commonSettings</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, String> getCommonSettings() {
-        return commonSettings;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>specialSettings</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, String> getSpecialSettings() {
-        return specialSettings;
-    }
-
-    /**
-     * <p>Getter for the field <code>views</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, String> getViews() {
-        return views;
-    }
-
-    /**
-     * <p>Getter for the field <code>textFilePath</code>.</p>
-     *
-     * @return return
-     */
-    public String getTextFilePath() {
-        return textFilePath;
-    }
-
-    /**
-     * <p>Setter for the field <code>textFilePath</code>.</p>
-     *
-     * @param textFilePath textFilePath
-     */
-    public void setTextFilePath(String textFilePath) {
-        this.textFilePath = textFilePath;
-    }
-
-    /**
-     * <p>Getter for the field <code>iconFilePath</code>.</p>
-     *
-     * @return return
-     */
-    public String getIconFilePath() {
-        return iconFilePath;
-    }
-
-    /**
-     * <p>Setter for the field <code>iconFilePath</code>.</p>
-     *
-     * @param iconFilePath iconFilePath
-     */
-    public void setIconFilePath(String iconFilePath) {
-        this.iconFilePath = iconFilePath;
-    }
 
     /**
      * <p>Getter for the field <code>textStructure</code>.</p>
@@ -275,60 +163,6 @@ public class DataCenter {
     }
 
     /**
-     * <p>Getter for the field <code>titleTextID</code>.</p>
-     *
-     * @return return
-     */
-    public String getTitleTextID() {
-        return titleTextID;
-    }
-
-    /**
-     * <p>Setter for the field <code>titleTextID</code>.</p>
-     *
-     * @param titleTextID titleTextID
-     */
-    public void setTitleTextID(String titleTextID) {
-        this.titleTextID = titleTextID;
-    }
-
-    /**
-     * <p>isDebug.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isDebug() {
-        return debug;
-    }
-
-    /**
-     * <p>Setter for the field <code>debug</code>.</p>
-     *
-     * @param debug a boolean.
-     */
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
-    /**
-     * <p>isRunWithSteam.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isRunWithSteam() {
-        return runWithSteam;
-    }
-
-    /**
-     * <p>Setter for the field <code>runWithSteam</code>.</p>
-     *
-     * @param runWithSteam a boolean.
-     */
-    public void setRunWithSteam(boolean runWithSteam) {
-        this.runWithSteam = runWithSteam;
-    }
-
-    /**
      * <p>Getter for the field <code>patchSettingsTree</code>.</p>
      *
      * @return return
@@ -344,13 +178,6 @@ public class DataCenter {
      */
     public void setPatchSettingsTree(X8lTree patchSettingsTree) {
         this.patchSettingsTree = patchSettingsTree;
-    }
-
-    /**
-     * <p>patchGlobalSettingsTree.</p>
-     */
-    public void patchGlobalSettingsTree() {
-        this.getGlobalSettingsTree().append(this.getPatchSettingsTree());
     }
 
     /**
@@ -405,47 +232,11 @@ public class DataCenter {
         this.usingJXInput = usingJXInput;
     }
 
-    /**
-     * <p>Getter for the field <code>gameName</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getGameName() {
-        return gameName;
+    public GameSettings getGameSettings() {
+        return gameSettings;
     }
 
-    /**
-     * <p>Setter for the field <code>gameName</code>.</p>
-     *
-     * @param gameName a {@link java.lang.String} object.
-     */
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameVersion</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getGameVersion() {
-        return gameVersion;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameVersion</code>.</p>
-     *
-     * @param gameVersion a {@link java.lang.String} object.
-     */
-    public void setGameVersion(String gameVersion) {
-        this.gameVersion = gameVersion;
-    }
-
-    public String getSteam_appid() {
-        return steam_appid;
-    }
-
-    public void setSteam_appid(String steam_appid) {
-        this.steam_appid = steam_appid;
+    public void setGameSettings(GameSettings gameSettings) {
+        this.gameSettings = gameSettings;
     }
 }

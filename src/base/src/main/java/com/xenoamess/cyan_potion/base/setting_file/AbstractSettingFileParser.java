@@ -22,35 +22,25 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.plugins;
+package com.xenoamess.cyan_potion.base.setting_file;
 
-/**
- * Notice that if no special instructions,
- * then every of each tag here shall only be inserted in one position in code.
- *
- * @author XenoAmess
- * @version 0.143.0
- */
-public enum CodePluginPosition {
-    rightBeforeResourceManagerCreate,
-    rightAfterResourceManagerCreate,
+import com.xenoamess.commons.version.Version;
+import com.xenoamess.x8l.X8lTree;
 
-    rightBeforeGameWindowInit,
-    rightAfterGameWindowInit,
+public abstract class AbstractSettingFileParser {
+    private final Version settingFormatVersion;
 
-    rightBeforeAudioManagerInit,
-    rightAfterAudioManagerInit,
+    protected AbstractSettingFileParser(String settingFormatVersionString) {
+        this(new Version(settingFormatVersionString));
+    }
 
-    rightBeforeGamepadInputManagerInit,
-    rightAfterGamepadInputManagerInit,
+    protected AbstractSettingFileParser(Version settingFormatVersion) {
+        this.settingFormatVersion = settingFormatVersion;
+    }
 
-    rightBeforeLogicFrame,
-    rightAfterLogicFrame,
+    public Version getSettingFormatVersion() {
+        return settingFormatVersion;
+    }
 
-    rightBeforeSolveEvents,
-    rightAfterSolveEvents,
-
-    rightBeforeUpdate,
-    rightAfterUpdate,
-    ;
+    public abstract GameSettings parse(X8lTree x8lTree);
 }

@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+package com.xenoamess.cyan_potion.base;
+
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;

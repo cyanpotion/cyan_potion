@@ -79,7 +79,7 @@ public class GamepadInputManager implements AutoCloseable {
             }
         }
 
-        if (gameManager.getDataCenter().isRunWithSteam()) {
+        if (gameManager.getDataCenter().getGameSettings().isRunWithSteam()) {
             SteamControllerHandle[] steamControllerHandles =
                     new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();

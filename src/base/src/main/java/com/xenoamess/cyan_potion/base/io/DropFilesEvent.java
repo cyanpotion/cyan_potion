@@ -86,7 +86,7 @@ public class DropFilesEvent implements Event {
      */
     @Override
     public Set<Event> apply(GameManager gameManager) {
-        if (gameManager.getDataCenter().isDebug()) {
+        if (gameManager.getDataCenter().getGameSettings().isDebug()) {
             LOGGER.debug("{}", this);
         }
         return gameManager.getGameWindowComponentTree().process(this);

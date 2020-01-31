@@ -34,7 +34,6 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
-import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
@@ -136,10 +135,14 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             {
                 Font.getDefaultFont().init(this.getGameWindow());
                 AbstractGameWindowComponent title =
-                        AbstractGameWindowComponent.createGameWindowComponentFromClassName(this.getGameWindow(),
-                                getString(this.getGameWindow().getGameManager().getDataCenter().getCommonSettings(),
-                                        "titleClassName",
-                                        "com.xenoamess.cyan_potion.base.game_window_components.TitleExample"));
+                        AbstractGameWindowComponent.createGameWindowComponentFromClassName(
+                                this.getGameWindow(),
+                                this.getGameWindow()
+                                        .getGameManager()
+                                        .getDataCenter()
+                                        .getGameSettings()
+                                        .getTitleClassName()
+                        );
 
                 title.addToGameWindowComponentTree(null);
                 title.enlargeAsFullWindow();

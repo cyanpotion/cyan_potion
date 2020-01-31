@@ -171,7 +171,7 @@ public class PlayAudioEvent implements MainThreadEvent {
     @Override
     @MainThreadOnly
     public Set<Event> apply(GameManager gameManager) {
-        if (gameManager.getDataCenter().isDebug()) {
+        if (gameManager.getDataCenter().getGameSettings().isDebug()) {
             LOGGER.debug("{}", this);
         }
         Source usedSource;

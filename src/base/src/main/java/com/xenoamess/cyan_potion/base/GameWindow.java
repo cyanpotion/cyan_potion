@@ -224,7 +224,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         // set the window can / cannot resize.
         glfwWindowHint(
                 GLFW_RESIZABLE,
-                GameManagerConfig.getBoolean(this.getGameManager().getDataCenter().getViews(),
+                GameManagerConfig.getBoolean(this.getGameManager().getDataCenter().getGameSettings().getViews(),
                         GameManagerConfig.STRING_GAME_WINDOW_RESIZABLE, false)
                         ? GLFW_TRUE : GLFW_FALSE);
 
@@ -232,7 +232,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         // Create the window
         setWindow(glfwCreateWindow(this.getRealWindowWidth(),
                 this.getRealWindowHeight(),
-                this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
+                this.getGameManager().getDataCenter().getTextStructure().getText(this.getGameManager().getDataCenter().getGameSettings().getTitleTextID()), isFullScreen() ? glfwGetPrimaryMonitor() : MemoryUtil.NULL, MemoryUtil.NULL));
 
         if (getWindow() == 0L) {
             throw new FailToCreateGLFWWindowException();
@@ -276,7 +276,9 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glfwSwapInterval(1);
 
         String iconFilePath = null;
-        FileObject iconFileObject = ResourceManager.resolveFile(this.getGameManager().getDataCenter().getIconFilePath());
+        FileObject iconFileObject = ResourceManager.resolveFile(
+                this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
+        );
         iconFilePath = ResourceManager.toFile(iconFileObject).getAbsolutePath();
         ImageParser.setWindowIcon(getWindow(), iconFilePath);
         // Make the window visible

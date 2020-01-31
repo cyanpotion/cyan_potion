@@ -201,7 +201,7 @@ public class TextureUtils {
                                     Integer.toString(k),
                                     Integer.toString(i * 8 + j)
                             );
-                    if (texture.getResourceManager().getGameManager().getDataCenter().isDebug()
+                    if (texture.getResourceManager().getGameManager().getDataCenter().getGameSettings().isDebug()
                             && nowTexture.getResourceInfo().equals(texture.getResourceInfo())
                             && nowTexture != texture
                     ) {

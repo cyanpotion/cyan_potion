@@ -132,7 +132,7 @@ public class MouseButtonEvent implements Event {
     @Override
     @GuardedBy("gameManager.keyMap")
     public Set<Event> apply(GameManager gameManager) {
-        if (gameManager.getDataCenter().isDebug()) {
+        if (gameManager.getDataCenter().getGameSettings().isDebug()) {
             LOGGER.debug("{}", this);
         }
         switch (getAction()) {
