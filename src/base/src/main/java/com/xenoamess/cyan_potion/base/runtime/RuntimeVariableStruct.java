@@ -52,26 +52,26 @@ public abstract class RuntimeVariableStruct {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
-    RuntimeVariableStruct() {
+    public RuntimeVariableStruct() {
 
     }
 
     /**
-     * fill means copy all things from a object of same class to this.
+     * loadFrom means copy all things from a object of same class to this.
      * assert (runtimeVariableStruct != null);
      * assert (runtimeVariableStruct.getClass().equals(this.getClass()));
      *
      * @param object the object you wanna copy from
      */
-    public abstract void fill(Object object);
+    public abstract void loadFrom(Object object);
 
     /**
      * get object from string and fill this.
      *
      * @param string json string
      */
-    public void fill(String string) {
-        this.fill(loadFromString(string));
+    public void loadFrom(String string) {
+        this.loadFrom(loadFromString(string));
     }
 
     /**

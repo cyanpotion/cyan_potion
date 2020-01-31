@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.rpg_module;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArrayList;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
 
 /**
  * <p>GameRuntime class.</p>
@@ -34,14 +35,11 @@ import com.xenoamess.cyan_potion.base.DataCenter;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameRuntime {
-    private DataCenter dataCenter;
+public class GameRuntime extends RuntimeVariableStruct {
+    private transient DataCenter dataCenter;
 
     private final BooleanArrayList runtimeSwitches = new BooleanArrayList();
     private final IntArrayList runtimeIntegerVariables = new IntArrayList();
-
-
-    //TODO maybe it would be better to write an Item class and an Actor class to do this. emmmmmmm
 
     /**
      * <p>Constructor for GameRuntime.</p>
@@ -49,22 +47,29 @@ public class GameRuntime {
      * @param dataCenter dataCenter
      */
     public GameRuntime(DataCenter dataCenter) {
+        super();
         this.setDataCenter(dataCenter);
     }
 
 
     /**
-     * <p>saveGameRuntime.</p>
+     * why don't you call RuntimeManager.save() directly?
+     *
+     * @deprecated
      */
+    @Deprecated
     public void saveGameRuntime() {
-        //TODO
+        this.getDataCenter().getGameManager().getRuntimeManager().save();
     }
 
     /**
-     * <p>loadGameRuntime.</p>
+     * why don't you call RuntimeManager.load() directly?
+     *
+     * @deprecated
      */
+    @Deprecated
     public void loadGameRuntime() {
-        //TODO
+        this.getDataCenter().getGameManager().getRuntimeManager().load();
     }
 
     /**
@@ -101,5 +106,14 @@ public class GameRuntime {
      */
     public IntArrayList getRuntimeIntegerVariables() {
         return runtimeIntegerVariables;
+    }
+
+    @Override
+    public void loadFrom(Object object) {
+        GameRuntime gameRuntime = (GameRuntime) object;
+        this.getRuntimeIntegerVariables().clear();
+        this.getRuntimeIntegerVariables().addAll(gameRuntime.getRuntimeIntegerVariables());
+        this.getRuntimeSwitches().clear();
+        this.getRuntimeSwitches().addAll(gameRuntime.getRuntimeSwitches());
     }
 }

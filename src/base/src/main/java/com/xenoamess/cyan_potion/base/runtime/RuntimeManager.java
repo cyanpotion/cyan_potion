@@ -94,7 +94,7 @@ public class RuntimeManager {
     public void load(int index) {
         List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().pickCurrentSaveFileObject(index).load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
-            this.runtimeVariableStructList.get(i).fill(loadedRuntimeVariableStructList.get(i));
+            this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
     }
 
@@ -104,7 +104,7 @@ public class RuntimeManager {
     public void load() {
         List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().getCurrentSaveFileObject().load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
-            this.runtimeVariableStructList.get(i).fill(loadedRuntimeVariableStructList.get(i));
+            this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
     }
 
