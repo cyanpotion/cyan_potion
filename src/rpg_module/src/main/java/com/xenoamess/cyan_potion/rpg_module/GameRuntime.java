@@ -43,13 +43,17 @@ public class GameRuntime extends RuntimeVariableStruct {
     private final BooleanArrayList runtimeSwitches = new BooleanArrayList();
     private final IntArrayList runtimeIntegerVariables = new IntArrayList();
 
+    public GameRuntime() {
+        super();
+    }
+
     /**
      * <p>Constructor for GameRuntime.</p>
      *
      * @param dataCenter dataCenter
      */
     public GameRuntime(DataCenter dataCenter) {
-        super();
+        this();
         this.setDataCenter(dataCenter);
         this.registerTo(dataCenter.getGameManager().getRuntimeManager());
     }

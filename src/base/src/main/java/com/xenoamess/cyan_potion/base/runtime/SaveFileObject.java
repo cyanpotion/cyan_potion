@@ -68,7 +68,7 @@ public class SaveFileObject {
     private final String path;
     private SaveFileObjectStatus saveFileObjectStatus;
 
-    protected void initStatusFile() {
+    protected synchronized void initStatusFile() {
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
         try {
             if (fileObject.exists()) {
@@ -94,7 +94,7 @@ public class SaveFileObject {
         }
     }
 
-    protected void updateStatusFile() {
+    protected synchronized void updateStatusFile() {
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
             DataCenter.getObjectMapper().writeValue(outputStream, this.getSaveFileObjectStatus());
@@ -143,7 +143,7 @@ public class SaveFileObject {
      *
      * @return loaded RuntimeVariableStructList
      */
-    public List<RuntimeVariableStruct> load() {
+    public synchronized List<RuntimeVariableStruct> load() {
         if (this.getNowIndex() == -1) {
             LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
             return new ArrayList<>();
@@ -168,7 +168,7 @@ public class SaveFileObject {
      *
      * @param runtimeVariableStructList list of runtimeVariableStruct to save.
      */
-    public void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
+    public synchronized void save(List<RuntimeVariableStruct> runtimeVariableStructList) {
         pickNextSaveFileObject();
         long time = System.currentTimeMillis();
         this.getSaveFileObjectStatus().setLastSaveTime(time);
@@ -189,7 +189,7 @@ public class SaveFileObject {
     /**
      * this.getNowIndex() += 1
      */
-    protected void pickNextSaveFileObject() {
+    protected synchronized void pickNextSaveFileObject() {
         int nextIndex = this.getNowIndex() + 1;
         if (nextIndex >= SAVE_FILE_OBJECT_NUM) {
             nextIndex %= SAVE_FILE_OBJECT_NUM;

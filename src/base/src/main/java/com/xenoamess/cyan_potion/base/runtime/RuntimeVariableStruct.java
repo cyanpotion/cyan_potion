@@ -47,6 +47,8 @@ import java.io.Serializable;
  * because migrate for several RuntimeVariableStruct is really really hard and boring.
  * and several RuntimeVariableStructs are acceptable,
  * if you wanna add a whole new module like dlc or something you can add it.
+ * <p>
+ * RuntimeVariableStruct must HAVE a empty constructor.
  *
  * @author XenoAmess
  * @version 0.148.8

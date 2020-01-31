@@ -94,6 +94,9 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
             RuntimeVariableStruct runtimeVariableStruct = null;
             try {
                 runtimeVariableStruct = (RuntimeVariableStruct) structClass.getConstructor().newInstance();
+                runtimeVariableStruct.loadFromString(
+                        objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText()
+                );
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 LOGGER.error("RuntimeVariableStruct class found but cannot create Instance : {}", className, e);
             }
