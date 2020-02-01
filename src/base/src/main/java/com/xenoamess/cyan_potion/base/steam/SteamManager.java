@@ -53,15 +53,14 @@ public class SteamManager extends SubManager {
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SteamManager.class);
 
-    private SteamUser user;
-    private SteamUserStats userStats;
-    private SteamRemoteStorage remoteStorage;
-    private SteamUGC ugc;
-    private SteamUtils utils;
-    private SteamApps apps;
-    private SteamFriends friends;
-    private SteamUtils clientUtils;
-    private SteamLeaderboardHandle currentLeaderboard = null;
+    private SteamUser steamUser;
+    private SteamUserStats steamUserStats;
+    private SteamRemoteStorage steamRemoteStorage;
+    private SteamUGC steamUGC;
+    private SteamUtils steamUtils;
+    private SteamApps steamApps;
+    private SteamFriends steamFriends;
+    private SteamLeaderboardHandle steamLeaderboardHandle = null;
 
     private SteamCallbacks steamCallbacks = new SteamCallbacks(this);
 
@@ -110,39 +109,38 @@ public class SteamManager extends SubManager {
 
 
                 LOGGER.debug("[steam]Register user ...");
-                this.setUser(new SteamUser(this.getSteamCallbacks().getUserCallback()));
+                this.setSteamUser(new SteamUser(this.getSteamCallbacks().getSteamUserCallback()));
 
                 LOGGER.debug("[steam]Register user stats callback ...");
-                this.setUserStats(new SteamUserStats(this.getSteamCallbacks().getSteamUserStatsCallback()));
+                this.setSteamUserStats(new SteamUserStats(this.getSteamCallbacks().getSteamUserStatsCallback()));
 
                 LOGGER.debug("[steam]Register remote storage ...");
-                setRemoteStorage(new SteamRemoteStorage(this.getSteamCallbacks().getRemoteStorageCallback()));
+                setSteamRemoteStorage(new SteamRemoteStorage(this.getSteamCallbacks().getSteamRemoteStorageCallback()));
 
                 LOGGER.debug("[steam]Register UGC ...");
-                setUgc(new SteamUGC(this.getSteamCallbacks().getUgcCallback()));
+                setSteamUGC(new SteamUGC(this.getSteamCallbacks().getSteamUGCCallback()));
 
                 LOGGER.debug("[steam]Register Utils ...");
-                setUtils(new SteamUtils(this.getSteamCallbacks().getUtilsCallback()));
+                setSteamUtils(new SteamUtils(this.getSteamCallbacks().getSteamUtilsCallback()));
+                getSteamUtils().setWarningMessageHook(this.getSteamCallbacks().getSteamAPIWarningMessageHook());
 
                 LOGGER.debug("[steam]Register Apps ...");
-                setApps(new SteamApps());
+                setSteamApps(new SteamApps());
 
                 LOGGER.debug("[steam]Register Friends ...");
-                setFriends(new SteamFriends(this.getSteamCallbacks().getFriendsCallback()));
+                setSteamFriends(new SteamFriends(this.getSteamCallbacks().getSteamFriendsCallback()));
 
-                setClientUtils(new SteamUtils(this.getSteamCallbacks().getClUtilsCallback()));
-                getClientUtils().setWarningMessageHook(this.getSteamCallbacks().getClMessageHook());
 
-                LOGGER.debug("Local user account ID: " + getUser().getSteamID().getAccountID());
-                LOGGER.debug("Local user steam ID: " + SteamID.getNativeHandle(getUser().getSteamID()));
-                LOGGER.debug("Local user friends name: " + getFriends().getPersonaName());
-                LOGGER.debug("App ID: " + getUtils().getAppID());
+                LOGGER.debug("Local user account ID: " + getSteamUser().getSteamID().getAccountID());
+                LOGGER.debug("Local user steam ID: " + SteamID.getNativeHandle(getSteamUser().getSteamID()));
+                LOGGER.debug("Local user friends name: " + getSteamFriends().getPersonaName());
+                LOGGER.debug("App ID: " + getSteamUtils().getAppID());
 
-                LOGGER.debug("App build ID: " + getApps().getAppBuildId());
-                LOGGER.debug("App owner: " + getApps().getAppOwner().getAccountID());
+                LOGGER.debug("App build ID: " + getSteamApps().getAppBuildId());
+                LOGGER.debug("App owner: " + getSteamApps().getAppOwner().getAccountID());
 
-                LOGGER.debug("Current game language: " + getApps().getCurrentGameLanguage());
-                LOGGER.debug("Available game languages: " + getApps().getAvailableGameLanguages());
+                LOGGER.debug("Current game language: " + getSteamApps().getCurrentGameLanguage());
+                LOGGER.debug("Available game languages: " + getSteamApps().getAvailableGameLanguages());
 
                 this.getGameManager().getDataCenter().getGameSettings().setRunWithSteam(true);
             } catch (SteamException e) {
@@ -223,29 +221,26 @@ public class SteamManager extends SubManager {
 
     @Override
     public void close() {
-        if (getClientUtils() != null) {
-            getClientUtils().dispose();
+        if (getSteamUser() != null) {
+            getSteamUser().dispose();
         }
-        if (getUser() != null) {
-            getUser().dispose();
+        if (getSteamUserStats() != null) {
+            getSteamUserStats().dispose();
         }
-        if (getUserStats() != null) {
-            getUserStats().dispose();
+        if (getSteamRemoteStorage() != null) {
+            getSteamRemoteStorage().dispose();
         }
-        if (getRemoteStorage() != null) {
-            getRemoteStorage().dispose();
+        if (getSteamUGC() != null) {
+            getSteamUGC().dispose();
         }
-        if (getUgc() != null) {
-            getUgc().dispose();
+        if (getSteamUtils() != null) {
+            getSteamUtils().dispose();
         }
-        if (getUtils() != null) {
-            getUtils().dispose();
+        if (getSteamApps() != null) {
+            getSteamApps().dispose();
         }
-        if (getApps() != null) {
-            getApps().dispose();
-        }
-        if (getFriends() != null) {
-            getFriends().dispose();
+        if (getSteamFriends() != null) {
+            getSteamFriends().dispose();
         }
         SteamAPI.shutdown();
     }
@@ -268,18 +263,18 @@ public class SteamManager extends SubManager {
                     if (cmd.length > 1) {
                         days = Integer.parseInt(cmd[1]);
                     }
-                    getUserStats().requestGlobalStats(days);
+                    getSteamUserStats().requestGlobalStats(days);
                 } else if (cmd[0].equals("lget") && cmd.length > 1) {
                     int days = 0;
                     if (cmd.length > 2) {
                         days = Integer.parseInt(cmd[2]);
                     }
                     if (days == 0) {
-                        long value = getUserStats().getGlobalStat(cmd[1], -1);
+                        long value = getSteamUserStats().getGlobalStat(cmd[1], -1);
                         LOGGER.debug("global stat (L) '" + cmd[1] + "' = " + value);
                     } else {
                         long[] data = new long[days];
-                        int count = getUserStats().getGlobalStatHistory(cmd[1], data);
+                        int count = getSteamUserStats().getGlobalStatHistory(cmd[1], data);
                         System.out.print("global stat history (L) for " + count + " of " + days + " days:");
                         for (int i = 0; i < count; i++) {
                             System.out.print(" " + Long.toString(data[i]));
@@ -292,11 +287,11 @@ public class SteamManager extends SubManager {
                         days = Integer.parseInt(cmd[2]);
                     }
                     if (days == 0) {
-                        double value = getUserStats().getGlobalStat(cmd[1], -1.0);
+                        double value = getSteamUserStats().getGlobalStat(cmd[1], -1.0);
                         LOGGER.debug("global stat (D) '" + cmd[1] + "' = " + value);
                     } else {
                         double[] data = new double[days];
-                        int count = getUserStats().getGlobalStatHistory(cmd[1], data);
+                        int count = getSteamUserStats().getGlobalStatHistory(cmd[1], data);
                         System.out.print("global stat history (D) for " + count + " of " + days + " days:");
                         for (int i = 0; i < count; i++) {
                             System.out.print(" " + Double.toString(data[i]));
@@ -306,32 +301,32 @@ public class SteamManager extends SubManager {
                 }
             }
         } else if (input.equals("stats request")) {
-            getUserStats().requestCurrentStats();
+            getSteamUserStats().requestCurrentStats();
         } else if (input.equals("stats store")) {
-            getUserStats().storeStats();
+            getSteamUserStats().storeStats();
         } else if (input.startsWith("achievement set ")) {
             String achievementName = input.substring("achievement set ".length());
             LOGGER.debug("- setting " + achievementName + " to 'achieved'");
-            getUserStats().setAchievement(achievementName);
+            getSteamUserStats().setAchievement(achievementName);
         } else if (input.startsWith("achievement clear ")) {
             String achievementName = input.substring("achievement clear ".length());
             LOGGER.debug("- clearing " + achievementName);
-            getUserStats().clearAchievement(achievementName);
+            getSteamUserStats().clearAchievement(achievementName);
         } else if (input.equals("file list")) {
-            int numFiles = getRemoteStorage().getFileCount();
+            int numFiles = getSteamRemoteStorage().getFileCount();
             LOGGER.debug("Num of files: " + numFiles);
 
             for (int i = 0; i < numFiles; i++) {
                 int[] sizes = new int[1];
-                String file = getRemoteStorage().getFileNameAndSize(i, sizes);
-                boolean exists = getRemoteStorage().fileExists(file);
+                String file = getSteamRemoteStorage().getFileNameAndSize(i, sizes);
+                boolean exists = getSteamRemoteStorage().fileExists(file);
                 LOGGER.debug("# " + i + " : name=" + file + ", size=" + sizes[0] + ", exists=" + (exists ? "yes" : "no"));
             }
         } else if (input.startsWith("file write ")) {
             String path = input.substring("file write ".length());
             File file = new File(path);
             try (FileInputStream in = new FileInputStream(file)) {
-                SteamUGCFileWriteStreamHandle remoteFile = getRemoteStorage().fileWriteStreamOpen(path);
+                SteamUGCFileWriteStreamHandle remoteFile = getSteamRemoteStorage().fileWriteStreamOpen(path);
                 if (remoteFile != null) {
                     byte[] bytes = new byte[1024];
                     int bytesRead;
@@ -339,25 +334,25 @@ public class SteamManager extends SubManager {
                         ByteBuffer buffer = ByteBuffer.allocateDirect(bytesRead);
                         buffer.put(bytes, 0, bytesRead);
                         buffer.flip();
-                        getRemoteStorage().fileWriteStreamWriteChunk(remoteFile, buffer);
+                        getSteamRemoteStorage().fileWriteStreamWriteChunk(remoteFile, buffer);
                     }
-                    getRemoteStorage().fileWriteStreamClose(remoteFile);
+                    getSteamRemoteStorage().fileWriteStreamClose(remoteFile);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (input.startsWith("file delete ")) {
             String path = input.substring("file delete ".length());
-            if (getRemoteStorage().fileDelete(path)) {
+            if (getSteamRemoteStorage().fileDelete(path)) {
                 LOGGER.debug("deleted file '" + path + "'");
             }
         } else if (input.startsWith("file share ")) {
-            getRemoteStorage().fileShare(input.substring("file share ".length()));
+            getSteamRemoteStorage().fileShare(input.substring("file share ".length()));
         } else if (input.startsWith("file publish ")) {
             String[] paths = input.substring("file publish ".length()).split(" ");
             if (paths.length >= 2) {
                 LOGGER.debug("publishing file: " + paths[0] + ", preview file: " + paths[1]);
-                getRemoteStorage().publishWorkshopFile(paths[0], paths[1], getUtils().getAppID(),
+                getSteamRemoteStorage().publishWorkshopFile(paths[0], paths[1], getSteamUtils().getAppID(),
                         "Test UGC!", "Dummy UGC file published by test application.",
                         SteamRemoteStorage.PublishedFileVisibility.Private, null,
                         SteamRemoteStorage.WorkshopFileType.Community);
@@ -369,38 +364,38 @@ public class SteamManager extends SubManager {
 
                 SteamPublishedFileID fileID = new SteamPublishedFileID(Long.parseLong(paths[0]));
 
-                SteamPublishedFileUpdateHandle updateHandle = getRemoteStorage().createPublishedFileUpdateRequest(fileID);
+                SteamPublishedFileUpdateHandle updateHandle = getSteamRemoteStorage().createPublishedFileUpdateRequest(fileID);
                 if (updateHandle != null) {
-                    getRemoteStorage().updatePublishedFileFile(updateHandle, paths[1]);
-                    getRemoteStorage().updatePublishedFilePreviewFile(updateHandle, paths[2]);
-                    getRemoteStorage().updatePublishedFileTitle(updateHandle, "Updated Test UGC!");
-                    getRemoteStorage().updatePublishedFileDescription(updateHandle, "Dummy UGC file *updated* by test application.");
-                    getRemoteStorage().commitPublishedFileUpdate(updateHandle);
+                    getSteamRemoteStorage().updatePublishedFileFile(updateHandle, paths[1]);
+                    getSteamRemoteStorage().updatePublishedFilePreviewFile(updateHandle, paths[2]);
+                    getSteamRemoteStorage().updatePublishedFileTitle(updateHandle, "Updated Test UGC!");
+                    getSteamRemoteStorage().updatePublishedFileDescription(updateHandle, "Dummy UGC file *updated* by test application.");
+                    getSteamRemoteStorage().commitPublishedFileUpdate(updateHandle);
                 }
             }
         } else if (input.equals("ugc query")) {
-            SteamUGCQuery query = getUgc().createQueryUserUGCRequest(getUser().getSteamID().getAccountID(), SteamUGC.UserUGCList.Subscribed,
+            SteamUGCQuery query = getSteamUGC().createQueryUserUGCRequest(getSteamUser().getSteamID().getAccountID(), SteamUGC.UserUGCList.Subscribed,
                     SteamUGC.MatchingUGCType.UsableInGame, SteamUGC.UserUGCListSortOrder.TitleAsc,
-                    getUtils().getAppID(), getUtils().getAppID(), 1);
+                    getSteamUtils().getAppID(), getSteamUtils().getAppID(), 1);
 
             if (query.isValid()) {
                 LOGGER.debug("sending UGC query: " + query.toString());
                 //ugc.setReturnTotalOnly(query, true);
-                getUgc().sendQueryUGCRequest(query);
+                getSteamUGC().sendQueryUGCRequest(query);
             }
         } else if (input.startsWith("ugc download ")) {
             String name = input.substring("ugc download ".length());
             SteamUGCHandle handle = new SteamUGCHandle(Long.parseLong(name, 16));
-            getRemoteStorage().ugcDownload(handle, 0);
+            getSteamRemoteStorage().ugcDownload(handle, 0);
         } else if (input.startsWith("ugc subscribe ")) {
             Long id = Long.parseLong(input.substring("ugc subscribe ".length()), 16);
-            getUgc().subscribeItem(new SteamPublishedFileID(id));
+            getSteamUGC().subscribeItem(new SteamPublishedFileID(id));
         } else if (input.startsWith("ugc unsubscribe ")) {
             Long id = Long.parseLong(input.substring("ugc unsubscribe ".length()), 16);
-            getUgc().unsubscribeItem(new SteamPublishedFileID(id));
+            getSteamUGC().unsubscribeItem(new SteamPublishedFileID(id));
         } else if (input.startsWith("ugc state ")) {
             Long id = Long.parseLong(input.substring("ugc state ".length()), 16);
-            Collection<SteamUGC.ItemState> itemStates = getUgc().getItemState(new SteamPublishedFileID(id));
+            Collection<SteamUGC.ItemState> itemStates = getSteamUGC().getItemState(new SteamPublishedFileID(id));
             LOGGER.debug("UGC item states: " + itemStates.size());
             for (SteamUGC.ItemState itemState : itemStates) {
                 LOGGER.debug("  " + itemState.name());
@@ -408,128 +403,120 @@ public class SteamManager extends SubManager {
         } else if (input.startsWith("ugc details ")) {
             LOGGER.debug("requesting UGC details (deprecated API call)");
             Long id = Long.parseLong(input.substring("ugc details ".length()), 16);
-            getUgc().requestUGCDetails(new SteamPublishedFileID(id), 0);
+            getSteamUGC().requestUGCDetails(new SteamPublishedFileID(id), 0);
 
-            SteamUGCQuery query = getUgc().createQueryUGCDetailsRequest(new SteamPublishedFileID(id));
+            SteamUGCQuery query = getSteamUGC().createQueryUGCDetailsRequest(new SteamPublishedFileID(id));
             if (query.isValid()) {
                 LOGGER.debug("sending UGC details query: " + query.toString());
-                getUgc().sendQueryUGCRequest(query);
+                getSteamUGC().sendQueryUGCRequest(query);
             }
         } else if (input.startsWith("ugc info ")) {
             Long id = Long.parseLong(input.substring("ugc info ".length()), 16);
             SteamUGC.ItemInstallInfo installInfo = new SteamUGC.ItemInstallInfo();
-            if (getUgc().getItemInstallInfo(new SteamPublishedFileID(id), installInfo)) {
+            if (getSteamUGC().getItemInstallInfo(new SteamPublishedFileID(id), installInfo)) {
                 LOGGER.debug("  folder: " + installInfo.getFolder());
                 LOGGER.debug("  size on disk: " + installInfo.getSizeOnDisk());
             }
             SteamUGC.ItemDownloadInfo downloadInfo = new SteamUGC.ItemDownloadInfo();
-            if (getUgc().getItemDownloadInfo(new SteamPublishedFileID(id), downloadInfo)) {
+            if (getSteamUGC().getItemDownloadInfo(new SteamPublishedFileID(id), downloadInfo)) {
                 LOGGER.debug("  bytes downloaded: " + downloadInfo.getBytesDownloaded());
                 LOGGER.debug("  bytes total: " + downloadInfo.getBytesTotal());
             }
         } else if (input.startsWith("leaderboard find ")) {
             String name = input.substring("leaderboard find ".length());
-            getUserStats().findLeaderboard(name);
+            getSteamUserStats().findLeaderboard(name);
         } else if (input.startsWith("leaderboard list ")) {
             String[] params = input.substring("leaderboard list ".length()).split(" ");
-            if (getCurrentLeaderboard() != null && params.length >= 2) {
-                getUserStats().downloadLeaderboardEntries(getCurrentLeaderboard(),
+            if (getSteamLeaderboardHandle() != null && params.length >= 2) {
+                getSteamUserStats().downloadLeaderboardEntries(getSteamLeaderboardHandle(),
                         SteamUserStats.LeaderboardDataRequest.Global,
                         Integer.parseInt(params[0]), Integer.parseInt(params[1]));
             }
         } else if (input.startsWith("leaderboard users ")) {
             String[] params = input.substring("leaderboard users ".length()).split(" ");
-            if (getCurrentLeaderboard() != null && params.length > 0) {
+            if (getSteamLeaderboardHandle() != null && params.length > 0) {
                 SteamID[] users = new SteamID[params.length];
                 for (int i = 0; i < params.length; i++) {
                     users[i] = SteamID.createFromNativeHandle(Long.parseLong(params[i]));
                 }
-                getUserStats().downloadLeaderboardEntriesForUsers(getCurrentLeaderboard(), users);
+                getSteamUserStats().downloadLeaderboardEntriesForUsers(getSteamLeaderboardHandle(), users);
             }
         } else if (input.startsWith("leaderboard score ")) {
             String score = input.substring("leaderboard score ".length());
-            if (getCurrentLeaderboard() != null) {
-                LOGGER.debug("uploading score " + score + " to leaderboard " + getCurrentLeaderboard().toString());
-                getUserStats().uploadLeaderboardScore(getCurrentLeaderboard(),
+            if (getSteamLeaderboardHandle() != null) {
+                LOGGER.debug("uploading score " + score + " to leaderboard " + getSteamLeaderboardHandle().toString());
+                getSteamUserStats().uploadLeaderboardScore(getSteamLeaderboardHandle(),
                         SteamUserStats.LeaderboardUploadScoreMethod.KeepBest, Integer.parseInt(score), new int[]{});
             }
         } else if (input.startsWith("apps subscribed ")) {
             String appId = input.substring("apps subscribed ".length());
-            boolean subscribed = getApps().isSubscribedApp(Integer.parseInt(appId));
+            boolean subscribed = getSteamApps().isSubscribedApp(Integer.parseInt(appId));
             LOGGER.debug("user described to app #" + appId + ": " + (subscribed ? "yes" : "no"));
         }
     }
 
-    public SteamUser getUser() {
-        return user;
+    public SteamUser getSteamUser() {
+        return steamUser;
     }
 
-    public void setUser(SteamUser user) {
-        this.user = user;
+    public void setSteamUser(SteamUser steamUser) {
+        this.steamUser = steamUser;
     }
 
-    public SteamUserStats getUserStats() {
-        return userStats;
+    public SteamUserStats getSteamUserStats() {
+        return steamUserStats;
     }
 
-    public void setUserStats(SteamUserStats userStats) {
-        this.userStats = userStats;
+    public void setSteamUserStats(SteamUserStats steamUserStats) {
+        this.steamUserStats = steamUserStats;
     }
 
-    public SteamRemoteStorage getRemoteStorage() {
-        return remoteStorage;
+    public SteamRemoteStorage getSteamRemoteStorage() {
+        return steamRemoteStorage;
     }
 
-    public void setRemoteStorage(SteamRemoteStorage remoteStorage) {
-        this.remoteStorage = remoteStorage;
+    public void setSteamRemoteStorage(SteamRemoteStorage steamRemoteStorage) {
+        this.steamRemoteStorage = steamRemoteStorage;
     }
 
-    public SteamUGC getUgc() {
-        return ugc;
+    public SteamUGC getSteamUGC() {
+        return steamUGC;
     }
 
-    public void setUgc(SteamUGC ugc) {
-        this.ugc = ugc;
+    public void setSteamUGC(SteamUGC steamUGC) {
+        this.steamUGC = steamUGC;
     }
 
-    public SteamUtils getUtils() {
-        return utils;
+    public SteamUtils getSteamUtils() {
+        return steamUtils;
     }
 
-    public void setUtils(SteamUtils utils) {
-        this.utils = utils;
+    public void setSteamUtils(SteamUtils steamUtils) {
+        this.steamUtils = steamUtils;
     }
 
-    public SteamApps getApps() {
-        return apps;
+    public SteamApps getSteamApps() {
+        return steamApps;
     }
 
-    public void setApps(SteamApps apps) {
-        this.apps = apps;
+    public void setSteamApps(SteamApps steamApps) {
+        this.steamApps = steamApps;
     }
 
-    public SteamFriends getFriends() {
-        return friends;
+    public SteamFriends getSteamFriends() {
+        return steamFriends;
     }
 
-    public void setFriends(SteamFriends friends) {
-        this.friends = friends;
+    public void setSteamFriends(SteamFriends steamFriends) {
+        this.steamFriends = steamFriends;
     }
 
-    public SteamUtils getClientUtils() {
-        return clientUtils;
+    public SteamLeaderboardHandle getSteamLeaderboardHandle() {
+        return steamLeaderboardHandle;
     }
 
-    public void setClientUtils(SteamUtils clientUtils) {
-        this.clientUtils = clientUtils;
-    }
-
-    public SteamLeaderboardHandle getCurrentLeaderboard() {
-        return currentLeaderboard;
-    }
-
-    public void setCurrentLeaderboard(SteamLeaderboardHandle currentLeaderboard) {
-        this.currentLeaderboard = currentLeaderboard;
+    public void setSteamLeaderboardHandle(SteamLeaderboardHandle steamLeaderboardHandle) {
+        this.steamLeaderboardHandle = steamLeaderboardHandle;
     }
 
     public SteamCallbacks getSteamCallbacks() {

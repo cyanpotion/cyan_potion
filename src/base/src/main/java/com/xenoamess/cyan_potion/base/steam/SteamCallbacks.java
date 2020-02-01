@@ -56,7 +56,7 @@ public class SteamCallbacks {
     }
 
 
-    private SteamUserCallback userCallback = new SteamUserCallback() {
+    private SteamUserCallback steamUserCallback = new SteamUserCallback() {
 
         @Override
         public void onValidateAuthTicket(SteamID steamID, SteamAuth.AuthSessionResponse authSessionResponse, SteamID ownerSteamID) {
@@ -74,18 +74,18 @@ public class SteamCallbacks {
         }
     };
 
-    private SteamUserStatsCallback userStatsCallback = new SteamUserStatsCallback() {
+    private SteamUserStatsCallback steamUserStatsCallback = new SteamUserStatsCallback() {
         @Override
         public void onUserStatsReceived(long gameId, SteamID steamIDUser, SteamResult result) {
             LOGGER.debug("User stats received: gameId=" + gameId + ", userId=" + steamIDUser.getAccountID() +
                     ", result=" + result.toString());
 
-            int numAchievements = getSteamManager().getUserStats().getNumAchievements();
+            int numAchievements = getSteamManager().getSteamUserStats().getNumAchievements();
             LOGGER.debug("Num of achievements: " + numAchievements);
 
             for (int i = 0; i < numAchievements; i++) {
-                String name = getSteamManager().getUserStats().getAchievementName(i);
-                boolean achieved = getSteamManager().getUserStats().isAchieved(name, false);
+                String name = getSteamManager().getSteamUserStats().getAchievementName(i);
+                boolean achieved = getSteamManager().getSteamUserStats().isAchieved(name, false);
                 LOGGER.debug("# " + i + " : name=" + name + ", achieved=" + (achieved ? "yes" : "no"));
             }
         }
@@ -114,10 +114,10 @@ public class SteamCallbacks {
                     ", found=" + (found ? "yes" : "no"));
 
             if (found) {
-                LOGGER.debug("Leaderboard: name=" + getSteamManager().getUserStats().getLeaderboardName(leaderboard) +
-                        ", entries=" + getSteamManager().getUserStats().getLeaderboardEntryCount(leaderboard));
+                LOGGER.debug("Leaderboard: name=" + getSteamManager().getSteamUserStats().getLeaderboardName(leaderboard) +
+                        ", entries=" + getSteamManager().getSteamUserStats().getLeaderboardEntryCount(leaderboard));
 
-                SteamCallbacks.this.getSteamManager().setCurrentLeaderboard(leaderboard);
+                SteamCallbacks.this.getSteamManager().setSteamLeaderboardHandle(leaderboard);
             }
         }
 
@@ -134,7 +134,7 @@ public class SteamCallbacks {
             for (int i = 0; i < numEntries; i++) {
 
                 SteamLeaderboardEntry entry = new SteamLeaderboardEntry();
-                if (getSteamManager().getUserStats().getDownloadedLeaderboardEntry(entries, i, entry, details)) {
+                if (getSteamManager().getSteamUserStats().getDownloadedLeaderboardEntry(entries, i, entry, details)) {
 
                     int numDetails = entry.getNumDetails();
 
@@ -148,22 +148,22 @@ public class SteamCallbacks {
                         LOGGER.debug("  ... detail #" + detail + "=" + details[detail]);
                     }
 
-                    if (getSteamManager().getFriends().requestUserInformation(entry.getSteamIDUser(), false)) {
+                    if (getSteamManager().getSteamFriends().requestUserInformation(entry.getSteamIDUser(), false)) {
                         LOGGER.debug("  ... requested user information for entry");
                     } else {
                         LOGGER.debug("  ... user name is '" +
-                                getSteamManager().getFriends().getFriendPersonaName(entry.getSteamIDUser()) + "'");
+                                getSteamManager().getSteamFriends().getFriendPersonaName(entry.getSteamIDUser()) + "'");
 
-                        int smallAvatar = getSteamManager().getFriends().getSmallFriendAvatar(entry.getSteamIDUser());
+                        int smallAvatar = getSteamManager().getSteamFriends().getSmallFriendAvatar(entry.getSteamIDUser());
                         if (smallAvatar != 0) {
-                            int w = getSteamManager().getUtils().getImageWidth(smallAvatar);
-                            int h = getSteamManager().getUtils().getImageHeight(smallAvatar);
+                            int w = getSteamManager().getSteamUtils().getImageWidth(smallAvatar);
+                            int h = getSteamManager().getSteamUtils().getImageHeight(smallAvatar);
                             LOGGER.debug("  ... small avatar size: " + w + "x" + h + " pixels");
 
                             ByteBuffer image = ByteBuffer.allocateDirect(w * h * 4);
 
                             try {
-                                if (getSteamManager().getUtils().getImageRGBA(smallAvatar, image)) {
+                                if (getSteamManager().getSteamUtils().getImageRGBA(smallAvatar, image)) {
                                     LOGGER.debug("  ... small avatar retrieve avatar image successful");
 
                                     int nonZeroes = w * h;
@@ -219,7 +219,7 @@ public class SteamCallbacks {
         }
     };
 
-    private SteamRemoteStorageCallback remoteStorageCallback = new SteamRemoteStorageCallback() {
+    private SteamRemoteStorageCallback steamRemoteStorageCallback = new SteamRemoteStorageCallback() {
         @Override
         public void onFileWriteAsyncComplete(SteamResult result) {
 
@@ -245,7 +245,7 @@ public class SteamCallbacks {
             int offset = 0, bytesRead;
 
             do {
-                bytesRead = getSteamManager().getRemoteStorage().ugcRead(fileHandle, buffer, buffer.limit(), offset,
+                bytesRead = getSteamManager().getSteamRemoteStorage().ugcRead(fileHandle, buffer, buffer.limit(), offset,
                         SteamRemoteStorage.UGCReadAction.ContinueReadingUntilFinished);
                 offset += bytesRead;
             } while (bytesRead > 0);
@@ -281,7 +281,7 @@ public class SteamCallbacks {
         }
     };
 
-    private SteamUGCCallback ugcCallback = new SteamUGCCallback() {
+    private SteamUGCCallback steamUGCCallback = new SteamUGCCallback() {
         @Override
         public void onUGCQueryCompleted(SteamUGCQuery query, int numResultsReturned, int totalMatchingResults,
                                         boolean isCachedData, SteamResult result) {
@@ -290,11 +290,11 @@ public class SteamCallbacks {
 
             for (int i = 0; i < numResultsReturned; i++) {
                 SteamUGCDetails details = new SteamUGCDetails();
-                getSteamManager().getUgc().getQueryUGCResult(query, i, details);
+                getSteamManager().getSteamUGC().getQueryUGCResult(query, i, details);
                 printUGCDetails("UGC details #" + i, details);
             }
 
-            getSteamManager().getUgc().releaseQueryUserUGCRequest(query);
+            getSteamManager().getSteamUGC().releaseQueryUserUGCRequest(query);
         }
 
         @Override
@@ -378,7 +378,7 @@ public class SteamCallbacks {
         }
     };
 
-    private SteamFriendsCallback friendsCallback = new SteamFriendsCallback() {
+    private SteamFriendsCallback steamFriendsCallback = new SteamFriendsCallback() {
         @Override
         public void onSetPersonaNameResponse(boolean success, boolean localSuccess, SteamResult result) {
 
@@ -392,7 +392,7 @@ public class SteamCallbacks {
                 case Name:
                     LOGGER.debug("Persona name received: " +
                             "accountID=" + steamID.getAccountID() +
-                            ", name='" + getSteamManager().getFriends().getFriendPersonaName(steamID) + "'");
+                            ", name='" + getSteamManager().getSteamFriends().getFriendPersonaName(steamID) + "'");
                     break;
 
                 default:
@@ -434,93 +434,20 @@ public class SteamCallbacks {
         }
     };
 
-    private SteamUtilsCallback utilsCallback = new SteamUtilsCallback() {
+    private SteamUtilsCallback steamUtilsCallback = new SteamUtilsCallback() {
         @Override
         public void onSteamShutdown() {
             LOGGER.debug("Steam client wants to shut down!");
         }
     };
 
-    private SteamAPIWarningMessageHook clMessageHook = new SteamAPIWarningMessageHook() {
+    private SteamAPIWarningMessageHook steamAPIWarningMessageHook = new SteamAPIWarningMessageHook() {
         @Override
         public void onWarningMessage(int severity, String message) {
             LOGGER.error("[client debug message] (" + severity + ") " + message);
         }
     };
 
-    private SteamUtilsCallback clUtilsCallback = new SteamUtilsCallback() {
-        @Override
-        public void onSteamShutdown() {
-            LOGGER.error("Steam client requested to shut down!");
-        }
-    };
-
-    private SteamUserStatsCallback steamUserStatsCallback =
-            new SteamUserStatsCallback() {
-
-                @Override
-                public void onUserStatsReceived(long gameId,
-                                                SteamID steamIDUser,
-                                                SteamResult result) {
-                    LOGGER.debug("onUserStatsReceived():gameId={},steamIDUser={},result={}", gameId, steamIDUser, result);
-                }
-
-                @Override
-                public void onUserStatsStored(long gameId, SteamResult result) {
-                    LOGGER.debug("onUserStatsStored():gameId={},result={}", gameId, result);
-                }
-
-                @Override
-                public void onUserStatsUnloaded(SteamID steamIDUser) {
-                    LOGGER.debug("onUserStatsUnloaded():steamIDUser={}", steamIDUser);
-                }
-
-                @Override
-                public void onUserAchievementStored(long gameId,
-                                                    boolean isGroupAchievement,
-                                                    String achievementName,
-                                                    int curProgress,
-                                                    int maxProgress) {
-                    LOGGER.debug(
-                            "onUserAchievementStored():gameId={},isGroupAchievement={},achievementName={},curProgress={},maxProgress={}",
-                            gameId, isGroupAchievement, achievementName, curProgress, maxProgress
-                    );
-                }
-
-                @Override
-                public void onLeaderboardFindResult(SteamLeaderboardHandle leaderboard, boolean found) {
-                    LOGGER.debug(
-                            "SteamLeaderboardHandle():leaderboard={},found={}",
-                            leaderboard, found
-                    );
-                }
-
-                @Override
-                public void onLeaderboardScoresDownloaded(SteamLeaderboardHandle leaderboard,
-                                                          SteamLeaderboardEntriesHandle entries, int numEntries) {
-                    LOGGER.debug(
-                            "onLeaderboardScoresDownloaded():leaderboard={},entries={},numEntries={}",
-                            leaderboard, entries, numEntries
-                    );
-                }
-
-                @Override
-                public void onLeaderboardScoreUploaded(boolean success,
-                                                       SteamLeaderboardHandle leaderboard, int score,
-                                                       boolean scoreChanged, int globalRankNew,
-                                                       int globalRankPrevious) {
-                    LOGGER.debug(
-                            "onLeaderboardScoreUploaded():success={},leaderboard={},score={},scoreChanged={},globalRankNew={},globalRankPrevious={}",
-                            success, leaderboard, score, scoreChanged, globalRankNew, globalRankPrevious
-                    );
-                }
-
-                @Override
-                public void onGlobalStatsReceived(long gameId,
-                                                  SteamResult result) {
-                    LOGGER.debug("onGlobalStatsReceived():gameId={},result={}", gameId, result);
-                }
-            };
 
     //---getters and setters starts
 
@@ -528,69 +455,54 @@ public class SteamCallbacks {
         return steamManager;
     }
 
-    public SteamUserCallback getUserCallback() {
-        return userCallback;
+    public SteamUserCallback getSteamUserCallback() {
+        return steamUserCallback;
     }
 
-    public void setUserCallback(SteamUserCallback userCallback) {
-        this.userCallback = userCallback;
+    public void setSteamUserCallback(SteamUserCallback steamUserCallback) {
+        this.steamUserCallback = steamUserCallback;
     }
 
-    public SteamUserStatsCallback getUserStatsCallback() {
-        return userStatsCallback;
+    public SteamRemoteStorageCallback getSteamRemoteStorageCallback() {
+        return steamRemoteStorageCallback;
     }
 
-    public void setUserStatsCallback(SteamUserStatsCallback userStatsCallback) {
-        this.userStatsCallback = userStatsCallback;
+    public void setSteamRemoteStorageCallback(SteamRemoteStorageCallback steamRemoteStorageCallback) {
+        this.steamRemoteStorageCallback = steamRemoteStorageCallback;
     }
 
-    public SteamRemoteStorageCallback getRemoteStorageCallback() {
-        return remoteStorageCallback;
+    public SteamUGCCallback getSteamUGCCallback() {
+        return steamUGCCallback;
     }
 
-    public void setRemoteStorageCallback(SteamRemoteStorageCallback remoteStorageCallback) {
-        this.remoteStorageCallback = remoteStorageCallback;
+    public void setSteamUGCCallback(SteamUGCCallback steamUGCCallback) {
+        this.steamUGCCallback = steamUGCCallback;
     }
 
-    public SteamUGCCallback getUgcCallback() {
-        return ugcCallback;
+    public SteamFriendsCallback getSteamFriendsCallback() {
+        return steamFriendsCallback;
     }
 
-    public void setUgcCallback(SteamUGCCallback ugcCallback) {
-        this.ugcCallback = ugcCallback;
+    public void setSteamFriendsCallback(SteamFriendsCallback steamFriendsCallback) {
+        this.steamFriendsCallback = steamFriendsCallback;
     }
 
-    public SteamFriendsCallback getFriendsCallback() {
-        return friendsCallback;
+    public SteamUtilsCallback getSteamUtilsCallback() {
+        return steamUtilsCallback;
     }
 
-    public void setFriendsCallback(SteamFriendsCallback friendsCallback) {
-        this.friendsCallback = friendsCallback;
+    public void setSteamUtilsCallback(SteamUtilsCallback steamUtilsCallback) {
+        this.steamUtilsCallback = steamUtilsCallback;
     }
 
-    public SteamUtilsCallback getUtilsCallback() {
-        return utilsCallback;
+    public SteamAPIWarningMessageHook getSteamAPIWarningMessageHook() {
+        return steamAPIWarningMessageHook;
     }
 
-    public void setUtilsCallback(SteamUtilsCallback utilsCallback) {
-        this.utilsCallback = utilsCallback;
+    public void setSteamAPIWarningMessageHook(SteamAPIWarningMessageHook steamAPIWarningMessageHook) {
+        this.steamAPIWarningMessageHook = steamAPIWarningMessageHook;
     }
 
-    public SteamAPIWarningMessageHook getClMessageHook() {
-        return clMessageHook;
-    }
-
-    public void setClMessageHook(SteamAPIWarningMessageHook clMessageHook) {
-        this.clMessageHook = clMessageHook;
-    }
-
-    public SteamUtilsCallback getClUtilsCallback() {
-        return clUtilsCallback;
-    }
-
-    public void setClUtilsCallback(SteamUtilsCallback clUtilsCallback) {
-        this.clUtilsCallback = clUtilsCallback;
-    }
 
     public SteamUserStatsCallback getSteamUserStatsCallback() {
         return steamUserStatsCallback;
