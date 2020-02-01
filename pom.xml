@@ -272,6 +272,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--lwjgl start-->
+        <!--
+        notice that we will not include lwjgl-ovr
+        until it can be built on linux.
+        Keep in mind and delete ovr when update lwjgl.
+        -->
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
@@ -364,10 +370,10 @@
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-opus</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-ovr</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.lwjgl</groupId>-->
+        <!--            <artifactId>lwjgl-ovr</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-par</artifactId>
@@ -514,11 +520,11 @@
             <artifactId>lwjgl-opus</artifactId>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-ovr</artifactId>
-            <classifier>${lwjgl.natives}</classifier>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.lwjgl</groupId>-->
+        <!--            <artifactId>lwjgl-ovr</artifactId>-->
+        <!--            <classifier>${lwjgl.natives}</classifier>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-par</artifactId>
@@ -584,6 +590,8 @@
             <artifactId>lwjgl-zstd</artifactId>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
+        <!--lwjgl end-->
+
         <dependency>
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
