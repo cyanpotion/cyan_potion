@@ -55,7 +55,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class WaveData extends AbstractResource implements AutoCloseable {
+public class WaveData extends AbstractResource {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);

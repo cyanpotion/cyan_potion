@@ -29,6 +29,8 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 
+import java.io.Closeable;
+
 import static org.lwjgl.openal.AL10.*;
 
 /**
@@ -37,7 +39,7 @@ import static org.lwjgl.openal.AL10.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Source implements AutoCloseable {
+public class Source implements Closeable {
     private int alSourceInt = -1;
     private WaveData currentWaveData = null;
 

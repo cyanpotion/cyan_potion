@@ -33,6 +33,7 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.nio.FloatBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,7 +46,7 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Shader implements AutoCloseable {
+public class Shader implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Shader.class);

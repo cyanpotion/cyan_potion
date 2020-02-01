@@ -37,6 +37,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,7 +52,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 0.143.0
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
-public abstract class AbstractGameWindowComponent implements AutoCloseable, AbstractMutableArea {
+public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);

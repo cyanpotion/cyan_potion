@@ -37,6 +37,7 @@ import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class ResourceManager implements AutoCloseable {
+public class ResourceManager implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
@@ -486,9 +487,9 @@ public class ResourceManager implements AutoCloseable {
             if (object instanceof Map) {
                 closeMap((Map) object);
             }
-            if (object instanceof AutoCloseable) {
+            if (object instanceof Closeable) {
                 try {
-                    ((AutoCloseable) object).close();
+                    ((Closeable) object).close();
                 } catch (Exception e) {
                     LOGGER.error("close fails:{}", object, e);
                 }
@@ -503,6 +504,10 @@ public class ResourceManager implements AutoCloseable {
      */
     public ResourceManager(GameManager gameManager) {
         this.gameManager = gameManager;
+    }
+
+    public void init() {
+        //do nothing
     }
 
     /**

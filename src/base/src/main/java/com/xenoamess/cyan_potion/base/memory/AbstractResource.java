@@ -30,6 +30,7 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -42,7 +43,7 @@ import java.util.function.Function;
  * @author XenoAmess
  * @version 0.143.0
  */
-public abstract class AbstractResource implements AutoCloseable, Bindable {
+public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);

@@ -31,7 +31,7 @@ import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.studiohartman.jamepad.ControllerManager;
 import com.xenoamess.cyan_potion.base.GameManager;
-import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.SubManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,7 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GamepadInputManager implements AutoCloseable {
+public class GamepadInputManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
@@ -52,13 +52,16 @@ public class GamepadInputManager implements AutoCloseable {
 
     private ControllerManager jamepadControllerManager = null;
 
+    public GamepadInputManager(GameManager gameManager) {
+        super(gameManager);
+    }
+
     /**
      * <p>init.</p>
-     *
-     * @param gameManager gameManager
      */
-    public void init(GameManager gameManager) {
-        if (gameManager.getDataCenter().isUsingJXInput()) {
+    @Override
+    public void init() {
+        if (this.getGameManager().getDataCenter().isUsingJXInput()) {
             try {
                 int jXInputDeviceNum = XInputDevice.getAllDevices().length;
                 for (int i = 0; i < jXInputDeviceNum; i++) {
@@ -81,7 +84,7 @@ public class GamepadInputManager implements AutoCloseable {
             }
         }
 
-        if (gameManager.getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
             SteamControllerHandle[] steamControllerHandles =
                     new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();
@@ -103,12 +106,10 @@ public class GamepadInputManager implements AutoCloseable {
 
     /**
      * <p>update.</p>
-     *
-     * @param gameWindow gameWindow
      */
-    public void update(GameWindow gameWindow) {
+    public void update() {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
-            gamepadData.update(gameWindow);
+            gamepadData.update(this.getGameManager().getGameWindow());
         }
         if (getJamepadControllerManager() != null) {
             getJamepadControllerManager().update();

@@ -56,17 +56,16 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * <p>GameWindow class.</p>
+ * //TODO
+ * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindow implements AutoCloseable, AbstractMutableArea {
+public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
-
-    private final GameManager gameManager;
 
     /**
      * <p>Constructor for GameWindow.</p>
@@ -74,8 +73,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param gameManager gameManager
      */
     public GameWindow(GameManager gameManager) {
-        super();
-        this.gameManager = gameManager;
+        super(gameManager);
     }
 
     private long window;
@@ -1031,15 +1029,6 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public long getWindow() {
         return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return return
-     */
-    public GameManager getGameManager() {
-        return gameManager;
     }
 
     /**
