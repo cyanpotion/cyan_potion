@@ -52,6 +52,12 @@ import java.util.List;
  * @version 0.143.0
  */
 public class TextureUtils {
+    public static final String STRING_CHARACTER = "characters";
+    public static final String STRING_A5 = "A5";
+    public static final String STRING_B = "B";
+    public static final String STRING_C = "C";
+    public static final String STRING_A2 = "A2";
+
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
@@ -115,7 +121,7 @@ public class TextureUtils {
                     final Texture nowTexture =
                             texture.getResourceManager().fetchResource(
                                     texture.getClass(),
-                                    "characters",
+                                    STRING_CHARACTER,
                                     texture.getResourceInfo().fileString,
                                     Integer.toString(k),
                                     Integer.toString(i * 3 + j)
@@ -155,11 +161,11 @@ public class TextureUtils {
         final String resourceType = resourceInfo.type;
         int columnNum;
         switch (resourceType) {
-            case "A5":
+            case STRING_A5:
                 columnNum = 1;
                 break;
-            case "B":
-            case "C":
+            case STRING_B:
+            case STRING_C:
                 columnNum = 2;
                 break;
             default:
@@ -247,7 +253,7 @@ public class TextureUtils {
         final Texture nowTexture =
                 resourceManager.fetchResource(
                         Texture.class,
-                        "A2",
+                        STRING_A2,
                         fileString,
                         Integer.toString(kk),
                         Integer.toString(ti)
@@ -676,7 +682,7 @@ public class TextureUtils {
                 final Texture nowTexture =
                         texture.getResourceManager().fetchResource(
                                 texture.getClass(),
-                                "A2",
+                                STRING_A2,
                                 texture.getResourceInfo().fileString,
                                 Integer.toString(k),
                                 Integer.toString(ti)
@@ -753,7 +759,7 @@ public class TextureUtils {
                 res.add(
                         resourceManager.fetchResource(
                                 Texture.class,
-                                "A2",
+                                STRING_A2,
                                 tilesetTexturesFilepath,
                                 Integer.toString(k),
                                 Integer.toString(ti)
@@ -772,7 +778,7 @@ public class TextureUtils {
      * @return return
      */
     public static List<Texture> getTilesetTexturesA5(ResourceManager resourceManager, String tilesetTexturesFilepath) {
-        return getTilesetTextures8(resourceManager, "A5",
+        return getTilesetTextures8(resourceManager, STRING_A5,
                 tilesetTexturesFilepath, 1);
     }
 
@@ -796,7 +802,7 @@ public class TextureUtils {
      * @return return
      */
     public static List<Texture> getTilesetTexturesC(ResourceManager resourceManager, String tilesetTexturesFilepath) {
-        return getTilesetTextures8(resourceManager, "C",
+        return getTilesetTextures8(resourceManager, STRING_C,
                 tilesetTexturesFilepath, 2);
     }
 
