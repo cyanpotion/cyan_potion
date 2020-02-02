@@ -35,6 +35,9 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
+import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.base.steam.SteamManager;
+import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
@@ -58,6 +61,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_LARGE;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_STEAM_AVATAR;
+
 /**
  * <p>World class.</p>
  *
@@ -65,12 +72,13 @@ import java.util.TreeMap;
  * @version 0.143.0
  */
 public class World extends AbstractEntityScene {
+    @JsonIgnore
+    private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
+
     /**
      * "scale"
      */
     public static final String STRING_SCALE = "scale";
-    @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
      * 10F
@@ -90,6 +98,16 @@ public class World extends AbstractEntityScene {
     private Menu menu;
     private Matrix4f scaleMatrix4f;
     private RpgModuleDataCenter rpgModuleDataCenter;
+
+    final Texture avatarTexture = new ResourceInfo<>(
+            Texture.class,
+            STRING_STEAM_AVATAR,
+            "",
+            Long.toString(getNativeHandle(this.getGameWindow().getGameManager().getSteamManager().getSteamUser().getSteamID())),
+            STRING_LARGE
+    ).fetchResource(this.getResourceManager());
+
+    final Picture avatarPicture = new Picture(avatarTexture);
 
     /**
      * <p>recalculateScaleMatrix4f.</p>
@@ -340,15 +358,24 @@ public class World extends AbstractEntityScene {
      */
     @Override
     public void update() {
-        preparePlayerMovement(this.getPlayer());
+        this.preparePlayerMovement(this.getPlayer());
 
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             dynamicEntity.update();
         }
 
         this.getCamera().getPosition().lerp(getPlayer().getCenterPos(), 0.05f);
-        correctCamera();
+        this.correctCamera();
+        this.fixAvatarPicture();
     }
+
+    protected void fixAvatarPicture() {
+        final int avatarPictureSize = 200;
+        this.avatarPicture.setCenterPos(this.getGameWindow().getRightPosX() - avatarPictureSize / 2, avatarPictureSize / 2);
+        this.avatarPicture.setWidth(avatarPictureSize);
+        this.avatarPicture.setHeight(avatarPictureSize);
+    }
+
 
     /**
      * {@inheritDoc}
@@ -401,6 +428,11 @@ public class World extends AbstractEntityScene {
         }
 
         this.getGameWindow().drawTextLeftTop(null, 10, 30, 50, "DEMO");
+        this.avatarPicture.draw(this.getGameWindow());
+
+        SteamManager steamManager = this.getGameManager().getSteamManager();
+        String personName = steamManager.getSteamFriends().getPersonaName();
+        this.getGameWindow().drawTextCenter(null, avatarPicture.getCenterBottomPosX(), avatarPicture.getCenterBottomPosY() + 12.5F, 25, personName);
     }
 
     /**

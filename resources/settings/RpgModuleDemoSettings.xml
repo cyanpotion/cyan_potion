@@ -22,6 +22,9 @@
         <rightAfterResourceManagerCreate>
             SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.plugins.CodePlugins:PLUGIN_RPG_MODULE_TEXTURE_LOADERS
         </rightAfterResourceManagerCreate>
+        <rightAfterResourceManagerCreate>
+            SimpleFunctionObject:com.xenoamess.cyan_potion.base.steam.SteamTextureUtils:PUT_TEXTURE_LOADER_STEAM_AVATAR
+        </rightAfterResourceManagerCreate>
     </codePlugins>
     <_nameless debug="1"/>
     <keymap using="">
