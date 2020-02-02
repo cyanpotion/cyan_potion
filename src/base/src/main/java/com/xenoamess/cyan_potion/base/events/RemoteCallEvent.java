@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
+ * RemoteCallEvent
  * RemoteCallEvent is a type of Event that designed "delay" a function to a gameWindowComponent.
  * When this function be solved, it invoke field function on field gameWindowComponent.
  * You can see how it works exactly in AbstractGameWindowComponent.initRemoteCallEventProcessor()
