@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
+
 /**
  * <p>WalkingAnimation4Dirs class.</p>
  *
@@ -72,10 +74,10 @@ public class WalkingAnimation4Dirs extends Animation {
                                  ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
-        String resourceFilePath = resourceInfo.fileString;
-        switch (resourceInfo.type) {
-            case "characters":
-                int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
+        String resourceFilePath = resourceInfo.getFileString();
+        switch (resourceInfo.getType()) {
+            case STRING_CHARACTER:
+                int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
                 List<Texture> walkingTextures =
                         TextureUtils.getWalkingTextures(resourceManager,
                                 resourceFilePath).get(peopleIndex);

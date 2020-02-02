@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.events.Event;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindowComponentTreeNode implements AutoCloseable {
+public class GameWindowComponentTreeNode implements Closeable {
     private final GameWindowComponentTree gameWindowComponentTree;
 
     private final GameWindowComponentTreeNode parent;

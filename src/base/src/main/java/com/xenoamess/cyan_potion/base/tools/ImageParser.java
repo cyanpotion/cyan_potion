@@ -73,6 +73,7 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -86,7 +87,7 @@ import static org.lwjgl.stb.STBImage.stbi_load;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class ImageParser implements AutoCloseable {
+public class ImageParser implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ImageParser.class);

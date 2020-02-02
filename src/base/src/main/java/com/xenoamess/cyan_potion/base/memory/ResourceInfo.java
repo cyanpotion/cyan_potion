@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
@@ -48,14 +49,14 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
     @Override
     public void serialize(ResourceInfo value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
-        if (value.values == null) {
+        if (value.getValues() == null) {
             return;
         }
         jsonGenerator.writeStartArray();
-        jsonGenerator.writeString(value.resourceClass.getCanonicalName());
-        jsonGenerator.writeString(value.type);
-        jsonGenerator.writeString(value.fileString);
-        for (String string : value.values) {
+        jsonGenerator.writeString(value.getResourceClass().getCanonicalName());
+        jsonGenerator.writeString(value.getType());
+        jsonGenerator.writeString(value.getFileString());
+        for (String string : value.getValues()) {
             jsonGenerator.writeString(string);
         }
         jsonGenerator.writeEndArray();
@@ -124,11 +125,12 @@ public class ResourceInfo<T extends AbstractResource> {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
-    public final Class<T> resourceClass;
-    public final String type;
-    public final String fileString;
-    public final FileObject fileObject;
-    public final String[] values;
+
+    private final Class<T> resourceClass;
+    private final String type;
+    private final String fileString;
+    private final FileObject fileObject;
+    private final String[] values;
 
 
     private String toString;
@@ -148,13 +150,13 @@ public class ResourceInfo<T extends AbstractResource> {
         this.resourceClass = resourceClass;
         this.type = type;
         this.fileString = fileObjectString;
-        this.fileObject = ResourceManager.resolveFile(this.fileString);
+        this.fileObject = ResourceManager.resolveFile(this.getFileString());
         this.values = values;
 
         try {
             this.toString = getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            LOGGER.error("toString() fails, {},{}", this.resourceClass, this.values, e);
+            LOGGER.error("toString() fails, {},{}", this.getResourceClass(), this.getValues(), e);
         }
     }
 
@@ -216,5 +218,25 @@ public class ResourceInfo<T extends AbstractResource> {
     @Override
     public int hashCode() {
         return this.toString().hashCode();
+    }
+
+    public Class<T> getResourceClass() {
+        return resourceClass;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getFileString() {
+        return fileString;
+    }
+
+    public FileObject getFileObject() {
+        return fileObject;
+    }
+
+    public String[] getValues() {
+        return Arrays.copyOf(values, values.length);
     }
 }

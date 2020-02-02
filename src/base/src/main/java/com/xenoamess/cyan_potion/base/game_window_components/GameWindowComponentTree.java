@@ -33,9 +33,8 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.Closeable;
 import java.util.*;
-
-import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
 
 
 /**
@@ -48,9 +47,10 @@ import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFiel
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindowComponentTree implements AutoCloseable {
+public class GameWindowComponentTree implements Closeable {
     @AsFinalField
     private GameWindowComponentTreeNode root;
+
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
     /**
@@ -167,7 +167,7 @@ public class GameWindowComponentTree implements AutoCloseable {
                     }
                 };
 
-        this.setRoot(new GameWindowComponentTreeNode(this, null, baseComponent));
+        this.root = new GameWindowComponentTreeNode(this, null, baseComponent);
         this.leafNodesAdd(this.getRoot());
     }
 
@@ -266,16 +266,5 @@ public class GameWindowComponentTree implements AutoCloseable {
      */
     public GameWindowComponentTreeNode getRoot() {
         return root;
-    }
-
-    /**
-     * set root of this tree.
-     * notice that root is an {@link com.xenoamess.commons.as_final_field.AsFinalField}.
-     *
-     * @param gameWindowComponentTreeNode root
-     * @see AsFinalField
-     */
-    public void setRoot(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        asFinalFieldSet(this, "root", gameWindowComponentTreeNode);
     }
 }

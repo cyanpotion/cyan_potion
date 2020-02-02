@@ -204,7 +204,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      Model model,
                                      Vector4f colorScale,
                                      float rotateRadius) {
-        this.getGameWindow().drawBindableRelative(
+        this.getGameWindow().drawBindableRelativeCenter(
                 bindable,
                 (posX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F,
                 (posY - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F,

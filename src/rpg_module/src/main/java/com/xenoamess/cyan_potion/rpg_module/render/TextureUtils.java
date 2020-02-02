@@ -52,6 +52,12 @@ import java.util.List;
  * @version 0.143.0
  */
 public class TextureUtils {
+    public static final String STRING_CHARACTER = "characters";
+    public static final String STRING_A5 = "A5";
+    public static final String STRING_B = "B";
+    public static final String STRING_C = "C";
+    public static final String STRING_A2 = "A2";
+
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
@@ -74,13 +80,13 @@ public class TextureUtils {
 
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
 
-        final int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
-        final int textureIndex = Integer.parseInt(resourceInfo.values[1]);
+        final int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
+        final int textureIndex = Integer.parseInt(resourceInfo.getValues()[1]);
 
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
@@ -115,8 +121,8 @@ public class TextureUtils {
                     final Texture nowTexture =
                             texture.getResourceManager().fetchResource(
                                     texture.getClass(),
-                                    "characters",
-                                    texture.getResourceInfo().fileString,
+                                    STRING_CHARACTER,
+                                    texture.getResourceInfo().getFileString(),
                                     Integer.toString(k),
                                     Integer.toString(i * 3 + j)
                             );
@@ -152,14 +158,14 @@ public class TextureUtils {
         }
 
         ResourceInfo resourceInfo = texture.getResourceInfo();
-        final String resourceType = resourceInfo.type;
+        final String resourceType = resourceInfo.getType();
         int columnNum;
         switch (resourceType) {
-            case "A5":
+            case STRING_A5:
                 columnNum = 1;
                 break;
-            case "B":
-            case "C":
+            case STRING_B:
+            case STRING_C:
                 columnNum = 2;
                 break;
             default:
@@ -168,7 +174,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage =
                     ImageIO.read(inputStream);
         } catch (IOException e) {
@@ -201,7 +207,7 @@ public class TextureUtils {
                             texture.getResourceManager().fetchResource(
                                     Texture.class,
                                     resourceType,
-                                    resourceInfo.fileString,
+                                    resourceInfo.getFileString(),
                                     Integer.toString(k),
                                     Integer.toString(i * 8 + j)
                             );
@@ -247,7 +253,7 @@ public class TextureUtils {
         final Texture nowTexture =
                 resourceManager.fetchResource(
                         Texture.class,
-                        "A2",
+                        STRING_A2,
                         fileString,
                         Integer.toString(kk),
                         Integer.toString(ti)
@@ -646,7 +652,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage =
                     ImageIO.read(inputStream);
         } catch (IOException e) {
@@ -676,13 +682,13 @@ public class TextureUtils {
                 final Texture nowTexture =
                         texture.getResourceManager().fetchResource(
                                 texture.getClass(),
-                                "A2",
-                                texture.getResourceInfo().fileString,
+                                STRING_A2,
+                                texture.getResourceInfo().getFileString(),
                                 Integer.toString(k),
                                 Integer.toString(ti)
                         );
                 if (!nowTexture.isInMemory()) {
-                    loadTilesetTexturesA2Single(texture.getResourceManager(), resourceInfo.fileString,
+                    loadTilesetTexturesA2Single(texture.getResourceManager(), resourceInfo.getFileString(),
                             k, singleWidth, singleHeight, entireWidth, entireHeight, startPosX, startPosY, pixelsRaw);
                     break;
                 }
@@ -753,7 +759,7 @@ public class TextureUtils {
                 res.add(
                         resourceManager.fetchResource(
                                 Texture.class,
-                                "A2",
+                                STRING_A2,
                                 tilesetTexturesFilepath,
                                 Integer.toString(k),
                                 Integer.toString(ti)
@@ -772,7 +778,7 @@ public class TextureUtils {
      * @return return
      */
     public static List<Texture> getTilesetTexturesA5(ResourceManager resourceManager, String tilesetTexturesFilepath) {
-        return getTilesetTextures8(resourceManager, "A5",
+        return getTilesetTextures8(resourceManager, STRING_A5,
                 tilesetTexturesFilepath, 1);
     }
 
@@ -796,7 +802,7 @@ public class TextureUtils {
      * @return return
      */
     public static List<Texture> getTilesetTexturesC(ResourceManager resourceManager, String tilesetTexturesFilepath) {
-        return getTilesetTextures8(resourceManager, "C",
+        return getTilesetTextures8(resourceManager, STRING_C,
                 tilesetTexturesFilepath, 2);
     }
 

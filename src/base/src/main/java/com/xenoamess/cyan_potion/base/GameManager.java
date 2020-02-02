@@ -24,10 +24,7 @@
 
 package com.xenoamess.cyan_potion.base;
 
-import com.codedisaster.steamworks.SteamAPI;
 import com.codedisaster.steamworks.SteamApps;
-import com.codedisaster.steamworks.SteamException;
-import com.codedisaster.steamworks.SteamUserStats;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
@@ -49,6 +46,7 @@ import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.runtime.RuntimeManager;
 import com.xenoamess.cyan_potion.base.runtime.SaveManager;
 import com.xenoamess.cyan_potion.base.setting_file.SettingFileParsers;
+import com.xenoamess.cyan_potion.base.steam.SteamManager;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
@@ -61,20 +59,16 @@ import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
@@ -84,7 +78,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameManager implements AutoCloseable {
+public class GameManager implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
@@ -102,25 +96,24 @@ public class GameManager implements AutoCloseable {
 
     @AsFinalField
     private ConsoleThread consoleThread;
+
     @AsFinalField
     private GameWindow gameWindow;
     private final Callbacks callbacks = new Callbacks(this);
-    @AsFinalField
-    private SteamUserStats steamUserStats;
     private final DataCenter dataCenter = new DataCenter(this);
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
     private final Keymap keymap = new Keymap();
-    private final GamepadInputManager gamepadInputManager = new GamepadInputManager();
+    private final GamepadInputManager gamepadInputManager = new GamepadInputManager(this);
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
 
     private final AudioManager audioManager = new AudioManager(this);
-    @AsFinalField
-    private ResourceManager resourceManager;
+    private final ResourceManager resourceManager = new ResourceManager(this);
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
     private final SaveManager saveManager = new SaveManager(this);
+    private final SteamManager steamManager = new SteamManager(this);
 
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(10);
@@ -240,9 +233,9 @@ public class GameManager implements AutoCloseable {
     private void initConsoleThread() {
 
         if (this.getDataCenter().getGameSettings().isNoConsoleThread()) {
-            this.setConsoleThread(null);
+            this.consoleThread = null;
         } else {
-            this.setConsoleThread(new ConsoleThread(this));
+            this.consoleThread = new ConsoleThread(this);
         }
         if (getConsoleThread() != null) {
             getConsoleThread().start();
@@ -278,14 +271,14 @@ public class GameManager implements AutoCloseable {
 
         this.initCodePluginManager();
 
-        this.initSteam();
+        this.getSteamManager().init();
 
         this.loadText();
 
         this.initConsoleThread();
 
         this.codePluginManager.apply(this, rightBeforeResourceManagerCreate);
-        this.resourceManager = new ResourceManager(this);
+        this.getResourceManager().init();
         this.codePluginManager.apply(this, rightAfterResourceManagerCreate);
 
         this.codePluginManager.apply(this, rightBeforeGameWindowInit);
@@ -297,7 +290,7 @@ public class GameManager implements AutoCloseable {
         this.codePluginManager.apply(this, rightAfterAudioManagerInit);
 
         this.codePluginManager.apply(this, rightBeforeGamepadInputManagerInit);
-        this.getGamepadInputManager().init(this);
+        this.getGamepadInputManager().init();
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
 
         this.getSaveManager().init();
@@ -306,7 +299,7 @@ public class GameManager implements AutoCloseable {
         final String defaultFontResourceJsonString = this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
 
         if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
-            Font.setDefaultFont(this.resourceManager.fetchResource(Font.class, defaultFontResourceJsonString));
+            Font.setDefaultFont(this.getResourceManager().fetchResource(Font.class, defaultFontResourceJsonString));
             Font.getDefaultFont().startLoad();
             Font.setCurrentFont(Font.getDefaultFont());
         }
@@ -412,93 +405,6 @@ public class GameManager implements AutoCloseable {
 
 
     /**
-     * Load runWithSteam from CommonSettings.
-     * if runWithSteam == true,
-     * -- try load steamAPI.
-     * -- if succeed
-     * ---- then start game, and set RunWithSteam be true.
-     * -- else
-     * ---- if DataCenter.ALLOW_RUN_WITHOUT_STEAM is true
-     * ------ then still start the game but RunWithSteam will be false.
-     * ---- else
-     * ------ exit 1
-     * else,
-     * -- if DataCenter.ALLOW_RUN_WITHOUT_STEAM is true,
-     * ---- then still start the game but RunWithSteam will be false.
-     * -- else
-     * ---- exit 1
-     */
-    protected void initSteam() {
-        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
-            this.renewSteam_appid();
-            try {
-                SteamAPI.loadLibraries();
-                if (!SteamAPI.init()) {
-                    throw new SteamException("Steamworks initialization error");
-                }
-                this.setSteamUserStats(
-                        new SteamUserStats(this.getCallbacks().getSteamUserStatsCallback())
-                );
-                this.getDataCenter().getGameSettings().setRunWithSteam(true);
-            } catch (SteamException e) {
-                // Error extracting or loading native libraries
-                this.getDataCenter().getGameSettings().setRunWithSteam(false);
-                LOGGER.warn("SteamAPI.init() fails", e);
-                shutIfNotAllowRunWithoutSteam();
-            }
-        } else {
-            shutIfNotAllowRunWithoutSteam();
-        }
-
-        long steamRunCallbacksNanoLong = this.getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
-
-        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
-            this.getScheduledExecutorService().scheduleAtFixedRate(
-                    this::steamRunCallbacks,
-                    0,
-                    steamRunCallbacksNanoLong, TimeUnit.NANOSECONDS);
-        }
-    }
-
-    private static void shutIfNotAllowRunWithoutSteam() {
-        if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-            LOGGER.warn("Steam load failed but somehow we cannot prevent " +
-                    "you from playing it.");
-        } else {
-            LOGGER.error("Steam load failed, thus the game shut.");
-            System.exit(1);
-        }
-    }
-
-    /**
-     * renew steam_appid.txt
-     * notice that this function shall only be invoked when runWithSteam=true
-     * (runWithSteam is false by default)
-     */
-    protected void renewSteam_appid() {
-        String steam_appid = this.getDataCenter().getGameSettings().getSteam_appid();
-        FileObject steam_appidFileObject = ResourceManager.resolveFile("steam_appid.txt");
-        if (!StringUtils.isBlank(steam_appid)) {
-            try (OutputStream outputStream = steam_appidFileObject.getContent().getOutputStream();
-                 PrintWriter printWriter = new PrintWriter(outputStream);
-            ) {
-                printWriter.write(steam_appid.trim());
-            } catch (IOException e) {
-                LOGGER.error("write to steam_appid.txt failed!", e);
-            }
-        } else {
-            try {
-                steam_appid = steam_appidFileObject.getContent().getString(StandardCharsets.UTF_8).trim();
-            } catch (IOException e) {
-                LOGGER.error("read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
-            }
-        }
-        if (StringUtils.isBlank(steam_appid)) {
-            LOGGER.error("OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
-        }
-    }
-
-    /**
      * shutdown.
      */
     public void shutdown() {
@@ -519,16 +425,15 @@ public class GameManager implements AutoCloseable {
         this.getGameWindow().close();
         this.getAudioManager().close();
         this.getGamepadInputManager().close();
+        this.getSteamManager().close();
+
         setAlive(false);
 
         if (getConsoleThread() != null) {
             getConsoleThread().shutdown();
         }
 
-        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
-            this.getSteamUserStats().dispose();
-            SteamAPI.shutdown();
-        }
+
         this.getScheduledExecutorService().shutdown();
     }
 
@@ -549,7 +454,7 @@ public class GameManager implements AutoCloseable {
             try {
                 GameWindow localGameWindow =
                         (GameWindow) this.getClass().getClassLoader().loadClass(gameWindowClassName).getConstructor(this.getClass()).newInstance(this);
-                this.setGameWindow(localGameWindow);
+                this.gameWindow = localGameWindow;
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 LOGGER.error("GameManager.initGameWindow() fails", e);
                 System.exit(-1);
@@ -750,7 +655,7 @@ public class GameManager implements AutoCloseable {
      * <p>update.</p>
      */
     protected void update() {
-        this.getGamepadInputManager().update(this.getGameWindow());
+        this.getGamepadInputManager().update();
         getGameWindow().update();
         this.getGameWindowComponentTree().update();
         this.getAudioManager().update();
@@ -761,19 +666,6 @@ public class GameManager implements AutoCloseable {
      */
     protected void draw() {
         getGameWindow().draw();
-    }
-
-    /**
-     * <p>steamRunCallbacks.</p>
-     */
-    protected void steamRunCallbacks() {
-        if (this.getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning()) {
-            SteamAPI.runCallbacks();
-        } else {
-            if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                this.shutdown();
-            }
-        }
     }
 
 
@@ -809,15 +701,6 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>Setter for the field <code>consoleThread</code>.</p>
-     *
-     * @param consoleThread consoleThread
-     */
-    public void setConsoleThread(ConsoleThread consoleThread) {
-        asFinalFieldSet(this, "consoleThread", consoleThread);
-    }
-
-    /**
      * <p>Getter for the field <code>gameWindow</code>.</p>
      *
      * @return return
@@ -827,39 +710,12 @@ public class GameManager implements AutoCloseable {
     }
 
     /**
-     * <p>Setter for the field <code>gameWindow</code>.</p>
-     *
-     * @param gameWindow gameWindow
-     */
-    public void setGameWindow(GameWindow gameWindow) {
-        asFinalFieldSet(this, "gameWindow", gameWindow);
-    }
-
-    /**
      * <p>Getter for the field <code>callbacks</code>.</p>
      *
      * @return return
      */
     public Callbacks getCallbacks() {
         return callbacks;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUserStats</code>.</p>
-     *
-     * @return return
-     */
-    public SteamUserStats getSteamUserStats() {
-        return steamUserStats;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUserStats</code>.</p>
-     *
-     * @param steamUserStats steamUserStats
-     */
-    public void setSteamUserStats(SteamUserStats steamUserStats) {
-        asFinalFieldSet(this, "steamUserStats", steamUserStats);
     }
 
     /**
@@ -1037,5 +893,9 @@ public class GameManager implements AutoCloseable {
      */
     public SaveManager getSaveManager() {
         return saveManager;
+    }
+
+    public SteamManager getSteamManager() {
+        return steamManager;
     }
 }

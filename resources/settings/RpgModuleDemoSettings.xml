@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settingFile settingFormatVersion="0.3.0">
-    <commonSettings gameName="CyanPotionRpgModuleDemo" gameVersion="0.151.1" titleTextID="0"
+    <commonSettings gameName="CyanPotionRpgModuleDemo" gameVersion="0.152.0" titleTextID="0"
                     textFilePath="resources/text/text.x8l"
                     defaultFontResourceURI="[&quot;com.xenoamess.cyan_potion.base.visual.Font&quot;,&quot;ttfFile&quot;,&quot;resources/www/fonts/SourceHanSans-Normal.ttc&quot;]"
                     language="english" gameWindowClassName="com.xenoamess.cyan_potion.base.GameWindow"
@@ -21,6 +21,9 @@
         </rightAfterResourceManagerCreate>
         <rightAfterResourceManagerCreate>
             SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.plugins.CodePlugins:PLUGIN_RPG_MODULE_TEXTURE_LOADERS
+        </rightAfterResourceManagerCreate>
+        <rightAfterResourceManagerCreate>
+            SimpleFunctionObject:com.xenoamess.cyan_potion.base.steam.SteamTextureUtils:PUT_TEXTURE_LOADER_STEAM_AVATAR
         </rightAfterResourceManagerCreate>
     </codePlugins>
     <_nameless debug="1"/>

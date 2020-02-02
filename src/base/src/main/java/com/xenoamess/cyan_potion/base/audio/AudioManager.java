@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.SubManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import org.joml.Vector3f;
 import org.lwjgl.openal.*;
@@ -52,7 +53,7 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * @see #useSource()
  * @see #useSource(WaveData)
  */
-public class AudioManager implements AutoCloseable {
+public class AudioManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AudioManager.class);
@@ -60,11 +61,6 @@ public class AudioManager implements AutoCloseable {
      * Initial used Source s' num.
      */
     public static final int INITIAL_TEMP_SOURCES_NUM = 128;
-
-    /**
-     * GameManager
-     */
-    private final GameManager gameManager;
 
     /**
      * Well sometimes we just want to map some sources to some name and get them by name and reuse them.
@@ -102,7 +98,7 @@ public class AudioManager implements AutoCloseable {
      * @param gameManager gameManager
      */
     public AudioManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
     }
 
     /**
@@ -418,15 +414,6 @@ public class AudioManager implements AutoCloseable {
         this.listenerVelocity = new Vector3f(listenerVelocity);
         AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x,
                 this.listenerVelocity.y, this.listenerVelocity.z);
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return return
-     */
-    public GameManager getGameManager() {
-        return gameManager;
     }
 
     /**

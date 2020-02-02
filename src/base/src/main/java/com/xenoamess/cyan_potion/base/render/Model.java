@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.render;
 
 import org.lwjgl.system.MemoryStack;
 
+import java.io.Closeable;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -36,7 +38,7 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Model implements AutoCloseable {
+public class Model implements Closeable {
     /**
      * Constant <code>INITIALIZED_VALUE=-1</code>
      */

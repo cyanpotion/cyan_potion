@@ -415,7 +415,7 @@ public class Font extends AbstractResource {
     };
 
     private boolean loadAsTtfFileFont(ResourceInfo<Font> resourceInfo) {
-        return this.loadBitmap(resourceInfo.fileObject);
+        return this.loadBitmap(resourceInfo.getFileObject());
     }
 
     /**

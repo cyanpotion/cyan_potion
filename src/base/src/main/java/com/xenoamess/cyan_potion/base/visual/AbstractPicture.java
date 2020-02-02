@@ -65,7 +65,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
         if (this.getCurrentBindable() == null) {
             return;
         }
-        gameWindow.drawBindableRelative(
+        gameWindow.drawBindableRelativeCenter(
                 this.getCurrentBindable(),
                 this.getCenterPosX(),
                 this.getCenterPosY(),

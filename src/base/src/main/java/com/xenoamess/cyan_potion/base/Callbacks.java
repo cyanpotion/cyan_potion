@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base;
 
-import com.codedisaster.steamworks.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
@@ -99,62 +98,6 @@ public class Callbacks {
             (long window, int codepoint) -> {
                 Event event = new CharEvent(window, codepoint);
                 getGameManager().eventListAdd(event);
-            };
-
-
-    private SteamUserStatsCallback steamUserStatsCallback =
-            new SteamUserStatsCallback() {
-
-                @Override
-                public void onUserStatsReceived(long gameId,
-                                                SteamID steamIDUser,
-                                                SteamResult result) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onUserStatsStored(long gameId, SteamResult result) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onUserStatsUnloaded(SteamID steamIDUser) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onUserAchievementStored(long gameId,
-                                                    boolean isGroupAchievement,
-                                                    String achievementName,
-                                                    int curProgress,
-                                                    int maxProgress) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onLeaderboardFindResult(SteamLeaderboardHandle leaderboard, boolean found) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onLeaderboardScoresDownloaded(SteamLeaderboardHandle leaderboard,
-                                                          SteamLeaderboardEntriesHandle entries, int numEntries) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onLeaderboardScoreUploaded(boolean success,
-                                                       SteamLeaderboardHandle leaderboard, int score,
-                                                       boolean scoreChanged, int globalRankNew,
-                                                       int globalRankPrevious) {
-                    // do nothing here.
-                }
-
-                @Override
-                public void onGlobalStatsReceived(long gameId,
-                                                  SteamResult result) {
-                    // do nothing here.
-                }
             };
 
     private GLFWDropCallbackI dropCallback =
@@ -296,24 +239,6 @@ public class Callbacks {
      */
     public void setCharCallback(GLFWCharCallbackI charCallback) {
         this.charCallback = charCallback;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUserStatsCallback</code>.</p>
-     *
-     * @return steamUserStatsCallback
-     */
-    public SteamUserStatsCallback getSteamUserStatsCallback() {
-        return steamUserStatsCallback;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUserStatsCallback</code>.</p>
-     *
-     * @param steamUserStatsCallback steamUserStatsCallback
-     */
-    public void setSteamUserStatsCallback(SteamUserStatsCallback steamUserStatsCallback) {
-        this.steamUserStatsCallback = steamUserStatsCallback;
     }
 
     /**

@@ -56,17 +56,16 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * <p>GameWindow class.</p>
+ * //TODO
+ * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
  * @version 0.143.0
  */
-public class GameWindow implements AutoCloseable, AbstractMutableArea {
+public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
-
-    private final GameManager gameManager;
 
     /**
      * <p>Constructor for GameWindow.</p>
@@ -74,8 +73,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param gameManager gameManager
      */
     public GameWindow(GameManager gameManager) {
-        super();
-        this.gameManager = gameManager;
+        super(gameManager);
     }
 
     private long window;
@@ -547,30 +545,307 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glfwSwapBuffers(getWindow());
     }
 
+    //---drawBindableRelative start---
+
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable    bindable
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     */
+    public void drawBindableRelativeLeftTop(
+            Bindable bindable,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height
+    ) {
+        this.drawBindableRelativeLeftTop(
+                bindable,
+                leftTopPosX,
+                leftTopPosY,
+                width,
+                height,
+                Model.COMMON_MODEL,
+                new Vector4f(1, 1, 1, 1)
+        );
+    }
+
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   bindable
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     */
+    public void drawBindableRelativeCenter(
+            Bindable bindable,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height
+    ) {
+        this.drawBindableRelativeCenter(
+                bindable,
+                centerPosX,
+                centerPosY,
+                width,
+                height,
+                Model.COMMON_MODEL,
+                new Vector4f(1, 1, 1, 1)
+        );
+    }
+
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable    bindable
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @param model       a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     */
+    public void drawBindableRelativeLeftTop(
+            Bindable bindable,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            Model model
+    ) {
+        this.drawBindableRelativeLeftTop(
+                bindable,
+                leftTopPosX,
+                leftTopPosY,
+                width,
+                height,
+                model,
+                new Vector4f(1, 1, 1, 1)
+        );
+    }
+
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   bindable
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     */
+    public void drawBindableRelativeCenter(
+            Bindable bindable,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            Model model
+    ) {
+        this.drawBindableRelativeCenter(
+                bindable,
+                centerPosX,
+                centerPosY,
+                width,
+                height,
+                model,
+                new Vector4f(1, 1, 1, 1)
+        );
+    }
+
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable    a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @param colorScale  colorScale
+     */
+    public void drawBindableRelativeLeftTop(
+            Bindable bindable,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            Vector4f colorScale
+    ) {
+        this.drawBindableRelativeLeftTop(
+                bindable,
+                leftTopPosX,
+                leftTopPosY,
+                width,
+                height,
+                Model.COMMON_MODEL,
+                colorScale
+        );
+    }
+
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param colorScale colorScale
+     */
+    public void drawBindableRelativeCenter(
+            Bindable bindable,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            Vector4f colorScale
+    ) {
+        this.drawBindableRelativeCenter(
+                bindable,
+                centerPosX,
+                centerPosY,
+                width,
+                height,
+                Model.COMMON_MODEL,
+                colorScale
+        );
+    }
+
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable    a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @param model       a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale  colorScale
+     */
+    public void drawBindableRelativeLeftTop(
+            Bindable bindable,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            Model model,
+            Vector4f colorScale
+    ) {
+        this.drawBindableRelativeLeftTop(
+                bindable,
+                leftTopPosX,
+                leftTopPosY,
+                width,
+                height,
+                model,
+                colorScale,
+                0F
+        );
+    }
+
+    /**
+     * <p>drawBindableRelative.</p>
+     *
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale colorScale
+     */
+    public void drawBindableRelativeCenter(
+            Bindable bindable,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            Model model,
+            Vector4f colorScale
+    ) {
+        this.drawBindableRelativeCenter(
+                bindable,
+                centerPosX,
+                centerPosY,
+                width,
+                height,
+                model,
+                colorScale,
+                0f
+        );
+    }
+
+
+    /**
+     * <p>drawBindableRelativeLeftTop.</p>
+     *
+     * @param bindable    a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @param model       a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale  colorScale
+     */
+    public void drawBindableRelativeLeftTop(
+            Bindable bindable,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            Model model,
+            Vector4f colorScale,
+            float rotateRadius
+    ) {
+        this.drawBindableRelativeCenter(
+                bindable,
+                leftTopPosX + width / 2,
+                leftTopPosY + height / 2,
+                width,
+                height,
+                model,
+                colorScale,
+                rotateRadius
+        );
+    }
+
     /**
      * <p>drawBindableRelative.</p>
      *
      * @param bindable     a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param posX         a float.
-     * @param posY         a float.
+     * @param centerPosX   a float.
+     * @param centerPosY   a float.
      * @param width        a float.
      * @param height       a float.
      * @param model        a {@link com.xenoamess.cyan_potion.base.render.Model} object.
      * @param colorScale   a {@link org.joml.Vector4f} object.
      * @param rotateRadius a float.
      */
-    public void drawBindableRelative(Bindable bindable, float posX,
-                                     float posY, float width, float height,
-                                     Model model, Vector4f colorScale, float rotateRadius) {
+    public void drawBindableRelativeCenter(
+            Bindable bindable,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            Model model,
+            Vector4f colorScale,
+            float rotateRadius
+    ) {
         if (bindable == null) {
             return;
         }
 
-        posX = posX / (float) this.getLogicWindowWidth();
-        posY = posY / (float) this.getLogicWindowHeight();
+        centerPosX = centerPosX / (float) this.getLogicWindowWidth();
+        centerPosY = centerPosY / (float) this.getLogicWindowHeight();
 
-        posX -= .5f;
-        posY -= .5f;
+        centerPosX -= .5f;
+        centerPosY -= .5f;
 
         if (colorScale == null) {
             colorScale = new Vector4f(1, 1, 1, 1);
@@ -584,7 +859,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
                     width / (float) this.getLogicWindowWidth(), 0, 0, 0,
                     0, height / (float) this.getLogicWindowHeight(), 0, 0,
                     0, 0, -1, 0,
-                    2 * posX, -2 * posY, 0, 1
+                    2 * centerPosX, -2 * centerPosY, 0, 1
             );
             this.getShader().setUniform("projection", projection);
         } else {
@@ -597,7 +872,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
                     line0.x / this.getLogicWindowWidth(), line0.y / this.getLogicWindowHeight(), 0, 0,
                     line1.x / this.getLogicWindowWidth(), line1.y / this.getLogicWindowHeight(), 0, 0,
                     0, 0, -1, 0,
-                    2 * posX, -2 * posY, 0, 1
+                    2 * centerPosX, -2 * centerPosY, 0, 1
             );
             this.getShader().setUniform("projection", projection);
         }
@@ -617,211 +892,9 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         Shader.unbind();
     }
 
-    /**
-     * <p>drawBindableRelative.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param posX       a float.
-     * @param posY       a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelative(Bindable bindable,
-                                     float posX,
-                                     float posY,
-                                     float width,
-                                     float height,
-                                     Model model,
-                                     Vector4f colorScale) {
-        this.drawBindableRelative(
-                bindable,
-                posX,
-                posY,
-                width,
-                height,
-                model,
-                colorScale,
-                0f
-        );
-    }
+    //---drawBindableRelative end---
 
-
-    /**
-     * <p>drawBindableRelative.</p>
-     *
-     * @param bindable bindable
-     * @param posX     a float.
-     * @param posY     a float.
-     * @param width    a float.
-     * @param height   a float.
-     */
-    public void drawBindableRelative(Bindable bindable, float posX,
-                                     float posY, float width, float height) {
-        this.drawBindableRelative(bindable, posX, posY, width, height,
-                Model.COMMON_MODEL, new Vector4f(1, 1, 1, 1));
-    }
-
-    /**
-     * <p>drawBindableRelative.</p>
-     *
-     * @param bindable bindable
-     * @param posX     a float.
-     * @param posY     a float.
-     * @param width    a float.
-     * @param height   a float.
-     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     */
-    public void drawBindableRelative(Bindable bindable, float posX,
-                                     float posY, float width, float height, Model model) {
-        this.drawBindableRelative(bindable, posX, posY, width, height,
-                model, new Vector4f(1, 1, 1, 1));
-    }
-
-    /**
-     * <p>drawBindableRelative.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param posX       a float.
-     * @param posY       a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelative(Bindable bindable, float posX,
-                                     float posY, float width, float height, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posX, posY, width, height,
-                Model.COMMON_MODEL, colorScale);
-    }
-
-
-    /**
-     * <p>drawBindableRelativeLeftTop.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param posX       a float.
-     * @param posY       a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
-                                            float posY, float width,
-                                            float height, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height,
-                Model.COMMON_MODEL, colorScale);
-    }
-
-    /**
-     * <p>drawBindableRelativeLeftTop.</p>
-     *
-     * @param bindable bindable
-     * @param posX     a float.
-     * @param posY     a float.
-     * @param width    a float.
-     * @param height   a float.
-     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     */
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
-                                            float posY, float width,
-                                            float height, Model model) {
-        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height,
-                model, new Vector4f(1, 1, 1, 1));
-    }
-
-    /**
-     * <p>drawBindableRelativeLeftTop.</p>
-     *
-     * @param bindable bindable
-     * @param posX     a float.
-     * @param posY     a float.
-     * @param width    a float.
-     * @param height   a float.
-     */
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
-                                            float posY, float width,
-                                            float height) {
-        this.drawBindableRelativeLeftTop(bindable, posX, posY, width, height, Model.COMMON_MODEL,
-                new Vector4f(1, 1, 1, 1));
-    }
-
-
-    /**
-     * <p>drawBindableRelativeLeftTop.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param posX       a float.
-     * @param posY       a float.
-     * @param width      a float.
-     * @param height     a float.
-     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelativeLeftTop(Bindable bindable, float posX,
-                                            float posY, float width,
-                                            float height, Model model, Vector4f colorScale) {
-        this.drawBindableRelative(bindable, posX + width / 2,
-                posY + height / 2, width, height, model, colorScale);
-    }
-
-
-    /**
-     * <p>drawBindableRelativeCenter.</p>
-     *
-     * @param bindable bindable
-     * @param width    a float.
-     * @param height   a float.
-     */
-    public void drawBindableRelativeCenter(Bindable bindable, float width,
-                                           float height) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
-                getLogicWindowHeight() / 2F - height / 2, width, height);
-    }
-
-    /**
-     * <p>drawBindableRelativeCenter.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param width      a float.
-     * @param height     a float.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelativeCenter(Bindable bindable, float width,
-                                           float height, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
-                getLogicWindowHeight() / 2F - height / 2, width, height, colorScale);
-    }
-
-    /**
-     * <p>drawBindableRelativeCenter.</p>
-     *
-     * @param bindable bindable
-     * @param width    a float.
-     * @param height   a float.
-     * @param model    a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     */
-    public void drawBindableRelativeCenter(Bindable bindable, float width,
-                                           float height, Model model) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
-                getLogicWindowHeight() / 2F - height / 2, width, height, model);
-    }
-
-    /**
-     * <p>drawBindableRelativeCenter.</p>
-     *
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param width      a float.
-     * @param height     a float.
-     * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale colorScale
-     */
-    public void drawBindableRelativeCenter(Bindable bindable, float width,
-                                           float height, Model model, Vector4f colorScale) {
-        this.drawBindableRelativeLeftTop(bindable, getLogicWindowWidth() / 2F - width / 2,
-                getLogicWindowHeight() / 2F - height / 2, width, height, model, colorScale);
-    }
-
+    //---drawTextFillArea start---
 
     /**
      * <p>drawTextFillAreaLeftTop.</p>
@@ -836,10 +909,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextFillAreaLeftTop(Font font, float leftTopPosX, float leftTopPosY,
-                                                       float width, float height,
-                                                       float characterSpace, Vector4f color,
-                                                       String text) {
+    public Font.DrawTextStruct drawTextFillAreaLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -869,10 +948,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextFillAreaCenter(Font font, float centerPosX, float centerPosY, float width,
-                                                      float height,
-                                                      float characterSpace, Vector4f color,
-                                                      String text) {
+    public Font.DrawTextStruct drawTextFillAreaCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -889,22 +974,9 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         return drawTextStruct;
     }
 
+    //---drawTextFillArea end---
 
-    /**
-     * <p>drawText.</p>
-     *
-     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param height      a float.
-     * @param color       a {@link org.joml.Vector4f} object.
-     * @param text        a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
-     */
-    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height,
-                                               Vector4f color, String text) {
-        return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, 0, color, text);
-    }
+    //---drawText start---
 
     /**
      * <p>drawText.</p>
@@ -918,8 +990,15 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, float characterSpace,
-                                               Vector4f color, String text) {
+    public Font.DrawTextStruct drawTextLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
@@ -927,6 +1006,42 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
         drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
+        drawTextStruct.setHeight(height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param centerPosX     a float.
+     * @param centerPosY     a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
+        centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setCenterPosXY(centerPosX, centerPosY);
         drawTextStruct.setHeight(height);
         drawTextStruct.setCharacterSpace(characterSpace);
         drawTextStruct.setColor(color);
@@ -948,9 +1063,16 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY,
-                                               float width, float height, float characterSpace,
-                                               Vector4f color, String text) {
+    public Font.DrawTextStruct drawTextLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -971,6 +1093,90 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
     /**
      * <p>drawText.</p>
      *
+     * @param font           a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param centerPosX     a float.
+     * @param centerPosY     a float.
+     * @param width          a float.
+     * @param height         a float.
+     * @param characterSpace a float.
+     * @param color          a {@link org.joml.Vector4f} object.
+     * @param text           a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Vector4f color,
+            String text
+    ) {
+        centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
+        height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+
+        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        drawTextStruct.setFont(font);
+        drawTextStruct.setCenterPosXY(centerPosX, centerPosY);
+        drawTextStruct.setWidth(width);
+        drawTextStruct.setHeight(height);
+        drawTextStruct.setCharacterSpace(characterSpace);
+        drawTextStruct.setColor(color);
+        drawTextStruct.setText(text);
+        drawTextStruct.draw();
+        return drawTextStruct;
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font        a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param height      a float.
+     * @param color       a {@link org.joml.Vector4f} object.
+     * @param text        a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            float height,
+            Vector4f color,
+            String text
+    ) {
+        return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, 0, color, text);
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font       a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param height     a float.
+     * @param color      a {@link org.joml.Vector4f} object.
+     * @param text       a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            float height,
+            Vector4f color,
+            String text
+    ) {
+        return this.drawTextCenter(font, centerPosX, centerPosY, height, 0, color, text);
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
      * @param font        font
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
@@ -978,8 +1184,34 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text        text
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, float height, String text) {
+    public Font.DrawTextStruct drawTextLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            float height,
+            String text
+    ) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, new Vector4f(1, 1, 1, 1), text);
+    }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font       font
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param height     a float.
+     * @param text       text
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            float height,
+            String text
+    ) {
+        return this.drawTextCenter(font, centerPosX, centerPosY, height, new Vector4f(1, 1, 1, 1), text);
     }
 
     /**
@@ -991,9 +1223,34 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      * @param text        text
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
      */
-    public Font.DrawTextStruct drawTextLeftTop(Font font, float leftTopPosX, float leftTopPosY, String text) {
+    public Font.DrawTextStruct drawTextLeftTop(
+            Font font,
+            float leftTopPosX,
+            float leftTopPosY,
+            String text
+    ) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, 30, text);
     }
+
+    /**
+     * <p>drawText.</p>
+     *
+     * @param font       font
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param text       text
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     */
+    public Font.DrawTextStruct drawTextCenter(
+            Font font,
+            float centerPosX,
+            float centerPosY,
+            String text
+    ) {
+        return this.drawTextCenter(font, centerPosX, centerPosY, 30, text);
+    }
+
+    //---drawText end---
 
     /**
      * <p>bindGlViewportToFullWindow.</p>
@@ -1002,7 +1259,7 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         glViewport(0, 0, this.getRealWindowWidth(), this.getRealWindowHeight());
     }
 
-    //shortcuts
+    //---shortcuts start---
 
     /**
      * <p>getResourceManager.</p>
@@ -1022,6 +1279,8 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
         return this.getGameManager().getDataCenter();
     }
 
+    //---shortcuts end---
+
     //--- getters and setters ---
 
     /**
@@ -1031,15 +1290,6 @@ public class GameWindow implements AutoCloseable, AbstractMutableArea {
      */
     public long getWindow() {
         return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return return
-     */
-    public GameManager getGameManager() {
-        return gameManager;
     }
 
     /**

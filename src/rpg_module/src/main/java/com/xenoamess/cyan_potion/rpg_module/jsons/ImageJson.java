@@ -30,6 +30,8 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 
 import java.io.Serializable;
 
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
+
 /**
  * <p>ImageJson class.</p>
  *
@@ -59,7 +61,7 @@ public class ImageJson implements Serializable {
             tmp += this.pattern;
             return resourceManager.fetchResource(
                     Texture.class,
-                    "characters",
+                    STRING_CHARACTER,
                     "resources/www/img/characters/" + this.characterName + ".png",
                     Integer.toString(this.characterIndex),
                     Integer.toString(tmp)

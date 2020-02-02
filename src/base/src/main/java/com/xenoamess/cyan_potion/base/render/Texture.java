@@ -229,7 +229,7 @@ public class Texture extends AbstractResource implements Bindable {
         }
 
         BufferedImage bufferedImage = null;
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("Texture.loadAsPictureTexture(String fullResourceURI) fails:{}", resourceInfo, e);

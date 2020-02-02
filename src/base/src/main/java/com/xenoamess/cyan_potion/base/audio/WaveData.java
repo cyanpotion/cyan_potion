@@ -55,7 +55,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class WaveData extends AbstractResource implements AutoCloseable {
+public class WaveData extends AbstractResource {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
@@ -194,7 +194,7 @@ public class WaveData extends AbstractResource implements AutoCloseable {
             return false;
         }
 
-        FileObject resourceFileObject = resourceInfo.fileObject;
+        FileObject resourceFileObject = resourceInfo.getFileObject();
 
         try (InputStream inputStream = resourceFileObject.getContent().getInputStream()) {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
