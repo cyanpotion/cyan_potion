@@ -43,7 +43,7 @@ public class SteamImage {
     private int height = -1;
     private ByteBuffer imageBuffer = null;
 
-    SteamImage(int imageHandle) {
+    public SteamImage(int imageHandle) {
         this.imageHandle = imageHandle;
     }
 
