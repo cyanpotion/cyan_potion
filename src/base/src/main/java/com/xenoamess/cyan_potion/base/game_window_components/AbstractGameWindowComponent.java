@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.RemoteCallEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.slf4j.Logger;
@@ -88,7 +89,21 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public AbstractGameWindowComponent(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+        this.initRemoteCallEventProcessor();
         this.initProcessors();
+    }
+
+    protected void initRemoteCallEventProcessor() {
+        this.registerProcessor(
+                RemoteCallEvent.class,
+                remoteCallEvent -> {
+                    if (remoteCallEvent.getGameWindowComponent() != AbstractGameWindowComponent.this) {
+                        //if remoteCallEvent is not for this gameWindowComponent, then return event.
+                        return remoteCallEvent;
+                    }
+                    return (Event) remoteCallEvent.getFunction().apply(AbstractGameWindowComponent.this);
+                }
+        );
     }
 
     /**
@@ -263,11 +278,13 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @see Event#apply(GameManager)
      */
     public <T extends Event> Event process(T event) {
-        EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
-        if (processor != null) {
-            return processor.apply(event);
+        synchronized (this) {
+            EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
+            if (processor != null) {
+                return processor.apply(event);
+            }
+            return event;
         }
-        return event;
     }
 
     /**
