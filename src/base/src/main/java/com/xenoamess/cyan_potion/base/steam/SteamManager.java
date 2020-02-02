@@ -131,16 +131,16 @@ public class SteamManager extends SubManager {
                 setSteamFriends(new SteamFriends(this.getSteamCallbacks().getSteamFriendsCallback()));
 
 
-                LOGGER.debug("Local user account ID: " + getSteamUser().getSteamID().getAccountID());
-                LOGGER.debug("Local user steam ID: " + SteamID.getNativeHandle(getSteamUser().getSteamID()));
-                LOGGER.debug("Local user friends name: " + getSteamFriends().getPersonaName());
-                LOGGER.debug("App ID: " + getSteamUtils().getAppID());
+                LOGGER.debug("[steam]Local user account ID: " + getSteamUser().getSteamID().getAccountID());
+                LOGGER.debug("[steam]Local user steam ID: " + SteamID.getNativeHandle(getSteamUser().getSteamID()));
+                LOGGER.debug("[steam]Local user friends name: " + getSteamFriends().getPersonaName());
+                LOGGER.debug("[steam]App ID: " + getSteamUtils().getAppID());
 
-                LOGGER.debug("App build ID: " + getSteamApps().getAppBuildId());
-                LOGGER.debug("App owner: " + getSteamApps().getAppOwner().getAccountID());
+                LOGGER.debug("[steam]App build ID: " + getSteamApps().getAppBuildId());
+                LOGGER.debug("[steam]App owner: " + getSteamApps().getAppOwner().getAccountID());
 
-                LOGGER.debug("Current game language: " + getSteamApps().getCurrentGameLanguage());
-                LOGGER.debug("Available game languages: " + getSteamApps().getAvailableGameLanguages());
+                LOGGER.debug("[steam]Current game language: " + getSteamApps().getCurrentGameLanguage());
+                LOGGER.debug("[steam]Available game languages: " + getSteamApps().getAvailableGameLanguages());
 
                 this.getGameManager().getDataCenter().getGameSettings().setRunWithSteam(true);
             } catch (SteamException e) {
@@ -165,10 +165,10 @@ public class SteamManager extends SubManager {
 
     private static void shutIfNotAllowRunWithoutSteam() {
         if (DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-            LOGGER.warn("Steam load failed but somehow we cannot prevent " +
+            LOGGER.warn("[steam]Steam load failed but somehow we cannot prevent " +
                     "you from playing it.");
         } else {
-            LOGGER.error("Steam load failed, thus the game shut.");
+            LOGGER.error("[steam]Steam load failed, thus the game shut.");
             System.exit(1);
         }
     }
@@ -187,17 +187,17 @@ public class SteamManager extends SubManager {
             ) {
                 printWriter.write(steam_appid.trim());
             } catch (IOException e) {
-                LOGGER.error("write to steam_appid.txt failed!", e);
+                LOGGER.error("[steam]write to steam_appid.txt failed!", e);
             }
         } else {
             try {
                 steam_appid = steam_appidFileObject.getContent().getString(StandardCharsets.UTF_8).trim();
             } catch (IOException e) {
-                LOGGER.error("read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
+                LOGGER.error("[steam]read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
             }
         }
         if (StringUtils.isBlank(steam_appid)) {
-            LOGGER.error("OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
+            LOGGER.error("[steam]OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
         }
     }
 
@@ -209,7 +209,7 @@ public class SteamManager extends SubManager {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
-                LOGGER.error("SteamAPI.isSteamRunning() fails thus shut down this game.");
+                LOGGER.error("[steam]SteamAPI.isSteamRunning() fails thus shut down this game.");
                 this.getGameManager().shutdown();
             }
         }
