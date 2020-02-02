@@ -194,7 +194,7 @@ public class WaveData extends AbstractResource {
             return false;
         }
 
-        FileObject resourceFileObject = resourceInfo.fileObject;
+        FileObject resourceFileObject = resourceInfo.getFileObject();
 
         try (InputStream inputStream = resourceFileObject.getContent().getInputStream()) {
             com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =

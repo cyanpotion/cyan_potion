@@ -80,13 +80,13 @@ public class TextureUtils {
 
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
 
-        final int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
-        final int textureIndex = Integer.parseInt(resourceInfo.values[1]);
+        final int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
+        final int textureIndex = Integer.parseInt(resourceInfo.getValues()[1]);
 
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
@@ -122,7 +122,7 @@ public class TextureUtils {
                             texture.getResourceManager().fetchResource(
                                     texture.getClass(),
                                     STRING_CHARACTER,
-                                    texture.getResourceInfo().fileString,
+                                    texture.getResourceInfo().getFileString(),
                                     Integer.toString(k),
                                     Integer.toString(i * 3 + j)
                             );
@@ -158,7 +158,7 @@ public class TextureUtils {
         }
 
         ResourceInfo resourceInfo = texture.getResourceInfo();
-        final String resourceType = resourceInfo.type;
+        final String resourceType = resourceInfo.getType();
         int columnNum;
         switch (resourceType) {
             case STRING_A5:
@@ -174,7 +174,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage =
                     ImageIO.read(inputStream);
         } catch (IOException e) {
@@ -207,7 +207,7 @@ public class TextureUtils {
                             texture.getResourceManager().fetchResource(
                                     Texture.class,
                                     resourceType,
-                                    resourceInfo.fileString,
+                                    resourceInfo.getFileString(),
                                     Integer.toString(k),
                                     Integer.toString(i * 8 + j)
                             );
@@ -652,7 +652,7 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = resourceInfo.fileObject.getContent().getInputStream()) {
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
             bufferedImage =
                     ImageIO.read(inputStream);
         } catch (IOException e) {
@@ -683,12 +683,12 @@ public class TextureUtils {
                         texture.getResourceManager().fetchResource(
                                 texture.getClass(),
                                 STRING_A2,
-                                texture.getResourceInfo().fileString,
+                                texture.getResourceInfo().getFileString(),
                                 Integer.toString(k),
                                 Integer.toString(ti)
                         );
                 if (!nowTexture.isInMemory()) {
-                    loadTilesetTexturesA2Single(texture.getResourceManager(), resourceInfo.fileString,
+                    loadTilesetTexturesA2Single(texture.getResourceManager(), resourceInfo.getFileString(),
                             k, singleWidth, singleHeight, entireWidth, entireHeight, startPosX, startPosY, pixelsRaw);
                     break;
                 }

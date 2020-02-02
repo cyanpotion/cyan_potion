@@ -74,10 +74,10 @@ public class WalkingAnimation4Dirs extends Animation {
                                  ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
-        String resourceFilePath = resourceInfo.fileString;
-        switch (resourceInfo.type) {
+        String resourceFilePath = resourceInfo.getFileString();
+        switch (resourceInfo.getType()) {
             case STRING_CHARACTER:
-                int peopleIndex = Integer.parseInt(resourceInfo.values[0]);
+                int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
                 List<Texture> walkingTextures =
                         TextureUtils.getWalkingTextures(resourceManager,
                                 resourceFilePath).get(peopleIndex);

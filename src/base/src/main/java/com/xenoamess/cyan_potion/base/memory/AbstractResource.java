@@ -230,7 +230,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     protected boolean forceLoad() {
-        Function<AbstractResource, Boolean> loader = (Function) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().type);
+        Function<AbstractResource, Boolean> loader = (Function) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }

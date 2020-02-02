@@ -337,7 +337,7 @@ public class ResourceManager implements Closeable {
      */
     public <T extends AbstractResource> T getResource(Class<T> tClass,
                                                       ResourceInfo<T> resourceInfo) {
-        assert (tClass == resourceInfo.resourceClass);
+        assert (tClass == resourceInfo.getResourceClass());
         ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
                 defaultResourcesURIMapGet(tClass);
         if (resourceURIMap == null) {
@@ -355,7 +355,7 @@ public class ResourceManager implements Closeable {
      * @return a T object.
      */
     public <T extends AbstractResource> T getResource(ResourceInfo<T> resourceInfo) {
-        return this.getResource(resourceInfo.resourceClass, resourceInfo);
+        return this.getResource(resourceInfo.getResourceClass(), resourceInfo);
     }
 
     /**
@@ -380,7 +380,7 @@ public class ResourceManager implements Closeable {
      */
     public <T extends AbstractResource> boolean ifExistResource(ResourceInfo<T> resourceInfo) {
         ConcurrentHashMap resourceURIMap =
-                defaultResourcesURIMapGet(resourceInfo.resourceClass);
+                defaultResourcesURIMapGet(resourceInfo.getResourceClass());
         if (resourceURIMap == null) {
             return false;
         } else {
@@ -408,7 +408,7 @@ public class ResourceManager implements Closeable {
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo<T> resourceInfo) {
-        assert (tClass == resourceInfo.resourceClass);
+        assert (tClass == resourceInfo.getResourceClass());
         T res = null;
         if (this.ifExistResource(resourceInfo)) {
             res = this.getResource(tClass, resourceInfo);
@@ -434,7 +434,7 @@ public class ResourceManager implements Closeable {
      * @return a T object.
      */
     public <T extends AbstractResource> T fetchResource(ResourceInfo<T> resourceInfo) {
-        return this.fetchResource(resourceInfo.resourceClass, resourceInfo);
+        return this.fetchResource(resourceInfo.getResourceClass(), resourceInfo);
     }
 
     /**
