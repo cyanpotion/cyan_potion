@@ -30,6 +30,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -69,38 +70,45 @@ public class Panel extends AbstractControllableGameWindowComponent {
      *
      * @param gameWindowComponent gameWindowComponent
      */
-    public void addContent(AbstractGameWindowComponent gameWindowComponent) {
+    public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            this.contents.add(gameWindowComponent);
+            return this.contents.add(gameWindowComponent);
         }
     }
 
     /**
      * <p>removeContent.</p>
      */
-    public void removeContent(int index) {
+    public AbstractGameWindowComponent removeContent(int index) {
         synchronized (this.contents) {
-            this.contents.remove(index);
+            return this.contents.remove(index);
         }
     }
 
     /**
      * <p>removeContent.</p>
      */
-    public void removeContent(AbstractGameWindowComponent gameWindowComponent) {
+    public boolean removeContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            this.contents.remove(gameWindowComponent);
+            return this.contents.remove(gameWindowComponent);
         }
     }
 
     /**
      * <p>clearContent.</p>
-     *
-     * @param gameWindowComponent gameWindowComponent
      */
-    public void clearContent(AbstractGameWindowComponent gameWindowComponent) {
+    public void clearContents() {
         synchronized (this.contents) {
             this.contents.clear();
+        }
+    }
+
+    /**
+     * <p>clearContent.</p>
+     */
+    public List<AbstractGameWindowComponent> copyContents() {
+        synchronized (this.contents) {
+            return new ArrayList<>(this.contents);
         }
     }
 
