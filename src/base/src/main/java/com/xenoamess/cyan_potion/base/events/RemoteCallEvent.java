@@ -40,7 +40,7 @@ public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements E
     private final T gameWindowComponent;
     private final Function<T, Event> function;
 
-    RemoteCallEvent(T gameWindowComponent, Function<T, Event> function) {
+    public RemoteCallEvent(T gameWindowComponent, Function<T, Event> function) {
         this.gameWindowComponent = gameWindowComponent;
         this.function = function;
     }
