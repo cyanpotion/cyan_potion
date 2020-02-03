@@ -107,9 +107,11 @@ public class SteamTextureUtils {
 
         ByteBuffer byteBuffer = null;
         try {
-            byteBuffer = steamImage.getImageBuffer(steamUtils);
+            while (byteBuffer == null) {
+                byteBuffer = steamImage.getImageBuffer(steamUtils);
+            }
         } catch (SteamException e) {
-            LOGGER.error("[steam]cannot getImageBuffer from avatar.");
+            LOGGER.error("[steam]cannot getImageBuffer from avatar:{}", resourceInfo);
         }
 
         texture.bake(steamImage.getWidth(steamUtils), steamImage.getHeight(steamUtils), byteBuffer);
