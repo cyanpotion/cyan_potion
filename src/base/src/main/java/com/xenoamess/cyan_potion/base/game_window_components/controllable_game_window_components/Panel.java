@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.visual.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 
 /**
@@ -41,7 +42,7 @@ import java.util.List;
  * @version 0.143.0
  */
 public class Panel extends AbstractControllableGameWindowComponent {
-    private final List<AbstractGameWindowComponent> contents = new ArrayList<>();
+    private final List<AbstractGameWindowComponent> contents = new Vector<>();
     private final Picture backgroundPicture = new Picture();
 
     /**
@@ -69,9 +70,48 @@ public class Panel extends AbstractControllableGameWindowComponent {
      *
      * @param gameWindowComponent gameWindowComponent
      */
-    public void addContent(AbstractGameWindowComponent gameWindowComponent) {
-        this.getContents().add(gameWindowComponent);
+    public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
+        synchronized (this.contents) {
+            return this.contents.add(gameWindowComponent);
+        }
     }
+
+    /**
+     * <p>removeContent.</p>
+     */
+    public AbstractGameWindowComponent removeContent(int index) {
+        synchronized (this.contents) {
+            return this.contents.remove(index);
+        }
+    }
+
+    /**
+     * <p>removeContent.</p>
+     */
+    public boolean removeContent(AbstractGameWindowComponent gameWindowComponent) {
+        synchronized (this.contents) {
+            return this.contents.remove(gameWindowComponent);
+        }
+    }
+
+    /**
+     * <p>clearContent.</p>
+     */
+    public void clearContents() {
+        synchronized (this.contents) {
+            this.contents.clear();
+        }
+    }
+
+    /**
+     * <p>clearContent.</p>
+     */
+    public List<AbstractGameWindowComponent> copyContents() {
+        synchronized (this.contents) {
+            return new ArrayList<>(this.contents);
+        }
+    }
+
 
     /**
      * {@inheritDoc}
@@ -79,8 +119,10 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void update() {
         super.update();
-        for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
-            gameWindowComponent.update();
+        synchronized (this.contents) {
+            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+                gameWindowComponent.update();
+            }
         }
         backgroundPicture.cover(this);
     }
@@ -91,11 +133,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void draw() {
         this.backgroundPicture.draw(this.getGameWindow());
-
-        for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
-            gameWindowComponent.draw();
+        synchronized (this.contents) {
+            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+                gameWindowComponent.draw();
+            }
         }
-
     }
 
     /**
@@ -103,22 +145,15 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @Override
     public Event process(Event event) {
-        for (AbstractGameWindowComponent gameWindowComponent : getContents()) {
-            event = gameWindowComponent.process(event);
-            if (event == null) {
-                return event;
+        synchronized (this.contents) {
+            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+                Event newEvent = gameWindowComponent.process(event);
+                if (newEvent != event) {
+                    return newEvent;
+                }
             }
+            return super.process(event);
         }
-        return event;
-    }
-
-    /**
-     * <p>Getter for the field <code>contents</code>.</p>
-     *
-     * @return return
-     */
-    public List<AbstractGameWindowComponent> getContents() {
-        return contents;
     }
 
 }
