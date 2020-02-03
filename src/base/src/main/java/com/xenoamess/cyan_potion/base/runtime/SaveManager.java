@@ -34,6 +34,10 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * @version 0.148.8
  */
 public class SaveManager {
+    public static final String DEFAULT_SAVE_FILE_PATH = System.getProperty("user.home") + "/AppData/Roaming/cyan_potion_saves/";
+
+    private String currentSaveFilePath = DEFAULT_SAVE_FILE_PATH;
+
     private final GameManager gameManager;
 
     /**
@@ -45,6 +49,11 @@ public class SaveManager {
         this.gameManager = gameManager;
     }
 
+    public SaveManager(GameManager gameManager, String currentSaveFilePath) {
+        this(gameManager);
+        this.currentSaveFilePath = currentSaveFilePath;
+    }
+
     private SaveFileObject currentSaveFileObject;
 
     /**
@@ -54,7 +63,7 @@ public class SaveManager {
      * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
      */
     public SaveFileObject getSaveFileObject(int index) {
-        String saveFolderPath = System.getProperty("user.home") + "/cyan_potion/" + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
+        String saveFolderPath = currentSaveFilePath + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
         SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
         return saveFileObject;
     }
@@ -112,5 +121,13 @@ public class SaveManager {
      */
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    public String getCurrentSaveFilePath() {
+        return currentSaveFilePath;
+    }
+
+    public void setCurrentSaveFilePath(String currentSaveFilePath) {
+        this.currentSaveFilePath = currentSaveFilePath;
     }
 }
