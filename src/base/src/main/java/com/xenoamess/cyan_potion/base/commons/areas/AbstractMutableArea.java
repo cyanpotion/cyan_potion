@@ -76,6 +76,86 @@ public interface AbstractMutableArea extends AbstractArea {
         this.setLeftTopPosY(newCenterPosY - this.getHeight() / 2F);
     }
 
+    //----------
+
+    default void setLeftPosX(float leftPosX) {
+        this.setLeftTopPosX(leftPosX);
+    }
+
+    default void setRightPosX(float rightPosX) {
+        this.setLeftTopPosX(rightPosX - this.getWidth());
+    }
+
+    default void setTopPosY(float topPosY) {
+        this.setLeftTopPosY(topPosY);
+    }
+
+    default void setBottomPosY(float bottomPosY) {
+        this.setLeftTopPosY(bottomPosY - this.getHeight());
+    }
+
+    //----------
+
+    default void setLeftBottomPosX(float leftBottomPosX) {
+        this.setLeftPosX(leftBottomPosX);
+    }
+
+    default void setLeftBottomPosY(float leftBottomPosY) {
+        this.setBottomPosY(leftBottomPosY);
+    }
+
+    default void setRightTopPosX(float rightTopPosX) {
+        this.setRightPosX(rightTopPosX);
+    }
+
+    default void setRightTopPosY(float rightTopPosY) {
+        this.setTopPosY(rightTopPosY);
+    }
+
+    default void setRightBottomPosX(float rightBottomPosX) {
+        this.setRightPosX(rightBottomPosX);
+    }
+
+    default void setRightBottomPosY(float rightBottomPosY) {
+        this.setBottomPosY(rightBottomPosY);
+    }
+
+    //----------
+
+    default void setLeftCenterPosX(float leftCenterPosX) {
+        this.setLeftPosX(leftCenterPosX);
+    }
+
+    default void setLeftCenterPosY(float leftCenterPosY) {
+        this.setCenterPosY(leftCenterPosY);
+    }
+
+    default void setRightCenterPosX(float rightCenterPosX) {
+        this.setRightPosX(rightCenterPosX);
+    }
+
+    default void setRightCenterPosY(float rightCenterPosY) {
+        this.setCenterPosY(rightCenterPosY);
+    }
+
+    default void setCenterTopPosX(float centerTopPosX) {
+        this.setCenterPosX(centerTopPosX);
+    }
+
+    default void setCenterTopPosY(float centerTopPosY) {
+        this.setTopPosY(centerTopPosY);
+    }
+
+    default void setCenterBottomPosX(float centerBottomPosX) {
+        this.setCenterPosX(centerBottomPosX);
+    }
+
+    default void setCenterBottomPosY(float centerBottomPosY) {
+        this.setBottomPosY(centerBottomPosY);
+    }
+
+    //----------
+
     /**
      * <p>setSize.</p>
      *
@@ -85,6 +165,16 @@ public interface AbstractMutableArea extends AbstractArea {
     default void setSize(float width, float height) {
         this.setWidth(width);
         this.setHeight(height);
+    }
+
+    /**
+     * <p>setSize.</p>
+     *
+     * @param widthAndHeight widthAndHeight == width == height
+     */
+    default void setSize(float widthAndHeight) {
+        this.setWidth(widthAndHeight);
+        this.setHeight(widthAndHeight);
     }
 
     /**
@@ -108,6 +198,42 @@ public interface AbstractMutableArea extends AbstractArea {
         this.setCenterPosX(centerPosX);
         this.setCenterPosY(centerPosY);
     }
+
+    default void setRightTopPos(float rightTopPosX, float rightTopPoxY) {
+        this.setRightTopPosX(rightTopPosX);
+        this.setRightTopPosY(rightTopPoxY);
+    }
+
+    default void setLeftBottomPos(float leftBottomPosX, float leftBottomPoxY) {
+        this.setLeftBottomPosX(leftBottomPosX);
+        this.setLeftBottomPosY(leftBottomPoxY);
+    }
+
+    default void setRightBottomPos(float rightBottomPosX, float rightBottomPoxY) {
+        this.setRightBottomPosX(rightBottomPosX);
+        this.setRightBottomPosY(rightBottomPoxY);
+    }
+
+    default void setLeftCenterPos(float leftCenterPosX, float leftCenterPoxY) {
+        this.setLeftCenterPosX(leftCenterPosX);
+        this.setLeftCenterPosY(leftCenterPoxY);
+    }
+
+    default void setRightCenterPos(float rightCenterPosX, float rightCenterPoxY) {
+        this.setRightCenterPosX(rightCenterPosX);
+        this.setRightCenterPosY(rightCenterPoxY);
+    }
+
+    default void setCenterTopPos(float centerTopPosX, float centerTopPosY) {
+        this.setCenterTopPosX(centerTopPosX);
+        this.setCenterTopPosY(centerTopPosY);
+    }
+
+    default void setCenterBottomPos(float centerBottomPosX, float centerBottomPosY) {
+        this.setCenterBottomPosX(centerBottomPosX);
+        this.setCenterBottomPosY(centerBottomPosY);
+    }
+
 
     /**
      * <p>setCenter.</p>
@@ -167,6 +293,42 @@ public interface AbstractMutableArea extends AbstractArea {
     default void moveY(float centerMovementY) {
         this.setCenterPosY(this.getCenterPosY() + centerMovementY);
     }
+
+    //----------
+
+    default void moveToLeftTopOf(AbstractArea abstractArea) {
+        this.setLeftTopPos(abstractArea.getLeftTopPosX(), abstractArea.getLeftTopPosY());
+    }
+
+    default void moveToRightTopOf(AbstractArea abstractArea) {
+        this.setRightTopPos(abstractArea.getRightTopPosX(), abstractArea.getRightTopPosY());
+    }
+
+    default void moveToLeftBottomOf(AbstractArea abstractArea) {
+        this.setLeftBottomPos(abstractArea.getLeftBottomPosX(), abstractArea.getLeftBottomPosY());
+    }
+
+    default void moveToRightBottomOf(AbstractArea abstractArea) {
+        this.setRightBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    default void moveToLeftCenterOf(AbstractArea abstractArea) {
+        this.setLeftCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    default void moveToRightCenterOf(AbstractArea abstractArea) {
+        this.setRightCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    default void moveToCenterTopOf(AbstractArea abstractArea) {
+        this.setCenterTopPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    default void moveToCenterBottomOf(AbstractArea abstractArea) {
+        this.setCenterBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    //----------
 
     /**
      * <p>Setter for the field <code>width</code>.</p>

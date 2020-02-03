@@ -28,6 +28,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.PictureBox;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RectangleBox;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
@@ -37,7 +41,6 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.steam.SteamManager;
-import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
@@ -53,6 +56,7 @@ import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +111,45 @@ public class World extends AbstractEntityScene {
             STRING_LARGE
     ).fetchResource(this.getResourceManager());
 
-    final Picture avatarPicture = new Picture(avatarTexture);
+//    final Picture avatarPicture = new Picture(avatarTexture);
+
+    final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
+    final RectangleBox rectangleBox = new RectangleBox(
+            this.getGameWindow(),
+            new Vector4f(0, 1, 1, 1)
+    );
+
+    final InputBox inputBox = new InputBox(this.getGameWindow());
+
+    final Texture iconTexture = new ResourceInfo<>(
+            Texture.class,
+            "picture",
+            this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
+    ).fetchResource(this.getResourceManager());
+
+
+    final Button demoButton = new Button(this.getGameWindow(), iconTexture, "DEMO");
+
+    {
+        demoButton.registerOnMouseEnterAreaCallback(
+                mouseButtonEvent -> {
+                    switch (demoButton.getButtonText()) {
+                        case "DEMO":
+                            demoButton.setButtonText("");
+                            break;
+                        case "":
+                            demoButton.getButtonPicture().setBindable(null);
+                            demoButton.setButtonText("LOL");
+                            break;
+                        case "LOL":
+                            demoButton.setButtonText("DEMO");
+                            demoButton.getButtonPicture().setBindable(iconTexture);
+                            break;
+                    }
+                    return null;
+                }
+        );
+    }
 
     /**
      * <p>recalculateScaleMatrix4f.</p>
@@ -207,6 +249,7 @@ public class World extends AbstractEntityScene {
         }
 
         this.setMenu(new Menu(this));
+        this.fix();
     }
 
     /**
@@ -256,6 +299,10 @@ public class World extends AbstractEntityScene {
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
         this.getMenu().addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.pictureBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.rectangleBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.inputBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.demoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
     /**
@@ -366,14 +413,20 @@ public class World extends AbstractEntityScene {
 
         this.getCamera().getPosition().lerp(getPlayer().getCenterPos(), 0.05f);
         this.correctCamera();
-        this.fixAvatarPicture();
+        this.fix();
     }
 
-    protected void fixAvatarPicture() {
+    protected void fix() {
         final int avatarPictureSize = 200;
-        this.avatarPicture.setCenterPos(this.getGameWindow().getRightPosX() - avatarPictureSize / 2, avatarPictureSize / 2);
-        this.avatarPicture.setWidth(avatarPictureSize);
-        this.avatarPicture.setHeight(avatarPictureSize);
+        this.pictureBox.setSize(avatarPictureSize);
+        this.pictureBox.moveToRightTopOf(this.getGameWindow());
+        this.rectangleBox.setSize(avatarPictureSize);
+        this.rectangleBox.moveToLeftBottomOf(this.getGameWindow());
+        this.inputBox.setSize(avatarPictureSize);
+        this.inputBox.moveToRightBottomOf(this.getGameWindow());
+        this.demoButton.setSize(avatarPictureSize);
+        this.demoButton.moveToLeftTopOf(this.getGameWindow());
+        //                setCenterPos(avatarPictureSize / 2, this.getGameWindow().getBottomPosY() - avatarPictureSize / 2);
     }
 
 
@@ -426,13 +479,9 @@ public class World extends AbstractEntityScene {
                 entity.draw(this);
             }
         }
-
-        this.getGameWindow().drawTextLeftTop(null, 10, 30, 50, "DEMO");
-        this.avatarPicture.draw(this.getGameWindow());
-
         SteamManager steamManager = this.getGameManager().getSteamManager();
         String personName = steamManager.getSteamFriends().getPersonaName();
-        this.getGameWindow().drawTextCenter(null, avatarPicture.getCenterBottomPosX(), avatarPicture.getCenterBottomPosY() + 12.5F, 25, personName);
+        this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
     }
 
     /**

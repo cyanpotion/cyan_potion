@@ -80,8 +80,8 @@ public class AudioManager extends SubManager {
      */
     private final Set<Source> usedSources = ConcurrentHashMap.newKeySet();
 
-    private long openalDevice = -1;
-    private long openalContext = -1;
+    private long openalDevice = -1L;
+    private long openalContext = -1L;
     /**
      * Position of the listener.
      */

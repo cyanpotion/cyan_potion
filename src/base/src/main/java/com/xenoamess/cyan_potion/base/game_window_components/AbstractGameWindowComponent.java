@@ -64,8 +64,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
 
     private float leftTopPosX = 0;
     private float leftTopPosY = 0;
-    private float width = -1;
-    private float height = -1;
+    private float width = Float.NaN;
+    private float height = Float.NaN;
 
     /**
      * map of eventClass to processors.

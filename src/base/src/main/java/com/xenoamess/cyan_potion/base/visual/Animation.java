@@ -41,7 +41,7 @@ public class Animation extends AbstractPicture {
     private long lastTime = System.currentTimeMillis();
     private float fps;
 
-    private final List<AbstractPicture> frames = new ArrayList<>();
+    private final List<AbstractPictureInterface> frames = new ArrayList<>();
 
 
     /**
@@ -59,7 +59,7 @@ public class Animation extends AbstractPicture {
      *
      * @return return
      */
-    public AbstractPicture getCurrentPicture() {
+    public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
         elapsedTime /= 1000;
@@ -143,7 +143,7 @@ public class Animation extends AbstractPicture {
      *
      * @return return
      */
-    public List<AbstractPicture> getFrames() {
+    public List<AbstractPictureInterface> getFrames() {
         return frames;
     }
 }
