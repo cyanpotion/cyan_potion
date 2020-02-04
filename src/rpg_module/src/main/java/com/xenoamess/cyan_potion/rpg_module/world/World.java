@@ -64,11 +64,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Function;
-
-import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
-import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_LARGE;
-import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_STEAM_AVATAR;
 
 /**
  * <p>World class.</p>
@@ -104,24 +99,7 @@ public class World extends AbstractEntityScene {
     private Matrix4f scaleMatrix4f;
     private RpgModuleDataCenter rpgModuleDataCenter;
 
-    final Texture avatarTexture = new ResourceInfo<>(
-            Texture.class,
-            STRING_STEAM_AVATAR,
-            "",
-            new Function<SteamManager, String>() {
-                @Override
-                public String apply(SteamManager steamManager) {
-                    if (!steamManager.isRunWithSteam()) {
-                        return "";
-                    } else {
-                        return Long.toString(getNativeHandle(steamManager.getSteamUser().getSteamID()));
-                    }
-                }
-            }.apply(this.getGameManager().getSteamManager()),
-            STRING_LARGE
-    ).fetchResource(this.getResourceManager());
-
-//    final Picture avatarPicture = new Picture(avatarTexture);
+    final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
 
     final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
     final RectangleBox rectangleBox = new RectangleBox(

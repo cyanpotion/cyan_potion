@@ -29,7 +29,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import com.xenoamess.cyan_potion.base.render.Texture;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.vfs2.FileObject;
@@ -41,6 +43,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+
+import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
 
 /**
  * This class learned a lot on com.codedisaster.steamworks.test.SteamClientAPITest
@@ -534,5 +539,43 @@ public class SteamManager extends SubManager {
 
     public void setSteamCallbacks(SteamCallbacks steamCallbacks) {
         this.steamCallbacks = steamCallbacks;
+    }
+
+    public Texture getPlayerAvatarTextureLarge() {
+        return getPlayerAvatarTexture(STRING_LARGE);
+    }
+
+    public Texture getPlayerAvatarTextureMedium() {
+        return getPlayerAvatarTexture(STRING_MEDIUM);
+    }
+
+    public Texture getPlayerAvatarTextureSmall() {
+        return getPlayerAvatarTexture(STRING_SMALL);
+    }
+
+    public Texture getPlayerAvatarTexture(String avatarType) {
+        SteamID steamID;
+        if (this.isRunWithSteam()) {
+            steamID = this.getSteamUser().getSteamID();
+        } else {
+            steamID = null;
+        }
+        return this.getUserAvatarTexture(steamID, avatarType);
+    }
+
+    public Texture getUserAvatarTexture(SteamID steamID, String avatarType) {
+        String steamIDhandleString;
+        if (this.isRunWithSteam()) {
+            steamIDhandleString = Long.toString(getNativeHandle(steamID));
+        } else {
+            steamIDhandleString = "";
+        }
+        return new ResourceInfo<>(
+                Texture.class,
+                STRING_STEAM_AVATAR,
+                "",
+                steamIDhandleString,
+                avatarType
+        ).fetchResource(this.getGameManager().getResourceManager());
     }
 }
