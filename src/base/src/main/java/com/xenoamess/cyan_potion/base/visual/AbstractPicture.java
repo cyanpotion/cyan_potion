@@ -24,11 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
-import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
-import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
 
 /**
@@ -37,7 +33,7 @@ import org.joml.Vector4f;
  * @author XenoAmess
  * @version 0.148.8
  */
-public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
+public abstract class AbstractPicture implements AbstractPictureInterface {
     private float leftTopPosX;
     private float leftTopPosY;
     private float width;
@@ -57,54 +53,11 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     }
 
     /**
-     * <p>draw.</p>
-     *
-     * @param gameWindow gameWindow
-     */
-    public void draw(GameWindow gameWindow) {
-        if (this.getCurrentBindable() == null) {
-            return;
-        }
-        gameWindow.drawBindableRelativeCenter(
-                this.getCurrentBindable(),
-                this.getCenterPosX(),
-                this.getCenterPosY(),
-                this.getWidth(),
-                this.getHeight(),
-                Model.COMMON_MODEL,
-                this.getColorScale(),
-                this.getRotateRadius()
-        );
-    }
-
-    /**
-     * <p>draw.</p>
-     *
-     * @param scene scene
-     */
-    public void draw(AbstractScene scene) {
-        if (this.getCurrentBindable() == null) {
-            return;
-        }
-        scene.drawBindableAbsolute(
-                scene.getCamera(),
-                scene.getScale(),
-                this.getCurrentBindable(),
-                this.getCenterPosX(),
-                this.getCenterPosY(),
-                this.getWidth(),
-                this.getHeight(),
-                Model.COMMON_MODEL,
-                this.getColorScale(),
-                this.getRotateRadius()
-        );
-    }
-
-    /**
      * <p>rotate.</p>
      *
      * @param newRotateRadius a float.
      */
+    @Override
     public void rotate(float newRotateRadius) {
         this.setRotateRadius(this.getRotateRadius() + newRotateRadius);
     }
@@ -114,17 +67,11 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @param newRotateRadius a float.
      */
+    @Override
     public void rotateTo(float newRotateRadius) {
         this.setRotateRadius(newRotateRadius);
     }
 
-
-    /**
-     * get current bindable of this picture.
-     *
-     * @return the bindable for draw
-     */
-    public abstract Bindable getCurrentBindable();
 
     //--- getters and setters ---
 
@@ -133,6 +80,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @return a float.
      */
+    @Override
     public float getLeftTopPosX() {
         return leftTopPosX;
     }
@@ -140,6 +88,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }
@@ -149,6 +98,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @return a float.
      */
+    @Override
     public float getLeftTopPosY() {
         return leftTopPosY;
     }
@@ -156,6 +106,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
     }
@@ -197,8 +148,9 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @return return
      */
+    @Override
     public Vector4f getColorScale() {
-        return colorScale;
+        return new Vector4f(colorScale);
     }
 
     /**
@@ -206,6 +158,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @return a float.
      */
+    @Override
     public float getRotateRadius() {
         return rotateRadius;
     }
@@ -215,6 +168,7 @@ public abstract class AbstractPicture implements AbstractMutableArea, Bindable {
      *
      * @param rotateRadius a float.
      */
+    @Override
     public void setRotateRadius(float rotateRadius) {
         this.rotateRadius = rotateRadius;
     }

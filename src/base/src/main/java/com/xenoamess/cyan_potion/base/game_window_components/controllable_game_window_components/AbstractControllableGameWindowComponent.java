@@ -495,7 +495,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean ifPosInArea(float posX, float posY) {
-        if (this.getWidth() < 0 || this.getHeight() < 0) {
+        if (Float.isNaN(this.getWidth()) || Float.isNaN(this.getHeight())) {
             return false;
         }
         return (posX >= this.getLeftTopPosX()

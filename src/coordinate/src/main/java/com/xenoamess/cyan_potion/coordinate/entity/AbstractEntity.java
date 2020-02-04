@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.coordinate.entity;
 
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.base.visual.AbstractPicture;
+import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
@@ -50,7 +50,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
     private final Vector3f centerPos;
     private final Vector3f size;
     private AbstractShape shape;
-    private AbstractPicture picture = new Picture();
+    private AbstractPictureInterface picture = new Picture();
 
 
     /**
@@ -81,7 +81,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      *
      * @param picture a {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture} object.
      */
-    public void setPicture(AbstractPicture picture) {
+    public void setPicture(AbstractPictureInterface picture) {
         this.picture = picture;
         if (this.picture != null) {
             this.picture.cover(this);
@@ -93,7 +93,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      *
      * @return return
      */
-    public AbstractPicture getPicture() {
+    public AbstractPictureInterface getPicture() {
         return this.picture;
     }
 

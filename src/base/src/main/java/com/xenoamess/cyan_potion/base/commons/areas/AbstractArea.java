@@ -75,6 +75,8 @@ public interface AbstractArea {
     }
 
 
+    //----------
+
     /**
      * get left posX of this area
      *
@@ -111,6 +113,7 @@ public interface AbstractArea {
         return this.getTopPosY() + this.getHeight();
     }
 
+    //----------
 
     /**
      * get left bottom posX of this area
@@ -190,7 +193,7 @@ public interface AbstractArea {
      * @return a float.
      */
     default float getRightCenterPosX() {
-        return this.getLeftPosX();
+        return this.getRightPosX();
     }
 
     /**

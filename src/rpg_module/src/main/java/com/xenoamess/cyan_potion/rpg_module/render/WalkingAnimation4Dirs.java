@@ -28,7 +28,7 @@ import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
-import com.xenoamess.cyan_potion.base.visual.AbstractPicture;
+import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Animation;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
@@ -47,7 +47,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * @version 0.143.0
  */
 public class WalkingAnimation4Dirs extends Animation {
-    private Map<Integer, List<AbstractPicture>> faceDirFrameMap = new ConcurrentHashMap<>();
+    private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
     private Unit unit;
     private int drawFaceDir;
 
@@ -88,8 +88,8 @@ public class WalkingAnimation4Dirs extends Animation {
         }
     }
 
-    private List<AbstractPicture> buildPictures(List<Texture> textures) {
-        List<AbstractPicture> res = new ArrayList<>(textures.size());
+    private List<AbstractPictureInterface> buildPictures(List<Texture> textures) {
+        List<AbstractPictureInterface> res = new ArrayList<>(textures.size());
         for (Texture texture : textures) {
             Picture picture = new Picture(texture);
             picture.cover(this.getUnit());
@@ -98,7 +98,7 @@ public class WalkingAnimation4Dirs extends Animation {
         return res;
     }
 
-    private void initPictures(List<AbstractPicture> walkingPictures) {
+    private void initPictures(List<AbstractPictureInterface> walkingPictures) {
         int ti = 0;
         getFaceDirFrameMap().put(180, new ArrayList<>());
         for (int i = 0; i < 3; i++, ti++) {
@@ -122,7 +122,7 @@ public class WalkingAnimation4Dirs extends Animation {
      * {@inheritDoc}
      */
     @Override
-    public AbstractPicture getCurrentPicture() {
+    public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
         elapsedTime /= 1000;
@@ -146,7 +146,7 @@ public class WalkingAnimation4Dirs extends Animation {
             tmpTexturePointer -= 2;
         }
 
-        List<AbstractPicture> list = getFaceDirFrameMap().get(getUnit().getFaceDir());
+        List<AbstractPictureInterface> list = getFaceDirFrameMap().get(getUnit().getFaceDir());
         if (list == null || list.isEmpty()) {
             list = getFaceDirFrameMap().get(this.getDrawFaceDir());
         }
@@ -159,7 +159,7 @@ public class WalkingAnimation4Dirs extends Animation {
      *
      * @return return
      */
-    public Map<Integer, List<AbstractPicture>> getFaceDirFrameMap() {
+    public Map<Integer, List<AbstractPictureInterface>> getFaceDirFrameMap() {
         return faceDirFrameMap;
     }
 
@@ -168,7 +168,7 @@ public class WalkingAnimation4Dirs extends Animation {
      *
      * @param faceDirFrameMap faceDirFrameMap
      */
-    public void setFaceDirFrameMap(Map<Integer, List<AbstractPicture>> faceDirFrameMap) {
+    public void setFaceDirFrameMap(Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap) {
         this.faceDirFrameMap = faceDirFrameMap;
     }
 

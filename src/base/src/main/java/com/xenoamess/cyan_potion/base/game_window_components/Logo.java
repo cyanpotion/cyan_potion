@@ -183,13 +183,13 @@ public class Logo extends AbstractGameWindowComponent {
             this.logoPicture.setHeight(60 * (pScale + 1) / 1024f * height);
             this.logoPicture.setCenter(this.getGameWindow());
             this.logoPicture.moveY(-50 * 2);
-            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
+            this.logoPicture.setColorScale(1, 1, 1, pScale);
         } else {
             pScale = (1 - (t - dynamicTime - stayTime) / fadeTime);
             if (pScale < 0) {
                 pScale = 0;
             }
-            this.logoPicture.getColorScale().set(1, 1, 1, pScale);
+            this.logoPicture.setColorScale(1, 1, 1, pScale);
         }
         this.logoPicture.draw(getGameWindow());
     }

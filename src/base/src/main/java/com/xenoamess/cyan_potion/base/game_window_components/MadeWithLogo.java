@@ -172,7 +172,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
             colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
         }
 
-        this.logoPicture.getColorScale().set(1, colorScale, colorScale, 1);
+        this.logoPicture.setColorScale(1, colorScale, colorScale, 1);
         this.logoPicture.draw(getGameWindow());
     }
 
