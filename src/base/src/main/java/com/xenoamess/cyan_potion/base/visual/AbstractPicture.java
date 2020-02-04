@@ -34,10 +34,10 @@ import org.joml.Vector4f;
  * @version 0.148.8
  */
 public abstract class AbstractPicture implements AbstractPictureInterface {
-    private float leftTopPosX;
-    private float leftTopPosY;
-    private float width;
-    private float height;
+    private float leftTopPosX = Float.NaN;
+    private float leftTopPosY = Float.NaN;
+    private float width = Float.NaN;
+    private float height = Float.NaN;
     private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
 
