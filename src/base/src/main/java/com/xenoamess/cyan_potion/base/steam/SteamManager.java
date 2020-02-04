@@ -155,7 +155,7 @@ public class SteamManager extends SubManager {
 
 
         long steamRunCallbacksNanoLong = this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.isRunWithSteam()) {
             this.getGameManager().getScheduledExecutorService().scheduleAtFixedRate(
                     this::steamRunCallbacks,
                     0,
@@ -202,10 +202,19 @@ public class SteamManager extends SubManager {
     }
 
     /**
+     * notice that never run this function before call this.init
+     *
+     * @return
+     */
+    public boolean isRunWithSteam() {
+        return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning();
+    }
+
+    /**
      * <p>steamRunCallbacks.</p>
      */
     protected void steamRunCallbacks() {
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning()) {
+        if (isRunWithSteam()) {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {

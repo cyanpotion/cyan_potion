@@ -84,7 +84,7 @@ public class GamepadInputManager extends SubManager {
             }
         }
 
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.getGameManager().getSteamManager().isRunWithSteam()) {
             SteamControllerHandle[] steamControllerHandles =
                     new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();

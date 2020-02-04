@@ -64,6 +64,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Function;
 
 import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
 import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_LARGE;
@@ -107,7 +108,16 @@ public class World extends AbstractEntityScene {
             Texture.class,
             STRING_STEAM_AVATAR,
             "",
-            Long.toString(getNativeHandle(this.getGameWindow().getGameManager().getSteamManager().getSteamUser().getSteamID())),
+            new Function<SteamManager, String>() {
+                @Override
+                public String apply(SteamManager steamManager) {
+                    if (!steamManager.isRunWithSteam()) {
+                        return "";
+                    } else {
+                        return Long.toString(getNativeHandle(steamManager.getSteamUser().getSteamID()));
+                    }
+                }
+            }.apply(this.getGameManager().getSteamManager()),
             STRING_LARGE
     ).fetchResource(this.getResourceManager());
 
@@ -480,7 +490,12 @@ public class World extends AbstractEntityScene {
             }
         }
         SteamManager steamManager = this.getGameManager().getSteamManager();
-        String personName = steamManager.getSteamFriends().getPersonaName();
+        String personName;
+        if (steamManager.isRunWithSteam()) {
+            personName = steamManager.getSteamFriends().getPersonaName();
+        } else {
+            personName = "RunSteamFirst";
+        }
         this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
     }
 

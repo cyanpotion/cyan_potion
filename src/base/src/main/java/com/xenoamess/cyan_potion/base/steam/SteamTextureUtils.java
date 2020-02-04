@@ -33,6 +33,7 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +65,13 @@ public class SteamTextureUtils {
         return null;
     };
 
+    /**
+     * If not run with steam,
+     * then return a all-black picture.
+     *
+     * @param texture
+     * @return
+     */
     @MainThreadOnly
     public static boolean loadSteamAvatarTextures(Texture texture) {
         if (!DataCenter.ifMainThread()) {
@@ -73,48 +81,59 @@ public class SteamTextureUtils {
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
         assert (STRING_STEAM_AVATAR.equals(resourceInfo.getType()));
         final GameManager gameManager = texture.getResourceManager().getGameManager();
-        if (!gameManager.getDataCenter().getGameSettings().isRunWithSteam()) {
-            LOGGER.error("[steam]cannot load steam avatar when not run with steam!");
-            return false;
-        }
-
-        final SteamManager steamManager = gameManager.getSteamManager();
-
-        String[] values = resourceInfo.getValues();
-        String steamUserHandleString = values[0];
-        String sizeString = values[1];
-
-        long steamUserHandleLong = Long.parseLong(steamUserHandleString);
-        SteamID steamUserID = createFromNativeHandle(steamUserHandleLong);
-
-        SteamImage steamImage = null;
-
-        switch (sizeString) {
-            case STRING_SMALL:
-                steamImage = new SteamImage(steamManager.getSteamFriends().getSmallFriendAvatar(steamUserID));
-                break;
-            case STRING_MEDIUM:
-                steamImage = new SteamImage(steamManager.getSteamFriends().getMediumFriendAvatar(steamUserID));
-                break;
-            case STRING_LARGE:
-                steamImage = new SteamImage(steamManager.getSteamFriends().getLargeFriendAvatar(steamUserID));
-                break;
-            default:
-                LOGGER.error("[steam]cannot understand sizeString:{}. can only accept {}/{}/{} here.", sizeString, STRING_SMALL, STRING_MEDIUM, STRING_LARGE);
-        }
-
-        SteamUtils steamUtils = steamManager.getSteamUtils();
 
         ByteBuffer byteBuffer = null;
-        try {
-            while (byteBuffer == null) {
-                byteBuffer = steamImage.getImageBuffer(steamUtils);
+        int width;
+        int height;
+
+        final SteamManager steamManager = gameManager.getSteamManager();
+        if (steamManager.isRunWithSteam()) {
+            String[] values = resourceInfo.getValues();
+            String steamUserHandleString = values[0];
+            String sizeString = values[1];
+
+            long steamUserHandleLong = Long.parseLong(steamUserHandleString);
+            SteamID steamUserID = createFromNativeHandle(steamUserHandleLong);
+
+            SteamImage steamImage = null;
+
+            switch (sizeString) {
+                case STRING_SMALL:
+                    steamImage = new SteamImage(steamManager.getSteamFriends().getSmallFriendAvatar(steamUserID));
+                    break;
+                case STRING_MEDIUM:
+                    steamImage = new SteamImage(steamManager.getSteamFriends().getMediumFriendAvatar(steamUserID));
+                    break;
+                case STRING_LARGE:
+                    steamImage = new SteamImage(steamManager.getSteamFriends().getLargeFriendAvatar(steamUserID));
+                    break;
+                default:
+                    LOGGER.error("[steam]cannot understand sizeString:{}. can only accept {}/{}/{} here.", sizeString, STRING_SMALL, STRING_MEDIUM, STRING_LARGE);
             }
-        } catch (SteamException e) {
-            LOGGER.error("[steam]cannot getImageBuffer from avatar:{}", resourceInfo);
+            SteamUtils steamUtils = steamManager.getSteamUtils();
+            try {
+                while (byteBuffer == null) {
+                    byteBuffer = steamImage.getImageBuffer(steamUtils);
+                }
+            } catch (SteamException e) {
+                LOGGER.error("[steam]cannot getImageBuffer from avatar:{}", resourceInfo);
+            }
+            width = steamImage.getWidth(steamUtils);
+            height = steamImage.getHeight(steamUtils);
+        } else {
+            width = 3;
+            height = 3;
+            byteBuffer = MemoryUtil.memAlloc(width * height * 4);
+            for (int i = 0; i < width * height * 4; i++) {
+                byteBuffer.put((byte) 255);
+            }
+            byteBuffer.flip();
         }
 
-        texture.bake(steamImage.getWidth(steamUtils), steamImage.getHeight(steamUtils), byteBuffer);
+        texture.bake(width, height, byteBuffer);
+        if (!steamManager.isRunWithSteam()) {
+            MemoryUtil.memFree(byteBuffer);
+        }
         return true;
     }
 }
