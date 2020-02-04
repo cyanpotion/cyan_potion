@@ -99,6 +99,7 @@ public final class SimpleMutableArea implements AbstractMutableArea {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }

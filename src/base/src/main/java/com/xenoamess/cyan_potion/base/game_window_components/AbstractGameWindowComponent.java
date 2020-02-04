@@ -62,8 +62,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     private final AtomicBoolean alive = new AtomicBoolean(true);
     private GameWindowComponentTreeNode gameWindowComponentTreeNode;
 
-    private float leftTopPosX = 0;
-    private float leftTopPosY = 0;
+    private float leftTopPosX = Float.NaN;
+    private float leftTopPosY = Float.NaN;
     private float width = Float.NaN;
     private float height = Float.NaN;
 

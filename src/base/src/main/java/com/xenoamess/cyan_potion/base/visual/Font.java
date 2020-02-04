@@ -280,12 +280,11 @@ public class Font extends AbstractResource {
             if (Float.isNaN(leftTopPosX) || Float.isNaN(leftTopPosY) || Float.isNaN(centerPosX) || Float.isNaN(centerPosY) || Float.isNaN(scaleX) || Float.isNaN(scaleY) || Float.isNaN(characterSpace) || text == null || Float.isNaN(height)) {
                 this.bake();
                 if (Float.isNaN(leftTopPosX) || Float.isNaN(leftTopPosY) || Float.isNaN(centerPosX) || Float.isNaN(centerPosY) || Float.isNaN(scaleX) || Float.isNaN(scaleY) || Float.isNaN(characterSpace) || text == null || Float.isNaN(height)) {
-                    String errorMessage = "font still cannot draw after bake:" + this.toString();
-                    LOGGER.error(errorMessage);
-                    throw new RuntimeException(errorMessage);
+                    LOGGER.info("This DrawTextStruct still cannot draw after bake, thus we will not draw it : {}" + this.toString());
+                } else {
+                    this.font.drawTextLeftTop(this);
                 }
             }
-            this.font.drawTextLeftTop(this);
         }
 
         public float getLeftTopPosX() {

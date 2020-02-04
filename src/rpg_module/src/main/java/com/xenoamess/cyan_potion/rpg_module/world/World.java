@@ -238,6 +238,7 @@ public class World extends AbstractEntityScene {
 
         this.setMenu(new Menu(this));
         this.fix();
+        inputBox.gainFocus();
     }
 
     /**
