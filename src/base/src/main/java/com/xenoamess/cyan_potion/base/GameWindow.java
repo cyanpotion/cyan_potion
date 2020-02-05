@@ -785,13 +785,14 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     /**
      * <p>drawBindableRelativeLeftTop.</p>
      *
-     * @param bindable    a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param leftTopPosX a float.
-     * @param leftTopPosY a float.
-     * @param width       a float.
-     * @param height      a float.
-     * @param model       a {@link com.xenoamess.cyan_potion.base.render.Model} object.
-     * @param colorScale  colorScale
+     * @param bindable     a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param leftTopPosX  a float.
+     * @param leftTopPosY  a float.
+     * @param width        a float.
+     * @param height       a float.
+     * @param model        a {@link com.xenoamess.cyan_potion.base.render.Model} object.
+     * @param colorScale   colorScale
+     * @param rotateRadius a float.
      */
     public void drawBindableRelativeLeftTop(
             Bindable bindable,

@@ -897,6 +897,11 @@ public class GameManager implements Closeable {
         return saveManager;
     }
 
+    /**
+     * <p>Getter for the field <code>steamManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamManager} object.
+     */
     public SteamManager getSteamManager() {
         return steamManager;
     }

@@ -42,14 +42,32 @@ import java.util.function.Function;
 
 import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
 
+/**
+ * <p>SteamTextureUtils class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public class SteamTextureUtils {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SteamTextureUtils.class);
 
+    /**
+     * Constant <code>STRING_STEAM_AVATAR="steam_avatar"</code>
+     */
     public static final String STRING_STEAM_AVATAR = "steam_avatar";
+    /**
+     * Constant <code>STRING_SMALL="small"</code>
+     */
     public static final String STRING_SMALL = "small";
+    /**
+     * Constant <code>STRING_MEDIUM="medium"</code>
+     */
     public static final String STRING_MEDIUM = "medium";
+    /**
+     * Constant <code>STRING_LARGE="large"</code>
+     */
     public static final String STRING_LARGE = "large";
 
     /**
@@ -69,15 +87,15 @@ public class SteamTextureUtils {
      * If not run with steam,
      * then return a all-black picture.
      *
-     * @param texture
-     * @return
+     * @param texture the texture to load.
+     * @return if load succeed
      */
     @MainThreadOnly
     public static boolean loadSteamAvatarTextures(Texture texture) {
         if (!DataCenter.ifMainThread()) {
             return false;
         }
-
+        assert (texture != null);
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
         assert (STRING_STEAM_AVATAR.equals(resourceInfo.getType()));
         final GameManager gameManager = texture.getResourceManager().getGameManager();

@@ -36,6 +36,9 @@ import java.nio.ByteBuffer;
  * I already created pull request for this class to steamworks4j.
  * If the pull request is accepted then I will remove this class here.
  * But right now let's just use this class here.
+ *
+ * @author xenoa
+ * @version $Id: $Id
  */
 public class SteamImage {
     private final int imageHandle;
@@ -43,14 +46,30 @@ public class SteamImage {
     private int height = -1;
     private ByteBuffer imageBuffer = null;
 
+    /**
+     * <p>Constructor for SteamImage.</p>
+     *
+     * @param imageHandle a int.
+     */
     public SteamImage(int imageHandle) {
         this.imageHandle = imageHandle;
     }
 
+    /**
+     * <p>Getter for the field <code>imageHandle</code>.</p>
+     *
+     * @return a int.
+     */
     public int getImageHandle() {
         return imageHandle;
     }
 
+    /**
+     * <p>Getter for the field <code>width</code>.</p>
+     *
+     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
+     * @return a int.
+     */
     public int getWidth(SteamUtils steamUtils) {
         if (width == -1) {
             this.getImageSizeAndSet(steamUtils);
@@ -58,6 +77,12 @@ public class SteamImage {
         return width;
     }
 
+    /**
+     * <p>Getter for the field <code>height</code>.</p>
+     *
+     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
+     * @return a int.
+     */
     public int getHeight(SteamUtils steamUtils) {
         if (height == -1) {
             this.getImageSizeAndSet(steamUtils);
@@ -65,6 +90,13 @@ public class SteamImage {
         return height;
     }
 
+    /**
+     * <p>Getter for the field <code>imageBuffer</code>.</p>
+     *
+     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
+     * @return a {@link java.nio.ByteBuffer} object.
+     * @throws com.codedisaster.steamworks.SteamException if any.
+     */
     public ByteBuffer getImageBuffer(SteamUtils steamUtils) throws SteamException {
         if (this.imageBuffer != null) {
             return this.imageBuffer;
@@ -76,6 +108,11 @@ public class SteamImage {
         return this.imageBuffer;
     }
 
+    /**
+     * <p>getImageSizeAndSet.</p>
+     *
+     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
+     */
     protected void getImageSizeAndSet(SteamUtils steamUtils) {
         int[] size = new int[2];
         steamUtils.getImageSize(getImageHandle(), size);

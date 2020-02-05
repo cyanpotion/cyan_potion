@@ -26,19 +26,44 @@ package com.xenoamess.cyan_potion.base;
 
 import java.io.Closeable;
 
+/**
+ * <p>Abstract SubManager class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public abstract class SubManager implements Closeable {
     private final GameManager gameManager;
 
+    /**
+     * <p>Constructor for SubManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public SubManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>init.</p>
+     */
     public abstract void init();
 
+    /**
+     * <p>update.</p>
+     */
     public abstract void update();
 
+    /**
+     * <p>close.</p>
+     */
     public abstract void close();
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }

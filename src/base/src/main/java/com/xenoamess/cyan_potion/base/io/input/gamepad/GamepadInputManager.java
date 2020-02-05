@@ -52,11 +52,18 @@ public class GamepadInputManager extends SubManager {
 
     private ControllerManager jamepadControllerManager = null;
 
+    /**
+     * <p>Constructor for GamepadInputManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GamepadInputManager(GameManager gameManager) {
         super(gameManager);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * <p>init.</p>
      */
     @Override

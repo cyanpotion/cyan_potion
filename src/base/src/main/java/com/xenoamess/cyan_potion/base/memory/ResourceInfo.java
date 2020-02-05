@@ -224,18 +224,38 @@ public class ResourceInfo<T extends AbstractResource> {
         return resourceClass;
     }
 
+    /**
+     * <p>Getter for the field <code>resourceClass</code>.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * <p>Getter for the field <code>type</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getFileString() {
         return fileString;
     }
 
+    /**
+     * <p>Getter for the field <code>fileString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public FileObject getFileObject() {
         return fileObject;
     }
 
+    /**
+     * <p>Getter for the field <code>fileObject</code>.</p>
+     *
+     * @return a {@link org.apache.commons.vfs2.FileObject} object.
+     */
     public String[] getValues() {
         return Arrays.copyOf(values, values.length);
     }

@@ -29,6 +29,12 @@ import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 
+/**
+ * <p>RectangleBox class.</p>
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
 public class RectangleBox extends AbstractControllableGameWindowComponent {
     private final Vector4f color = new Vector4f(1, 1, 1, 1);
 
@@ -45,12 +51,16 @@ public class RectangleBox extends AbstractControllableGameWindowComponent {
      * <p>Constructor for AbstractControllableGameWindowComponent.</p>
      *
      * @param gameWindow gameWindow
+     * @param color      a {@link org.joml.Vector4f} object.
      */
     public RectangleBox(GameWindow gameWindow, Vector4f color) {
         this(gameWindow);
         this.setColor(color);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ifVisibleThenDraw() {
         glDisable(GL_TEXTURE_2D);
@@ -58,14 +68,32 @@ public class RectangleBox extends AbstractControllableGameWindowComponent {
         glRectf(getLeftPosX(), getLeftTopPosY(), getRightBottomPosX(), getRightBottomPosY());
     }
 
+    /**
+     * <p>Getter for the field <code>color</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4f} object.
+     */
     public Vector4f getColor() {
         return color;
     }
 
+    /**
+     * <p>Setter for the field <code>color</code>.</p>
+     *
+     * @param color a {@link org.joml.Vector4f} object.
+     */
     public void setColor(Vector4f color) {
         this.getColor().set(color);
     }
 
+    /**
+     * <p>Setter for the field <code>color</code>.</p>
+     *
+     * @param x a int.
+     * @param y a int.
+     * @param z a int.
+     * @param w a int.
+     */
     public void setColor(int x, int y, int z, int w) {
         this.getColor().set(x, y, z, w);
     }

@@ -37,6 +37,9 @@ import java.nio.ByteBuffer;
  * thanks for steamworks4j of code-disaster.
  * the original codes are follow MIT license under code-disaster, but that file does not contain license head.
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
+ *
+ * @author xenoa
+ * @version $Id: $Id
  */
 public class SteamCallbacks {
     @JsonIgnore
@@ -451,63 +454,138 @@ public class SteamCallbacks {
 
     //---getters and setters starts
 
+    /**
+     * <p>Getter for the field <code>steamManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamManager} object.
+     */
     public SteamManager getSteamManager() {
         return steamManager;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUserCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUserCallback} object.
+     */
     public SteamUserCallback getSteamUserCallback() {
         return steamUserCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUserCallback</code>.</p>
+     *
+     * @param steamUserCallback a {@link com.codedisaster.steamworks.SteamUserCallback} object.
+     */
     public void setSteamUserCallback(SteamUserCallback steamUserCallback) {
         this.steamUserCallback = steamUserCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamRemoteStorageCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamRemoteStorageCallback} object.
+     */
     public SteamRemoteStorageCallback getSteamRemoteStorageCallback() {
         return steamRemoteStorageCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamRemoteStorageCallback</code>.</p>
+     *
+     * @param steamRemoteStorageCallback a {@link com.codedisaster.steamworks.SteamRemoteStorageCallback} object.
+     */
     public void setSteamRemoteStorageCallback(SteamRemoteStorageCallback steamRemoteStorageCallback) {
         this.steamRemoteStorageCallback = steamRemoteStorageCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUGCCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUGCCallback} object.
+     */
     public SteamUGCCallback getSteamUGCCallback() {
         return steamUGCCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUGCCallback</code>.</p>
+     *
+     * @param steamUGCCallback a {@link com.codedisaster.steamworks.SteamUGCCallback} object.
+     */
     public void setSteamUGCCallback(SteamUGCCallback steamUGCCallback) {
         this.steamUGCCallback = steamUGCCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamFriendsCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamFriendsCallback} object.
+     */
     public SteamFriendsCallback getSteamFriendsCallback() {
         return steamFriendsCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamFriendsCallback</code>.</p>
+     *
+     * @param steamFriendsCallback a {@link com.codedisaster.steamworks.SteamFriendsCallback} object.
+     */
     public void setSteamFriendsCallback(SteamFriendsCallback steamFriendsCallback) {
         this.steamFriendsCallback = steamFriendsCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUtilsCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUtilsCallback} object.
+     */
     public SteamUtilsCallback getSteamUtilsCallback() {
         return steamUtilsCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUtilsCallback</code>.</p>
+     *
+     * @param steamUtilsCallback a {@link com.codedisaster.steamworks.SteamUtilsCallback} object.
+     */
     public void setSteamUtilsCallback(SteamUtilsCallback steamUtilsCallback) {
         this.steamUtilsCallback = steamUtilsCallback;
     }
 
+    /**
+     * <p>Getter for the field <code>steamAPIWarningMessageHook</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamAPIWarningMessageHook} object.
+     */
     public SteamAPIWarningMessageHook getSteamAPIWarningMessageHook() {
         return steamAPIWarningMessageHook;
     }
 
+    /**
+     * <p>Setter for the field <code>steamAPIWarningMessageHook</code>.</p>
+     *
+     * @param steamAPIWarningMessageHook a {@link com.codedisaster.steamworks.SteamAPIWarningMessageHook} object.
+     */
     public void setSteamAPIWarningMessageHook(SteamAPIWarningMessageHook steamAPIWarningMessageHook) {
         this.steamAPIWarningMessageHook = steamAPIWarningMessageHook;
     }
 
 
+    /**
+     * <p>Getter for the field <code>steamUserStatsCallback</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUserStatsCallback} object.
+     */
     public SteamUserStatsCallback getSteamUserStatsCallback() {
         return steamUserStatsCallback;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUserStatsCallback</code>.</p>
+     *
+     * @param steamUserStatsCallback a {@link com.codedisaster.steamworks.SteamUserStatsCallback} object.
+     */
     public void setSteamUserStatsCallback(SteamUserStatsCallback steamUserStatsCallback) {
         this.steamUserStatsCallback = steamUserStatsCallback;
     }

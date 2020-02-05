@@ -405,6 +405,9 @@ public class World extends AbstractEntityScene {
         this.fix();
     }
 
+    /**
+     * <p>fix.</p>
+     */
     protected void fix() {
         final int avatarPictureSize = 200;
         this.pictureBox.setSize(avatarPictureSize);

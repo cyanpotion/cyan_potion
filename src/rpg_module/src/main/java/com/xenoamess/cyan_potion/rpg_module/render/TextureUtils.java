@@ -52,10 +52,25 @@ import java.util.List;
  * @version 0.143.0
  */
 public class TextureUtils {
+    /**
+     * Constant <code>STRING_CHARACTER="characters"</code>
+     */
     public static final String STRING_CHARACTER = "characters";
+    /**
+     * Constant <code>STRING_A5="A5"</code>
+     */
     public static final String STRING_A5 = "A5";
+    /**
+     * Constant <code>STRING_B="B"</code>
+     */
     public static final String STRING_B = "B";
+    /**
+     * Constant <code>STRING_C="C"</code>
+     */
     public static final String STRING_C = "C";
+    /**
+     * Constant <code>STRING_A2="A2"</code>
+     */
     public static final String STRING_A2 = "A2";
 
     @JsonIgnore
