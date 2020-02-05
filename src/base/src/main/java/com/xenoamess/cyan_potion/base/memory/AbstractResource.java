@@ -41,7 +41,7 @@ import java.util.function.Function;
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.1-SNAPSHOT
  */
 public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore

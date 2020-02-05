@@ -42,7 +42,7 @@ import java.util.List;
  * <p>GamepadInput class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.1-SNAPSHOT
  */
 public class GamepadInputManager extends SubManager {
     @JsonIgnore

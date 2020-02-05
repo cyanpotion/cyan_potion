@@ -32,7 +32,7 @@ import java.util.Collection;
  * <p>KeyModEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.148.8
+ * @version 0.155.1-SNAPSHOT
  */
 public enum KeyModEnum {
     /**

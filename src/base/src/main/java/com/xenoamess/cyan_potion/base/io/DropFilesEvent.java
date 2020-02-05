@@ -40,7 +40,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.1-SNAPSHOT
  */
 public class DropFilesEvent implements Event {
     @JsonIgnore

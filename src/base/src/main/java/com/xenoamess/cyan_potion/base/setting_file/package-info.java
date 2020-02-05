@@ -22,36 +22,14 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.render;
-
-import org.joml.Vector3f;
-
 /**
- * <p>Camera class.</p>
+ * This packages focused on setting files,
+ * including load, parse setting files,
+ * and provide functions for getting the data in settings.
+ * <p>
+ * this package is split from GameManager,
+ * for more complex logic of multiple-version setting files processing.
  *
- * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @since 0.155.0
  */
-public class Camera {
-    private final Vector3f position;
-
-    /**
-     * <p>Constructor for Camera.</p>
-     *
-     * @param initX a int.
-     * @param initY a int.
-     */
-    public Camera(int initX, int initY) {
-        position = new Vector3f(initX, initY, 0);
-    }
-
-    /**
-     * <p>Getter for the field <code>position</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getPosition() {
-        return position;
-    }
-
-}
+package com.xenoamess.cyan_potion.base.setting_file;
