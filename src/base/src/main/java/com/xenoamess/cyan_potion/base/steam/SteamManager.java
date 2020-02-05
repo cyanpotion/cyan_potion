@@ -219,7 +219,7 @@ public class SteamManager extends SubManager {
      * <p>
      * notice that this function shall never be called before call this.init
      *
-     * @return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning();
+     * @return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() AND SteamAPI.isSteamRunning();
      */
     public boolean isRunWithSteam() {
         return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning();
@@ -281,7 +281,7 @@ public class SteamManager extends SubManager {
      * of course this function is from steamworks4j.
      *
      * @param input a {@link java.lang.String} object.
-     * @throws com.codedisaster.steamworks.SteamException
+     * @throws com.codedisaster.steamworks.SteamException if any
      */
     protected void processInput(String input) throws SteamException {
 

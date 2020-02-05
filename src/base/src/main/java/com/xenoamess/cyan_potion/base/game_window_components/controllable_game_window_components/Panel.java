@@ -120,9 +120,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * return new ArrayList<>(this.contents);
+     * return new ArrayList(this.contents);
      *
-     * @return new ArrayList<>(this.contents);
+     * @return new ArrayList(this.contents);
      * @see #contents
      * @see List#clear()
      */
