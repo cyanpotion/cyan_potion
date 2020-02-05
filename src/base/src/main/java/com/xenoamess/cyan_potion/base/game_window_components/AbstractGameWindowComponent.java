@@ -93,6 +93,11 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         this.initProcessors();
     }
 
+    /**
+     * register a processor to deal with RemoteCallEvent
+     *
+     * @see com.xenoamess.cyan_potion.base.events.RemoteCallEvent
+     */
     protected void initRemoteCallEventProcessor() {
         this.registerProcessor(
                 RemoteCallEvent.class,
