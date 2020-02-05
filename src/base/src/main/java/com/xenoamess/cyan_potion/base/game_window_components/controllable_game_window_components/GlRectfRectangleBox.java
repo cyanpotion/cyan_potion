@@ -42,7 +42,7 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author xenoa
  * @version 0.155.1-SNAPSHOT
- * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture);
+ * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
 @Deprecated
