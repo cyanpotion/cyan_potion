@@ -44,24 +44,24 @@ public interface AbstractArea {
     boolean ifMutable();
 
     /**
-     * get left top posX of this area. return {@link Float#NaN} if no leftTopPosX.
+     * get left top posX of this area. return {@link java.lang.Float#NaN} if no leftTopPosX.
      *
      * @return leftTopPosX
      */
     float getLeftTopPosX();
 
     /**
-     * get left top posY of this area. return {@link Float#NaN} if no leftTopPosY.
+     * get left top posY of this area. return {@link java.lang.Float#NaN} if no leftTopPosY.
      *
      * @return leftTopPosY
      */
     float getLeftTopPosY();
 
     /**
-     * get center posX of this area. return {@link Float#NaN} if no centerPosX.
+     * get center posX of this area. return {@link java.lang.Float#NaN} if no centerPosX.
      * <p>
      * notice that this value is calculated using {@link #getLeftTopPosX()} and {@link #getWidth()},
-     * so make sure they have value before you call this, or it will return {@link Float#NaN} as well.
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
      * @return centerPosX
      */
@@ -70,10 +70,10 @@ public interface AbstractArea {
     }
 
     /**
-     * get center posY of this area. return {@link Float#NaN} if no centerPosY.
+     * get center posY of this area. return {@link java.lang.Float#NaN} if no centerPosY.
      * <p>
      * notice that this value is calculated using {@link #getLeftTopPosY()} and {@link #getHeight()},
-     * so make sure they have value before you call this, or it will return {@link Float#NaN} as well.
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
      * @return centerPosY
      */
@@ -97,7 +97,7 @@ public interface AbstractArea {
      * get right posX of this area
      * <p>
      * notice that this value is calculated using {@link #getLeftTopPosX()} and {@link #getWidth()},
-     * so make sure they have value before you call this, or it will return {@link Float#NaN} as well.
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
      * @return RightPosX
      */
@@ -118,7 +118,7 @@ public interface AbstractArea {
      * get bottom posY of this area
      * <p>
      * notice that this value is calculated using {@link #getLeftTopPosY()} and {@link #getHeight()},
-     * so make sure they have value before you call this, or it will return {@link Float#NaN} as well.
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
      * @return BottomPosY
      */
