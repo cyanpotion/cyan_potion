@@ -69,7 +69,7 @@ import java.util.TreeMap;
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0-SNAPSHOT
+ * @version 0.155.0
  */
 public class World extends AbstractEntityScene {
     @JsonIgnore

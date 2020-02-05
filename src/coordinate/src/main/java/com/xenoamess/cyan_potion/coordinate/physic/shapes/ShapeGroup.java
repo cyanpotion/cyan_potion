@@ -38,7 +38,7 @@ import java.util.List;
  * as simple AbstractShape,thus as a group of shapes.
  *
  * @author XenoAmess
- * @version 0.155.0-SNAPSHOT
+ * @version 0.155.0
  */
 public class ShapeGroup extends AbstractShape {
     private final List<AbstractShape> shapes = new ArrayList<>();

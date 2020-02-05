@@ -42,7 +42,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>MadeWithLogo class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0-SNAPSHOT
+ * @version 0.155.0
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =

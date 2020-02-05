@@ -46,7 +46,7 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * <p>SteamTextureUtils class.</p>
  *
  * @author xenoa
- * @version 0.155.0-SNAPSHOT
+ * @version 0.155.0
  */
 public class SteamTextureUtils {
     @JsonIgnore
