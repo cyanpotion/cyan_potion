@@ -37,7 +37,7 @@ import org.joml.Vector4f;
  * @author XenoAmess
  * @version 0.143.0
  */
-public class Button extends AbstractControllableGameWindowComponent implements Bindable {
+public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();
     private String buttonText;
     /**
@@ -76,14 +76,6 @@ public class Button extends AbstractControllableGameWindowComponent implements B
         super(gameWindow);
         this.getButtonPicture().setBindable(buttonBindable);
         this.setButtonText(buttonText);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void bind(int sampler) {
-        this.getButtonPicture().bind(sampler);
     }
 
     /**

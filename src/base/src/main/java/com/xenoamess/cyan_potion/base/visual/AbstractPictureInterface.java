@@ -27,54 +27,29 @@ package com.xenoamess.cyan_potion.base.visual;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
-import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
 
-public interface AbstractPictureInterface extends AbstractMutableArea, Bindable {
+/**
+ * AbstractPictureInterface
+ * AbstractPictureInterface mean
+ *
+ * @author xenoa
+ * @version $Id: $Id
+ */
+public interface AbstractPictureInterface extends AbstractMutableArea {
     /**
      * <p>draw.</p>
      *
      * @param gameWindow gameWindow
      */
-    default void draw(GameWindow gameWindow) {
-        if (this.getCurrentBindable() == null) {
-            return;
-        }
-        gameWindow.drawBindableRelativeCenter(
-                this.getCurrentBindable(),
-                this.getCenterPosX(),
-                this.getCenterPosY(),
-                this.getWidth(),
-                this.getHeight(),
-                Model.COMMON_MODEL,
-                this.getColorScale(),
-                this.getRotateRadius()
-        );
-    }
+    void draw(GameWindow gameWindow);
 
     /**
      * <p>draw.</p>
      *
      * @param scene scene
      */
-    default void draw(AbstractScene scene) {
-        if (this.getCurrentBindable() == null) {
-            return;
-        }
-        scene.drawBindableAbsolute(
-                scene.getCamera(),
-                scene.getScale(),
-                this.getCurrentBindable(),
-                this.getCenterPosX(),
-                this.getCenterPosY(),
-                this.getWidth(),
-                this.getHeight(),
-                Model.COMMON_MODEL,
-                this.getColorScale(),
-                this.getRotateRadius()
-        );
-    }
+    void draw(AbstractScene scene);
 
     /**
      * <p>rotate.</p>
@@ -91,24 +66,45 @@ public interface AbstractPictureInterface extends AbstractMutableArea, Bindable 
     void rotateTo(float newRotateRadius);
 
     /**
-     * get current bindable of this picture.
+     * <p>getColorScale.</p>
      *
-     * @return the bindable for draw
+     * @return a {@link org.joml.Vector4f} object.
      */
-    Bindable getCurrentBindable();
-
     Vector4f getColorScale();
 
+    /**
+     * <p>setColorScale.</p>
+     *
+     * @param colorScale a {@link org.joml.Vector4f} object.
+     */
     default void setColorScale(Vector4f colorScale) {
         this.getColorScale().set(colorScale);
     }
 
+    /**
+     * <p>setColorScale.</p>
+     *
+     * @param x a float.
+     * @param y a float.
+     * @param z a float.
+     * @param w a float.
+     */
     default void setColorScale(float x, float y, float z, float w) {
         this.getColorScale().set(x, y, z, w);
     }
 
+    /**
+     * <p>getRotateRadius.</p>
+     *
+     * @return a float.
+     */
     float getRotateRadius();
 
+    /**
+     * <p>setRotateRadius.</p>
+     *
+     * @param rotateRadius a float.
+     */
     void setRotateRadius(float rotateRadius);
 
 }
