@@ -39,7 +39,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.154.2-SNAPSHOT
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();

@@ -53,7 +53,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * <p>Texture class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.154.2-SNAPSHOT
  */
 public class Texture extends AbstractResource implements Bindable {
     @JsonIgnore

@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GameSettings class.</p>
  *
  * @author xenoa
- * @version $Id: $Id
+ * @version 0.154.2-SNAPSHOT
  */
 public class GameSettings {
 

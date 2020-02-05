@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.coordinate.physic;
  * <p>ShapeRelation class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.154.2-SNAPSHOT
  */
 public enum ShapeRelation {
     RELATION_UNDEFINED,

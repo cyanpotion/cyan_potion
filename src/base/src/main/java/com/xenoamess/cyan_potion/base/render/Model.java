@@ -36,7 +36,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Model class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.154.2-SNAPSHOT
  */
 public class Model implements Closeable {
     /**

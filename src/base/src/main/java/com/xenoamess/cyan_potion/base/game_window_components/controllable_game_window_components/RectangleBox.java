@@ -33,7 +33,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>RectangleBox class.</p>
  *
  * @author xenoa
- * @version $Id: $Id
+ * @version 0.154.2-SNAPSHOT
  */
 public class RectangleBox extends AbstractControllableGameWindowComponent {
     private final Vector4f color = new Vector4f(1, 1, 1, 1);

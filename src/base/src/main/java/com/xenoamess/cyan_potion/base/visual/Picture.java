@@ -32,7 +32,7 @@ import java.util.Objects;
  * <p>Picture class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.154.2-SNAPSHOT
  */
 public class Picture extends AbstractBindablePicture {
     private Bindable bindable;
