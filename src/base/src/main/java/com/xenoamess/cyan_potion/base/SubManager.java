@@ -30,7 +30,7 @@ import java.io.Closeable;
  * <p>Abstract SubManager class.</p>
  *
  * @author xenoa
- * @version 0.154.2-SNAPSHOT
+ * @version 0.155.0-SNAPSHOT
  */
 public abstract class SubManager implements Closeable {
     private final GameManager gameManager;

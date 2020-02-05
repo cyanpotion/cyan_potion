@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.exceptions;
  * <p>ConfigFileBooleanValueStringIsNotBooleanException class.</p>
  *
  * @author XenoAmess
- * @version 0.154.2-SNAPSHOT
+ * @version 0.155.0-SNAPSHOT
  */
 public class ConfigFileBooleanValueStringIsNotBooleanException extends RuntimeException {
     /**
