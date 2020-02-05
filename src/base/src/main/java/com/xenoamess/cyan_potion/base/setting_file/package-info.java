@@ -22,26 +22,14 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges;
-
-import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-
 /**
- * <p>ShapeRelationJudge interface.</p>
+ * This packages focused on setting files,
+ * including load, parse setting files,
+ * and provide functions for getting the data in settings.
+ * <p>
+ * this package is split from GameManager,
+ * for more complex logic of multiple-version setting files processing.
  *
- * @author XenoAmess
- * @version 0.155.2
+ * @since 0.155.0
  */
-public interface ShapeRelationJudge<K extends AbstractShape,
-        V extends AbstractShape> {
-    /**
-     * <p>relation.</p>
-     *
-     * @param k     a K object.
-     * @param v     a V object.
-     * @param rough a boolean.
-     * @return return
-     */
-    ShapeRelation relation(K k, V v, boolean rough);
-}
+package com.xenoamess.cyan_potion.base.setting_file;

@@ -46,7 +46,7 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * <p>SteamTextureUtils class.</p>
  *
  * @author xenoa
- * @version 0.155.0
+ * @version 0.155.2
  */
 public class SteamTextureUtils {
     @JsonIgnore
@@ -139,8 +139,8 @@ public class SteamTextureUtils {
             width = steamImage.getWidth(steamUtils);
             height = steamImage.getHeight(steamUtils);
         } else {
-            width = 3;
-            height = 3;
+            width = 1;
+            height = 1;
             byteBuffer = MemoryUtil.memAlloc(width * height * 4);
             for (int i = 0; i < width * height * 4; i++) {
                 byteBuffer.put((byte) 255);

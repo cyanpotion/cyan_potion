@@ -22,26 +22,11 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges;
-
-import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-
 /**
- * <p>ShapeRelationJudge interface.</p>
+ * Package to hold classes about URL.
+ * now I'm still considering deprecate/delete this package.
  *
- * @author XenoAmess
- * @version 0.155.2
+ * @since 0.148.8
  */
-public interface ShapeRelationJudge<K extends AbstractShape,
-        V extends AbstractShape> {
-    /**
-     * <p>relation.</p>
-     *
-     * @param k     a K object.
-     * @param v     a V object.
-     * @param rough a boolean.
-     * @return return
-     */
-    ShapeRelation relation(K k, V v, boolean rough);
-}
+package com.xenoamess.cyan_potion.base.io.url;
+

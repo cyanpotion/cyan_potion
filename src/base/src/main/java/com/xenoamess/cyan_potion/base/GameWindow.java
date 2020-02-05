@@ -60,7 +60,7 @@ import static org.lwjgl.opengl.GL11.*;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.2
  */
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore

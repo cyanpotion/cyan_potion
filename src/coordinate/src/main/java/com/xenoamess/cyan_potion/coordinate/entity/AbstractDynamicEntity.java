@@ -35,7 +35,7 @@ import java.util.Objects;
  * <p>Abstract AbstractDynamicEntity class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.2
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 

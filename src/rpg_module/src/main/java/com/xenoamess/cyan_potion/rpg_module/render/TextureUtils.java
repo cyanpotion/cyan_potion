@@ -49,7 +49,7 @@ import java.util.List;
  * <p>TextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.2
  */
 public class TextureUtils {
     /**

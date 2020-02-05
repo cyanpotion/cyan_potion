@@ -12,7 +12,7 @@
         "textFilePath": "resources/text/text.x8l",
         "gameWindowClassName": "com.xenoamess.cyan_potion.base.GameWindow",
         "titleClassName": "com.xenoamess.cyan_potion.rpg_module.world.World",
-        "gameVersion": "0.155.0",
+        "gameVersion": "0.155.2",
         "steam_appid": "480",
         "language": "english",
         "commonSettings": "",
@@ -41,7 +41,7 @@
         "_attributes": {
           "rightAfterResourceManagerCreate": ""
         },
-        "_text0": "SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADER_PICTURE"
+        "_text0": "SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADERS"
       },
       {
         "_attributes": {

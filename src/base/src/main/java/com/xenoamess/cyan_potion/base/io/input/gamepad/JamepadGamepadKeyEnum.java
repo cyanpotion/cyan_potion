@@ -31,7 +31,7 @@ import java.util.Arrays;
  * But for convenience, we just split them.
  *
  * @author XenoAmess
- * @version 0.148.8
+ * @version 0.155.2
  * @see JXInputGamepadKeyEnum
  */
 public enum JamepadGamepadKeyEnum {

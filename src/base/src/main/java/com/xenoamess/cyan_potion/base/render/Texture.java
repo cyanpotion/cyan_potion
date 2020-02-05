@@ -33,12 +33,14 @@ import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import com.xenoamess.cyan_potion.base.visual.Colors;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +55,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * <p>Texture class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.2
  */
 public class Texture extends AbstractResource implements Bindable {
     @JsonIgnore
@@ -88,15 +90,27 @@ public class Texture extends AbstractResource implements Bindable {
      * Constant <code>STRING_PICTURE="picture"</code>
      */
     public static final String STRING_PICTURE = "picture";
+
+    /**
+     * Constant <code>STRING_PURE_COLOR="pure_color"</code>
+     */
+    public static final String STRING_PURE_COLOR = "pure_color";
+
     /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
-    public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_PICTURE = (GameManager gameManager) -> {
-        gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_PICTURE,
-                (Texture texture) -> {
-                    return texture.loadAsPictureTexture(texture.getResourceInfo());
-                }
+    public static final Function<GameManager, Void> PUT_TEXTURE_LOADERS = (GameManager gameManager) -> {
+        ResourceManager resourceManager = gameManager.getResourceManager();
+        resourceManager.putResourceLoader(
+                Texture.class,
+                STRING_PICTURE,
+                Texture::loadAsPictureTexture
+        );
+        resourceManager.putResourceLoader(
+                Texture.class,
+                STRING_PURE_COLOR,
+                Texture::loadAsPureColorTexture
         );
         return null;
     };
@@ -219,14 +233,18 @@ public class Texture extends AbstractResource implements Bindable {
     /**
      * <p>loadAsPictureTexture.</p>
      *
-     * @param resourceInfo resourceInfo
-     * @return a boolean.
+     * @param texture texture
+     * @return if load succeeded
      */
     @MainThreadOnly
-    public boolean loadAsPictureTexture(ResourceInfo<Texture> resourceInfo) {
+    public static boolean loadAsPictureTexture(Texture texture) {
+        assert (texture != null);
         if (!DataCenter.ifMainThread()) {
             return false;
         }
+
+        ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
+        assert (resourceInfo.getType().equals(STRING_PICTURE));
 
         BufferedImage bufferedImage = null;
         try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
@@ -241,12 +259,44 @@ public class Texture extends AbstractResource implements Bindable {
         final int entireHeight = bufferedImage.getHeight();
         final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,
                 entireHeight, null, 0, entireWidth);
-        this.bake(entireWidth, entireHeight, entireWidth, entireHeight, 0, 0,
+        texture.bake(entireWidth, entireHeight, entireWidth, entireHeight, 0, 0,
                 pixelsRaw);
 
         return true;
     }
 
+    /**
+     * <p>loadAsPureColorTexture.</p>
+     *
+     * @param texture texture
+     * @return if load succeeded
+     */
+    @MainThreadOnly
+    public static boolean loadAsPureColorTexture(Texture texture) {
+        assert (texture != null);
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+        ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
+        assert (resourceInfo.getType().equals(STRING_PURE_COLOR));
+        String[] values = resourceInfo.getValues();
+        assert (values.length >= 1);
+        Color colorAwt = Colors.colorStringToColorAwt(values[0]);
+
+        int width = 1;
+        int height = 1;
+        ByteBuffer byteBuffer = MemoryUtil.memAlloc(width * height * 4);
+        for (int i = 0; i < width * height; i++) {
+            byteBuffer.put((byte) colorAwt.getRed());
+            byteBuffer.put((byte) colorAwt.getGreen());
+            byteBuffer.put((byte) colorAwt.getBlue());
+            byteBuffer.put((byte) colorAwt.getAlpha());
+        }
+        byteBuffer.flip();
+        texture.bake(width, height, byteBuffer);
+        MemoryUtil.memFree(byteBuffer);
+        return true;
+    }
 
     /**
      * {@inheritDoc}

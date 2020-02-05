@@ -38,7 +38,7 @@ import java.util.Set;
  * <p>MouseScrollEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.155.0
+ * @version 0.155.2
  */
 public class MouseScrollEvent implements Event {
     @JsonIgnore
