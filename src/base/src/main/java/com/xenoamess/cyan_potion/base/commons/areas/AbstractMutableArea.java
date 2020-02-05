@@ -125,6 +125,8 @@ public interface AbstractMutableArea extends AbstractArea {
     //----------
 
     /**
+     * <p>setLeftBottomPosX.</p>
+     *
      * @param leftBottomPosX leftBottomPosX
      * @see #setLeftPosX(float)
      */
@@ -133,6 +135,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setLeftBottomPosY.</p>
+     *
      * @param leftBottomPosY leftBottomPosY
      * @see #setBottomPosY(float)
      */
@@ -141,6 +145,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightTopPosX.</p>
+     *
      * @param rightTopPosX rightTopPosX
      * @see #setRightPosX(float)
      */
@@ -149,6 +155,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightTopPosY.</p>
+     *
      * @param rightTopPosY rightTopPosY
      * @see #setTopPosY(float)
      */
@@ -157,6 +165,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightBottomPosX.</p>
+     *
      * @param rightBottomPosX rightBottomPosX
      * @see #setRightBottomPosX(float)
      */
@@ -165,6 +175,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightBottomPosY.</p>
+     *
      * @param rightBottomPosY rightBottomPosY
      * @see #setBottomPosY(float)
      */
@@ -175,6 +187,8 @@ public interface AbstractMutableArea extends AbstractArea {
     //----------
 
     /**
+     * <p>setLeftCenterPosX.</p>
+     *
      * @param leftCenterPosX leftCenterPosX
      * @see #setLeftPosX(float)
      */
@@ -183,6 +197,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setLeftCenterPosY.</p>
+     *
      * @param leftCenterPosY leftCenterPosY
      * @see #setCenterPosY(float)
      */
@@ -191,6 +207,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightCenterPosX.</p>
+     *
      * @param rightCenterPosX rightCenterPosX
      * @see #setRightPosX(float)
      */
@@ -199,6 +217,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setRightCenterPosY.</p>
+     *
      * @param rightCenterPosY rightCenterPosY
      * @see #setCenterPosY(float)
      */
@@ -207,6 +227,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setCenterTopPosX.</p>
+     *
      * @param centerTopPosX centerTopPosX
      * @see #setCenterPosX(float)
      */
@@ -215,6 +237,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setCenterTopPosY.</p>
+     *
      * @param centerTopPosY centerTopPosY
      * @see #setTopPosY(float)
      */
@@ -223,6 +247,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setCenterBottomPosX.</p>
+     *
      * @param centerBottomPosX centerBottomPosX
      * @see #setCenterPosX(float)
      */
@@ -231,6 +257,8 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
+     * <p>setCenterBottomPosY.</p>
+     *
      * @param centerBottomPosY centerBottomPosY
      * @see #setBottomPosY(float)
      */
@@ -448,38 +476,83 @@ public interface AbstractMutableArea extends AbstractArea {
 
     //----------
 
+    /**
+     * <p>moveToLeftTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftTopOf(AbstractArea abstractArea) {
         this.setLeftTopPos(abstractArea.getLeftTopPosX(), abstractArea.getLeftTopPosY());
     }
 
+    /**
+     * <p>moveToRightTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightTopOf(AbstractArea abstractArea) {
         this.setRightTopPos(abstractArea.getRightTopPosX(), abstractArea.getRightTopPosY());
     }
 
+    /**
+     * <p>moveToLeftBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftBottomOf(AbstractArea abstractArea) {
         this.setLeftBottomPos(abstractArea.getLeftBottomPosX(), abstractArea.getLeftBottomPosY());
     }
 
+    /**
+     * <p>moveToRightBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightBottomOf(AbstractArea abstractArea) {
         this.setRightBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToLeftCenterOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftCenterOf(AbstractArea abstractArea) {
         this.setLeftCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToRightCenterOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightCenterOf(AbstractArea abstractArea) {
         this.setRightCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToCenterTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToCenterTopOf(AbstractArea abstractArea) {
         this.setCenterTopPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToCenterBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToCenterBottomOf(AbstractArea abstractArea) {
         this.setCenterBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToCenterCentorOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToCenterCentorOf(AbstractArea abstractArea) {
         this.setCenter(abstractArea);
     }
