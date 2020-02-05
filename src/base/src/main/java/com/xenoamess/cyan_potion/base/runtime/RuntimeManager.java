@@ -39,7 +39,7 @@ import java.util.List;
  * (invoking functions in SaveManager).
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class RuntimeManager {
     @JsonIgnore

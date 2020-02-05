@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  * @see JXInputGamepadDevice
  * @deprecated
  */

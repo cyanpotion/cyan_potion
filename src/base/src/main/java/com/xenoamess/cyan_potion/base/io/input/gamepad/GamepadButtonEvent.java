@@ -41,7 +41,7 @@ import java.util.Set;
  * <p>GamepadButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class GamepadButtonEvent implements Event {
     @JsonIgnore

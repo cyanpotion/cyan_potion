@@ -38,7 +38,7 @@ import java.nio.ByteBuffer;
  * But right now let's just use this class here.
  *
  * @author xenoa
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class SteamImage {
     private final int imageHandle;

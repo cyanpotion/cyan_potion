@@ -49,7 +49,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Keymap class.</p>
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class Keymap {
     @JsonIgnore

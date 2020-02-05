@@ -32,7 +32,7 @@ import java.awt.*;
  * <p>Colors class.</p>
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class Colors {
     public static String colorVector4fToColorString(Vector4f colorVector) {

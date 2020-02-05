@@ -39,7 +39,7 @@ import java.util.function.Function;
  * <p>CodePluginManager class.</p>
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class CodePluginManager {
     @JsonIgnore

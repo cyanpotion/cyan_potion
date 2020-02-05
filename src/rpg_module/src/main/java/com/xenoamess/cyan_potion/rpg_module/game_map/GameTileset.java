@@ -44,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GameTileset class.</p>
  *
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class GameTileset {
     @JsonIgnore

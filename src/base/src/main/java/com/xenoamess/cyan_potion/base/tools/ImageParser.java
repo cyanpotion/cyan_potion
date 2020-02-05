@@ -85,7 +85,7 @@ import static org.lwjgl.stb.STBImage.stbi_load;
  *
  * @author ArtemisHD
  * @author XenoAmess
- * @version 0.155.1-SNAPSHOT
+ * @version 0.155.2
  */
 public class ImageParser implements Closeable {
     @JsonIgnore
