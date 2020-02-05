@@ -24,7 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
-import com.xenoamess.cyan_potion.base.render.Bindable;
+import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.List;
  * <p>Animation class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class Animation extends AbstractPicture {
     private int texturePointer;
@@ -52,6 +53,21 @@ public class Animation extends AbstractPicture {
     public Animation(int fps) {
         this.setTexturePointer(0);
         this.setFps(1f / fps);
+    }
+
+
+    @Override
+    public void draw(GameWindow gameWindow) {
+        AbstractPictureInterface pictureInterface = this.getCurrentPicture();
+        pictureInterface.cover(this);
+        pictureInterface.draw(gameWindow);
+    }
+
+    @Override
+    public void draw(AbstractScene scene) {
+        AbstractPictureInterface pictureInterface = this.getCurrentPicture();
+        pictureInterface.cover(this);
+        pictureInterface.draw(scene);
     }
 
     /**
@@ -76,13 +92,6 @@ public class Animation extends AbstractPicture {
         return getFrames().get(getTexturePointer());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Bindable getCurrentBindable() {
-        return this.getCurrentPicture().getCurrentBindable();
-    }
 
     /**
      * <p>Getter for the field <code>texturePointer</code>.</p>

@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
  * as less as possible.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class EventPage {
     private PageJson pageJson;

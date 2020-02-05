@@ -37,7 +37,7 @@ import org.lwjgl.glfw.GLFW;
  * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**
@@ -485,23 +485,6 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         }
         this.setInFocusNow(isWillStillInFocus());
         return res;
-    }
-
-    /**
-     * <p>ifPosInArea.</p>
-     *
-     * @param posX a float.
-     * @param posY a float.
-     * @return a boolean.
-     */
-    public boolean ifPosInArea(float posX, float posY) {
-        if (Float.isNaN(this.getWidth()) || Float.isNaN(this.getHeight())) {
-            return false;
-        }
-        return (posX >= this.getLeftTopPosX()
-                && posX <= this.getLeftTopPosX() + this.getWidth()
-                && posY >= this.getLeftTopPosY()
-                && posY <= this.getLeftTopPosY() + this.getHeight());
     }
 
     /**

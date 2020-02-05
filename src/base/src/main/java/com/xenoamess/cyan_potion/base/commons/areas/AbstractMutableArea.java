@@ -41,115 +41,227 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>setLeftTopPosX.</p>
+     * set left top posX.
      *
-     * @param leftTopPosX a float.
+     * @param leftTopPosX leftTopPosX
      */
     void setLeftTopPosX(float leftTopPosX);
 
     /**
-     * <p>setLeftTopPosY.</p>
+     * set left top posY.
      *
-     * @param leftTopPosY a float.
+     * @param leftTopPosY leftTopPosY
      */
     void setLeftTopPosY(float leftTopPosY);
 
     /**
      * set center posX.
-     * notice that this function will calculate center posX from leftTop posX and width.
-     * so make sure your this.getWidth() is correct before you set this.
+     * <p>
+     * notice that this function will calculate center posX from centerPosX and {@link #getWidth()}.
+     * so make sure your {@link #getWidth()} is correct before you set this.
      *
-     * @param newCenterPosX a float.
+     * @param centerPosX centerPosX
      */
-    default void setCenterPosX(float newCenterPosX) {
-        this.setLeftTopPosX(newCenterPosX - this.getWidth() / 2F);
+    default void setCenterPosX(float centerPosX) {
+        this.setLeftTopPosX(centerPosX - this.getWidth() / 2F);
     }
 
     /**
      * set center posY.
-     * notice that this function will calculate center posY from leftTop posY and height.
-     * so make sure your this.getHeight() is correct before you set this.
+     * <p>
+     * notice that this function will calculate center posY from leftTop posY and {@link #getHeight()}.
+     * so make sure your {@link #getHeight()} is correct before you set this.
      *
-     * @param newCenterPosY a float.
+     * @param centerPosY centerPosY
      */
-    default void setCenterPosY(float newCenterPosY) {
-        this.setLeftTopPosY(newCenterPosY - this.getHeight() / 2F);
+    default void setCenterPosY(float centerPosY) {
+        this.setLeftTopPosY(centerPosY - this.getHeight() / 2F);
     }
 
     //----------
 
+    /**
+     * set left PosX.
+     *
+     * @param leftPosX leftPosX
+     */
     default void setLeftPosX(float leftPosX) {
         this.setLeftTopPosX(leftPosX);
     }
 
+    /**
+     * set right posX.
+     * <p>
+     * notice that this function will calculate left top posX from right PosX and {@link #getWidth()}.
+     * so make sure your {@link #getWidth()} is correct before you set this.
+     *
+     * @param rightPosX rightPosX
+     */
     default void setRightPosX(float rightPosX) {
         this.setLeftTopPosX(rightPosX - this.getWidth());
     }
 
+    /**
+     * set top posY.
+     *
+     * @param topPosY topPosY
+     */
     default void setTopPosY(float topPosY) {
         this.setLeftTopPosY(topPosY);
     }
 
+    /**
+     * set bottom posY.
+     * <p>
+     * notice that this function will calculate left top posY from bottomPosY and {@link #getHeight()}.
+     * so make sure your {@link #getHeight()} is correct before you set this.
+     *
+     * @param bottomPosY bottomPosY
+     */
     default void setBottomPosY(float bottomPosY) {
         this.setLeftTopPosY(bottomPosY - this.getHeight());
     }
 
     //----------
 
+    /**
+     * <p>setLeftBottomPosX.</p>
+     *
+     * @param leftBottomPosX leftBottomPosX
+     * @see #setLeftPosX(float)
+     */
     default void setLeftBottomPosX(float leftBottomPosX) {
         this.setLeftPosX(leftBottomPosX);
     }
 
+    /**
+     * <p>setLeftBottomPosY.</p>
+     *
+     * @param leftBottomPosY leftBottomPosY
+     * @see #setBottomPosY(float)
+     */
     default void setLeftBottomPosY(float leftBottomPosY) {
         this.setBottomPosY(leftBottomPosY);
     }
 
+    /**
+     * <p>setRightTopPosX.</p>
+     *
+     * @param rightTopPosX rightTopPosX
+     * @see #setRightPosX(float)
+     */
     default void setRightTopPosX(float rightTopPosX) {
         this.setRightPosX(rightTopPosX);
     }
 
+    /**
+     * <p>setRightTopPosY.</p>
+     *
+     * @param rightTopPosY rightTopPosY
+     * @see #setTopPosY(float)
+     */
     default void setRightTopPosY(float rightTopPosY) {
         this.setTopPosY(rightTopPosY);
     }
 
+    /**
+     * <p>setRightBottomPosX.</p>
+     *
+     * @param rightBottomPosX rightBottomPosX
+     * @see #setRightBottomPosX(float)
+     */
     default void setRightBottomPosX(float rightBottomPosX) {
         this.setRightPosX(rightBottomPosX);
     }
 
+    /**
+     * <p>setRightBottomPosY.</p>
+     *
+     * @param rightBottomPosY rightBottomPosY
+     * @see #setBottomPosY(float)
+     */
     default void setRightBottomPosY(float rightBottomPosY) {
         this.setBottomPosY(rightBottomPosY);
     }
 
     //----------
 
+    /**
+     * <p>setLeftCenterPosX.</p>
+     *
+     * @param leftCenterPosX leftCenterPosX
+     * @see #setLeftPosX(float)
+     */
     default void setLeftCenterPosX(float leftCenterPosX) {
         this.setLeftPosX(leftCenterPosX);
     }
 
+    /**
+     * <p>setLeftCenterPosY.</p>
+     *
+     * @param leftCenterPosY leftCenterPosY
+     * @see #setCenterPosY(float)
+     */
     default void setLeftCenterPosY(float leftCenterPosY) {
         this.setCenterPosY(leftCenterPosY);
     }
 
+    /**
+     * <p>setRightCenterPosX.</p>
+     *
+     * @param rightCenterPosX rightCenterPosX
+     * @see #setRightPosX(float)
+     */
     default void setRightCenterPosX(float rightCenterPosX) {
         this.setRightPosX(rightCenterPosX);
     }
 
+    /**
+     * <p>setRightCenterPosY.</p>
+     *
+     * @param rightCenterPosY rightCenterPosY
+     * @see #setCenterPosY(float)
+     */
     default void setRightCenterPosY(float rightCenterPosY) {
         this.setCenterPosY(rightCenterPosY);
     }
 
+    /**
+     * <p>setCenterTopPosX.</p>
+     *
+     * @param centerTopPosX centerTopPosX
+     * @see #setCenterPosX(float)
+     */
     default void setCenterTopPosX(float centerTopPosX) {
         this.setCenterPosX(centerTopPosX);
     }
 
+    /**
+     * <p>setCenterTopPosY.</p>
+     *
+     * @param centerTopPosY centerTopPosY
+     * @see #setTopPosY(float)
+     */
     default void setCenterTopPosY(float centerTopPosY) {
         this.setTopPosY(centerTopPosY);
     }
 
+    /**
+     * <p>setCenterBottomPosX.</p>
+     *
+     * @param centerBottomPosX centerBottomPosX
+     * @see #setCenterPosX(float)
+     */
     default void setCenterBottomPosX(float centerBottomPosX) {
         this.setCenterPosX(centerBottomPosX);
     }
 
+    /**
+     * <p>setCenterBottomPosY.</p>
+     *
+     * @param centerBottomPosY centerBottomPosY
+     * @see #setBottomPosY(float)
+     */
     default void setCenterBottomPosY(float centerBottomPosY) {
         this.setBottomPosY(centerBottomPosY);
     }
@@ -157,10 +269,12 @@ public interface AbstractMutableArea extends AbstractArea {
     //----------
 
     /**
-     * <p>setSize.</p>
+     * set width and height.
      *
      * @param width  a float.
      * @param height a float.
+     * @see #setHeight(float)
+     * @see #setWidth(float)
      */
     default void setSize(float width, float height) {
         this.setWidth(width);
@@ -168,9 +282,11 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>setSize.</p>
+     * set width and height to a same value.
      *
      * @param widthAndHeight widthAndHeight == width == height
+     * @see #setHeight(float)
+     * @see #setWidth(float)
      */
     default void setSize(float widthAndHeight) {
         this.setWidth(widthAndHeight);
@@ -178,10 +294,12 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>setCenterPos.</p>
+     * set leftTopPosX and leftTopPoxY
      *
-     * @param leftTopPosX a float.
-     * @param leftTopPoxY a float.
+     * @param leftTopPosX leftTopPosX
+     * @param leftTopPoxY leftTopPoxY
+     * @see #setLeftTopPosX(float)
+     * @see #setLeftTopPosY(float)
      */
     default void setLeftTopPos(float leftTopPosX, float leftTopPoxY) {
         this.setLeftTopPosX(leftTopPosX);
@@ -189,46 +307,104 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>setCenterPos.</p>
+     * set centerPosX and centerPosY
      *
-     * @param centerPosX a float.
-     * @param centerPosY a float.
+     * @param centerPosX centerPosX
+     * @param centerPosY centerPosY
+     * @see #setCenterPosX(float)
+     * @see #setCenterPosY(float)
      */
     default void setCenterPos(float centerPosX, float centerPosY) {
         this.setCenterPosX(centerPosX);
         this.setCenterPosY(centerPosY);
     }
 
+    /**
+     * set rightTopPosX and rightTopPoxY
+     *
+     * @param rightTopPosX rightTopPosX
+     * @param rightTopPoxY rightTopPosX
+     * @see #setRightTopPosX(float)
+     * @see #setRightTopPosY(float)
+     */
     default void setRightTopPos(float rightTopPosX, float rightTopPoxY) {
         this.setRightTopPosX(rightTopPosX);
         this.setRightTopPosY(rightTopPoxY);
     }
 
+    /**
+     * set rightTopPosX and rightTopPoxY
+     *
+     * @param leftBottomPosX leftBottomPoxY
+     * @param leftBottomPoxY leftBottomPoxY
+     * @see #setLeftBottomPosX(float)
+     * @see #setLeftBottomPosY(float)
+     */
     default void setLeftBottomPos(float leftBottomPosX, float leftBottomPoxY) {
         this.setLeftBottomPosX(leftBottomPosX);
         this.setLeftBottomPosY(leftBottomPoxY);
     }
 
+    /**
+     * set rightBottomPosX and rightBottomPoxY
+     *
+     * @param rightBottomPosX rightBottomPosX
+     * @param rightBottomPoxY rightBottomPoxY
+     * @see #setRightBottomPosX(float)
+     * @see #setRightBottomPosY(float)
+     */
     default void setRightBottomPos(float rightBottomPosX, float rightBottomPoxY) {
         this.setRightBottomPosX(rightBottomPosX);
         this.setRightBottomPosY(rightBottomPoxY);
     }
 
+    /**
+     * set leftCenterPosX and leftCenterPoxY
+     *
+     * @param leftCenterPosX leftCenterPosX
+     * @param leftCenterPoxY leftCenterPoxY
+     * @see #setLeftCenterPosX(float)
+     * @see #setLeftCenterPosY(float)
+     */
     default void setLeftCenterPos(float leftCenterPosX, float leftCenterPoxY) {
         this.setLeftCenterPosX(leftCenterPosX);
         this.setLeftCenterPosY(leftCenterPoxY);
     }
 
+    /**
+     * set rightCenterPosX and rightCenterPoxY
+     *
+     * @param rightCenterPosX rightCenterPosX
+     * @param rightCenterPoxY rightCenterPoxY
+     * @see #setRightCenterPosX(float)
+     * @see #setRightCenterPosY(float)
+     */
     default void setRightCenterPos(float rightCenterPosX, float rightCenterPoxY) {
         this.setRightCenterPosX(rightCenterPosX);
         this.setRightCenterPosY(rightCenterPoxY);
     }
 
+    /**
+     * set centerTopPosX and centerTopPosY
+     *
+     * @param centerTopPosX centerTopPosX
+     * @param centerTopPosY centerTopPosY
+     * @see #setCenterTopPosX(float)
+     * @see #setCenterTopPosY(float)
+     */
     default void setCenterTopPos(float centerTopPosX, float centerTopPosY) {
         this.setCenterTopPosX(centerTopPosX);
         this.setCenterTopPosY(centerTopPosY);
     }
 
+    /**
+     * set centerBottomPosX and centerBottomPosY
+     *
+     * @param centerBottomPosX centerBottomPosX
+     * @param centerBottomPosY centerBottomPosY
+     * @see #setCenterBottomPosX(float)
+     * @see #setCenterBottomPosY(float)
+     */
     default void setCenterBottomPos(float centerBottomPosX, float centerBottomPosY) {
         this.setCenterBottomPosX(centerBottomPosX);
         this.setCenterBottomPosY(centerBottomPosY);
@@ -236,9 +412,11 @@ public interface AbstractMutableArea extends AbstractArea {
 
 
     /**
-     * <p>setCenter.</p>
+     * set this.center to abstractArea.center
      *
-     * @param abstractArea area
+     * @param abstractArea abstractArea
+     * @see #setCenterPosX(float)
+     * @see #setCenterPosY(float)
      */
     default void setCenter(AbstractArea abstractArea) {
         this.setCenterPosX(abstractArea.getCenterPosX());
@@ -246,7 +424,7 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>setSize.</p>
+     * set this.size to abstractArea.size
      *
      * @param abstractArea area
      */
@@ -256,7 +434,9 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>cover.</p>
+     * make this be same size and same position to a area
+     * set this.center to abstractArea.center
+     * set this.size to abstractArea.size
      *
      * @param abstractArea area
      */
@@ -266,66 +446,115 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>move.</p>
+     * move
      *
-     * @param centerMovementX a float.
-     * @param centerMovementY a float.
+     * @param movementX movementX
+     * @param movementY movementY
      */
-    default void move(float centerMovementX, float centerMovementY) {
-        this.moveX(centerMovementX);
-        this.moveY(centerMovementY);
+    default void move(float movementX, float movementY) {
+        this.moveX(movementX);
+        this.moveY(movementY);
     }
 
     /**
-     * <p>moveX.</p>
+     * move posX
      *
-     * @param centerMovementX a float.
+     * @param movementX movementX
      */
-    default void moveX(float centerMovementX) {
-        this.setCenterPosX(this.getCenterPosX() + centerMovementX);
+    default void moveX(float movementX) {
+        this.setLeftTopPosX(this.getLeftTopPosX() + movementX);
     }
 
     /**
-     * <p>moveY.</p>
+     * move posY
      *
-     * @param centerMovementY a float.
+     * @param movementY movementY
      */
-    default void moveY(float centerMovementY) {
-        this.setCenterPosY(this.getCenterPosY() + centerMovementY);
+    default void moveY(float movementY) {
+        this.setLeftTopPosY(this.getLeftTopPosY() + movementY);
     }
 
     //----------
 
+    /**
+     * <p>moveToLeftTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftTopOf(AbstractArea abstractArea) {
         this.setLeftTopPos(abstractArea.getLeftTopPosX(), abstractArea.getLeftTopPosY());
     }
 
+    /**
+     * <p>moveToRightTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightTopOf(AbstractArea abstractArea) {
         this.setRightTopPos(abstractArea.getRightTopPosX(), abstractArea.getRightTopPosY());
     }
 
+    /**
+     * <p>moveToLeftBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftBottomOf(AbstractArea abstractArea) {
         this.setLeftBottomPos(abstractArea.getLeftBottomPosX(), abstractArea.getLeftBottomPosY());
     }
 
+    /**
+     * <p>moveToRightBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightBottomOf(AbstractArea abstractArea) {
         this.setRightBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToLeftCenterOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToLeftCenterOf(AbstractArea abstractArea) {
         this.setLeftCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToRightCenterOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToRightCenterOf(AbstractArea abstractArea) {
         this.setRightCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToCenterTopOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToCenterTopOf(AbstractArea abstractArea) {
         this.setCenterTopPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
     }
 
+    /**
+     * <p>moveToCenterBottomOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
     default void moveToCenterBottomOf(AbstractArea abstractArea) {
         this.setCenterBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+    }
+
+    /**
+     * <p>moveToCenterCentorOf.</p>
+     *
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     */
+    default void moveToCenterCentorOf(AbstractArea abstractArea) {
+        this.setCenter(abstractArea);
     }
 
     //----------
@@ -333,68 +562,68 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>Setter for the field <code>width</code>.</p>
      *
-     * @param width a float.
+     * @param width width
      */
     void setWidth(float width);
 
     /**
      * <p>Setter for the field <code>height</code>.</p>
      *
-     * @param height a float.
+     * @param height height
      */
     void setHeight(float height);
 
     /**
-     * <p>enlargeWidth.</p>
+     * this.width += enlargedWidth
      *
-     * @param newWidth a float.
+     * @param enlargedWidth enlargedWidth
      */
-    default void enlargeWidth(float newWidth) {
-        this.setWidth(this.getWidth() + newWidth);
+    default void enlargeWidth(float enlargedWidth) {
+        this.setWidth(this.getWidth() + enlargedWidth);
     }
 
     /**
-     * <p>enlargeHeight.</p>
+     * this.height += enlargedHeight
      *
-     * @param newHeight a float.
+     * @param enlargedHeight enlargedHeight
      */
-    default void enlargeHeight(float newHeight) {
-        this.setHeight(this.getHeight() + newHeight);
+    default void enlargeHeight(float enlargedHeight) {
+        this.setHeight(this.getHeight() + enlargedHeight);
     }
 
     /**
-     * <p>enlargeSize.</p>
+     * enlarge both width and height
      *
-     * @param newWidth  a float.
-     * @param newHeight a float.
+     * @param enlargedWidth  a float.
+     * @param enlargedHeight a float.
      */
-    default void enlargeSize(float newWidth, float newHeight) {
-        this.enlargeWidth(newWidth);
-        this.enlargeHeight(newHeight);
+    default void enlargeSize(float enlargedWidth, float enlargedHeight) {
+        this.enlargeWidth(enlargedWidth);
+        this.enlargeHeight(enlargedHeight);
     }
 
     /**
-     * <p>scaleWidth.</p>
+     * scale width
      *
-     * @param ratio a float.
+     * @param ratio ratio
      */
     default void scaleWidth(float ratio) {
         this.setWidth(this.getWidth() * ratio);
     }
 
     /**
-     * <p>scaleHeight.</p>
+     * scale height
      *
-     * @param ratio a float.
+     * @param ratio ratio
      */
     default void scaleHeight(float ratio) {
         this.setHeight(this.getHeight() * ratio);
     }
 
     /**
-     * <p>scaleSize.</p>
+     * scale size
      *
-     * @param ratio a float.
+     * @param ratio ratio
      */
     default void scaleSize(float ratio) {
         this.scaleWidth(ratio);

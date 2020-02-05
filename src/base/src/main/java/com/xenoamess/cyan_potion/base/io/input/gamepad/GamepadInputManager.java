@@ -42,7 +42,7 @@ import java.util.List;
  * <p>GamepadInput class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class GamepadInputManager extends SubManager {
     @JsonIgnore
@@ -52,11 +52,18 @@ public class GamepadInputManager extends SubManager {
 
     private ControllerManager jamepadControllerManager = null;
 
+    /**
+     * <p>Constructor for GamepadInputManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GamepadInputManager(GameManager gameManager) {
         super(gameManager);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * <p>init.</p>
      */
     @Override
@@ -84,7 +91,7 @@ public class GamepadInputManager extends SubManager {
             }
         }
 
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.getGameManager().getSteamManager().isRunWithSteam()) {
             SteamControllerHandle[] steamControllerHandles =
                     new SteamControllerHandle[SteamController.STEAM_CONTROLLER_MAX_COUNT];
             SteamController steamController = new SteamController();

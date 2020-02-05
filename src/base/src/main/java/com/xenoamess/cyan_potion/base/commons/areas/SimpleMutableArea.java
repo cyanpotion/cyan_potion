@@ -29,7 +29,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * must create it from Areas.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  * @see Areas#generateMutableAreaFromArea(AbstractArea)
  * @see Areas#generateMutableAreaFromLeftTop(float, float, float, float)
  * @see Areas#generateMutableAreaFromArea(float, float, float, float)
@@ -99,6 +99,7 @@ public final class SimpleMutableArea implements AbstractMutableArea {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }

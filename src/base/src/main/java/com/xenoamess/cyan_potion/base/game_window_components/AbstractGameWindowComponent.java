@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
@@ -62,8 +62,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     private final AtomicBoolean alive = new AtomicBoolean(true);
     private GameWindowComponentTreeNode gameWindowComponentTreeNode;
 
-    private float leftTopPosX = 0;
-    private float leftTopPosY = 0;
+    private float leftTopPosX = Float.NaN;
+    private float leftTopPosY = Float.NaN;
     private float width = Float.NaN;
     private float height = Float.NaN;
 
@@ -93,6 +93,11 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         this.initProcessors();
     }
 
+    /**
+     * register a processor to deal with RemoteCallEvent
+     *
+     * @see com.xenoamess.cyan_potion.base.events.RemoteCallEvent
+     */
     protected void initRemoteCallEventProcessor() {
         this.registerProcessor(
                 RemoteCallEvent.class,

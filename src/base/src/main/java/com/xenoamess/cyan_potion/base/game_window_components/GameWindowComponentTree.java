@@ -45,7 +45,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class GameWindowComponentTree implements Closeable {
     @AsFinalField

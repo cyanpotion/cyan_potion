@@ -65,15 +65,11 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
-import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_LARGE;
-import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_STEAM_AVATAR;
-
 /**
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class World extends AbstractEntityScene {
     @JsonIgnore
@@ -103,15 +99,7 @@ public class World extends AbstractEntityScene {
     private Matrix4f scaleMatrix4f;
     private RpgModuleDataCenter rpgModuleDataCenter;
 
-    final Texture avatarTexture = new ResourceInfo<>(
-            Texture.class,
-            STRING_STEAM_AVATAR,
-            "",
-            Long.toString(getNativeHandle(this.getGameWindow().getGameManager().getSteamManager().getSteamUser().getSteamID())),
-            STRING_LARGE
-    ).fetchResource(this.getResourceManager());
-
-//    final Picture avatarPicture = new Picture(avatarTexture);
+    final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
 
     final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
     final RectangleBox rectangleBox = new RectangleBox(
@@ -250,6 +238,7 @@ public class World extends AbstractEntityScene {
 
         this.setMenu(new Menu(this));
         this.fix();
+        inputBox.gainFocus();
     }
 
     /**
@@ -416,6 +405,9 @@ public class World extends AbstractEntityScene {
         this.fix();
     }
 
+    /**
+     * <p>fix.</p>
+     */
     protected void fix() {
         final int avatarPictureSize = 200;
         this.pictureBox.setSize(avatarPictureSize);
@@ -480,7 +472,12 @@ public class World extends AbstractEntityScene {
             }
         }
         SteamManager steamManager = this.getGameManager().getSteamManager();
-        String personName = steamManager.getSteamFriends().getPersonaName();
+        String personName;
+        if (steamManager.isRunWithSteam()) {
+            personName = steamManager.getSteamFriends().getPersonaName();
+        } else {
+            personName = "RunSteamFirst";
+        }
         this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
     }
 

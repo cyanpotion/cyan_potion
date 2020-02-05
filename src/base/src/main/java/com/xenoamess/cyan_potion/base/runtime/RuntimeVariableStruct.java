@@ -58,8 +58,11 @@ public abstract class RuntimeVariableStruct implements Serializable {
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
+    /**
+     * <p>Constructor for RuntimeVariableStruct.</p>
+     */
     public RuntimeVariableStruct() {
-
+        //do nothing
     }
 
     /**

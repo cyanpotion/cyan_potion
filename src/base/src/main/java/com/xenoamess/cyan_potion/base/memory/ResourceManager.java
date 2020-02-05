@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.SubManager;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
@@ -56,9 +57,9 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
-public class ResourceManager implements Closeable {
+public class ResourceManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
@@ -503,10 +504,20 @@ public class ResourceManager implements Closeable {
      * @param gameManager gameManager
      */
     public ResourceManager(GameManager gameManager) {
+        super(gameManager);
         this.gameManager = gameManager;
     }
 
+    /**
+     * <p>init.</p>
+     */
+    @Override
     public void init() {
+        //do nothing
+    }
+
+    @Override
+    public void update() {
         //do nothing
     }
 

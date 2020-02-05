@@ -51,7 +51,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * every etity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public abstract class AbstractShape implements AbstractMutableArea {
     @JsonIgnore
@@ -527,16 +527,16 @@ public abstract class AbstractShape implements AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosX(float newCenterPosX) {
-        this.getCenterPos().x = newCenterPosX;
+    public void setCenterPosX(float centerPosX) {
+        this.getCenterPos().x = centerPosX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosY(float newCenterPosY) {
-        this.getCenterPos().y = newCenterPosY;
+    public void setCenterPosY(float centerPosY) {
+        this.getCenterPos().y = centerPosY;
     }
 
     /**

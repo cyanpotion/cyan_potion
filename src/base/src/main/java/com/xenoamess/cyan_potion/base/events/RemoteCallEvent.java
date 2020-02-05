@@ -35,25 +35,53 @@ import java.util.function.Function;
  * RemoteCallEvent is a type of Event that designed "delay" a function to a gameWindowComponent.
  * When this function be solved, it invoke field function on field gameWindowComponent.
  * You can see how it works exactly in AbstractGameWindowComponent.initRemoteCallEventProcessor()
+ *
+ * @author xenoa
+ * @version 0.155.0
  */
 public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements Event {
+    /**
+     * the AbstractGameWindowComponent that will be invoked with this function.
+     */
     private final T gameWindowComponent;
+    /**
+     * the function to invoke.
+     */
     private final Function<T, Event> function;
 
+    /**
+     * <p>Constructor for RemoteCallEvent.</p>
+     *
+     * @param gameWindowComponent a T object.
+     * @param function            a {@link java.util.function.Function} object.
+     */
     public RemoteCallEvent(T gameWindowComponent, Function<T, Event> function) {
         this.gameWindowComponent = gameWindowComponent;
         this.function = function;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Event> apply(GameManager gameManager) {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    /**
+     * <p>Getter for the field <code>gameWindowComponent</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     */
     public AbstractGameWindowComponent getGameWindowComponent() {
         return gameWindowComponent;
     }
 
+    /**
+     * <p>Getter for the field <code>function</code>.</p>
+     *
+     * @return a {@link java.util.function.Function} object.
+     */
     public Function<T, Event> getFunction() {
         return function;
     }

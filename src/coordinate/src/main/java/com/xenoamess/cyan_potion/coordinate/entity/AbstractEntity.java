@@ -43,7 +43,7 @@ import java.util.Objects;
  * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an Entity.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public abstract class AbstractEntity implements AbstractMutableArea {
     private final AbstractEntityScene scene;
@@ -203,16 +203,16 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosX(float newCenterPosX) {
-        this.getCenterPos().x = newCenterPosX;
+    public void setCenterPosX(float centerPosX) {
+        this.getCenterPos().x = centerPosX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosY(float newCenterPosY) {
-        this.getCenterPos().y = newCenterPosY;
+    public void setCenterPosY(float centerPosY) {
+        this.getCenterPos().y = centerPosY;
     }
 
     /**

@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -34,6 +35,9 @@ import org.joml.Vector4f;
  * PictureComponent
  * PictureComponent is a component class that contains only a picture.
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
+ *
+ * @author xenoa
+ * @version 0.155.0
  */
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
 
@@ -51,6 +55,12 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
         this(gameWindow, (Bindable) null);
     }
 
+    /**
+     * <p>Constructor for PictureBox.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param picture    a {@link com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface} object.
+     */
     public PictureBox(GameWindow gameWindow, AbstractPictureInterface picture) {
         super(gameWindow);
         if (picture != null) {
@@ -60,10 +70,19 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
         }
     }
 
+    /**
+     * <p>Constructor for PictureBox.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public PictureBox(GameWindow gameWindow, Bindable bindable) {
-        this(gameWindow, new Picture(bindable));
+        this(gameWindow, (AbstractPictureInterface) new Picture(bindable));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         super.update();
@@ -71,6 +90,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * <p>draw.</p>
      *
      * @param gameWindow gameWindow
@@ -79,56 +100,83 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
         this.picture.draw(gameWindow);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>draw.</p>
+     */
+    public void draw(AbstractScene abstractScene) {
+        this.picture.draw(abstractScene);
+    }
 
+    /**
+     * <p>Getter for the field <code>picture</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface} object.
+     */
     public AbstractPictureInterface getPicture() {
         return picture;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rotate(float newRotateRadius) {
         this.getPicture().rotate(newRotateRadius);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rotateTo(float newRotateRadius) {
         this.getPicture().rotateTo(newRotateRadius);
     }
 
-    public Bindable getCurrentBindable() {
-        return this.getPicture().getCurrentBindable();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector4f getColorScale() {
         return this.getPicture().getColorScale();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setColorScale(Vector4f colorScale) {
         this.getPicture().setColorScale(colorScale);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setColorScale(float x, float y, float z, float w) {
         this.getPicture().getColorScale().set(x, y, z, w);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getRotateRadius() {
         return this.getPicture().getRotateRadius();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setRotateRadius(float rotateRadius) {
         this.getPicture().setRotateRadius(rotateRadius);
     }
 
-
-    @Override
-    public void bind(int sampler) {
-        this.getPicture().bind(sampler);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ifVisibleThenDraw() {
         this.draw(this.getGameWindow());

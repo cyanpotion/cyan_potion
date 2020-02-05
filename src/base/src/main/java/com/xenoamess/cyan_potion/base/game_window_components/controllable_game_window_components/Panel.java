@@ -39,7 +39,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
@@ -66,9 +66,12 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>addContent.</p>
+     * return this.contents.add(gameWindowComponent);
      *
      * @param gameWindowComponent gameWindowComponent
+     * @return this.contents.add(gameWindowComponent)
+     * @see #contents
+     * @see List#add(Object)
      */
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
@@ -77,7 +80,12 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>removeContent.</p>
+     * return this.contents.remove(index);
+     *
+     * @param index a int.
+     * @return this.contents.remove(index);
+     * @see #contents
+     * @see List#remove(int)
      */
     public AbstractGameWindowComponent removeContent(int index) {
         synchronized (this.contents) {
@@ -86,7 +94,12 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>removeContent.</p>
+     * return this.contents.remove(gameWindowComponent);
+     *
+     * @param gameWindowComponent a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @return this.contents.remove(gameWindowComponent);
+     * @see #contents
+     * @see List#remove(Object)
      */
     public boolean removeContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
@@ -95,7 +108,10 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>clearContent.</p>
+     * return this.contents.clear();
+     *
+     * @see #contents
+     * @see List#clear()
      */
     public void clearContents() {
         synchronized (this.contents) {
@@ -104,7 +120,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>clearContent.</p>
+     * return new ArrayList(this.contents);
+     *
+     * @return new ArrayList(this.contents);
+     * @see #contents
+     * @see List#clear()
      */
     public List<AbstractGameWindowComponent> copyContents() {
         synchronized (this.contents) {

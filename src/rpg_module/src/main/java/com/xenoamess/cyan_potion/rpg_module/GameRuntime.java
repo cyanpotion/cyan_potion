@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
  * <p>GameRuntime class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class GameRuntime extends RuntimeVariableStruct {
     @JsonIgnore
@@ -43,6 +43,9 @@ public class GameRuntime extends RuntimeVariableStruct {
     private final BooleanArrayList runtimeSwitches = new BooleanArrayList();
     private final IntArrayList runtimeIntegerVariables = new IntArrayList();
 
+    /**
+     * <p>Constructor for GameRuntime.</p>
+     */
     public GameRuntime() {
         super();
     }
@@ -115,6 +118,9 @@ public class GameRuntime extends RuntimeVariableStruct {
         return runtimeIntegerVariables;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadFrom(Object object) {
         GameRuntime gameRuntime = (GameRuntime) object;

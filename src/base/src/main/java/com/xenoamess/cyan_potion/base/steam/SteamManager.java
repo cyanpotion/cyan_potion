@@ -29,7 +29,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import com.xenoamess.cyan_potion.base.render.Texture;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.vfs2.FileObject;
@@ -42,11 +44,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
+
 /**
  * This class learned a lot on com.codedisaster.steamworks.test.SteamClientAPITest
  * thanks for steamworks4j of code-disaster.
  * the original codes are follow MIT license under code-disaster, but that file does not contain license head.
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
+ *
+ * @author xenoa
+ * @version 0.155.0
  */
 public class SteamManager extends SubManager {
     @JsonIgnore
@@ -64,6 +72,11 @@ public class SteamManager extends SubManager {
 
     private SteamCallbacks steamCallbacks = new SteamCallbacks(this);
 
+    /**
+     * <p>Constructor for SteamManager.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public SteamManager(GameManager gameManager) {
         super(gameManager);
     }
@@ -155,7 +168,7 @@ public class SteamManager extends SubManager {
 
 
         long steamRunCallbacksNanoLong = this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.isRunWithSteam()) {
             this.getGameManager().getScheduledExecutorService().scheduleAtFixedRate(
                     this::steamRunCallbacks,
                     0,
@@ -202,10 +215,21 @@ public class SteamManager extends SubManager {
     }
 
     /**
+     * if this game is now running with steam.
+     * <p>
+     * notice that this function shall never be called before call this.init
+     *
+     * @return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() AND SteamAPI.isSteamRunning();
+     */
+    public boolean isRunWithSteam() {
+        return this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning();
+    }
+
+    /**
      * <p>steamRunCallbacks.</p>
      */
     protected void steamRunCallbacks() {
-        if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam() && SteamAPI.isSteamRunning()) {
+        if (isRunWithSteam()) {
             SteamAPI.runCallbacks();
         } else {
             if (!DataCenter.ALLOW_RUN_WITHOUT_STEAM) {
@@ -215,10 +239,16 @@ public class SteamManager extends SubManager {
         }
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
-
+        //do nothing
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         if (getSteamUser() != null) {
@@ -250,8 +280,8 @@ public class SteamManager extends SubManager {
      * This function is remained here as a hint of how to deal with steamworks4j.
      * of course this function is from steamworks4j.
      *
-     * @param input
-     * @throws SteamException
+     * @param input a {@link java.lang.String} object.
+     * @throws com.codedisaster.steamworks.SteamException if any
      */
     protected void processInput(String input) throws SteamException {
 
@@ -455,75 +485,231 @@ public class SteamManager extends SubManager {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>steamUser</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUser} object.
+     */
     public SteamUser getSteamUser() {
         return steamUser;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUser</code>.</p>
+     *
+     * @param steamUser a {@link com.codedisaster.steamworks.SteamUser} object.
+     */
     public void setSteamUser(SteamUser steamUser) {
         this.steamUser = steamUser;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUserStats</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUserStats} object.
+     */
     public SteamUserStats getSteamUserStats() {
         return steamUserStats;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUserStats</code>.</p>
+     *
+     * @param steamUserStats a {@link com.codedisaster.steamworks.SteamUserStats} object.
+     */
     public void setSteamUserStats(SteamUserStats steamUserStats) {
         this.steamUserStats = steamUserStats;
     }
 
+    /**
+     * <p>Getter for the field <code>steamRemoteStorage</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamRemoteStorage} object.
+     */
     public SteamRemoteStorage getSteamRemoteStorage() {
         return steamRemoteStorage;
     }
 
+    /**
+     * <p>Setter for the field <code>steamRemoteStorage</code>.</p>
+     *
+     * @param steamRemoteStorage a {@link com.codedisaster.steamworks.SteamRemoteStorage} object.
+     */
     public void setSteamRemoteStorage(SteamRemoteStorage steamRemoteStorage) {
         this.steamRemoteStorage = steamRemoteStorage;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUGC</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUGC} object.
+     */
     public SteamUGC getSteamUGC() {
         return steamUGC;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUGC</code>.</p>
+     *
+     * @param steamUGC a {@link com.codedisaster.steamworks.SteamUGC} object.
+     */
     public void setSteamUGC(SteamUGC steamUGC) {
         this.steamUGC = steamUGC;
     }
 
+    /**
+     * <p>Getter for the field <code>steamUtils</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamUtils} object.
+     */
     public SteamUtils getSteamUtils() {
         return steamUtils;
     }
 
+    /**
+     * <p>Setter for the field <code>steamUtils</code>.</p>
+     *
+     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
+     */
     public void setSteamUtils(SteamUtils steamUtils) {
         this.steamUtils = steamUtils;
     }
 
+    /**
+     * <p>Getter for the field <code>steamApps</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamApps} object.
+     */
     public SteamApps getSteamApps() {
         return steamApps;
     }
 
+    /**
+     * <p>Setter for the field <code>steamApps</code>.</p>
+     *
+     * @param steamApps a {@link com.codedisaster.steamworks.SteamApps} object.
+     */
     public void setSteamApps(SteamApps steamApps) {
         this.steamApps = steamApps;
     }
 
+    /**
+     * <p>Getter for the field <code>steamFriends</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamFriends} object.
+     */
     public SteamFriends getSteamFriends() {
         return steamFriends;
     }
 
+    /**
+     * <p>Setter for the field <code>steamFriends</code>.</p>
+     *
+     * @param steamFriends a {@link com.codedisaster.steamworks.SteamFriends} object.
+     */
     public void setSteamFriends(SteamFriends steamFriends) {
         this.steamFriends = steamFriends;
     }
 
+    /**
+     * <p>Getter for the field <code>steamLeaderboardHandle</code>.</p>
+     *
+     * @return a {@link com.codedisaster.steamworks.SteamLeaderboardHandle} object.
+     */
     public SteamLeaderboardHandle getSteamLeaderboardHandle() {
         return steamLeaderboardHandle;
     }
 
+    /**
+     * <p>Setter for the field <code>steamLeaderboardHandle</code>.</p>
+     *
+     * @param steamLeaderboardHandle a {@link com.codedisaster.steamworks.SteamLeaderboardHandle} object.
+     */
     public void setSteamLeaderboardHandle(SteamLeaderboardHandle steamLeaderboardHandle) {
         this.steamLeaderboardHandle = steamLeaderboardHandle;
     }
 
+    /**
+     * <p>Getter for the field <code>steamCallbacks</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamCallbacks} object.
+     */
     public SteamCallbacks getSteamCallbacks() {
         return steamCallbacks;
     }
 
+    /**
+     * <p>Setter for the field <code>steamCallbacks</code>.</p>
+     *
+     * @param steamCallbacks a {@link com.xenoamess.cyan_potion.base.steam.SteamCallbacks} object.
+     */
     public void setSteamCallbacks(SteamCallbacks steamCallbacks) {
         this.steamCallbacks = steamCallbacks;
+    }
+
+    /**
+     * <p>getPlayerAvatarTextureLarge.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public Texture getPlayerAvatarTextureLarge() {
+        return getPlayerAvatarTexture(STRING_LARGE);
+    }
+
+    /**
+     * <p>getPlayerAvatarTextureMedium.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public Texture getPlayerAvatarTextureMedium() {
+        return getPlayerAvatarTexture(STRING_MEDIUM);
+    }
+
+    /**
+     * <p>getPlayerAvatarTextureSmall.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public Texture getPlayerAvatarTextureSmall() {
+        return getPlayerAvatarTexture(STRING_SMALL);
+    }
+
+    /**
+     * <p>getPlayerAvatarTexture.</p>
+     *
+     * @param avatarType a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public Texture getPlayerAvatarTexture(String avatarType) {
+        SteamID steamID;
+        if (this.isRunWithSteam()) {
+            steamID = this.getSteamUser().getSteamID();
+        } else {
+            steamID = null;
+        }
+        return this.getUserAvatarTexture(steamID, avatarType);
+    }
+
+    /**
+     * <p>getUserAvatarTexture.</p>
+     *
+     * @param steamID    a {@link com.codedisaster.steamworks.SteamID} object.
+     * @param avatarType a {@link java.lang.String} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public Texture getUserAvatarTexture(SteamID steamID, String avatarType) {
+        String steamIDhandleString;
+        if (this.isRunWithSteam()) {
+            steamIDhandleString = Long.toString(getNativeHandle(steamID));
+        } else {
+            steamIDhandleString = "";
+        }
+        return new ResourceInfo<>(
+                Texture.class,
+                STRING_STEAM_AVATAR,
+                "",
+                steamIDhandleString,
+                avatarType
+        ).fetchResource(this.getGameManager().getResourceManager());
     }
 }

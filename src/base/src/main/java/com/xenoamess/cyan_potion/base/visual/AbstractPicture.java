@@ -24,7 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
-import com.xenoamess.cyan_potion.base.render.Bindable;
 import org.joml.Vector4f;
 
 /**
@@ -34,28 +33,17 @@ import org.joml.Vector4f;
  * @version 0.148.8
  */
 public abstract class AbstractPicture implements AbstractPictureInterface {
-    private float leftTopPosX;
-    private float leftTopPosY;
-    private float width;
-    private float height;
+    private float leftTopPosX = Float.NaN;
+    private float leftTopPosY = Float.NaN;
+    private float width = Float.NaN;
+    private float height = Float.NaN;
     private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
     private float rotateRadius = 0f;
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public void bind(int sampler) {
-        Bindable bindable = this.getCurrentBindable();
-        if (bindable != null) {
-            bindable.bind(sampler);
-        }
-    }
-
-    /**
-     * <p>rotate.</p>
      *
-     * @param newRotateRadius a float.
+     * <p>rotate.</p>
      */
     @Override
     public void rotate(float newRotateRadius) {
@@ -63,9 +51,9 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     }
 
     /**
-     * <p>rotateTo.</p>
+     * {@inheritDoc}
      *
-     * @param newRotateRadius a float.
+     * <p>rotateTo.</p>
      */
     @Override
     public void rotateTo(float newRotateRadius) {
@@ -76,9 +64,9 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     //--- getters and setters ---
 
     /**
-     * <p>Getter for the field <code>leftTopPosX</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a float.
+     * <p>Getter for the field <code>leftTopPosX</code>.</p>
      */
     @Override
     public float getLeftTopPosX() {
@@ -95,8 +83,6 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
 
     /**
      * {@inheritDoc}
-     *
-     * @return a float.
      */
     @Override
     public float getLeftTopPosY() {
@@ -144,9 +130,9 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     }
 
     /**
-     * <p>Getter for the field <code>colorScale</code>.</p>
+     * {@inheritDoc}
      *
-     * @return return
+     * <p>Getter for the field <code>colorScale</code>.</p>
      */
     @Override
     public Vector4f getColorScale() {
@@ -154,9 +140,9 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     }
 
     /**
-     * <p>Getter for the field <code>rotateRadius</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a float.
+     * <p>Getter for the field <code>rotateRadius</code>.</p>
      */
     @Override
     public float getRotateRadius() {
@@ -164,9 +150,9 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     }
 
     /**
-     * <p>Setter for the field <code>rotateRadius</code>.</p>
+     * {@inheritDoc}
      *
-     * @param rotateRadius a float.
+     * <p>Setter for the field <code>rotateRadius</code>.</p>
      */
     @Override
     public void setRotateRadius(float rotateRadius) {

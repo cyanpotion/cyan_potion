@@ -29,10 +29,11 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * who have a position,and width, and height.
  * by default(of this engine), the area must be totally contained in the described rectangle.
  * for example, if the shape is a circle, then the area must be the circumscribed rectangle of the circle.
- * you can see implement of this class for more details.
+ * <p>
+ * you can see implementations of this class for more details.
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public interface AbstractArea {
     /**
@@ -43,32 +44,38 @@ public interface AbstractArea {
     boolean ifMutable();
 
     /**
-     * get left top posX of this area
+     * get left top posX of this area. return {@link java.lang.Float#NaN} if no leftTopPosX.
      *
-     * @return a float.
+     * @return leftTopPosX
      */
     float getLeftTopPosX();
 
     /**
-     * get left top posY of this area
+     * get left top posY of this area. return {@link java.lang.Float#NaN} if no leftTopPosY.
      *
-     * @return a float.
+     * @return leftTopPosY
      */
     float getLeftTopPosY();
 
     /**
-     * get center posX of this area
+     * get center posX of this area. return {@link java.lang.Float#NaN} if no centerPosX.
+     * <p>
+     * notice that this value is calculated using {@link #getLeftTopPosX()} and {@link #getWidth()},
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
-     * @return a float.
+     * @return centerPosX
      */
     default float getCenterPosX() {
         return this.getLeftTopPosX() + this.getWidth() / 2F;
     }
 
     /**
-     * get center posY of this area
+     * get center posY of this area. return {@link java.lang.Float#NaN} if no centerPosY.
+     * <p>
+     * notice that this value is calculated using {@link #getLeftTopPosY()} and {@link #getHeight()},
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
-     * @return a float.
+     * @return centerPosY
      */
     default float getCenterPosY() {
         return this.getLeftTopPosY() + this.getHeight() / 2F;
@@ -80,7 +87,7 @@ public interface AbstractArea {
     /**
      * get left posX of this area
      *
-     * @return a float.
+     * @return LeftPosX
      */
     default float getLeftPosX() {
         return this.getLeftTopPosX();
@@ -88,8 +95,11 @@ public interface AbstractArea {
 
     /**
      * get right posX of this area
+     * <p>
+     * notice that this value is calculated using {@link #getLeftTopPosX()} and {@link #getWidth()},
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
-     * @return a float.
+     * @return RightPosX
      */
     default float getRightPosX() {
         return this.getLeftPosX() + this.getWidth();
@@ -98,7 +108,7 @@ public interface AbstractArea {
     /**
      * get top posY of this area
      *
-     * @return a float.
+     * @return TopPosY
      */
     default float getTopPosY() {
         return this.getLeftTopPosY();
@@ -106,8 +116,11 @@ public interface AbstractArea {
 
     /**
      * get bottom posY of this area
+     * <p>
+     * notice that this value is calculated using {@link #getLeftTopPosY()} and {@link #getHeight()},
+     * so make sure they have value before you call this, or it will return {@link java.lang.Float#NaN} as well.
      *
-     * @return a float.
+     * @return BottomPosY
      */
     default float getBottomPosY() {
         return this.getTopPosY() + this.getHeight();
@@ -118,7 +131,7 @@ public interface AbstractArea {
     /**
      * get left bottom posX of this area
      *
-     * @return a float.
+     * @return LeftBottomPosX
      */
     default float getLeftBottomPosX() {
         return this.getLeftPosX();
@@ -127,7 +140,7 @@ public interface AbstractArea {
     /**
      * get left bottom posY of this area
      *
-     * @return a float.
+     * @return LeftBottomPosY
      */
     default float getLeftBottomPosY() {
         return this.getBottomPosY();
@@ -136,7 +149,7 @@ public interface AbstractArea {
     /**
      * get right top posX of this area
      *
-     * @return a float.
+     * @return RightTopPosX
      */
     default float getRightTopPosX() {
         return this.getRightPosX();
@@ -145,7 +158,7 @@ public interface AbstractArea {
     /**
      * get right top posY of this area
      *
-     * @return a float.
+     * @return RightTopPosY
      */
     default float getRightTopPosY() {
         return this.getTopPosY();
@@ -154,7 +167,7 @@ public interface AbstractArea {
     /**
      * get right bottom posX of this area
      *
-     * @return a float.
+     * @return RightBottomPosX
      */
     default float getRightBottomPosX() {
         return this.getRightPosX();
@@ -163,7 +176,7 @@ public interface AbstractArea {
     /**
      * get right bottom posY of this area
      *
-     * @return a float.
+     * @return RightBottomPosY
      */
     default float getRightBottomPosY() {
         return this.getBottomPosY();
@@ -172,7 +185,7 @@ public interface AbstractArea {
     /**
      * get left center posX of this area
      *
-     * @return a float.
+     * @return LeftCenterPosX
      */
     default float getLeftCenterPosX() {
         return this.getLeftPosX();
@@ -181,7 +194,7 @@ public interface AbstractArea {
     /**
      * get left center posY of this area
      *
-     * @return a float.
+     * @return LeftCenterPosY
      */
     default float getLeftCenterPosY() {
         return this.getCenterPosY();
@@ -190,7 +203,7 @@ public interface AbstractArea {
     /**
      * get right center posX of this area
      *
-     * @return a float.
+     * @return RightCenterPosX
      */
     default float getRightCenterPosX() {
         return this.getRightPosX();
@@ -199,7 +212,7 @@ public interface AbstractArea {
     /**
      * get right center posY of this area
      *
-     * @return a float.
+     * @return RightCenterPosY
      */
     default float getRightCenterPosY() {
         return this.getCenterPosY();
@@ -208,7 +221,7 @@ public interface AbstractArea {
     /**
      * get center top posX of this area
      *
-     * @return a float.
+     * @return CenterTopPosX
      */
     default float getCenterTopPosX() {
         return this.getCenterPosX();
@@ -217,7 +230,7 @@ public interface AbstractArea {
     /**
      * get center top posY of this area
      *
-     * @return a float.
+     * @return CenterTopPosY
      */
     default float getCenterTopPosY() {
         return this.getTopPosY();
@@ -226,7 +239,7 @@ public interface AbstractArea {
     /**
      * get center bottom posX of this area
      *
-     * @return a float.
+     * @return CenterBottomPosX
      */
     default float getCenterBottomPosX() {
         return this.getCenterPosX();
@@ -235,7 +248,7 @@ public interface AbstractArea {
     /**
      * get center bottom posY of this area
      *
-     * @return a float.
+     * @return CenterBottomPosY
      */
     default float getCenterBottomPosY() {
         return this.getBottomPosY();
@@ -259,9 +272,29 @@ public interface AbstractArea {
     /**
      * get a SimpleImmutableArea build from this area.
      *
-     * @return return
+     * @return SimpleImmutableArea built from this area.
      */
     default SimpleImmutableArea copyArea() {
         return new SimpleImmutableArea(this);
     }
+
+    /**
+     * detect if a Pos in this Area
+     * <p>
+     * if width or height be NaN, then return false.
+     *
+     * @param posX posX
+     * @param posY posY
+     * @return whether point (posX,posY) in this area.
+     */
+    default boolean ifPosInArea(float posX, float posY) {
+        if (Float.isNaN(this.getWidth()) || Float.isNaN(this.getHeight())) {
+            return false;
+        }
+        return (posX >= this.getLeftTopPosX()
+                && posX <= this.getLeftTopPosX() + this.getWidth()
+                && posY >= this.getLeftTopPosY()
+                && posY <= this.getLeftTopPosY() + this.getHeight());
+    }
+
 }

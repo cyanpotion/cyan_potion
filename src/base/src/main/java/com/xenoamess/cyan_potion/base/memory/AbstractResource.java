@@ -41,7 +41,7 @@ import java.util.function.Function;
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore
@@ -160,7 +160,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
             if (!result) {
                 result = this.loadByLoadTaskOrSelf();
                 if (!result) {
-                    LOGGER.debug("load resource by self failed! Resource:{}", this);
+                    LOGGER.error("load resource by self failed too! This means we can never load this resource! Resource:{}", this);
                 }
             }
         } else {

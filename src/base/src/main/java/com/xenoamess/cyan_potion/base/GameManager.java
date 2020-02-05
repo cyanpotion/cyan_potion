@@ -76,7 +76,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.143.0
+ * @version 0.155.0
  */
 public class GameManager implements Closeable {
     @JsonIgnore
@@ -368,6 +368,7 @@ public class GameManager implements Closeable {
      * then set text structure's current language as current language from steam api.
      * all languages are String typed.
      */
+    //todo
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {
@@ -388,7 +389,7 @@ public class GameManager implements Closeable {
         String settingLanguage = this.getDataCenter().getGameSettings().getSettingLanguage();
 
         String steamLanguage = "";
-        if (this.getDataCenter().getGameSettings().isRunWithSteam()) {
+        if (this.getSteamManager().isRunWithSteam()) {
             steamLanguage = new SteamApps().getCurrentGameLanguage();
         }
 
@@ -656,9 +657,10 @@ public class GameManager implements Closeable {
      */
     protected void update() {
         this.getGamepadInputManager().update();
-        getGameWindow().update();
+        this.getGameWindow().update();
         this.getGameWindowComponentTree().update();
         this.getAudioManager().update();
+        this.getSteamManager().update();
     }
 
     /**
@@ -895,6 +897,11 @@ public class GameManager implements Closeable {
         return saveManager;
     }
 
+    /**
+     * <p>Getter for the field <code>steamManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamManager} object.
+     */
     public SteamManager getSteamManager() {
         return steamManager;
     }

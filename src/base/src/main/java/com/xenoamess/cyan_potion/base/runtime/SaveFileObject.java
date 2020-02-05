@@ -68,6 +68,9 @@ public class SaveFileObject {
     private final String path;
     private SaveFileObjectStatus saveFileObjectStatus;
 
+    /**
+     * <p>initStatusFile.</p>
+     */
     protected synchronized void initStatusFile() {
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
         try {
@@ -94,6 +97,9 @@ public class SaveFileObject {
         }
     }
 
+    /**
+     * <p>updateStatusFile.</p>
+     */
     protected synchronized void updateStatusFile() {
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
