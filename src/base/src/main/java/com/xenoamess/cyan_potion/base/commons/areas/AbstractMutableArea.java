@@ -289,8 +289,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @see #setWidth(float)
      */
     default void setSize(float widthAndHeight) {
-        this.setWidth(widthAndHeight);
-        this.setHeight(widthAndHeight);
+        setSize(widthAndHeight, widthAndHeight);
     }
 
     /**
@@ -518,7 +517,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
      */
     default void moveToLeftCenterOf(AbstractArea abstractArea) {
-        this.setLeftCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+        this.setLeftCenterPos(abstractArea.getLeftCenterPosX(), abstractArea.getLeftCenterPosY());
     }
 
     /**
@@ -527,7 +526,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
      */
     default void moveToRightCenterOf(AbstractArea abstractArea) {
-        this.setRightCenterPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+        this.setRightCenterPos(abstractArea.getRightCenterPosX(), abstractArea.getRightCenterPosY());
     }
 
     /**
@@ -536,7 +535,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
      */
     default void moveToCenterTopOf(AbstractArea abstractArea) {
-        this.setCenterTopPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+        this.setCenterTopPos(abstractArea.getCenterTopPosX(), abstractArea.getCenterTopPosY());
     }
 
     /**
@@ -545,7 +544,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
      */
     default void moveToCenterBottomOf(AbstractArea abstractArea) {
-        this.setCenterBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
+        this.setCenterBottomPos(abstractArea.getCenterBottomPosX(), abstractArea.getCenterBottomPosY());
     }
 
     /**

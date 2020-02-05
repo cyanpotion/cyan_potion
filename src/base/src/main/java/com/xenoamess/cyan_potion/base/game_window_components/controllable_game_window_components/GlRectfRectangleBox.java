@@ -30,12 +30,23 @@ import org.joml.Vector4f;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * <p>RectangleBox class.</p>
+ * GlRectfRectangleBox
+ * <p>
+ * can draw a horizontal rectangle.(rotate radios will be ignored)
+ * <p>
+ * it is written here only be used for a demo for how can yuu implement AbstractControllableGameWindowComponent,
+ * (especially for drawing new
+ * <p>
+ * I already found a new (and better) way to do this.
+ * And I suggest you use pure color Texture (and PictureBox) instead.
  *
  * @author xenoa
  * @version 0.155.1-SNAPSHOT
+ * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture);
+ * @deprecated
  */
-public class RectangleBox extends AbstractControllableGameWindowComponent {
+@Deprecated
+public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent {
     private final Vector4f color = new Vector4f(1, 1, 1, 1);
 
     /**
@@ -43,7 +54,7 @@ public class RectangleBox extends AbstractControllableGameWindowComponent {
      *
      * @param gameWindow gameWindow
      */
-    public RectangleBox(GameWindow gameWindow) {
+    public GlRectfRectangleBox(GameWindow gameWindow) {
         super(gameWindow);
     }
 
@@ -53,7 +64,7 @@ public class RectangleBox extends AbstractControllableGameWindowComponent {
      * @param gameWindow gameWindow
      * @param color      a {@link org.joml.Vector4f} object.
      */
-    public RectangleBox(GameWindow gameWindow, Vector4f color) {
+    public GlRectfRectangleBox(GameWindow gameWindow, Vector4f color) {
         this(gameWindow);
         this.setColor(color);
     }

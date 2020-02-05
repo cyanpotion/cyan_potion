@@ -29,9 +29,9 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.GlRectfRectangleBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.PictureBox;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RectangleBox;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
@@ -64,6 +64,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
 /**
  * <p>World class.</p>
@@ -102,7 +105,8 @@ public class World extends AbstractEntityScene {
     final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
 
     final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
-    final RectangleBox rectangleBox = new RectangleBox(
+
+    final GlRectfRectangleBox glRectfRectangleBox = new GlRectfRectangleBox(
             this.getGameWindow(),
             new Vector4f(0, 1, 1, 1)
     );
@@ -111,10 +115,18 @@ public class World extends AbstractEntityScene {
 
     final Texture iconTexture = new ResourceInfo<>(
             Texture.class,
-            "picture",
+            STRING_PICTURE,
             this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
     ).fetchResource(this.getResourceManager());
 
+    final Texture pureColorTexture = new ResourceInfo<>(
+            Texture.class,
+            STRING_PURE_COLOR,
+            "",
+            "0.5,0.5,0.5,1"
+    ).fetchResource(this.getResourceManager());
+
+    final PictureBox pureColorBox = new PictureBox(this.getGameWindow(), pureColorTexture);
 
     final Button demoButton = new Button(this.getGameWindow(), iconTexture, "DEMO");
 
@@ -289,9 +301,10 @@ public class World extends AbstractEntityScene {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
         this.getMenu().addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.pictureBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.rectangleBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.glRectfRectangleBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.inputBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.demoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.pureColorBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
     /**
@@ -412,13 +425,14 @@ public class World extends AbstractEntityScene {
         final int avatarPictureSize = 200;
         this.pictureBox.setSize(avatarPictureSize);
         this.pictureBox.moveToRightTopOf(this.getGameWindow());
-        this.rectangleBox.setSize(avatarPictureSize);
-        this.rectangleBox.moveToLeftBottomOf(this.getGameWindow());
+        this.glRectfRectangleBox.setSize(avatarPictureSize);
+        this.glRectfRectangleBox.moveToLeftBottomOf(this.getGameWindow());
         this.inputBox.setSize(avatarPictureSize);
         this.inputBox.moveToRightBottomOf(this.getGameWindow());
         this.demoButton.setSize(avatarPictureSize);
         this.demoButton.moveToLeftTopOf(this.getGameWindow());
-        //                setCenterPos(avatarPictureSize / 2, this.getGameWindow().getBottomPosY() - avatarPictureSize / 2);
+        this.pureColorBox.setSize(avatarPictureSize);
+        this.pureColorBox.moveToCenterBottomOf(this.getGameWindow());
     }
 
 

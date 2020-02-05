@@ -41,7 +41,7 @@
         "_attributes": {
           "rightAfterResourceManagerCreate": ""
         },
-        "_text0": "SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADER_PICTURE"
+        "_text0": "SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADERS"
       },
       {
         "_attributes": {

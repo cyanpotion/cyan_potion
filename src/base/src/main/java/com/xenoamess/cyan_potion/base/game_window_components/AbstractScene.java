@@ -206,14 +206,38 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float rotateRadius) {
         this.getGameWindow().drawBindableRelativeCenter(
                 bindable,
-                (posX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F,
-                (posY - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F,
+                this.relativePosToAbsoluteX(camera, posX, scale),
+                this.relativePosToAbsoluteY(camera, posY, scale),
                 width * scale,
                 height * scale,
                 model,
                 colorScale,
                 rotateRadius
         );
+    }
+
+    public float relativePosToAbsoluteX(float posX) {
+        return this.relativePosToAbsoluteX(posX, this.scale);
+    }
+
+    public float relativePosToAbsoluteX(float posX, float scale) {
+        return this.relativePosToAbsoluteX(this.getCamera(), posX, scale);
+    }
+
+    public float relativePosToAbsoluteX(Camera camera, float posX, float scale) {
+        return (posX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
+    }
+
+    public float relativePosToAbsoluteY(float posY) {
+        return this.relativePosToAbsoluteY(posY, this.scale);
+    }
+
+    public float relativePosToAbsoluteY(float posY, float scale) {
+        return this.relativePosToAbsoluteY(this.getCamera(), posY, scale);
+    }
+
+    public float relativePosToAbsoluteY(Camera camera, float posY, float scale) {
+        return (posY - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
     }
 
     /**
