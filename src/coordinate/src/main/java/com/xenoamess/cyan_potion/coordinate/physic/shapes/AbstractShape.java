@@ -527,16 +527,16 @@ public abstract class AbstractShape implements AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosX(float newCenterPosX) {
-        this.getCenterPos().x = newCenterPosX;
+    public void setCenterPosX(float centerPosX) {
+        this.getCenterPos().x = centerPosX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setCenterPosY(float newCenterPosY) {
-        this.getCenterPos().y = newCenterPosY;
+    public void setCenterPosY(float centerPosY) {
+        this.getCenterPos().y = centerPosY;
     }
 
     /**
