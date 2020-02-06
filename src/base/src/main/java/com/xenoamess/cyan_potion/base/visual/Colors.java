@@ -56,7 +56,7 @@ public class Colors {
     }
 
     public static Vector4fc colorAwtToColorVector4f(Color colorAwt) {
-        return new Vector4f(colorAwt.getRed(), colorAwt.getGreen(), colorAwt.getBlue(), colorAwt.getAlpha());
+        return new Vector4f(colorAwt.getRed() / 255F, colorAwt.getGreen() / 255F, colorAwt.getBlue() / 255F, colorAwt.getAlpha() / 255F);
     }
 
     public static Color colorStringToColorAwt(String colorString) {
