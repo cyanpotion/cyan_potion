@@ -432,6 +432,7 @@ public class World extends AbstractEntityScene {
         this.demoButton.setSize(avatarPictureSize);
         this.demoButton.moveToLeftTopOf(this.getGameWindow());
         this.pureColorBox.setSize(avatarPictureSize);
+        this.pureColorBox.setRotateRadius((float) Math.toRadians(45));
         this.pureColorBox.moveToCenterBottomOf(this.getGameWindow());
     }
 
