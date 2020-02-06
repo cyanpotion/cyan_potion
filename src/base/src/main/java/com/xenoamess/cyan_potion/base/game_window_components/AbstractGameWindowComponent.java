@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3-SNAPSHOT
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {

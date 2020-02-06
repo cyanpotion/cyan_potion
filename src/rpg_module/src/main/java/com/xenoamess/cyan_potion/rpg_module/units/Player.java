@@ -36,7 +36,7 @@ import org.joml.Vector3f;
  * <p>Player class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3-SNAPSHOT
  */
 public class Player extends Unit {
     /**

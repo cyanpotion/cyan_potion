@@ -36,7 +36,7 @@ import static com.xenoamess.cyan_potion.base.setting_file.SettingFIleParser_0_3_
  * <p>SettingFileParsers class.</p>
  *
  * @author xenoa
- * @version 0.155.2
+ * @version 0.155.3-SNAPSHOT
  */
 public class SettingFileParsers {
     private static Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
