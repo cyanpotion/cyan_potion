@@ -29,7 +29,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
-import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 /**
  * PictureComponent
@@ -138,7 +138,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@inheritDoc}
      */
     @Override
-    public Vector4f getColorScale() {
+    public Vector4fc getColorScale() {
         return this.getPicture().getColorScale();
     }
 
@@ -146,7 +146,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@inheritDoc}
      */
     @Override
-    public void setColorScale(Vector4f colorScale) {
+    public void setColorScale(Vector4fc colorScale) {
         this.getPicture().setColorScale(colorScale);
     }
 
@@ -155,7 +155,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      */
     @Override
     public void setColorScale(float x, float y, float z, float w) {
-        this.getPicture().getColorScale().set(x, y, z, w);
+        this.getPicture().setColorScale(x, y, z, w);
     }
 
     /**

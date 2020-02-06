@@ -38,6 +38,7 @@ import org.apache.commons.vfs2.FileObject;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -675,7 +676,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosY,
             float width,
             float height,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeLeftTop(
                 bindable,
@@ -704,7 +705,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosY,
             float width,
             float height,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeCenter(
                 bindable,
@@ -735,7 +736,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeLeftTop(
                 bindable,
@@ -767,7 +768,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeCenter(
                 bindable,
@@ -801,7 +802,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale,
+            Vector4fc colorScale,
             float rotateRadius
     ) {
         this.drawBindableRelativeCenter(
@@ -835,7 +836,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale,
+            Vector4fc colorScale,
             float rotateRadius
     ) {
         if (bindable == null) {
@@ -917,7 +918,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -956,7 +957,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -997,7 +998,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosY,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -1033,7 +1034,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosY,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -1071,7 +1072,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -1111,7 +1112,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
@@ -1147,7 +1148,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosX,
             float leftTopPosY,
             float height,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, 0, color, text);
@@ -1169,7 +1170,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosX,
             float centerPosY,
             float height,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         return this.drawTextCenter(font, centerPosX, centerPosY, height, 0, color, text);

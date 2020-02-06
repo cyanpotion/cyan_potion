@@ -28,6 +28,7 @@ import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -53,7 +54,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
 
     @Override
     public void draw(GameWindow gameWindow) {
-        Vector4f drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
+        Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
         GlRectfRectanglePicture.drawRectangleLeftTop(
                 this.getLeftTopPosX(),
                 this.getLeftTopPosY(),
@@ -65,7 +66,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
 
     @Override
     public void draw(AbstractScene scene) {
-        Vector4f drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
+        Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
         GlRectfRectanglePicture.drawRectangleLeftTop(
                 scene.relativePosToAbsoluteX(this.getLeftTopPosX()),
                 scene.relativePosToAbsoluteY(this.getLeftTopPosY()),
@@ -81,18 +82,18 @@ public class GlRectfRectanglePicture extends AbstractPicture {
             float leftTopPosY,
             float width,
             float height,
-            Vector4f color
+            Vector4fc color
     ) {
         glDisable(GL_TEXTURE_2D);
-        glColor4f(color.x, color.y, color.z, color.w);
+        glColor4f(color.x(), color.y(), color.z(), color.w());
         glRectf(leftTopPosX, leftTopPosY, leftTopPosX + width, leftTopPosX + height);
     }
 
-    public Vector4f getColor() {
-        return color;
+    public Vector4fc getColor() {
+        return new Vector4f(color);
     }
 
-    public void setColor(Vector4f color) {
+    public void setColor(Vector4fc color) {
         this.color.set(color);
     }
 }

@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.opengl.GL11.*;
@@ -43,7 +44,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;
     private String contentString = "";
     private float charHeight = 20.0f;
-    private Vector4f textColor = new Vector4f(1, 1, 1, 1);
+    private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
     /**
      * <p>Constructor for TextBox.</p>
@@ -104,8 +105,12 @@ public class TextBox extends AbstractControllableGameWindowComponent {
 
         for (int i = 0; i < this.getContentString().length(); i++) {
             if (this.getTextColor() != null) {
-                glColor4f(this.getTextColor().x, this.getTextColor().y,
-                        this.getTextColor().z, this.getTextColor().w);
+                glColor4f(
+                        this.getTextColor().x(),
+                        this.getTextColor().y(),
+                        this.getTextColor().z(),
+                        this.getTextColor().w()
+                );
             }
 
             if (this.getContentString().charAt(i) == '\n') {
@@ -313,8 +318,8 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getTextColor() {
-        return textColor;
+    public Vector4fc getTextColor() {
+        return new Vector4f(textColor);
     }
 
     /**
@@ -322,8 +327,12 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      *
      * @param textColor textColor
      */
-    public void setTextColor(Vector4f textColor) {
-        this.textColor = textColor;
+    public void setTextColor(Vector4fc textColor) {
+        this.textColor.set(textColor);
+    }
+
+    public void setTextColor(float x, float y, float z, float w) {
+        this.textColor.set(x, y, z, w);
     }
 }
 

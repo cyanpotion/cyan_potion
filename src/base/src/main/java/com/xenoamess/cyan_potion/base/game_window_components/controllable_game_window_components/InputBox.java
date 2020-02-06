@@ -32,6 +32,7 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.glfw.GLFW.*;
@@ -59,9 +60,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     private float charHeight =
             20.0f / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
-    private Vector4f textColor = new Vector4f(1, 1, 1, 1);
-    private Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
-    private Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
+    private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
+    private final Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
+    private final Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
 
 
     /**
@@ -406,8 +407,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             glEnable(GL_TEXTURE_2D);
 
             if (this.getTextColor() != null) {
-                glColor4f(this.getTextColor().x, this.getTextColor().y,
-                        this.getTextColor().z, this.getTextColor().w);
+                glColor4f(
+                        this.getTextColor().x(),
+                        this.getTextColor().y(),
+                        this.getTextColor().z(),
+                        this.getTextColor().w()
+                );
             }
             glBegin(GL_QUADS);
             float lastXReal = x;
@@ -433,13 +438,13 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 float nowY0 = y + spaceUpToCharShould * scaleY;
 
                 if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                    glColor4f(this.getTextSelectColor().x,
-                            this.getTextSelectColor().y,
-                            this.getTextSelectColor().z,
-                            this.getTextSelectColor().w);
+                    glColor4f(this.getTextSelectColor().x(),
+                            this.getTextSelectColor().y(),
+                            this.getTextSelectColor().z(),
+                            this.getTextSelectColor().w());
                 } else {
-                    glColor4f(this.getTextColor().x, this.getTextColor().y,
-                            this.getTextColor().z, this.getTextColor().w);
+                    glColor4f(this.getTextColor().x(), this.getTextColor().y(),
+                            this.getTextColor().z(), this.getTextColor().w());
                 }
                 if (ifDraw) {
                     Font.drawBoxTC(
@@ -540,15 +545,15 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                         nowY0 = y + spaceUpToCharShould * scaleY;
 
                         if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                            glColor4f(this.getTextSelectColor().x,
-                                    this.getTextSelectColor().y,
-                                    this.getTextSelectColor().z,
-                                    this.getTextSelectColor().w);
+                            glColor4f(this.getTextSelectColor().x(),
+                                    this.getTextSelectColor().y(),
+                                    this.getTextSelectColor().z(),
+                                    this.getTextSelectColor().w());
                         } else {
-                            glColor4f(this.getTextColor().x,
-                                    this.getTextColor().y,
-                                    this.getTextColor().z,
-                                    this.getTextColor().w);
+                            glColor4f(this.getTextColor().x(),
+                                    this.getTextColor().y(),
+                                    this.getTextColor().z(),
+                                    this.getTextColor().w());
                         }
                         float nowDist = Math.abs(distPosX - nowX0);
                         if (nowDist < minDist) {
@@ -748,8 +753,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getTextColor() {
-        return textColor;
+    public Vector4fc getTextColor() {
+        return new Vector4f(textColor);
     }
 
     /**
@@ -757,8 +762,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param textColor textColor
      */
-    public void setTextColor(Vector4f textColor) {
-        this.textColor = textColor;
+    public void setTextColor(Vector4fc textColor) {
+        this.textColor.set(textColor);
+    }
+
+    public void setTextColor(float x, float y, float z, float w) {
+        this.textColor.set(x, y, z, w);
     }
 
     /**
@@ -766,8 +775,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getTextSelectColor() {
-        return textSelectColor;
+    public Vector4fc getTextSelectColor() {
+        return new Vector4f(textSelectColor);
     }
 
     /**
@@ -775,8 +784,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param textSelectColor textSelectColor
      */
-    public void setTextSelectColor(Vector4f textSelectColor) {
-        this.textSelectColor = textSelectColor;
+    public void setTextSelectColor(Vector4fc textSelectColor) {
+        this.textSelectColor.set(textSelectColor);
+    }
+
+    public void setTextSelectColor(float x, float y, float z, float w) {
+        this.textSelectColor.set(x, y, z, w);
     }
 
     /**
@@ -784,8 +797,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getCursorColor() {
-        return cursorColor;
+    public Vector4fc getCursorColor() {
+        return new Vector4f(cursorColor);
     }
 
     /**
@@ -793,8 +806,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param cursorColor insertColor
      */
-    public void setCursorColor(Vector4f cursorColor) {
-        this.cursorColor = cursorColor;
+    public void setCursorColor(Vector4fc cursorColor) {
+        this.cursorColor.set(cursorColor);
+    }
+
+    public void setCursorColor(float x, float y, float z, float w) {
+        this.cursorColor.set(x, y, z, w);
     }
 
 }

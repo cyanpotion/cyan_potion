@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Camera;
 import com.xenoamess.cyan_potion.base.render.Model;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 /**
  * <p>Abstract AbstractScene class.</p>
@@ -86,7 +87,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float posX,
                                      float posY,
                                      float size,
-                                     Vector4f colorScale) {
+                                     Vector4fc colorScale) {
         this.drawBindableAbsolute(camera, scale, bindable, posX, posY, size, size, colorScale);
     }
 
@@ -130,7 +131,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float posY,
                                      float width,
                                      float height,
-                                     Vector4f colorScale) {
+                                     Vector4fc colorScale) {
         this.drawBindableAbsolute(
                 camera,
                 scale,
@@ -165,7 +166,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float width,
                                      float height,
                                      Model model,
-                                     Vector4f colorScale) {
+                                     Vector4fc colorScale) {
         this.drawBindableAbsolute(
                 camera,
                 scale,
@@ -202,7 +203,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float width,
                                      float height,
                                      Model model,
-                                     Vector4f colorScale,
+                                     Vector4fc colorScale,
                                      float rotateRadius) {
         this.getGameWindow().drawBindableRelativeCenter(
                 bindable,

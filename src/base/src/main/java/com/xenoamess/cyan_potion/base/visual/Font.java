@@ -39,6 +39,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import org.apache.commons.vfs2.FileObject;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
 import org.lwjgl.stb.STBTTPackedchar;
@@ -129,7 +130,9 @@ public class Font extends AbstractResource {
         private float scaleX = Float.NaN;
         private float scaleY = Float.NaN;
         private float characterSpace = 0;
-        private Vector4f color = new Vector4f(1, 1, 1, 1);
+
+        private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
+        private final Vector4f color = new Vector4f(1, 1, 1, 1);
         private String text = "";
 
         public DrawTextStruct() {
@@ -150,7 +153,7 @@ public class Font extends AbstractResource {
             if (drawTextStruct.color != null) {
                 this.color.set(drawTextStruct.color);
             } else {
-                this.color = null;
+                this.color.set(DEFAULT_TEXT_COLOR);
             }
             this.text = drawTextStruct.text;
         }
@@ -264,7 +267,7 @@ public class Font extends AbstractResource {
                 //do nothing
             } else if (!Float.isNaN(this.scaleX) && !Float.isNaN(this.scaleY)) {
                 DrawTextStruct drawTextStruct = new DrawTextStruct(this);
-                drawTextStruct.color = new Vector4f(0, 0, 0, 0);
+                drawTextStruct.setColor(new Vector4f(0, 0, 0, 0));
                 drawTextStruct.leftTopPosX = 0;
                 drawTextStruct.leftTopPosY = 0;
                 font.drawTextLeftTop(drawTextStruct);
@@ -351,12 +354,15 @@ public class Font extends AbstractResource {
             this.scaleY = scaleY;
         }
 
-        public Vector4f getColor() {
-            return color;
+        public Vector4fc getColor() {
+            return new Vector4f(color);
         }
 
-        public void setColor(Vector4f color) {
-            this.color = color;
+        public void setColor(Vector4fc color) {
+            if (color == null) {
+                color = DEFAULT_TEXT_COLOR;
+            }
+            this.color.set(color);
         }
 
         public float getCharacterSpace() {
@@ -403,6 +409,7 @@ public class Font extends AbstractResource {
                     ", text='" + text + '\'' +
                     '}';
         }
+
     }
 
     /**
@@ -571,7 +578,7 @@ public class Font extends AbstractResource {
             float scaleX,
             float scaleY,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         DrawTextStruct drawTextStruct = new DrawTextStruct();
@@ -589,7 +596,7 @@ public class Font extends AbstractResource {
      *
      * @param drawTextStruct drawStruct.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
-     * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4f, String)
+     * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4fc, String)
      */
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
         this.bind();
@@ -658,7 +665,7 @@ public class Font extends AbstractResource {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         DrawTextStruct drawTextStruct = new DrawTextStruct();

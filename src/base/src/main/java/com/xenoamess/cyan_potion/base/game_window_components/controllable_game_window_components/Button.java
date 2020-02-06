@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 
 /**
@@ -43,7 +44,7 @@ public class Button extends AbstractControllableGameWindowComponent {
     /**
      * color of the buttonText drawn.
      */
-    private Vector4f textColor = new Vector4f(1, 1, 1, 1);
+    private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
     /**
      * <p>Constructor for Button.</p>
@@ -135,8 +136,8 @@ public class Button extends AbstractControllableGameWindowComponent {
      *
      * @return return
      */
-    public Vector4f getTextColor() {
-        return textColor;
+    public Vector4fc getTextColor() {
+        return new Vector4f(textColor);
     }
 
     /**
@@ -144,7 +145,11 @@ public class Button extends AbstractControllableGameWindowComponent {
      *
      * @param textColor textColor
      */
-    public void setTextColor(Vector4f textColor) {
-        this.textColor = textColor;
+    public void setTextColor(Vector4fc textColor) {
+        this.textColor.set(textColor);
+    }
+
+    public void setTextColor(float x, float y, float z, float w) {
+        this.textColor.set(x, y, z, w);
     }
 }

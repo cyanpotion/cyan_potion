@@ -41,7 +41,7 @@ public class Colors {
         return "" + colorVector.x() + "," + colorVector.y() + "," + colorVector.z() + "," + colorVector.w();
     }
 
-    public static Vector4f colorStringToColorVector4f(String colorString) {
+    public static Vector4fc colorStringToColorVector4f(String colorString) {
         String[] strings = colorString.split(",");
         return new Vector4f(
                 Float.parseFloat(strings[0]),
@@ -55,7 +55,7 @@ public class Colors {
         return new Color(colorVector.x(), colorVector.y(), colorVector.z(), colorVector.w());
     }
 
-    public static Vector4f colorAwtToColorVector4f(Color colorAwt) {
+    public static Vector4fc colorAwtToColorVector4f(Color colorAwt) {
         return new Vector4f(colorAwt.getRed(), colorAwt.getGreen(), colorAwt.getBlue(), colorAwt.getAlpha());
     }
 
@@ -74,6 +74,20 @@ public class Colors {
     }
 
     /**
+     * The color (0,0,0,0)
+     */
+    public static final Vector4fc empty = colorAwtToColorVector4f(Color.white);
+
+    /**
+     * The color (0,0,0,0)
+     *
+     * @since 0.155.3
+     */
+    public static final Vector4fc EMPTY = empty;
+
+    public static final String COLOR_STRING_EMPTY = colorVector4fToColorString(empty);
+
+    /**
      * The color white.  In the default sRGB space.
      */
     public static final Vector4fc white = colorAwtToColorVector4f(Color.white);
@@ -81,7 +95,7 @@ public class Colors {
     /**
      * The color white.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc WHITE = white;
 
@@ -95,7 +109,7 @@ public class Colors {
     /**
      * The color light gray.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc LIGHT_GRAY = lightGray;
 
@@ -109,7 +123,7 @@ public class Colors {
     /**
      * The color gray.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc GRAY = gray;
 
@@ -123,7 +137,7 @@ public class Colors {
     /**
      * The color dark gray.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc DARK_GRAY = darkGray;
 
@@ -137,7 +151,7 @@ public class Colors {
     /**
      * The color black.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc BLACK = black;
 
@@ -151,7 +165,7 @@ public class Colors {
     /**
      * The color red.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc RED = red;
 
@@ -165,7 +179,7 @@ public class Colors {
     /**
      * The color pink.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc PINK = pink;
 
@@ -179,7 +193,7 @@ public class Colors {
     /**
      * The color orange.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc ORANGE = orange;
 
@@ -193,7 +207,7 @@ public class Colors {
     /**
      * The color yellow.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc YELLOW = yellow;
 
@@ -207,7 +221,7 @@ public class Colors {
     /**
      * The color green.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc GREEN = green;
 
@@ -221,7 +235,7 @@ public class Colors {
     /**
      * The color magenta.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc MAGENTA = magenta;
 
@@ -235,7 +249,7 @@ public class Colors {
     /**
      * The color cyan.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc CYAN = cyan;
 
@@ -249,7 +263,7 @@ public class Colors {
     /**
      * The color blue.  In the default sRGB space.
      *
-     * @since 1.4
+     * @since 0.155.3
      */
     public static final Vector4fc BLUE = blue;
 

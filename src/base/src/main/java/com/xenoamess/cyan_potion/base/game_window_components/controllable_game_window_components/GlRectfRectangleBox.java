@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -64,7 +65,7 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      * @param gameWindow gameWindow
      * @param color      a {@link org.joml.Vector4f} object.
      */
-    public GlRectfRectangleBox(GameWindow gameWindow, Vector4f color) {
+    public GlRectfRectangleBox(GameWindow gameWindow, Vector4fc color) {
         this(gameWindow);
         this.setColor(color);
     }
@@ -84,8 +85,8 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      *
      * @return a {@link org.joml.Vector4f} object.
      */
-    public Vector4f getColor() {
-        return color;
+    public Vector4fc getColor() {
+        return new Vector4f(color);
     }
 
     /**
@@ -93,8 +94,8 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      *
      * @param color a {@link org.joml.Vector4f} object.
      */
-    public void setColor(Vector4f color) {
-        this.getColor().set(color);
+    public void setColor(Vector4fc color) {
+        this.color.set(color);
     }
 
     /**
@@ -106,6 +107,6 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      * @param w a int.
      */
     public void setColor(int x, int y, int z, int w) {
-        this.getColor().set(x, y, z, w);
+        this.color.set(x, y, z, w);
     }
 }
