@@ -140,22 +140,22 @@ public class Font extends AbstractResource {
         }
 
         public DrawTextStruct(DrawTextStruct drawTextStruct) {
-            this.font = drawTextStruct.font;
-            this.leftTopPosX = drawTextStruct.leftTopPosX;
-            this.leftTopPosY = drawTextStruct.leftTopPosY;
-            this.centerPosX = drawTextStruct.centerPosX;
-            this.centerPosY = drawTextStruct.centerPosY;
-            this.width = drawTextStruct.width;
-            this.height = drawTextStruct.height;
-            this.scaleX = drawTextStruct.scaleX;
-            this.scaleY = drawTextStruct.scaleY;
-            this.characterSpace = drawTextStruct.characterSpace;
+            this.setFont(drawTextStruct.getFont());
+            this.setLeftTopPosX(drawTextStruct.getLeftTopPosX());
+            this.setLeftTopPosY(drawTextStruct.getLeftTopPosY());
+            this.setCenterPosX(drawTextStruct.getCenterPosX());
+            this.setCenterPosY(drawTextStruct.getCenterPosY());
+            this.setWidth(drawTextStruct.getWidth());
+            this.setHeight(drawTextStruct.getHeight());
+            this.setScaleX(drawTextStruct.getScaleX());
+            this.setScaleY(drawTextStruct.getScaleY());
+            this.setCharacterSpace(drawTextStruct.getCharacterSpace());
             if (drawTextStruct.color != null) {
                 this.color.set(drawTextStruct.color);
             } else {
                 this.color.set(DEFAULT_TEXT_COLOR);
             }
-            this.text = drawTextStruct.text;
+            this.setText(drawTextStruct.getText());
         }
 
         public void setLeftTopPosXY(float leftTopPosX, float leftTopPosY) {
@@ -179,8 +179,8 @@ public class Font extends AbstractResource {
         }
 
         public void bakePosXY() {
-            assert (!Float.isNaN(this.width));
-            assert (!Float.isNaN(this.height));
+            assert (!Float.isNaN(this.getWidth()));
+            assert (!Float.isNaN(this.getHeight()));
 
             if (!Float.isNaN(getLeftTopPosX()) && !Float.isNaN(getLeftTopPosY())) {
                 setCenterPosX(getLeftTopPosX() + getWidth() / 2f);
@@ -196,12 +196,12 @@ public class Font extends AbstractResource {
         }
 
         public void calculateScaleXYFromWidthHeight() {
-            assert (!Float.isNaN(this.width) || !Float.isNaN(this.height));
-            assert (this.text != null);
+            assert (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight()));
+            assert (this.getText() != null);
 
             this.getFont().bind();
-            font.getXb().put(0, 0);
-            font.getYb().put(0, 0);
+            getFont().getXb().put(0, 0);
+            getFont().getYb().put(0, 0);
 
             glEnable(GL_TEXTURE_2D);
 
@@ -213,20 +213,20 @@ public class Font extends AbstractResource {
             float x3 = Float.MIN_VALUE;
             float y3 = Float.MIN_VALUE;
 
-            for (int i = 0; i < this.text.length(); i++) {
-                if (this.text.charAt(i) < 32) {
+            for (int i = 0; i < this.getText().length(); i++) {
+                if (this.getText().charAt(i) < 32) {
                     continue;
                 }
-                glBindTexture(GL_TEXTURE_2D, font.getFontTextures().getPrimitive(this.text.charAt(i) / EACH_CHAR_NUM));
+                glBindTexture(GL_TEXTURE_2D, getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / EACH_CHAR_NUM));
                 glBegin(GL_QUADS);
-                stbtt_GetPackedQuad(font.getCharDatas().get(this.text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                        this.text.charAt(i) % EACH_CHAR_NUM, font.getXb(), font.getYb(), font.getQ(), false);
+                stbtt_GetPackedQuad(getFont().getCharDatas().get(this.getText().charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                        this.getText().charAt(i) % EACH_CHAR_NUM, getFont().getXb(), getFont().getYb(), getFont().getQ(), false);
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
-                float charWidthShould = font.getQ().x1() - font.getQ().x0();
-                float charHeightShould = font.getQ().y1() - font.getQ().y0();
-                float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
-                float spaceUpToCharShould = font.getQ().y0() - lastYShould;
+                float charWidthShould = getFont().getQ().x1() - getFont().getQ().x0();
+                float charHeightShould = getFont().getQ().y1() - getFont().getQ().y0();
+                float spaceLeftToCharShould = getFont().getQ().x0() - lastXShould;
+                float spaceUpToCharShould = getFont().getQ().y0() - lastYShould;
                 float nowX0 = lastXReal + spaceLeftToCharShould;
                 float nowY0 = 0;
 //            LOGGER.debug(charWidthShould + " " + charHeightShould + "
@@ -241,51 +241,51 @@ public class Font extends AbstractResource {
                 y3 = Math.max(y3, nowY0 + charHeightShould);
                 lastXReal = nowX0 + charWidthShould * 1;
                 lastYReal = 0;
-                lastXShould = font.getQ().x1();
+                lastXShould = getFont().getQ().x1();
                 lastYShould = 0;
                 glEnd();
             }
-            assert (!Float.isNaN(this.width) || !Float.isNaN(this.height));
-            float calculatedScaleX = Float.isNaN(this.width) ? Float.NaN : this.width / (x3 - 0);
-            float calculatedScaleY = Float.isNaN(this.height) ? Float.NaN : this.height / (y3 - 0);
+            assert (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight()));
+            float calculatedScaleX = Float.isNaN(this.getWidth()) ? Float.NaN : this.getWidth() / (x3 - 0);
+            float calculatedScaleY = Float.isNaN(this.getHeight()) ? Float.NaN : this.getHeight() / (y3 - 0);
             if (Float.isNaN(calculatedScaleX)) {
                 calculatedScaleX = calculatedScaleY;
             } else if (Float.isNaN(calculatedScaleY)) {
                 calculatedScaleY = calculatedScaleX;
             }
             this.setScaleXY(calculatedScaleX, calculatedScaleY);
-            if (Float.isNaN(this.height)) {
-                this.height = this.width / x3 * y3;
+            if (Float.isNaN(this.getHeight())) {
+                this.setHeight(this.getWidth() / x3 * y3);
             }
-            if (Float.isNaN(this.width)) {
-                this.width = this.height / y3 * x3;
+            if (Float.isNaN(this.getWidth())) {
+                this.setWidth(this.getHeight() / y3 * x3);
             }
         }
 
         public void bake() {
-            if (!Float.isNaN(this.scaleX) && !Float.isNaN(this.scaleY) && !Float.isNaN(this.height)) {
+            if (!Float.isNaN(this.getScaleX()) && !Float.isNaN(this.getScaleY()) && !Float.isNaN(this.getHeight())) {
                 //do nothing
-            } else if (!Float.isNaN(this.scaleX) && !Float.isNaN(this.scaleY)) {
+            } else if (!Float.isNaN(this.getScaleX()) && !Float.isNaN(this.getScaleY())) {
                 DrawTextStruct drawTextStruct = new DrawTextStruct(this);
                 drawTextStruct.setColor(new Vector4f(0, 0, 0, 0));
-                drawTextStruct.leftTopPosX = 0;
-                drawTextStruct.leftTopPosY = 0;
-                font.drawTextLeftTop(drawTextStruct);
-                this.width = drawTextStruct.width;
-                this.height = drawTextStruct.height;
-            } else if (!Float.isNaN(this.width) || !Float.isNaN(this.height)) {
+                drawTextStruct.setLeftTopPosX(0);
+                drawTextStruct.setLeftTopPosY(0);
+                getFont().drawTextLeftTop(drawTextStruct);
+                this.setWidth(drawTextStruct.getWidth());
+                this.setHeight(drawTextStruct.getHeight());
+            } else if (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight())) {
                 this.calculateScaleXYFromWidthHeight();
             }
             this.bakePosXY();
         }
 
         public void draw() {
-            if (Float.isNaN(leftTopPosX) || Float.isNaN(leftTopPosY) || Float.isNaN(centerPosX) || Float.isNaN(centerPosY) || Float.isNaN(scaleX) || Float.isNaN(scaleY) || Float.isNaN(characterSpace) || text == null || Float.isNaN(height)) {
+            if (Float.isNaN(getLeftTopPosX()) || Float.isNaN(getLeftTopPosY()) || Float.isNaN(getCenterPosX()) || Float.isNaN(getCenterPosY()) || Float.isNaN(getScaleX()) || Float.isNaN(getScaleY()) || Float.isNaN(getCharacterSpace()) || getText() == null || Float.isNaN(getHeight())) {
                 this.bake();
-                if (Float.isNaN(leftTopPosX) || Float.isNaN(leftTopPosY) || Float.isNaN(centerPosX) || Float.isNaN(centerPosY) || Float.isNaN(scaleX) || Float.isNaN(scaleY) || Float.isNaN(characterSpace) || text == null || Float.isNaN(height)) {
+                if (Float.isNaN(getLeftTopPosX()) || Float.isNaN(getLeftTopPosY()) || Float.isNaN(getCenterPosX()) || Float.isNaN(getCenterPosY()) || Float.isNaN(getScaleX()) || Float.isNaN(getScaleY()) || Float.isNaN(getCharacterSpace()) || getText() == null || Float.isNaN(getHeight())) {
                     LOGGER.info("This DrawTextStruct still cannot draw after bake, thus we will not draw it : {}" + this.toString());
                 } else {
-                    this.font.drawTextLeftTop(this);
+                    this.getFont().drawTextLeftTop(this);
                 }
             }
         }
@@ -395,18 +395,18 @@ public class Font extends AbstractResource {
         @Override
         public String toString() {
             return "DrawTextStruct{" +
-                    "font=" + font +
-                    ", leftTopPosX=" + leftTopPosX +
-                    ", leftTopPosY=" + leftTopPosY +
-                    ", centerPosX=" + centerPosX +
-                    ", centerPosY=" + centerPosY +
-                    ", width=" + width +
-                    ", height=" + height +
-                    ", scaleX=" + scaleX +
-                    ", scaleY=" + scaleY +
-                    ", characterSpace=" + characterSpace +
+                    "font=" + getFont() +
+                    ", leftTopPosX=" + getLeftTopPosX() +
+                    ", leftTopPosY=" + getLeftTopPosY() +
+                    ", centerPosX=" + getCenterPosX() +
+                    ", centerPosY=" + getCenterPosY() +
+                    ", width=" + getWidth() +
+                    ", height=" + getHeight() +
+                    ", scaleX=" + getScaleX() +
+                    ", scaleY=" + getScaleY() +
+                    ", characterSpace=" + getCharacterSpace() +
                     ", color=" + color +
-                    ", text='" + text + '\'' +
+                    ", text='" + getText() + '\'' +
                     '}';
         }
 
@@ -601,8 +601,8 @@ public class Font extends AbstractResource {
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
         this.bind();
 
-        getXb().put(0, drawTextStruct.leftTopPosX);
-        getYb().put(0, drawTextStruct.leftTopPosY);
+        getXb().put(0, drawTextStruct.getLeftTopPosX());
+        getYb().put(0, drawTextStruct.getLeftTopPosY());
 
         glEnable(GL_TEXTURE_2D);
 
@@ -610,39 +610,39 @@ public class Font extends AbstractResource {
             glColor4f(drawTextStruct.color.x, drawTextStruct.color.y, drawTextStruct.color.z, drawTextStruct.color.w);
         }
 
-        float lastXReal = drawTextStruct.leftTopPosX;
-        float lastYReal = drawTextStruct.leftTopPosY;
-        float lastXShould = drawTextStruct.leftTopPosX;
-        float lastYShould = drawTextStruct.leftTopPosY;
-        for (int i = 0; i < drawTextStruct.text.length(); i++) {
-            if (drawTextStruct.text.charAt(i) < 32) {
+        float lastXReal = drawTextStruct.getLeftTopPosX();
+        float lastYReal = drawTextStruct.getLeftTopPosY();
+        float lastXShould = drawTextStruct.getLeftTopPosX();
+        float lastYShould = drawTextStruct.getLeftTopPosY();
+        for (int i = 0; i < drawTextStruct.getText().length(); i++) {
+            if (drawTextStruct.getText().charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(drawTextStruct.text.charAt(i) / EACH_CHAR_NUM));
+            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM));
             glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.text.charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    drawTextStruct.text.charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+            stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
+                    drawTextStruct.getText().charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
 
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
             float spaceLeftToCharShould = getQ().x0() - lastXShould;
             float spaceUpToCharShould = getQ().y0() - lastYShould;
-            float nowX0 = lastXReal + spaceLeftToCharShould * drawTextStruct.scaleX;
-            float nowY0 = lastYReal + spaceUpToCharShould * drawTextStruct.scaleY;
+            float nowX0 = lastXReal + spaceLeftToCharShould * drawTextStruct.getScaleX();
+            float nowY0 = lastYReal + spaceUpToCharShould * drawTextStruct.getScaleY();
 
             drawBoxTC(
-                    nowX0, nowY0 + drawTextStruct.height * 0.8f,
-                    nowX0 + charWidthShould * drawTextStruct.scaleX,
-                    nowY0 + charHeightShould * drawTextStruct.scaleY + drawTextStruct.height * 0.8f,
+                    nowX0, nowY0 + drawTextStruct.getHeight() * 0.8f,
+                    nowX0 + charWidthShould * drawTextStruct.getScaleX(),
+                    nowY0 + charHeightShould * drawTextStruct.getScaleY() + drawTextStruct.getHeight() * 0.8f,
                     getQ().s0(), getQ().t0(), getQ().s1(), getQ().t1()
             );
-            lastXReal = nowX0 + charWidthShould * drawTextStruct.scaleX;
-            lastYReal = drawTextStruct.leftTopPosY;
-            lastXShould = getQ().x1() + drawTextStruct.characterSpace;
-            lastYShould = drawTextStruct.leftTopPosY;
+            lastXReal = nowX0 + charWidthShould * drawTextStruct.getScaleX();
+            lastYReal = drawTextStruct.getLeftTopPosY();
+            lastXShould = getQ().x1() + drawTextStruct.getCharacterSpace();
+            lastYShould = drawTextStruct.getLeftTopPosY();
             glEnd();
         }
-        drawTextStruct.setWidth(lastXReal - drawTextStruct.leftTopPosX);
+        drawTextStruct.setWidth(lastXReal - drawTextStruct.getLeftTopPosX());
         drawTextStruct.bake();
         return drawTextStruct;
     }

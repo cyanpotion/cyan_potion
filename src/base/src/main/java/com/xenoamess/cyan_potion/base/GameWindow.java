@@ -925,6 +925,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -964,6 +965,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1004,6 +1006,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1040,6 +1043,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1079,6 +1083,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1119,6 +1124,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
