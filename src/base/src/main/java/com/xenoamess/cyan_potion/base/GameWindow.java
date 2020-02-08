@@ -38,6 +38,7 @@ import org.apache.commons.vfs2.FileObject;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -60,7 +61,7 @@ import static org.lwjgl.opengl.GL11.*;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
@@ -675,7 +676,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosY,
             float width,
             float height,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeLeftTop(
                 bindable,
@@ -704,7 +705,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosY,
             float width,
             float height,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeCenter(
                 bindable,
@@ -735,7 +736,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeLeftTop(
                 bindable,
@@ -767,7 +768,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale
+            Vector4fc colorScale
     ) {
         this.drawBindableRelativeCenter(
                 bindable,
@@ -801,7 +802,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale,
+            Vector4fc colorScale,
             float rotateRadius
     ) {
         this.drawBindableRelativeCenter(
@@ -835,7 +836,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             Model model,
-            Vector4f colorScale,
+            Vector4fc colorScale,
             float rotateRadius
     ) {
         if (bindable == null) {
@@ -917,13 +918,14 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -956,13 +958,14 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -997,12 +1000,13 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosY,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1033,12 +1037,13 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosY,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1071,13 +1076,14 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         leftTopPosX = leftTopPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         leftTopPosY = leftTopPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1111,13 +1117,14 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float width,
             float height,
             float characterSpace,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         centerPosX = centerPosX / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         centerPosY = centerPosY / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
         width = width / (float) this.getLogicWindowWidth() * (float) this.getRealWindowWidth();
         height = height / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
+        characterSpace = characterSpace / (float) this.getLogicWindowHeight() * (float) this.getRealWindowHeight();
 
         Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
         drawTextStruct.setFont(font);
@@ -1147,7 +1154,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float leftTopPosX,
             float leftTopPosY,
             float height,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         return this.drawTextLeftTop(font, leftTopPosX, leftTopPosY, height, 0, color, text);
@@ -1169,7 +1176,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             float centerPosX,
             float centerPosY,
             float height,
-            Vector4f color,
+            Vector4fc color,
             String text
     ) {
         return this.drawTextCenter(font, centerPosX, centerPosY, height, 0, color, text);

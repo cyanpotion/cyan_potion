@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
@@ -191,7 +191,13 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     @Override
     public void close() {
-        this.setAlive(false);
+        if (!this.alive.compareAndSet(true, false)) {
+            return;
+        }
+        GameWindowComponentTreeNode gameWindowComponentTreeNode = this.getGameWindowComponentTreeNode();
+        if (gameWindowComponentTreeNode != null) {
+            gameWindowComponentTreeNode.close();
+        }
     }
 
     /**
@@ -299,11 +305,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        if (gameWindowComponentTreeNode != null) {
-            gameWindowComponentTreeNode.newNode(this);
-        } else {
-            getGameWindow().getGameManager().getGameWindowComponentTree().newNode(this);
-        }
+        assert (gameWindowComponentTreeNode != null);
+        gameWindowComponentTreeNode.newNode(this);
     }
 
     /**

@@ -25,12 +25,13 @@
 package com.xenoamess.cyan_potion.base.visual;
 
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 /**
  * Abstract Picture
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public abstract class AbstractPicture implements AbstractPictureInterface {
     private float leftTopPosX = Float.NaN;
@@ -135,8 +136,18 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
      * <p>Getter for the field <code>colorScale</code>.</p>
      */
     @Override
-    public Vector4f getColorScale() {
+    public Vector4fc getColorScale() {
         return new Vector4f(colorScale);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Setter for the field <code>colorScale</code>.</p>
+     */
+    @Override
+    public void setColorScale(Vector4fc colorScale) {
+        this.colorScale.set(colorScale);
     }
 
     /**

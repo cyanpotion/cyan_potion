@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Shader class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class Shader implements Closeable {
     @JsonIgnore
@@ -179,10 +179,10 @@ public class Shader implements Closeable {
      * @param uniformName uniformName
      * @param value       a {@link org.joml.Vector4f} object.
      */
-    public void setUniform(String uniformName, Vector4f value) {
+    public void setUniform(String uniformName, Vector4fc value) {
         int location = iGetUniformLocation(uniformName);
         if (location != -1) {
-            glUniform4f(location, value.x, value.y, value.z, value.w);
+            glUniform4f(location, value.x(), value.y(), value.z(), value.w());
         }
     }
 

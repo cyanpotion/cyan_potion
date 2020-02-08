@@ -72,7 +72,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class World extends AbstractEntityScene {
     @JsonIgnore
@@ -432,6 +432,7 @@ public class World extends AbstractEntityScene {
         this.demoButton.setSize(avatarPictureSize);
         this.demoButton.moveToLeftTopOf(this.getGameWindow());
         this.pureColorBox.setSize(avatarPictureSize);
+        this.pureColorBox.setRotateRadius((float) Math.toRadians(45));
         this.pureColorBox.moveToCenterBottomOf(this.getGameWindow());
     }
 

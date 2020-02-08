@@ -30,7 +30,7 @@ import java.util.Arrays;
  * <p>KeyActionEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public enum KeyActionEnum {
     GLFW_RELEASE(0),

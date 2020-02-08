@@ -48,7 +48,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>TitleExample class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveSlotTexture =
@@ -446,7 +446,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                                 .getGameSettings()
                                 .getWorldClassName()
                 );
-        world.addToGameWindowComponentTree(null);
+        world.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
         world.enlargeAsFullWindow();
     }
 

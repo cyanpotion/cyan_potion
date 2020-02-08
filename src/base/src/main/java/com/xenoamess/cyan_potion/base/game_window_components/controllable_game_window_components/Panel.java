@@ -27,11 +27,13 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -39,11 +41,24 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
     private final Picture backgroundPicture = new Picture();
+    private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
+        @Override
+        public void update() {
+        }
+
+        @Override
+        public void draw() {
+        }
+
+        @Override
+        public void initProcessors() {
+        }
+    });
 
     /**
      * <p>Constructor for Panel.</p>
@@ -75,7 +90,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            return this.contents.add(gameWindowComponent);
+            boolean result = this.contents.add(gameWindowComponent);
+            if (subGameWindowComponentTree.getRoot() != null) {
+                gameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
+            }
+            return result;
         }
     }
 
@@ -89,7 +108,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public AbstractGameWindowComponent removeContent(int index) {
         synchronized (this.contents) {
-            return this.contents.remove(index);
+            AbstractGameWindowComponent result = this.contents.remove(index);
+            result.close();
+            return result;
         }
     }
 
@@ -103,7 +124,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public boolean removeContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            return this.contents.remove(gameWindowComponent);
+            boolean result = this.contents.remove(gameWindowComponent);
+            gameWindowComponent.close();
+            return result;
         }
     }
 
@@ -115,6 +138,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public void clearContents() {
         synchronized (this.contents) {
+            for (AbstractGameWindowComponent abstractGameWindowComponent : this.contents) {
+                abstractGameWindowComponent.close();
+            }
             this.contents.clear();
         }
     }
@@ -126,7 +152,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * @see #contents
      * @see List#clear()
      */
-    public List<AbstractGameWindowComponent> copyContents() {
+    public List<AbstractGameWindowComponent> getContents() {
         synchronized (this.contents) {
             return new ArrayList<>(this.contents);
         }
@@ -139,25 +165,32 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void update() {
         super.update();
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                gameWindowComponent.update();
+        for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
+            if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
+                abstractGameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
             }
         }
         backgroundPicture.cover(this);
+        this.subGameWindowComponentTree.update();
+//        synchronized (this.contents) {
+//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+//                gameWindowComponent.update();
+//            }
+//        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public void ifVisibleThenDraw() {
         this.backgroundPicture.draw(this.getGameWindow());
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                gameWindowComponent.draw();
-            }
-        }
+        this.subGameWindowComponentTree.draw();
+//        synchronized (this.contents) {
+//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+//                gameWindowComponent.draw();
+//            }
+//        }
     }
 
     /**
@@ -165,15 +198,22 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @Override
     public Event process(Event event) {
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                Event newEvent = gameWindowComponent.process(event);
-                if (newEvent != event) {
-                    return newEvent;
+        synchronized (this) {
+            Set<Event> res = this.subGameWindowComponentTree.process(event);
+            for (Event au : res) {
+                if (au != event) {
+                    return au;
                 }
             }
             return super.process(event);
         }
+
+    }
+
+    public void close() {
+        subGameWindowComponentTree.getRoot().close();
+        this.clearContents();
+        super.close();
     }
 
 }

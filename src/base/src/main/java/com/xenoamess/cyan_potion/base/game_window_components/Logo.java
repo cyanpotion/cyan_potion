@@ -33,6 +33,8 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
@@ -41,7 +43,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>Logo class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
@@ -105,7 +107,7 @@ public class Logo extends AbstractGameWindowComponent {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:
-                            this.setAlive(false);
+                            this.willClose.set(true);
                             break;
                         default:
                             return keyboardEvent;
@@ -116,11 +118,14 @@ public class Logo extends AbstractGameWindowComponent {
 
         this.registerProcessor(MouseButtonEvent.class,
                 (MouseButtonEvent event) -> {
-                    this.setAlive(false);
+                    this.willClose.set(true);
                     return null;
                 }
         );
     }
+
+    private final AtomicBoolean willClose = new AtomicBoolean(false);
+    private final AtomicBoolean initNext = new AtomicBoolean(false);
 
     /**
      * {@inheritDoc}
@@ -128,14 +133,16 @@ public class Logo extends AbstractGameWindowComponent {
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.setAlive(false);
+            willClose.set(true);
         }
 
-        if (!this.getAlive()) {
-            this.getGameWindowComponentTreeNode().close();
-            MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
-            madeWithLogo.addToGameWindowComponentTree(null);
-            madeWithLogo.enlargeAsFullWindow();
+        if (willClose.get()) {
+            if (initNext.compareAndSet(false, true)) {
+                MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
+                madeWithLogo.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
+                madeWithLogo.enlargeAsFullWindow();
+                this.close();
+            }
         }
     }
 
@@ -145,10 +152,9 @@ public class Logo extends AbstractGameWindowComponent {
     @Override
     public void draw() {
         if (!this.getAlive()) {
-            glClearColor(1, 1, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
             return;
         }
+
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 

@@ -49,7 +49,7 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * Audios Manager is manager class of some SE audio.
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  * @see #useSource()
  * @see #useSource(WaveData)
  */

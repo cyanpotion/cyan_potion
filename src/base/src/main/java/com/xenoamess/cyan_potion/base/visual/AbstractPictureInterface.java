@@ -28,13 +28,14 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 /**
  * AbstractPictureInterface
  * AbstractPictureInterface mean
  *
  * @author xenoa
- * @version 0.155.2
+ * @version 0.155.3
  */
 public interface AbstractPictureInterface extends AbstractMutableArea {
     /**
@@ -70,16 +71,14 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @return a {@link org.joml.Vector4f} object.
      */
-    Vector4f getColorScale();
+    Vector4fc getColorScale();
 
     /**
      * <p>setColorScale.</p>
      *
      * @param colorScale a {@link org.joml.Vector4f} object.
      */
-    default void setColorScale(Vector4f colorScale) {
-        this.getColorScale().set(colorScale);
-    }
+    void setColorScale(Vector4fc colorScale);
 
     /**
      * <p>setColorScale.</p>
@@ -90,7 +89,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      * @param w a float.
      */
     default void setColorScale(float x, float y, float z, float w) {
-        this.getColorScale().set(x, y, z, w);
+        this.setColorScale(new Vector4f(x, y, z, w));
     }
 
     /**

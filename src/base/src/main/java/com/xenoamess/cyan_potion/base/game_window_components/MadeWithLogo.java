@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
@@ -34,15 +35,16 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
-import static org.lwjgl.opengl.GL11.*;
 
 /**
  * <p>MadeWithLogo class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
@@ -103,7 +105,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:
-                            this.setAlive(false);
+                            this.willClose.set(true);
                             break;
                         default:
                             return keyboardEvent;
@@ -114,12 +116,14 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.registerProcessor(
                 MouseButtonEvent.class,
                 (MouseButtonEvent event) -> {
-                    this.setAlive(false);
+                    this.willClose.set(true);
                     return null;
                 }
         );
     }
 
+    private final AtomicBoolean willClose = new AtomicBoolean(false);
+    private final AtomicBoolean initNext = new AtomicBoolean(false);
 
     /**
      * {@inheritDoc}
@@ -127,12 +131,11 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @Override
     public void update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.setAlive(false);
+            this.willClose.set(true);
         }
 
-        if (!this.getAlive() && Font.getDefaultFont().isInMemory()) {
-            this.getGameWindowComponentTreeNode().close();
-            {
+        if (DataCenter.ifMainThread() && willClose.get() && Font.getDefaultFont().isInMemory()) {
+            if (initNext.compareAndSet(false, true)) {
                 Font.getDefaultFont().init(this.getGameWindow());
                 AbstractGameWindowComponent title =
                         AbstractGameWindowComponent.createGameWindowComponentFromClassName(
@@ -143,9 +146,9 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                                         .getGameSettings()
                                         .getTitleClassName()
                         );
-
-                title.addToGameWindowComponentTree(null);
+                title.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
                 title.enlargeAsFullWindow();
+                this.close();
             }
         }
     }
@@ -156,16 +159,14 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @Override
     public void draw() {
         if (!this.getAlive()) {
-            glClearColor(1, 1, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
             return;
         }
 
         long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
         float colorScale;
 
-        long stayTime = 5000L;
-        long fadeTime = 5000L;
+        long stayTime = 2000L;
+        long fadeTime = 3000L;
         if (t < stayTime) {
             colorScale = 1;
         } else {

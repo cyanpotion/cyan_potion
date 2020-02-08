@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * <p>GameMapJson class.</p>
  *
  * @author XenoAmess
- * @version 0.155.2
+ * @version 0.155.3
  */
 public class GameMapJson implements Serializable {
     @JsonIgnore
