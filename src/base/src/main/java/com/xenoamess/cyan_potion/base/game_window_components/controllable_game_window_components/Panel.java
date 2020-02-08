@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -75,7 +74,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            return this.contents.add(gameWindowComponent);
+            boolean result = this.contents.add(gameWindowComponent);
+            if (this.getGameWindowComponentTreeNode() != null) {
+                gameWindowComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+            }
+            return result;
         }
     }
 
@@ -89,7 +92,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public AbstractGameWindowComponent removeContent(int index) {
         synchronized (this.contents) {
-            return this.contents.remove(index);
+            AbstractGameWindowComponent result = this.contents.remove(index);
+            result.close();
+            return result;
         }
     }
 
@@ -103,7 +108,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public boolean removeContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
-            return this.contents.remove(gameWindowComponent);
+            boolean result = this.contents.remove(gameWindowComponent);
+            gameWindowComponent.close();
+            return result;
         }
     }
 
@@ -115,6 +122,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public void clearContents() {
         synchronized (this.contents) {
+            for (AbstractGameWindowComponent abstractGameWindowComponent : this.contents) {
+                abstractGameWindowComponent.close();
+            }
             this.contents.clear();
         }
     }
@@ -126,7 +136,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * @see #contents
      * @see List#clear()
      */
-    public List<AbstractGameWindowComponent> copyContents() {
+    public List<AbstractGameWindowComponent> getContents() {
         synchronized (this.contents) {
             return new ArrayList<>(this.contents);
         }
@@ -139,12 +149,17 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void update() {
         super.update();
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                gameWindowComponent.update();
+        for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
+            if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
+                abstractGameWindowComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
             }
         }
         backgroundPicture.cover(this);
+//        synchronized (this.contents) {
+//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+//                gameWindowComponent.update();
+//            }
+//        }
     }
 
     /**
@@ -153,27 +168,27 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void ifVisibleThenDraw() {
         this.backgroundPicture.draw(this.getGameWindow());
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                gameWindowComponent.draw();
-            }
-        }
+//        synchronized (this.contents) {
+//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+//                gameWindowComponent.draw();
+//            }
+//        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Event process(Event event) {
-        synchronized (this.contents) {
-            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-                Event newEvent = gameWindowComponent.process(event);
-                if (newEvent != event) {
-                    return newEvent;
-                }
-            }
-            return super.process(event);
-        }
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public Event process(Event event) {
+//        synchronized (this.contents) {
+//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
+//                Event newEvent = gameWindowComponent.process(event);
+//                if (newEvent != event) {
+//                    return newEvent;
+//                }
+//            }
+//            return super.process(event);
+//        }
+//    }
 
 }
