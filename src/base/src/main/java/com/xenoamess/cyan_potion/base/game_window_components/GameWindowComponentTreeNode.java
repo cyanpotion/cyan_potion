@@ -48,6 +48,8 @@ public class GameWindowComponentTreeNode implements Closeable {
     private final List<GameWindowComponentTreeNode> children =
             new ArrayList<>();
 
+    private final AtomicBoolean alive = new AtomicBoolean(true);
+
     /**
      * <p>Constructor for GameWindowComponentTreeNode.</p>
      *
@@ -60,13 +62,12 @@ public class GameWindowComponentTreeNode implements Closeable {
                                           AbstractGameWindowComponent gameWindowComponent) {
         super();
         this.gameWindowComponentTree = gameWindowComponentTree;
-        this.parent = parent;
         this.gameWindowComponent = gameWindowComponent;
+        this.parent = parent;
         this.getGameWindowComponent().setGameWindowComponentTreeNode(this);
-        if (this.getParent() != null) {
+        if (parent != null) {
             this.getGameWindowComponentTree().leafNodesRemove(this.getParent());
             this.getGameWindowComponentTree().leafNodesAdd(this);
-
             this.getParent().childrenAdd(this);
             this.depth = this.getParent().getDepth() + 1;
         } else {
@@ -80,6 +81,11 @@ public class GameWindowComponentTreeNode implements Closeable {
      */
     @Override
     public void close() {
+        if (!this.getAlive()) {
+            return;
+        }
+        this.setAlive(false);
+
         ArrayList<GameWindowComponentTreeNode> tmpSons =
                 new ArrayList<>(childrenCopy());
 
@@ -87,7 +93,10 @@ public class GameWindowComponentTreeNode implements Closeable {
             au.close();
         }
 
-        this.getGameWindowComponent().close();
+        AbstractGameWindowComponent gameWindowComponent = this.getGameWindowComponent();
+        if (gameWindowComponent != null) {
+            gameWindowComponent.close();
+        }
 
         getGameWindowComponentTree().leafNodesRemove(this);
 
@@ -332,6 +341,24 @@ public class GameWindowComponentTreeNode implements Closeable {
      */
     public int getDepth() {
         return depth;
+    }
+
+    /**
+     * <p>Getter for the field <code>alive</code>.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean getAlive() {
+        return alive.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>alive</code>.</p>
+     *
+     * @param alive a boolean.
+     */
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
     }
 }
 

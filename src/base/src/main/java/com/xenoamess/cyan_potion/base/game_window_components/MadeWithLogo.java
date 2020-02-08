@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.audio.WaveData;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
@@ -33,6 +34,8 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
@@ -120,19 +123,21 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         );
     }
 
+    private final AtomicBoolean initNext = new AtomicBoolean(false);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void update() {
+        boolean willClose = false;
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.setAlive(false);
+            willClose = true;
         }
 
-        if (!this.getAlive() && Font.getDefaultFont().isInMemory()) {
-            this.getGameWindowComponentTreeNode().close();
-            {
+        if (DataCenter.ifMainThread() && willClose && Font.getDefaultFont().isInMemory()) {
+            this.close();
+            if (initNext.compareAndSet(false, true)) {
                 Font.getDefaultFont().init(this.getGameWindow());
                 AbstractGameWindowComponent title =
                         AbstractGameWindowComponent.createGameWindowComponentFromClassName(
@@ -143,8 +148,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                                         .getGameSettings()
                                         .getTitleClassName()
                         );
-
-                title.addToGameWindowComponentTree(null);
+                title.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
                 title.enlargeAsFullWindow();
             }
         }
@@ -164,8 +168,8 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
         float colorScale;
 
-        long stayTime = 5000L;
-        long fadeTime = 5000L;
+        long stayTime = 2000L;
+        long fadeTime = 3000L;
         if (t < stayTime) {
             colorScale = 1;
         } else {

@@ -25,15 +25,15 @@
 package com.xenoamess.cyan_potion.base.game_window_components;
 
 
-import com.xenoamess.commons.as_final_field.AsFinalField;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.SubManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import org.lwjgl.glfw.GLFW;
 
-import java.io.Closeable;
 import java.util.*;
 
 
@@ -47,11 +47,65 @@ import java.util.*;
  * @author XenoAmess
  * @version 0.155.3-SNAPSHOT
  */
-public class GameWindowComponentTree implements Closeable {
-    @AsFinalField
-    private GameWindowComponentTreeNode root;
+public class GameWindowComponentTree extends SubManager {
 
+    private GameWindowComponentTreeNode root;
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
+
+    /**
+     * <p>Constructor for SubManager.</p>
+     *
+     * @param gameManager a {@link GameManager} object.
+     */
+    public GameWindowComponentTree(GameManager gameManager) {
+        super(gameManager);
+    }
+
+    @Override
+    public void init() {
+        GameWindow gameWindow = this.getGameManager().getGameWindow();
+        AbstractGameWindowComponent baseComponent =
+                new AbstractGameWindowComponent(gameWindow) {
+                    @Override
+                    public void initProcessors() {
+                        this.registerProcessor(KeyboardEvent.class,
+                                (KeyboardEvent keyboardEvent) -> {
+                                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
+                                        case Keymap.XENOAMESS_KEY_ENTER:
+                                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
+                                                this.getGameWindow().changeFullScreen();
+                                            }
+                                            return null;
+                                        default:
+                                            return null;
+                                    }
+                                });
+                        this.registerProcessor(WindowResizeEvent.class,
+                                (WindowResizeEvent windowResizeEvent) -> {
+                                    this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
+                                    this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
+                                    return null;
+                                });
+                    }
+
+                    @Override
+                    public void close() {
+                        super.close();
+                        this.getGameWindow().getGameManager().shutdown();
+                    }
+
+                    @Override
+                    public void update() {
+                        //no update here.
+                    }
+
+                    @Override
+                    public void draw() {
+                        //no draw here.
+                    }
+                };
+        root = new GameWindowComponentTreeNode(this, null, baseComponent);
+    }
 
     /**
      * <p>leafNodesAdd.</p>
@@ -125,50 +179,7 @@ public class GameWindowComponentTree implements Closeable {
      * @param gameWindow gameWindow
      */
     public void init(GameWindow gameWindow) {
-        AbstractGameWindowComponent baseComponent =
-                new AbstractGameWindowComponent(gameWindow) {
 
-                    @Override
-                    public void initProcessors() {
-                        this.registerProcessor(KeyboardEvent.class,
-                                (KeyboardEvent keyboardEvent) -> {
-                                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                                        case Keymap.XENOAMESS_KEY_ENTER:
-                                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
-                                                this.getGameWindow().changeFullScreen();
-                                            }
-                                            return null;
-                                        default:
-                                            return null;
-                                    }
-                                });
-                        this.registerProcessor(WindowResizeEvent.class,
-                                (WindowResizeEvent windowResizeEvent) -> {
-                                    this.getGameWindow().setRealWindowWidth(windowResizeEvent.getWidth());
-                                    this.getGameWindow().setRealWindowHeight(windowResizeEvent.getHeight());
-                                    return null;
-                                });
-                    }
-
-                    @Override
-                    public void close() {
-                        super.close();
-                        this.getGameWindow().getGameManager().shutdown();
-                    }
-
-                    @Override
-                    public void update() {
-                        //no update here.
-                    }
-
-                    @Override
-                    public void draw() {
-                        //no draw here.
-                    }
-                };
-
-        this.root = new GameWindowComponentTreeNode(this, null, baseComponent);
-        this.leafNodesAdd(this.getRoot());
     }
 
     /**
@@ -194,6 +205,7 @@ public class GameWindowComponentTree implements Closeable {
         return res;
     }
 
+
     /**
      * <p>update.</p>
      */
@@ -208,15 +220,15 @@ public class GameWindowComponentTree implements Closeable {
         getRoot().draw();
     }
 
-    /**
-     * <p>newNode.</p>
-     *
-     * @param gameWindowComponent gameWindowComponent
-     * @return return
-     */
-    public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
-        return this.leafNodesFirst().newNode(gameWindowComponent);
-    }
+//    /**
+//     * <p>newNode.</p>
+//     *
+//     * @param gameWindowComponent gameWindowComponent
+//     * @return return
+//     */
+//    public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
+//        return this.leafNodesFirst().newNode(gameWindowComponent);
+//    }
 
     /**
      * <p>findNode.</p>

@@ -105,7 +105,7 @@ public class GameManager implements Closeable {
 
     private final Keymap keymap = new Keymap();
     private final GamepadInputManager gamepadInputManager = new GamepadInputManager(this);
-    private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree();
+    private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree(this);
     private long nowFrameIndex = 0L;
     private Map<String, String> argsMap;
 
@@ -294,6 +294,8 @@ public class GameManager implements Closeable {
         this.codePluginManager.apply(this, rightAfterGamepadInputManagerInit);
 
         this.getSaveManager().init();
+
+        this.getGameWindowComponentTree().init();
 
         this.setStartingContent();
         final String defaultFontResourceJsonString = this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
@@ -494,7 +496,7 @@ public class GameManager implements Closeable {
                         this.getGameWindow(),
                         this.getDataCenter().getGameSettings().getLogoClassName()
                 );
-        logo.addToGameWindowComponentTree(null);
+        logo.addToGameWindowComponentTree(this.getGameWindowComponentTree().getRoot());
     }
 
     /**

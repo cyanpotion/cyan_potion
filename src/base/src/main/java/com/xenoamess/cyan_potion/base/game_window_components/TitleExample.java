@@ -446,7 +446,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                                 .getGameSettings()
                                 .getWorldClassName()
                 );
-        world.addToGameWindowComponentTree(null);
+        world.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
         world.enlargeAsFullWindow();
     }
 

@@ -33,6 +33,8 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static org.lwjgl.opengl.GL11.*;
@@ -122,20 +124,25 @@ public class Logo extends AbstractGameWindowComponent {
         );
     }
 
+    private final AtomicBoolean initNext = new AtomicBoolean(false);
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void update() {
+        boolean willClose = false;
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            this.setAlive(false);
+            willClose = true;
         }
 
-        if (!this.getAlive()) {
-            this.getGameWindowComponentTreeNode().close();
-            MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
-            madeWithLogo.addToGameWindowComponentTree(null);
-            madeWithLogo.enlargeAsFullWindow();
+        if (willClose) {
+            this.close();
+            if (initNext.compareAndSet(false, true)) {
+                MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
+                madeWithLogo.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
+                madeWithLogo.enlargeAsFullWindow();
+            }
         }
     }
 
