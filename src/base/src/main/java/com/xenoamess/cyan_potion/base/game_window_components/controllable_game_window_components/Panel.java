@@ -25,12 +25,15 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -43,6 +46,19 @@ import java.util.Vector;
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
     private final Picture backgroundPicture = new Picture();
+    private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
+        @Override
+        public void update() {
+        }
+
+        @Override
+        public void draw() {
+        }
+
+        @Override
+        public void initProcessors() {
+        }
+    });
 
     /**
      * <p>Constructor for Panel.</p>
@@ -75,8 +91,8 @@ public class Panel extends AbstractControllableGameWindowComponent {
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
             boolean result = this.contents.add(gameWindowComponent);
-            if (this.getGameWindowComponentTreeNode() != null) {
-                gameWindowComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+            if (subGameWindowComponentTree.getRoot() != null) {
+                gameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
             }
             return result;
         }
@@ -151,10 +167,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
         super.update();
         for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
             if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
-                abstractGameWindowComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+                abstractGameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
             }
         }
         backgroundPicture.cover(this);
+        this.subGameWindowComponentTree.update();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
 //                gameWindowComponent.update();
@@ -168,6 +185,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public void ifVisibleThenDraw() {
         this.backgroundPicture.draw(this.getGameWindow());
+        this.subGameWindowComponentTree.draw();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
 //                gameWindowComponent.draw();
@@ -175,20 +193,27 @@ public class Panel extends AbstractControllableGameWindowComponent {
 //        }
     }
 
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public Event process(Event event) {
-//        synchronized (this.contents) {
-//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-//                Event newEvent = gameWindowComponent.process(event);
-//                if (newEvent != event) {
-//                    return newEvent;
-//                }
-//            }
-//            return super.process(event);
-//        }
-//    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Event process(Event event) {
+        synchronized (this) {
+            Set<Event> res = this.subGameWindowComponentTree.process(event);
+            for (Event au : res) {
+                if (au != event) {
+                    return au;
+                }
+            }
+            return super.process(event);
+        }
+
+    }
+
+    public void close() {
+        subGameWindowComponentTree.getRoot().close();
+        this.clearContents();
+        super.close();
+    }
 
 }

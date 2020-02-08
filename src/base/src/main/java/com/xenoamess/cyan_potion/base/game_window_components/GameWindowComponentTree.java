@@ -107,6 +107,11 @@ public class GameWindowComponentTree extends SubManager {
         root = new GameWindowComponentTreeNode(this, null, baseComponent);
     }
 
+    public GameWindowComponentTree(GameManager gameManager, AbstractGameWindowComponent abstractGameWindowComponent) {
+        super(gameManager);
+        root = new GameWindowComponentTreeNode(this, null, abstractGameWindowComponent);
+    }
+
     /**
      * <p>leafNodesAdd.</p>
      *
