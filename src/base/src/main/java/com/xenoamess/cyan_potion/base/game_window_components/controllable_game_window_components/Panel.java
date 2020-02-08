@@ -77,7 +77,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public Panel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow);
-        this.backgroundPicture.setBindable(backgroundBindable);
+        this.getBackgroundPicture().setBindable(backgroundBindable);
     }
 
     /**
@@ -170,7 +170,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
                 abstractGameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
             }
         }
-        backgroundPicture.cover(this);
+        getBackgroundPicture().cover(this);
         this.subGameWindowComponentTree.update();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
@@ -184,7 +184,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @Override
     public void ifVisibleThenDraw() {
-        this.backgroundPicture.draw(this.getGameWindow());
+        this.getBackgroundPicture().draw(this.getGameWindow());
         this.subGameWindowComponentTree.draw();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
@@ -216,4 +216,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
         super.close();
     }
 
+    public Picture getBackgroundPicture() {
+        return backgroundPicture;
+    }
 }
