@@ -24,10 +24,14 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
+import com.xenoamess.cyan_potion.base.render.Texture;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
 import java.awt.*;
+
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
 /**
  * <p>Colors class.</p>
@@ -73,6 +77,25 @@ public class Colors {
         return colorVector4fToColorString(colorAwtToColorVector4f(colorAwt));
     }
 
+    public static ResourceInfo<Texture> getPureColorTextureResourceInfo(Color colorAWT) {
+        return getPureColorTextureResourceInfo(colorAwtToColorString(colorAWT));
+    }
+
+    public static ResourceInfo<Texture> getPureColorTextureResourceInfo(Vector4fc colorVector) {
+        return getPureColorTextureResourceInfo(colorVector4fToColorString(colorVector));
+    }
+
+    public static ResourceInfo<Texture> getPureColorTextureResourceInfo(String colorString) {
+        ResourceInfo<Texture> resourceInfo = new ResourceInfo<>(
+                Texture.class,
+                STRING_PURE_COLOR,
+                "",
+                colorString
+        );
+        return resourceInfo;
+    }
+
+
     /**
      * The color (0,0,0,0)
      */
@@ -87,6 +110,9 @@ public class Colors {
 
     public static final String COLOR_STRING_EMPTY = colorVector4fToColorString(empty);
 
+    public static final ResourceInfo<Texture> RESOURCE_INFO_EMPTY = getPureColorTextureResourceInfo(COLOR_STRING_EMPTY);
+
+
     /**
      * The color white.  In the default sRGB space.
      */
@@ -100,6 +126,7 @@ public class Colors {
     public static final Vector4fc WHITE = white;
 
     public static final String COLOR_STRING_WHITE = colorVector4fToColorString(white);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_WHITE = getPureColorTextureResourceInfo(COLOR_STRING_WHITE);
 
     /**
      * The color light gray.  In the default sRGB space.
@@ -114,6 +141,8 @@ public class Colors {
     public static final Vector4fc LIGHT_GRAY = lightGray;
 
     public static final String COLOR_STRING_LIGHT_GRAY = colorVector4fToColorString(lightGray);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_LIGHT_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_LIGHT_GRAY);
+
 
     /**
      * The color gray.  In the default sRGB space.
@@ -128,6 +157,7 @@ public class Colors {
     public static final Vector4fc GRAY = gray;
 
     public static final String COLOR_STRING_GRAY = colorVector4fToColorString(gray);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_GRAY);
 
     /**
      * The color dark gray.  In the default sRGB space.
@@ -142,6 +172,8 @@ public class Colors {
     public static final Vector4fc DARK_GRAY = darkGray;
 
     public static final String COLOR_STRING_DARK_GRAY = colorVector4fToColorString(darkGray);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_DARK_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_DARK_GRAY);
+
 
     /**
      * The color black.  In the default sRGB space.
@@ -156,6 +188,8 @@ public class Colors {
     public static final Vector4fc BLACK = black;
 
     public static final String COLOR_STRING_BLACK = colorVector4fToColorString(black);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_BLACK = getPureColorTextureResourceInfo(COLOR_STRING_BLACK);
+
 
     /**
      * The color red.  In the default sRGB space.
@@ -170,6 +204,8 @@ public class Colors {
     public static final Vector4fc RED = red;
 
     public static final String COLOR_STRING_RED = colorVector4fToColorString(red);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_RED = getPureColorTextureResourceInfo(COLOR_STRING_RED);
+
 
     /**
      * The color pink.  In the default sRGB space.
@@ -184,6 +220,8 @@ public class Colors {
     public static final Vector4fc PINK = pink;
 
     public static final String COLOR_STRING_PINK = colorVector4fToColorString(pink);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_PINK = getPureColorTextureResourceInfo(COLOR_STRING_PINK);
+
 
     /**
      * The color orange.  In the default sRGB space.
@@ -198,6 +236,8 @@ public class Colors {
     public static final Vector4fc ORANGE = orange;
 
     public static final String COLOR_STRING_ORANGE = colorVector4fToColorString(orange);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_ORANGE = getPureColorTextureResourceInfo(COLOR_STRING_ORANGE);
+
 
     /**
      * The color yellow.  In the default sRGB space.
@@ -212,6 +252,8 @@ public class Colors {
     public static final Vector4fc YELLOW = yellow;
 
     public static final String COLOR_STRING_YELLOW = colorVector4fToColorString(yellow);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_YELLOW = getPureColorTextureResourceInfo(COLOR_STRING_YELLOW);
+
 
     /**
      * The color green.  In the default sRGB space.
@@ -226,6 +268,8 @@ public class Colors {
     public static final Vector4fc GREEN = green;
 
     public static final String COLOR_STRING_GREEN = colorVector4fToColorString(green);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_GREEN = getPureColorTextureResourceInfo(COLOR_STRING_GREEN);
+
 
     /**
      * The color magenta.  In the default sRGB space.
@@ -240,6 +284,8 @@ public class Colors {
     public static final Vector4fc MAGENTA = magenta;
 
     public static final String COLOR_STRING_MAGENTA = colorVector4fToColorString(magenta);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_MAGENTA = getPureColorTextureResourceInfo(COLOR_STRING_MAGENTA);
+
 
     /**
      * The color cyan.  In the default sRGB space.
@@ -254,6 +300,8 @@ public class Colors {
     public static final Vector4fc CYAN = cyan;
 
     public static final String COLOR_STRING_CYAN = colorVector4fToColorString(cyan);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_CYAN = getPureColorTextureResourceInfo(COLOR_STRING_CYAN);
+
 
     /**
      * The color blue.  In the default sRGB space.
@@ -268,4 +316,6 @@ public class Colors {
     public static final Vector4fc BLUE = blue;
 
     public static final String COLOR_STRING_BLUE = colorVector4fToColorString(blue);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_BLUE = getPureColorTextureResourceInfo(COLOR_STRING_BLUE);
+
 }
