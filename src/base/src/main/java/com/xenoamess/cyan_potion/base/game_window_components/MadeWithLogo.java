@@ -39,7 +39,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
-import static org.lwjgl.opengl.GL11.*;
 
 /**
  * <p>MadeWithLogo class.</p>
@@ -106,7 +105,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:
-                            this.setAlive(false);
+                            this.willClose.set(true);
                             break;
                         default:
                             return keyboardEvent;
@@ -117,12 +116,13 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
         this.registerProcessor(
                 MouseButtonEvent.class,
                 (MouseButtonEvent event) -> {
-                    this.setAlive(false);
+                    this.willClose.set(true);
                     return null;
                 }
         );
     }
 
+    private final AtomicBoolean willClose = new AtomicBoolean(false);
     private final AtomicBoolean initNext = new AtomicBoolean(false);
 
     /**
@@ -130,13 +130,11 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
      */
     @Override
     public void update() {
-        boolean willClose = false;
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            willClose = true;
+            this.willClose.set(true);
         }
 
-        if (DataCenter.ifMainThread() && willClose && Font.getDefaultFont().isInMemory()) {
-            this.close();
+        if (DataCenter.ifMainThread() && willClose.get() && Font.getDefaultFont().isInMemory()) {
             if (initNext.compareAndSet(false, true)) {
                 Font.getDefaultFont().init(this.getGameWindow());
                 AbstractGameWindowComponent title =
@@ -150,6 +148,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                         );
                 title.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
                 title.enlargeAsFullWindow();
+                this.close();
             }
         }
     }
@@ -160,8 +159,6 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
     @Override
     public void draw() {
         if (!this.getAlive()) {
-            glClearColor(1, 1, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
             return;
         }
 

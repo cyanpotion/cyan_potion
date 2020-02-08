@@ -107,7 +107,7 @@ public class Logo extends AbstractGameWindowComponent {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                         case Keymap.XENOAMESS_KEY_ENTER:
                         case Keymap.XENOAMESS_KEY_SPACE:
-                            this.setAlive(false);
+                            this.willClose.set(true);
                             break;
                         default:
                             return keyboardEvent;
@@ -118,12 +118,13 @@ public class Logo extends AbstractGameWindowComponent {
 
         this.registerProcessor(MouseButtonEvent.class,
                 (MouseButtonEvent event) -> {
-                    this.setAlive(false);
+                    this.willClose.set(true);
                     return null;
                 }
         );
     }
 
+    private final AtomicBoolean willClose = new AtomicBoolean(false);
     private final AtomicBoolean initNext = new AtomicBoolean(false);
 
     /**
@@ -131,17 +132,16 @@ public class Logo extends AbstractGameWindowComponent {
      */
     @Override
     public void update() {
-        boolean willClose = false;
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
-            willClose = true;
+            willClose.set(true);
         }
 
-        if (willClose) {
-            this.close();
+        if (willClose.get()) {
             if (initNext.compareAndSet(false, true)) {
                 MadeWithLogo madeWithLogo = new MadeWithLogo(this.getGameWindow());
                 madeWithLogo.addToGameWindowComponentTree(this.getGameManager().getGameWindowComponentTree().getRoot());
                 madeWithLogo.enlargeAsFullWindow();
+                this.close();
             }
         }
     }
@@ -152,10 +152,9 @@ public class Logo extends AbstractGameWindowComponent {
     @Override
     public void draw() {
         if (!this.getAlive()) {
-            glClearColor(1, 1, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
             return;
         }
+
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
