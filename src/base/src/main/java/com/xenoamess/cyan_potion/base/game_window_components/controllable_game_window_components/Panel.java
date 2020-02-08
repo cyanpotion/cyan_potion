@@ -151,7 +151,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public void ifVisibleThenDraw() {
         this.backgroundPicture.draw(this.getGameWindow());
         synchronized (this.contents) {
             for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
