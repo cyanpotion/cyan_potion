@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
  * <p>GameRuntime class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.155.4-SNAPSHOT
  */
 public class GameRuntime extends RuntimeVariableStruct {
     @JsonIgnore

@@ -38,7 +38,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>TextBox class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.155.4-SNAPSHOT
  */
 public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;

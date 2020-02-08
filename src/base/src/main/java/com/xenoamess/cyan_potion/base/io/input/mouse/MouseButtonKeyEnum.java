@@ -30,7 +30,7 @@ import java.util.Arrays;
  * <p>MouseButtonKeyEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.155.4-SNAPSHOT
  */
 public enum MouseButtonKeyEnum {
     /**
