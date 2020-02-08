@@ -35,7 +35,7 @@ import com.xenoamess.x8l.X8lTree;
  * <p>DataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  */
 public class DataCenter {
 

@@ -37,7 +37,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>Colors class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  */
 public class Colors {
 

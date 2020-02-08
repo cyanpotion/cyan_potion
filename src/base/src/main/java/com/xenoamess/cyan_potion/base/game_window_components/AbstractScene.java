@@ -35,7 +35,7 @@ import org.joml.Vector4fc;
  * <p>Abstract AbstractScene class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  */
 public abstract class AbstractScene extends AbstractGameWindowComponent {
     private Camera camera = new Camera(0, 0);

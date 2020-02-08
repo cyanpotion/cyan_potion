@@ -42,7 +42,7 @@ import java.util.List;
  * <p>GameTilesetJson class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  */
 public class GameTilesetJson implements Serializable {
     @JsonIgnore

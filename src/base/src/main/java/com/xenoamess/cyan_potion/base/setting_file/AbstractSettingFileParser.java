@@ -31,7 +31,7 @@ import com.xenoamess.x8l.X8lTree;
  * <p>Abstract AbstractSettingFileParser class.</p>
  *
  * @author xenoa
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  */
 public abstract class AbstractSettingFileParser {
     private final Version settingFormatVersion;

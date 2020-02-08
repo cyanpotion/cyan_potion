@@ -33,7 +33,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.155.3-SNAPSHOT
+ * @version 0.155.3
  * @see JamepadGamepadDevice
  */
 public class JamepadGamepadData extends AbstractGamepadData {
