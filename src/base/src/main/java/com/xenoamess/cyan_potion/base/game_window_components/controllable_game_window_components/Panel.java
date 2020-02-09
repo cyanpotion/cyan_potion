@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.EventsEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -200,12 +201,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
     public Event process(Event event) {
         synchronized (this) {
             Set<Event> res = this.subGameWindowComponentTree.process(event);
-            for (Event au : res) {
-                if (au != event) {
-                    return au;
-                }
+            if (!res.isEmpty()) {
+                return new EventsEvent(res);
+            } else {
+                return super.process(event);
             }
-            return super.process(event);
         }
 
     }
