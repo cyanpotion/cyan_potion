@@ -93,16 +93,6 @@ public class GameWindowComponentTree extends SubManager {
                         super.close();
                         this.getGameWindow().getGameManager().shutdown();
                     }
-
-                    @Override
-                    public void update() {
-                        //no update here.
-                    }
-
-                    @Override
-                    public void draw() {
-                        //no draw here.
-                    }
                 };
         root = new GameWindowComponentTreeNode(this, null, baseComponent);
     }

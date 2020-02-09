@@ -97,14 +97,6 @@ public class Menu extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
-        //just do nothing
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void draw() {
         if (!getShow()) {
             return;
