@@ -92,7 +92,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
@@ -101,6 +101,7 @@ public class Button extends AbstractControllableGameWindowComponent {
                     this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
                     0, this.getTextColor(), this.getButtonText());
         }
+        return true;
     }
 
 

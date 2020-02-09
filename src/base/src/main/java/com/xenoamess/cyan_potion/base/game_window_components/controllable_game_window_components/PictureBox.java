@@ -178,7 +178,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.draw(this.getGameWindow());
+        return true;
     }
 }

@@ -28,6 +28,8 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.Drawer;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
@@ -69,6 +71,58 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     public AbstractControllableGameWindowComponent(GameWindow gameWindow) {
         super(gameWindow);
+
+        this.setUpdater(
+                new Updater<AbstractControllableGameWindowComponent>(super.getUpdater()) {
+                    @Override
+                    public boolean thisUpdate(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
+                        if (!abstractControllableGameWindowComponent.isActive()) {
+                            return false;
+                        }
+                        Event processMouseEnterAreaAndLeaveAreaEvent =
+                                abstractControllableGameWindowComponent.processMouseEnterAreaAndLeaveArea();
+                        if (processMouseEnterAreaAndLeaveAreaEvent != null) {
+                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processMouseEnterAreaAndLeaveAreaEvent);
+                        }
+                        Event processGainFocusAndLoseFocusEvent =
+                                abstractControllableGameWindowComponent.processGainFocusAndLoseFocus();
+                        if (processGainFocusAndLoseFocusEvent != null) {
+                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processGainFocusAndLoseFocusEvent);
+                        }
+                        if (isMouseButtonLeftPressing) {
+                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonLeftPressing();
+                            if (resEvent != null) {
+                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                            }
+                        }
+                        if (isMouseButtonRightPressing) {
+                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonRightPressing();
+                            if (resEvent != null) {
+                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                            }
+                        }
+                        if (isMouseButtonMiddlePressing) {
+                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonMiddlePressing();
+                            if (resEvent != null) {
+                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                            }
+                        }
+                        return true;
+                    }
+                }
+        );
+
+        this.setDrawer(
+                new Drawer<AbstractControllableGameWindowComponent>(super.getDrawer()) {
+                    @Override
+                    public boolean thisDraw(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
+                        if (!abstractControllableGameWindowComponent.isVisible()) {
+                            return false;
+                        }
+                        return abstractControllableGameWindowComponent.ifVisibleThenDraw();
+                    }
+                }
+        );
     }
 
     /**
@@ -608,43 +662,6 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return super.process(event);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        if (!this.isActive()) {
-            return;
-        }
-        Event processMouseEnterAreaAndLeaveAreaEvent =
-                this.processMouseEnterAreaAndLeaveArea();
-        if (processMouseEnterAreaAndLeaveAreaEvent != null) {
-            this.getGameWindow().getGameManager().eventListAdd(processMouseEnterAreaAndLeaveAreaEvent);
-        }
-        Event processGainFocusAndLoseFocusEvent =
-                this.processGainFocusAndLoseFocus();
-        if (processGainFocusAndLoseFocusEvent != null) {
-            this.getGameWindow().getGameManager().eventListAdd(processGainFocusAndLoseFocusEvent);
-        }
-        if (isMouseButtonLeftPressing) {
-            Event resEvent = this.onMouseButtonLeftPressing();
-            if (resEvent != null) {
-                this.getGameWindow().getGameManager().eventListAdd(resEvent);
-            }
-        }
-        if (isMouseButtonRightPressing) {
-            Event resEvent = this.onMouseButtonRightPressing();
-            if (resEvent != null) {
-                this.getGameWindow().getGameManager().eventListAdd(resEvent);
-            }
-        }
-        if (isMouseButtonMiddlePressing) {
-            Event resEvent = this.onMouseButtonMiddlePressing();
-            if (resEvent != null) {
-                this.getGameWindow().getGameManager().eventListAdd(resEvent);
-            }
-        }
-    }
 
     /**
      * draw function which only invoke this function when this.visible==true
@@ -652,18 +669,8 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @see AbstractControllableGameWindowComponent#draw()
      * @see AbstractControllableGameWindowComponent#visible
      */
-    public void ifVisibleThenDraw() {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void draw() {
-        if (this.isVisible()) {
-            this.ifVisibleThenDraw();
-        }
+    public boolean ifVisibleThenDraw() {
+        return true;
     }
 
     /**

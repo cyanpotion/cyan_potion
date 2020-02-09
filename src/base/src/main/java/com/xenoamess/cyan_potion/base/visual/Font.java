@@ -191,7 +191,6 @@ public class Font extends AbstractResource {
             } else {
                 String errorMessage = "all pos be NaN : " + this.toString();
                 LOGGER.error(errorMessage);
-                throw new RuntimeException(errorMessage);
             }
         }
 

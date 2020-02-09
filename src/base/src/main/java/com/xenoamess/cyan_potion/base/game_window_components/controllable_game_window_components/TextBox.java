@@ -60,8 +60,9 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.drawText();
+        return true;
     }
 
 

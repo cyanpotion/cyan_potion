@@ -74,10 +74,11 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         glDisable(GL_TEXTURE_2D);
         glColor4f(color.x, color.y, color.z, color.w);
         glRectf(getLeftPosX(), getLeftTopPosY(), getRightBottomPosX(), getRightBottomPosY());
+        return true;
     }
 
     /**
