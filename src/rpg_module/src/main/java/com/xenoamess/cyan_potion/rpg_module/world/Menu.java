@@ -40,7 +40,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>Menu class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class Menu extends AbstractGameWindowComponent {
     private final AtomicBoolean show = new AtomicBoolean(false);
@@ -91,14 +91,6 @@ public class Menu extends AbstractGameWindowComponent {
                     }
                 }
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        //just do nothing
     }
 
     /**

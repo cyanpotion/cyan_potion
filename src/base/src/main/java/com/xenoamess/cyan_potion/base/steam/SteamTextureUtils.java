@@ -46,7 +46,7 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * <p>SteamTextureUtils class.</p>
  *
  * @author xenoa
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class SteamTextureUtils {
     @JsonIgnore
@@ -130,28 +130,34 @@ public class SteamTextureUtils {
             }
             SteamUtils steamUtils = steamManager.getSteamUtils();
             try {
-                while (byteBuffer == null) {
-                    byteBuffer = steamImage.getImageBuffer(steamUtils);
-                }
+                byteBuffer = steamImage.getImageBuffer(steamUtils);
             } catch (SteamException e) {
                 LOGGER.error("[steam]cannot getImageBuffer from avatar:{}", resourceInfo);
             }
-            width = steamImage.getWidth(steamUtils);
-            height = steamImage.getHeight(steamUtils);
-        } else {
-            width = 1;
-            height = 1;
-            byteBuffer = MemoryUtil.memAlloc(width * height * 4);
-            for (int i = 0; i < width * height * 4; i++) {
-                byteBuffer.put((byte) 255);
+            if (byteBuffer != null) {
+                width = steamImage.getWidth(steamUtils);
+                height = steamImage.getHeight(steamUtils);
+                texture.bake(width, height, byteBuffer);
+            } else {
+                loadAsPureWhite(texture);
             }
-            byteBuffer.flip();
+        } else {
+            loadAsPureWhite(texture);
         }
 
-        texture.bake(width, height, byteBuffer);
-        if (!steamManager.isRunWithSteam()) {
-            MemoryUtil.memFree(byteBuffer);
-        }
         return true;
+    }
+
+    private static void loadAsPureWhite(Texture texture) {
+        LOGGER.error("[steam]cannot getImageBuffer from avatar:{}, generate a white texture instead.", texture.getResourceInfo());
+        int width = 1;
+        int height = 1;
+        ByteBuffer byteBuffer = MemoryUtil.memAlloc(width * height * 4);
+        for (int i = 0; i < width * height * 4; i++) {
+            byteBuffer.put((byte) 255);
+        }
+        byteBuffer.flip();
+        texture.bake(width, height, byteBuffer);
+        MemoryUtil.memFree(byteBuffer);
     }
 }

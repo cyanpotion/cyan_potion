@@ -38,7 +38,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>TextBox class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;
@@ -60,8 +60,9 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.drawText();
+        return true;
     }
 
 

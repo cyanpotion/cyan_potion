@@ -44,7 +44,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
     /**
@@ -339,9 +339,10 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
                 this.getGameWindow().getMousePosY(), true, null);
+        return true;
     }
 
     private long slashStartTime = 0;

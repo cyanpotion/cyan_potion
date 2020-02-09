@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
@@ -66,6 +66,10 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     private float leftTopPosY = Float.NaN;
     private float width = Float.NaN;
     private float height = Float.NaN;
+
+    private UpdaterInterface updater = DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT;
+
+    private DrawerInterface drawer = DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT;
 
     /**
      * map of eventClass to processors.
@@ -175,16 +179,33 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         this.alive.set(alive);
     }
 
+    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT = new UpdaterInterface<AbstractGameWindowComponent>() {
+        @Override
+        public boolean update(AbstractGameWindowComponent abstractGameWindowComponent) {
+            return true;
+        }
+    };
+
+    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT = new DrawerInterface<AbstractGameWindowComponent>() {
+        @Override
+        public boolean draw(AbstractGameWindowComponent abstractGameWindowComponent) {
+            return true;
+        }
+    };
 
     /**
      * <p>update.</p>
      */
-    public abstract void update();
+    public void update() {
+        this.getUpdater().update(this);
+    }
 
     /**
      * <p>draw.</p>
      */
-    public abstract void draw();
+    public void draw() {
+        this.getDrawer().draw(this);
+    }
 
     /**
      * {@inheritDoc}
@@ -507,5 +528,21 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     @Override
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public UpdaterInterface getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(UpdaterInterface updater) {
+        this.updater = updater;
+    }
+
+    public DrawerInterface getDrawer() {
+        return drawer;
+    }
+
+    public void setDrawer(DrawerInterface drawer) {
+        this.drawer = drawer;
     }
 }

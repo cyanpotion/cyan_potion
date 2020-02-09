@@ -42,7 +42,7 @@ import static org.lwjgl.opengl.GL11.*;
  * And I suggest you use pure color Texture (and PictureBox) instead.
  *
  * @author xenoa
- * @version 0.155.3
+ * @version 0.156.0
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
@@ -74,10 +74,11 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         glDisable(GL_TEXTURE_2D);
         glColor4f(color.x, color.y, color.z, color.w);
         glRectf(getLeftPosX(), getLeftTopPosY(), getRightBottomPosX(), getRightBottomPosY());
+        return true;
     }
 
     /**

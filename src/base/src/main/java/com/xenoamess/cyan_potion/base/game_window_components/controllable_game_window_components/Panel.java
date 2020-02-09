@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.events.EventsEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -41,7 +42,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
@@ -77,7 +78,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public Panel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow);
-        this.backgroundPicture.setBindable(backgroundBindable);
+        this.getBackgroundPicture().setBindable(backgroundBindable);
     }
 
     /**
@@ -170,7 +171,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
                 abstractGameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
             }
         }
-        backgroundPicture.cover(this);
+        getBackgroundPicture().cover(this);
         this.subGameWindowComponentTree.update();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
@@ -183,14 +184,10 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
-        this.backgroundPicture.draw(this.getGameWindow());
+    public boolean ifVisibleThenDraw() {
+        this.getBackgroundPicture().draw(this.getGameWindow());
         this.subGameWindowComponentTree.draw();
-//        synchronized (this.contents) {
-//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-//                gameWindowComponent.draw();
-//            }
-//        }
+        return true;
     }
 
     /**
@@ -200,12 +197,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
     public Event process(Event event) {
         synchronized (this) {
             Set<Event> res = this.subGameWindowComponentTree.process(event);
-            for (Event au : res) {
-                if (au != event) {
-                    return au;
-                }
+            if (!res.isEmpty()) {
+                return new EventsEvent(res);
+            } else {
+                return super.process(event);
             }
-            return super.process(event);
         }
 
     }
@@ -216,4 +212,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
         super.close();
     }
 
+    public Picture getBackgroundPicture() {
+        return backgroundPicture;
+    }
 }

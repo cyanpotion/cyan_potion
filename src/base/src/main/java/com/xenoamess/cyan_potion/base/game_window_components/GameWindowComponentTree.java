@@ -45,7 +45,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class GameWindowComponentTree extends SubManager {
 
@@ -92,16 +92,6 @@ public class GameWindowComponentTree extends SubManager {
                     public void close() {
                         super.close();
                         this.getGameWindow().getGameManager().shutdown();
-                    }
-
-                    @Override
-                    public void update() {
-                        //no update here.
-                    }
-
-                    @Override
-                    public void draw() {
-                        //no draw here.
                     }
                 };
         root = new GameWindowComponentTreeNode(this, null, baseComponent);

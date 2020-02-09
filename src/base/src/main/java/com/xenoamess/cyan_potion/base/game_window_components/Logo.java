@@ -43,7 +43,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>Logo class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =

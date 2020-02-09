@@ -62,7 +62,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class Font extends AbstractResource {
     @JsonIgnore
@@ -191,7 +191,6 @@ public class Font extends AbstractResource {
             } else {
                 String errorMessage = "all pos be NaN : " + this.toString();
                 LOGGER.error(errorMessage);
-                throw new RuntimeException(errorMessage);
             }
         }
 

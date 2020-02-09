@@ -36,7 +36,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.155.3
+ * @version 0.156.0
  */
 public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();
@@ -92,7 +92,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void ifVisibleThenDraw() {
+    public boolean ifVisibleThenDraw() {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
@@ -101,6 +101,7 @@ public class Button extends AbstractControllableGameWindowComponent {
                     this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
                     0, this.getTextColor(), this.getButtonText());
         }
+        return true;
     }
 
 
