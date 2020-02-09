@@ -40,6 +40,10 @@ public class RadioButton extends Button {
     private Bindable bindableSelected;
     private Bindable bindableDeselected;
 
+    private final Vector4f textColorSelected = new Vector4f(this.getTextColor());
+
+    private final Vector4f textColorDeselected = new Vector4f(this.getTextColor()).mul(0.5F, 0.5F, 0.5F, 1);
+
     public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet) {
         this(gameWindow, radioButtonSet, null);
     }
@@ -94,14 +98,11 @@ public class RadioButton extends Button {
         }
     }
 
-    public RadioButtonSet getRadioButtonSet() {
-        return radioButtonSet;
-    }
-
     @Override
     public void update() {
         super.update();
         this.updatePictureBindable();
+        this.updateTextColor();
     }
 
     protected void updatePictureBindable() {
@@ -125,6 +126,26 @@ public class RadioButton extends Button {
         }
     }
 
+    protected void updateTextColor() {
+        if (this.isSelected()) {
+            this.setTextColor(this.getTextColorSelected());
+        } else {
+            this.setTextColor(this.getTextColorDeselected());
+        }
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        this.deselect();
+    }
+
+    //-----getters and setters-----
+
+    public RadioButtonSet getRadioButtonSet() {
+        return radioButtonSet;
+    }
+
     public Bindable getBindableSelected() {
         return bindableSelected;
     }
@@ -145,9 +166,19 @@ public class RadioButton extends Button {
         return this.selected.get();
     }
 
-    @Override
-    public void close() {
-        super.close();
-        this.deselect();
+    public Vector4fc getTextColorSelected() {
+        return new Vector4f(textColorSelected);
+    }
+
+    public void setTextColorSelected(Vector4fc textColorSelected) {
+        this.textColorSelected.set(textColorSelected);
+    }
+
+    public Vector4fc getTextColorDeselected() {
+        return new Vector4f(textColorDeselected);
+    }
+
+    public void setTextColorDeselected(Vector4fc textColorDeselected) {
+        this.textColorDeselected.set(textColorDeselected);
     }
 }
