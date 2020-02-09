@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * Immutable Area
  *
  * @author XenoAmess
- * @version 0.155.4-SNAPSHOT
+ * @version 0.156.0
  */
 public interface AbstractImmutableArea extends AbstractArea {
 

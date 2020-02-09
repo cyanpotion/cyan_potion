@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.155.4-SNAPSHOT
+ * @version 0.156.0
  */
 public class Callbacks {
     @JsonIgnore
