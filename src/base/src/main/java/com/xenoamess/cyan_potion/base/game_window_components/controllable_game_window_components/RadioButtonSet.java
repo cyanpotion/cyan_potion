@@ -51,9 +51,10 @@ public class RadioButtonSet implements Closeable {
 
     public synchronized boolean select(RadioButton radioButton) {
         if (!this.selectedRadioButtons.contains(radioButton)) {
-            radioButton.select();
-            this.selectedRadioButtons.addLast(radioButton);
-            this.ensureSelectedRatioButtonsToSelectLimit();
+            if (radioButton.select()) {
+                this.selectedRadioButtons.addLast(radioButton);
+                this.ensureSelectedRatioButtonsToSelectLimit();
+            }
             return true;
         } else {
             this.selectedRadioButtons.remove(radioButton);
@@ -65,8 +66,9 @@ public class RadioButtonSet implements Closeable {
 
     public synchronized boolean deselect(RadioButton radioButton) {
         if (this.selectedRadioButtons.contains(radioButton)) {
-            radioButton.deselect();
-            this.selectedRadioButtons.remove(radioButton);
+            if (radioButton.deselect()) {
+                this.selectedRadioButtons.remove(radioButton);
+            }
             return true;
         } else {
             return false;
