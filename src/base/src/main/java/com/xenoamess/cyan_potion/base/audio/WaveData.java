@@ -53,7 +53,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  * <p>WaveData class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.157.1-SNAPSHOT
  */
 public class WaveData extends AbstractResource {
     @JsonIgnore

@@ -34,7 +34,7 @@ import org.joml.Vector4fc;
  * TextPicture is a class that allow you to pack up some text into an {@link AbstractPicture}, and use it as an {@link AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.157.1-SNAPSHOT
  */
 public class TextPicture extends AbstractPicture {
     private float centerPosX = Float.NaN;

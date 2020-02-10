@@ -32,7 +32,7 @@ import org.joml.Vector3f;
  * <p>HorizontalRectangle class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.157.1-SNAPSHOT
  */
 public class HorizontalRectangle extends AbstractShape {
     /**
