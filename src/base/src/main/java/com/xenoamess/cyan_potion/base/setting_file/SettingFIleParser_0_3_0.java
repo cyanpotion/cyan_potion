@@ -43,7 +43,7 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  * <p>SettingFIleParser_0_3_0 class.</p>
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     /**

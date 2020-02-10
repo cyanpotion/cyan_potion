@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.exceptions;
  * <p>UnexpectedBufferClassTypeException class.</p>
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class UnexpectedBufferClassTypeException extends RuntimeException {
     /**

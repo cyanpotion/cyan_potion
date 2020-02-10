@@ -38,7 +38,7 @@ import java.io.Closeable;
  * some of them are not named this way, due to historical or other reasons.
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public abstract class SubManager implements Closeable {
     private final GameManager gameManager;

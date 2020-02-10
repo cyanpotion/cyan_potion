@@ -57,7 +57,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class ResourceManager extends SubManager {
     @JsonIgnore

@@ -37,7 +37,7 @@ import org.lwjgl.glfw.GLFW;
  * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**

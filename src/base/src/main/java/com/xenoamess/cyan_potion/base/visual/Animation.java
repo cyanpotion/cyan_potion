@@ -34,7 +34,7 @@ import java.util.List;
  * <p>Animation class.</p>
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class Animation extends AbstractPicture {
     private int texturePointer;

@@ -36,7 +36,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();

@@ -30,7 +30,7 @@ import org.joml.Vector3f;
  * <p>Camera class.</p>
  *
  * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
+ * @version 0.157.0
  */
 public class Camera {
     private final Vector3f position;
