@@ -27,9 +27,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.game_window_components.Drawer;
-import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.*;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
@@ -64,6 +62,83 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     private boolean willStillInFocus = false;
 
+
+    /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterBuilder<AbstractControllableGameWindowComponent> UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = new UpdaterBuilder<AbstractControllableGameWindowComponent>() {
+        @Override
+        public UpdaterInterface<AbstractControllableGameWindowComponent> build(UpdaterInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
+            return new Updater<AbstractControllableGameWindowComponent>(superUpdater) {
+                @Override
+                public boolean thisUpdate(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
+                    if (!abstractControllableGameWindowComponent.isActive()) {
+                        return false;
+                    }
+                    Event processMouseEnterAreaAndLeaveAreaEvent =
+                            abstractControllableGameWindowComponent.processMouseEnterAreaAndLeaveArea();
+                    if (processMouseEnterAreaAndLeaveAreaEvent != null) {
+                        abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processMouseEnterAreaAndLeaveAreaEvent);
+                    }
+                    Event processGainFocusAndLoseFocusEvent =
+                            abstractControllableGameWindowComponent.processGainFocusAndLoseFocus();
+                    if (processGainFocusAndLoseFocusEvent != null) {
+                        abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processGainFocusAndLoseFocusEvent);
+                    }
+                    if (abstractControllableGameWindowComponent.isMouseButtonLeftPressing) {
+                        Event resEvent = abstractControllableGameWindowComponent.onMouseButtonLeftPressing();
+                        if (resEvent != null) {
+                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                        }
+                    }
+                    if (abstractControllableGameWindowComponent.isMouseButtonRightPressing) {
+                        Event resEvent = abstractControllableGameWindowComponent.onMouseButtonRightPressing();
+                        if (resEvent != null) {
+                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                        }
+                    }
+                    if (abstractControllableGameWindowComponent.isMouseButtonMiddlePressing) {
+                        Event resEvent = abstractControllableGameWindowComponent.onMouseButtonMiddlePressing();
+                        if (resEvent != null) {
+                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
+                        }
+                    }
+                    return true;
+                }
+            };
+        }
+    };
+
+    /**
+     * DrawerBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final DrawerBuilder<AbstractControllableGameWindowComponent> DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = new DrawerBuilder<AbstractControllableGameWindowComponent>() {
+        @Override
+        public DrawerInterface<AbstractControllableGameWindowComponent> build(DrawerInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
+            return new Drawer<AbstractControllableGameWindowComponent>() {
+                @Override
+                public boolean thisDraw(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
+                    if (!abstractControllableGameWindowComponent.isVisible()) {
+                        return false;
+                    }
+                    return abstractControllableGameWindowComponent.ifVisibleThenDraw();
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterInterface<AbstractControllableGameWindowComponent> DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(AbstractGameWindowComponent.DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT);
+
+    /**
+     * default Drawer for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final DrawerInterface<AbstractControllableGameWindowComponent> DEFAULT_DRAWER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(AbstractGameWindowComponent.DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT);
+
+
     /**
      * <p>Constructor for AbstractControllableGameWindowComponent.</p>
      *
@@ -73,55 +148,15 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         super(gameWindow);
 
         this.setUpdater(
-                new Updater<AbstractControllableGameWindowComponent>(super.getUpdater()) {
-                    @Override
-                    public boolean thisUpdate(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
-                        if (!abstractControllableGameWindowComponent.isActive()) {
-                            return false;
-                        }
-                        Event processMouseEnterAreaAndLeaveAreaEvent =
-                                abstractControllableGameWindowComponent.processMouseEnterAreaAndLeaveArea();
-                        if (processMouseEnterAreaAndLeaveAreaEvent != null) {
-                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processMouseEnterAreaAndLeaveAreaEvent);
-                        }
-                        Event processGainFocusAndLoseFocusEvent =
-                                abstractControllableGameWindowComponent.processGainFocusAndLoseFocus();
-                        if (processGainFocusAndLoseFocusEvent != null) {
-                            abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(processGainFocusAndLoseFocusEvent);
-                        }
-                        if (isMouseButtonLeftPressing) {
-                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonLeftPressing();
-                            if (resEvent != null) {
-                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
-                            }
-                        }
-                        if (isMouseButtonRightPressing) {
-                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonRightPressing();
-                            if (resEvent != null) {
-                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
-                            }
-                        }
-                        if (isMouseButtonMiddlePressing) {
-                            Event resEvent = abstractControllableGameWindowComponent.onMouseButtonMiddlePressing();
-                            if (resEvent != null) {
-                                abstractControllableGameWindowComponent.getGameWindow().getGameManager().eventListAdd(resEvent);
-                            }
-                        }
-                        return true;
-                    }
-                }
+                UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(
+                        super.getUpdater()
+                )
         );
 
         this.setDrawer(
-                new Drawer<AbstractControllableGameWindowComponent>(super.getDrawer()) {
-                    @Override
-                    public boolean thisDraw(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
-                        if (!abstractControllableGameWindowComponent.isVisible()) {
-                            return false;
-                        }
-                        return abstractControllableGameWindowComponent.ifVisibleThenDraw();
-                    }
-                }
+                DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(
+                        super.getDrawer()
+                )
         );
     }
 
@@ -666,6 +701,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     /**
      * draw function which only invoke this function when this.visible==true
      *
+     * @return if draw succeed
      * @see AbstractControllableGameWindowComponent#draw()
      * @see AbstractControllableGameWindowComponent#visible
      */

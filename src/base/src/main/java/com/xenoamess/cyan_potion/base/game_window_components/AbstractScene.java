@@ -207,8 +207,8 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                                      float rotateRadius) {
         this.getGameWindow().drawBindableRelativeCenter(
                 bindable,
-                this.relativePosToAbsoluteX(camera, posX, scale),
-                this.relativePosToAbsoluteY(camera, posY, scale),
+                this.absolutePosToRelativeX(camera, posX, scale),
+                this.absolutePosToRelativeY(camera, posY, scale),
                 width * scale,
                 height * scale,
                 model,
@@ -217,28 +217,70 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         );
     }
 
-    public float relativePosToAbsoluteX(float posX) {
-        return this.relativePosToAbsoluteX(posX, this.scale);
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param absolutePosX absolutePosX
+     * @return relativePosX
+     */
+    public float absolutePosToRelativeX(float absolutePosX) {
+        return this.absolutePosToRelativeX(absolutePosX, this.scale);
     }
 
-    public float relativePosToAbsoluteX(float posX, float scale) {
-        return this.relativePosToAbsoluteX(this.getCamera(), posX, scale);
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param absolutePosX absolutePosX
+     * @param scale        scale
+     * @return relativePosX
+     */
+    public float absolutePosToRelativeX(float absolutePosX, float scale) {
+        return this.absolutePosToRelativeX(this.getCamera(), absolutePosX, scale);
     }
 
-    public float relativePosToAbsoluteX(Camera camera, float posX, float scale) {
-        return (posX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param camera       a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param absolutePosX absolutePosX
+     * @param scale        scale
+     * @return relativePosX
+     */
+    public float absolutePosToRelativeX(Camera camera, float absolutePosX, float scale) {
+        return (absolutePosX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
     }
 
-    public float relativePosToAbsoluteY(float posY) {
-        return this.relativePosToAbsoluteY(posY, this.scale);
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param absolutePosY absolutePosY
+     * @return relativePosY
+     */
+    public float absolutePosToRelativeY(float absolutePosY) {
+        return this.absolutePosToRelativeY(absolutePosY, this.scale);
     }
 
-    public float relativePosToAbsoluteY(float posY, float scale) {
-        return this.relativePosToAbsoluteY(this.getCamera(), posY, scale);
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param absolutePosX absolutePosX
+     * @param scale        scale
+     * @return relativePosY
+     */
+    public float absolutePosToRelativeY(float absolutePosX, float scale) {
+        return this.absolutePosToRelativeY(this.getCamera(), absolutePosX, scale);
     }
 
-    public float relativePosToAbsoluteY(Camera camera, float posY, float scale) {
-        return (posY - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
+    /**
+     * translate a absolute pos(for this scene) to a relative pos(for window)
+     *
+     * @param camera       a {@link com.xenoamess.cyan_potion.base.render.Camera} object.
+     * @param absolutePosX absolutePosX
+     * @param scale        scale
+     * @return relativePosY
+     */
+    public float absolutePosToRelativeY(Camera camera, float absolutePosX, float scale) {
+        return (absolutePosX - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
     }
 
     /**

@@ -53,14 +53,17 @@ public class GameWindowComponentTree extends SubManager {
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
     /**
-     * <p>Constructor for SubManager.</p>
+     * <p>Constructor for GameWindowComponentTree.</p>
      *
-     * @param gameManager a {@link GameManager} object.
+     * @param gameManager gameManager
      */
     public GameWindowComponentTree(GameManager gameManager) {
         super(gameManager);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init() {
         GameWindow gameWindow = this.getGameManager().getGameWindow();
@@ -97,6 +100,12 @@ public class GameWindowComponentTree extends SubManager {
         root = new GameWindowComponentTreeNode(this, null, baseComponent);
     }
 
+    /**
+     * <p>Constructor for GameWindowComponentTree.</p>
+     *
+     * @param gameManager                 a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param abstractGameWindowComponent a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     */
     public GameWindowComponentTree(GameManager gameManager, AbstractGameWindowComponent abstractGameWindowComponent) {
         super(gameManager);
         root = new GameWindowComponentTreeNode(this, null, abstractGameWindowComponent);

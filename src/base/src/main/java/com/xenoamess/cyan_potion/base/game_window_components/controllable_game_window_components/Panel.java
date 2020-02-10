@@ -206,12 +206,21 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void close() {
         subGameWindowComponentTree.getRoot().close();
         this.clearContents();
         super.close();
     }
 
+    /**
+     * <p>Getter for the field <code>backgroundPicture</code>.</p>
+     *
+     * @return this.backgroundPicture
+     */
     public Picture getBackgroundPicture() {
         return backgroundPicture;
     }

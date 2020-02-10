@@ -203,8 +203,8 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesURIMapGet.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
-     * @param <T>    a T object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapGet(Class<T> tClass) {
@@ -214,9 +214,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesURIMapPut.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
-     * @param <T>    a T object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapPut(Class<T> tClass, ConcurrentHashMap<ResourceInfo<T>, T> map) {
@@ -226,8 +226,8 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesURIMapContainsKey.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
-     * @param <T>    a T object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @return a boolean.
      */
     protected <T extends AbstractResource> boolean defaultResourcesURIMapContainsKey(Class<T> tClass) {
@@ -237,8 +237,8 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesLoaderMapGet.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
-     * @param <T>    a T object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapGet(Class<T> tClass) {
@@ -248,9 +248,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesLoaderMapPut.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
-     * @param <T>    a T object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
     protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
@@ -260,8 +260,8 @@ public class ResourceManager extends SubManager {
     /**
      * <p>defaultResourcesLoaderMapContainsKey.</p>
      *
-     * @param tClass a {@link java.lang.Class} object.
-     * @param <T>    a T object.
+     * @param <T>    resource class
+     * @param tClass resource class
      * @return a boolean.
      */
     protected <T extends AbstractResource> boolean defaultResourcesLoaderMapContainsKey(Class<T> tClass) {
@@ -271,10 +271,10 @@ public class ResourceManager extends SubManager {
     /**
      * <p>putResourceLoader.</p>
      *
-     * @param tClass       a {@link java.lang.Class} object.
+     * @param <T>          resource class
+     * @param tClass       resource class
      * @param resourceType resourceType
      * @param loader       a {@link java.util.function.Function} object.
-     * @param <T>          tClass
      */
     public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Boolean> loader) {
         ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>> resourceLoaderMap =
@@ -286,9 +286,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>getResourceLoader.</p>
      *
-     * @param tClass       a {@link java.lang.Class} object.
+     * @param <T>          resource class
+     * @param tClass       resource class
      * @param resourceType resourceType
-     * @param <T>          tClass
      * @return return
      */
     public <T extends AbstractResource> Function<T, Boolean> getResourceLoader(Class<T> tClass, String resourceType) {
@@ -303,9 +303,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>putResourceWithShortenURI.</p>
      *
+     * @param <T>          resource class
      * @param resourceInfo resourceInfo
-     * @param t            a T object.
-     * @param <T>          tClass
+     * @param t            resource
      */
     public <T extends AbstractResource> void putResource(ResourceInfo<T> resourceInfo, T t) {
         ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
@@ -320,9 +320,9 @@ public class ResourceManager extends SubManager {
     /**
      * put resource into efaultResourcesURIMap
      *
+     * @param <T>              resource class
      * @param resourceInfoJson resourceInfo
      * @param t                resource
-     * @param <T>              resource class
      */
     public <T extends AbstractResource> void putResource(String resourceInfoJson, T t) {
         this.putResource((ResourceInfo<T>) ResourceInfo.of(resourceInfoJson), t);
@@ -331,10 +331,10 @@ public class ResourceManager extends SubManager {
     /**
      * <p>getResourceFromShortenURI.</p>
      *
-     * @param tClass       a {@link java.lang.Class} object.
+     * @param <T>          resource class
+     * @param tClass       resource class
      * @param resourceInfo resourceInfo
-     * @param <T>          a T object.
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T getResource(Class<T> tClass,
                                                       ResourceInfo<T> resourceInfo) {
@@ -351,9 +351,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>getResourceFromShortenURI.</p>
      *
+     * @param <T>          resource class
      * @param resourceInfo resourceInfo
-     * @param <T>          resourceInfo class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T getResource(ResourceInfo<T> resourceInfo) {
         return this.getResource(resourceInfo.getResourceClass(), resourceInfo);
@@ -362,10 +362,10 @@ public class ResourceManager extends SubManager {
     /**
      * <p>getResourceFromShortenURI.</p>
      *
-     * @param tClass           a {@link java.lang.Class} object.
+     * @param <T>              resource class
+     * @param tClass           resource class
      * @param resourceInfoJson resourceInfo
-     * @param <T>              resourceInfo class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T getResource(Class<T> tClass,
                                                       String resourceInfoJson) {
@@ -375,8 +375,8 @@ public class ResourceManager extends SubManager {
     /**
      * <p>ifExistResourceFromShortenURI.</p>
      *
+     * @param <T>          resource class
      * @param resourceInfo resourceInfo
-     * @param <T>          resourceInfo class
      * @return a boolean.
      */
     public <T extends AbstractResource> boolean ifExistResource(ResourceInfo<T> resourceInfo) {
@@ -403,10 +403,10 @@ public class ResourceManager extends SubManager {
     /**
      * <p>fetchResource.</p>
      *
-     * @param tClass       a {@link java.lang.Class} object.
+     * @param <T>          resource class
+     * @param tClass       resource class
      * @param resourceInfo resourceInfo
-     * @param <T>          resourceInfo class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, ResourceInfo<T> resourceInfo) {
         assert (tClass == resourceInfo.getResourceClass());
@@ -430,9 +430,9 @@ public class ResourceManager extends SubManager {
     /**
      * <p>fetchResource.</p>
      *
+     * @param <T>          resource class
      * @param resourceInfo resourceInfo
-     * @param <T>          resourceInfo class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T fetchResource(ResourceInfo<T> resourceInfo) {
         return this.fetchResource(resourceInfo.getResourceClass(), resourceInfo);
@@ -441,10 +441,10 @@ public class ResourceManager extends SubManager {
     /**
      * <p>fetchResource.</p>
      *
-     * @param tClass           a {@link java.lang.Class} object.
+     * @param <T>              resource class
+     * @param tClass           resource class
      * @param resourceInfoJson resource Info Json String
-     * @param <T>              resourceInfo class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
         return this.fetchResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
@@ -453,12 +453,12 @@ public class ResourceManager extends SubManager {
     /**
      * <p>fetchResource.</p>
      *
-     * @param tClass           a {@link java.lang.Class} object.
+     * @param <T>              resource class
+     * @param tClass           resource class
      * @param type             a {@link java.lang.String} object.
      * @param fileObjectString a {@link java.lang.String} object.
      * @param values           a {@link java.lang.String} object.
-     * @param <T>              resource class
-     * @return a T object.
+     * @return resource
      */
     public <T extends AbstractResource> T
     fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
@@ -509,13 +509,16 @@ public class ResourceManager extends SubManager {
     }
 
     /**
-     * <p>init.</p>
+     * {@inheritDoc}
      */
     @Override
     public void init() {
         //do nothing
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         //do nothing

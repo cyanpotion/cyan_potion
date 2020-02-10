@@ -24,17 +24,34 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+/**
+ * <p>Abstract Drawer class.</p>
+ *
+ * @author XenoAmess
+ * @version 0.156.1-SNAPSHOT
+ */
 public abstract class Drawer<T> implements DrawerInterface<T> {
     private final DrawerInterface<? super T> parentDrawer;
 
+    /**
+     * <p>Constructor for Drawer.</p>
+     */
     public Drawer() {
         this(null);
     }
 
+    /**
+     * <p>Constructor for Drawer.</p>
+     *
+     * @param parentDrawer a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     */
     public Drawer(DrawerInterface<? super T> parentDrawer) {
         this.parentDrawer = parentDrawer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean draw(T t) {
         if (getParentDrawer() == null || getParentDrawer().draw(t)) {
@@ -44,8 +61,25 @@ public abstract class Drawer<T> implements DrawerInterface<T> {
         }
     }
 
+    /**
+     * this drawer draw.
+     * this will invoke after {@link #getParentDrawer()} draw.
+     *
+     * @param t the AbstractGameWindowComponent to draw
+     * @return true means this draw runs to its end normally.
+     * false means something happens that this draw is abort.
+     * Usually when we implement a subclass of this,
+     * if draw returns false,
+     * then we shall consider whether should we also stop the subclass's drawer as well.
+     * @see #draw(Object)
+     */
     public abstract boolean thisDraw(T t);
 
+    /**
+     * <p>Getter for the field <code>parentDrawer</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     */
     public DrawerInterface<? super T> getParentDrawer() {
         return parentDrawer;
     }

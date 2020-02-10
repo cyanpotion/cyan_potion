@@ -37,9 +37,9 @@ import com.xenoamess.cyan_potion.base.render.Model;
  */
 public abstract class AbstractBindablePicture extends AbstractPicture implements Bindable {
     /**
-     * <p>draw.</p>
+     * {@inheritDoc}
      *
-     * @param gameWindow gameWindow
+     * <p>draw.</p>
      */
     @Override
     public void draw(GameWindow gameWindow) {
@@ -59,9 +59,9 @@ public abstract class AbstractBindablePicture extends AbstractPicture implements
     }
 
     /**
-     * <p>draw.</p>
+     * {@inheritDoc}
      *
-     * @param scene scene
+     * <p>draw.</p>
      */
     @Override
     public void draw(AbstractScene scene) {

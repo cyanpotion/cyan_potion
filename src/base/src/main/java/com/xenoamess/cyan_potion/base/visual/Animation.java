@@ -56,6 +56,9 @@ public class Animation extends AbstractPicture {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw(GameWindow gameWindow) {
         AbstractPictureInterface pictureInterface = this.getCurrentPicture();
@@ -63,6 +66,9 @@ public class Animation extends AbstractPicture {
         pictureInterface.draw(gameWindow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw(AbstractScene scene) {
         AbstractPictureInterface pictureInterface = this.getCurrentPicture();

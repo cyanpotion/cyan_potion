@@ -33,9 +33,24 @@ import org.joml.Vector4fc;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * RadioButton
+ * <p>
+ * A RadioButton is one type of selection indicator in a list of options.
+ * If an option is selected, {@link RadioButton#isSelected()} is true.
+ * If the option is not selected, {@link RadioButton#isSelected()} is false.
+ * When one RadioButton invoke {@link RadioButton#select()},
+ * it will invoke {@link RadioButtonGroup#select(RadioButton)},
+ * and then if the selected RadioButton s' number ({@link RadioButtonGroup#getSelectedRadioButtons()}'s size) in {@link RadioButtonGroup} is larger than {@link RadioButtonGroup#getSelectLimit()},
+ * it will deselect the overdose RadioButton one by one according to the timeline.
+ *
+ * @author XenoAmess
+ * @version 0.156.1-SNAPSHOT
+ * @see RadioButtonGroup
+ */
 public class RadioButton extends Button {
     private final AtomicBoolean selected = new AtomicBoolean(false);
-    private final RadioButtonSet radioButtonSet;
+    private final RadioButtonGroup radioButtonGroup;
 
     private Bindable bindableSelected;
     private Bindable bindableDeselected;
@@ -44,26 +59,64 @@ public class RadioButton extends Button {
 
     private final Vector4f textColorDeselected = new Vector4f(this.getTextColor()).mul(0.5F, 0.5F, 0.5F, 1);
 
-    public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet) {
-        this(gameWindow, radioButtonSet, null);
+    /**
+     * <p>Constructor for RadioButton.</p>
+     *
+     * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     */
+    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup) {
+        this(gameWindow, radioButtonGroup, null);
     }
 
-    public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet, Texture bindableSelected) {
-        this(gameWindow, radioButtonSet, bindableSelected, null);
+    /**
+     * <p>Constructor for RadioButton.</p>
+     *
+     * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected) {
+        this(gameWindow, radioButtonGroup, bindableSelected, null);
 
     }
 
-    public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet, String buttonText, Texture bindableSelected) {
-        this(gameWindow, radioButtonSet, buttonText, bindableSelected, null);
+    /**
+     * <p>Constructor for RadioButton.</p>
+     *
+     * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     * @param buttonText       a {@link java.lang.String} object.
+     * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, String buttonText, Texture bindableSelected) {
+        this(gameWindow, radioButtonGroup, buttonText, bindableSelected, null);
     }
 
-    public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet, Texture bindableSelected, Texture bindableDeselected) {
-        this(gameWindow, radioButtonSet, null, bindableSelected, null);
+    /**
+     * <p>Constructor for RadioButton.</p>
+     *
+     * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param radioButtonGroup   a {@link RadioButtonGroup} object.
+     * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected, Texture bindableDeselected) {
+        this(gameWindow, radioButtonGroup, null, bindableSelected, null);
     }
 
-    public RadioButton(GameWindow gameWindow, RadioButtonSet radioButtonSet, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
+    /**
+     * <p>Constructor for RadioButton.</p>
+     *
+     * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param radioButtonGroup   a {@link RadioButtonGroup} object.
+     * @param buttonText         a {@link java.lang.String} object.
+     * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
+    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
         super(gameWindow, bindableSelected, buttonText);
-        this.radioButtonSet = radioButtonSet;
+        this.radioButtonGroup = radioButtonGroup;
         this.setBindableSelected(bindableSelected);
         this.setBindableDeselected(bindableDeselected);
         this.registerOnMouseButtonLeftDownCallback(
@@ -78,26 +131,39 @@ public class RadioButton extends Button {
         );
     }
 
+    /**
+     * make this RadioButton selected
+     *
+     * @return select succeed.
+     */
     public boolean select() {
         synchronized (this) {
             boolean res = this.selected.compareAndSet(false, true);
             if (res) {
-                this.getRadioButtonSet().select(this);
+                this.getRadioButtonGroup().select(this);
             }
             return res;
         }
     }
 
+    /**
+     * make this RadioButton not selected
+     *
+     * @return deselect succeed.
+     */
     public boolean deselect() {
         synchronized (this) {
             boolean res = this.selected.compareAndSet(true, false);
             if (res) {
-                this.getRadioButtonSet().deselect(this);
+                this.getRadioButtonGroup().deselect(this);
             }
             return res;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         super.update();
@@ -105,6 +171,9 @@ public class RadioButton extends Button {
         this.updateTextColor();
     }
 
+    /**
+     * update Picture's Bindable according to whether being selected
+     */
     protected void updatePictureBindable() {
         Picture buttonPicture = this.getButtonPicture();
         if (this.getBindableDeselected() != null) {
@@ -126,6 +195,9 @@ public class RadioButton extends Button {
         }
     }
 
+    /**
+     * update TextColor according to whether being selected
+     */
     protected void updateTextColor() {
         if (this.isSelected()) {
             this.setTextColor(this.getTextColorSelected());
@@ -134,6 +206,9 @@ public class RadioButton extends Button {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         super.close();
@@ -142,42 +217,92 @@ public class RadioButton extends Button {
 
     //-----getters and setters-----
 
-    public RadioButtonSet getRadioButtonSet() {
-        return radioButtonSet;
+    /**
+     * <p>Getter for the field <code>radioButtonSet</code>.</p>
+     *
+     * @return a {@link RadioButtonGroup} object.
+     */
+    public RadioButtonGroup getRadioButtonGroup() {
+        return radioButtonGroup;
     }
 
+    /**
+     * <p>Getter for the field <code>bindableSelected</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public Bindable getBindableSelected() {
         return bindableSelected;
     }
 
+    /**
+     * <p>Setter for the field <code>bindableSelected</code>.</p>
+     *
+     * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public void setBindableSelected(Texture bindableSelected) {
         this.bindableSelected = bindableSelected;
     }
 
+    /**
+     * <p>Getter for the field <code>bindableDeselected</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public Bindable getBindableDeselected() {
         return bindableDeselected;
     }
 
+    /**
+     * <p>Setter for the field <code>bindableDeselected</code>.</p>
+     *
+     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     */
     public void setBindableDeselected(Texture bindableDeselected) {
         this.bindableDeselected = bindableDeselected;
     }
 
+    /**
+     * <p>isSelected.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSelected() {
         return this.selected.get();
     }
 
+    /**
+     * <p>Getter for the field <code>textColorSelected</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4fc} object.
+     */
     public Vector4fc getTextColorSelected() {
         return new Vector4f(textColorSelected);
     }
 
+    /**
+     * <p>Setter for the field <code>textColorSelected</code>.</p>
+     *
+     * @param textColorSelected a {@link org.joml.Vector4fc} object.
+     */
     public void setTextColorSelected(Vector4fc textColorSelected) {
         this.textColorSelected.set(textColorSelected);
     }
 
+    /**
+     * <p>Getter for the field <code>textColorDeselected</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4fc} object.
+     */
     public Vector4fc getTextColorDeselected() {
         return new Vector4f(textColorDeselected);
     }
 
+    /**
+     * <p>Setter for the field <code>textColorDeselected</code>.</p>
+     *
+     * @param textColorDeselected a {@link org.joml.Vector4fc} object.
+     */
     public void setTextColorDeselected(Vector4fc textColorDeselected) {
         this.textColorDeselected.set(textColorDeselected);
     }

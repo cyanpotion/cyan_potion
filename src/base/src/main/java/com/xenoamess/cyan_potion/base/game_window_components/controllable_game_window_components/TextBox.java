@@ -332,6 +332,14 @@ public class TextBox extends AbstractControllableGameWindowComponent {
         this.textColor.set(textColor);
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param x textColor.x
+     * @param y textColor.y
+     * @param z textColor.z
+     * @param w textColor.w
+     */
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }

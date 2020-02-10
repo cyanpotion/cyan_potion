@@ -72,6 +72,48 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     private DrawerInterface drawer = DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT;
 
     /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     */
+    public static final UpdaterBuilder<AbstractGameWindowComponent> UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT = new UpdaterBuilder<AbstractGameWindowComponent>() {
+        @Override
+        public UpdaterInterface<AbstractGameWindowComponent> build(UpdaterInterface<? super AbstractGameWindowComponent> superUpdater) {
+            return new Updater<AbstractGameWindowComponent>() {
+                @Override
+                public boolean thisUpdate(AbstractGameWindowComponent abstractGameWindowComponent) {
+                    return true;
+                }
+            };
+        }
+    };
+
+    /**
+     * DrawerBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     */
+    public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT = new DrawerBuilder<AbstractGameWindowComponent>() {
+        @Override
+        public DrawerInterface<AbstractGameWindowComponent> build(DrawerInterface<? super AbstractGameWindowComponent> superUpdater) {
+            return new Drawer<AbstractGameWindowComponent>() {
+                @Override
+                public boolean thisDraw(AbstractGameWindowComponent abstractGameWindowComponent) {
+                    return true;
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     */
+    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT = UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+
+    /**
+     * default Drawer for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     */
+    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT = DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+
+
+    /**
      * map of eventClass to processors.
      * EventProcess must be able to process the event Class.
      * notice that this eventClassToProcessorMap not works automatically,
@@ -161,37 +203,6 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         return this;
     }
 
-    /**
-     * <p>Getter for the field <code>alive</code>.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean getAlive() {
-        return alive.get();
-    }
-
-    /**
-     * <p>Setter for the field <code>alive</code>.</p>
-     *
-     * @param alive a boolean.
-     */
-    public void setAlive(boolean alive) {
-        this.alive.set(alive);
-    }
-
-    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT = new UpdaterInterface<AbstractGameWindowComponent>() {
-        @Override
-        public boolean update(AbstractGameWindowComponent abstractGameWindowComponent) {
-            return true;
-        }
-    };
-
-    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT = new DrawerInterface<AbstractGameWindowComponent>() {
-        @Override
-        public boolean draw(AbstractGameWindowComponent abstractGameWindowComponent) {
-            return true;
-        }
-    };
 
     /**
      * <p>update.</p>
@@ -331,87 +342,6 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     }
 
     /**
-     * enlarge to full window.
-     * <p>
-     * I'm thinking about deleting this function
-     * because I think this function be meaningless.
-     * I asked myself: why not call this.cover(this.getGameWindow()); direcly?
-     */
-    public void enlargeAsFullWindow() {
-        this.cover(this.getGameWindow());
-    }
-
-    /**
-     * move to center to the gameWindow
-     * <p>
-     * I'm thinking about deleting this function
-     * because I think this function be meaningless.
-     * I asked myself: why not call this.setCenter(this.getGameWindow()); direcly?
-     *
-     * @see #setCenter(AbstractArea)
-     */
-    public void moveToCenterOfFullWindow() {
-        this.setCenter(this.getGameWindow());
-    }
-
-
-    /**
-     * <p>Getter for the field <code>gameWindow</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindowComponentTreeNode</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTreeNode getGameWindowComponentTreeNode() {
-        return gameWindowComponentTreeNode;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
-     *
-     * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
-     */
-    public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
-    }
-
-    //shortcuts
-
-    /**
-     * <p>getGameManager.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return this.getGameWindow().getGameManager();
-    }
-
-    /**
-     * <p>getResourceManager.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
-     */
-    public ResourceManager getResourceManager() {
-        return this.getGameWindow().getGameManager().getResourceManager();
-    }
-
-    /**
-     * <p>getDataCenter.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
-     */
-    public DataCenter getDataCenter() {
-        return this.getGameWindow().getGameManager().getDataCenter();
-    }
-
-    /**
      * don't use it if not necessary.
      * just use eventClassToProcessorMapPut , eventClassToProcessorMapGet , eventClassToProcessorMapContainsKey if you can.
      *
@@ -456,6 +386,82 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     protected <T extends Event> boolean eventClassToProcessorMapContainsKey(Class<T> eventClass) {
         return this.getEventClassToProcessorMap().containsKey(eventClass);
+    }
+
+
+//-----shortcuts starts-----
+
+    /**
+     * enlarge to full window.
+     * <p>
+     * I'm thinking about deleting this function
+     * because I think this function be meaningless.
+     * I asked myself: why not call this.cover(this.getGameWindow()); direcly?
+     */
+    public void enlargeAsFullWindow() {
+        this.cover(this.getGameWindow());
+    }
+
+    /**
+     * move to center to the gameWindow
+     * <p>
+     * I'm thinking about deleting this function
+     * because I think this function be meaningless.
+     * I asked myself: why not call this.setCenter(this.getGameWindow()); direcly?
+     *
+     * @see #setCenter(AbstractArea)
+     */
+    public void moveToCenterOfFullWindow() {
+        this.setCenter(this.getGameWindow());
+    }
+
+    /**
+     * <p>getGameManager.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
+    public GameManager getGameManager() {
+        return this.getGameWindow().getGameManager();
+    }
+
+    /**
+     * <p>getResourceManager.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     */
+    public ResourceManager getResourceManager() {
+        return this.getGameWindow().getGameManager().getResourceManager();
+    }
+
+    /**
+     * <p>getDataCenter.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
+     */
+    public DataCenter getDataCenter() {
+        return this.getGameWindow().getGameManager().getDataCenter();
+    }
+
+//-----shortcuts ends-----
+
+//-----getters and setters starts-----
+
+    /**
+     * <p>Getter for the field <code>alive</code>.</p>
+     *
+     * @return alive
+     */
+    public boolean getAlive() {
+        return alive.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>alive</code>.</p>
+     *
+     * @param alive alive
+     */
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
     }
 
     /**
@@ -530,19 +536,68 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         this.height = height;
     }
 
+    /**
+     * <p>Getter for the field <code>updater</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
+     */
     public UpdaterInterface getUpdater() {
         return updater;
     }
 
+    /**
+     * <p>Setter for the field <code>updater</code>.</p>
+     *
+     * @param updater a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
+     */
     public void setUpdater(UpdaterInterface updater) {
         this.updater = updater;
     }
 
+    /**
+     * <p>Getter for the field <code>drawer</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     */
     public DrawerInterface getDrawer() {
         return drawer;
     }
 
+    /**
+     * <p>Setter for the field <code>drawer</code>.</p>
+     *
+     * @param drawer a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     */
     public void setDrawer(DrawerInterface drawer) {
         this.drawer = drawer;
     }
+
+    /**
+     * <p>Getter for the field <code>gameWindow</code>.</p>
+     *
+     * @return return
+     */
+    public GameWindow getGameWindow() {
+        return gameWindow;
+    }
+
+    /**
+     * <p>Getter for the field <code>gameWindowComponentTreeNode</code>.</p>
+     *
+     * @return return
+     */
+    public GameWindowComponentTreeNode getGameWindowComponentTreeNode() {
+        return gameWindowComponentTreeNode;
+    }
+
+    /**
+     * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
+     *
+     * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
+     */
+    public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
+        this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
+    }
+
+    //-----getters and setters ends-----
 }

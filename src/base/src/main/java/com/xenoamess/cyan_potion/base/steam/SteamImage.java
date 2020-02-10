@@ -37,7 +37,7 @@ import java.nio.ByteBuffer;
  * If the pull request is accepted then I will remove this class here.
  * But right now let's just use this class here.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.156.1-SNAPSHOT
  */
 public class SteamImage {

@@ -24,17 +24,34 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+/**
+ * <p>Abstract Updater class.</p>
+ *
+ * @author XenoAmess
+ * @version 0.156.1-SNAPSHOT
+ */
 public abstract class Updater<T> implements UpdaterInterface<T> {
     private final UpdaterInterface<? super T> parentUpdater;
 
+    /**
+     * <p>Constructor for Updater.</p>
+     */
     public Updater() {
         this(null);
     }
 
+    /**
+     * <p>Constructor for Updater.</p>
+     *
+     * @param parentUpdater a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
+     */
     public Updater(UpdaterInterface<? super T> parentUpdater) {
         this.parentUpdater = parentUpdater;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean update(T t) {
         if (getParentUpdater() == null || getParentUpdater().update(t)) {
@@ -44,8 +61,25 @@ public abstract class Updater<T> implements UpdaterInterface<T> {
         }
     }
 
+    /**
+     * this updater update.
+     * this will invoke after {@link #getParentUpdater()} update.
+     *
+     * @param t the AbstractGameWindowComponent to update
+     * @return true means this update runs to its end normally.
+     * false means something happens that this update is abort.
+     * Usually when we implement a subclass of this,
+     * if update returns false,
+     * then we shall consider whether should we also stop the subclass's updateer as well.
+     * @see #update(Object)
+     */
     public abstract boolean thisUpdate(T t);
 
+    /**
+     * <p>Getter for the field <code>parentUpdater</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
+     */
     public UpdaterInterface<? super T> getParentUpdater() {
         return parentUpdater;
     }

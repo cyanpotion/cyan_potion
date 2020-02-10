@@ -22,37 +22,8 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.events;
+package com.xenoamess.cyan_potion.base.game_window_components;
 
-import com.xenoamess.cyan_potion.base.GameManager;
-
-import java.util.Set;
-
-/**
- * EmptyEvent means an Event which contains nothing meaningful in it.
- *
- * @author XenoAmess
- * @version 0.156.1-SNAPSHOT
- */
-public interface EmptyEvent extends Event {
-    /**
-     * detect if a Event be null or EmptyEvent.
-     * this is used to detect whether we shall take this Event as an EmptyEvent,
-     *
-     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     * @return a boolean.
-     */
-    static boolean isNullOrEmpty(Event event) {
-        return event == null || event instanceof EmptyEvent;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * do nothing. This event is nothing, and do nothing when apply.
-     */
-    @Override
-    default Set<Event> apply(GameManager gameManager) {
-        return null;
-    }
+public abstract class DrawerBuilder<T> {
+    public abstract DrawerInterface<T> build(DrawerInterface<? super T> superUpdater);
 }

@@ -38,7 +38,7 @@ import java.nio.ByteBuffer;
  * the original codes are follow MIT license under code-disaster, but that file does not contain license head.
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.156.1-SNAPSHOT
  */
 public class SteamCallbacks {

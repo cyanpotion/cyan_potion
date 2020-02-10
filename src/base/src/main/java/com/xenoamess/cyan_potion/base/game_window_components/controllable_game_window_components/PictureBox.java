@@ -36,7 +36,7 @@ import org.joml.Vector4fc;
  * PictureComponent is a component class that contains only a picture.
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
- * @author xenoa
+ * @author XenoAmess
  * @version 0.156.1-SNAPSHOT
  */
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
