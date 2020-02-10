@@ -24,22 +24,6 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
-/**
- * <p>DrawerInterface interface.</p>
- *
- * @author XenoAmess
- * @version 0.157.0
- */
-public interface DrawerInterface<T> {
-    /**
-     * draw this AbstractGameWindowComponent
-     *
-     * @param t the AbstractGameWindowComponent to draw
-     * @return true means this draw runs to its end normally.
-     * false means something happens that this draw is abort.
-     * Usually when we implement a subclass of this,
-     * if draw returns false,
-     * then we shall consider whether should we also stop the subclass's drawer as well.
-     */
-    boolean draw(T t);
+public abstract class DrawerBuilder<T> {
+    public abstract DrawerInterface<T> build(DrawerInterface<? super T> superUpdater);
 }

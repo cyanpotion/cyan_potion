@@ -42,7 +42,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public class Panel extends AbstractControllableGameWindowComponent {
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
@@ -206,12 +206,21 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void close() {
         subGameWindowComponentTree.getRoot().close();
         this.clearContents();
         super.close();
     }
 
+    /**
+     * <p>Getter for the field <code>backgroundPicture</code>.</p>
+     *
+     * @return this.backgroundPicture
+     */
     public Picture getBackgroundPicture() {
         return backgroundPicture;
     }

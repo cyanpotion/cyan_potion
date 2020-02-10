@@ -38,7 +38,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>TextBox class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public class TextBox extends AbstractControllableGameWindowComponent {
     private boolean wordWrap;
@@ -332,6 +332,14 @@ public class TextBox extends AbstractControllableGameWindowComponent {
         this.textColor.set(textColor);
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param x textColor.x
+     * @param y textColor.y
+     * @param z textColor.z
+     * @param w textColor.w
+     */
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }

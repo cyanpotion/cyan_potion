@@ -43,8 +43,8 @@ import static org.lwjgl.opengl.GL11.*;
  * I already found a new (and better) way to do this.
  * And I suggest you use pure color Texture instead.
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
@@ -52,6 +52,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class GlRectfRectanglePicture extends AbstractPicture {
     private final Vector4f color = new Vector4f(0, 0, 0, 0);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw(GameWindow gameWindow) {
         Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
@@ -64,18 +67,30 @@ public class GlRectfRectanglePicture extends AbstractPicture {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw(AbstractScene scene) {
         Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
         GlRectfRectanglePicture.drawRectangleLeftTop(
-                scene.relativePosToAbsoluteX(this.getLeftTopPosX()),
-                scene.relativePosToAbsoluteY(this.getLeftTopPosY()),
+                scene.absolutePosToRelativeX(this.getLeftTopPosX()),
+                scene.absolutePosToRelativeY(this.getLeftTopPosY()),
                 this.getWidth(),
                 this.getHeight(),
                 drawColor
         );
     }
 
+    /**
+     * draw a rectangle using opengl
+     *
+     * @param leftTopPosX leftTopPosX
+     * @param leftTopPosY leftTopPosY
+     * @param width       width
+     * @param height      height
+     * @param color       color
+     */
     @MainThreadOnly
     public static void drawRectangleLeftTop(
             float leftTopPosX,
@@ -89,10 +104,20 @@ public class GlRectfRectanglePicture extends AbstractPicture {
         glRectf(leftTopPosX, leftTopPosY, leftTopPosX + width, leftTopPosX + height);
     }
 
+    /**
+     * <p>Getter for the field <code>color</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4fc} object.
+     */
     public Vector4fc getColor() {
         return new Vector4f(color);
     }
 
+    /**
+     * <p>Setter for the field <code>color</code>.</p>
+     *
+     * @param color a {@link org.joml.Vector4fc} object.
+     */
     public void setColor(Vector4fc color) {
         this.color.set(color);
     }

@@ -36,7 +36,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();
@@ -150,6 +150,14 @@ public class Button extends AbstractControllableGameWindowComponent {
         this.textColor.set(textColor);
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param x a float.
+     * @param y a float.
+     * @param z a float.
+     * @param w a float.
+     */
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }

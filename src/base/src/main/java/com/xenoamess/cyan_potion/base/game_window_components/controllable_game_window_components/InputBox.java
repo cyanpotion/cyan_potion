@@ -44,7 +44,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
     /**
@@ -767,6 +767,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.textColor.set(textColor);
     }
 
+    /**
+     * <p>Setter for the field <code>textColor</code>.</p>
+     *
+     * @param x textColor.x
+     * @param y textColor.x
+     * @param z textColor.x
+     * @param w textColor.x
+     */
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }
@@ -789,6 +797,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.textSelectColor.set(textSelectColor);
     }
 
+    /**
+     * <p>Setter for the field <code>textSelectColor</code>.</p>
+     *
+     * @param x textSelectColor.x
+     * @param y textSelectColor.y
+     * @param z textSelectColor.z
+     * @param w textSelectColor.w
+     */
     public void setTextSelectColor(float x, float y, float z, float w) {
         this.textSelectColor.set(x, y, z, w);
     }
@@ -811,6 +827,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.cursorColor.set(cursorColor);
     }
 
+    /**
+     * <p>Setter for the field <code>cursorColor</code>.</p>
+     *
+     * @param x cursorColor.x
+     * @param y cursorColor.y
+     * @param z cursorColor.z
+     * @param w cursorColor.w
+     */
     public void setCursorColor(float x, float y, float z, float w) {
         this.cursorColor.set(x, y, z, w);
     }

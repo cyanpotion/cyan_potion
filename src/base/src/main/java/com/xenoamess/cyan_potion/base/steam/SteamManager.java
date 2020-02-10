@@ -53,8 +53,8 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
  * the original codes are follow MIT license under code-disaster, but that file does not contain license head.
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  */
 public class SteamManager extends SubManager {
     @JsonIgnore
@@ -281,7 +281,7 @@ public class SteamManager extends SubManager {
      * of course this function is from steamworks4j.
      *
      * @param input a {@link java.lang.String} object.
-     * @throws com.codedisaster.steamworks.SteamException if any
+     * @throws com.codedisaster.steamworks.SteamException if any.
      */
     protected void processInput(String input) throws SteamException {
 

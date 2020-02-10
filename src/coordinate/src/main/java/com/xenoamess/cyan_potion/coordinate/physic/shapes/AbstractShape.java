@@ -51,7 +51,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * every etity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public abstract class AbstractShape implements AbstractMutableArea {
     @JsonIgnore

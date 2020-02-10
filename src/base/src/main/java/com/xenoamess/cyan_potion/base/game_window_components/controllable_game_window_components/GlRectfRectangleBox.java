@@ -41,8 +41,8 @@ import static org.lwjgl.opengl.GL11.*;
  * I already found a new (and better) way to do this.
  * And I suggest you use pure color Texture (and PictureBox) instead.
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */

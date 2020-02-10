@@ -34,8 +34,8 @@ import org.joml.Vector4fc;
  * AbstractPictureInterface
  * AbstractPictureInterface mean
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  */
 public interface AbstractPictureInterface extends AbstractMutableArea {
     /**
@@ -46,7 +46,9 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
     void draw(GameWindow gameWindow);
 
     /**
-     * <p>draw.</p>
+     * draw this picture to Scene.
+     * notice that this function will use Scene's "absolutePos" for all positions, and draw on the scene absolutely
+     * if you want to draw relative to the window, then you shall get GameWindow from the Scene, and
      *
      * @param scene scene
      */

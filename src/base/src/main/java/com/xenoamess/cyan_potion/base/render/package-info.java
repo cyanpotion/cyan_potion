@@ -23,7 +23,7 @@
  */
 
 /**
- * This packages focused on rendering the materials.
+ * Package to hold classes about rendering the materials.
  * <p>
  * All classes in it is bound to lwjgl (opengl)
  * This is the main difference between com.xenoamess.cyan_potion.base.visual and com.xenoamess.cyan_potion.base.render.

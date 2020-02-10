@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * <p>GameSystemJson class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public class GameSystemJson implements Serializable {
     @JsonIgnore

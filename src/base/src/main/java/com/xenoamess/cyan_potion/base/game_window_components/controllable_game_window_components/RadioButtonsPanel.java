@@ -24,39 +24,114 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RadioButtonsPanel
+ * <p>
+ * a panel which can contains a set of radio buttons.
+ * <p>
+ * notice that if you want to use this class,
+ * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
+ *
+ * @author XenoAmess
+ * @version 0.157.0
+ */
 public class RadioButtonsPanel extends Panel {
-    private final RadioButtonSet radioButtonSet = new RadioButtonSet();
+    @JsonIgnore
+    private static transient final Logger LOGGER =
+            LoggerFactory.getLogger(RadioButtonsPanel.class);
 
+    private final RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
+
+    /**
+     * <p>Constructor for RadioButtonsPanel.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public RadioButtonsPanel(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>Constructor for RadioButtonsPanel.</p>
+     *
+     * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param backgroundBindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public RadioButtonsPanel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow, backgroundBindable);
     }
 
-    public RadioButtonSet getRadioButtonSet() {
-        return radioButtonSet;
+    /**
+     * <p>Getter for the field <code>radioButtonSet</code>.</p>
+     *
+     * @return a {@link RadioButtonGroup} object.
+     */
+    public RadioButtonGroup getRadioButtonGroup() {
+        return radioButtonGroup;
     }
 
+    /**
+     * <p>createNewRadioButton.</p>
+     *
+     * @param buttonText         a {@link java.lang.String} object.
+     * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     */
     public RadioButton createNewRadioButton(String buttonText, Texture bindableSelected, Texture bindableDeselected) {
-        RadioButton radioButton = new RadioButton(this.getGameWindow(), this.getRadioButtonSet(), buttonText, bindableSelected, bindableDeselected);
+        RadioButton radioButton = new RadioButton(this.getGameWindow(), this.getRadioButtonGroup(), buttonText, bindableSelected, bindableDeselected);
         this.addContent(radioButton);
         return radioButton;
     }
 
-    public List<RadioButton> getSelectedRadioButtons() {
-        return this.getRadioButtonSet().getSelectedRadioButtons();
+    /**
+     * <p>createNewRadioButton.</p>
+     *
+     * @param tClass             class of the returned RadioButton.
+     * @param buttonText         a {@link java.lang.String} object.
+     * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     */
+    public <T extends RadioButton> RadioButton createNewRadioButton(Class<T> tClass, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
+        T radioButton = null;
+        try {
+            Constructor<T> constructor = tClass.getConstructor(GameWindow.class, RadioButtonGroup.class, String.class, Texture.class, Texture.class);
+            radioButton = constructor.newInstance(this.getGameWindow(), this.getRadioButtonGroup(), buttonText, bindableSelected, bindableDeselected);
+            this.addContent(radioButton);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            LOGGER.error("cannot create RadioButton from (GameWindow,RadioButtonGroup,String,Texture,Texture), class:{}", tClass, e);
+        }
+        return radioButton;
     }
 
+    /**
+     * <p>getSelectedRadioButtons.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
+    public List<RadioButton> getSelectedRadioButtons() {
+        return this.getRadioButtonGroup().getSelectedRadioButtons();
+    }
+
+    /**
+     * <p>getRadioButtons.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<RadioButton> getRadioButtons() {
         ArrayList<RadioButton> radioButtons = new ArrayList<>();
         for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
@@ -65,12 +140,21 @@ public class RadioButtonsPanel extends Panel {
         return radioButtons;
     }
 
+    /**
+     * <p>removeRadioButton.</p>
+     *
+     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @return a boolean.
+     */
     public boolean removeRadioButton(RadioButton radioButton) {
         boolean result = this.removeContent(radioButton);
         radioButton.close();
         return result;
     }
 
+    /**
+     * <p>removeAllRadioButtons.</p>
+     */
     public void removeAllRadioButtons() {
         for (RadioButton radioButton : this.getRadioButtons()) {
             this.removeRadioButton(radioButton);

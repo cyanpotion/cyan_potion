@@ -27,10 +27,18 @@ package com.xenoamess.cyan_potion.base;
 import java.io.Closeable;
 
 /**
- * <p>Abstract SubManager class.</p>
+ * SubManager
+ * SubManager means a sub manager of GameManager.
+ * nearly all SubManagers a split from GameManager(some of them are done even before I put cyan_potion open source).
+ * (for example,{@link com.xenoamess.cyan_potion.base.steam.SteamManager})
+ * each SubManager deals with a part of this game,
+ * and can be thought as a part of GameManager.
+ * <p>
+ * notice that although most of the SubManagers named ***Manager,
+ * some of them are not named this way, due to historical or other reasons.
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  */
 public abstract class SubManager implements Closeable {
     private final GameManager gameManager;
@@ -38,7 +46,7 @@ public abstract class SubManager implements Closeable {
     /**
      * <p>Constructor for SubManager.</p>
      *
-     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param gameManager gameManager
      */
     public SubManager(GameManager gameManager) {
         this.gameManager = gameManager;

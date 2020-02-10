@@ -36,8 +36,8 @@ import java.util.function.Function;
  * When this function be solved, it invoke field function on field gameWindowComponent.
  * You can see how it works exactly in AbstractGameWindowComponent.initRemoteCallEventProcessor()
  *
- * @author xenoa
- * @version 0.156.0
+ * @author XenoAmess
+ * @version 0.157.0
  */
 public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements Event {
     /**

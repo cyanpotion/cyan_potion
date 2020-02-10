@@ -30,30 +30,64 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * EventsEvent.
+ * EventsEvent is a Event which contains set of Events.
+ * that is done
+ *
+ * @author XenoAmess
+ * @version 0.157.0
+ */
 public class EventsEvent implements Event {
     private final Set<Event> events;
 
+    /**
+     * <p>Constructor for EventsEvent.</p>
+     */
     public EventsEvent() {
         this.events = new HashSet<>();
     }
 
+    /**
+     * <p>Constructor for EventsEvent.</p>
+     *
+     * @param events a {@link java.util.Set} object.
+     */
     public EventsEvent(Set<Event> events) {
         this.events = new HashSet<>(events);
     }
 
+    /**
+     * <p>addEvent.</p>
+     *
+     * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
+     */
     public void addEvent(Event event) {
         this.events.add(event);
     }
 
+    /**
+     * <p>addEvents.</p>
+     *
+     * @param events a {@link java.util.Collection} object.
+     */
     public void addEvents(Collection<Event> events) {
         this.events.addAll(events);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Event> apply(GameManager gameManager) {
         return events;
     }
 
+    /**
+     * <p>Getter for the field <code>events</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Event> getEvents() {
         return new HashSet<>(this.events);
     }

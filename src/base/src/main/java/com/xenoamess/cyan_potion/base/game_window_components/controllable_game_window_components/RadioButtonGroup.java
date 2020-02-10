@@ -30,7 +30,16 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RadioButtonSet implements Closeable {
+/**
+ * RadioButtonGroup
+ * <p>
+ * a manager of a group of radio buttons, and operations / management.
+ *
+ * @author XenoAmess
+ * @version 0.157.0
+ * @see RadioButton
+ */
+public class RadioButtonGroup implements Closeable {
     /**
      * the max buttons that can be selected.
      * notice that this value shall never be less than 1.
@@ -41,15 +50,30 @@ public class RadioButtonSet implements Closeable {
     private final AtomicInteger selectLimit = new AtomicInteger();
     private final ConcurrentLinkedDeque<RadioButton> selectedRadioButtons = new ConcurrentLinkedDeque<>();
 
-    public RadioButtonSet() {
+    /**
+     * <p>Constructor for RadioButtonGroup.</p>
+     */
+    public RadioButtonGroup() {
         this(1);
     }
 
-    public RadioButtonSet(int selectLimit) {
+    /**
+     * <p>Constructor for RadioButtonGroup.</p>
+     *
+     * @param selectLimit this.selectLimit
+     */
+    public RadioButtonGroup(int selectLimit) {
         this.setSelectLimit(selectLimit);
     }
 
+    /**
+     * select a RadioButton.
+     *
+     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @return select succeed.
+     */
     public synchronized boolean select(RadioButton radioButton) {
+        assert (radioButton.getRadioButtonGroup() == this);
         if (!this.selectedRadioButtons.contains(radioButton)) {
             radioButton.select();
             this.selectedRadioButtons.remove(radioButton);
@@ -64,7 +88,14 @@ public class RadioButtonSet implements Closeable {
         }
     }
 
+    /**
+     * deselect a RadioButton.
+     *
+     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @return deselect succeed.
+     */
     public synchronized boolean deselect(RadioButton radioButton) {
+        assert (radioButton.getRadioButtonGroup() == this);
         if (this.selectedRadioButtons.contains(radioButton)) {
             radioButton.deselect();
             this.selectedRadioButtons.remove(radioButton);
@@ -74,10 +105,20 @@ public class RadioButtonSet implements Closeable {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>selectLimit</code>.</p>
+     *
+     * @return a int.
+     */
     public int getSelectLimit() {
         return selectLimit.get();
     }
 
+    /**
+     * <p>Setter for the field <code>selectLimit</code>.</p>
+     *
+     * @param selectLimit a int.
+     */
     public void setSelectLimit(int selectLimit) {
         this.selectLimit.set(selectLimit);
     }
@@ -93,17 +134,28 @@ public class RadioButtonSet implements Closeable {
     }
 
 
+    /**
+     * delete all RadioButtons
+     */
     public synchronized void clear() {
         while (selectedRadioButtons.size() > 0) {
             selectedRadioButtons.removeFirst().deselect();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         this.clear();
     }
 
+    /**
+     * get a copy of this.selectedRadioButtons
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<RadioButton> getSelectedRadioButtons() {
         return new ArrayList<>(selectedRadioButtons);
     }

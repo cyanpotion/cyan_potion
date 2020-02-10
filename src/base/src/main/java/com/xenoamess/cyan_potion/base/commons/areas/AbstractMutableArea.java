@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * Mutable Area
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public interface AbstractMutableArea extends AbstractArea {
 

@@ -32,7 +32,7 @@ import java.util.Set;
  * EmptyEvent means an Event which contains nothing meaningful in it.
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.157.0
  */
 public interface EmptyEvent extends Event {
     /**
@@ -49,10 +49,7 @@ public interface EmptyEvent extends Event {
     /**
      * {@inheritDoc}
      * <p>
-     * do nothing
-     *
-     * @param gameManager don't care
-     * @return null
+     * do nothing. This event is nothing, and do nothing when apply.
      */
     @Override
     default Set<Event> apply(GameManager gameManager) {
