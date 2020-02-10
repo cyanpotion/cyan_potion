@@ -23,7 +23,7 @@
  */
 
 /**
- * This packages focused on setting files,
+ * Package to hold classes about setting files,
  * including load, parse setting files,
  * and provide functions for getting the data in settings.
  * <p>

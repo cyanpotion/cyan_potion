@@ -23,7 +23,7 @@
  */
 
 /**
- * This packages focused on visual effects.
+ * Package to hold classes about visual effects.
  * <p>
  * Notice that classes in it shall not be bound to lwjgl (opengl), but on a higher level.
  * This is the main difference between com.xenoamess.cyan_potion.base.visual and com.xenoamess.cyan_potion.base.render.

@@ -23,7 +23,7 @@
  */
 
 /**
- * This packages focused on game runtime,
+ * Package to hold classes about game runtime,
  * including runtime variable structure's create, management, save, load, and other things.
  *
  * @since 0.148.0
