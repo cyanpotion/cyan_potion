@@ -35,7 +35,7 @@ import org.joml.Vector4fc;
  * AbstractPictureInterface mean
  *
  * @author xenoa
- * @version 0.156.0
+ * @version 0.156.1-SNAPSHOT
  */
 public interface AbstractPictureInterface extends AbstractMutableArea {
     /**

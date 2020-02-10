@@ -30,7 +30,7 @@ import java.util.Arrays;
  * <p>KeyboardKeyEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.156.0
+ * @version 0.156.1-SNAPSHOT
  */
 public enum KeyboardKeyEnum {
     GLFW_KEY_UNKNOWN(-1),

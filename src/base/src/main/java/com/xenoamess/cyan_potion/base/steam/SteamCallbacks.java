@@ -39,7 +39,7 @@ import java.nio.ByteBuffer;
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
  * @author xenoa
- * @version 0.156.0
+ * @version 0.156.1-SNAPSHOT
  */
 public class SteamCallbacks {
     @JsonIgnore
