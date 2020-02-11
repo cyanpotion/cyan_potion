@@ -124,6 +124,8 @@ public class GameSettings {
 
     private long steamRunCallbacksNanoLong;
 
+    private int maxFPS;
+
     //specialSettings----------
 
     /**
@@ -600,5 +602,13 @@ public class GameSettings {
      */
     public X8lTree getSettingTree() {
         return settingTree;
+    }
+
+    public int getMaxFPS() {
+        return maxFPS;
+    }
+
+    public void setMaxFPS(int maxFPS) {
+        this.maxFPS = maxFPS;
     }
 }

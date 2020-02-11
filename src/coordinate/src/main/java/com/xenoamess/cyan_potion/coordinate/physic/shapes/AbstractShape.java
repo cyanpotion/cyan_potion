@@ -324,12 +324,11 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>canMove.</p>
      *
-     * @param direction the direction the moves to
      * @return true: can move. false: cannot move.
      */
-    public boolean canMove(Vector3f direction) {
+    public boolean canMove(float movementX, float movementY) {
         AbstractShape tmpCopy = this.copy();
-        tmpCopy.forceMove(direction);
+        tmpCopy.forceMove(movementX, movementY);
 
         Set<AbstractShape> newCollisionSet = new HashSet<>();
         Set<AbstractShape> oldCollisionSet =
@@ -395,22 +394,19 @@ public abstract class AbstractShape implements AbstractMutableArea {
 
     /**
      * <p>forceMove.</p>
-     *
-     * @param direction direction
      */
-    public void forceMove(Vector3f direction) {
-        this.setCenterPos(this.getCenterPos().add(direction));
+    public void forceMove(float movementX, float movementY) {
+        this.move(movementX, movementY);
     }
 
     /**
      * <p>tryMove.</p>
      *
-     * @param direction direction
      * @return a boolean.
      */
-    public boolean tryMove(Vector3f direction) {
-        if (this.canMove(direction)) {
-            this.forceMove(direction);
+    public boolean tryMove(float movementX, float movementY) {
+        if (this.canMove(movementX, movementY)) {
+            this.forceMove(movementX, movementY);
             return true;
         } else {
             return false;

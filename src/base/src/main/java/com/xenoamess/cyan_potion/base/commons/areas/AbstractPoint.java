@@ -22,44 +22,29 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.render;
+package com.xenoamess.cyan_potion.base.commons.areas;
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutablePoint;
+public interface AbstractPoint {
+    /**
+     * see if this point is mutable.
+     *
+     * @return true if mutable
+     */
+    boolean ifMutable();
 
-/**
- * <p>Camera class.</p>
- *
- * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
- */
-public class Camera implements AbstractMutablePoint {
-    private float posX;
-    private float posY;
+    float getPosX();
+
+    float getPosY();
 
     /**
-     * <p>Constructor for Camera.</p>
+     * detect if a point in this Area
+     * <p>
+     * if width or height be NaN, then return false.
      *
-     * @param initX a int.
-     * @param initY a int.
+     * @param area area
+     * @return whether point (posX,posY) in this area.
      */
-    public Camera(float initX, float initY) {
-        this.setPosX(initX);
-        this.setPosY(initY);
-    }
-
-    public float getPosX() {
-        return posX;
-    }
-
-    public void setPosX(float posX) {
-        this.posX = posX;
-    }
-
-    public float getPosY() {
-        return posY;
-    }
-
-    public void setPosY(float posY) {
-        this.posY = posY;
+    default boolean ifPointInArea(AbstractArea area) {
+        return area.ifPosXInArea(this.getPosX()) && area.ifPosYInArea(this.getPosY());
     }
 }

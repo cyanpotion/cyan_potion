@@ -311,4 +311,16 @@ public interface AbstractArea {
         return this.ifPosXInArea(posX) && this.ifPosYInArea(posY);
     }
 
+    /**
+     * detect if a point in this Area
+     * <p>
+     * if width or height be NaN, then return false.
+     *
+     * @param point point
+     * @return whether point (posX,posY) in this area.
+     */
+    default boolean ifPointInArea(AbstractPoint point) {
+        return this.ifPosXInArea(point.getPosX()) && this.ifPosYInArea(point.getPosY());
+    }
+
 }

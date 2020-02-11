@@ -16,6 +16,7 @@
         "steam_appid": "480",
         "language": "english",
         "commonSettings": "",
+        "maxFPS": "5",
         "defaultFontResourceURI": "[\"com.xenoamess.cyan_potion.base.visual.Font\",\"ttfFile\",\"resources/www/fonts/SourceHanSans-Normal.ttc\"]"
       }
     },

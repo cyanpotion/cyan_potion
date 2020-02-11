@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.coordinate.entity;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-import org.joml.Vector3f;
 
 import java.util.Objects;
 
@@ -42,33 +41,45 @@ public class StaticEntity extends AbstractEntity {
     /**
      * <p>Constructor for StaticEntity.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape    a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
      */
-    public StaticEntity(AbstractEntityScene scene, Vector3f centerPos,
-                        Vector3f size, Bindable bindable, AbstractShape shape) {
-        super(scene, centerPos, size, bindable, shape);
+    public StaticEntity(
+            AbstractEntityScene scene,
+            float leftTopPosX, float leftTopPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable,
+            AbstractShape shape
+    ) {
+        super(
+                scene,
+                leftTopPosX, leftTopPosY,
+                width, height,
+                layer,
+                bindable,
+                shape
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof StaticEntity)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         StaticEntity that = (StaticEntity) o;
-        return Objects.equals(getScene(), that.getScene()) &&
-                Objects.equals(getCenterPos(), that.getCenterPos()) &&
-                Objects.equals(getSize(), that.getSize()) &&
+        return Float.compare(that.getLeftTopPosX(), getLeftTopPosX()) == 0 &&
+                Float.compare(that.getLeftTopPosY(), getLeftTopPosY()) == 0 &&
+                Float.compare(that.getWidth(), getWidth()) == 0 &&
+                Float.compare(that.getHeight(), getHeight()) == 0 &&
+                Objects.equals(getScene(), that.getScene()) &&
                 Objects.equals(getShape(), that.getShape()) &&
                 Objects.equals(getPicture(), that.getPicture());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
+    }
+
 }

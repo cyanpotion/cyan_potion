@@ -73,10 +73,6 @@ public class DataCenter {
     private int consolePort = DEFAULT_CONSOLE_PORT;
 
     /**
-     * Constant <code>FRAME_CAP=1 / 60.0</code>
-     */
-    public static final double FRAME_CAP = 1 / 60.0;
-    /**
      * Constant <code>SCALE=2</code>
      */
     public static final int SCALE = 2;

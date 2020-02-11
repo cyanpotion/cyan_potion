@@ -115,6 +115,8 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
                 STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
         gameSettings.setIconFilePath(getString(gameSettings.getCommonSettings(),
                 STRING_ICON_FILE_PATH, "resources/www/icon/icon.png"));
+        gameSettings.setMaxFPS(getInteger(gameSettings.getCommonSettings(),
+                STRING_MAX_FPS, -1));
     }
 
 

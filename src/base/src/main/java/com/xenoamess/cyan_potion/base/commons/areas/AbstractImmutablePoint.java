@@ -22,44 +22,15 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.render;
+package com.xenoamess.cyan_potion.base.commons.areas;
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutablePoint;
-
-/**
- * <p>Camera class.</p>
- *
- * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
- */
-public class Camera implements AbstractMutablePoint {
-    private float posX;
-    private float posY;
+public interface AbstractImmutablePoint extends AbstractPoint {
 
     /**
-     * <p>Constructor for Camera.</p>
-     *
-     * @param initX a int.
-     * @param initY a int.
+     * {@inheritDoc}
      */
-    public Camera(float initX, float initY) {
-        this.setPosX(initX);
-        this.setPosY(initY);
-    }
-
-    public float getPosX() {
-        return posX;
-    }
-
-    public void setPosX(float posX) {
-        this.posX = posX;
-    }
-
-    public float getPosY() {
-        return posY;
-    }
-
-    public void setPosY(float posY) {
-        this.posY = posY;
+    @Override
+    default boolean ifMutable() {
+        return false;
     }
 }

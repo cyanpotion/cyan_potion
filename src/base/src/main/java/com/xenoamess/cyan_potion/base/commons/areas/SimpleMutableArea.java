@@ -45,7 +45,7 @@ public final class SimpleMutableArea implements AbstractMutableArea {
      *
      * @param abstractArea area
      */
-    SimpleMutableArea(AbstractArea abstractArea) {
+    public SimpleMutableArea(AbstractArea abstractArea) {
         this.cover(abstractArea);
     }
 
@@ -57,7 +57,7 @@ public final class SimpleMutableArea implements AbstractMutableArea {
      * @param width       a float.
      * @param height      a float.
      */
-    SimpleMutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
+    public SimpleMutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
         this.leftTopPosX = leftTopPosX;
         this.leftTopPosY = leftTopPosY;
         this.width = width;

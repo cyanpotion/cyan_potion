@@ -45,7 +45,7 @@ public final class SimpleImmutableArea implements AbstractImmutableArea {
      *
      * @param abstractArea area
      */
-    SimpleImmutableArea(AbstractArea abstractArea) {
+    public SimpleImmutableArea(AbstractArea abstractArea) {
         this.leftTopPosX = abstractArea.getLeftTopPosX();
         this.leftTopPosY = abstractArea.getLeftTopPosY();
         this.width = abstractArea.getWidth();
@@ -60,7 +60,7 @@ public final class SimpleImmutableArea implements AbstractImmutableArea {
      * @param width       a float.
      * @param height      a float.
      */
-    SimpleImmutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
+    public SimpleImmutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
         this.leftTopPosX = leftTopPosX;
         this.leftTopPosY = leftTopPosY;
         this.width = width;

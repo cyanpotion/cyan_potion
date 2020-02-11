@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.coordinate.entity;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-import org.joml.Vector3f;
 
 import java.util.Objects;
 
@@ -39,19 +38,20 @@ import java.util.Objects;
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 
-    /**
-     * <p>Constructor for AbstractDynamicEntity.</p>
-     *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
-     */
-    public AbstractDynamicEntity(AbstractEntityScene scene, Vector3f centerPos,
-                                 Vector3f size, Bindable bindable,
-                                 AbstractShape shape) {
-        super(scene, centerPos, size, bindable, shape);
+    public AbstractDynamicEntity(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable,
+            AbstractShape shape) {
+        super(scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                bindable,
+                shape
+        );
     }
 
     /**
@@ -61,13 +61,11 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
 
     /**
      * <p>forceMove.</p>
-     *
-     * @param direction direction
      */
-    public void forceMove(Vector3f direction) {
-        this.setCenterPos(this.getCenterPos().add(direction));
+    public void forceMove(float movementX, float movementY) {
+        this.move(movementX, movementY);
         if (this.getShape() != null) {
-            this.getShape().forceMove(direction);
+            this.getShape().forceMove(movementX, movementY);
         }
         this.getPicture().cover(this);
     }
@@ -75,12 +73,11 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>tryMove.</p>
      *
-     * @param direction direction
      * @return a boolean.
      */
-    public boolean tryMove(Vector3f direction) {
-        if (this.canMove(direction)) {
-            this.forceMove(direction);
+    public boolean tryMove(float movementX, float movementY) {
+        if (this.canMove(movementX, movementY)) {
+            this.forceMove(movementX, movementY);
             return true;
         } else {
             return false;
@@ -90,33 +87,31 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>canMove.</p>
      *
-     * @param direction direction
      * @return a boolean.
      */
-    public boolean canMove(Vector3f direction) {
+    public boolean canMove(float movementX, float movementY) {
         if (this.getShape() == null) {
             return true;
         }
-        return this.getShape().canMove(direction);
+        return this.getShape().canMove(movementX, movementY);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof AbstractDynamicEntity)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractDynamicEntity that = (AbstractDynamicEntity) o;
-        return Objects.equals(getScene(), that.getScene()) &&
-                Objects.equals(getCenterPos(), that.getCenterPos()) &&
-                Objects.equals(getSize(), that.getSize()) &&
+        return Float.compare(that.getLeftTopPosX(), getLeftTopPosX()) == 0 &&
+                Float.compare(that.getLeftTopPosY(), getLeftTopPosY()) == 0 &&
+                Float.compare(that.getWidth(), getWidth()) == 0 &&
+                Float.compare(that.getHeight(), getHeight()) == 0 &&
+                Objects.equals(getScene(), that.getScene()) &&
                 Objects.equals(getShape(), that.getShape()) &&
                 Objects.equals(getPicture(), that.getPicture());
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
+    }
 }

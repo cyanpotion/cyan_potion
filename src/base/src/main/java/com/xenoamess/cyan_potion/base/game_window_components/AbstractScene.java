@@ -247,7 +247,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @return relativePosX
      */
     public float absolutePosToRelativeX(Camera camera, float absolutePosX, float scale) {
-        return (absolutePosX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
+        return (absolutePosX - camera.getPosX()) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
     }
 
     /**
@@ -280,7 +280,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @return relativePosY
      */
     public float absolutePosToRelativeY(Camera camera, float absolutePosX, float scale) {
-        return (absolutePosX - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
+        return (absolutePosX - camera.getPosY()) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
     }
 
     /**

@@ -44,6 +44,102 @@ public class GameManagerConfig {
     }
 
     /**
+     * <p>getInteger.</p>
+     *
+     * @param value value
+     * @return a boolean.
+     */
+    public static int getInteger(String value) {
+        /*
+         * if value is null or empty, we think that it have no value part,
+         * and a key part alone is thought to mean -1.
+         */
+        if (StringUtils.isBlank(value)) {
+            return -1;
+        }
+
+        return Integer.parseInt(value);
+    }
+
+    /**
+     * <p>getInteger.</p>
+     *
+     * @param settingMap settingMap
+     * @param key        a {@link java.lang.String} object.
+     * @return a boolean.
+     */
+    public static int getInteger(final Map<String, String> settingMap,
+                                 final String key) {
+        return getInteger(settingMap, key, -1);
+    }
+
+    /**
+     * <p>getInteger.</p>
+     *
+     * @param settingMap   a {@link java.util.Map} object.
+     * @param key          a {@link java.lang.String} object.
+     * @param defaultValue a boolean.
+     * @return a boolean.
+     */
+    public static int getInteger(final Map<String, String> settingMap,
+                                 final String key, int defaultValue) {
+        assert (settingMap != null);
+        assert (key != null);
+        if (!settingMap.containsKey(key)) {
+            return defaultValue;
+        }
+        return getInteger(settingMap.get(key));
+    }
+
+    /**
+     * <p>getFloat.</p>
+     *
+     * @param value value
+     * @return a boolean.
+     */
+    public static float getFloat(String value) {
+        /*
+         * if value is null or empty, we think that it have no value part,
+         * and a key part alone is thought to mean NaN.
+         */
+        if (StringUtils.isBlank(value)) {
+            return Float.NaN;
+        }
+
+        return Float.parseFloat(value);
+    }
+
+    /**
+     * <p>getFloat.</p>
+     *
+     * @param settingMap settingMap
+     * @param key        a {@link java.lang.String} object.
+     * @return a boolean.
+     */
+    public static float getFloat(final Map<String, String> settingMap,
+                                 final String key) {
+        return getFloat(settingMap, key, Float.NaN);
+    }
+
+    /**
+     * <p>getFloat.</p>
+     *
+     * @param settingMap   a {@link java.util.Map} object.
+     * @param key          a {@link java.lang.String} object.
+     * @param defaultValue a boolean.
+     * @return a boolean.
+     */
+    public static float getFloat(final Map<String, String> settingMap,
+                                 final String key, float defaultValue) {
+        assert (settingMap != null);
+        assert (key != null);
+        if (!settingMap.containsKey(key)) {
+            return defaultValue;
+        }
+        return getFloat(settingMap.get(key));
+    }
+
+    /**
      * <p>getBoolean.</p>
      *
      * @param value value
@@ -133,6 +229,7 @@ public class GameManagerConfig {
         return settingMap.get(key);
     }
 
+
     /**
      * If exist this tag then does not start console thread when start up the
      * game.
@@ -180,6 +277,16 @@ public class GameManagerConfig {
      * @see GameManager
      */
     public static final String STRING_ICON_FILE_PATH = "iconFilePath";
+
+    /**
+     * the max fps of this game.
+     * if -1 or missing,
+     * then no max fps limit will be set,
+     * and your game will suck performance as much as possible.
+     *
+     * @see GameManager
+     */
+    public static final String STRING_MAX_FPS = "maxFPS";
 
     /**
      * The default font's path

@@ -118,7 +118,7 @@ public class GameManager implements Closeable {
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(10);
 
-    private float timeToLastUpdate = 0;
+    private double timeToLastUpdate = 0;
 
     private boolean canRender = false;
 
@@ -536,18 +536,20 @@ public class GameManager implements Closeable {
             unprocessed += passed;
             timeForFPS += passed;
 
-            while (unprocessed >= DataCenter.FRAME_CAP) {
-                this.setTimeToLastUpdate((float) DataCenter.FRAME_CAP);
-                unprocessed -= DataCenter.FRAME_CAP;
+            if (this.getDataCenter().getGameSettings().getMaxFPS() > 0) {
+                double eachFrameTime = 1.0 / this.getDataCenter().getGameSettings().getMaxFPS();
+                while (unprocessed >= eachFrameTime) {
+                    unprocessed -= eachFrameTime;
+                    this.setTimeToLastUpdate(eachFrameTime);
+                    setCanRender(true);
+                    this.loopOnce();
+                }
+            } else {
+                this.setTimeToLastUpdate(unprocessed);
+                unprocessed = 0;
                 setCanRender(true);
                 this.loopOnce();
             }
-
-            this.setTimeToLastUpdate((float) unprocessed);
-            unprocessed = 0;
-            setCanRender(true);
-            this.loopOnce();
-
 
             if (isCanRender()) {
                 draw();
@@ -848,18 +850,18 @@ public class GameManager implements Closeable {
     /**
      * <p>Getter for the field <code>timeToLastUpdate</code>.</p>
      *
-     * @return a float.
+     * @return timeToLastUpdate
      */
-    public float getTimeToLastUpdate() {
+    public double getTimeToLastUpdate() {
         return timeToLastUpdate;
     }
 
     /**
      * <p>Setter for the field <code>timeToLastUpdate</code>.</p>
      *
-     * @param timeToLastUpdate a float.
+     * @param timeToLastUpdate timeToLastUpdate
      */
-    public void setTimeToLastUpdate(float timeToLastUpdate) {
+    public void setTimeToLastUpdate(double timeToLastUpdate) {
         this.timeToLastUpdate = timeToLastUpdate;
     }
 
