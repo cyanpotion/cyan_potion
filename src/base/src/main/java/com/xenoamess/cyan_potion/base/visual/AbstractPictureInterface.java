@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
@@ -35,7 +35,7 @@ import org.joml.Vector4fc;
  * AbstractPictureInterface mean
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public interface AbstractPictureInterface extends AbstractMutableArea {
     /**

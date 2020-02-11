@@ -37,7 +37,7 @@ import java.util.function.Function;
  * You can see how it works exactly in AbstractGameWindowComponent.initRemoteCallEventProcessor()
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements Event {
     /**

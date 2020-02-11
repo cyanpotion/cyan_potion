@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
-import com.xenoamess.cyan_potion.base.DataCenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <p>JamepadGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
@@ -87,11 +86,22 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
      */
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
+        this.setVibration(leftVibration, rightVibration, Integer.MAX_VALUE);
+    }
+
+    /**
+     * <p>setVibration.</p>
+     *
+     * @param leftVibration  a int.
+     * @param rightVibration a int.
+     * @param duration_ms    a int.
+     */
+    public void setVibration(int leftVibration, int rightVibration, int duration_ms) {
         this.getJamepadControllerManager().doVibration(
                 this.getJamepadGamepadDeviceIndex(),
                 leftVibration / 65535.0F,
                 rightVibration / 65535.0F,
-                (int) DataCenter.FRAME_CAP * 1000
+                duration_ms
         );
     }
 

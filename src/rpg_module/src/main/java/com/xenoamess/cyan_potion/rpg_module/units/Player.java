@@ -29,57 +29,95 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-import com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle;
-import org.joml.Vector3f;
 
 /**
  * <p>Player class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class Player extends Unit {
     /**
-     * <p>Constructor for Player.</p>
+     * <p>Constructor for Unit.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
-    public Player(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                  Bindable bindable, AbstractShape shape) {
-        super(scene, centerPos, size, bindable, shape);
+    public Player(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable,
+            AbstractShape shape) {
+        super(
+                scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                bindable, shape
+        );
     }
 
     /**
-     * <p>Constructor for Player.</p>
+     * <p>Constructor for Unit.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
-    public Player(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                  Bindable bindable) {
-        super(scene, centerPos, size, bindable, new HorizontalRectangle(null,
-                centerPos, size));
+    public Player(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable) {
+        super(
+                scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                bindable
+        );
     }
 
     /**
-     * <p>Constructor for Player.</p>
+     * <p>Constructor for Unit.</p>
      *
      * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos                         a {@link org.joml.Vector3f} object.
-     * @param size                              a {@link org.joml.Vector3f} object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param centerPosX                        a float.
+     * @param centerPosY                        a float.
+     * @param width                             a float.
+     * @param height                            a float.
+     * @param layer                             a int.
      */
-    public Player(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                  ResourceInfo walkingAnimation4DirsResourceInfo,
-                  ResourceManager resourceManager) {
-        super(scene, centerPos, size, walkingAnimation4DirsResourceInfo,
-                resourceManager);
+    public Player(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            ResourceInfo walkingAnimation4DirsResourceInfo,
+            ResourceManager resourceManager) {
+        super(
+                scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                walkingAnimation4DirsResourceInfo,
+                resourceManager
+        );
     }
+
 }

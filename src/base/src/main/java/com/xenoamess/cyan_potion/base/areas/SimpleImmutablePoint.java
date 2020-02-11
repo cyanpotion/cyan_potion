@@ -22,10 +22,51 @@
  * SOFTWARE.
  */
 
-/**
- * Package to hold area classes.
- *
- * @since 0.140.0
- */
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
+/**
+ * <p>SimpleImmutablePoint class.</p>
+ *
+ * @author XenoAmess
+ * @version 0.158.0
+ */
+public final class SimpleImmutablePoint implements AbstractImmutablePoint {
+    private final float posX;
+    private final float posY;
+
+    /**
+     * <p>Constructor for SimpleImmutablePoint.</p>
+     *
+     * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
+    public SimpleImmutablePoint(AbstractPoint point) {
+        this(point.getPosX(), point.getPosY());
+    }
+
+    /**
+     * <p>Constructor for SimpleImmutablePoint.</p>
+     *
+     * @param posX a float.
+     * @param posY a float.
+     */
+    public SimpleImmutablePoint(float posX, float posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float getPosX() {
+        return posX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float getPosY() {
+        return posY;
+    }
+}

@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
@@ -51,7 +51,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * every etity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public abstract class AbstractShape implements AbstractMutableArea {
     @JsonIgnore
@@ -324,12 +324,13 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>canMove.</p>
      *
-     * @param direction the direction the moves to
+     * @param movementX a float.
+     * @param movementY a float.
      * @return true: can move. false: cannot move.
      */
-    public boolean canMove(Vector3f direction) {
+    public boolean canMove(float movementX, float movementY) {
         AbstractShape tmpCopy = this.copy();
-        tmpCopy.forceMove(direction);
+        tmpCopy.forceMove(movementX, movementY);
 
         Set<AbstractShape> newCollisionSet = new HashSet<>();
         Set<AbstractShape> oldCollisionSet =
@@ -396,21 +397,23 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>forceMove.</p>
      *
-     * @param direction direction
+     * @param movementX a float.
+     * @param movementY a float.
      */
-    public void forceMove(Vector3f direction) {
-        this.setCenterPos(this.getCenterPos().add(direction));
+    public void forceMove(float movementX, float movementY) {
+        this.move(movementX, movementY);
     }
 
     /**
      * <p>tryMove.</p>
      *
-     * @param direction direction
+     * @param movementX a float.
+     * @param movementY a float.
      * @return a boolean.
      */
-    public boolean tryMove(Vector3f direction) {
-        if (this.canMove(direction)) {
-            this.forceMove(direction);
+    public boolean tryMove(float movementX, float movementY) {
+        if (this.canMove(movementX, movementY)) {
+            this.forceMove(movementX, movementY);
             return true;
         } else {
             return false;

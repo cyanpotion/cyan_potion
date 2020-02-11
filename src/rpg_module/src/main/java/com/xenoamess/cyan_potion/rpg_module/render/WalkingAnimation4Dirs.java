@@ -44,7 +44,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>WalkingAnimation4Dirs class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class WalkingAnimation4Dirs extends Animation {
     private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
@@ -125,16 +125,13 @@ public class WalkingAnimation4Dirs extends Animation {
     public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
-        elapsedTime /= 1000;
 
-        if (elapsedTime >= getFps()) {
-            this.setTexturePointer(this.getTexturePointer() + 1);
-            this.setLastTime(currentTime);
-        }
-
-        if (getTexturePointer() >= 4) {
-            setTexturePointer(0);
-        }
+        int texturePointer = getTexturePointer();
+        int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
+        texturePointer += textureAddNum;
+        texturePointer %= 4;
+        setTexturePointer(texturePointer);
+        this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
 
         if (!getUnit().isMoving()) {
             setTexturePointer(1);

@@ -105,7 +105,7 @@ class ConsoleTalkThread implements Runnable {
  * the thread.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  * @see Console
  * @see GameManager
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig

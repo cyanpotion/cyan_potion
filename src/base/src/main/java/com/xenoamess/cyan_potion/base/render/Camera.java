@@ -24,16 +24,17 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import org.joml.Vector3f;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutablePoint;
 
 /**
  * <p>Camera class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
-public class Camera {
-    private final Vector3f position;
+public class Camera implements AbstractMutablePoint {
+    private float posX;
+    private float posY;
 
     /**
      * <p>Constructor for Camera.</p>
@@ -41,17 +42,40 @@ public class Camera {
      * @param initX a int.
      * @param initY a int.
      */
-    public Camera(int initX, int initY) {
-        position = new Vector3f(initX, initY, 0);
+    public Camera(float initX, float initY) {
+        this.setPosX(initX);
+        this.setPosY(initY);
     }
 
     /**
-     * <p>Getter for the field <code>position</code>.</p>
+     * <p>Getter for the field <code>posX</code>.</p>
      *
-     * @return return
+     * @return a float.
      */
-    public Vector3f getPosition() {
-        return position;
+    public float getPosX() {
+        return posX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    /**
+     * <p>Getter for the field <code>posY</code>.</p>
+     *
+     * @return a float.
+     */
+    public float getPosY() {
+        return posY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
 }

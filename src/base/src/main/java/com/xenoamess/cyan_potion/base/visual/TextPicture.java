@@ -31,10 +31,10 @@ import org.joml.Vector4fc;
 
 /**
  * TextPicture
- * TextPicture is a class that allow you to pack up some text into an {@link AbstractPicture}, and use it as an {@link AbstractPicture}.
+ * TextPicture is a class that allow you to pack up some text into an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}, and use it as an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class TextPicture extends AbstractPicture {
     private float centerPosX = Float.NaN;

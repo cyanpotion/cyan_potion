@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GameSettings class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class GameSettings {
 
@@ -123,6 +123,8 @@ public class GameSettings {
     private boolean runWithSteam;
 
     private long steamRunCallbacksNanoLong;
+
+    private int maxFPS;
 
     //specialSettings----------
 
@@ -600,5 +602,23 @@ public class GameSettings {
      */
     public X8lTree getSettingTree() {
         return settingTree;
+    }
+
+    /**
+     * <p>Getter for the field <code>maxFPS</code>.</p>
+     *
+     * @return a int.
+     */
+    public int getMaxFPS() {
+        return maxFPS;
+    }
+
+    /**
+     * <p>Setter for the field <code>maxFPS</code>.</p>
+     *
+     * @param maxFPS a int.
+     */
+    public void setMaxFPS(int maxFPS) {
+        this.maxFPS = maxFPS;
     }
 }

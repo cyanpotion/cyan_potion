@@ -34,7 +34,7 @@ import java.util.List;
  * <p>Animation class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class Animation extends AbstractPicture {
     private int texturePointer;
@@ -52,7 +52,7 @@ public class Animation extends AbstractPicture {
      */
     public Animation(int fps) {
         this.setTexturePointer(0);
-        this.setFps(1f / fps);
+        this.setFps(fps);
     }
 
 
@@ -83,17 +83,14 @@ public class Animation extends AbstractPicture {
      */
     public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
-        float elapsedTime = currentTime - getLastTime();
-        elapsedTime /= 1000;
+        long elapsedTime = currentTime - getLastTime();
 
-        if (elapsedTime >= getFps()) {
-            setTexturePointer(getTexturePointer() + 1);
-            this.setLastTime(currentTime);
-        }
-
-        if (getTexturePointer() >= getFrames().size()) {
-            setTexturePointer(0);
-        }
+        int texturePointer = getTexturePointer();
+        int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
+        texturePointer += textureAddNum;
+        texturePointer %= getFrames().size();
+        setTexturePointer(texturePointer);
+        this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
 
         return getFrames().get(getTexturePointer());
     }

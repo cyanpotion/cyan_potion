@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
  * Mutable Area
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public interface AbstractMutableArea extends AbstractArea {
 
@@ -478,7 +478,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToLeftTopOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToLeftTopOf(AbstractArea abstractArea) {
         this.setLeftTopPos(abstractArea.getLeftTopPosX(), abstractArea.getLeftTopPosY());
@@ -487,7 +487,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToRightTopOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToRightTopOf(AbstractArea abstractArea) {
         this.setRightTopPos(abstractArea.getRightTopPosX(), abstractArea.getRightTopPosY());
@@ -496,7 +496,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToLeftBottomOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToLeftBottomOf(AbstractArea abstractArea) {
         this.setLeftBottomPos(abstractArea.getLeftBottomPosX(), abstractArea.getLeftBottomPosY());
@@ -505,7 +505,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToRightBottomOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToRightBottomOf(AbstractArea abstractArea) {
         this.setRightBottomPos(abstractArea.getRightBottomPosX(), abstractArea.getRightBottomPosY());
@@ -514,7 +514,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToLeftCenterOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToLeftCenterOf(AbstractArea abstractArea) {
         this.setLeftCenterPos(abstractArea.getLeftCenterPosX(), abstractArea.getLeftCenterPosY());
@@ -523,7 +523,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToRightCenterOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToRightCenterOf(AbstractArea abstractArea) {
         this.setRightCenterPos(abstractArea.getRightCenterPosX(), abstractArea.getRightCenterPosY());
@@ -532,7 +532,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToCenterTopOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToCenterTopOf(AbstractArea abstractArea) {
         this.setCenterTopPos(abstractArea.getCenterTopPosX(), abstractArea.getCenterTopPosY());
@@ -541,7 +541,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToCenterBottomOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToCenterBottomOf(AbstractArea abstractArea) {
         this.setCenterBottomPos(abstractArea.getCenterBottomPosX(), abstractArea.getCenterBottomPosY());
@@ -550,7 +550,7 @@ public interface AbstractMutableArea extends AbstractArea {
     /**
      * <p>moveToCenterCentorOf.</p>
      *
-     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.commons.areas.AbstractArea} object.
+     * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     default void moveToCenterCentorOf(AbstractArea abstractArea) {
         this.setCenter(abstractArea);

@@ -43,7 +43,7 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  * <p>SettingFIleParser_0_3_0 class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     /**
@@ -115,6 +115,8 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
                 STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
         gameSettings.setIconFilePath(getString(gameSettings.getCommonSettings(),
                 STRING_ICON_FILE_PATH, "resources/www/icon/icon.png"));
+        gameSettings.setMaxFPS(getInteger(gameSettings.getCommonSettings(),
+                STRING_MAX_FPS, -1));
     }
 
 

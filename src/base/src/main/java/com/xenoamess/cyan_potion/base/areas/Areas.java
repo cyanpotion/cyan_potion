@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
  * Utility class for Area.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class Areas {
     private Areas() {

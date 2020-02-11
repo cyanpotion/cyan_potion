@@ -22,45 +22,42 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
- * a simple immutable area class
+ * a simple mutable area class
  * must create it from Areas.
  *
  * @author XenoAmess
- * @version 0.157.0
- * @see Areas#generateImmutableAreaFromArea(AbstractArea)
- * @see Areas#generateImmutableAreaFromLeftTop(float, float, float, float)
- * @see Areas#generateImmutableAreaFromArea(float, float, float, float)
+ * @version 0.158.0
+ * @see Areas#generateMutableAreaFromArea(AbstractArea)
+ * @see Areas#generateMutableAreaFromLeftTop(float, float, float, float)
+ * @see Areas#generateMutableAreaFromArea(float, float, float, float)
  */
-public final class SimpleImmutableArea implements AbstractImmutableArea {
-    private final float leftTopPosX;
-    private final float leftTopPosY;
-    private final float width;
-    private final float height;
+public final class SimpleMutableArea implements AbstractMutableArea {
+    private float leftTopPosX;
+    private float leftTopPosY;
+    private float width;
+    private float height;
 
     /**
-     * <p>Constructor for ImmutableArea.</p>
+     * <p>Constructor for MutableArea.</p>
      *
      * @param abstractArea area
      */
-    SimpleImmutableArea(AbstractArea abstractArea) {
-        this.leftTopPosX = abstractArea.getLeftTopPosX();
-        this.leftTopPosY = abstractArea.getLeftTopPosY();
-        this.width = abstractArea.getWidth();
-        this.height = abstractArea.getHeight();
+    public SimpleMutableArea(AbstractArea abstractArea) {
+        this.cover(abstractArea);
     }
 
     /**
-     * <p>Constructor for ImmutableArea.</p>
+     * <p>Constructor for MutableArea.</p>
      *
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
      * @param width       a float.
      * @param height      a float.
      */
-    SimpleImmutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
+    public SimpleMutableArea(float leftTopPosX, float leftTopPosY, float width, float height) {
         this.leftTopPosX = leftTopPosX;
         this.leftTopPosY = leftTopPosY;
         this.width = width;
@@ -97,5 +94,37 @@ public final class SimpleImmutableArea implements AbstractImmutableArea {
     @Override
     public float getHeight() {
         return this.height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeftTopPosX(float leftTopPosX) {
+        this.leftTopPosX = leftTopPosX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeftTopPosY(float leftTopPosY) {
+        this.leftTopPosY = leftTopPosY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHeight(float height) {
+        this.height = height;
     }
 }

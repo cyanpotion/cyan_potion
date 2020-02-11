@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractArea;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.RemoteCallEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {

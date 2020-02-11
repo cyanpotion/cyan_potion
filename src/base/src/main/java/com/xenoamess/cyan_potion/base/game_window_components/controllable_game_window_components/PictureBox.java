@@ -37,7 +37,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
 
@@ -104,6 +104,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@inheritDoc}
      *
      * <p>draw.</p>
+     *
+     * @param abstractScene a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractScene} object.
      */
     public void draw(AbstractScene abstractScene) {
         this.picture.draw(abstractScene);

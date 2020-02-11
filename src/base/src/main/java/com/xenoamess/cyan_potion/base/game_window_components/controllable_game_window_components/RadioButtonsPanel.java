@@ -46,7 +46,7 @@ import java.util.List;
  * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class RadioButtonsPanel extends Panel {
     @JsonIgnore
@@ -77,7 +77,7 @@ public class RadioButtonsPanel extends Panel {
     /**
      * <p>Getter for the field <code>radioButtonSet</code>.</p>
      *
-     * @return a {@link RadioButtonGroup} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      */
     public RadioButtonGroup getRadioButtonGroup() {
         return radioButtonGroup;
@@ -100,13 +100,14 @@ public class RadioButtonsPanel extends Panel {
     /**
      * <p>createNewRadioButton.</p>
      *
+     * @param <T>                class of the returned RadioButton.
      * @param tClass             class of the returned RadioButton.
      * @param buttonText         a {@link java.lang.String} object.
      * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
      */
-    public <T extends RadioButton> RadioButton createNewRadioButton(Class<T> tClass, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
+    public <T extends RadioButton> T createNewRadioButton(Class<T> tClass, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
         T radioButton = null;
         try {
             Constructor<T> constructor = tClass.getConstructor(GameWindow.class, RadioButtonGroup.class, String.class, Texture.class, Texture.class);

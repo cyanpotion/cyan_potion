@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
  * AbstractArea means a rectangle(or maybe not rectangle, but something else like circle)
@@ -33,7 +33,7 @@ package com.xenoamess.cyan_potion.base.commons.areas;
  * you can see implementations of this class for more details.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public interface AbstractArea {
     /**
@@ -279,6 +279,26 @@ public interface AbstractArea {
     }
 
     /**
+     * detect if a PosX in this Area
+     *
+     * @param posX posX
+     * @return whether posX in this area.
+     */
+    default boolean ifPosXInArea(float posX) {
+        return posX >= this.getLeftPosX() && posX <= this.getRightPosX();
+    }
+
+    /**
+     * detect if a PosY in this Area
+     *
+     * @param posY posY
+     * @return whether posY in this area.
+     */
+    default boolean ifPosYInArea(float posY) {
+        return posY >= this.getTopPosY() && posY <= this.getBottomPosY();
+    }
+
+    /**
      * detect if a Pos in this Area
      * <p>
      * if width or height be NaN, then return false.
@@ -288,13 +308,19 @@ public interface AbstractArea {
      * @return whether point (posX,posY) in this area.
      */
     default boolean ifPosInArea(float posX, float posY) {
-        if (Float.isNaN(this.getWidth()) || Float.isNaN(this.getHeight())) {
-            return false;
-        }
-        return (posX >= this.getLeftTopPosX()
-                && posX <= this.getLeftTopPosX() + this.getWidth()
-                && posY >= this.getLeftTopPosY()
-                && posY <= this.getLeftTopPosY() + this.getHeight());
+        return this.ifPosXInArea(posX) && this.ifPosYInArea(posY);
+    }
+
+    /**
+     * detect if a point in this Area
+     * <p>
+     * if width or height be NaN, then return false.
+     *
+     * @param point point
+     * @return whether point (posX,posY) in this area.
+     */
+    default boolean ifPointInArea(AbstractPoint point) {
+        return this.ifPosXInArea(point.getPosX()) && this.ifPosYInArea(point.getPosY());
     }
 
 }

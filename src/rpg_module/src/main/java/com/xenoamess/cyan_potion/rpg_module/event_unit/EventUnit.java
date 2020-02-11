@@ -31,7 +31,6 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.ImageJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ import java.util.List;
  * <p>EventUnit class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class EventUnit extends Unit {
     private EventUnitJson eventUnitJson;
@@ -55,11 +54,13 @@ public class EventUnit extends Unit {
     public EventUnit(AbstractEntityScene scene, EventUnitJson eventUnitJson) {
         //todo
         super(scene,
-                new Vector3f(eventUnitJson.x * RpgModuleDataCenter.TILE_SIZE,
-                        eventUnitJson.y * RpgModuleDataCenter.TILE_SIZE,
-                        Unit.DEFAULT_UNIT_LAYER),
-                new Vector3f(RpgModuleDataCenter.TILE_SIZE,
-                        RpgModuleDataCenter.TILE_SIZE, 0), null);
+                eventUnitJson.x * RpgModuleDataCenter.TILE_SIZE,
+                eventUnitJson.y * RpgModuleDataCenter.TILE_SIZE,
+                RpgModuleDataCenter.TILE_SIZE,
+                RpgModuleDataCenter.TILE_SIZE,
+                Unit.DEFAULT_UNIT_LAYER,
+                null
+        );
         this.setEventUnitJson(eventUnitJson);
         for (PageJson pageJson : eventUnitJson.pages) {
             getEventPages().add(new EventPage(pageJson, this));

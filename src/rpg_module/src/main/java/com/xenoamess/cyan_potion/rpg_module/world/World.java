@@ -36,6 +36,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.math.FrameFloat;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -55,6 +56,7 @@ import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -72,7 +74,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class World extends AbstractEntityScene {
     @JsonIgnore
@@ -230,11 +232,11 @@ public class World extends AbstractEntityScene {
                     this.getRpgModuleDataCenter().getGameSystemJson().startY;
             LOGGER.debug("startX : {} , startY : {}", startX, startX);
             this.setPlayer(new Player(this,
-                    new Vector3f(startX * RpgModuleDataCenter.TILE_SIZE,
-                            startY * RpgModuleDataCenter.TILE_SIZE, 100),
-                    new Vector3f(RpgModuleDataCenter.TILE_SIZE,
-                            RpgModuleDataCenter.TILE_SIZE,
-                            Unit.DEFAULT_UNIT_LAYER),
+                    startX * RpgModuleDataCenter.TILE_SIZE,
+                    startY * RpgModuleDataCenter.TILE_SIZE,
+                    RpgModuleDataCenter.TILE_SIZE,
+                    RpgModuleDataCenter.TILE_SIZE,
+                    Unit.DEFAULT_UNIT_LAYER,
                     new ResourceInfo(
                             WalkingAnimation4Dirs.class,
                             "characters",
@@ -245,7 +247,8 @@ public class World extends AbstractEntityScene {
             this.getPlayer().registerShape();
             getDynamicEntitySet().add(getPlayer());
 
-            this.getCamera().getPosition().set(this.getPlayer().getCenterPos());
+            this.getCamera().setPos(this.getPlayer().getCenterPosX(), this.getPlayer().getCenterPosY());
+
         }
 
         this.setMenu(new Menu(this));
@@ -322,7 +325,6 @@ public class World extends AbstractEntityScene {
      * <p>correctCamera.</p>
      */
     public void correctCamera() {
-        Vector3f pos = this.getCamera().getPosition();
 
         float wDivScale =
                 getGameMap().getWidth() * RpgModuleDataCenter.TILE_SIZE;
@@ -334,22 +336,25 @@ public class World extends AbstractEntityScene {
         float windowHeight2DivScale =
                 (this.getGameWindow().getLogicWindowHeight() / 2F) / this.getScale();
 
+        float posX = getCamera().getPosX();
+        float posY = getCamera().getPosY();
 
-        if (pos.x < windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
-            pos.x = windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
+        if (posX < windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            posX = windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.x > wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
-            pos.x = wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
+        if (posX > wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            posX = wDivScale - windowWidth2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.y < windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
-            pos.y = windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
+        if (posY < windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            posY = windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
 
-        if (pos.y > hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
-            pos.y = hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
+        if (posY > hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F) {
+            posY = hDivScale - windowHeight2DivScale - RpgModuleDataCenter.TILE_SIZE / 2F;
         }
+        getCamera().setPos(posX, posY);
     }
 
     /**
@@ -381,26 +386,28 @@ public class World extends AbstractEntityScene {
      * @param player player
      */
     public void preparePlayerMovement(Unit player) {
-        player.getMovement().set(0, 0);
+        player.setMovement(0, 0);
         if (this.getMenu().getShow()) {
             return;
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {
-            player.getMovement().add(0,
-                    -player.getMoveSpeed());
+            player.setMovementY(player.getMovementY() - player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_LEFT))) {
-            player.getMovement().add(-player.getMoveSpeed(), 0);
+            player.setMovementX(player.getMovementX() - player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_DOWN))) {
-            player.getMovement().add(0,
-                    player.getMoveSpeed());
+            player.setMovementY(player.getMovementY() + player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_RIGHT))) {
-            player.getMovement().add(player.getMoveSpeed(), 0);
+            player.setMovementX(player.getMovementX() + player.getMoveSpeed().getValue());
         }
+
+
     }
 
+
+    static final float cameraLerp = 0.05f;
 
     /**
      * {@inheritDoc}
@@ -413,7 +420,10 @@ public class World extends AbstractEntityScene {
             dynamicEntity.update();
         }
 
-        this.getCamera().getPosition().lerp(getPlayer().getCenterPos(), 0.05f);
+        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
+        Vector2f vector2f = new Vector2f(this.getCamera().getPosX(), this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()), lerpFloat.getValue());
+
+        this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();
         this.fix();
     }
@@ -443,9 +453,9 @@ public class World extends AbstractEntityScene {
     @Override
     public void draw() {
         int posX =
-                (int) (this.getCamera().getPosition().x / RpgModuleDataCenter.TILE_SIZE);
+                (int) (this.getCamera().getPosX() / RpgModuleDataCenter.TILE_SIZE);
         int posY =
-                (int) (this.getCamera().getPosition().y / RpgModuleDataCenter.TILE_SIZE);
+                (int) (this.getCamera().getPosY() / RpgModuleDataCenter.TILE_SIZE);
 
         //TODO
         for (int i = 0; i < getViewX(); i++) {
@@ -470,12 +480,12 @@ public class World extends AbstractEntityScene {
 
         for (StaticEntity staticEntity : this.getStaticEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getCenterPos().z), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getLayer()), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getCenterPos().z), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getLayer()), k -> new ArrayList<>());
             entities.add(dynamicEntity);
         }
 

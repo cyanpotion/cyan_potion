@@ -35,7 +35,7 @@ import com.xenoamess.x8l.X8lTree;
  * <p>DataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class DataCenter {
 
@@ -72,10 +72,6 @@ public class DataCenter {
      */
     private int consolePort = DEFAULT_CONSOLE_PORT;
 
-    /**
-     * Constant <code>FRAME_CAP=1 / 60.0</code>
-     */
-    public static final double FRAME_CAP = 1 / 60.0;
     /**
      * Constant <code>SCALE=2</code>
      */

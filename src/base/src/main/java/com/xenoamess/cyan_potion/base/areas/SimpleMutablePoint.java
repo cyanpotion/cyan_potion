@@ -22,21 +22,67 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
- * Immutable Area
+ * <p>SimpleMutablePoint class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
-public interface AbstractImmutableArea extends AbstractArea {
+public final class SimpleMutablePoint implements AbstractMutablePoint {
+    private float posX;
+    private float posY;
+
+    /**
+     * <p>Constructor for SimpleMutablePoint.</p>
+     *
+     * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
+    public SimpleMutablePoint(AbstractPoint point) {
+        this(point.getPosX(), point.getPosY());
+    }
+
+    /**
+     * <p>Constructor for SimpleMutablePoint.</p>
+     *
+     * @param posX a float.
+     * @param posY a float.
+     */
+    public SimpleMutablePoint(float posX, float posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    default boolean ifMutable() {
-        return false;
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float getPosX() {
+        return this.posX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float getPosY() {
+        return this.posY;
     }
 }

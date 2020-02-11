@@ -117,7 +117,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 @JsonSerialize(using = ResourceInfoSerializer.class)
 @JsonDeserialize(using = ResourceInfoDeserializer.class)
@@ -224,6 +224,11 @@ public class ResourceInfo<T extends AbstractResource> {
         return resourceClass;
     }
 
+    /**
+     * <p>Getter for the field <code>resourceClass</code>.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     /**
      * <p>Getter for the field <code>resourceClass</code>.</p>
      *

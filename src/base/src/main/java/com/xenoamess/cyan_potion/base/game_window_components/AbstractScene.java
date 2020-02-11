@@ -35,7 +35,7 @@ import org.joml.Vector4fc;
  * <p>Abstract AbstractScene class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public abstract class AbstractScene extends AbstractGameWindowComponent {
     private Camera camera = new Camera(0, 0);
@@ -247,7 +247,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @return relativePosX
      */
     public float absolutePosToRelativeX(Camera camera, float absolutePosX, float scale) {
-        return (absolutePosX - camera.getPosition().x) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
+        return (absolutePosX - camera.getPosX()) * scale + this.getGameWindow().getLogicWindowWidth() / 2F;
     }
 
     /**
@@ -280,7 +280,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
      * @return relativePosY
      */
     public float absolutePosToRelativeY(Camera camera, float absolutePosX, float scale) {
-        return (absolutePosX - camera.getPosition().y) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
+        return (absolutePosX - camera.getPosY()) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
     }
 
     /**

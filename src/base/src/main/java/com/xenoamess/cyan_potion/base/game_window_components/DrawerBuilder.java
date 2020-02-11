@@ -24,6 +24,18 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+/**
+ * <p>Abstract DrawerBuilder class.</p>
+ *
+ * @author XenoAmess
+ * @version 0.158.0
+ */
 public abstract class DrawerBuilder<T> {
+    /**
+     * <p>build.</p>
+     *
+     * @param superUpdater a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
+     */
     public abstract DrawerInterface<T> build(DrawerInterface<? super T> superUpdater);
 }

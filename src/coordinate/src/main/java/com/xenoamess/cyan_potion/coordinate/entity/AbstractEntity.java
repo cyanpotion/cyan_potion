@@ -24,13 +24,12 @@
 
 package com.xenoamess.cyan_potion.coordinate.entity;
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-import org.joml.Vector3f;
 
 import java.util.Objects;
 
@@ -43,12 +42,18 @@ import java.util.Objects;
  * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an Entity.
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public abstract class AbstractEntity implements AbstractMutableArea {
     private final AbstractEntityScene scene;
-    private final Vector3f centerPos;
-    private final Vector3f size;
+    private float leftTopPosX;
+    private float leftTopPosY;
+
+    private int layer;
+
+    private float width;
+    private float height;
+
     private AbstractShape shape;
     private AbstractPictureInterface picture = new Picture();
 
@@ -56,18 +61,28 @@ public abstract class AbstractEntity implements AbstractMutableArea {
     /**
      * <p>Constructor for AbstractEntity.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
-    public AbstractEntity(AbstractEntityScene scene, Vector3f centerPos,
-                          Vector3f size, Bindable bindable,
-                          AbstractShape shape) {
+    public AbstractEntity(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable,
+            AbstractShape shape
+    ) {
         this.scene = scene;
-        this.centerPos = new Vector3f(centerPos);
-        this.size = new Vector3f(size);
+        this.width = width;
+        this.height = height;
+        this.setCenterPos(centerPosX, centerPosY);
+        this.layer = layer;
         this.setShape(shape);
         if (this.getShape() != null) {
             this.getShape().setEntity(this);
@@ -125,45 +140,41 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         return scene;
     }
 
-    /**
-     * <p>Getter for the field <code>centerPos</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getCenterPos() {
-        return centerPos;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPos</code>.</p>
-     *
-     * @param centerPos centerPos
-     */
-    public void setCenterPos(Vector3f centerPos) {
-        if (centerPos != null) {
-            this.centerPos.set(centerPos);
-        }
-    }
-
-    /**
-     * <p>Getter for the field <code>size</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getSize() {
-        return size;
-    }
-
-    /**
-     * <p>Setter for the field <code>size</code>.</p>
-     *
-     * @param size size
-     */
-    public void setSize(Vector3f size) {
-        if (size != null) {
-            this.size.set(size);
-        }
-    }
+//    /**
+//     * <p>Getter for the field <code>centerPos</code>.</p>
+//     *
+//     * @return return
+//     */
+//    public Vector3fc getCenterPos() {
+//        return centerPos;
+//    }
+//
+//    /**
+//     * <p>Setter for the field <code>centerPos</code>.</p>
+//     *
+//     * @param centerPos centerPos
+//     */
+//    public void setCenterPos(Vector3f centerPos) {
+//        this.centerPos.set(centerPos);
+//    }
+//
+//    /**
+//     * <p>Getter for the field <code>size</code>.</p>
+//     *
+//     * @return return
+//     */
+//    public Vector3fc getSize() {
+//        return size;
+//    }
+//
+//    /**
+//     * <p>Setter for the field <code>size</code>.</p>
+//     *
+//     * @param size size
+//     */
+//    public void setSize(Vector3f size) {
+//        this.size.set(size);
+//    }
 
     /**
      * <p>Getter for the field <code>shape</code>.</p>
@@ -187,40 +198,8 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      * {@inheritDoc}
      */
     @Override
-    public float getCenterPosX() {
-        return this.getCenterPos().x();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosY() {
-        return this.getCenterPos().y();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosX(float centerPosX) {
-        this.getCenterPos().x = centerPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosY(float centerPosY) {
-        this.getCenterPos().y = centerPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public float getLeftTopPosX() {
-        return this.getCenterPosX() - getWidth() / 2F;
+        return this.leftTopPosX;
     }
 
     /**
@@ -228,7 +207,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public float getLeftTopPosY() {
-        return this.getCenterPosY() - getHeight() / 2F;
+        return this.leftTopPosY;
     }
 
     /**
@@ -236,7 +215,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public void setLeftTopPosX(float newLeftTopPosX) {
-        this.setCenterPosX(newLeftTopPosX + getWidth() / 2);
+        this.leftTopPosX = newLeftTopPosX;
     }
 
     /**
@@ -244,7 +223,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public void setLeftTopPosY(float newLeftTopPosY) {
-        this.setCenterPosY(newLeftTopPosY + getHeight() / 2);
+        this.leftTopPosY = newLeftTopPosY;
     }
 
     /**
@@ -252,7 +231,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public float getWidth() {
-        return this.getSize().x();
+        return this.width;
     }
 
     /**
@@ -260,7 +239,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public float getHeight() {
-        return this.getSize().y();
+        return this.height;
     }
 
     /**
@@ -268,7 +247,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public void setWidth(float newWidth) {
-        this.getSize().x = newWidth;
+        this.width = newWidth;
     }
 
     /**
@@ -276,7 +255,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public void setHeight(float newHeight) {
-        this.getSize().y = newHeight;
+        this.height = newHeight;
     }
 
     /**
@@ -284,17 +263,41 @@ public abstract class AbstractEntity implements AbstractMutableArea {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof AbstractEntity)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractEntity that = (AbstractEntity) o;
-        return Objects.equals(getScene(), that.getScene()) &&
-                Objects.equals(getCenterPos(), that.getCenterPos()) &&
-                Objects.equals(getSize(), that.getSize()) &&
+        return Float.compare(that.getLeftTopPosX(), getLeftTopPosX()) == 0 &&
+                Float.compare(that.getLeftTopPosY(), getLeftTopPosY()) == 0 &&
+                Float.compare(that.getWidth(), getWidth()) == 0 &&
+                Float.compare(that.getHeight(), getHeight()) == 0 &&
+                Objects.equals(getScene(), that.getScene()) &&
                 Objects.equals(getShape(), that.getShape()) &&
                 Objects.equals(getPicture(), that.getPicture());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
+    }
+
+    /**
+     * <p>Getter for the field <code>layer</code>.</p>
+     *
+     * @return a int.
+     */
+    public int getLayer() {
+        return layer;
+    }
+
+    /**
+     * <p>Setter for the field <code>layer</code>.</p>
+     *
+     * @param layer a int.
+     */
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }

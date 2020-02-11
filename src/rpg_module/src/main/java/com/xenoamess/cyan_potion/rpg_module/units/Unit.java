@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.units;
 
+import com.xenoamess.cyan_potion.base.math.FrameFloat;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -41,61 +42,108 @@ import java.util.Objects;
  * <p>Unit class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public class Unit extends AbstractDynamicEntity {
     /**
      * Constant <code>DEFAULT_UNIT_LAYER=100</code>
      */
     public static final int DEFAULT_UNIT_LAYER = 100;
+    private static final float DEFAULT_UNIT_SPEED = 100F;
 
     private boolean moving = false;
-    private Vector2f movement = new Vector2f();
-    private float moveSpeed = 3f;
+    private float movementX;
+    private float movementY;
+
+
+    private final FrameFloat moveSpeed;
     private int faceDir = 180;
     private boolean canMove = true;
 
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape     a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
-    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                Bindable bindable, AbstractShape shape) {
-        super(scene, centerPos, size, bindable, shape);
+    public Unit(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable,
+            AbstractShape shape) {
+        super(
+                scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                bindable, shape
+        );
+        this.moveSpeed = new FrameFloat(scene.getGameWindow().getGameManager(), DEFAULT_UNIT_SPEED);
     }
 
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene     a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos centerPos
-     * @param size      a {@link org.joml.Vector3f} object.
-     * @param bindable  a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
-    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                Bindable bindable) {
-        this(scene, centerPos, size, bindable, new HorizontalRectangle(null,
-                centerPos, size));
+    public Unit(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            Bindable bindable) {
+        this(
+                scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                bindable,
+                new HorizontalRectangle(
+                        null,
+                        new Vector3f(centerPosX, centerPosY, layer),
+                        new Vector3f(width, height, 0)
+                )
+        );
     }
 
     /**
      * <p>Constructor for Unit.</p>
      *
      * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param centerPos                         a {@link org.joml.Vector3f} object.
-     * @param size                              a {@link org.joml.Vector3f} object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param centerPosX                        a float.
+     * @param centerPosY                        a float.
+     * @param width                             a float.
+     * @param height                            a float.
+     * @param layer                             a int.
      */
-    public Unit(AbstractEntityScene scene, Vector3f centerPos, Vector3f size,
-                ResourceInfo walkingAnimation4DirsResourceInfo,
-                ResourceManager resourceManager) {
-        this(scene, centerPos, size, null);
+    public Unit(
+            AbstractEntityScene scene,
+            float centerPosX, float centerPosY,
+            float width, float height,
+            int layer,
+            ResourceInfo walkingAnimation4DirsResourceInfo,
+            ResourceManager resourceManager) {
+        this(scene,
+                centerPosX, centerPosY,
+                width, height,
+                layer,
+                null);
         this.loadWalkingAnimations(walkingAnimation4DirsResourceInfo, resourceManager);
     }
 
@@ -105,21 +153,24 @@ public class Unit extends AbstractDynamicEntity {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Unit)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Unit unit = (Unit) o;
         return isMoving() == unit.isMoving() &&
-                Float.compare(unit.getMoveSpeed(), getMoveSpeed()) == 0 &&
+                Float.compare(unit.getMovementX(), getMovementX()) == 0 &&
+                Float.compare(unit.getMovementY(), getMovementY()) == 0 &&
                 getFaceDir() == unit.getFaceDir() &&
                 isCanMove() == unit.isCanMove() &&
-                Objects.equals(getMovement(), unit.getMovement());
+                Objects.equals(getMoveSpeed(), unit.getMoveSpeed());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMoving(), getMovementX(), getMovementY(), getMoveSpeed(), getFaceDir(), isCanMove());
     }
 
     /**
@@ -128,24 +179,23 @@ public class Unit extends AbstractDynamicEntity {
     @Override
     public void update() {
         if (!this.isCanMove()) {
-            this.getMovement().set(0, 0);
+            this.setMovement(0, 0);
         }
-        if (getMovement().x != 0 || getMovement().y != 0) {
+        if (getMovementX() != 0 || getMovementY() != 0) {
             setMoving(true);
-            setFaceDir(getFaceDir(getMovement().x, getMovement().y));
+            setFaceDir(getFaceDir(getMovementX(), getMovementY()));
 
             if (this.getPicture() instanceof WalkingAnimation4Dirs) {
                 ((WalkingAnimation4Dirs) this.getPicture()).setFaceDir(getFaceDir());
             }
-
-            if (getMovement().length() > getMoveSpeed()) {
-                this.tryMove(new Vector3f(
-                                getMovement().mul(getMoveSpeed() / getMovement().length(), new Vector2f()),
-                                0
-                        )
+            float moveLength = new Vector2f(getMovementX(), getMovementY()).length();
+            if (moveLength > getMoveSpeed().getValue()) {
+                this.tryMove(
+                        getMovementX() * getMoveSpeed().getValue() / moveLength,
+                        getMovementY() * getMoveSpeed().getValue() / moveLength
                 );
             } else {
-                this.tryMove(new Vector3f(getMovement(), 0));
+                this.tryMove(getMovementX(), getMovementY());
             }
         } else {
             setMoving(false);
@@ -188,40 +238,14 @@ public class Unit extends AbstractDynamicEntity {
         this.moving = moving;
     }
 
-    /**
-     * <p>Getter for the field <code>movement</code>.</p>
-     *
-     * @return return
-     */
-    public Vector2f getMovement() {
-        return movement;
-    }
-
-    /**
-     * <p>Setter for the field <code>movement</code>.</p>
-     *
-     * @param movement movement
-     */
-    public void setMovement(Vector2f movement) {
-        this.movement = movement;
-    }
 
     /**
      * <p>Getter for the field <code>moveSpeed</code>.</p>
      *
      * @return a float.
      */
-    public float getMoveSpeed() {
+    public FrameFloat getMoveSpeed() {
         return moveSpeed;
-    }
-
-    /**
-     * <p>Setter for the field <code>moveSpeed</code>.</p>
-     *
-     * @param moveSpeed a int.
-     */
-    public void setMoveSpeed(int moveSpeed) {
-        this.moveSpeed = moveSpeed;
     }
 
     /**
@@ -258,6 +282,53 @@ public class Unit extends AbstractDynamicEntity {
      */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
+    }
+
+    /**
+     * <p>Getter for the field <code>movementX</code>.</p>
+     *
+     * @return a float.
+     */
+    public float getMovementX() {
+        return movementX;
+    }
+
+    /**
+     * <p>Setter for the field <code>movementX</code>.</p>
+     *
+     * @param movementX a float.
+     */
+    public void setMovementX(float movementX) {
+        this.movementX = movementX;
+    }
+
+    /**
+     * <p>Getter for the field <code>movementY</code>.</p>
+     *
+     * @return a float.
+     */
+    public float getMovementY() {
+        return movementY;
+    }
+
+    /**
+     * <p>Setter for the field <code>movementY</code>.</p>
+     *
+     * @param movementY a float.
+     */
+    public void setMovementY(float movementY) {
+        this.movementY = movementY;
+    }
+
+    /**
+     * <p>setMovement.</p>
+     *
+     * @param movementX a float.
+     * @param movementY a float.
+     */
+    public void setMovement(float movementX, float movementY) {
+        this.setMovementX(movementX);
+        this.setMovementY(movementY);
     }
 }
 

@@ -33,7 +33,7 @@ import com.xenoamess.cyan_potion.base.render.Model;
  * <p>AbstractBindablePicture class.</p>
  *
  * @author XenoAmess
- * @version 0.157.0
+ * @version 0.158.0
  */
 public abstract class AbstractBindablePicture extends AbstractPicture implements Bindable {
     /**
