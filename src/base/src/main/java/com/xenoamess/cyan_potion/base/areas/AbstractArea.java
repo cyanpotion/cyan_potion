@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
  * AbstractArea means a rectangle(or maybe not rectangle, but something else like circle)

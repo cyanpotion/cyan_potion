@@ -27,5 +27,5 @@
  *
  * @since 0.140.0
  */
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 

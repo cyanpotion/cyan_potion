@@ -22,28 +22,38 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
-public final class SimpleImmutablePoint implements AbstractImmutablePoint {
-    private final float posX;
-    private final float posY;
+public final class SimpleMutablePoint implements AbstractMutablePoint {
+    private float posX;
+    private float posY;
 
-    public SimpleImmutablePoint(AbstractPoint point) {
+    public SimpleMutablePoint(AbstractPoint point) {
         this(point.getPosX(), point.getPosY());
     }
 
-    public SimpleImmutablePoint(float posX, float posY) {
+    public SimpleMutablePoint(float posX, float posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
     @Override
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    @Override
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
+
+    @Override
     public float getPosX() {
-        return posX;
+        return this.posX;
     }
 
     @Override
     public float getPosY() {
-        return posY;
+        return this.posY;
     }
 }

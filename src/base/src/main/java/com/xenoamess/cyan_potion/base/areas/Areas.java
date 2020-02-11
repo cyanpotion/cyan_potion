@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
 /**
  * Utility class for Area.

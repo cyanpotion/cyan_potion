@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;

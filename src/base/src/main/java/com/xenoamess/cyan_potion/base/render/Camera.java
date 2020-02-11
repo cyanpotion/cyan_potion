@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutablePoint;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutablePoint;
 
 /**
  * <p>Camera class.</p>

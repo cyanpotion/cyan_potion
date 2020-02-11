@@ -24,7 +24,7 @@
 
 package com.xenoamess.cyan_potion.coordinate.entity;
 
-import com.xenoamess.cyan_potion.base.commons.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;

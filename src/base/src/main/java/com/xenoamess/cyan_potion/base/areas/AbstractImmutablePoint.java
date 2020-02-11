@@ -22,29 +22,15 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.base.commons.areas;
+package com.xenoamess.cyan_potion.base.areas;
 
-public interface AbstractPoint {
-    /**
-     * see if this point is mutable.
-     *
-     * @return true if mutable
-     */
-    boolean ifMutable();
-
-    float getPosX();
-
-    float getPosY();
+public interface AbstractImmutablePoint extends AbstractPoint {
 
     /**
-     * detect if a point in this Area
-     * <p>
-     * if width or height be NaN, then return false.
-     *
-     * @param area area
-     * @return whether point (posX,posY) in this area.
+     * {@inheritDoc}
      */
-    default boolean ifPointInArea(AbstractArea area) {
-        return area.ifPosXInArea(this.getPosX()) && area.ifPosYInArea(this.getPosY());
+    @Override
+    default boolean ifMutable() {
+        return false;
     }
 }
