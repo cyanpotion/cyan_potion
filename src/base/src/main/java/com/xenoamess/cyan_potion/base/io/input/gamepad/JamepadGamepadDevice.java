@@ -91,6 +91,10 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
 
     /**
      * <p>setVibration.</p>
+     *
+     * @param leftVibration  a int.
+     * @param rightVibration a int.
+     * @param duration_ms    a int.
      */
     public void setVibration(int leftVibration, int rightVibration, int duration_ms) {
         this.getJamepadControllerManager().doVibration(

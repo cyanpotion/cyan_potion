@@ -63,9 +63,14 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape    a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
     public Unit(
             AbstractEntityScene scene,
@@ -87,8 +92,13 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
     public Unit(
             AbstractEntityScene scene,
@@ -116,6 +126,11 @@ public class Unit extends AbstractDynamicEntity {
      * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param centerPosX                        a float.
+     * @param centerPosY                        a float.
+     * @param width                             a float.
+     * @param height                            a float.
+     * @param layer                             a int.
      */
     public Unit(
             AbstractEntityScene scene,
@@ -133,6 +148,9 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -147,6 +165,9 @@ public class Unit extends AbstractDynamicEntity {
                 Objects.equals(getMoveSpeed(), unit.getMoveSpeed());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), isMoving(), getMovementX(), getMovementY(), getMoveSpeed(), getFaceDir(), isCanMove());
@@ -263,22 +284,48 @@ public class Unit extends AbstractDynamicEntity {
         this.canMove = canMove;
     }
 
+    /**
+     * <p>Getter for the field <code>movementX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMovementX() {
         return movementX;
     }
 
+    /**
+     * <p>Setter for the field <code>movementX</code>.</p>
+     *
+     * @param movementX a float.
+     */
     public void setMovementX(float movementX) {
         this.movementX = movementX;
     }
 
+    /**
+     * <p>Getter for the field <code>movementY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMovementY() {
         return movementY;
     }
 
+    /**
+     * <p>Setter for the field <code>movementY</code>.</p>
+     *
+     * @param movementY a float.
+     */
     public void setMovementY(float movementY) {
         this.movementY = movementY;
     }
 
+    /**
+     * <p>setMovement.</p>
+     *
+     * @param movementX a float.
+     * @param movementY a float.
+     */
     public void setMovement(float movementX, float movementY) {
         this.setMovementX(movementX);
         this.setMovementY(movementY);

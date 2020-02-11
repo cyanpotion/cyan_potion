@@ -229,6 +229,11 @@ public class ResourceInfo<T extends AbstractResource> {
      *
      * @return a {@link java.lang.Class} object.
      */
+    /**
+     * <p>Getter for the field <code>resourceClass</code>.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     public String getType() {
         return type;
     }

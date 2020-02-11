@@ -324,6 +324,8 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>canMove.</p>
      *
+     * @param movementX a float.
+     * @param movementY a float.
      * @return true: can move. false: cannot move.
      */
     public boolean canMove(float movementX, float movementY) {
@@ -394,6 +396,9 @@ public abstract class AbstractShape implements AbstractMutableArea {
 
     /**
      * <p>forceMove.</p>
+     *
+     * @param movementX a float.
+     * @param movementY a float.
      */
     public void forceMove(float movementX, float movementY) {
         this.move(movementX, movementY);
@@ -402,6 +407,8 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>tryMove.</p>
      *
+     * @param movementX a float.
+     * @param movementY a float.
      * @return a boolean.
      */
     public boolean tryMove(float movementX, float movementY) {

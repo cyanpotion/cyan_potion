@@ -38,6 +38,18 @@ import java.util.Objects;
  */
 public abstract class AbstractDynamicEntity extends AbstractEntity {
 
+    /**
+     * <p>Constructor for AbstractDynamicEntity.</p>
+     *
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     */
     public AbstractDynamicEntity(
             AbstractEntityScene scene,
             float centerPosX, float centerPosY,
@@ -61,6 +73,9 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
 
     /**
      * <p>forceMove.</p>
+     *
+     * @param movementX a float.
+     * @param movementY a float.
      */
     public void forceMove(float movementX, float movementY) {
         this.move(movementX, movementY);
@@ -73,6 +88,8 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>tryMove.</p>
      *
+     * @param movementX a float.
+     * @param movementY a float.
      * @return a boolean.
      */
     public boolean tryMove(float movementX, float movementY) {
@@ -87,6 +104,8 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
     /**
      * <p>canMove.</p>
      *
+     * @param movementX a float.
+     * @param movementY a float.
      * @return a boolean.
      */
     public boolean canMove(float movementX, float movementY) {
@@ -96,6 +115,9 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
         return this.getShape().canMove(movementX, movementY);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,6 +132,9 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
                 Objects.equals(getPicture(), that.getPicture());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());

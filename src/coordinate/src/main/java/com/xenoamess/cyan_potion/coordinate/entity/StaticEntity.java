@@ -41,9 +41,14 @@ public class StaticEntity extends AbstractEntity {
     /**
      * <p>Constructor for StaticEntity.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape    a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene       a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable    a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape       a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     * @param width       a float.
+     * @param height      a float.
+     * @param layer       a int.
      */
     public StaticEntity(
             AbstractEntityScene scene,
@@ -63,6 +68,9 @@ public class StaticEntity extends AbstractEntity {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,6 +85,9 @@ public class StaticEntity extends AbstractEntity {
                 Objects.equals(getPicture(), that.getPicture());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());

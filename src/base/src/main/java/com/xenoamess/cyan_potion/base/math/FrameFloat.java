@@ -31,32 +31,66 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * FrameFloat is a float that will be used to calculate things between each frame.
  * the {@link #valueFor1Second} means value for 1 second.
  * for example if this FrameFloat means a speed, and its valueFor1Second is 100, then its speed is 100/second.
+ *
+ * @author XenoAmess
+ * @version 0.157.1-SNAPSHOT
  */
 public class FrameFloat {
     private final GameManager gameManager;
     private float valueFor1Second;
 
+    /**
+     * <p>Constructor for FrameFloat.</p>
+     *
+     * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public FrameFloat(GameManager gameManager) {
         this(gameManager, Float.NaN);
     }
 
+    /**
+     * <p>Constructor for FrameFloat.</p>
+     *
+     * @param gameManager     a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     * @param valueFor1Second a float.
+     */
     public FrameFloat(GameManager gameManager, float valueFor1Second) {
         this.gameManager = gameManager;
         this.valueFor1Second = valueFor1Second;
     }
 
+    /**
+     * <p>Getter for the field <code>valueFor1Second</code>.</p>
+     *
+     * @return a float.
+     */
     public float getValueFor1Second() {
         return valueFor1Second;
     }
 
+    /**
+     * <p>Setter for the field <code>valueFor1Second</code>.</p>
+     *
+     * @param valueFor1Second a float.
+     */
     public void setValueFor1Second(float valueFor1Second) {
         this.valueFor1Second = valueFor1Second;
     }
 
+    /**
+     * <p>getValue.</p>
+     *
+     * @return a float.
+     */
     public float getValue() {
         return (float) this.getGameManager().getTimeToLastUpdate() * this.valueFor1Second;
     }
 
+    /**
+     * <p>Getter for the field <code>gameManager</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
+     */
     public GameManager getGameManager() {
         return gameManager;
     }

@@ -37,11 +37,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * RadioButton
  * <p>
  * A RadioButton is one type of selection indicator in a list of options.
- * If an option is selected, {@link RadioButton#isSelected()} is true.
- * If the option is not selected, {@link RadioButton#isSelected()} is false.
- * When one RadioButton invoke {@link RadioButton#select()},
- * it will invoke {@link RadioButtonGroup#select(RadioButton)},
- * and then if the selected RadioButton s' number ({@link RadioButtonGroup#getSelectedRadioButtons()}'s size) in {@link RadioButtonGroup} is larger than {@link RadioButtonGroup#getSelectLimit()},
+ * If an option is selected, {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton#isSelected()} is true.
+ * If the option is not selected, {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton#isSelected()} is false.
+ * When one RadioButton invoke {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton#select()},
+ * it will invoke {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup#select(RadioButton)},
+ * and then if the selected RadioButton s' number ({@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup#getSelectedRadioButtons()}'s size) in {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} is larger than {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup#getSelectLimit()},
  * it will deselect the overdose RadioButton one by one according to the timeline.
  *
  * @author XenoAmess
@@ -63,7 +63,7 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      */
     public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup) {
         this(gameWindow, radioButtonGroup, null);
@@ -73,7 +73,7 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
     public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected) {
@@ -85,7 +85,7 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link RadioButtonGroup} object.
+     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param buttonText       a {@link java.lang.String} object.
      * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
@@ -97,7 +97,7 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup   a {@link RadioButtonGroup} object.
+     * @param radioButtonGroup   a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
@@ -109,7 +109,7 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup   a {@link RadioButtonGroup} object.
+     * @param radioButtonGroup   a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param buttonText         a {@link java.lang.String} object.
      * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
@@ -220,7 +220,7 @@ public class RadioButton extends Button {
     /**
      * <p>Getter for the field <code>radioButtonSet</code>.</p>
      *
-     * @return a {@link RadioButtonGroup} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      */
     public RadioButtonGroup getRadioButtonGroup() {
         return radioButtonGroup;

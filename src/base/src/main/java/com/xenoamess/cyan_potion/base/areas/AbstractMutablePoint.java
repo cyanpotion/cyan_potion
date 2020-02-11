@@ -24,26 +24,61 @@
 
 package com.xenoamess.cyan_potion.base.areas;
 
+/**
+ * <p>AbstractMutablePoint interface.</p>
+ *
+ * @author XenoAmess
+ * @version 0.157.1-SNAPSHOT
+ */
 public interface AbstractMutablePoint extends AbstractPoint {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     default boolean ifMutable() {
         return true;
     }
 
+    /**
+     * <p>setPosX.</p>
+     *
+     * @param posX a float.
+     */
     void setPosX(float posX);
 
+    /**
+     * <p>setPosY.</p>
+     *
+     * @param posY a float.
+     */
     void setPosY(float posY);
 
+    /**
+     * <p>setPos.</p>
+     *
+     * @param posX a float.
+     * @param posY a float.
+     */
     default void setPos(float posX, float posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
 
+    /**
+     * <p>setPos.</p>
+     *
+     * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
     default void setPos(AbstractPoint point) {
         this.setPos(point.getPosX(), point.getPosY());
     }
 
+    /**
+     * <p>cover.</p>
+     *
+     * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
     default void cover(AbstractPoint point) {
         this.setPos(point);
     }

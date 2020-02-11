@@ -40,9 +40,14 @@ public class Player extends Unit {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape    a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
     public Player(
             AbstractEntityScene scene,
@@ -63,8 +68,13 @@ public class Player extends Unit {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
     public Player(
             AbstractEntityScene scene,
@@ -87,6 +97,11 @@ public class Player extends Unit {
      * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
+     * @param centerPosX                        a float.
+     * @param centerPosY                        a float.
+     * @param width                             a float.
+     * @param height                            a float.
+     * @param layer                             a int.
      */
     public Player(
             AbstractEntityScene scene,

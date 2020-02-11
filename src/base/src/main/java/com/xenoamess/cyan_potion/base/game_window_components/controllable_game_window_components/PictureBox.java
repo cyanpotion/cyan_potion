@@ -104,6 +104,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@inheritDoc}
      *
      * <p>draw.</p>
+     *
+     * @param abstractScene a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractScene} object.
      */
     public void draw(AbstractScene abstractScene) {
         this.picture.draw(abstractScene);

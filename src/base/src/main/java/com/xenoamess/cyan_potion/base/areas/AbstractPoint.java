@@ -24,6 +24,12 @@
 
 package com.xenoamess.cyan_potion.base.areas;
 
+/**
+ * <p>AbstractPoint interface.</p>
+ *
+ * @author XenoAmess
+ * @version 0.157.1-SNAPSHOT
+ */
 public interface AbstractPoint {
     /**
      * see if this point is mutable.
@@ -32,8 +38,18 @@ public interface AbstractPoint {
      */
     boolean ifMutable();
 
+    /**
+     * <p>getPosX.</p>
+     *
+     * @return a float.
+     */
     float getPosX();
 
+    /**
+     * <p>getPosY.</p>
+     *
+     * @return a float.
+     */
     float getPosY();
 
     /**

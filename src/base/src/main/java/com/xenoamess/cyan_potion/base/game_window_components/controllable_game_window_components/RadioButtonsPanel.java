@@ -77,7 +77,7 @@ public class RadioButtonsPanel extends Panel {
     /**
      * <p>Getter for the field <code>radioButtonSet</code>.</p>
      *
-     * @return a {@link RadioButtonGroup} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      */
     public RadioButtonGroup getRadioButtonGroup() {
         return radioButtonGroup;

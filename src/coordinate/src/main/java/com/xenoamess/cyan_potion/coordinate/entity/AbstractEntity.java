@@ -61,9 +61,14 @@ public abstract class AbstractEntity implements AbstractMutableArea {
     /**
      * <p>Constructor for AbstractEntity.</p>
      *
-     * @param scene    a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     * @param shape    a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param scene      a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     * @param shape      a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape} object.
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     * @param width      a float.
+     * @param height     a float.
+     * @param layer      a int.
      */
     public AbstractEntity(
             AbstractEntityScene scene,
@@ -253,6 +258,9 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         this.height = newHeight;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -267,15 +275,28 @@ public abstract class AbstractEntity implements AbstractMutableArea {
                 Objects.equals(getPicture(), that.getPicture());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
     }
 
+    /**
+     * <p>Getter for the field <code>layer</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLayer() {
         return layer;
     }
 
+    /**
+     * <p>Setter for the field <code>layer</code>.</p>
+     *
+     * @param layer a int.
+     */
     public void setLayer(int layer) {
         this.layer = layer;
     }

@@ -47,18 +47,34 @@ public class Camera implements AbstractMutablePoint {
         this.setPosY(initY);
     }
 
+    /**
+     * <p>Getter for the field <code>posX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getPosX() {
         return posX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void setPosX(float posX) {
         this.posX = posX;
     }
 
+    /**
+     * <p>Getter for the field <code>posY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getPosY() {
         return posY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void setPosY(float posY) {
         this.posY = posY;
     }

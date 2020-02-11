@@ -604,10 +604,20 @@ public class GameSettings {
         return settingTree;
     }
 
+    /**
+     * <p>Getter for the field <code>maxFPS</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMaxFPS() {
         return maxFPS;
     }
 
+    /**
+     * <p>Setter for the field <code>maxFPS</code>.</p>
+     *
+     * @param maxFPS a int.
+     */
     public void setMaxFPS(int maxFPS) {
         this.maxFPS = maxFPS;
     }
