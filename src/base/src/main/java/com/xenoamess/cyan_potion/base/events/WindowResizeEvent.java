@@ -36,7 +36,7 @@ import java.util.Set;
  * Not implemented yet.
  *
  * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
+ * @version 0.158.0
  */
 public class WindowResizeEvent implements Event {
     @JsonIgnore

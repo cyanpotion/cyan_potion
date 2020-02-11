@@ -30,7 +30,7 @@
     <parent>
         <artifactId>cyan_potion</artifactId>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <version>0.157.1-SNAPSHOT</version>
+        <version>0.158.0</version>
     </parent>
     <artifactId>cyan_potion_demo</artifactId>
     <version>${project.parent.version}</version>

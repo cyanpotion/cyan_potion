@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * <p>EventUnitProgramCodeLineJson class.</p>
  *
  * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
+ * @version 0.158.0
  */
 public class EventUnitProgramCodeLineJson implements Serializable {
     public int code;

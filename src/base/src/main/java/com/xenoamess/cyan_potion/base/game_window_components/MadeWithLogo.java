@@ -44,7 +44,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>MadeWithLogo class.</p>
  *
  * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
+ * @version 0.158.0
  */
 public class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =

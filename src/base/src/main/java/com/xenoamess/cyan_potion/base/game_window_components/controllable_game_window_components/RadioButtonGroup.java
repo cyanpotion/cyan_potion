@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * a manager of a group of radio buttons, and operations / management.
  *
  * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
+ * @version 0.158.0
  * @see RadioButton
  */
 public class RadioButtonGroup implements Closeable {

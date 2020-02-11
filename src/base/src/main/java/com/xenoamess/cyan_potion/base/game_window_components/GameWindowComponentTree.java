@@ -45,7 +45,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.157.1-SNAPSHOT
+ * @version 0.158.0
  */
 public class GameWindowComponentTree extends SubManager {
 
