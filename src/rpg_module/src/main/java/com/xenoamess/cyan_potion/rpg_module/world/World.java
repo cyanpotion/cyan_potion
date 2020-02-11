@@ -36,6 +36,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.math.FrameFloat;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -390,16 +391,16 @@ public class World extends AbstractEntityScene {
             return;
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {
-            player.setMovementY(player.getMovementY() - player.getMoveSpeed());
+            player.setMovementY(player.getMovementY() - player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_LEFT))) {
-            player.setMovementX(player.getMovementX() - player.getMoveSpeed());
+            player.setMovementX(player.getMovementX() - player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_DOWN))) {
-            player.setMovementY(player.getMovementY() + player.getMoveSpeed());
+            player.setMovementY(player.getMovementY() + player.getMoveSpeed().getValue());
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_RIGHT))) {
-            player.setMovementX(player.getMovementX() + player.getMoveSpeed());
+            player.setMovementX(player.getMovementX() + player.getMoveSpeed().getValue());
         }
 
 
@@ -419,7 +420,8 @@ public class World extends AbstractEntityScene {
             dynamicEntity.update();
         }
 
-        Vector2f vector2f = new Vector2f(this.getCamera().getPosX(), this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()), 0.05f);
+        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
+        Vector2f vector2f = new Vector2f(this.getCamera().getPosX(), this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()), lerpFloat.getValue());
 
         this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();

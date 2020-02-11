@@ -125,16 +125,13 @@ public class WalkingAnimation4Dirs extends Animation {
     public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
-        elapsedTime /= 1000;
 
-        if (elapsedTime >= getFps()) {
-            this.setTexturePointer(this.getTexturePointer() + 1);
-            this.setLastTime(currentTime);
-        }
-
-        if (getTexturePointer() >= 4) {
-            setTexturePointer(0);
-        }
+        int texturePointer = getTexturePointer();
+        int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
+        texturePointer += textureAddNum;
+        texturePointer %= 4;
+        setTexturePointer(texturePointer);
+        this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
 
         if (!getUnit().isMoving()) {
             setTexturePointer(1);

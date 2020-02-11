@@ -1,0 +1,65 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 XenoAmess
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package com.xenoamess.cyan_potion.base.math;
+
+import com.xenoamess.cyan_potion.base.GameManager;
+
+/**
+ * FrameFloat
+ * FrameFloat is a float that will be used to calculate things between each frame.
+ * the {@link #valueFor1Second} means value for 1 second.
+ * for example if this FrameFloat means a speed, and its valueFor1Second is 100, then its speed is 100/second.
+ */
+public class FrameFloat {
+    private final GameManager gameManager;
+    private float valueFor1Second;
+
+    public FrameFloat(GameManager gameManager) {
+        this(gameManager, Float.NaN);
+    }
+
+    public FrameFloat(GameManager gameManager, float valueFor1Second) {
+        this.gameManager = gameManager;
+        this.valueFor1Second = valueFor1Second;
+    }
+
+    public float getValueFor1Second() {
+        return valueFor1Second;
+    }
+
+    public void setValueFor1Second(float valueFor1Second) {
+        this.valueFor1Second = valueFor1Second;
+    }
+
+    public float getValue() {
+        return (float) this.getGameManager().getTimeToLastUpdate() * this.valueFor1Second;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+
+}

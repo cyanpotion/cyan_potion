@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.units;
 
+import com.xenoamess.cyan_potion.base.math.FrameFloat;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -48,11 +49,14 @@ public class Unit extends AbstractDynamicEntity {
      * Constant <code>DEFAULT_UNIT_LAYER=100</code>
      */
     public static final int DEFAULT_UNIT_LAYER = 100;
+    private static final float DEFAULT_UNIT_SPEED = 100F;
 
     private boolean moving = false;
     private float movementX;
     private float movementY;
-    private float moveSpeed = 3f;
+
+
+    private final FrameFloat moveSpeed;
     private int faceDir = 180;
     private boolean canMove = true;
 
@@ -77,6 +81,7 @@ public class Unit extends AbstractDynamicEntity {
                 layer,
                 bindable, shape
         );
+        this.moveSpeed = new FrameFloat(scene.getGameWindow().getGameManager(), DEFAULT_UNIT_SPEED);
     }
 
     /**
@@ -128,27 +133,23 @@ public class Unit extends AbstractDynamicEntity {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Unit)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Unit unit = (Unit) o;
         return isMoving() == unit.isMoving() &&
-                Float.compare(unit.getMoveSpeed(), getMoveSpeed()) == 0 &&
+                Float.compare(unit.getMovementX(), getMovementX()) == 0 &&
+                Float.compare(unit.getMovementY(), getMovementY()) == 0 &&
                 getFaceDir() == unit.getFaceDir() &&
                 isCanMove() == unit.isCanMove() &&
-                Objects.equals(getMovementX(), unit.getMovementX()) &&
-                Objects.equals(getMovementY(), unit.getMovementY());
+                Objects.equals(getMoveSpeed(), unit.getMoveSpeed());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMoving(), getMovementX(), getMovementY(), getMoveSpeed(), getFaceDir(), isCanMove());
     }
 
     /**
@@ -167,10 +168,10 @@ public class Unit extends AbstractDynamicEntity {
                 ((WalkingAnimation4Dirs) this.getPicture()).setFaceDir(getFaceDir());
             }
             float moveLength = new Vector2f(getMovementX(), getMovementY()).length();
-            if (moveLength > getMoveSpeed()) {
+            if (moveLength > getMoveSpeed().getValue()) {
                 this.tryMove(
-                        getMovementX() * getMoveSpeed() / moveLength,
-                        getMovementY() * getMoveSpeed() / moveLength
+                        getMovementX() * getMoveSpeed().getValue() / moveLength,
+                        getMovementY() * getMoveSpeed().getValue() / moveLength
                 );
             } else {
                 this.tryMove(getMovementX(), getMovementY());
@@ -222,17 +223,8 @@ public class Unit extends AbstractDynamicEntity {
      *
      * @return a float.
      */
-    public float getMoveSpeed() {
+    public FrameFloat getMoveSpeed() {
         return moveSpeed;
-    }
-
-    /**
-     * <p>Setter for the field <code>moveSpeed</code>.</p>
-     *
-     * @param moveSpeed a int.
-     */
-    public void setMoveSpeed(int moveSpeed) {
-        this.moveSpeed = moveSpeed;
     }
 
     /**
