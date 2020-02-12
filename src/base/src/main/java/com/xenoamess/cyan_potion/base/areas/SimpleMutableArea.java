@@ -29,7 +29,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * must create it from Areas.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1-SNAPSHOT
  * @see Areas#generateMutableAreaFromArea(AbstractArea)
  * @see Areas#generateMutableAreaFromLeftTop(float, float, float, float)
  * @see Areas#generateMutableAreaFromArea(float, float, float, float)

@@ -38,7 +38,7 @@ import java.util.Random;
  * <p>ForceEntrance class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1-SNAPSHOT
  */
 public class ForceEntrance {
     /**
