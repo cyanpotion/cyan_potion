@@ -92,8 +92,8 @@ public class Panel extends AbstractControllableGameWindowComponent {
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         synchronized (this.contents) {
             boolean result = this.contents.add(gameWindowComponent);
-            if (subGameWindowComponentTree.getRoot() != null) {
-                gameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
+            if (getSubGameWindowComponentTree().getRoot() != null) {
+                gameWindowComponent.addToGameWindowComponentTree(getSubGameWindowComponentTree().getRoot());
             }
             return result;
         }
@@ -168,11 +168,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
         super.update();
         for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
             if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
-                abstractGameWindowComponent.addToGameWindowComponentTree(subGameWindowComponentTree.getRoot());
+                abstractGameWindowComponent.addToGameWindowComponentTree(getSubGameWindowComponentTree().getRoot());
             }
         }
         getBackgroundPicture().cover(this);
-        this.subGameWindowComponentTree.update();
+        this.getSubGameWindowComponentTree().update();
 //        synchronized (this.contents) {
 //            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
 //                gameWindowComponent.update();
@@ -186,7 +186,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public boolean ifVisibleThenDraw() {
         this.getBackgroundPicture().draw(this.getGameWindow());
-        this.subGameWindowComponentTree.draw();
+        this.getSubGameWindowComponentTree().draw();
         return true;
     }
 
@@ -196,14 +196,13 @@ public class Panel extends AbstractControllableGameWindowComponent {
     @Override
     public Event process(Event event) {
         synchronized (this) {
-            Set<Event> res = this.subGameWindowComponentTree.process(event);
+            Set<Event> res = this.getSubGameWindowComponentTree().process(event);
             if (!res.isEmpty()) {
                 return new EventsEvent(res);
             } else {
                 return super.process(event);
             }
         }
-
     }
 
     /**
@@ -211,7 +210,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @Override
     public void close() {
-        subGameWindowComponentTree.getRoot().close();
+        getSubGameWindowComponentTree().getRoot().close();
         this.clearContents();
         super.close();
     }
@@ -223,5 +222,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     public Picture getBackgroundPicture() {
         return backgroundPicture;
+    }
+
+    protected GameWindowComponentTree getSubGameWindowComponentTree() {
+        return subGameWindowComponentTree;
     }
 }
