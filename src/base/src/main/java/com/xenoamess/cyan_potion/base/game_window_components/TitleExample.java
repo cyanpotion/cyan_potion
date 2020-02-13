@@ -259,7 +259,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
                     if (keyboardEvent.getAction() != GLFW.GLFW_PRESS) {

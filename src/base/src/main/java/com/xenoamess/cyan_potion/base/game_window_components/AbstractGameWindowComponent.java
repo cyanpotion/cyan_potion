@@ -241,7 +241,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     /**
      * <p>initProcessors.</p>
      */
-    public abstract void initProcessors();
+    protected abstract void initProcessors();
 
     /**
      * <p>registerProcessor.</p>

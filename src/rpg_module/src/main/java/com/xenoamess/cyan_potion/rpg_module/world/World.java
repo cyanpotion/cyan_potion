@@ -260,7 +260,7 @@ public final class World extends AbstractEntityScene {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {

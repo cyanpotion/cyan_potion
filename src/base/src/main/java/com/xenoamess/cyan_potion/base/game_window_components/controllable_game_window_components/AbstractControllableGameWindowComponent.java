@@ -164,7 +164,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 MouseButtonEvent.class,
                 this::processMouseButtonEvents);
@@ -545,7 +545,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @return return
      */
-    public Event processMouseEnterAreaAndLeaveArea() {
+    protected Event processMouseEnterAreaAndLeaveArea() {
         boolean ifPosInAreaNow =
                 this.ifPosInArea(this.getGameWindow().getMousePosX(),
                         this.getGameWindow().getMousePosY());
@@ -565,7 +565,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @return return
      */
-    public Event processGainFocusAndLoseFocus() {
+    protected Event processGainFocusAndLoseFocus() {
         Event res = null;
         if (isInFocusNow() && !isWillStillInFocus()) {
             res = this.onLoseFocus();
@@ -592,7 +592,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
+    protected Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
 
@@ -633,7 +633,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
+    protected Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
                 switch (mouseButtonEvent.getAction()) {
@@ -677,7 +677,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEvents(MouseButtonEvent mouseButtonEvent) {
+    protected Event processMouseButtonEvents(MouseButtonEvent mouseButtonEvent) {
         if (this.ifMouseInArea()) {
             return this.processMouseButtonEventsInside(mouseButtonEvent);
         } else {

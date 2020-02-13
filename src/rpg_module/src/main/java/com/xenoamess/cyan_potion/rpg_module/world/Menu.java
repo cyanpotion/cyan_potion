@@ -71,7 +71,7 @@ public final class Menu extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {

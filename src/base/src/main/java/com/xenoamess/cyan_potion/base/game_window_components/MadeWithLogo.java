@@ -97,7 +97,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {

@@ -70,7 +70,7 @@ public class GameWindowComponentTree extends SubManager {
         AbstractGameWindowComponent baseComponent =
                 new AbstractGameWindowComponent(gameWindow) {
                     @Override
-                    public void initProcessors() {
+                    protected void initProcessors() {
                         this.registerProcessor(KeyboardEvent.class,
                                 (KeyboardEvent keyboardEvent) -> {
                                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {

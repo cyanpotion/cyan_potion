@@ -78,7 +78,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         super.initProcessors();
         this.registerOnMouseButtonLeftDownCallback(new MainThreadEventProcessor<MouseButtonEvent>(
                 this,

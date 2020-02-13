@@ -100,7 +100,7 @@ public final class Logo extends AbstractGameWindowComponent {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
