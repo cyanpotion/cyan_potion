@@ -27,8 +27,7 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventsEvent;
-import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
-import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
+import com.xenoamess.cyan_potion.base.game_window_components.*;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 
@@ -49,17 +48,38 @@ public class Panel extends AbstractControllableGameWindowComponent {
     private final Picture backgroundPicture = new Picture();
     private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
         @Override
-        public void update() {
-        }
-
-        @Override
-        public void draw() {
-        }
-
-        @Override
         public void initProcessors() {
         }
     });
+
+    /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterBuilder<Panel> UPDATER_BUILDER_PANEL = new UpdaterBuilder<Panel>() {
+        @Override
+        public UpdaterInterface<Panel> build(UpdaterInterface<? super Panel> superUpdater) {
+            return new Updater<Panel>(superUpdater) {
+                @Override
+                public boolean thisUpdate(Panel panel) {
+                    for (AbstractGameWindowComponent abstractGameWindowComponent : panel.getContents()) {
+                        if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
+                            abstractGameWindowComponent.addToGameWindowComponentTree(panel.getSubGameWindowComponentTree().getRoot());
+                        }
+                    }
+                    panel.getBackgroundPicture().cover(panel);
+                    panel.getSubGameWindowComponentTree().update();
+                    return true;
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterInterface<Panel> DEFAULT_UPDATER_PANEL = UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+
 
     /**
      * <p>Constructor for Panel.</p>
@@ -67,7 +87,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * @param gameWindow gameWindow
      */
     public Panel(GameWindow gameWindow) {
-        super(gameWindow);
+        this(gameWindow, null);
     }
 
     /**
@@ -79,6 +99,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
     public Panel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow);
         this.getBackgroundPicture().setBindable(backgroundBindable);
+        this.setUpdater(
+                UPDATER_BUILDER_PANEL.build(super.getUpdater())
+        );
     }
 
     /**
@@ -157,27 +180,6 @@ public class Panel extends AbstractControllableGameWindowComponent {
         synchronized (this.contents) {
             return new ArrayList<>(this.contents);
         }
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        super.update();
-        for (AbstractGameWindowComponent abstractGameWindowComponent : this.getContents()) {
-            if (abstractGameWindowComponent.getGameWindowComponentTreeNode() == null) {
-                abstractGameWindowComponent.addToGameWindowComponentTree(getSubGameWindowComponentTree().getRoot());
-            }
-        }
-        getBackgroundPicture().cover(this);
-        this.getSubGameWindowComponentTree().update();
-//        synchronized (this.contents) {
-//            for (AbstractGameWindowComponent gameWindowComponent : this.contents) {
-//                gameWindowComponent.update();
-//            }
-//        }
     }
 
     /**

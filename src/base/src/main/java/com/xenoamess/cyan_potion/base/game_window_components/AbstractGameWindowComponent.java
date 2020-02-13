@@ -48,6 +48,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * AbstractGameWindowComponent class is an ancestor of all GameWindowComponent classes.
  * If you are implementing a GameWindowComponent, and wanna a easy start,
  * just implement AbstractControllableGameWindowComponent instead
+ * <p>
+ * if you want to override {@link #update()} / {@link #draw()} method,
+ * Then you shall better go use {@link #setUpdater(UpdaterInterface)} / {@link #setDrawer(DrawerInterface)} instead.
+ * to make life easier, we follow such a principle here.
+ * 1. if you override the  {@link #update()} / {@link #draw()} method directly in a class, then this class MUST be a final class.
+ * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
  * @version 0.158.1-SNAPSHOT
@@ -207,15 +213,15 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     /**
      * <p>update.</p>
      */
-    public void update() {
-        this.getUpdater().update(this);
+    public boolean update() {
+        return this.getUpdater().update(this);
     }
 
     /**
      * <p>draw.</p>
      */
-    public void draw() {
-        this.getDrawer().draw(this);
+    public boolean draw() {
+        return this.getDrawer().draw(this);
     }
 
     /**

@@ -25,6 +25,9 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -58,6 +61,31 @@ public class RadioButton extends Button {
     private final Vector4f textColorSelected = new Vector4f(this.getTextColor());
 
     private final Vector4f textColorDeselected = new Vector4f(this.getTextColor()).mul(0.5F, 0.5F, 0.5F, 1);
+
+
+    /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterBuilder<RadioButton> UPDATER_BUILDER_RADIOBUTTON = new UpdaterBuilder<RadioButton>() {
+        @Override
+        public UpdaterInterface<RadioButton> build(UpdaterInterface<? super RadioButton> superUpdater) {
+            return new Updater<RadioButton>(superUpdater) {
+                @Override
+                public boolean thisUpdate(RadioButton radioButton) {
+                    radioButton.updatePictureBindable();
+                    radioButton.updateTextColor();
+                    return true;
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIOBUTTO = UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+
 
     /**
      * <p>Constructor for RadioButton.</p>
@@ -129,6 +157,9 @@ public class RadioButton extends Button {
                     return null;
                 }
         );
+        this.setUpdater(
+                UPDATER_BUILDER_RADIOBUTTON.build(this.getUpdater())
+        );
     }
 
     /**
@@ -161,15 +192,6 @@ public class RadioButton extends Button {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        super.update();
-        this.updatePictureBindable();
-        this.updateTextColor();
-    }
 
     /**
      * update Picture's Bindable according to whether being selected

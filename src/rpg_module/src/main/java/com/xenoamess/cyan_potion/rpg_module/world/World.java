@@ -76,7 +76,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * @author XenoAmess
  * @version 0.158.1-SNAPSHOT
  */
-public class World extends AbstractEntityScene {
+public final class World extends AbstractEntityScene {
     @JsonIgnore
     private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
 
@@ -413,7 +413,7 @@ public class World extends AbstractEntityScene {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public boolean update() {
         this.preparePlayerMovement(this.getPlayer());
 
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
@@ -426,6 +426,7 @@ public class World extends AbstractEntityScene {
         this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();
         this.fix();
+        return true;
     }
 
     /**
@@ -451,7 +452,7 @@ public class World extends AbstractEntityScene {
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public boolean draw() {
         int posX =
                 (int) (this.getCamera().getPosX() / RpgModuleDataCenter.TILE_SIZE);
         int posY =
@@ -504,6 +505,7 @@ public class World extends AbstractEntityScene {
             personName = "RunSteamFirst";
         }
         this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
+        return true;
     }
 
     /**
