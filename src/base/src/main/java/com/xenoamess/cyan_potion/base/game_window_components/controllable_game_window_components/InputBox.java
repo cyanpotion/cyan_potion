@@ -84,8 +84,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 this,
                 (MouseButtonEvent event) -> {
                     int clickIndex =
-                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
-                                    InputBox.this.getGameWindow().getMousePosY(), false, null);
+                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                    event.getMousePosY(), false, null);
                     setNowSelectStartPos(clickIndex);
                     setNowSelectEndPos(clickIndex);
                     setNowInsertPos(clickIndex);
@@ -94,9 +94,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 })
         );
 
-        this.registerOnMouseLeaveAreaCallback(
-                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(null)
-        );
+//        this.registerOnMouseLeaveAreaCallback(
+//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()))
+//        );
 
         this.registerOnMouseButtonLeftUpCallback(
                 new MainThreadEventProcessor<MouseButtonEvent>(
@@ -105,9 +105,13 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             if (getNowSelectStartPos() < 0) {
                                 return null;
                             }
+                            if (event == null) {
+                                System.err.println("event == null");
+                                new Error().printStackTrace();
+                            }
                             int releaseIndex =
-                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                            this.getGameWindow().getMousePosY(), false, null);
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                            event.getMousePosY(), false, null);
                             setNowSelectEndPos(releaseIndex);
                             setNowInsertPos(getNowSelectEndPos());
                             if (getNowSelectStartPos() > getNowSelectEndPos()) {
@@ -135,8 +139,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                 return null;
                             }
                             int clickIndex =
-                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                            this.getGameWindow().getMousePosY(), false, null);
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                            event.getMousePosY(), false, null);
                             setNowSelectEndPos(clickIndex);
                             return null;
                         }
@@ -340,8 +344,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     @Override
     public boolean ifVisibleThenDraw() {
-        this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                this.getGameWindow().getMousePosY(), true, null);
+        this.drawTextGivenHeightLeftTopAndGetIndex(Float.NaN,
+                Float.NaN, true, null);
         return true;
     }
 

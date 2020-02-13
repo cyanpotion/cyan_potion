@@ -26,6 +26,9 @@ package com.xenoamess.cyan_potion.base.io.input.mouse;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
+import com.xenoamess.cyan_potion.base.areas.SimpleImmutablePoint;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
@@ -52,8 +55,8 @@ public class MouseButtonEvent implements Event {
             LoggerFactory.getLogger(MouseButtonEvent.class);
 
     private static class EmptyMouseButtonEvent extends MouseButtonEvent implements EmptyEvent {
-        public EmptyMouseButtonEvent() {
-            super(0, 0, 0, 0);
+        public EmptyMouseButtonEvent(float mousePosX, float mousePosY) {
+            super(0, 0, 0, 0, mousePosX, mousePosY);
         }
 
         @Override
@@ -64,10 +67,23 @@ public class MouseButtonEvent implements Event {
 
     /**
      * use this instead of null for safety.
+     * notice that due to the need of mousePosX / Y, you have to generate the empty event from your posX / Y.
      *
      * @see EmptyEvent
      */
-    public static final MouseButtonEvent EMPTY = new EmptyMouseButtonEvent();
+    public static MouseButtonEvent generateEmptyMouseButtonEvent(float mousePosX, float mousePosY) {
+        return new EmptyMouseButtonEvent(mousePosX, mousePosY);
+    }
+
+    /**
+     * use this instead of null for safety.
+     * notice that due to the need of mousePosX / Y, you have to generate the empty event from your posX / Y.
+     *
+     * @see EmptyEvent
+     */
+    public static MouseButtonEvent generateEmptyMouseButtonEvent(GameWindow gameWindow) {
+        return new EmptyMouseButtonEvent(gameWindow.getMousePosX(), gameWindow.getMousePosY());
+    }
 
     private final long window;
     private final int key;
@@ -112,6 +128,10 @@ public class MouseButtonEvent implements Event {
      */
     private final int mods;
 
+    private final float mousePosX;
+
+    private final float mousePosY;
+
     /**
      * <p>Constructor for MouseButtonEvent.</p>
      *
@@ -120,12 +140,14 @@ public class MouseButtonEvent implements Event {
      * @param action a int.
      * @param mods   a int.
      */
-    public MouseButtonEvent(long window, int button, int action, int mods) {
+    public MouseButtonEvent(long window, int button, int action, int mods, float mousePosX, float mousePosY) {
         super();
         this.window = window;
         this.key = button;
         this.action = action;
         this.mods = mods;
+        this.mousePosX = mousePosX;
+        this.mousePosY = mousePosY;
     }
 
     /**
@@ -232,6 +254,18 @@ public class MouseButtonEvent implements Event {
         return mods;
     }
 
+    public float getMousePosX() {
+        return mousePosX;
+    }
+
+    public float getMousePosY() {
+        return mousePosY;
+    }
+
+    public AbstractPoint getMousePoint() {
+        return new SimpleImmutablePoint(this.getMousePosX(), this.getMousePosY());
+    }
+
     /**
      * <p>getModEnums.</p>
      *
@@ -256,6 +290,10 @@ public class MouseButtonEvent implements Event {
         stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
         stringBuilder.append(",mods:");
         stringBuilder.append(this.getModEnums());
+        stringBuilder.append(",mousePosX:");
+        stringBuilder.append(this.getMousePosX());
+        stringBuilder.append(",mousePosY:");
+        stringBuilder.append(this.getMousePosY());
         stringBuilder.append("}");
         return stringBuilder.toString();
     }

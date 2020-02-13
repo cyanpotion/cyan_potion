@@ -76,8 +76,9 @@ public class Callbacks {
 
     private GLFWMouseButtonCallbackI mouseButtonCallback =
             (long window, int button, int action, int mods) -> {
+                GameWindow gameWindow = getGameManager().getGameWindow();
                 Event event = new MouseButtonEvent(window, button, action
-                        , mods);
+                        , mods, gameWindow.getMousePosX(), gameWindow.getMousePosY());
                 getGameManager().eventListAdd(event);
             };
 
