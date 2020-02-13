@@ -189,8 +189,7 @@ public class Font extends AbstractResource {
                 setLeftTopPosX(getCenterPosX() - getWidth() / 2f);
                 setLeftTopPosY(getCenterPosY() - getHeight() / 2f);
             } else {
-                String errorMessage = "all pos be NaN : " + this.toString();
-                LOGGER.error(errorMessage);
+                LOGGER.info("all pos be NaN : {}", this);
             }
         }
 
