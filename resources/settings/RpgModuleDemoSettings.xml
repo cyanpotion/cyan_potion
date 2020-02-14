@@ -52,5 +52,6 @@
         <JAMEPAD_KEY_LEFT>XENOAMESS_KEY_LEFT</JAMEPAD_KEY_LEFT>
         <JAMEPAD_KEY_DOWN>XENOAMESS_KEY_DOWN</JAMEPAD_KEY_DOWN>
         <JAMEPAD_KEY_RIGHT>XENOAMESS_KEY_RIGHT</JAMEPAD_KEY_RIGHT>
-    </keymap><!--comment-->
+    </keymap>
+    <test_module>%</test_module><!--comment-->
 </settingFile>

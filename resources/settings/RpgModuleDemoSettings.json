@@ -224,6 +224,12 @@
         "_text28": "XENOAMESS_KEY_RIGHT"
       }
     },
-    "_comment29": "comment"
+    "test_module": {
+      "_attributes": {
+        "test_module": ""
+      },
+      "_text29": "%"
+    },
+    "_comment30": "comment"
   }
 }

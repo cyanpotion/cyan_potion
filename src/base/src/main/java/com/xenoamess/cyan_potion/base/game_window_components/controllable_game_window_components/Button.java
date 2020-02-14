@@ -118,9 +118,9 @@ public class Button extends AbstractControllableGameWindowComponent {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
-                    this.getLeftTopPosX() + this.getWidth() / 2,
-                    this.getLeftTopPosY() + this.getHeight() / 2,
-                    this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
+                    this.getCenterPosX(),
+                    this.getCenterPosY(),
+                    this.getWidth() / 3 * 2, this.getHeight() / 3 * 2,
                     0, this.getTextColor(), this.getButtonText());
         }
         return true;
