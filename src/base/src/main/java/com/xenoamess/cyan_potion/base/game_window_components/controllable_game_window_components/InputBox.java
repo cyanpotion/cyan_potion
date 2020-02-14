@@ -779,7 +779,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * @see #contentStringLengthLimit
      */
     public void applyContentStringLengthLimit() {
-        if (this.getContentStringLengthLimit() != -1) {
+        if (this.getContentStringLengthLimit() != -1 && this.getContentString().length() > this.getContentStringLengthLimit()) {
             this.contentString = this.getContentString().substring(0, this.getContentStringLengthLimit());
         }
     }
