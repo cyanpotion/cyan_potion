@@ -25,6 +25,9 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -36,7 +39,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class Button extends AbstractControllableGameWindowComponent {
     private final Picture buttonPicture = new Picture();
@@ -45,6 +48,30 @@ public class Button extends AbstractControllableGameWindowComponent {
      * color of the buttonText drawn.
      */
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
+
+
+    /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterBuilder<Button> UPDATER_BUILDER_BUTTON = new UpdaterBuilder<Button>() {
+        @Override
+        public UpdaterInterface<Button> build(UpdaterInterface<? super Button> superUpdater) {
+            return new Updater<Button>(superUpdater) {
+                @Override
+                public boolean thisUpdate(Button button) {
+                    button.getButtonPicture().cover(button);
+                    return true;
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterInterface<Button> DEFAULT_UPDATER_BUTTON = UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+
 
     /**
      * <p>Constructor for Button.</p>
@@ -77,16 +104,11 @@ public class Button extends AbstractControllableGameWindowComponent {
         super(gameWindow);
         this.getButtonPicture().setBindable(buttonBindable);
         this.setButtonText(buttonText);
+        this.setUpdater(
+                UPDATER_BUILDER_BUTTON.build(super.getUpdater())
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        super.update();
-        this.getButtonPicture().cover(this);
-    }
 
     /**
      * {@inheritDoc}
@@ -96,9 +118,9 @@ public class Button extends AbstractControllableGameWindowComponent {
         this.getButtonPicture().draw(this.getGameWindow());
         if (this.getButtonText() != null) {
             this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
-                    this.getLeftTopPosX() + this.getWidth() / 2,
-                    this.getLeftTopPosY() + this.getHeight() / 2,
-                    this.getWidth() / 6 * 4, this.getHeight() / 6 * 4,
+                    this.getCenterPosX(),
+                    this.getCenterPosY(),
+                    this.getWidth() / 3 * 2, this.getHeight() / 3 * 2,
                     0, this.getTextColor(), this.getButtonText());
         }
         return true;

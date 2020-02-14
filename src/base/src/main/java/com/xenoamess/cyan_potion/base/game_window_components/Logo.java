@@ -43,9 +43,9 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>Logo class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
-public class Logo extends AbstractGameWindowComponent {
+public final class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
@@ -100,7 +100,7 @@ public class Logo extends AbstractGameWindowComponent {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
@@ -131,7 +131,7 @@ public class Logo extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public boolean update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
             willClose.set(true);
         }
@@ -144,15 +144,16 @@ public class Logo extends AbstractGameWindowComponent {
                 this.close();
             }
         }
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public boolean draw() {
         if (!this.getAlive()) {
-            return;
+            return false;
         }
 
         glClearColor(1, 1, 1, 1);
@@ -198,6 +199,8 @@ public class Logo extends AbstractGameWindowComponent {
             this.logoPicture.setColorScale(1, 1, 1, pScale);
         }
         this.logoPicture.draw(getGameWindow());
+
+        return true;
     }
 
 

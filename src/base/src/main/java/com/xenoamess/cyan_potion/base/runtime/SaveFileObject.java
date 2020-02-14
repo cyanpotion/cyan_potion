@@ -50,7 +50,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
@@ -150,7 +150,7 @@ public class SaveFileObject {
      * @return loaded RuntimeVariableStructList
      */
     public synchronized List<RuntimeVariableStruct> load() {
-        if (this.getNowIndex() == -1) {
+        if (!this.exist()) {
             LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
             return new ArrayList<>();
         }
@@ -210,6 +210,15 @@ public class SaveFileObject {
      */
     protected int getNowIndex() {
         return this.getSaveFileObjectStatus().getNowIndex();
+    }
+
+    /**
+     * set now used fileObject index
+     *
+     * @return now index
+     */
+    public boolean exist() {
+        return this.getSaveFileObjectStatus().getNowIndex() != -1;
     }
 
 

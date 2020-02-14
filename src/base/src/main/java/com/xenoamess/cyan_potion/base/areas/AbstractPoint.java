@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * <p>AbstractPoint interface.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public interface AbstractPoint {
     /**

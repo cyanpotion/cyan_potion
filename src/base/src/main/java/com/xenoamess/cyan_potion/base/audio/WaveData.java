@@ -53,7 +53,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  * <p>WaveData class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class WaveData extends AbstractResource {
     @JsonIgnore
@@ -197,8 +197,8 @@ public class WaveData extends AbstractResource {
         FileObject resourceFileObject = resourceInfo.getFileObject();
 
         try (InputStream inputStream = resourceFileObject.getContent().getInputStream()) {
-            com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData slickWaveData =
-                    com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal.WaveData.create(
+            com.xenoamess.cyan_potion.base.modified_sources.org.newdawn.slick.openal.WaveData slickWaveData =
+                    com.xenoamess.cyan_potion.base.modified_sources.org.newdawn.slick.openal.WaveData.create(
                             inputStream
                     );
             this.bake(slickWaveData.data, slickWaveData.format, slickWaveData.sampleRate);

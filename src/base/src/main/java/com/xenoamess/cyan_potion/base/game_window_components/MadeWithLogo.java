@@ -44,9 +44,9 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>MadeWithLogo class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
-public class MadeWithLogo extends AbstractGameWindowComponent {
+public final class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
@@ -97,7 +97,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
@@ -129,7 +129,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public boolean update() {
         if (System.currentTimeMillis() > this.getDieTimeStamp()) {
             this.willClose.set(true);
         }
@@ -151,15 +151,16 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
                 this.close();
             }
         }
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public boolean draw() {
         if (!this.getAlive()) {
-            return;
+            return false;
         }
 
         long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
@@ -175,6 +176,7 @@ public class MadeWithLogo extends AbstractGameWindowComponent {
 
         this.logoPicture.setColorScale(1, colorScale, colorScale, 1);
         this.logoPicture.draw(getGameWindow());
+        return true;
     }
 
     /**

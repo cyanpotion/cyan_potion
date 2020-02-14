@@ -28,4 +28,4 @@
  *
  * @since 0.140.0
  */
-package com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal;
+package com.xenoamess.cyan_potion.base.modified_sources.org.newdawn.slick.openal;

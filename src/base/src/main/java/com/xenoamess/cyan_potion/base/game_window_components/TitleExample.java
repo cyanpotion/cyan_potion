@@ -48,9 +48,9 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>TitleExample class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
-public class TitleExample extends AbstractGameWindowComponent {
+public final class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveSlotTexture =
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
@@ -110,7 +110,7 @@ public class TitleExample extends AbstractGameWindowComponent {
             static final int INDEX = 1;
 
             @Override
-            public void draw() {
+            public boolean draw() {
                 this.init(-50 + 250 * INDEX, 900, 120, 30);
                 if (getState() >= 0 && getState() <= 4) {
                     this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
@@ -119,6 +119,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                             new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                     0.3f), "开始游戏");
                 }
+                return true;
             }
 
         });
@@ -149,7 +150,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     static final int INDEX = 2;
 
                     @Override
-                    public void draw() {
+                    public boolean draw() {
                         this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
@@ -158,6 +159,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                                     new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "设置选项");
                         }
+                        return true;
                     }
                 });
 
@@ -187,7 +189,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     static final int INDEX = 3;
 
                     @Override
-                    public void draw() {
+                    public boolean draw() {
                         this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
@@ -196,6 +198,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                                     new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "制作人员");
                         }
+                        return true;
                     }
                 });
 
@@ -225,7 +228,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     static final int INDEX = 4;
 
                     @Override
-                    public void draw() {
+                    public boolean draw() {
                         this.init(-50 + 250 * INDEX, 900, 120, 30);
                         if (getState() >= 0 && getState() <= 4) {
                             this.getGameWindow().drawTextFillAreaLeftTop(Font.getCurrentFont(), this.getLeftTopPosX(),
@@ -234,6 +237,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                                     new Vector4f(1, 1, 1, getState() == INDEX ? 1f :
                                             0.3f), "退出游戏");
                         }
+                        return true;
                     }
                 });
 
@@ -255,7 +259,7 @@ public class TitleExample extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
                     if (keyboardEvent.getAction() != GLFW.GLFW_PRESS) {
@@ -396,7 +400,7 @@ public class TitleExample extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public boolean update() {
         switch (getState()) {
             case -1:
                 setState(-101);
@@ -414,15 +418,14 @@ public class TitleExample extends AbstractGameWindowComponent {
             default:
                 break;
         }
-
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
-
+    public boolean draw() {
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -433,6 +436,7 @@ public class TitleExample extends AbstractGameWindowComponent {
                     this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
                     0, new Vector4f(1, 1, 1, 1F), "校准文本BeEf");
         }
+        return true;
     }
 
     private void startGame() {

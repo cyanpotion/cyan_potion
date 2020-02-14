@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
+import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
+import com.xenoamess.cyan_potion.base.areas.SimpleImmutablePoint;
 import com.xenoamess.cyan_potion.base.exceptions.FailToCreateGLFWWindowException;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
@@ -61,7 +63,7 @@ import static org.lwjgl.opengl.GL11.*;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
@@ -505,12 +507,10 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         glfwGetCursorPos(this.getWindow(), x, y);
         setLastMousePosX(getMousePosX());
         setLastMousePosY(getMousePosY());
-        setMousePosX((float) (x[0] / this.getRealWindowWidth() * this.getLogicWindowWidth()));
-        setMousePosY((float) (y[0] / this.getRealWindowHeight() * this.getLogicWindowHeight()));
-        setMousePosX(Math.max(getMousePosX(), 0));
-        setMousePosX(Math.min(getMousePosX(), this.getLogicWindowWidth()));
-        setMousePosY(Math.max(getMousePosY(), 0));
-        setMousePosY(Math.min(getMousePosY(), this.getLogicWindowHeight()));
+        float rawMousePosX = (float) (x[0] / this.getRealWindowWidth() * this.getLogicWindowWidth());
+        setMousePosX(Math.min(Math.max(rawMousePosX, 0), this.getLogicWindowWidth()));
+        float rawMousePosY = (float) (y[0] / this.getRealWindowHeight() * this.getLogicWindowHeight());
+        setMousePosY(Math.min(Math.max(rawMousePosY, 0), this.getLogicWindowHeight()));
     }
 
     /**
@@ -1496,6 +1496,15 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      */
     public float getMousePosY() {
         return mousePosY;
+    }
+
+    /**
+     * <p>getMousePoint.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
+    public AbstractPoint getMousePoint() {
+        return new SimpleImmutablePoint(this.getMousePosX(), this.getMousePosY());
     }
 
     /**

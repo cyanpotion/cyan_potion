@@ -51,7 +51,7 @@ import java.io.Serializable;
  * RuntimeVariableStruct must HAVE a empty constructor.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public abstract class RuntimeVariableStruct implements Serializable {
     @JsonIgnore
@@ -97,7 +97,6 @@ public abstract class RuntimeVariableStruct implements Serializable {
     /**
      * get an RuntimeVariableStruct object from a string.
      *
-     * @param <T>         class of the RuntimeVariableStruct
      * @param string      json string
      * @param classObject class of the RuntimeVariableStruct
      * @return a {@link java.lang.Object} object.
@@ -115,7 +114,6 @@ public abstract class RuntimeVariableStruct implements Serializable {
     /**
      * save a RuntimeVariableStruct to a String
      *
-     * @param <T>                   class of the RuntimeVariableStruct
      * @param runtimeVariableStruct the struct you wanna save.
      * @return json string
      */

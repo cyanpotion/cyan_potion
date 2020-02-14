@@ -37,7 +37,7 @@ import org.lwjgl.glfw.GLFW;
  * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**
@@ -51,6 +51,17 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * if visible == false then this AbstractControllableGameWindowComponent does not call ifVisibleThenDraw().
      */
     private boolean visible = true;
+
+    /**
+     * blockClick means this can block a {@link MouseButtonEvent} inside of it.
+     * if blockClick is true, then if we can not process a {@link MouseButtonEvent} inside of this,
+     * we return null instead of the {@link MouseButtonEvent} itself.
+     * <p>
+     * In other words, when this.blockClick is true, this will eat all {@link MouseButtonEvent} inside of it.
+     *
+     * @see #processMouseButtonEventsInside(MouseButtonEvent)
+     */
+    private boolean blockClick = false;
 
     /**
      * inFocusNow means this AbstractControllableGameWindowComponent in
@@ -164,30 +175,11 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 MouseButtonEvent.class,
                 this::processMouseButtonEvents);
     }
-
-    /**
-     * <p>Setter for the field <code>active</code>.</p>
-     *
-     * @param active a boolean.
-     */
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    /**
-     * <p>Setter for the field <code>visible</code>.</p>
-     *
-     * @param visible a boolean.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
 
     private boolean isMouseButtonLeftPressing = false;
 
@@ -252,7 +244,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     protected final Event onMouseButtonLeftPressing() {
         if (onMouseButtonLeftPressingEventProcessor != null) {
-            return onMouseButtonLeftPressingEventProcessor.apply(MouseButtonEvent.EMPTY);
+            return onMouseButtonLeftPressingEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return null;
     }
@@ -331,7 +323,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     protected final Event onMouseButtonRightPressing() {
         if (onMouseButtonRightPressingEventProcessor != null) {
-            return onMouseButtonRightPressingEventProcessor.apply(MouseButtonEvent.EMPTY);
+            return onMouseButtonRightPressingEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return null;
     }
@@ -410,7 +402,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     protected final Event onMouseButtonMiddlePressing() {
         if (onMouseButtonMiddlePressingEventProcessor != null) {
-            return onMouseButtonMiddlePressingEventProcessor.apply(MouseButtonEvent.EMPTY);
+            return onMouseButtonMiddlePressingEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return null;
     }
@@ -448,7 +440,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     protected final Event onGainFocus() {
         Event res = null;
         if (onGainFocusEventProcessor != null) {
-            res = onGainFocusEventProcessor.apply(MouseButtonEvent.EMPTY);
+            res = onGainFocusEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return res;
     }
@@ -475,7 +467,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         this.isMouseButtonRightPressing = false;
         Event res = null;
         if (onLoseFocusEventProcessor != null) {
-            res = onLoseFocusEventProcessor.apply(MouseButtonEvent.EMPTY);
+            res = onLoseFocusEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return res;
     }
@@ -500,7 +492,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     protected final Event onMouseEnterArea() {
         Event res = null;
         if (onMouseEnterAreaEventProcessor != null) {
-            res = onMouseEnterAreaEventProcessor.apply(MouseButtonEvent.EMPTY);
+            res = onMouseEnterAreaEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return res;
     }
@@ -524,7 +516,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     protected final Event onMouseLeaveArea() {
         Event res = null;
         if (onMouseLeaveAreaEventProcessor != null) {
-            res = onMouseLeaveAreaEventProcessor.apply(MouseButtonEvent.EMPTY);
+            res = onMouseLeaveAreaEventProcessor.apply(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()));
         }
         return res;
     }
@@ -545,10 +537,9 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @return return
      */
-    public Event processMouseEnterAreaAndLeaveArea() {
+    protected Event processMouseEnterAreaAndLeaveArea() {
         boolean ifPosInAreaNow =
-                this.ifPosInArea(this.getGameWindow().getMousePosX(),
-                        this.getGameWindow().getMousePosY());
+                this.ifMouseInArea();
         boolean ifPosInAreaLast =
                 this.ifPosInArea(this.getGameWindow().getLastMousePosX(),
                         this.getGameWindow().getLastMousePosY());
@@ -565,7 +556,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @return return
      */
-    public Event processGainFocusAndLoseFocus() {
+    protected Event processGainFocusAndLoseFocus() {
         Event res = null;
         if (isInFocusNow() && !isWillStillInFocus()) {
             res = this.onLoseFocus();
@@ -582,9 +573,19 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean ifMouseInArea() {
-        return this.ifPosInArea(this.getGameWindow().getMousePosX(),
-                this.getGameWindow().getMousePosY());
+        return this.ifPointInArea(this.getGameWindow().getMousePoint());
     }
+
+    /**
+     * <p>ifMouseInArea.</p>
+     *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
+     * @return a boolean.
+     */
+    public boolean ifMouseInArea(MouseButtonEvent mouseButtonEvent) {
+        return this.ifPointInArea(mouseButtonEvent.getMousePoint());
+    }
+
 
     /**
      * <p>processMouseButtonEventsInside.</p>
@@ -592,39 +593,56 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
+    protected Event processMouseButtonEventsInside(MouseButtonEvent mouseButtonEvent) {
+        Event result;
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
-
                 switch (mouseButtonEvent.getAction()) {
                     case GLFW.GLFW_PRESS:
-                        return this.onMouseButtonLeftDown(mouseButtonEvent);
+                        result = this.onMouseButtonLeftDown(mouseButtonEvent);
+                        break;
                     case GLFW.GLFW_RELEASE:
-                        return this.onMouseButtonLeftUp(mouseButtonEvent);
+                        result = this.onMouseButtonLeftUp(mouseButtonEvent);
+                        break;
                     default:
-                        return mouseButtonEvent;
+                        result = mouseButtonEvent;
+                        break;
                 }
+                break;
             case Keymap.XENOAMESS_MOUSE_BUTTON_RIGHT:
                 switch (mouseButtonEvent.getAction()) {
                     case GLFW.GLFW_PRESS:
-                        return this.onMouseButtonRightDown(mouseButtonEvent);
+                        result = this.onMouseButtonRightDown(mouseButtonEvent);
+                        break;
                     case GLFW.GLFW_RELEASE:
-                        return this.onMouseButtonRightUp(mouseButtonEvent);
+                        result = this.onMouseButtonRightUp(mouseButtonEvent);
+                        break;
                     default:
-                        return mouseButtonEvent;
+                        result = mouseButtonEvent;
+                        break;
                 }
+                break;
             case Keymap.XENOAMESS_MOUSE_BUTTON_MIDDLE:
                 switch (mouseButtonEvent.getAction()) {
                     case GLFW.GLFW_PRESS:
-                        return this.onMouseButtonMiddleDown(mouseButtonEvent);
+                        result = this.onMouseButtonMiddleDown(mouseButtonEvent);
+                        break;
                     case GLFW.GLFW_RELEASE:
-                        return this.onMouseButtonMiddleUp(mouseButtonEvent);
+                        result = this.onMouseButtonMiddleUp(mouseButtonEvent);
+                        break;
                     default:
-                        return mouseButtonEvent;
+                        result = mouseButtonEvent;
+                        break;
                 }
+                break;
             default:
-                return mouseButtonEvent;
+                result = mouseButtonEvent;
+                break;
         }
+        if (this.isBlockClick() && result == mouseButtonEvent) {
+            result = null;
+        }
+        return result;
     }
 
     /**
@@ -633,7 +651,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
+    protected Event processMouseButtonEventsOutside(MouseButtonEvent mouseButtonEvent) {
         switch (mouseButtonEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
             case Keymap.XENOAMESS_MOUSE_BUTTON_LEFT:
                 switch (mouseButtonEvent.getAction()) {
@@ -677,8 +695,8 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param mouseButtonEvent mouseButtonEvent
      * @return return
      */
-    public Event processMouseButtonEvents(MouseButtonEvent mouseButtonEvent) {
-        if (this.ifMouseInArea()) {
+    protected Event processMouseButtonEvents(MouseButtonEvent mouseButtonEvent) {
+        if (this.ifMouseInArea(mouseButtonEvent)) {
             return this.processMouseButtonEventsInside(mouseButtonEvent);
         } else {
             return this.processMouseButtonEventsOutside(mouseButtonEvent);
@@ -709,6 +727,8 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         return true;
     }
 
+    //-----getters and setters-----
+
     /**
      * <p>isActive.</p>
      *
@@ -719,6 +739,15 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     }
 
     /**
+     * <p>Setter for the field <code>active</code>.</p>
+     *
+     * @param active a boolean.
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
      * <p>isVisible.</p>
      *
      * @return a boolean.
@@ -726,6 +755,16 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     public boolean isVisible() {
         return visible;
     }
+
+    /**
+     * <p>Setter for the field <code>visible</code>.</p>
+     *
+     * @param visible a boolean.
+     */
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
 
     /**
      * <p>isInFocusNow.</p>
@@ -761,5 +800,23 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     public void setWillStillInFocus(boolean willStillInFocus) {
         this.willStillInFocus = willStillInFocus;
+    }
+
+    /**
+     * <p>isBlockClick.</p>
+     *
+     * @return if block click
+     */
+    public boolean isBlockClick() {
+        return blockClick;
+    }
+
+    /**
+     * <p>Setter for the field <code>blockClick</code>.</p>
+     *
+     * @param blockClick blockClick
+     */
+    public void setBlockClick(boolean blockClick) {
+        this.blockClick = blockClick;
     }
 }

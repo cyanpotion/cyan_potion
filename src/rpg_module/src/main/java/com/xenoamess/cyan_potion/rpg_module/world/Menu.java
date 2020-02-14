@@ -40,9 +40,9 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>Menu class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
-public class Menu extends AbstractGameWindowComponent {
+public final class Menu extends AbstractGameWindowComponent {
     private final AtomicBoolean show = new AtomicBoolean(false);
     private final Texture menuBackGroundTexture =
             this.getGameWindow().getGameManager().getResourceManager().
@@ -71,7 +71,7 @@ public class Menu extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
@@ -97,11 +97,12 @@ public class Menu extends AbstractGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
+    public boolean draw() {
         if (!getShow()) {
-            return;
+            return false;
         }
         this.menuBackGroundPicture.draw(this.getGameWindow());
+        return true;
     }
 
     /**

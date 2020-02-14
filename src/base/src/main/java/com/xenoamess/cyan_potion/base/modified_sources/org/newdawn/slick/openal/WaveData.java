@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.xenoamess.cyan_potion.base.com.xenoamess.cyan_potion.org.newdawn.slick.openal;
+package com.xenoamess.cyan_potion.base.modified_sources.org.newdawn.slick.openal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.lwjgl.openal.AL10;
@@ -54,6 +54,7 @@ import java.nio.ShortBuffer;
  * @author Brian Matzon brian@matzon.dk
  * @version $Revision: 2286 $
  * $Id: WaveData.java 2286 2006-03-23 19:32:21Z matzon $
+ * <p>
  * modified by XenoAmess
  */
 public class WaveData {

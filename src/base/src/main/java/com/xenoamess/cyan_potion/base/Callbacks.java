@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class Callbacks {
     @JsonIgnore
@@ -76,8 +76,9 @@ public class Callbacks {
 
     private GLFWMouseButtonCallbackI mouseButtonCallback =
             (long window, int button, int action, int mods) -> {
+                GameWindow gameWindow = getGameManager().getGameWindow();
                 Event event = new MouseButtonEvent(window, button, action
-                        , mods);
+                        , mods, gameWindow.getMousePosX(), gameWindow.getMousePosY());
                 getGameManager().eventListAdd(event);
             };
 

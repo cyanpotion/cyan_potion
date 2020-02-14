@@ -26,6 +26,9 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -37,7 +40,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
 
@@ -46,6 +49,30 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      */
     private final AbstractPictureInterface picture;
 
+
+    /**
+     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterBuilder<PictureBox> UPDATER_BUILDER_PICTUREBOX = new UpdaterBuilder<PictureBox>() {
+        @Override
+        public UpdaterInterface<PictureBox> build(UpdaterInterface<? super PictureBox> superUpdater) {
+            return new Updater<PictureBox>(superUpdater) {
+                @Override
+                public boolean thisUpdate(PictureBox pictureBox) {
+                    pictureBox.picture.cover(pictureBox);
+                    return true;
+                }
+            };
+        }
+    };
+
+
+    /**
+     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     */
+    public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTUREBOX = UPDATER_BUILDER_PICTUREBOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+
+
     /**
      * <p>Constructor for AbstractControllableGameWindowComponent.</p>
      *
@@ -53,6 +80,16 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      */
     public PictureBox(GameWindow gameWindow) {
         this(gameWindow, (Bindable) null);
+    }
+
+    /**
+     * <p>Constructor for PictureBox.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
+    public PictureBox(GameWindow gameWindow, Bindable bindable) {
+        this(gameWindow, (AbstractPictureInterface) new Picture(bindable));
     }
 
     /**
@@ -68,26 +105,11 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
         } else {
             this.picture = new Picture(null);
         }
+        this.setUpdater(
+                UPDATER_BUILDER_PICTUREBOX.build(super.getUpdater())
+        );
     }
 
-    /**
-     * <p>Constructor for PictureBox.</p>
-     *
-     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param bindable   a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     */
-    public PictureBox(GameWindow gameWindow, Bindable bindable) {
-        this(gameWindow, (AbstractPictureInterface) new Picture(bindable));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
-        super.update();
-        this.picture.cover(this);
-    }
 
     /**
      * {@inheritDoc}

@@ -45,7 +45,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class GameWindowComponentTree extends SubManager {
 
@@ -70,7 +70,7 @@ public class GameWindowComponentTree extends SubManager {
         AbstractGameWindowComponent baseComponent =
                 new AbstractGameWindowComponent(gameWindow) {
                     @Override
-                    public void initProcessors() {
+                    protected void initProcessors() {
                         this.registerProcessor(KeyboardEvent.class,
                                 (KeyboardEvent keyboardEvent) -> {
                                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {

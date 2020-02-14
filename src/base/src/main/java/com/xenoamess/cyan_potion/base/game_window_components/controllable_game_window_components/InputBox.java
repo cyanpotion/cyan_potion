@@ -30,9 +30,14 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import org.apache.commons.lang.StringUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.glfw.GLFW.*;
@@ -44,9 +49,14 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.158.0
+ * @version 0.158.1
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
+
+    /**
+     * Constant <code>NEXT_LINE_STRING="\n"</code>
+     */
+    public static final String NEXT_LINE_STRING = "\n";
     /**
      * the time everytime slash shines.
      */
@@ -63,7 +73,34 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
     private final Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
     private final Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
+    /**
+     * if allowMultiLine is true then this InputBox allows multiline.
+     * otherwise does not allow multiLine(all contents must be in one line. all /n will be deleted).
+     */
+    private final AtomicBoolean allowMultiLine = new AtomicBoolean(true);
 
+    private int contentStringLengthLimit = -1;
+
+    /**
+     * if useAllowCharSet is true then this InputBox use {@link #allowCharSet},
+     * and only chars in {@link #allowCharSet} are allowed in this InputBox.
+     */
+    private final AtomicBoolean useAllowCharSet = new AtomicBoolean(true);
+    /**
+     * @see #useAllowCharSet
+     */
+    private final Set<Character> allowCharSet = new HashSet<>();
+
+    /**
+     * if useAllowCharSet is true then this InputBox use {@link #disallowCharSet},
+     * and only chars not in {@link #disallowCharSet} are allowed in this InputBox.
+     */
+    private final AtomicBoolean useDisallowCharSet = new AtomicBoolean(true);
+
+    /**
+     * @see #useDisallowCharSet
+     */
+    private final Set<Character> disallowCharSet = new HashSet<>();
 
     /**
      * <p>Constructor for InputBox.</p>
@@ -78,14 +115,14 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * {@inheritDoc}
      */
     @Override
-    public void initProcessors() {
+    protected void initProcessors() {
         super.initProcessors();
         this.registerOnMouseButtonLeftDownCallback(new MainThreadEventProcessor<MouseButtonEvent>(
                 this,
                 (MouseButtonEvent event) -> {
                     int clickIndex =
-                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(InputBox.this.getGameWindow().getMousePosX(),
-                                    InputBox.this.getGameWindow().getMousePosY(), false, null);
+                            InputBox.this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                    event.getMousePosY(), false, null);
                     setNowSelectStartPos(clickIndex);
                     setNowSelectEndPos(clickIndex);
                     setNowInsertPos(clickIndex);
@@ -94,9 +131,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 })
         );
 
-        this.registerOnMouseLeaveAreaCallback(
-                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(null)
-        );
+//        this.registerOnMouseLeaveAreaCallback(
+//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()))
+//        );
 
         this.registerOnMouseButtonLeftUpCallback(
                 new MainThreadEventProcessor<MouseButtonEvent>(
@@ -105,9 +142,10 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             if (getNowSelectStartPos() < 0) {
                                 return null;
                             }
+                            assert (event != null);
                             int releaseIndex =
-                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                            this.getGameWindow().getMousePosY(), false, null);
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                            event.getMousePosY(), false, null);
                             setNowSelectEndPos(releaseIndex);
                             setNowInsertPos(getNowSelectEndPos());
                             if (getNowSelectStartPos() > getNowSelectEndPos()) {
@@ -135,8 +173,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                 return null;
                             }
                             int clickIndex =
-                                    this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                                            this.getGameWindow().getMousePosY(), false, null);
+                                    this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
+                                            event.getMousePosY(), false, null);
                             setNowSelectEndPos(clickIndex);
                             return null;
                         }
@@ -157,7 +195,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                     Vector2f insertPos;
                                     switch (keyboardEvent.getKeyRaw().getKey()) {
                                         case GLFW_KEY_ENTER:
-                                            this.insertString("\n");
+                                            if (this.isAllowMultiLine()) {
+                                                this.insertString(NEXT_LINE_STRING);
+                                            }
                                             return null;
                                         case GLFW_KEY_TAB:
                                             this.insertString("  ");
@@ -340,8 +380,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     @Override
     public boolean ifVisibleThenDraw() {
-        this.drawTextGivenHeightLeftTopAndGetIndex(this.getGameWindow().getMousePosX(),
-                this.getGameWindow().getMousePosY(), true, null);
+        this.drawTextGivenHeightLeftTopAndGetIndex(Float.NaN,
+                Float.NaN, true, null);
         return true;
     }
 
@@ -378,7 +418,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         float insPosY1 = 0;
 
         Font font = Font.getCurrentFont();
-        String[] strings = this.getContentString().split("\n", -1);
+        String[] strings = this.getContentString().split(NEXT_LINE_STRING, -1);
 
         float minDist = Float.MAX_VALUE;
 
@@ -642,6 +682,19 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     }
 
     /**
+     * delete next line in this.contentString.
+     */
+    public void deleteNextLine() {
+        this.contentString = StringUtils.join(
+                this.contentString.split(
+                        NEXT_LINE_STRING
+                )
+        );
+    }
+
+    //-----getters and setters
+
+    /**
      * <p>Getter for the field <code>slashTime</code>.</p>
      *
      * @return a long.
@@ -675,6 +728,63 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
+        if (this.isAllowMultiLine()) {
+            this.deleteNextLine();
+        }
+        this.applyContentStringLengthLimit();
+        if (this.isUseAllowCharSet()) {
+            this.applyAllowCharSet();
+        }
+        if (this.isUseDisallowCharSet()) {
+            this.applyDisallowCharSet();
+        }
+    }
+
+    /**
+     * apply disallowCharSet on {@link #contentString}
+     * notice that usually you shall check {@link #useDisallowCharSet} before you invoke this.
+     *
+     * @see #disallowCharSet
+     */
+    private void applyDisallowCharSet() {
+        if (!this.getDisallowCharSet().isEmpty()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char chr : this.getContentString().toCharArray()) {
+                if (!this.getDisallowCharSet().contains(chr)) {
+                    stringBuilder.append(chr);
+                }
+            }
+            this.contentString = stringBuilder.toString();
+        }
+    }
+
+    /**
+     * apply allowCharSet on {@link #contentString}
+     * notice that usually you shall check {@link #useAllowCharSet} before you invoke this.
+     *
+     * @see #allowCharSet
+     */
+    private void applyAllowCharSet() {
+        if (!this.getAllowCharSet().isEmpty()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char chr : this.getContentString().toCharArray()) {
+                if (this.getAllowCharSet().contains(chr)) {
+                    stringBuilder.append(chr);
+                }
+            }
+            this.contentString = stringBuilder.toString();
+        }
+    }
+
+    /**
+     * cut {@link #contentString} 's longer than {@link #contentStringLengthLimit}'s part.
+     *
+     * @see #contentStringLengthLimit
+     */
+    public void applyContentStringLengthLimit() {
+        if (this.getContentStringLengthLimit() != -1 && this.getContentString().length() > this.getContentStringLengthLimit()) {
+            this.contentString = this.getContentString().substring(0, this.getContentStringLengthLimit());
+        }
     }
 
     /**
@@ -839,5 +949,94 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.cursorColor.set(x, y, z, w);
     }
 
+    /**
+     * <p>isAllowMultiLine.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isAllowMultiLine() {
+        return allowMultiLine.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>allowMultiLine</code>.</p>
+     *
+     * @param allowMultiLine a boolean.
+     */
+    public void setAllowMultiLine(boolean allowMultiLine) {
+        this.allowMultiLine.set(allowMultiLine);
+    }
+
+    /**
+     * max content String Length allowed. if contentStringLengthLimit == -1 then will allow any length.
+     *
+     * @return a int.
+     */
+    public int getContentStringLengthLimit() {
+        return contentStringLengthLimit;
+    }
+
+    /**
+     * <p>Setter for the field <code>contentStringLengthLimit</code>.</p>
+     *
+     * @param contentStringLengthLimit a int.
+     */
+    public void setContentStringLengthLimit(int contentStringLengthLimit) {
+        this.contentStringLengthLimit = contentStringLengthLimit;
+    }
+
+    /**
+     * <p>isUseAllowCharSet.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isUseAllowCharSet() {
+        return this.useAllowCharSet.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>useAllowCharSet</code>.</p>
+     *
+     * @param useAllowCharSet a boolean.
+     */
+    public void setUseAllowCharSet(boolean useAllowCharSet) {
+        this.useAllowCharSet.set(useAllowCharSet);
+    }
+
+    /**
+     * <p>Getter for the field <code>allowCharSet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
+    public Set<Character> getAllowCharSet() {
+        return allowCharSet;
+    }
+
+    /**
+     * <p>isUseDisallowCharSet.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isUseDisallowCharSet() {
+        return this.useDisallowCharSet.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>useDisallowCharSet</code>.</p>
+     *
+     * @param useDisallowCharSet a boolean.
+     */
+    public void setUseDisallowCharSet(boolean useDisallowCharSet) {
+        this.useDisallowCharSet.set(useDisallowCharSet);
+    }
+
+    /**
+     * <p>Getter for the field <code>disallowCharSet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
+    public Set<Character> getDisallowCharSet() {
+        return disallowCharSet;
+    }
 }
 
