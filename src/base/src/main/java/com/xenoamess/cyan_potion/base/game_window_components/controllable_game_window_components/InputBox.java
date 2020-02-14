@@ -682,11 +682,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * delete next line in this.contentString.
      */
     public void deleteNextLine() {
-        this.setContentString(
-                StringUtils.join(
-                        this.contentString.split(
-                                NEXT_LINE_STRING
-                        )
+        this.contentString = StringUtils.join(
+                this.contentString.split(
+                        NEXT_LINE_STRING
                 )
         );
     }
