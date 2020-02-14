@@ -35,6 +35,8 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
@@ -73,6 +75,29 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * otherwise does not allow multiLine(all contents must be in one line. all /n will be deleted).
      */
     private final AtomicBoolean allowMultiLine = new AtomicBoolean(true);
+
+    private int contentStringLengthLimit = -1;
+
+    /**
+     * if useAllowCharSet is true then this InputBox use {@link #allowCharSet},
+     * and only chars in {@link #allowCharSet} are allowed in this InputBox.
+     */
+    private final AtomicBoolean useAllowCharSet = new AtomicBoolean(true);
+    /**
+     * @see #useAllowCharSet
+     */
+    private final Set<Character> allowCharSet = new HashSet<>();
+
+    /**
+     * if useAllowCharSet is true then this InputBox use {@link #disallowCharSet},
+     * and only chars not in {@link #disallowCharSet} are allowed in this InputBox.
+     */
+    private final AtomicBoolean useDisallowCharSet = new AtomicBoolean(true);
+
+    /**
+     * @see #useDisallowCharSet
+     */
+    private final Set<Character> disallowCharSet = new HashSet<>();
 
     /**
      * <p>Constructor for InputBox.</p>
@@ -653,11 +678,19 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     }
 
+    /**
+     * delete next line in this.contentString.
+     */
     public void deleteNextLine() {
-        if (this.isAllowMultiLine()) {
-            this.contentString = StringUtils.join(this.contentString.split(NEXT_LINE_STRING));
-        }
+        this.setContentString(
+                StringUtils.join(
+                        this.contentString.split(
+                                NEXT_LINE_STRING
+                        )
+                )
+        );
     }
+
     //-----getters and setters
 
     /**
@@ -694,7 +727,63 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
-        this.deleteNextLine();
+        if (this.isAllowMultiLine()) {
+            this.deleteNextLine();
+        }
+        this.applyContentStringLengthLimit();
+        if (this.isUseAllowCharSet()) {
+            this.applyAllowCharSet();
+        }
+        if (this.isUseDisallowCharSet()) {
+            this.applyDisallowCharSet();
+        }
+    }
+
+    /**
+     * apply disallowCharSet on {@link #contentString}
+     * notice that usually you shall check {@link #useDisallowCharSet} before you invoke this.
+     *
+     * @see #disallowCharSet
+     */
+    private void applyDisallowCharSet() {
+        if (!this.getDisallowCharSet().isEmpty()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char chr : this.getContentString().toCharArray()) {
+                if (!this.getDisallowCharSet().contains(chr)) {
+                    stringBuilder.append(chr);
+                }
+            }
+            this.contentString = stringBuilder.toString();
+        }
+    }
+
+    /**
+     * apply allowCharSet on {@link #contentString}
+     * notice that usually you shall check {@link #useAllowCharSet} before you invoke this.
+     *
+     * @see #allowCharSet
+     */
+    private void applyAllowCharSet() {
+        if (!this.getAllowCharSet().isEmpty()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char chr : this.getContentString().toCharArray()) {
+                if (this.getAllowCharSet().contains(chr)) {
+                    stringBuilder.append(chr);
+                }
+            }
+            this.contentString = stringBuilder.toString();
+        }
+    }
+
+    /**
+     * cut {@link #contentString} 's longer than {@link #contentStringLengthLimit}'s part.
+     *
+     * @see #contentStringLengthLimit
+     */
+    public void applyContentStringLengthLimit() {
+        if (this.getContentStringLengthLimit() != -1) {
+            this.contentString = this.getContentString().substring(0, this.getContentStringLengthLimit());
+        }
     }
 
     /**
@@ -865,6 +954,41 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     public void setAllowMultiLine(boolean allowMultiLine) {
         this.allowMultiLine.set(allowMultiLine);
+    }
+
+    /**
+     * max content String Length allowed. if contentStringLengthLimit == -1 then will allow any length.
+     */
+    public int getContentStringLengthLimit() {
+        return contentStringLengthLimit;
+    }
+
+    public void setContentStringLengthLimit(int contentStringLengthLimit) {
+        this.contentStringLengthLimit = contentStringLengthLimit;
+    }
+
+    public boolean isUseAllowCharSet() {
+        return this.useAllowCharSet.get();
+    }
+
+    public void setUseAllowCharSet(boolean useAllowCharSet) {
+        this.useAllowCharSet.set(useAllowCharSet);
+    }
+
+    public Set<Character> getAllowCharSet() {
+        return allowCharSet;
+    }
+
+    public boolean isUseDisallowCharSet() {
+        return this.useDisallowCharSet.get();
+    }
+
+    public void setUseDisallowCharSet(boolean useDisallowCharSet) {
+        this.useDisallowCharSet.set(useDisallowCharSet);
+    }
+
+    public Set<Character> getDisallowCharSet() {
+        return disallowCharSet;
     }
 }
 
