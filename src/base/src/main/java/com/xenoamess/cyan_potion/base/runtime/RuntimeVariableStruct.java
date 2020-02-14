@@ -51,7 +51,7 @@ import java.io.Serializable;
  * RuntimeVariableStruct must HAVE a empty constructor.
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public abstract class RuntimeVariableStruct implements Serializable {
     @JsonIgnore

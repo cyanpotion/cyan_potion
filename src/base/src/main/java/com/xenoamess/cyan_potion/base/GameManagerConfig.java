@@ -33,7 +33,7 @@ import java.util.Map;
  * <p>GameManagerConfig class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class GameManagerConfig {
 

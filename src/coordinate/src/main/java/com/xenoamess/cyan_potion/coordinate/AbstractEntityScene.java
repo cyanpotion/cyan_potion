@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>Abstract AbstractEntityScene class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public abstract class AbstractEntityScene extends AbstractScene {
     /**

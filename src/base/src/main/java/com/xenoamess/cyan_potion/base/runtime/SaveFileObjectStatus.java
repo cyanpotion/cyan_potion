@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * status of SaveFileObject
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  * @see SaveFileObject
  */
 public class SaveFileObjectStatus {

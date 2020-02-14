@@ -42,7 +42,7 @@ import java.util.Objects;
  * <p>Unit class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class Unit extends AbstractDynamicEntity {
     /**

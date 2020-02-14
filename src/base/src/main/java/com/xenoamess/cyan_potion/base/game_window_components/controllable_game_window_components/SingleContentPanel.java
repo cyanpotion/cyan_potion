@@ -35,8 +35,8 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
  * <p>
  * This class is used as a display panel or something.
  *
- * @author xenoa
- * @version $Id: $Id
+ * @author XenoAmess
+ * @version 0.158.1
  */
 public class SingleContentPanel extends Panel {
 

@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.areas.AbstractMutablePoint;
  * <p>Camera class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class Camera implements AbstractMutablePoint {
     private float posX;

@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * <p>EventUnitJson class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class EventUnitJson implements Serializable {
     public int id;

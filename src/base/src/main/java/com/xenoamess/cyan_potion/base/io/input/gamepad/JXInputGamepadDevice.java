@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * then you shall call DataCenter.setUsingJXInput(true) in code plugin rightBeforeGamepadInputInit.
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  * @see DataCenter#isUsingJXInput()
  * @deprecated
  */

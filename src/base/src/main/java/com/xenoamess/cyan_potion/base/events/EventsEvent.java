@@ -36,7 +36,7 @@ import java.util.Set;
  * that is done
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class EventsEvent implements Event {
     private final Set<Event> events;

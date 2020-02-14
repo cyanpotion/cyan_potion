@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <p>JamepadGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore

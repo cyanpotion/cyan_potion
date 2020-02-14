@@ -33,7 +33,7 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * for example if this FrameFloat means a speed, and its valueFor1Second is 100, then its speed is 100/second.
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public class FrameFloat {
     private final GameManager gameManager;

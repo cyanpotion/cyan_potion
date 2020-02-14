@@ -48,7 +48,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>TitleExample class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1-SNAPSHOT
+ * @version 0.158.1
  */
 public final class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveSlotTexture =
