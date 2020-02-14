@@ -30,9 +30,12 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import org.apache.commons.lang.StringUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
 import static org.lwjgl.glfw.GLFW.*;
@@ -47,6 +50,8 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * @version 0.158.1-SNAPSHOT
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
+
+    public static final String NEXT_LINE_STRING = "\n";
     /**
      * the time everytime slash shines.
      */
@@ -63,7 +68,11 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
     private final Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
     private final Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
-
+    /**
+     * if allowMultiLine is true then this InputBox allows multiline.
+     * otherwise does not allow multiLine(all contents must be in one line. all /n will be deleted).
+     */
+    private final AtomicBoolean allowMultiLine = new AtomicBoolean(true);
 
     /**
      * <p>Constructor for InputBox.</p>
@@ -105,10 +114,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             if (getNowSelectStartPos() < 0) {
                                 return null;
                             }
-                            if (event == null) {
-                                System.err.println("event == null");
-                                new Error().printStackTrace();
-                            }
+                            assert (event != null);
                             int releaseIndex =
                                     this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
                                             event.getMousePosY(), false, null);
@@ -161,7 +167,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                     Vector2f insertPos;
                                     switch (keyboardEvent.getKeyRaw().getKey()) {
                                         case GLFW_KEY_ENTER:
-                                            this.insertString("\n");
+                                            if (this.isAllowMultiLine()) {
+                                                this.insertString(NEXT_LINE_STRING);
+                                            }
                                             return null;
                                         case GLFW_KEY_TAB:
                                             this.insertString("  ");
@@ -382,7 +390,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         float insPosY1 = 0;
 
         Font font = Font.getCurrentFont();
-        String[] strings = this.getContentString().split("\n", -1);
+        String[] strings = this.getContentString().split(NEXT_LINE_STRING, -1);
 
         float minDist = Float.MAX_VALUE;
 
@@ -645,6 +653,13 @@ public class InputBox extends AbstractControllableGameWindowComponent {
 
     }
 
+    public void deleteNextLine() {
+        if (this.isAllowMultiLine()) {
+            this.contentString = StringUtils.join(this.contentString.split(NEXT_LINE_STRING));
+        }
+    }
+    //-----getters and setters
+
     /**
      * <p>Getter for the field <code>slashTime</code>.</p>
      *
@@ -679,6 +694,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
+        this.deleteNextLine();
     }
 
     /**
@@ -843,5 +859,12 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.cursorColor.set(x, y, z, w);
     }
 
+    public boolean isAllowMultiLine() {
+        return allowMultiLine.get();
+    }
+
+    public void setAllowMultiLine(boolean allowMultiLine) {
+        this.allowMultiLine.set(allowMultiLine);
+    }
 }
 
