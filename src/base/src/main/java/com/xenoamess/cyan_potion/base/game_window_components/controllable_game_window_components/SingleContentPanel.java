@@ -30,21 +30,38 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
 
 /**
  * SingleContentPanel
- * A {@link Panel} who allow at most one {@link AbstractGameWindowComponent} as content.
- * When adding a new {@link AbstractGameWindowComponent}, the exist ones will be closed automatically.
+ * A {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel} who allow at most one {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} as content.
+ * When adding a new {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, the exist ones will be closed automatically.
  * <p>
  * This class is used as a display panel or something.
+ *
+ * @author xenoa
+ * @version $Id: $Id
  */
 public class SingleContentPanel extends Panel {
 
+    /**
+     * <p>Constructor for SingleContentPanel.</p>
+     *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     */
     public SingleContentPanel(GameWindow gameWindow) {
         super(gameWindow);
     }
 
+    /**
+     * <p>Constructor for SingleContentPanel.</p>
+     *
+     * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @param backgroundBindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
+     */
     public SingleContentPanel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow, backgroundBindable);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.clearContents();

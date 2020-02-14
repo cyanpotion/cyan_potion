@@ -226,6 +226,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
         return backgroundPicture;
     }
 
+    /**
+     * <p>Getter for the field <code>subGameWindowComponentTree</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree} object.
+     */
     protected GameWindowComponentTree getSubGameWindowComponentTree() {
         return subGameWindowComponentTree;
     }

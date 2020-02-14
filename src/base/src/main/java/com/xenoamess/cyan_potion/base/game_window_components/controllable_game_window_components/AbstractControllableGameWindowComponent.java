@@ -579,6 +579,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     /**
      * <p>ifMouseInArea.</p>
      *
+     * @param mouseButtonEvent a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
      * @return a boolean.
      */
     public boolean ifMouseInArea(MouseButtonEvent mouseButtonEvent) {
@@ -801,10 +802,20 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
         this.willStillInFocus = willStillInFocus;
     }
 
+    /**
+     * <p>isBlockClick.</p>
+     *
+     * @return if block click
+     */
     public boolean isBlockClick() {
         return blockClick;
     }
 
+    /**
+     * <p>Setter for the field <code>blockClick</code>.</p>
+     *
+     * @param blockClick blockClick
+     */
     public void setBlockClick(boolean blockClick) {
         this.blockClick = blockClick;
     }

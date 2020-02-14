@@ -69,6 +69,9 @@ public class MouseButtonEvent implements Event {
      * use this instead of null for safety.
      * notice that due to the need of mousePosX / Y, you have to generate the empty event from your posX / Y.
      *
+     * @param mousePosX mousePosX
+     * @param mousePosY mousePosX
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
      * @see EmptyEvent
      */
     public static MouseButtonEvent generateEmptyMouseButtonEvent(float mousePosX, float mousePosY) {
@@ -79,6 +82,8 @@ public class MouseButtonEvent implements Event {
      * use this instead of null for safety.
      * notice that due to the need of mousePosX / Y, you have to generate the empty event from your posX / Y.
      *
+     * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
      * @see EmptyEvent
      */
     public static MouseButtonEvent generateEmptyMouseButtonEvent(GameWindow gameWindow) {
@@ -135,10 +140,12 @@ public class MouseButtonEvent implements Event {
     /**
      * <p>Constructor for MouseButtonEvent.</p>
      *
-     * @param window a long.
-     * @param button a int.
-     * @param action a int.
-     * @param mods   a int.
+     * @param window    window
+     * @param button    button
+     * @param action    action
+     * @param mods      mods
+     * @param mousePosX mousePosX
+     * @param mousePosY mousePosY
      */
     public MouseButtonEvent(long window, int button, int action, int mods, float mousePosX, float mousePosY) {
         super();
@@ -254,14 +261,29 @@ public class MouseButtonEvent implements Event {
         return mods;
     }
 
+    /**
+     * <p>Getter for the field <code>mousePosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMousePosX() {
         return mousePosX;
     }
 
+    /**
+     * <p>Getter for the field <code>mousePosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMousePosY() {
         return mousePosY;
     }
 
+    /**
+     * <p>getMousePoint.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
     public AbstractPoint getMousePoint() {
         return new SimpleImmutablePoint(this.getMousePosX(), this.getMousePosY());
     }

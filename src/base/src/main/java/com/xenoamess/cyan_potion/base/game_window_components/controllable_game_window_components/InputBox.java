@@ -53,6 +53,9 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
 
+    /**
+     * Constant <code>NEXT_LINE_STRING="\n"</code>
+     */
     public static final String NEXT_LINE_STRING = "\n";
     /**
      * the time everytime slash shines.
@@ -946,45 +949,92 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         this.cursorColor.set(x, y, z, w);
     }
 
+    /**
+     * <p>isAllowMultiLine.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAllowMultiLine() {
         return allowMultiLine.get();
     }
 
+    /**
+     * <p>Setter for the field <code>allowMultiLine</code>.</p>
+     *
+     * @param allowMultiLine a boolean.
+     */
     public void setAllowMultiLine(boolean allowMultiLine) {
         this.allowMultiLine.set(allowMultiLine);
     }
 
     /**
      * max content String Length allowed. if contentStringLengthLimit == -1 then will allow any length.
+     *
+     * @return a int.
      */
     public int getContentStringLengthLimit() {
         return contentStringLengthLimit;
     }
 
+    /**
+     * <p>Setter for the field <code>contentStringLengthLimit</code>.</p>
+     *
+     * @param contentStringLengthLimit a int.
+     */
     public void setContentStringLengthLimit(int contentStringLengthLimit) {
         this.contentStringLengthLimit = contentStringLengthLimit;
     }
 
+    /**
+     * <p>isUseAllowCharSet.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUseAllowCharSet() {
         return this.useAllowCharSet.get();
     }
 
+    /**
+     * <p>Setter for the field <code>useAllowCharSet</code>.</p>
+     *
+     * @param useAllowCharSet a boolean.
+     */
     public void setUseAllowCharSet(boolean useAllowCharSet) {
         this.useAllowCharSet.set(useAllowCharSet);
     }
 
+    /**
+     * <p>Getter for the field <code>allowCharSet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Character> getAllowCharSet() {
         return allowCharSet;
     }
 
+    /**
+     * <p>isUseDisallowCharSet.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUseDisallowCharSet() {
         return this.useDisallowCharSet.get();
     }
 
+    /**
+     * <p>Setter for the field <code>useDisallowCharSet</code>.</p>
+     *
+     * @param useDisallowCharSet a boolean.
+     */
     public void setUseDisallowCharSet(boolean useDisallowCharSet) {
         this.useDisallowCharSet.set(useDisallowCharSet);
     }
 
+    /**
+     * <p>Getter for the field <code>disallowCharSet</code>.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Character> getDisallowCharSet() {
         return disallowCharSet;
     }

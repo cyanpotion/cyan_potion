@@ -212,6 +212,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
 
     /**
      * <p>update.</p>
+     *
+     * @return if update succeed
      */
     public boolean update() {
         return this.getUpdater().update(this);
@@ -219,6 +221,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
 
     /**
      * <p>draw.</p>
+     *
+     * @return if draw succeed
      */
     public boolean draw() {
         return this.getDrawer().draw(this);

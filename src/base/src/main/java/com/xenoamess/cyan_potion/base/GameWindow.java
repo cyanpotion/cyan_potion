@@ -1498,6 +1498,11 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         return mousePosY;
     }
 
+    /**
+     * <p>getMousePoint.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
+     */
     public AbstractPoint getMousePoint() {
         return new SimpleImmutablePoint(this.getMousePosX(), this.getMousePosY());
     }
