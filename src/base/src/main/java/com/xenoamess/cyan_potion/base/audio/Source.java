@@ -37,7 +37,7 @@ import static org.lwjgl.openal.AL10.*;
  * <p>Source class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class Source implements Closeable {
     private int alSourceInt = -1;

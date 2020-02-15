@@ -45,7 +45,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class KeyboardEvent implements Event {
     @JsonIgnore

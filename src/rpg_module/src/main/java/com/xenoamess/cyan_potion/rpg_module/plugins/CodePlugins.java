@@ -35,7 +35,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.*;
  * This Class's contents are used by reflection and don't delete it if you don't know about the plugin mechanism here.
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class CodePlugins {
     private CodePlugins() {

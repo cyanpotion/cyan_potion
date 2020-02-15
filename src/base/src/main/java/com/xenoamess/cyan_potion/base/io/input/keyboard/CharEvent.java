@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * That will always make things easier for both of us.
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class CharEvent implements Event {
     @JsonIgnore

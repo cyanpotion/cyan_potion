@@ -34,7 +34,7 @@ import java.util.Objects;
  * <p>StaticEntity class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class StaticEntity extends AbstractEntity {
 

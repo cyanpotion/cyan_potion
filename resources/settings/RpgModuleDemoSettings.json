@@ -12,7 +12,7 @@
         "textFilePath": "resources/text/text.x8l",
         "gameWindowClassName": "com.xenoamess.cyan_potion.base.GameWindow",
         "titleClassName": "com.xenoamess.cyan_potion.rpg_module.world.World",
-        "gameVersion": "0.158.1",
+        "gameVersion": "0.158.2-SNAPSHOT",
         "steam_appid": "480",
         "language": "english",
         "commonSettings": "",

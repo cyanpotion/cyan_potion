@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>GameWindowComponentTreeNode class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.158.2-SNAPSHOT
  */
 public class GameWindowComponentTreeNode implements Closeable {
     private final GameWindowComponentTree gameWindowComponentTree;
