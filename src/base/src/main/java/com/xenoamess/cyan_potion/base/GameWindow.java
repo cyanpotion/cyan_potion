@@ -242,22 +242,22 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         }
 
         glfwSetKeyCallback(getWindow(),
-                this.getGameManager().getCallbacks().getKeyCallback());
+                this.getGameManager().getCallbacks().wrapKeyCallback());
         glfwSetCharCallback(getWindow(),
-                this.getGameManager().getCallbacks().getCharCallback());
+                this.getGameManager().getCallbacks().wrapCharCallback());
 
         glfwSetMouseButtonCallback(getWindow(),
-                this.getGameManager().getCallbacks().getMouseButtonCallback());
+                this.getGameManager().getCallbacks().wrapMouseButtonCallback());
         glfwSetScrollCallback(getWindow(),
-                this.getGameManager().getCallbacks().getScrollCallback());
-        glfwSetJoystickCallback(this.getGameManager().getCallbacks().getJoystickCallback());
+                this.getGameManager().getCallbacks().wrapScrollCallback());
+        glfwSetJoystickCallback(this.getGameManager().getCallbacks().wrapJoystickCallback());
 
         glfwSetWindowCloseCallback(getWindow(),
-                this.getGameManager().getCallbacks().getWindowCloseCallback());
+                this.getGameManager().getCallbacks().wrapWindowCloseCallback());
         glfwSetWindowSizeCallback(getWindow(),
-                this.getGameManager().getCallbacks().getWindowSizeCallback());
+                this.getGameManager().getCallbacks().wrapWindowSizeCallback());
 
-        glfwSetDropCallback(getWindow(), this.getGameManager().getCallbacks().getDropCallback());
+        glfwSetDropCallback(getWindow(), this.getGameManager().getCallbacks().wrapDropCallback());
 
         if (!isFullScreen()) {
             // make the window be at the center of the screen.

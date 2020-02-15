@@ -116,6 +116,42 @@ public class Callbacks {
         return gameManager;
     }
 
+    //-----wrap callback functions-----
+
+    public GLFWWindowCloseCallbackI wrapWindowCloseCallback() {
+        return window -> Callbacks.this.getWindowCloseCallback().invoke(window);
+    }
+
+    public GLFWKeyCallbackI wrapKeyCallback() {
+        return (window, key, scancode, action, mods) -> Callbacks.this.getKeyCallback().invoke(window, key, scancode, action, mods);
+    }
+
+    public GLFWJoystickCallbackI wrapJoystickCallback() {
+        return (jid, event) -> Callbacks.this.getJoystickCallback().invoke(jid, event);
+    }
+
+    public GLFWMouseButtonCallbackI wrapMouseButtonCallback() {
+        return (window, button, action, mods) -> Callbacks.this.getMouseButtonCallback().invoke(window, button, action, mods);
+    }
+
+    public GLFWScrollCallbackI wrapScrollCallback() {
+        return (window, xoffset, yoffset) -> Callbacks.this.getScrollCallback().invoke(window, xoffset, yoffset);
+    }
+
+    public GLFWWindowSizeCallbackI wrapWindowSizeCallback() {
+        return (window, width, height) -> Callbacks.this.getWindowSizeCallback().invoke(window, width, height);
+    }
+
+    public GLFWCharCallbackI wrapCharCallback() {
+        return (window, codepoint) -> Callbacks.this.getCharCallback().invoke(window, codepoint);
+    }
+
+    public GLFWDropCallbackI wrapDropCallback() {
+        return (window, count, names) -> Callbacks.this.getDropCallback().invoke(window, count, names);
+    }
+
+    //-----getters and setters starts-----
+
     /**
      * <p>Getter for the field <code>windowCloseCallback</code>.</p>
      *
