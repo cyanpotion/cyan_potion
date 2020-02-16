@@ -42,7 +42,7 @@ import java.util.Set;
  * if this.waveData==null, then will use source.getCurrentWaveData() as waveData
  *
  * @author XenoAmess
- * @version 0.159.0-SNAPSHOT
+ * @version 0.159.0
  */
 public class PlayAudioEvent implements MainThreadEvent {
     @JsonIgnore

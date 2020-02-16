@@ -30,7 +30,7 @@ import java.util.Arrays;
  * <p>JXInputGamepadKeyEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0-SNAPSHOT
+ * @version 0.159.0
  * @see JXInputGamepadDevice
  * @deprecated
  */

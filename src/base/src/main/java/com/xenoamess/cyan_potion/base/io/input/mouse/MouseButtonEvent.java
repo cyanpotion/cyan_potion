@@ -47,7 +47,7 @@ import java.util.Set;
  * <p>MouseButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0-SNAPSHOT
+ * @version 0.159.0
  */
 public class MouseButtonEvent implements Event {
     @JsonIgnore
