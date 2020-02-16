@@ -50,6 +50,10 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
@@ -79,8 +83,10 @@ public class Font extends AbstractResource {
 
     /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
+     * notice that open this shall create a lot of pictures onto your disk when loading your ttf.
+     * Only open it when you are debugging a new ttf file.
      */
-    public static final boolean TEST_PRINT_FONT_BMP = false;
+    public static boolean TEST_PRINT_FONT_BMP = false;
 
     /**
      * size of each font pic.
@@ -158,6 +164,18 @@ public class Font extends AbstractResource {
      */
     private final List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
 
+    private static class LoadBitmapPojo {
+        final int index;
+        final ByteBuffer bitmapLocal;
+        final STBTTPackedchar.Buffer charDataLocal;
+
+        public LoadBitmapPojo(int index, ByteBuffer bitmapLocal, STBTTPackedchar.Buffer charDataLocal) {
+            this.index = index;
+            this.bitmapLocal = bitmapLocal;
+            this.charDataLocal = charDataLocal;
+        }
+    }
+
     /**
      * <p>loadBitmap.</p>
      *
@@ -165,31 +183,60 @@ public class Font extends AbstractResource {
      * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
-        ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
+        final ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
-        try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
+        ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
-            for (int i = 0; i < PIC_NUM; i++) {
-                ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-                stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
-                STBTTPackedchar.Buffer charDataLocal =
-                        STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
-                charDataLocal.position(0);
-                charDataLocal.limit(EACH_CHAR_NUM);
-                stbtt_PackSetOversampling(pc, 1, 1);
-                stbtt_PackFontRange(pc, ttf, 0, SCALE, i * EACH_CHAR_NUM, charDataLocal);
+        final ExecutorService executorService = Executors.newCachedThreadPool();
+        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<Callable<LoadBitmapPojo>>();
+        for (int i = 0; i < PIC_NUM; i++) {
+            final int ti = i;
+            returnValueList.add(
+                    new Callable<LoadBitmapPojo>() {
+                        @Override
+                        public LoadBitmapPojo call() throws Exception {
+                            try (STBTTPackContext pc = STBTTPackContext.malloc()) {
+                                ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+                                stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
+                                STBTTPackedchar.Buffer charDataLocal =
+                                        STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
+                                charDataLocal.position(0);
+                                charDataLocal.limit(EACH_CHAR_NUM);
+                                stbtt_PackSetOversampling(pc, 1, 1);
+                                stbtt_PackFontRange(pc, ttf, 0, SCALE, ti * EACH_CHAR_NUM, charDataLocal);
 
-                stbtt_PackEnd(pc);
-                if (TEST_PRINT_FONT_BMP) {
-                    stbi_write_bmp("font_texture" + i + ".bmp", BITMAP_W, BITMAP_H, 1,
-                            bitmapLocal);
-                }
-
-                this.bitmaps.add(bitmapLocal);
-                this.getCharDatas().add(charDataLocal);
-            }
+                                stbtt_PackEnd(pc);
+                                if (TEST_PRINT_FONT_BMP) {
+                                    stbi_write_bmp("font_texture" + ti + ".bmp", BITMAP_W, BITMAP_H, 1,
+                                            bitmapLocal);
+                                }
+                                return new LoadBitmapPojo(ti, bitmapLocal, charDataLocal);
+                            }
+                        }
+                    }
+            );
         }
+
+        this.bitmaps.clear();
+        this.getCharDatas().clear();
+
+        try {
+            List<Future<LoadBitmapPojo>> result = executorService.invokeAll(returnValueList);
+            int ti = 0;
+            for (Future<LoadBitmapPojo> au : result) {
+                LoadBitmapPojo pojo = au.get();
+                assert (ti == pojo.index);
+                ti++;
+                this.bitmaps.add(pojo.bitmapLocal);
+                this.getCharDatas().add(pojo.charDataLocal);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Font.loadBitmap fails: Font:{}, fileObject:{}", this, fileObject, e);
+            return false;
+        }
+
+        executorService.shutdown();
+        MemoryUtil.memFree(ttf);
         return true;
     }
 
@@ -213,6 +260,7 @@ public class Font extends AbstractResource {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             MemoryUtil.memFree(this.bitmaps.get(i));
         }
+        this.bitmaps.clear();
     }
 
     /**
