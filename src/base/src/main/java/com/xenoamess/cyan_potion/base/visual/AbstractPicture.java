@@ -31,7 +31,7 @@ import org.joml.Vector4fc;
  * Abstract Picture
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public abstract class AbstractPicture implements AbstractPictureInterface {
     private float leftTopPosX = Float.NaN;

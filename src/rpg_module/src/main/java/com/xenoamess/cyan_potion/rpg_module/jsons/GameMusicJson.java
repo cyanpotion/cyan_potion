@@ -30,7 +30,7 @@ import java.io.Serializable;
  * <p>GameMusicJson class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public class GameMusicJson implements Serializable {
     public String name;

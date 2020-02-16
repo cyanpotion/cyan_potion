@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
  * <p>Abstract Drawer class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public abstract class Drawer<T> implements DrawerInterface<T> {
     private final DrawerInterface<? super T> parentDrawer;

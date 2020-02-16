@@ -117,7 +117,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 @JsonSerialize(using = ResourceInfoSerializer.class)
 @JsonDeserialize(using = ResourceInfoDeserializer.class)

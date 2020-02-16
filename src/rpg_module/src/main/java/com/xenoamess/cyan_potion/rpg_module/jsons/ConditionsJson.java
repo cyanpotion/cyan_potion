@@ -30,7 +30,7 @@ import java.io.Serializable;
  * <p>ConditionsJson class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public class ConditionsJson implements Serializable {
     public int actorId;

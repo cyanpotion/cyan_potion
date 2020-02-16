@@ -44,7 +44,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Shader class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public class Shader implements Closeable {
     @JsonIgnore

@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * <p>Abstract AbstractGamepadData class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public abstract class AbstractGamepadData {
 

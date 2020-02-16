@@ -35,7 +35,7 @@ import org.joml.Vector3f;
  * .size.x logically.
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public class Circle extends AbstractShape {
     /**

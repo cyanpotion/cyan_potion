@@ -38,7 +38,6 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import org.apache.commons.vfs2.FileObject;
-import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.lwjgl.stb.STBTTAlignedQuad;
 import org.lwjgl.stb.STBTTPackContext;
@@ -51,6 +50,10 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
@@ -62,7 +65,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.158.1
+ * @version 0.159.0
  */
 public class Font extends AbstractResource {
     @JsonIgnore
@@ -80,8 +83,10 @@ public class Font extends AbstractResource {
 
     /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
+     * notice that open this shall create a lot of pictures onto your disk when loading your ttf.
+     * Only open it when you are debugging a new ttf file.
      */
-    public static final boolean TEST_PRINT_FONT_BMP = false;
+    public static boolean TEST_PRINT_FONT_BMP = false;
 
     /**
      * size of each font pic.
@@ -118,297 +123,6 @@ public class Font extends AbstractResource {
 
 
     private GameWindow gameWindow;
-
-    public static class DrawTextStruct {
-        private Font font = Font.currentFont;
-        private float leftTopPosX = Float.NaN;
-        private float leftTopPosY = Float.NaN;
-        private float centerPosX = Float.NaN;
-        private float centerPosY = Float.NaN;
-        private float width = Float.NaN;
-        private float height = Float.NaN;
-        private float scaleX = Float.NaN;
-        private float scaleY = Float.NaN;
-        private float characterSpace = 0;
-
-        private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
-        private final Vector4f color = new Vector4f(1, 1, 1, 1);
-        private String text = "";
-
-        public DrawTextStruct() {
-
-        }
-
-        public DrawTextStruct(DrawTextStruct drawTextStruct) {
-            this.setFont(drawTextStruct.getFont());
-            this.setLeftTopPosX(drawTextStruct.getLeftTopPosX());
-            this.setLeftTopPosY(drawTextStruct.getLeftTopPosY());
-            this.setCenterPosX(drawTextStruct.getCenterPosX());
-            this.setCenterPosY(drawTextStruct.getCenterPosY());
-            this.setWidth(drawTextStruct.getWidth());
-            this.setHeight(drawTextStruct.getHeight());
-            this.setScaleX(drawTextStruct.getScaleX());
-            this.setScaleY(drawTextStruct.getScaleY());
-            this.setCharacterSpace(drawTextStruct.getCharacterSpace());
-            if (drawTextStruct.color != null) {
-                this.color.set(drawTextStruct.color);
-            } else {
-                this.color.set(DEFAULT_TEXT_COLOR);
-            }
-            this.setText(drawTextStruct.getText());
-        }
-
-        public void setLeftTopPosXY(float leftTopPosX, float leftTopPosY) {
-            this.setLeftTopPosX(leftTopPosX);
-            this.setLeftTopPosY(leftTopPosY);
-        }
-
-        public void setCenterPosXY(float centerPosX, float centerPosY) {
-            this.setCenterPosX(centerPosX);
-            this.setCenterPosY(centerPosY);
-        }
-
-        public void setWidthHeight(float width, float height) {
-            this.setWidth(width);
-            this.setHeight(height);
-        }
-
-        public void setScaleXY(float scaleX, float scaleY) {
-            this.setScaleX(scaleX);
-            this.setScaleY(scaleY);
-        }
-
-        public void bakePosXY() {
-            assert (!Float.isNaN(this.getWidth()));
-            assert (!Float.isNaN(this.getHeight()));
-
-            if (!Float.isNaN(getLeftTopPosX()) && !Float.isNaN(getLeftTopPosY())) {
-                setCenterPosX(getLeftTopPosX() + getWidth() / 2f);
-                setCenterPosY(getLeftTopPosY() + getHeight() / 2f);
-            } else if (!Float.isNaN(getCenterPosX()) && !Float.isNaN(getCenterPosY())) {
-                setLeftTopPosX(getCenterPosX() - getWidth() / 2f);
-                setLeftTopPosY(getCenterPosY() - getHeight() / 2f);
-            } else {
-                LOGGER.info("all pos be NaN : {}", this);
-            }
-        }
-
-        public void calculateScaleXYFromWidthHeight() {
-            assert (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight()));
-            assert (this.getText() != null);
-
-            this.getFont().bind();
-            getFont().getXb().put(0, 0);
-            getFont().getYb().put(0, 0);
-
-            glEnable(GL_TEXTURE_2D);
-
-            float lastXReal = 0;
-            float lastYReal = 0;
-            float lastXShould = 0;
-            float lastYShould = 0;
-
-            float x3 = Float.MIN_VALUE;
-            float y3 = Float.MIN_VALUE;
-
-            for (int i = 0; i < this.getText().length(); i++) {
-                if (this.getText().charAt(i) < 32) {
-                    continue;
-                }
-                glBindTexture(GL_TEXTURE_2D, getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / EACH_CHAR_NUM));
-                glBegin(GL_QUADS);
-                stbtt_GetPackedQuad(getFont().getCharDatas().get(this.getText().charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                        this.getText().charAt(i) % EACH_CHAR_NUM, getFont().getXb(), getFont().getYb(), getFont().getQ(), false);
-//            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
-//            q.y0() + " y1:" + q.y1());
-                float charWidthShould = getFont().getQ().x1() - getFont().getQ().x0();
-                float charHeightShould = getFont().getQ().y1() - getFont().getQ().y0();
-                float spaceLeftToCharShould = getFont().getQ().x0() - lastXShould;
-                float spaceUpToCharShould = getFont().getQ().y0() - lastYShould;
-                float nowX0 = lastXReal + spaceLeftToCharShould;
-                float nowY0 = 0;
-//            LOGGER.debug(charWidthShould + " " + charHeightShould + "
-//            " + spaceLeftToCharShould + " " + spaceUpToCharShould + " " +
-//            nowX0 + " " + nowY0);
-//            drawBoxTC(
-//                    nowX0, nowY0, nowX0 + charWidthShould * 1, nowY0 +
-//                    charHeightShould * 1,
-//                    q.s0(), q.t0(), q.s1(), q.t1()
-//            );
-                x3 = Math.max(x3, nowX0 + charWidthShould);
-                y3 = Math.max(y3, nowY0 + charHeightShould);
-                lastXReal = nowX0 + charWidthShould * 1;
-                lastYReal = 0;
-                lastXShould = getFont().getQ().x1();
-                lastYShould = 0;
-                glEnd();
-            }
-            assert (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight()));
-            float calculatedScaleX = Float.isNaN(this.getWidth()) ? Float.NaN : this.getWidth() / (x3 - 0);
-            float calculatedScaleY = Float.isNaN(this.getHeight()) ? Float.NaN : this.getHeight() / (y3 - 0);
-            if (Float.isNaN(calculatedScaleX)) {
-                calculatedScaleX = calculatedScaleY;
-            } else if (Float.isNaN(calculatedScaleY)) {
-                calculatedScaleY = calculatedScaleX;
-            }
-            this.setScaleXY(calculatedScaleX, calculatedScaleY);
-            if (Float.isNaN(this.getHeight())) {
-                this.setHeight(this.getWidth() / x3 * y3);
-            }
-            if (Float.isNaN(this.getWidth())) {
-                this.setWidth(this.getHeight() / y3 * x3);
-            }
-        }
-
-        public void bake() {
-            if (!Float.isNaN(this.getScaleX()) && !Float.isNaN(this.getScaleY()) && !Float.isNaN(this.getHeight())) {
-                //do nothing
-            } else if (!Float.isNaN(this.getScaleX()) && !Float.isNaN(this.getScaleY())) {
-                DrawTextStruct drawTextStruct = new DrawTextStruct(this);
-                drawTextStruct.setColor(new Vector4f(0, 0, 0, 0));
-                drawTextStruct.setLeftTopPosX(0);
-                drawTextStruct.setLeftTopPosY(0);
-                getFont().drawTextLeftTop(drawTextStruct);
-                this.setWidth(drawTextStruct.getWidth());
-                this.setHeight(drawTextStruct.getHeight());
-            } else if (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight())) {
-                this.calculateScaleXYFromWidthHeight();
-            }
-            this.bakePosXY();
-        }
-
-        public void draw() {
-            if (Float.isNaN(getLeftTopPosX()) || Float.isNaN(getLeftTopPosY()) || Float.isNaN(getCenterPosX()) || Float.isNaN(getCenterPosY()) || Float.isNaN(getScaleX()) || Float.isNaN(getScaleY()) || Float.isNaN(getCharacterSpace()) || getText() == null || Float.isNaN(getHeight())) {
-                this.bake();
-                if (Float.isNaN(getLeftTopPosX()) || Float.isNaN(getLeftTopPosY()) || Float.isNaN(getCenterPosX()) || Float.isNaN(getCenterPosY()) || Float.isNaN(getScaleX()) || Float.isNaN(getScaleY()) || Float.isNaN(getCharacterSpace()) || getText() == null || Float.isNaN(getHeight())) {
-                    LOGGER.info("This DrawTextStruct still cannot draw after bake, thus we will not draw it : {}" + this.toString());
-                } else {
-                    this.getFont().drawTextLeftTop(this);
-                }
-            }
-        }
-
-        public float getLeftTopPosX() {
-            return leftTopPosX;
-        }
-
-        public void setLeftTopPosX(float leftTopPosX) {
-            this.leftTopPosX = leftTopPosX;
-        }
-
-        public float getLeftTopPosY() {
-            return leftTopPosY;
-        }
-
-        public void setLeftTopPosY(float leftTopPosY) {
-            this.leftTopPosY = leftTopPosY;
-        }
-
-        public float getCenterPosX() {
-            return centerPosX;
-        }
-
-        public void setCenterPosX(float centerPosX) {
-            this.centerPosX = centerPosX;
-        }
-
-        public float getCenterPosY() {
-            return centerPosY;
-        }
-
-        public void setCenterPosY(float centerPosY) {
-            this.centerPosY = centerPosY;
-        }
-
-        public float getWidth() {
-            return width;
-        }
-
-        public void setWidth(float width) {
-            this.width = width;
-        }
-
-        public float getHeight() {
-            return height;
-        }
-
-        public void setHeight(float height) {
-            this.height = height;
-        }
-
-        public float getScaleX() {
-            return scaleX;
-        }
-
-        public void setScaleX(float scaleX) {
-            this.scaleX = scaleX;
-        }
-
-        public float getScaleY() {
-            return scaleY;
-        }
-
-        public void setScaleY(float scaleY) {
-            this.scaleY = scaleY;
-        }
-
-        public Vector4fc getColor() {
-            return new Vector4f(color);
-        }
-
-        public void setColor(Vector4fc color) {
-            if (color == null) {
-                color = DEFAULT_TEXT_COLOR;
-            }
-            this.color.set(color);
-        }
-
-        public float getCharacterSpace() {
-            return characterSpace;
-        }
-
-        public void setCharacterSpace(float characterSpace) {
-            this.characterSpace = characterSpace;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public Font getFont() {
-            return font;
-        }
-
-        public void setFont(Font font) {
-            if (font == null) {
-                font = Font.currentFont;
-            }
-            this.font = font;
-        }
-
-        @Override
-        public String toString() {
-            return "DrawTextStruct{" +
-                    "font=" + getFont() +
-                    ", leftTopPosX=" + getLeftTopPosX() +
-                    ", leftTopPosY=" + getLeftTopPosY() +
-                    ", centerPosX=" + getCenterPosX() +
-                    ", centerPosY=" + getCenterPosY() +
-                    ", width=" + getWidth() +
-                    ", height=" + getHeight() +
-                    ", scaleX=" + getScaleX() +
-                    ", scaleY=" + getScaleY() +
-                    ", characterSpace=" + getCharacterSpace() +
-                    ", color=" + color +
-                    ", text='" + getText() + '\'' +
-                    '}';
-        }
-
-    }
 
     /**
      * !!!NOTICE!!!
@@ -450,6 +164,18 @@ public class Font extends AbstractResource {
      */
     private final List<ByteBuffer> bitmaps = new ArrayList<>(PIC_NUM);
 
+    private static class LoadBitmapPojo {
+        final int index;
+        final ByteBuffer bitmapLocal;
+        final STBTTPackedchar.Buffer charDataLocal;
+
+        public LoadBitmapPojo(int index, ByteBuffer bitmapLocal, STBTTPackedchar.Buffer charDataLocal) {
+            this.index = index;
+            this.bitmapLocal = bitmapLocal;
+            this.charDataLocal = charDataLocal;
+        }
+    }
+
     /**
      * <p>loadBitmap.</p>
      *
@@ -457,31 +183,60 @@ public class Font extends AbstractResource {
      * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
-        ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
+        final ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
-        try (STBTTPackContext pc = STBTTPackContext.malloc()) {
-            ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
+        ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
-            for (int i = 0; i < PIC_NUM; i++) {
-                ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
-                stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
-                STBTTPackedchar.Buffer charDataLocal =
-                        STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
-                charDataLocal.position(0);
-                charDataLocal.limit(EACH_CHAR_NUM);
-                stbtt_PackSetOversampling(pc, 1, 1);
-                stbtt_PackFontRange(pc, ttf, 0, SCALE, i * EACH_CHAR_NUM, charDataLocal);
+        final ExecutorService executorService = Executors.newCachedThreadPool();
+        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<Callable<LoadBitmapPojo>>();
+        for (int i = 0; i < PIC_NUM; i++) {
+            final int ti = i;
+            returnValueList.add(
+                    new Callable<LoadBitmapPojo>() {
+                        @Override
+                        public LoadBitmapPojo call() throws Exception {
+                            try (STBTTPackContext pc = STBTTPackContext.malloc()) {
+                                ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
+                                stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
+                                STBTTPackedchar.Buffer charDataLocal =
+                                        STBTTPackedchar.malloc(6 * EACH_CHAR_NUM);
+                                charDataLocal.position(0);
+                                charDataLocal.limit(EACH_CHAR_NUM);
+                                stbtt_PackSetOversampling(pc, 1, 1);
+                                stbtt_PackFontRange(pc, ttf, 0, SCALE, ti * EACH_CHAR_NUM, charDataLocal);
 
-                stbtt_PackEnd(pc);
-                if (TEST_PRINT_FONT_BMP) {
-                    stbi_write_bmp("font_texture" + i + ".bmp", BITMAP_W, BITMAP_H, 1,
-                            bitmapLocal);
-                }
-
-                this.bitmaps.add(bitmapLocal);
-                this.getCharDatas().add(charDataLocal);
-            }
+                                stbtt_PackEnd(pc);
+                                if (TEST_PRINT_FONT_BMP) {
+                                    stbi_write_bmp("font_texture" + ti + ".bmp", BITMAP_W, BITMAP_H, 1,
+                                            bitmapLocal);
+                                }
+                                return new LoadBitmapPojo(ti, bitmapLocal, charDataLocal);
+                            }
+                        }
+                    }
+            );
         }
+
+        this.bitmaps.clear();
+        this.getCharDatas().clear();
+
+        try {
+            List<Future<LoadBitmapPojo>> result = executorService.invokeAll(returnValueList);
+            int ti = 0;
+            for (Future<LoadBitmapPojo> au : result) {
+                LoadBitmapPojo pojo = au.get();
+                assert (ti == pojo.index);
+                ti++;
+                this.bitmaps.add(pojo.bitmapLocal);
+                this.getCharDatas().add(pojo.charDataLocal);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Font.loadBitmap fails: Font:{}, fileObject:{}", this, fileObject, e);
+            return false;
+        }
+
+        executorService.shutdown();
+        MemoryUtil.memFree(ttf);
         return true;
     }
 
@@ -505,6 +260,7 @@ public class Font extends AbstractResource {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             MemoryUtil.memFree(this.bitmaps.get(i));
         }
+        this.bitmaps.clear();
     }
 
     /**
@@ -568,7 +324,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             float leftTopPosX,
@@ -593,7 +349,7 @@ public class Font extends AbstractResource {
      * <p>drawText.</p>
      *
      * @param drawTextStruct drawStruct.
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4fc, String)
      */
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
@@ -604,8 +360,8 @@ public class Font extends AbstractResource {
 
         glEnable(GL_TEXTURE_2D);
 
-        if (drawTextStruct.color != null) {
-            glColor4f(drawTextStruct.color.x, drawTextStruct.color.y, drawTextStruct.color.z, drawTextStruct.color.w);
+        if (drawTextStruct.getColor() != null) {
+            glColor4f(drawTextStruct.getColor().x(), drawTextStruct.getColor().y(), drawTextStruct.getColor().z(), drawTextStruct.getColor().w());
         }
 
         float lastXReal = drawTextStruct.getLeftTopPosX();
@@ -655,7 +411,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font.DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaLeftTop(
             float leftTopPosX,
