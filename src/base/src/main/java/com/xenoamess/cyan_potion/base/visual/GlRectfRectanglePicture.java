@@ -44,7 +44,7 @@ import static org.lwjgl.opengl.GL11.*;
  * And I suggest you use pure color Texture instead.
  *
  * @author XenoAmess
- * @version 0.158.2-SNAPSHOT
+ * @version 0.159.0-SNAPSHOT
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */

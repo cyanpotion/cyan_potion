@@ -35,7 +35,7 @@ import static com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandler.P
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
- * @version 0.158.2-SNAPSHOT
+ * @version 0.159.0-SNAPSHOT
  */
 public class CyanPotionURLStreamHandlerFactory implements URLStreamHandlerFactory {
     private String userDir;

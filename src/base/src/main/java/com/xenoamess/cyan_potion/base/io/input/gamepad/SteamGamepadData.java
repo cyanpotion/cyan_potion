@@ -32,7 +32,7 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * TODO But really it is not at high priority, as steam controller is not well accepted.
  *
  * @author XenoAmess
- * @version 0.158.2-SNAPSHOT
+ * @version 0.159.0-SNAPSHOT
  */
 public class SteamGamepadData extends AbstractGamepadData {
     /**

@@ -31,7 +31,7 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * A manager class for saving and loading, and other save file operations.
  *
  * @author XenoAmess
- * @version 0.158.2-SNAPSHOT
+ * @version 0.159.0-SNAPSHOT
  */
 public class SaveManager {
     /**

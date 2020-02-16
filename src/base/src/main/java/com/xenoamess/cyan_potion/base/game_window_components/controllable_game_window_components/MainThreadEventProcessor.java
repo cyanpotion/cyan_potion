@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
  * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
  *
  * @author XenoAmess
- * @version 0.158.2-SNAPSHOT
+ * @version 0.159.0-SNAPSHOT
  */
 public class MainThreadEventProcessor<T extends Event> implements EventProcessor<T> {
     private final GameManager gameManager;
