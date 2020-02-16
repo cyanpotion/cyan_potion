@@ -106,7 +106,7 @@ public class TextPicture extends AbstractPicture {
 
         characterSpace = characterSpace / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
-        Font.DrawTextStruct drawTextStruct = new Font.DrawTextStruct();
+        DrawTextStruct drawTextStruct = new DrawTextStruct();
         drawTextStruct.setFont(font);
         drawTextStruct.setLeftTopPosXY(leftTopPosX, leftTopPosY);
         drawTextStruct.setCenterPosXY(centerPosX, centerPosY);
