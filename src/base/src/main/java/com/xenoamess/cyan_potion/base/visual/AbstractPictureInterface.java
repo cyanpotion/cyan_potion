@@ -39,14 +39,14 @@ import org.joml.Vector4fc;
  */
 public interface AbstractPictureInterface extends AbstractMutableArea {
     /**
-     * <p>draw.</p>
+     * draw this picture to {@link com.xenoamess.cyan_potion.base.GameWindow}.
      *
      * @param gameWindow gameWindow
      */
     void draw(GameWindow gameWindow);
 
     /**
-     * draw this picture to Scene.
+     * draw this picture to {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractScene}
      * notice that this function will use Scene's "absolutePos" for all positions, and draw on the scene absolutely
      * if you want to draw relative to the window, then you shall get GameWindow from the Scene, and
      *

@@ -118,34 +118,74 @@ public class Callbacks {
 
     //-----wrap callback functions-----
 
+    /**
+     * <p>wrapWindowCloseCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWWindowCloseCallbackI} object.
+     */
     public GLFWWindowCloseCallbackI wrapWindowCloseCallback() {
         return window -> Callbacks.this.getWindowCloseCallback().invoke(window);
     }
 
+    /**
+     * <p>wrapKeyCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
+     */
     public GLFWKeyCallbackI wrapKeyCallback() {
         return (window, key, scancode, action, mods) -> Callbacks.this.getKeyCallback().invoke(window, key, scancode, action, mods);
     }
 
+    /**
+     * <p>wrapJoystickCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWJoystickCallbackI} object.
+     */
     public GLFWJoystickCallbackI wrapJoystickCallback() {
         return (jid, event) -> Callbacks.this.getJoystickCallback().invoke(jid, event);
     }
 
+    /**
+     * <p>wrapMouseButtonCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
+     */
     public GLFWMouseButtonCallbackI wrapMouseButtonCallback() {
         return (window, button, action, mods) -> Callbacks.this.getMouseButtonCallback().invoke(window, button, action, mods);
     }
 
+    /**
+     * <p>wrapScrollCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWScrollCallbackI} object.
+     */
     public GLFWScrollCallbackI wrapScrollCallback() {
         return (window, xoffset, yoffset) -> Callbacks.this.getScrollCallback().invoke(window, xoffset, yoffset);
     }
 
+    /**
+     * <p>wrapWindowSizeCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWWindowSizeCallbackI} object.
+     */
     public GLFWWindowSizeCallbackI wrapWindowSizeCallback() {
         return (window, width, height) -> Callbacks.this.getWindowSizeCallback().invoke(window, width, height);
     }
 
+    /**
+     * <p>wrapCharCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWCharCallbackI} object.
+     */
     public GLFWCharCallbackI wrapCharCallback() {
         return (window, codepoint) -> Callbacks.this.getCharCallback().invoke(window, codepoint);
     }
 
+    /**
+     * <p>wrapDropCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWDropCallbackI} object.
+     */
     public GLFWDropCallbackI wrapDropCallback() {
         return (window, count, names) -> Callbacks.this.getDropCallback().invoke(window, count, names);
     }

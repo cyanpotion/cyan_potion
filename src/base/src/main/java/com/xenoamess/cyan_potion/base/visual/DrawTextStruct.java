@@ -33,6 +33,13 @@ import org.slf4j.LoggerFactory;
 
 import static org.lwjgl.opengl.GL11.*;
 
+/**
+ * DrawTextStruct
+ * DrawTextStruct is a struct to describe how to draw texts.
+ *
+ * @author XenoAmess
+ * @version 0.159.0-SNAPSHOT
+ */
 public class DrawTextStruct {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -53,10 +60,18 @@ public class DrawTextStruct {
     private final Vector4f color = new Vector4f(1, 1, 1, 1);
     private String text = "";
 
+    /**
+     * <p>Constructor for DrawTextStruct.</p>
+     */
     public DrawTextStruct() {
 
     }
 
+    /**
+     * <p>Constructor for DrawTextStruct.</p>
+     *
+     * @param drawTextStruct a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
+     */
     public DrawTextStruct(DrawTextStruct drawTextStruct) {
         this.setFont(drawTextStruct.getFont());
         this.setLeftTopPosX(drawTextStruct.getLeftTopPosX());
@@ -76,26 +91,53 @@ public class DrawTextStruct {
         this.setText(drawTextStruct.getText());
     }
 
+    /**
+     * <p>setLeftTopPosXY.</p>
+     *
+     * @param leftTopPosX a float.
+     * @param leftTopPosY a float.
+     */
     public void setLeftTopPosXY(float leftTopPosX, float leftTopPosY) {
         this.setLeftTopPosX(leftTopPosX);
         this.setLeftTopPosY(leftTopPosY);
     }
 
+    /**
+     * <p>setCenterPosXY.</p>
+     *
+     * @param centerPosX a float.
+     * @param centerPosY a float.
+     */
     public void setCenterPosXY(float centerPosX, float centerPosY) {
         this.setCenterPosX(centerPosX);
         this.setCenterPosY(centerPosY);
     }
 
+    /**
+     * <p>setWidthHeight.</p>
+     *
+     * @param width  a float.
+     * @param height a float.
+     */
     public void setWidthHeight(float width, float height) {
         this.setWidth(width);
         this.setHeight(height);
     }
 
+    /**
+     * <p>setScaleXY.</p>
+     *
+     * @param scaleX a float.
+     * @param scaleY a float.
+     */
     public void setScaleXY(float scaleX, float scaleY) {
         this.setScaleX(scaleX);
         this.setScaleY(scaleY);
     }
 
+    /**
+     * <p>bakePosXY.</p>
+     */
     public void bakePosXY() {
         assert (!Float.isNaN(this.getWidth()));
         assert (!Float.isNaN(this.getHeight()));
@@ -111,6 +153,9 @@ public class DrawTextStruct {
         }
     }
 
+    /**
+     * <p>calculateScaleXYFromWidthHeight.</p>
+     */
     public void calculateScaleXYFromWidthHeight() {
         assert (!Float.isNaN(this.getWidth()) || !Float.isNaN(this.getHeight()));
         assert (this.getText() != null);
@@ -178,6 +223,9 @@ public class DrawTextStruct {
         }
     }
 
+    /**
+     * <p>bake.</p>
+     */
     public void bake() {
         if (!Float.isNaN(this.getScaleX()) && !Float.isNaN(this.getScaleY()) && !Float.isNaN(this.getHeight())) {
             //do nothing
@@ -195,6 +243,9 @@ public class DrawTextStruct {
         this.bakePosXY();
     }
 
+    /**
+     * <p>draw.</p>
+     */
     public void draw() {
         if (Float.isNaN(getLeftTopPosX()) || Float.isNaN(getLeftTopPosY()) || Float.isNaN(getCenterPosX()) || Float.isNaN(getCenterPosY()) || Float.isNaN(getScaleX()) || Float.isNaN(getScaleY()) || Float.isNaN(getCharacterSpace()) || getText() == null || Float.isNaN(getHeight())) {
             this.bake();
@@ -206,74 +257,164 @@ public class DrawTextStruct {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>leftTopPosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLeftTopPosX() {
         return leftTopPosX;
     }
 
+    /**
+     * <p>Setter for the field <code>leftTopPosX</code>.</p>
+     *
+     * @param leftTopPosX a float.
+     */
     public void setLeftTopPosX(float leftTopPosX) {
         this.leftTopPosX = leftTopPosX;
     }
 
+    /**
+     * <p>Getter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getLeftTopPosY() {
         return leftTopPosY;
     }
 
+    /**
+     * <p>Setter for the field <code>leftTopPosY</code>.</p>
+     *
+     * @param leftTopPosY a float.
+     */
     public void setLeftTopPosY(float leftTopPosY) {
         this.leftTopPosY = leftTopPosY;
     }
 
+    /**
+     * <p>Getter for the field <code>centerPosX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getCenterPosX() {
         return centerPosX;
     }
 
+    /**
+     * <p>Setter for the field <code>centerPosX</code>.</p>
+     *
+     * @param centerPosX a float.
+     */
     public void setCenterPosX(float centerPosX) {
         this.centerPosX = centerPosX;
     }
 
+    /**
+     * <p>Getter for the field <code>centerPosY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getCenterPosY() {
         return centerPosY;
     }
 
+    /**
+     * <p>Setter for the field <code>centerPosY</code>.</p>
+     *
+     * @param centerPosY a float.
+     */
     public void setCenterPosY(float centerPosY) {
         this.centerPosY = centerPosY;
     }
 
+    /**
+     * <p>Getter for the field <code>width</code>.</p>
+     *
+     * @return a float.
+     */
     public float getWidth() {
         return width;
     }
 
+    /**
+     * <p>Setter for the field <code>width</code>.</p>
+     *
+     * @param width a float.
+     */
     public void setWidth(float width) {
         this.width = width;
     }
 
+    /**
+     * <p>Getter for the field <code>height</code>.</p>
+     *
+     * @return a float.
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * <p>Setter for the field <code>height</code>.</p>
+     *
+     * @param height a float.
+     */
     public void setHeight(float height) {
         this.height = height;
     }
 
+    /**
+     * <p>Getter for the field <code>scaleX</code>.</p>
+     *
+     * @return a float.
+     */
     public float getScaleX() {
         return scaleX;
     }
 
+    /**
+     * <p>Setter for the field <code>scaleX</code>.</p>
+     *
+     * @param scaleX a float.
+     */
     public void setScaleX(float scaleX) {
         this.scaleX = scaleX;
     }
 
+    /**
+     * <p>Getter for the field <code>scaleY</code>.</p>
+     *
+     * @return a float.
+     */
     public float getScaleY() {
         return scaleY;
     }
 
+    /**
+     * <p>Setter for the field <code>scaleY</code>.</p>
+     *
+     * @param scaleY a float.
+     */
     public void setScaleY(float scaleY) {
         this.scaleY = scaleY;
     }
 
+    /**
+     * <p>Getter for the field <code>color</code>.</p>
+     *
+     * @return a {@link org.joml.Vector4fc} object.
+     */
     public Vector4fc getColor() {
         return new Vector4f(color);
     }
 
+    /**
+     * <p>Setter for the field <code>color</code>.</p>
+     *
+     * @param color a {@link org.joml.Vector4fc} object.
+     */
     public void setColor(Vector4fc color) {
         if (color == null) {
             color = DEFAULT_TEXT_COLOR;
@@ -281,26 +422,56 @@ public class DrawTextStruct {
         this.color.set(color);
     }
 
+    /**
+     * <p>Getter for the field <code>characterSpace</code>.</p>
+     *
+     * @return a float.
+     */
     public float getCharacterSpace() {
         return characterSpace;
     }
 
+    /**
+     * <p>Setter for the field <code>characterSpace</code>.</p>
+     *
+     * @param characterSpace a float.
+     */
     public void setCharacterSpace(float characterSpace) {
         this.characterSpace = characterSpace;
     }
 
+    /**
+     * <p>Getter for the field <code>text</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * <p>Setter for the field <code>text</code>.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+    /**
+     * <p>Getter for the field <code>font</code>.</p>
+     *
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     */
     public Font getFont() {
         return font;
     }
 
+    /**
+     * <p>Setter for the field <code>font</code>.</p>
+     *
+     * @param font a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
+     */
     public void setFont(Font font) {
         if (font == null) {
             font = Font.getCurrentFont();
@@ -308,6 +479,9 @@ public class DrawTextStruct {
         this.font = font;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "DrawTextStruct{" +

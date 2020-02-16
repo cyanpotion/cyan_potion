@@ -910,7 +910,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaLeftTop(
             Font font,
@@ -950,7 +950,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaCenter(
             Font font,
@@ -993,7 +993,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             Font font,
@@ -1030,7 +1030,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextCenter(
             Font font,
@@ -1068,7 +1068,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             Font font,
@@ -1109,7 +1109,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextCenter(
             Font font,
@@ -1148,7 +1148,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height      a float.
      * @param color       a {@link org.joml.Vector4f} object.
      * @param text        a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             Font font,
@@ -1170,7 +1170,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height     a float.
      * @param color      a {@link org.joml.Vector4f} object.
      * @param text       a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextCenter(
             Font font,
@@ -1191,7 +1191,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param leftTopPosY a float.
      * @param height      a float.
      * @param text        text
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             Font font,
@@ -1211,7 +1211,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param centerPosY a float.
      * @param height     a float.
      * @param text       text
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextCenter(
             Font font,
@@ -1230,7 +1230,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param leftTopPosX a float.
      * @param leftTopPosY a float.
      * @param text        text
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             Font font,
@@ -1248,7 +1248,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param centerPosX a float.
      * @param centerPosY a float.
      * @param text       text
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextCenter(
             Font font,

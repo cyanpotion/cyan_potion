@@ -324,7 +324,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextLeftTop(
             float leftTopPosX,
@@ -349,7 +349,7 @@ public class Font extends AbstractResource {
      * <p>drawText.</p>
      *
      * @param drawTextStruct drawStruct.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4fc, String)
      */
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
@@ -411,7 +411,7 @@ public class Font extends AbstractResource {
      * @param characterSpace a float.
      * @param color          a {@link org.joml.Vector4f} object.
      * @param text           a {@link java.lang.String} object.
-     * @return a {@link DrawTextStruct} object.
+     * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
     public DrawTextStruct drawTextFillAreaLeftTop(
             float leftTopPosX,
