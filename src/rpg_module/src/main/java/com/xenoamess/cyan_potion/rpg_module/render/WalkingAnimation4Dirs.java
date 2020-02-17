@@ -44,7 +44,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>WalkingAnimation4Dirs class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class WalkingAnimation4Dirs extends Animation {
     private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();

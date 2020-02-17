@@ -49,7 +49,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class InputBox extends AbstractControllableGameWindowComponent {
 

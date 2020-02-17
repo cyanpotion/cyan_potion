@@ -46,7 +46,7 @@ import java.util.List;
  * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class RadioButtonsPanel extends Panel {
     @JsonIgnore

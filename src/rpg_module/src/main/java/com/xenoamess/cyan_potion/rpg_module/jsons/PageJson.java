@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * <p>PageJson class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class PageJson implements Serializable {
     public ConditionsJson conditions;

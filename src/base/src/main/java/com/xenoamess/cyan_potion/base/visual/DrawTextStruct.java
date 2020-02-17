@@ -38,7 +38,7 @@ import static org.lwjgl.opengl.GL11.*;
  * DrawTextStruct is a struct to describe how to draw texts.
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class DrawTextStruct {
     @JsonIgnore

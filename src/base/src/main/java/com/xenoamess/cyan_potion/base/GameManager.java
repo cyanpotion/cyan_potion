@@ -76,7 +76,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class GameManager implements Closeable {
     @JsonIgnore

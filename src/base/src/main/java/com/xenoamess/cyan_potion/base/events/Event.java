@@ -38,7 +38,7 @@ import java.util.function.Function;
  * (for the first time) before next frame start.
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  * @see com.xenoamess.cyan_potion.base.GameManager#eventListAdd(Event)
  * @see com.xenoamess.cyan_potion.base.GameManager#solveEvents()
  * @see com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree#process(Event)

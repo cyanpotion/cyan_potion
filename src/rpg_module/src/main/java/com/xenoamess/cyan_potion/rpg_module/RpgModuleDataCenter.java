@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * <p>RpgModuleDataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 public class RpgModuleDataCenter {
     /**

@@ -35,7 +35,7 @@ import java.util.function.Function;
  * <p>EventProcessor interface.</p>
  *
  * @author XenoAmess
- * @version 0.159.0
+ * @version 0.159.1-SNAPSHOT
  */
 @FunctionalInterface
 public interface EventProcessor<T extends Event> extends Function<T, Event> {
