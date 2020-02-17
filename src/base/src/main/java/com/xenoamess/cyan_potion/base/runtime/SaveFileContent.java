@@ -95,6 +95,7 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
                     objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText(),
                     structClass
             );
+            assert (runtimeVariableStruct != null);
             result.getRuntimeVariableStructList().add(runtimeVariableStruct);
         }
         return result;

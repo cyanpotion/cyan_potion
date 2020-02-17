@@ -155,15 +155,19 @@ public class SaveFileObject {
             return new ArrayList<>();
         }
         FileObject fileObject = ResourceManager.resolveFile(getPath() + getSaveFileObjectStatus().getNowIndex());
-        SaveFileContent res = null;
+        SaveFileContent saveFileContent = null;
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
-            res = DataCenter.getObjectMapper().readValue(inputStream, SaveFileContent.class);
+            saveFileContent = DataCenter.getObjectMapper().readValue(inputStream, SaveFileContent.class);
         } catch (IOException e) {
             LOGGER.error("cannot load SaveFileContent from : {}", fileObject, e);
         }
         updateStatusFile();
-        assert res != null;
-        return res.getRuntimeVariableStructList();
+        assert saveFileContent != null;
+        List<RuntimeVariableStruct> result = saveFileContent.getRuntimeVariableStructList();
+        for (RuntimeVariableStruct au : result) {
+            assert au != null;
+        }
+        return result;
     }
 
 
