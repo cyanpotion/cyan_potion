@@ -23,6 +23,8 @@ matrix:
       jdk: openjdk13
     - os: linux
       jdk: openjdk14
+    - os: linux
+      jdk: openjdk-ea
   allow_failures:
     - os: linux
       jdk: openjdk-ea
