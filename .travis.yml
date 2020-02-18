@@ -25,7 +25,7 @@ matrix:
       jdk: openjdk14
   allow_failures:
     - os: linux
-    jdk: openjdk-ea
+      jdk: openjdk-ea
 script:
   - "./mvnw clean install site -U -Dmaven.javadoc.skip=false"
   - "if [ \"$TRAVIS_JDK_VERSION\" = \"openjdk12\" ]; then ./mvnw sonar:sonar -Dsonar.projectKey=cyanpotion_cyan_potion -Dsonar.organization=cyanpotion -Dsonar.host.url=https://sonarcloud.io -Dsonar.log.level=DEBUG -Dsonar.language=java -Dsonar.java.source=1.8 -Dsonar.sourceEncoding=UTF-8 -Dsonar.login=133240d1ee4abeaa8b7ba1ef36cab1a2b789ddcb ; fi"
