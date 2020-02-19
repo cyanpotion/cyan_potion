@@ -677,8 +677,8 @@ public class SteamManager extends SubManager {
     /**
      * <p>getPlayerAvatarTexture.</p>
      *
-     * @param avatarType a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param avatarType can only be one of "small", "medium" and "large".
+     * @return texture.
      */
     public Texture getPlayerAvatarTexture(String avatarType) {
         SteamID steamID;
@@ -694,8 +694,8 @@ public class SteamManager extends SubManager {
      * <p>getUserAvatarTexture.</p>
      *
      * @param steamID    a {@link com.codedisaster.steamworks.SteamID} object.
-     * @param avatarType a {@link java.lang.String} object.
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
+     * @param avatarType can only be one of "small", "medium" and "large".
+     * @return texture
      */
     public Texture getUserAvatarTexture(SteamID steamID, String avatarType) {
         String steamIDhandleString;
@@ -711,5 +711,13 @@ public class SteamManager extends SubManager {
                 steamIDhandleString,
                 avatarType
         ).fetchResource(this.getGameManager().getResourceManager());
+    }
+
+    public String getPlayerName() {
+        return this.getSteamFriends().getPersonaName();
+    }
+
+    public String getUserName(SteamID steamID) {
+        return this.getSteamFriends().getFriendPersonaName(steamID);
     }
 }
