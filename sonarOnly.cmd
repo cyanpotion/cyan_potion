@@ -1,4 +1,3 @@
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
 -Dsonar.projectKey=cyanpotion_cyan_potion ^
@@ -13,7 +12,6 @@ call mvn sonar:sonar ^
 
 cd ./src/
 cd ./base/
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
 -Dsonar.sources=src/main/ ^
@@ -38,7 +36,6 @@ call mvn sonar:sonar ^
 
 cd ../
 cd ./coordinate
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 call mvn sonar:sonar
 -Dsonar.scm.exclusions.disabled=true ^
 -Dsonar.sources=src/main/ ^
@@ -63,7 +60,6 @@ call mvn sonar:sonar
 
 cd ../
 cd ./rpg_module
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
 -Dsonar.sources=src/main/ ^
@@ -88,6 +84,5 @@ call mvn sonar:sonar ^
 
 cd ../
 cd ./demo
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 pause
 

@@ -122,6 +122,8 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+        <lombok.version>1.18.12</lombok.version>
+        <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -831,6 +833,12 @@
             <artifactId>commons-vfs2-jackrabbit2</artifactId>
             <version>${commons-vfs2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -985,6 +993,20 @@
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>${lombok-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                            <goal>testDelombok</goal>
                         </goals>
                     </execution>
                 </executions>

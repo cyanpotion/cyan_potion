@@ -13,6 +13,8 @@ target/
 .settings/
 .classpath
 
+**/.scannerwork
+
 # Compiled class file
 *.class
 
