@@ -14,8 +14,8 @@ cd ./src/
 cd ./base/
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
@@ -38,8 +38,8 @@ cd ../
 cd ./coordinate
 call mvn sonar:sonar
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
@@ -62,8 +62,8 @@ cd ../
 cd ./rpg_module
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^

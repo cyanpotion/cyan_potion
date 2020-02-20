@@ -16,8 +16,8 @@ cd ./base/
 call mvn clean install -Dmaven.javadoc.skip=false
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
@@ -41,8 +41,8 @@ cd ./coordinate
 call mvn clean install -Dmaven.javadoc.skip=false
 call mvn sonar:sonar
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
@@ -66,8 +66,8 @@ cd ./rpg_module
 call mvn clean install -Dmaven.javadoc.skip=false
 call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
--Dsonar.sources=src/main/ ^
--Dsonar.tests=src/test/ ^
+-Dsonar.sources=src/main/,target/generated-sources/ ^
+-Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
 -Dsonar.inclusions=target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
