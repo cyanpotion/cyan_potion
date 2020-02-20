@@ -1,14 +1,14 @@
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
+call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
 cd ./src/
 cd ./base/
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
+call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
 cd ../
 cd ./coordinate
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
+call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
 cd ../
 cd ./rpg_module
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
+call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
 cd ../
 cd ./demo
-call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
+call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
 pause

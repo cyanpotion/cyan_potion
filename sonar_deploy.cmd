@@ -19,9 +19,9 @@ call mvn sonar:sonar ^
 -Dsonar.sources=src/main/,target/generated-sources/ ^
 -Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
--Dsonar.inclusions=target/generated-sources/delombok/** ^
+-Dsonar.inclusions=src/main/java/**,target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
--Dsonar.test.inclusions=target/generated-test-sources/delombok/** ^
+-Dsonar.test.inclusions=src/test/java/**,target/generated-test-sources/delombok/** ^
 -Dsonar.projectKey=cyan_potion_base ^
 -Dsonar.organization=cyanpotion ^
 -Dsonar.host.url=https://sonarcloud.io ^
@@ -39,14 +39,14 @@ call mvn sonar:sonar ^
 cd ../
 cd ./coordinate
 call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
-call mvn sonar:sonar
+call mvn sonar:sonar ^
 -Dsonar.scm.exclusions.disabled=true ^
 -Dsonar.sources=src/main/,target/generated-sources/ ^
 -Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
--Dsonar.inclusions=target/generated-sources/delombok/** ^
+-Dsonar.inclusions=src/main/java/**,target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
--Dsonar.test.inclusions=target/generated-test-sources/delombok/** ^
+-Dsonar.test.inclusions=src/test/java/**,target/generated-test-sources/delombok/** ^
 -Dsonar.projectKey=cyan_potion_coordinate ^
 -Dsonar.organization=cyanpotion ^
 -Dsonar.host.url=https://sonarcloud.io ^
@@ -69,9 +69,9 @@ call mvn sonar:sonar ^
 -Dsonar.sources=src/main/,target/generated-sources/ ^
 -Dsonar.tests=src/test/,target/generated-test-sources/ ^
 -Dsonar.exclusions=src/main/lombok/** ^
--Dsonar.inclusions=target/generated-sources/delombok/** ^
+-Dsonar.inclusions=src/main/java/**,target/generated-sources/delombok/** ^
 -Dsonar.test.exclusions=src/test/lombok/** ^
--Dsonar.test.inclusions=target/generated-test-sources/delombok/** ^
+-Dsonar.test.inclusions=src/test/java/**,target/generated-test-sources/delombok/** ^
 -Dsonar.projectKey=cyan_potion_rpg_module ^
 -Dsonar.organization=cyanpotion ^
 -Dsonar.host.url=https://sonarcloud.io ^
@@ -89,5 +89,8 @@ call mvn sonar:sonar ^
 cd ../
 cd ./demo
 call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
-pause
 
+cd ../
+cd ../
+build.cmd
+pause
