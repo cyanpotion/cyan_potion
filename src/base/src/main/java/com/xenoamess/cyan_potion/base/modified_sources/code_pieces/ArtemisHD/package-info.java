@@ -23,8 +23,8 @@
  */
 
 /**
- * Package to hold useful tool codes from others.
+ * Package to hold code pieces from ArtemisHD.
  *
  * @since 0.140.0
  */
-package com.xenoamess.cyan_potion.base.tools;
+package com.xenoamess.cyan_potion.base.modified_sources.code_pieces.ArtemisHD;
