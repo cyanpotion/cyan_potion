@@ -997,21 +997,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <forkCount>1</forkCount>
-                    <reuseForks>true</reuseForks>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1069,6 +1054,12 @@
                         <exclude>${project.build.directory}/generated-sources/delombok</exclude>
                         <exclude>${project.build.directory}/generated-test-sources/delombok</exclude>
                     </excludes>
+                    <includes>
+                        <include>${project.basedir}/src/main/lombok</include>
+                        <include>${project.basedir}/src/main/java</include>
+                        <include>${project.basedir}/src/test/lombok</include>
+                        <include>${project.basedir}/src/test/java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>
