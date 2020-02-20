@@ -52,6 +52,7 @@ import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.X8lTree;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -78,6 +79,9 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@ToString
+@EqualsAndHashCode
+@Setter
 public class GameManager implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -90,36 +94,57 @@ public class GameManager implements Closeable {
 
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
-    private final List<Event> eventList = new ArrayList<>();
-    private final List<Event> eventListCache = new ArrayList<>();
     private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
 
+    @Getter(AccessLevel.PROTECTED)
+    private final List<Event> eventList = new ArrayList<>();
+    @Getter(AccessLevel.PROTECTED)
+    private final List<Event> eventListCache = new ArrayList<>();
+
+    @Getter
     @AsFinalField
     private ConsoleThread consoleThread;
 
+    @Getter
     @AsFinalField
     private GameWindow gameWindow;
+    @Getter
     private final Callbacks callbacks = new Callbacks(this);
+    @Getter
     private final DataCenter dataCenter = new DataCenter(this);
+    @Getter
     private final CodePluginManager codePluginManager = new CodePluginManager();
 
+    @Getter
     private final Keymap keymap = new Keymap();
+    @Getter
     private final GamepadInputManager gamepadInputManager = new GamepadInputManager(this);
+    @Getter
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree(this);
+    @Getter
     private long nowFrameIndex = 0L;
+    @Getter
     private Map<String, String> argsMap;
 
+    @Getter
     private final AudioManager audioManager = new AudioManager(this);
+    @Getter
     private final ResourceManager resourceManager = new ResourceManager(this);
+    @Getter
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
+    @Getter
     private final SaveManager saveManager = new SaveManager(this);
+    @Getter
     private final SteamManager steamManager = new SteamManager(this);
 
+    @Getter
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(10);
 
+    @Getter
     private double timeToLastUpdate = 0;
 
+    @Getter
     private boolean canRender = false;
 
     /**
@@ -258,7 +283,7 @@ public class GameManager implements Closeable {
      * <p>startup.</p>
      */
     public void startup() {
-        if (this.getAlive()) {
+        if (this.isAlive()) {
             return;
         }
         setAlive(true);
@@ -528,7 +553,7 @@ public class GameManager implements Closeable {
         long time = System.currentTimeMillis();
         double unprocessed = 0;
 
-        while (getAlive()) {
+        while (this.isAlive()) {
             long time2 = System.currentTimeMillis();
             double passed = (time2 - time) / 1000.0;
             time = time2;
@@ -675,16 +700,12 @@ public class GameManager implements Closeable {
     }
 
 
-    /*
-     * Getters and Setters
-     */
-
     /**
      * <p>Getter for the field <code>alive</code>.</p>
      *
      * @return a boolean.
      */
-    public boolean getAlive() {
+    public boolean isAlive() {
         return alive.get();
     }
 
@@ -695,141 +716,6 @@ public class GameManager implements Closeable {
      */
     public void setAlive(boolean newAlive) {
         this.alive.set(newAlive);
-    }
-
-    /**
-     * <p>Getter for the field <code>consoleThread</code>.</p>
-     *
-     * @return return
-     */
-    public ConsoleThread getConsoleThread() {
-        return consoleThread;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindow</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
-
-    /**
-     * <p>Getter for the field <code>callbacks</code>.</p>
-     *
-     * @return return
-     */
-    public Callbacks getCallbacks() {
-        return callbacks;
-    }
-
-    /**
-     * <p>Getter for the field <code>dataCenter</code>.</p>
-     *
-     * @return return
-     */
-    public DataCenter getDataCenter() {
-        return dataCenter;
-    }
-
-    /**
-     * <p>Getter for the field <code>keymap</code>.</p>
-     *
-     * @return return
-     */
-    public Keymap getKeymap() {
-        return keymap;
-    }
-
-    /**
-     * <p>Getter for the field <code>gamepadInput</code>.</p>
-     *
-     * @return return
-     */
-    public GamepadInputManager getGamepadInputManager() {
-        return gamepadInputManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindowComponentTree</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTree getGameWindowComponentTree() {
-        return gameWindowComponentTree;
-    }
-
-    /**
-     * <p>Getter for the field <code>nowFrameIndex</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getNowFrameIndex() {
-        return nowFrameIndex;
-    }
-
-    /**
-     * <p>Getter for the field <code>argsMap</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, String> getArgsMap() {
-        return argsMap;
-    }
-
-    /**
-     * <p>Getter for the field <code>audioManager</code>.</p>
-     *
-     * @return return
-     */
-    public AudioManager getAudioManager() {
-        return audioManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>resourceManager</code>.</p>
-     *
-     * @return return
-     */
-    public ResourceManager getResourceManager() {
-        return resourceManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>scheduledExecutorService</code>.</p>
-     *
-     * @return return
-     */
-    public ScheduledExecutorService getScheduledExecutorService() {
-        return scheduledExecutorService;
-    }
-
-    /**
-     * <p>Getter for the field <code>eventList</code>.</p>
-     *
-     * @return return
-     */
-    protected List<Event> getEventList() {
-        return eventList;
-    }
-
-    /**
-     * <p>Getter for the field <code>eventListCache</code>.</p>
-     *
-     * @return a {@link java.util.List} object.
-     */
-    protected List<Event> getEventListCache() {
-        return eventListCache;
-    }
-
-    /**
-     * <p>Setter for the field <code>nowFrameIndex</code>.</p>
-     *
-     * @param nowFrameIndex a long.
-     */
-    public void setNowFrameIndex(long nowFrameIndex) {
-        this.nowFrameIndex = nowFrameIndex;
     }
 
     /**
@@ -845,68 +731,5 @@ public class GameManager implements Closeable {
             LOGGER.info("    {} : {}", entry.getKey(), entry.getValue());
         }
         LOGGER.info(LINE_SEGMENT);
-    }
-
-    /**
-     * <p>Getter for the field <code>timeToLastUpdate</code>.</p>
-     *
-     * @return timeToLastUpdate
-     */
-    public double getTimeToLastUpdate() {
-        return timeToLastUpdate;
-    }
-
-    /**
-     * <p>Setter for the field <code>timeToLastUpdate</code>.</p>
-     *
-     * @param timeToLastUpdate timeToLastUpdate
-     */
-    public void setTimeToLastUpdate(double timeToLastUpdate) {
-        this.timeToLastUpdate = timeToLastUpdate;
-    }
-
-    /**
-     * <p>isCanRender.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isCanRender() {
-        return canRender;
-    }
-
-    /**
-     * <p>Setter for the field <code>canRender</code>.</p>
-     *
-     * @param canRender a boolean.
-     */
-    public void setCanRender(boolean canRender) {
-        this.canRender = canRender;
-    }
-
-    /**
-     * <p>Getter for the field <code>runtimeManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.runtime.RuntimeManager} object.
-     */
-    public RuntimeManager getRuntimeManager() {
-        return runtimeManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>saveManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveManager} object.
-     */
-    public SaveManager getSaveManager() {
-        return saveManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamManager} object.
-     */
-    public SteamManager getSteamManager() {
-        return steamManager;
     }
 }

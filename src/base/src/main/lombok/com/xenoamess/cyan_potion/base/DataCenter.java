@@ -30,6 +30,10 @@ import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.base.setting_file.GameSettings;
 import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.x8l.X8lTree;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>DataCenter class.</p>
@@ -37,6 +41,10 @@ import com.xenoamess.x8l.X8lTree;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class DataCenter {
 
     /**
@@ -107,6 +115,7 @@ public class DataCenter {
         this.gameManager = gameManager;
     }
 
+    @Getter
     @AsFinalField
     private static ObjectMapper objectMapper;
 
@@ -128,121 +137,5 @@ public class DataCenter {
             objectMapper = localObjectMapper;
         }
         return objectMapper;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>textStructure</code>.</p>
-     *
-     * @return return
-     */
-    public MultiLanguageStructure getTextStructure() {
-        return textStructure;
-    }
-
-    /**
-     * <p>Setter for the field <code>textStructure</code>.</p>
-     *
-     * @param textStructure textStructure
-     */
-    public void setTextStructure(MultiLanguageStructure textStructure) {
-        this.textStructure = textStructure;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return return
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>patchSettingsTree</code>.</p>
-     *
-     * @return return
-     */
-    public X8lTree getPatchSettingsTree() {
-        return patchSettingsTree;
-    }
-
-    /**
-     * <p>Setter for the field <code>patchSettingsTree</code>.</p>
-     *
-     * @param patchSettingsTree patchSettingsTree
-     */
-    public void setPatchSettingsTree(X8lTree patchSettingsTree) {
-        this.patchSettingsTree = patchSettingsTree;
-    }
-
-    /**
-     * the port used to receive console commands.
-     *
-     * @return a int.
-     */
-    public int getConsolePort() {
-        return consolePort;
-    }
-
-    /**
-     * the port used to receive console commands.
-     *
-     * @param consolePort a int.
-     */
-    public void setConsolePort(int consolePort) {
-        this.consolePort = consolePort;
-    }
-
-    /**
-     * If true, then will use JXInput
-     * (using DirectX directly, but can only run in windows.)
-     * to deal with controller.
-     * <p>
-     * If false, then will use Jamepad
-     * (using SDL, can run on multi-platforms.)
-     * to deal with controller.
-     * <p>
-     * At default it is set to false, meaing we just use Jamepad.
-     *
-     * @return a boolean.
-     */
-    public boolean isUsingJXInput() {
-        return usingJXInput;
-    }
-
-    /**
-     * If true, then will use JXInput
-     * (using DirectX directly, but can only run in windows.)
-     * to deal with controller.
-     * <p>
-     * If false, then will use Jamepad
-     * (using SDL, can run on multi-platforms.)
-     * to deal with controller.
-     * <p>
-     * At default it is set to false, meaing we just use Jamepad.
-     *
-     * @param usingJXInput a boolean.
-     */
-    public void setUsingJXInput(boolean usingJXInput) {
-        this.usingJXInput = usingJXInput;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameSettings</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
-     */
-    public GameSettings getGameSettings() {
-        return gameSettings;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameSettings</code>.</p>
-     *
-     * @param gameSettings a {@link com.xenoamess.cyan_potion.base.setting_file.GameSettings} object.
-     */
-    public void setGameSettings(GameSettings gameSettings) {
-        this.gameSettings = gameSettings;
     }
 }

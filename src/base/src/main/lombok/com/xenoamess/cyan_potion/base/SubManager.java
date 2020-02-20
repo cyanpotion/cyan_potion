@@ -24,6 +24,10 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.io.Closeable;
 
 /**
@@ -40,6 +44,9 @@ import java.io.Closeable;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Getter
+@EqualsAndHashCode
+@ToString
 public abstract class SubManager implements Closeable {
     private final GameManager gameManager;
 
@@ -66,13 +73,4 @@ public abstract class SubManager implements Closeable {
      * <p>close.</p>
      */
     public abstract void close();
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
 }
