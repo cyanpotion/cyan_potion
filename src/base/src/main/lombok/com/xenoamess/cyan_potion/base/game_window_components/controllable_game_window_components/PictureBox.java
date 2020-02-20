@@ -40,7 +40,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.159.1-SNAPSHOT
+ * @version 0.160.0-SNAPSHOT
  */
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
 

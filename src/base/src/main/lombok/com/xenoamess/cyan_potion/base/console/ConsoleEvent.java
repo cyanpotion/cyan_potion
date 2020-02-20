@@ -38,7 +38,7 @@ import java.util.Set;
  * <p>ConsoleEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.159.1-SNAPSHOT
+ * @version 0.160.0-SNAPSHOT
  */
 public class ConsoleEvent implements Event {
     @JsonIgnore

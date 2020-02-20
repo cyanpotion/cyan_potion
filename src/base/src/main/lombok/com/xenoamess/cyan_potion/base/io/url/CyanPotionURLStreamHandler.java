@@ -33,7 +33,7 @@ import java.net.URLStreamHandler;
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
- * @version 0.159.1-SNAPSHOT
+ * @version 0.160.0-SNAPSHOT
  */
 public class CyanPotionURLStreamHandler extends URLStreamHandler {
     /**

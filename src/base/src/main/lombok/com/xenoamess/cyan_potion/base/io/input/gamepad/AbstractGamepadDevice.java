@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
  * <p>Abstract AbstractGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.159.1-SNAPSHOT
+ * @version 0.160.0-SNAPSHOT
  */
 public abstract class AbstractGamepadDevice {
     /**

@@ -1,7 +1,7 @@
 <settingFile settingFormatVersion=0.3.0>
     <commonSettings
         gameName=CyanPotionRpgModuleDemo
-        gameVersion=0.159.1-SNAPSHOT
+        gameVersion=0.160.0-SNAPSHOT
         titleTextID=0
         textFilePath=resources/text/text.x8l
         defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
