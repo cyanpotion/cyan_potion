@@ -976,6 +976,12 @@
                     </source>
                     <target>${maven.compiler.target}
                     </target>
+                    <excludes>
+                        <exclude>target/generated-sources/delombok</exclude>
+                    </excludes>
+                    <testExcludes>
+                        <testExclude>target/generated-test-sources/delombok</testExclude>
+                    </testExcludes>
                 </configuration>
             </plugin>
             <plugin>
