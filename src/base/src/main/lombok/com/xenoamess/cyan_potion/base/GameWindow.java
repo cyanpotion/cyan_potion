@@ -37,6 +37,10 @@ import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.tools.ImageParser;
 import com.xenoamess.cyan_potion.base.visual.DrawTextStruct;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -66,6 +70,10 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -115,24 +123,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     public void setRealWindowSize(int windowWidth, int windowHeight) {
         this.setRealWindowWidth(windowWidth);
         this.setRealWindowWidth(windowHeight);
-    }
-
-    /**
-     * <p>Getter for the field <code>logicWindowWidth</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getLogicWindowWidth() {
-        return logicWindowWidth;
-    }
-
-    /**
-     * <p>Getter for the field <code>logicWindowHeight</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getLogicWindowHeight() {
-        return logicWindowHeight;
     }
 
     /**
@@ -1290,215 +1280,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
 
     //---shortcuts end---
 
-    //--- getters and setters ---
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return the window handle
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Setter for the field <code>window</code>.</p>
-     *
-     * @param window a long.
-     */
-    public void setWindow(long window) {
-        this.window = window;
-    }
-
-    /**
-     * <p>Setter for the field <code>logicWindowWidth</code>.</p>
-     *
-     * @param logicWindowWidth a int.
-     */
-    public void setLogicWindowWidth(int logicWindowWidth) {
-        this.logicWindowWidth = logicWindowWidth;
-    }
-
-    /**
-     * <p>Setter for the field <code>logicWindowHeight</code>.</p>
-     *
-     * @param logicWindowHeight a int.
-     */
-    public void setLogicWindowHeight(int logicWindowHeight) {
-        this.logicWindowHeight = logicWindowHeight;
-    }
-
-    /**
-     * <p>Getter for the field <code>realWindowWidth</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getRealWindowWidth() {
-        return realWindowWidth;
-    }
-
-    /**
-     * <p>Setter for the field <code>realWindowWidth</code>.</p>
-     *
-     * @param realWindowWidth a int.
-     */
-    public void setRealWindowWidth(int realWindowWidth) {
-        this.realWindowWidth = realWindowWidth;
-    }
-
-    /**
-     * <p>Getter for the field <code>realWindowHeight</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getRealWindowHeight() {
-        return realWindowHeight;
-    }
-
-    /**
-     * <p>Setter for the field <code>realWindowHeight</code>.</p>
-     *
-     * @param realWindowHeight a int.
-     */
-    public void setRealWindowHeight(int realWindowHeight) {
-        this.realWindowHeight = realWindowHeight;
-    }
-
-    /**
-     * <p>isFullScreen.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isFullScreen() {
-        return fullScreen;
-    }
-
-    /**
-     * <p>Setter for the field <code>fullScreen</code>.</p>
-     *
-     * @param fullScreen a boolean.
-     */
-    public void setFullScreen(boolean fullScreen) {
-        this.fullScreen = fullScreen;
-    }
-
-    /**
-     * <p>Getter for the field <code>shader</code>.</p>
-     *
-     * @return return
-     */
-    public Shader getShader() {
-        return shader;
-    }
-
-    /**
-     * <p>Setter for the field <code>shader</code>.</p>
-     *
-     * @param shader shader
-     */
-    public void setShader(Shader shader) {
-        this.shader = shader;
-    }
-
-    /**
-     * <p>isShowing.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isShowing() {
-        return showing;
-    }
-
-    /**
-     * <p>Setter for the field <code>showing</code>.</p>
-     *
-     * @param showing a boolean.
-     */
-    public void setShowing(boolean showing) {
-        this.showing = showing;
-    }
-
-    /**
-     * <p>isBeingFocused.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isBeingFocused() {
-        return beingFocused;
-    }
-
-    /**
-     * <p>Setter for the field <code>beingFocused</code>.</p>
-     *
-     * @param beingFocused a boolean.
-     */
-    public void setBeingFocused(boolean beingFocused) {
-        this.beingFocused = beingFocused;
-    }
-
-    /**
-     * <p>Getter for the field <code>lastMousePosX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLastMousePosX() {
-        return lastMousePosX;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastMousePosX</code>.</p>
-     *
-     * @param lastMousePosX a float.
-     */
-    public void setLastMousePosX(float lastMousePosX) {
-        this.lastMousePosX = lastMousePosX;
-    }
-
-    /**
-     * <p>Getter for the field <code>lastMousePosY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLastMousePosY() {
-        return lastMousePosY;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastMousePosY</code>.</p>
-     *
-     * @param lastMousePosY a float.
-     */
-    public void setLastMousePosY(float lastMousePosY) {
-        this.lastMousePosY = lastMousePosY;
-    }
-
-    /**
-     * <p>Getter for the field <code>mousePosX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getMousePosX() {
-        return mousePosX;
-    }
-
-    /**
-     * <p>Setter for the field <code>mousePosX</code>.</p>
-     *
-     * @param mousePosX a float.
-     */
-    public void setMousePosX(float mousePosX) {
-        this.mousePosX = mousePosX;
-    }
-
-    /**
-     * <p>Getter for the field <code>mousePosY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getMousePosY() {
-        return mousePosY;
-    }
-
     /**
      * <p>getMousePoint.</p>
      *
@@ -1506,15 +1287,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      */
     public AbstractPoint getMousePoint() {
         return new SimpleImmutablePoint(this.getMousePosX(), this.getMousePosY());
-    }
-
-    /**
-     * <p>Setter for the field <code>mousePosY</code>.</p>
-     *
-     * @param mousePosY a float.
-     */
-    public void setMousePosY(float mousePosY) {
-        this.mousePosY = mousePosY;
     }
 
     /**
