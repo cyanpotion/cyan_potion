@@ -92,5 +92,5 @@ call mvn clean deploy -Dmaven.javadoc.skip=false -Possrh
 
 cd ../
 cd ../
-build.cmd
+delete_delombok.cmd
 pause

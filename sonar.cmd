@@ -92,5 +92,5 @@ call mvn clean install -Dmaven.javadoc.skip=false
 
 cd ../
 cd ../
-build.cmd
+delete_delombok.cmd
 pause
