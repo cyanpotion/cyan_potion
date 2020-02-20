@@ -42,13 +42,10 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-public class Callbacks {
+public class Callbacks extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Callbacks.class);
-
-
-    private final GameManager gameManager;
 
     /**
      * <p>Constructor for Callbacks.</p>
@@ -56,7 +53,22 @@ public class Callbacks {
      * @param gameManager gameManager
      */
     public Callbacks(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
+    }
+
+    @Override
+    public void init() {
+        //do nothing
+    }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
+
+    @Override
+    public void close() {
+        //do nothing
     }
 
     private GLFWWindowCloseCallbackI windowCloseCallback =
@@ -106,15 +118,6 @@ public class Callbacks {
                 Event event = new DropFilesEvent(window, count, names);
                 getGameManager().eventListAdd(event);
             };
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return gameManager
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
 
     //-----wrap callback functions-----
 

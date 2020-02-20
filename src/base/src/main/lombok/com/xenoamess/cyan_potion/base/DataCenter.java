@@ -45,7 +45,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class DataCenter {
+public class DataCenter extends SubManager {
 
     /**
      * Constant <code>MAIN_THREAD_NAME="main"</code>
@@ -97,13 +97,8 @@ public class DataCenter {
      * At default it is set to false, meaing we just use Jamepad.
      */
     private boolean usingJXInput = false;
-
     private X8lTree patchSettingsTree;
-
-
     private MultiLanguageStructure textStructure;
-
-    private final GameManager gameManager;
     private GameSettings gameSettings;
 
     /**
@@ -112,7 +107,22 @@ public class DataCenter {
      * @param gameManager gameManager
      */
     public DataCenter(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
+    }
+
+    @Override
+    public void init() {
+        //do nothing
+    }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
+
+    @Override
+    public void close() {
+        //do nothing
     }
 
     @Getter
