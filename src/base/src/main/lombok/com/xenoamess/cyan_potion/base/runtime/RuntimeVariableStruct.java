@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.runtime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,7 @@ import java.io.Serializable;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public abstract class RuntimeVariableStruct implements Serializable {
     @JsonIgnore
     private static transient final Logger LOGGER =

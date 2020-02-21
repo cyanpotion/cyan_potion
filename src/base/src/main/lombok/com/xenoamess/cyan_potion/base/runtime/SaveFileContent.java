@@ -32,10 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,8 +110,7 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
  *
  * @see RuntimeVariableStruct
  */
-@EqualsAndHashCode
-@ToString
+@Data
 @JsonSerialize(using = SaveFileContentSerializer.class)
 @JsonDeserialize(using = SaveFileContentDeserializer.class)
 class SaveFileContent {
@@ -141,15 +137,11 @@ class SaveFileContent {
     /**
      * saveTime means what time does it saved.
      */
-    @Getter
-    @Setter
     private long saveTime;
 
     /**
      * runtimeVariableStructList means what to save.
      */
-    @Getter
-    @Setter
     private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();
 
     /**
