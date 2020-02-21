@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.Data;
 import net.jcip.annotations.GuardedBy;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.144.4
  */
+@Data
 public class TextEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -117,35 +119,5 @@ public class TextEvent implements Event {
             LOGGER.debug("{}", this);
         }
         return gameManager.getGameWindowComponentTree().process(this);
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>contentString</code>.</p>
-     *
-     * @return a String.
-     */
-    public String getContentString() {
-        return contentString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("TextEvent:{codepoint:");
-        stringBuilder.append(this.getContentString());
-        stringBuilder.append("}");
-        return stringBuilder.toString();
     }
 }
