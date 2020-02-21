@@ -32,11 +32,14 @@ import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.studiohartman.jamepad.ControllerManager;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>GamepadInput class.</p>
@@ -44,12 +47,17 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class GamepadInputManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
+    @Getter
+    @Setter
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
-
+    @Getter
+    @Setter
     private ControllerManager jamepadControllerManager = null;
 
     /**
@@ -121,32 +129,5 @@ public class GamepadInputManager extends SubManager {
         if (getJamepadControllerManager() != null) {
             getJamepadControllerManager().update();
         }
-    }
-
-    /**
-     * <p>Getter for the field <code>gamepadDatas</code>.</p>
-     *
-     * @return return
-     */
-    public List<AbstractGamepadData> getGamepadDatas() {
-        return gamepadDatas;
-    }
-
-    /**
-     * <p>Getter for the field <code>jamepadControllerManager</code>.</p>
-     *
-     * @return a {@link com.studiohartman.jamepad.ControllerManager} object.
-     */
-    public ControllerManager getJamepadControllerManager() {
-        return jamepadControllerManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>jamepadControllerManager</code>.</p>
-     *
-     * @param jamepadControllerManager a {@link com.studiohartman.jamepad.ControllerManager} object.
-     */
-    public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
-        this.jamepadControllerManager = jamepadControllerManager;
     }
 }
