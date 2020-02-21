@@ -27,6 +27,10 @@ package com.xenoamess.cyan_potion.base.runtime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.slf4j.Logger;
@@ -54,6 +58,8 @@ import java.util.List;
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
+@EqualsAndHashCode
+@ToString
 public class SaveFileObject {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -64,9 +70,14 @@ public class SaveFileObject {
      */
     public static final int SAVE_FILE_OBJECT_NUM = 10;
 
+    @Getter(AccessLevel.PROTECTED)
     private final SaveManager saveManager;
+
+    @Getter(AccessLevel.PROTECTED)
     private final String path;
-    private SaveFileObjectStatus saveFileObjectStatus;
+
+    @Getter(AccessLevel.PROTECTED)
+    private final SaveFileObjectStatus saveFileObjectStatus;
 
     /**
      * <p>initStatusFile.</p>
@@ -126,12 +137,13 @@ public class SaveFileObject {
         FileObject fileObject = ResourceManager.resolveFile(path + "status");
         this.initStatusFile();
 
+        SaveFileObjectStatus loadedSaveFileObjectStatus = null;
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
-            SaveFileObjectStatus loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
-            this.setSaveFileObjectStatus(loadedSaveFileObjectStatus);
+            loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
         } catch (IOException e) {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }
+        this.saveFileObjectStatus = loadedSaveFileObjectStatus;
         try (OutputStream outputStream = fileObject.getContent().getOutputStream()) {
             SaveFileObjectStatus beSavedSaveFileObjectStatus = new SaveFileObjectStatus(this.getSaveFileObjectStatus());
             beSavedSaveFileObjectStatus.setLastLoadTime(System.currentTimeMillis());
@@ -235,39 +247,4 @@ public class SaveFileObject {
         this.getSaveFileObjectStatus().setNowIndex(index);
     }
 
-    /**
-     * <p>Getter for the field <code>saveFileObjectStatus</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObjectStatus} object.
-     */
-    protected SaveFileObjectStatus getSaveFileObjectStatus() {
-        return saveFileObjectStatus;
-    }
-
-    /**
-     * <p>Setter for the field <code>saveFileObjectStatus</code>.</p>
-     *
-     * @param saveFileObjectStatus a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObjectStatus} object.
-     */
-    protected void setSaveFileObjectStatus(SaveFileObjectStatus saveFileObjectStatus) {
-        this.saveFileObjectStatus = saveFileObjectStatus;
-    }
-
-    /**
-     * <p>Getter for the field <code>path</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    protected String getPath() {
-        return path;
-    }
-
-    /**
-     * <p>Getter for the field <code>saveManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveManager} object.
-     */
-    protected SaveManager getSaveManager() {
-        return saveManager;
-    }
 }
