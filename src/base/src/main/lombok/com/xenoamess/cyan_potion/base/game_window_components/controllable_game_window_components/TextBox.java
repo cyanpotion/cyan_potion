@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -40,10 +44,21 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class TextBox extends AbstractControllableGameWindowComponent {
+    @Getter
+    @Setter
     private boolean wordWrap;
+    @Getter
+    @Setter
     private String contentString = "";
+    @Getter
+    @Setter
     private float charHeight = 20.0f;
+    @Getter
+    @Setter
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
 
     /**
@@ -258,60 +273,6 @@ public class TextBox extends AbstractControllableGameWindowComponent {
             i = ti - 1;
         }
         glEnd();
-    }
-
-    /**
-     * <p>isWordWrap.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isWordWrap() {
-        return wordWrap;
-    }
-
-    /**
-     * <p>Setter for the field <code>wordWrap</code>.</p>
-     *
-     * @param wordWrap a boolean.
-     */
-    public void setWordWrap(boolean wordWrap) {
-        this.wordWrap = wordWrap;
-    }
-
-    /**
-     * <p>Getter for the field <code>contentString</code>.</p>
-     *
-     * @return return
-     */
-    public String getContentString() {
-        return contentString;
-    }
-
-    /**
-     * <p>Setter for the field <code>contentString</code>.</p>
-     *
-     * @param contentString contentString
-     */
-    public void setContentString(String contentString) {
-        this.contentString = contentString;
-    }
-
-    /**
-     * <p>Getter for the field <code>charHeight</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCharHeight() {
-        return charHeight;
-    }
-
-    /**
-     * <p>Setter for the field <code>charHeight</code>.</p>
-     *
-     * @param charHeight a float.
-     */
-    public void setCharHeight(float charHeight) {
-        this.charHeight = charHeight;
     }
 
     /**
