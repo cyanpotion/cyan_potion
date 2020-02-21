@@ -32,6 +32,9 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.WindowResizeEvent;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -47,8 +50,11 @@ import java.util.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-public class GameWindowComponentTree extends SubManager {
 
+@EqualsAndHashCode(callSuper = true)
+@ToString
+public class GameWindowComponentTree extends SubManager {
+    @Getter
     private GameWindowComponentTreeNode root;
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
@@ -275,12 +281,4 @@ public class GameWindowComponentTree extends SubManager {
     }
 
 
-    /**
-     * <p>Getter for the field <code>root</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTreeNode getRoot() {
-        return root;
-    }
 }
