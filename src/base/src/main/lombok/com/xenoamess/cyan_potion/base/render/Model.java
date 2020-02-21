@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
+import lombok.*;
 import org.lwjgl.system.MemoryStack;
 
 import java.io.Closeable;
@@ -38,17 +39,13 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Model implements Closeable {
     /**
      * Constant <code>INITIALIZED_VALUE=-1</code>
      */
     public static final int INITIALIZED_VALUE = -1;
-
-    private int drawCount = INITIALIZED_VALUE;
-    private int vertexObject = INITIALIZED_VALUE;
-    private int textureCoordObject = INITIALIZED_VALUE;
-    private int indexObject = INITIALIZED_VALUE;
-
 
     private static final float[] COMMON_VERTICES_FLOAT_ARRAY = new float[]{
             -1f, 1f, 0,
@@ -68,6 +65,18 @@ public class Model implements Closeable {
      */
     public static final Model COMMON_MODEL = new Model();
 
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private int drawCount = INITIALIZED_VALUE;
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private int vertexObject = INITIALIZED_VALUE;
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private int textureCoordObject = INITIALIZED_VALUE;
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private int indexObject = INITIALIZED_VALUE;
 
     /**
      * <p>Constructor for Model.</p>
@@ -153,58 +162,6 @@ public class Model implements Closeable {
 
     }
 
-
-    /**
-     * <p>Getter for the field <code>drawCount</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getDrawCount() {
-        return drawCount;
-    }
-
-    private void setDrawCount(int drawCount) {
-        this.drawCount = drawCount;
-    }
-
-    /**
-     * <p>Getter for the field <code>vertexObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getVertexObject() {
-        return vertexObject;
-    }
-
-    private void setVertexObject(int vertexObject) {
-        this.vertexObject = vertexObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>textureCoordObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getTextureCoordObject() {
-        return textureCoordObject;
-    }
-
-    private void setTextureCoordObject(int textureCoordObject) {
-        this.textureCoordObject = textureCoordObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>indexObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getIndexObject() {
-        return indexObject;
-    }
-
-    private void setIndexObject(int indexObject) {
-        this.indexObject = indexObject;
-    }
 
     /**
      * <p>getCommonVerticesFloatArray.</p>
