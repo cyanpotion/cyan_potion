@@ -24,6 +24,10 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 0.160.0-SNAPSHOT
  * @see RadioButton
  */
+@EqualsAndHashCode
+@ToString
 public class RadioButtonGroup implements Closeable {
     /**
      * the max buttons that can be selected.
@@ -48,6 +54,7 @@ public class RadioButtonGroup implements Closeable {
      * usually just use 1 is enough.
      */
     private final AtomicInteger selectLimit = new AtomicInteger();
+    @Getter
     private final ConcurrentLinkedDeque<RadioButton> selectedRadioButtons = new ConcurrentLinkedDeque<>();
 
     /**

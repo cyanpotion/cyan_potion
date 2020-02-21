@@ -30,8 +30,11 @@ import com.xenoamess.cyan_potion.base.events.EventsEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.*;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -43,9 +46,14 @@ import java.util.Vector;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Panel extends AbstractControllableGameWindowComponent {
+    @Getter
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
+    @Getter
     private final Picture backgroundPicture = new Picture();
+    @Getter(AccessLevel.PROTECTED)
     private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
         @Override
         protected void initProcessors() {
@@ -170,19 +178,6 @@ public class Panel extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * return new ArrayList(this.contents);
-     *
-     * @return new ArrayList(this.contents);
-     * @see #contents
-     * @see List#clear()
-     */
-    public List<AbstractGameWindowComponent> getContents() {
-        synchronized (this.contents) {
-            return new ArrayList<>(this.contents);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -215,23 +210,5 @@ public class Panel extends AbstractControllableGameWindowComponent {
         getSubGameWindowComponentTree().getRoot().close();
         this.clearContents();
         super.close();
-    }
-
-    /**
-     * <p>Getter for the field <code>backgroundPicture</code>.</p>
-     *
-     * @return this.backgroundPicture
-     */
-    public Picture getBackgroundPicture() {
-        return backgroundPicture;
-    }
-
-    /**
-     * <p>Getter for the field <code>subGameWindowComponentTree</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree} object.
-     */
-    protected GameWindowComponentTree getSubGameWindowComponentTree() {
-        return subGameWindowComponentTree;
     }
 }

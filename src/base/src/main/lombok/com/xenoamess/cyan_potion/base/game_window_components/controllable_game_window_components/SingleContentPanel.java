@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * SingleContentPanel
@@ -38,6 +40,8 @@ import com.xenoamess.cyan_potion.base.render.Bindable;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class SingleContentPanel extends Panel {
 
     /**

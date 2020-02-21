@@ -29,6 +29,9 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,11 +51,13 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class RadioButtonsPanel extends Panel {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RadioButtonsPanel.class);
-
+    @Getter
     private final RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
 
     /**
@@ -72,15 +77,6 @@ public class RadioButtonsPanel extends Panel {
      */
     public RadioButtonsPanel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow, backgroundBindable);
-    }
-
-    /**
-     * <p>Getter for the field <code>radioButtonSet</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
-     */
-    public RadioButtonGroup getRadioButtonGroup() {
-        return radioButtonGroup;
     }
 
     /**
