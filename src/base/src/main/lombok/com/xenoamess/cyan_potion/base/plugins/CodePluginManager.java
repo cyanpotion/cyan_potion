@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.plugins;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,8 @@ import java.util.function.Function;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class CodePluginManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -131,5 +135,4 @@ public class CodePluginManager {
             function.apply(gameManager);
         }
     }
-
 }
