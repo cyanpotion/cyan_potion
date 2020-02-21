@@ -28,6 +28,8 @@ matrix:
     - os: linux
       jdk: openjdk-ea
   allow_failures:
+    #seems lombok-maven-plugin does not support JDK14 right now.
+    - jdk: openjdk14
     - jdk: openjdk9
     - jdk: openjdk-ea
 script:
