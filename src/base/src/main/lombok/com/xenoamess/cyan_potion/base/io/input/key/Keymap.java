@@ -31,6 +31,9 @@ import com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum;
 import com.xenoamess.cyan_potion.base.io.input.gamepad.JamepadGamepadKeyEnum;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +54,8 @@ import static org.lwjgl.glfw.GLFW.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Keymap {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -108,18 +113,24 @@ public class Keymap {
      */
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
-
+    /**
+     * the map to convert raw-key-type to my-key-type
+     */
+    @Getter
     private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
-
+    /**
+     * the map to convert my-key-type to raw-key-type
+     */
+    @Getter
     private final Map<Key, List> keymapReverse = new ConcurrentHashMap<>();
-
+    @Getter
     private final AtomicBoolean[][] rawKeys =
             new AtomicBoolean[][]{
                     fillNewSelf(new AtomicBoolean[GLFW_KEY_LAST + 1]),
                     fillNewSelf(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
                     fillNewSelf(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
                     fillNewSelf(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
-
+    @Getter
     private final AtomicBoolean[] myKeys = fillNewSelf(new AtomicBoolean[2000]);
 
     /**
@@ -275,41 +286,4 @@ public class Keymap {
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()].get();
     }
-
-    /**
-     * <p>Getter for the field <code>keymap</code>.</p>
-     *
-     * @return the map to convert raw-key-type to my-key-type
-     */
-    public Map<Key, Key> getKeymap() {
-        return keymap;
-    }
-
-    /**
-     * <p>Getter for the field <code>keymapReverse</code>.</p>
-     *
-     * @return the map to convert my-key-type to raw-key-type
-     */
-    public Map<Key, List> getKeymapReverse() {
-        return keymapReverse;
-    }
-
-    /**
-     * <p>Getter for the field <code>rawKeys</code>.</p>
-     *
-     * @return an array of {@link java.util.concurrent.atomic.AtomicBoolean} objects.
-     */
-    public AtomicBoolean[][] getRawKeys() {
-        return rawKeys;
-    }
-
-    /**
-     * <p>Getter for the field <code>myKeys</code>.</p>
-     *
-     * @return an array of {@link java.util.concurrent.atomic.AtomicBoolean} objects.
-     */
-    public AtomicBoolean[] getMyKeys() {
-        return myKeys;
-    }
-
 }
