@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.xenoamess.cyan_potion.base.exceptions.ConfigFileBooleanValueStringIsNotBooleanException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
@@ -35,6 +37,8 @@ import java.util.Map;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class GameManagerConfig {
 
     /**

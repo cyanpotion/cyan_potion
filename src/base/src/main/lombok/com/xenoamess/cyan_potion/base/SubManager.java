@@ -44,10 +44,12 @@ import java.io.Closeable;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@Getter
 @EqualsAndHashCode
 @ToString
 public abstract class SubManager implements Closeable {
+    @Getter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private final GameManager gameManager;
 
     /**

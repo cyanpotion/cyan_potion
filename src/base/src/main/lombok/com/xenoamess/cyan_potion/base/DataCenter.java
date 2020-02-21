@@ -41,8 +41,6 @@ import lombok.ToString;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@Getter
-@Setter
 @EqualsAndHashCode
 @ToString
 public class DataCenter extends SubManager {
@@ -76,14 +74,17 @@ public class DataCenter extends SubManager {
     public static final int DEFAULT_CONSOLE_PORT = 13888;
 
     /**
-     * the port used to receive console commands.
-     */
-    private int consolePort = DEFAULT_CONSOLE_PORT;
-
-    /**
      * Constant <code>SCALE=2</code>
      */
     public static final int SCALE = 2;
+
+    //---final ends---
+
+    /**
+     * the port used to receive console commands.
+     */
+    @Getter
+    private int consolePort = DEFAULT_CONSOLE_PORT;
 
     /**
      * If true, then will use JXInput
@@ -96,9 +97,18 @@ public class DataCenter extends SubManager {
      * <p>
      * At default it is set to false, meaing we just use Jamepad.
      */
+    @Getter
+    @Setter
     private boolean usingJXInput = false;
+    @Getter
+    @Setter
     private X8lTree patchSettingsTree;
+    @Getter
+    @Setter
     private MultiLanguageStructure textStructure;
+    @Getter
+    @Setter
+    @AsFinalField
     private GameSettings gameSettings;
 
     /**

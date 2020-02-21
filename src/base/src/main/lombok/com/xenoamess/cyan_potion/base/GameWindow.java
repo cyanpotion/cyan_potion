@@ -70,8 +70,6 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@Getter
-@Setter
 @EqualsAndHashCode
 @ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
@@ -88,20 +86,47 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         super(gameManager);
     }
 
+    @Getter
+    @Setter
     private long window;
-
+    @Getter
+    @Setter
     private int logicWindowWidth = 1280;
+    @Getter
+    @Setter
     private int logicWindowHeight = 1024;
+    @Getter
+    @Setter
     private int realWindowWidth = 1280;
+    @Getter
+    @Setter
     private int realWindowHeight = 1024;
-
+    @Getter
+    @Setter
     private boolean fullScreen;
-
+    @Getter
+    @Setter
     private Shader shader;
-
+    @Getter
+    @Setter
     private boolean showing = false;
+    @Getter
+    @Setter
     private boolean beingFocused = false;
     private GLFWErrorCallback glfwErrorCallback;
+
+    @Getter
+    @Setter
+    private float lastMousePosX;
+    @Getter
+    @Setter
+    private float lastMousePosY;
+    @Getter
+    @Setter
+    private float mousePosX;
+    @Getter
+    @Setter
+    private float mousePosY;
 
     /**
      * <p>setLogicWindowSize.</p>
@@ -483,10 +508,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         //        tileRender = new Renderer();
     }
 
-    private float lastMousePosX;
-    private float lastMousePosY;
-    private float mousePosX;
-    private float mousePosY;
 
     /**
      * <p>updateMousePos.</p>

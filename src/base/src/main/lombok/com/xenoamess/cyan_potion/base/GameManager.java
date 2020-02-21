@@ -79,9 +79,8 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@ToString
 @EqualsAndHashCode
-@Setter
+@ToString
 public class GameManager implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -122,9 +121,10 @@ public class GameManager implements Closeable {
     @Getter
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree(this);
     @Getter
+    @Setter
     private long nowFrameIndex = 0L;
     @Getter
-    private Map<String, String> argsMap;
+    private final Map<String, String> argsMap = new HashMap<>();
 
     @Getter
     private final AudioManager audioManager = new AudioManager(this);
@@ -142,9 +142,11 @@ public class GameManager implements Closeable {
             Executors.newScheduledThreadPool(10);
 
     @Getter
+    @Setter
     private double timeToLastUpdate = 0;
 
     @Getter
+    @Setter
     private boolean canRender = false;
 
     /**
@@ -724,7 +726,10 @@ public class GameManager implements Closeable {
      * @param argsMap argsMap
      */
     public void setArgsMap(Map<String, String> argsMap) {
-        this.argsMap = argsMap;
+        this.argsMap.clear();
+        if (argsMap != null) {
+            this.argsMap.putAll(argsMap);
+        }
         LOGGER.info(LINE_SEGMENT);
         LOGGER.info("Args : ->");
         for (Map.Entry entry : this.getArgsMap().entrySet()) {
