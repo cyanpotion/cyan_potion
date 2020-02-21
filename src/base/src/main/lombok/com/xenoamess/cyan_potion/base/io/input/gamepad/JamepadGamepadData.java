@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * this class is used as data class, (struct)
@@ -36,6 +38,8 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * @version 0.160.0-SNAPSHOT
  * @see JamepadGamepadDevice
  */
+@EqualsAndHashCode
+@ToString
 public class JamepadGamepadData extends AbstractGamepadData {
     /**
      * Constant <code>JAMEPAD_KEY_A=0</code>

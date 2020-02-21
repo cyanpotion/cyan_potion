@@ -27,6 +27,10 @@ package com.xenoamess.cyan_potion.base.io.input.gamepad;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,13 +40,20 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(JamepadGamepadDevice.class);
-
+    @Getter
+    @Setter
     private int jamepadGamepadDeviceIndex;
+    @Getter
+    @Setter
     private ControllerManager jamepadControllerManager;
+    @Getter
+    @Setter
     private ControllerState jamepadControllerState;
 
     /**
@@ -105,57 +116,4 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
         );
     }
 
-    /**
-     * <p>Getter for the field <code>jamepadGamepadDeviceIndex</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getJamepadGamepadDeviceIndex() {
-        return jamepadGamepadDeviceIndex;
-    }
-
-    /**
-     * <p>Setter for the field <code>jamepadGamepadDeviceIndex</code>.</p>
-     *
-     * @param jamepadGamepadDeviceIndex a int.
-     */
-    public void setJamepadGamepadDeviceIndex(int jamepadGamepadDeviceIndex) {
-        this.jamepadGamepadDeviceIndex = jamepadGamepadDeviceIndex;
-    }
-
-    /**
-     * <p>Getter for the field <code>jamepadControllerManager</code>.</p>
-     *
-     * @return a {@link com.studiohartman.jamepad.ControllerManager} object.
-     */
-    public ControllerManager getJamepadControllerManager() {
-        return jamepadControllerManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>jamepadControllerManager</code>.</p>
-     *
-     * @param jamepadControllerManager a {@link com.studiohartman.jamepad.ControllerManager} object.
-     */
-    public void setJamepadControllerManager(ControllerManager jamepadControllerManager) {
-        this.jamepadControllerManager = jamepadControllerManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>jamepadControllerState</code>.</p>
-     *
-     * @return a {@link com.studiohartman.jamepad.ControllerState} object.
-     */
-    public ControllerState getJamepadControllerState() {
-        return jamepadControllerState;
-    }
-
-    /**
-     * <p>Setter for the field <code>jamepadControllerState</code>.</p>
-     *
-     * @param jamepadControllerState a {@link com.studiohartman.jamepad.ControllerState} object.
-     */
-    public void setJamepadControllerState(ControllerState jamepadControllerState) {
-        this.jamepadControllerState = jamepadControllerState;
-    }
 }

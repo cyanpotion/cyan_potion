@@ -28,6 +28,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.xenoamess.cyan_potion.base.DataCenter;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,13 +50,18 @@ import org.slf4j.LoggerFactory;
  * @see DataCenter#isUsingJXInput()
  * @deprecated
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Deprecated
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(JXInputGamepadDevice.class);
-
+    @Getter
+    @Setter
     private int jXInputGamepadDeviceIndex;
+    @Getter
+    @Setter
     private XInputDevice rawXInputDevice;
 
     /**
@@ -61,9 +70,9 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
      * @param jXInputGamepadDeviceIndex a int.
      */
     public JXInputGamepadDevice(int jXInputGamepadDeviceIndex) {
-        this.setjXInputGamepadDeviceIndex(jXInputGamepadDeviceIndex);
+        this.setJXInputGamepadDeviceIndex(jXInputGamepadDeviceIndex);
         try {
-            this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getjXInputGamepadDeviceIndex()));
+            this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));
         } catch (XInputNotLoadedException e) {
             LOGGER.error("this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));", e);
         }
@@ -75,7 +84,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     @Override
     public void update() {
         try {
-            this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getjXInputGamepadDeviceIndex()));
+            this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));
         } catch (XInputNotLoadedException e) {
             LOGGER.error("this.setRawXInputDevice(XInputDevice.getDeviceFor(this.getJXInputGamepadDeviceIndex()));", e);
         }
@@ -98,39 +107,4 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
         this.getRawXInputDevice().setVibration(fixVibrationPower(leftVibration), fixVibrationPower(rightVibration));
     }
 
-    /**
-     * <p>Getter for the field <code>rawXInputDevice</code>.</p>
-     *
-     * @return return
-     */
-    public XInputDevice getRawXInputDevice() {
-        return rawXInputDevice;
-    }
-
-    /**
-     * <p>getJXInputGamepadDeviceIndex.</p>
-     *
-     * @return a int.
-     */
-    public int getjXInputGamepadDeviceIndex() {
-        return jXInputGamepadDeviceIndex;
-    }
-
-    /**
-     * <p>setJXInputGamepadDeviceIndex.</p>
-     *
-     * @param jXInputGamepadDeviceIndex a int.
-     */
-    public void setjXInputGamepadDeviceIndex(int jXInputGamepadDeviceIndex) {
-        this.jXInputGamepadDeviceIndex = jXInputGamepadDeviceIndex;
-    }
-
-    /**
-     * <p>Setter for the field <code>rawXInputDevice</code>.</p>
-     *
-     * @param rawXInputDevice rawXInputDevice
-     */
-    public void setRawXInputDevice(XInputDevice rawXInputDevice) {
-        this.rawXInputDevice = rawXInputDevice;
-    }
 }

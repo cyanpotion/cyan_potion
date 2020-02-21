@@ -28,6 +28,8 @@ import com.github.strikerx3.jxinput.XInputAxes;
 import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.xenoamess.cyan_potion.base.GameWindow;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * this class is used as data class, (struct)
@@ -38,6 +40,8 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * @see JXInputGamepadDevice
  * @deprecated
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Deprecated
 public class JXInputGamepadData extends AbstractGamepadData {
     /**
