@@ -24,12 +24,17 @@
 
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * <p>Abstract AbstractGamepadDevice class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractGamepadDevice {
     /**
      * Constant <code>MIN_VIBRATION_POWER=0</code>
@@ -75,5 +80,4 @@ public abstract class AbstractGamepadDevice {
         }
         return originalVibrationPower;
     }
-
 }
