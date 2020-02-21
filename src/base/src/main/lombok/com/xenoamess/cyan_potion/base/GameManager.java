@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
-import com.xenoamess.cyan_potion.base.console.ConsoleThread;
+import com.xenoamess.cyan_potion.base.console.ConsoleTalkThreadManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
@@ -106,7 +106,7 @@ public class GameManager implements Closeable {
     @ToString.Exclude
     @Getter
     @AsFinalField
-    private ConsoleThread consoleThread;
+    private ConsoleTalkThreadManager consoleTalkThreadManager;
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
@@ -283,14 +283,13 @@ public class GameManager implements Closeable {
     }
 
     private void initConsoleThread() {
-
         if (this.getDataCenter().getGameSettings().isNoConsoleThread()) {
-            this.consoleThread = null;
+            this.consoleTalkThreadManager = null;
         } else {
-            this.consoleThread = new ConsoleThread(this);
+            this.consoleTalkThreadManager = new ConsoleTalkThreadManager(this);
         }
-        if (getConsoleThread() != null) {
-            getConsoleThread().start();
+        if (getConsoleTalkThreadManager() != null) {
+            this.getConsoleTalkThreadManager().init();
         }
     }
 
@@ -481,14 +480,9 @@ public class GameManager implements Closeable {
         this.getAudioManager().close();
         this.getGamepadInputManager().close();
         this.getSteamManager().close();
+        this.getConsoleTalkThreadManager().close();
 
         setAlive(false);
-
-        if (getConsoleThread() != null) {
-            getConsoleThread().shutdown();
-        }
-
-
         this.getScheduledExecutorService().shutdown();
     }
 

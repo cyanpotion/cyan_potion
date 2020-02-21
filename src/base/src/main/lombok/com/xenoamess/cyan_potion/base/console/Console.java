@@ -26,9 +26,9 @@ package com.xenoamess.cyan_potion.base.console;
 
 import com.xenoamess.cyan_potion.base.DataCenter;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -81,27 +81,26 @@ public class Console implements Runnable {
      */
     @Override
     public void run() {
-        try (Socket socket = new Socket("localhost", this.consolePort)) {
-            OutputStream os = null;
-            while (os == null) {
-                try {
-                    os = socket.getOutputStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        AsynchronousSocketChannel socketChannel = null;
+        try {
+            socketChannel = AsynchronousSocketChannel.open();
+            InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost", this.consolePort);
+            socketChannel.connect(inetSocketAddress).get();
+
             Scanner scanner = new Scanner(System.in);
             while (this.getAlive()) {
                 try {
-                    os.write((scanner.nextLine() + "\n").getBytes());
-                    os.flush();
-                } catch (IOException e) {
+                    String nowLine = scanner.nextLine() + "\n";
+                    socketChannel.write(ByteBuffer.wrap((nowLine).getBytes())).get();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     /**
