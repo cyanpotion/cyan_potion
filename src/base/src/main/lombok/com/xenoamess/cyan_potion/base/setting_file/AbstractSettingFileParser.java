@@ -26,6 +26,9 @@ package com.xenoamess.cyan_potion.base.setting_file;
 
 import com.xenoamess.commons.version.Version;
 import com.xenoamess.x8l.X8lTree;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * <p>Abstract AbstractSettingFileParser class.</p>
@@ -33,7 +36,10 @@ import com.xenoamess.x8l.X8lTree;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractSettingFileParser {
+    @Getter
     private final Version settingFormatVersion;
 
     /**
@@ -52,15 +58,6 @@ public abstract class AbstractSettingFileParser {
      */
     protected AbstractSettingFileParser(Version settingFormatVersion) {
         this.settingFormatVersion = settingFormatVersion;
-    }
-
-    /**
-     * <p>Getter for the field <code>settingFormatVersion</code>.</p>
-     *
-     * @return a {@link com.xenoamess.commons.version.Version} object.
-     */
-    public Version getSettingFormatVersion() {
-        return settingFormatVersion;
     }
 
     /**

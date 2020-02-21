@@ -32,6 +32,8 @@ import com.xenoamess.x8l.AbstractTreeNode;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
 import com.xenoamess.x8l.X8lTree;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.system.Configuration;
 
@@ -45,6 +47,8 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     /**
      * Constant <code>version_0_3_0</code>

@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.setting_file;
 
 import com.xenoamess.commons.version.Version;
 import com.xenoamess.x8l.X8lTree;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,8 @@ import static com.xenoamess.cyan_potion.base.setting_file.SettingFIleParser_0_3_
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class SettingFileParsers {
     private static Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
 
