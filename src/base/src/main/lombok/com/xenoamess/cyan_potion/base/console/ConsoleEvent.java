@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class ConsoleEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -89,24 +91,4 @@ public class ConsoleEvent implements Event {
         return new HashSet<>();
     }
 
-    /**
-     * <p>Getter for the field <code>command</code>.</p>
-     *
-     * @return return
-     */
-    public String getCommand() {
-        return command;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("ConsoleEvent:{command:");
-        stringBuilder.append(this.getCommand());
-        stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
 }

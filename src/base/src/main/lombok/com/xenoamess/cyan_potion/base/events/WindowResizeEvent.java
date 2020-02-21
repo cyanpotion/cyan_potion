@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class WindowResizeEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -89,30 +91,4 @@ public class WindowResizeEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>width</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     * <p>Getter for the field <code>height</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getHeight() {
-        return height;
-    }
 }

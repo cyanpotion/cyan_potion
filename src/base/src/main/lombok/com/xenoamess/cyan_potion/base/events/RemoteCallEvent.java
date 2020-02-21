@@ -26,6 +26,9 @@ package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -39,10 +42,13 @@ import java.util.function.Function;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements Event {
     /**
      * the AbstractGameWindowComponent that will be invoked with this function.
      */
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private final T gameWindowComponent;
     /**
      * the function to invoke.
@@ -68,21 +74,4 @@ public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements E
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
-    /**
-     * <p>Getter for the field <code>gameWindowComponent</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
-     */
-    public AbstractGameWindowComponent getGameWindowComponent() {
-        return gameWindowComponent;
-    }
-
-    /**
-     * <p>Getter for the field <code>function</code>.</p>
-     *
-     * @return a {@link java.util.function.Function} object.
-     */
-    public Function<T, Event> getFunction() {
-        return function;
-    }
 }

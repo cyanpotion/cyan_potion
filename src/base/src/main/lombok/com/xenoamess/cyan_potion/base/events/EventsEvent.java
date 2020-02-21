@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.events;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import lombok.Data;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,6 +39,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class EventsEvent implements Event {
     private final Set<Event> events;
 
