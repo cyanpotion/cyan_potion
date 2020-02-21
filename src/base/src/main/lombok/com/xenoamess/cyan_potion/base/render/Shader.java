@@ -80,7 +80,7 @@ public class Shader implements Closeable {
 
     @Getter
     private final Map<String, Integer> uniformLocationMap = new ConcurrentHashMap<>();
-    
+
     @Getter
     private final FloatBuffer matrixData = MemoryUtil.memAllocFloat(16);
 
