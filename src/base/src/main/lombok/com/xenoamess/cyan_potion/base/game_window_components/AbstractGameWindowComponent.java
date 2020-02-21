@@ -471,7 +471,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      *
      * @return alive
      */
-    public boolean getAlive() {
+    public boolean isAlive() {
         return alive.get();
     }
 

@@ -158,7 +158,7 @@ public final class Logo extends AbstractGameWindowComponent {
      */
     @Override
     public boolean draw() {
-        if (!this.getAlive()) {
+        if (!this.isAlive()) {
             return false;
         }
 

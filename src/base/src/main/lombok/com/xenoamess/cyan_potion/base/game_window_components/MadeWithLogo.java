@@ -168,7 +168,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
      */
     @Override
     public boolean draw() {
-        if (!this.getAlive()) {
+        if (!this.isAlive()) {
             return false;
         }
 

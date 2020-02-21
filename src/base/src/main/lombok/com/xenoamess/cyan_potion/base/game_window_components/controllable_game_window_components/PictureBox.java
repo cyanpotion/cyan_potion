@@ -32,6 +32,9 @@ import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.joml.Vector4fc;
 
 /**
@@ -42,11 +45,15 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class PictureBox extends AbstractControllableGameWindowComponent implements AbstractPictureInterface {
 
     /**
      * make sure PictureComponent.picture shall never be null.
      */
+    @Getter
     private final AbstractPictureInterface picture;
 
 
@@ -123,15 +130,6 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      */
     public void draw(AbstractScene abstractScene) {
         this.picture.draw(abstractScene);
-    }
-
-    /**
-     * <p>Getter for the field <code>picture</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface} object.
-     */
-    public AbstractPictureInterface getPicture() {
-        return picture;
     }
 
     /**

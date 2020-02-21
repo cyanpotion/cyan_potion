@@ -31,6 +31,10 @@ import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -41,8 +45,13 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Button extends AbstractControllableGameWindowComponent {
+    @Getter
     private final Picture buttonPicture = new Picture();
+    @Getter
+    @Setter
     private String buttonText;
     /**
      * color of the buttonText drawn.
@@ -124,34 +133,6 @@ public class Button extends AbstractControllableGameWindowComponent {
                     0, this.getTextColor(), this.getButtonText());
         }
         return true;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>buttonText</code>.</p>
-     *
-     * @return return
-     */
-    public String getButtonText() {
-        return buttonText;
-    }
-
-    /**
-     * <p>Setter for the field <code>buttonText</code>.</p>
-     *
-     * @param buttonText buttonText
-     */
-    public void setButtonText(String buttonText) {
-        this.buttonText = buttonText;
-    }
-
-    /**
-     * <p>Getter for the field <code>buttonPicture</code>.</p>
-     *
-     * @return this.buttonPicture
-     */
-    public Picture getButtonPicture() {
-        return buttonPicture;
     }
 
     /**

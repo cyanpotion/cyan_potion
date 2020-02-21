@@ -30,6 +30,10 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang.StringUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -51,6 +55,8 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class InputBox extends AbstractControllableGameWindowComponent {
 
     /**
@@ -58,15 +64,25 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public static final String NEXT_LINE_STRING = "\n";
     /**
-     * the time everytime slash shines.
+     * the time between every single slash shines.
      */
+    @Getter
+    @Setter
     private long cursorShineTime = 1000L;
-
+    @Getter
+    @Setter
     private String contentString = "";
+    @Getter
+    @Setter
     private int nowInsertPos = 0;
+    @Getter
+    @Setter
     private int nowSelectStartPos = -1;
+    @Getter
+    @Setter
     private int nowSelectEndPos = -1;
-
+    @Getter
+    @Setter
     private float charHeight =
             20.0f / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
@@ -79,6 +95,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     private final AtomicBoolean allowMultiLine = new AtomicBoolean(true);
 
+    @Getter
+    @Setter
     private int contentStringLengthLimit = -1;
 
     /**
@@ -89,6 +107,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * @see #useAllowCharSet
      */
+    @Getter
     private final Set<Character> allowCharSet = new HashSet<>();
 
     /**
@@ -100,6 +119,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     /**
      * @see #useDisallowCharSet
      */
+    @Getter
     private final Set<Character> disallowCharSet = new HashSet<>();
 
     /**
@@ -692,35 +712,6 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
     }
 
-    //-----getters and setters
-
-    /**
-     * <p>Getter for the field <code>slashTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getCursorShineTime() {
-        return cursorShineTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>slashTime</code>.</p>
-     *
-     * @param cursorShineTime a long.
-     */
-    public void setCursorShineTime(long cursorShineTime) {
-        this.cursorShineTime = cursorShineTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>contentString</code>.</p>
-     *
-     * @return return
-     */
-    public String getContentString() {
-        return contentString;
-    }
-
     /**
      * <p>Setter for the field <code>contentString</code>.</p>
      *
@@ -785,78 +776,6 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         if (this.getContentStringLengthLimit() != -1 && this.getContentString().length() > this.getContentStringLengthLimit()) {
             this.contentString = this.getContentString().substring(0, this.getContentStringLengthLimit());
         }
-    }
-
-    /**
-     * <p>Getter for the field <code>nowInsertPos</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getNowInsertPos() {
-        return nowInsertPos;
-    }
-
-    /**
-     * <p>Setter for the field <code>nowInsertPos</code>.</p>
-     *
-     * @param nowInsertPos a int.
-     */
-    public void setNowInsertPos(int nowInsertPos) {
-        this.nowInsertPos = nowInsertPos;
-    }
-
-    /**
-     * <p>Getter for the field <code>nowSelectStartPos</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getNowSelectStartPos() {
-        return nowSelectStartPos;
-    }
-
-    /**
-     * <p>Setter for the field <code>nowSelectStartPos</code>.</p>
-     *
-     * @param nowSelectStartPos a int.
-     */
-    public void setNowSelectStartPos(int nowSelectStartPos) {
-        this.nowSelectStartPos = nowSelectStartPos;
-    }
-
-    /**
-     * <p>Getter for the field <code>nowSelectEndPos</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getNowSelectEndPos() {
-        return nowSelectEndPos;
-    }
-
-    /**
-     * <p>Setter for the field <code>nowSelectEndPos</code>.</p>
-     *
-     * @param nowSelectEndPos a int.
-     */
-    public void setNowSelectEndPos(int nowSelectEndPos) {
-        this.nowSelectEndPos = nowSelectEndPos;
-    }
-
-    /**
-     * <p>Getter for the field <code>charHeight</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCharHeight() {
-        return charHeight;
-    }
-
-    /**
-     * <p>Setter for the field <code>charHeight</code>.</p>
-     *
-     * @param charHeight a float.
-     */
-    public void setCharHeight(float charHeight) {
-        this.charHeight = charHeight;
     }
 
     /**
@@ -968,24 +887,6 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * max content String Length allowed. if contentStringLengthLimit == -1 then will allow any length.
-     *
-     * @return a int.
-     */
-    public int getContentStringLengthLimit() {
-        return contentStringLengthLimit;
-    }
-
-    /**
-     * <p>Setter for the field <code>contentStringLengthLimit</code>.</p>
-     *
-     * @param contentStringLengthLimit a int.
-     */
-    public void setContentStringLengthLimit(int contentStringLengthLimit) {
-        this.contentStringLengthLimit = contentStringLengthLimit;
-    }
-
-    /**
      * <p>isUseAllowCharSet.</p>
      *
      * @return a boolean.
@@ -1004,15 +905,6 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * <p>Getter for the field <code>allowCharSet</code>.</p>
-     *
-     * @return a {@link java.util.Set} object.
-     */
-    public Set<Character> getAllowCharSet() {
-        return allowCharSet;
-    }
-
-    /**
      * <p>isUseDisallowCharSet.</p>
      *
      * @return a boolean.
@@ -1028,15 +920,6 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public void setUseDisallowCharSet(boolean useDisallowCharSet) {
         this.useDisallowCharSet.set(useDisallowCharSet);
-    }
-
-    /**
-     * <p>Getter for the field <code>disallowCharSet</code>.</p>
-     *
-     * @return a {@link java.util.Set} object.
-     */
-    public Set<Character> getDisallowCharSet() {
-        return disallowCharSet;
     }
 }
 

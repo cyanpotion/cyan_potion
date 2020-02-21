@@ -28,6 +28,10 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * MainThreadEventProcessor class is not a processor class for MainThreadEvent,
@@ -36,8 +40,16 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+
+@EqualsAndHashCode
+@ToString
 public class MainThreadEventProcessor<T extends Event> implements EventProcessor<T> {
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final GameManager gameManager;
+    @Getter
+    @Setter
     private EventProcessor<? super T> processor;
 
     /**
@@ -59,33 +71,6 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      */
     public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<? super T> processor) {
         this(gameWindowComponent.getGameWindow().getGameManager(), processor);
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>processor</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
-     */
-    public EventProcessor<? super T> getProcessor() {
-        return processor;
-    }
-
-    /**
-     * <p>Setter for the field <code>processor</code>.</p>
-     *
-     * @param processor a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
-     */
-    public void setProcessor(EventProcessor<? super T> processor) {
-        this.processor = processor;
     }
 
     /**

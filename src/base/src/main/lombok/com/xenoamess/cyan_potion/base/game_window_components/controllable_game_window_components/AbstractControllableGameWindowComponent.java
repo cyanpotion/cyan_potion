@@ -30,7 +30,11 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.*;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Abstract Controllable GameWindow Component
@@ -39,18 +43,20 @@ import org.lwjgl.glfw.GLFW;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**
      * active means this AbstractControllableGameWindowComponent is active and can sole Events and can update.
      * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not update anymore.
      */
-    private boolean active = true;
+    private AtomicBoolean active = new AtomicBoolean(true);
 
     /**
      * visible means this AbstractControllableGameWindowComponent is visible and can draw(actually, can call ifVisibleThenDraw() ).
      * if visible == false then this AbstractControllableGameWindowComponent does not call ifVisibleThenDraw().
      */
-    private boolean visible = true;
+    private AtomicBoolean visible = new AtomicBoolean(true);
 
     /**
      * blockClick means this can block a {@link MouseButtonEvent} inside of it.
@@ -61,17 +67,17 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @see #processMouseButtonEventsInside(MouseButtonEvent)
      */
-    private boolean blockClick = false;
+    private AtomicBoolean blockClick = new AtomicBoolean(false);
 
     /**
      * inFocusNow means this AbstractControllableGameWindowComponent in
      */
-    private boolean inFocusNow = false;
+    private AtomicBoolean inFocusNow = new AtomicBoolean(false);
 
     /**
      * inFocusNow means this AbstractControllableGameWindowComponent will still in focus in next frame.
      */
-    private boolean willStillInFocus = false;
+    private AtomicBoolean willStillInFocus = new AtomicBoolean(false);
 
 
     /**
@@ -735,7 +741,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean isActive() {
-        return active;
+        return active.get();
     }
 
     /**
@@ -744,7 +750,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param active a boolean.
      */
     public void setActive(boolean active) {
-        this.active = active;
+        this.active.set(active);
     }
 
     /**
@@ -753,7 +759,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean isVisible() {
-        return visible;
+        return visible.get();
     }
 
     /**
@@ -762,7 +768,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param visible a boolean.
      */
     public void setVisible(boolean visible) {
-        this.visible = visible;
+        this.visible.set(visible);
     }
 
 
@@ -772,7 +778,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean isInFocusNow() {
-        return inFocusNow;
+        return inFocusNow.get();
     }
 
     /**
@@ -781,7 +787,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param inFocusNow a boolean.
      */
     public void setInFocusNow(boolean inFocusNow) {
-        this.inFocusNow = inFocusNow;
+        this.inFocusNow.set(inFocusNow);
     }
 
     /**
@@ -790,7 +796,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean isWillStillInFocus() {
-        return willStillInFocus;
+        return willStillInFocus.get();
     }
 
     /**
@@ -799,7 +805,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param willStillInFocus a boolean.
      */
     public void setWillStillInFocus(boolean willStillInFocus) {
-        this.willStillInFocus = willStillInFocus;
+        this.willStillInFocus.set(willStillInFocus);
     }
 
     /**
@@ -808,7 +814,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return if block click
      */
     public boolean isBlockClick() {
-        return blockClick;
+        return blockClick.get();
     }
 
     /**
@@ -817,6 +823,6 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @param blockClick blockClick
      */
     public void setBlockClick(boolean blockClick) {
-        this.blockClick = blockClick;
+        this.blockClick.set(blockClick);
     }
 }

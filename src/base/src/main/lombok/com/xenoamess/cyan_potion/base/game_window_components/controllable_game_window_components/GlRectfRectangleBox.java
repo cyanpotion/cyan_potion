@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -46,6 +48,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Deprecated
 public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent {
     private final Vector4f color = new Vector4f(1, 1, 1, 1);
