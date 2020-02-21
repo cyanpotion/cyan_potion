@@ -24,12 +24,15 @@
 
 package com.xenoamess.cyan_potion.base.io.input.key;
 
+import lombok.Data;
+
 /**
  * <p>Key class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class Key {
     /**
      * Constant <code>TYPE_XENOAMESS_KEY=-1</code>
@@ -78,54 +81,5 @@ public class Key {
     public Key(int type, int key) {
         this.type = type;
         this.key = key;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (!object.getClass().equals(this.getClass())) {
-            return false;
-        }
-        final Key keyLocal = (Key) (object);
-        return (this.getType() == keyLocal.getType() && this.getKey() == keyLocal.getKey());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return (this.getType() << 10) | this.getKey();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "type : " + this.type + ", key : " + key;
-    }
-
-    /**
-     * <p>Getter for the field <code>type</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getType() {
-        return type;
-    }
-
-    /**
-     * <p>Getter for the field <code>key</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getKey() {
-        return key;
     }
 }
