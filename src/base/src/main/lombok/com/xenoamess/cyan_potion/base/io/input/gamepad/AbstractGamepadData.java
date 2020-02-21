@@ -25,6 +25,9 @@
 package com.xenoamess.cyan_potion.base.io.input.gamepad;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * <p>Abstract AbstractGamepadData class.</p>
@@ -32,8 +35,13 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-public abstract class AbstractGamepadData {
 
+@EqualsAndHashCode
+@ToString
+public abstract class AbstractGamepadData {
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final AbstractGamepadDevice gamepadDevice;
 
     /**
@@ -43,15 +51,6 @@ public abstract class AbstractGamepadData {
      */
     public AbstractGamepadData(AbstractGamepadDevice gamepadDevice) {
         this.gamepadDevice = gamepadDevice;
-    }
-
-    /**
-     * <p>Getter for the field <code>gamepadDevice</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractGamepadDevice getGamepadDevice() {
-        return this.gamepadDevice;
     }
 
     /**
@@ -83,6 +82,4 @@ public abstract class AbstractGamepadData {
             updateGamepadStatus(gameWindow);
         }
     }
-
-
 }
