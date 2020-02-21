@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.runtime;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
+import lombok.*;
 
 /**
  * SaveManager
@@ -34,14 +35,20 @@ import com.xenoamess.cyan_potion.base.SubManager;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class SaveManager extends SubManager {
     /**
      * Constant <code>DEFAULT_SAVE_FILE_PATH="System.getProperty(user.home) + /AppData/Roaming/cyan_potion_saves/"</code>
      */
     public static final String DEFAULT_SAVE_FILE_PATH = System.getProperty("user.home") + "/AppData/Roaming/cyan_potion_saves/";
 
+    @Getter
+    @Setter
     private String currentSaveFilePath = DEFAULT_SAVE_FILE_PATH;
 
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
     private SaveFileObject currentSaveFileObject;
 
     /**
@@ -116,39 +123,4 @@ public class SaveManager extends SubManager {
         return result;
     }
 
-    /**
-     * get current save file object
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
-     */
-    public SaveFileObject getCurrentSaveFileObject() {
-        return currentSaveFileObject;
-    }
-
-    /**
-     * set current save file object.
-     *
-     * @param currentSaveFileObject a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
-     */
-    protected void setCurrentSaveFileObject(SaveFileObject currentSaveFileObject) {
-        this.currentSaveFileObject = currentSaveFileObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>currentSaveFilePath</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getCurrentSaveFilePath() {
-        return currentSaveFilePath;
-    }
-
-    /**
-     * <p>Setter for the field <code>currentSaveFilePath</code>.</p>
-     *
-     * @param currentSaveFilePath a {@link java.lang.String} object.
-     */
-    public void setCurrentSaveFilePath(String currentSaveFilePath) {
-        this.currentSaveFilePath = currentSaveFilePath;
-    }
 }
