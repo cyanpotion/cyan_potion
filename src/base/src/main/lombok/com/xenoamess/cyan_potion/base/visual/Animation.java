@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +40,19 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Animation extends AbstractPicture {
+    @Getter
+    @Setter
     private int texturePointer;
-
+    @Getter
+    @Setter
     private long lastTime = System.currentTimeMillis();
+    @Getter
+    @Setter
     private float fps;
-
+    @Getter
     private final List<AbstractPictureInterface> frames = new ArrayList<>();
 
 
@@ -93,69 +104,5 @@ public class Animation extends AbstractPicture {
         this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
 
         return getFrames().get(getTexturePointer());
-    }
-
-
-    /**
-     * <p>Getter for the field <code>texturePointer</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getTexturePointer() {
-        return texturePointer;
-    }
-
-    /**
-     * <p>Setter for the field <code>texturePointer</code>.</p>
-     *
-     * @param texturePointer a int.
-     */
-    public void setTexturePointer(int texturePointer) {
-        this.texturePointer = texturePointer;
-    }
-
-    /**
-     * <p>Getter for the field <code>lastTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLastTime() {
-        return lastTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastTime</code>.</p>
-     *
-     * @param lastTime a long.
-     */
-    public void setLastTime(long lastTime) {
-        this.lastTime = lastTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>fps</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getFps() {
-        return fps;
-    }
-
-    /**
-     * <p>Setter for the field <code>fps</code>.</p>
-     *
-     * @param fps a float.
-     */
-    public void setFps(float fps) {
-        this.fps = fps;
-    }
-
-    /**
-     * <p>Getter for the field <code>frames</code>.</p>
-     *
-     * @return return
-     */
-    public List<AbstractPictureInterface> getFrames() {
-        return frames;
     }
 }
