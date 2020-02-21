@@ -24,13 +24,22 @@
 
 package com.xenoamess.cyan_potion.base.memory;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class ResourceHandler {
+    @Getter
+    @Setter
     private ResourceManager resourceManager;
 
     /**
@@ -41,6 +50,4 @@ public abstract class ResourceHandler {
     public ResourceHandler(ResourceManager resourceManager) {
         this.resourceManager = resourceManager;
     }
-
-
 }
