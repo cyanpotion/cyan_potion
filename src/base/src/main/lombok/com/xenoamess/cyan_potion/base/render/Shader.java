@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base.render;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4fc;
@@ -46,6 +50,8 @@ import static org.lwjgl.opengl.GL20.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Shader implements Closeable {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -56,12 +62,26 @@ public class Shader implements Closeable {
      */
     public static final int CLEAR_TIME_MILLIS = 10000;
 
+    @Getter
+    @Setter
     private int programObject;
+
+    @Getter
+    @Setter
     private int vertexShaderObject;
+
+    @Getter
+    @Setter
     private int fragmentShaderObject;
 
-    private final Map<String, Integer> uniformLocationMap = new ConcurrentHashMap<>();
+    @Getter
+    @Setter
     private long lastClearTime = System.currentTimeMillis();
+
+    @Getter
+    private final Map<String, Integer> uniformLocationMap = new ConcurrentHashMap<>();
+    
+    @Getter
     private final FloatBuffer matrixData = MemoryUtil.memAllocFloat(16);
 
     /**
@@ -214,95 +234,4 @@ public class Shader implements Closeable {
     public void bind() {
         glUseProgram(getProgramObject());
     }
-
-    /**
-     * <p>Getter for the field <code>programObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getProgramObject() {
-        return programObject;
-    }
-
-    /**
-     * <p>Setter for the field <code>programObject</code>.</p>
-     *
-     * @param programObject a int.
-     */
-    public void setProgramObject(int programObject) {
-        this.programObject = programObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>vertexShaderObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getVertexShaderObject() {
-        return vertexShaderObject;
-    }
-
-    /**
-     * <p>Setter for the field <code>vertexShaderObject</code>.</p>
-     *
-     * @param vertexShaderObject a int.
-     */
-    public void setVertexShaderObject(int vertexShaderObject) {
-        this.vertexShaderObject = vertexShaderObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>fragmentShaderObject</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getFragmentShaderObject() {
-        return fragmentShaderObject;
-    }
-
-    /**
-     * <p>Setter for the field <code>fragmentShaderObject</code>.</p>
-     *
-     * @param fragmentShaderObject a int.
-     */
-    public void setFragmentShaderObject(int fragmentShaderObject) {
-        this.fragmentShaderObject = fragmentShaderObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>uniformLocationMap</code>.</p>
-     *
-     * @return return
-     */
-    public Map<String, Integer> getUniformLocationMap() {
-        return uniformLocationMap;
-    }
-
-    /**
-     * <p>Getter for the field <code>lastClearTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLastClearTime() {
-        return lastClearTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastClearTime</code>.</p>
-     *
-     * @param lastClearTime a long.
-     */
-    public void setLastClearTime(long lastClearTime) {
-        this.lastClearTime = lastClearTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>matrixData</code>.</p>
-     *
-     * @return return
-     */
-    public FloatBuffer getMatrixData() {
-        return matrixData;
-    }
-
 }
