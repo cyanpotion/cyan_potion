@@ -26,6 +26,9 @@ package com.xenoamess.cyan_potion.base.runtime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.SubManager;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +44,12 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-public class RuntimeManager {
+@EqualsAndHashCode(callSuper = true)
+@ToString
+public class RuntimeManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
-
-    private final GameManager gameManager;
 
     private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();
 
@@ -56,16 +59,22 @@ public class RuntimeManager {
      * @param gameManager gameManager
      */
     public RuntimeManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
     }
 
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return gameManager;
+    @Override
+    public void init() {
+        //do nothing
+    }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
+
+    @Override
+    public void close() {
+        //do nothing
     }
 
     /**
@@ -94,7 +103,7 @@ public class RuntimeManager {
      * @param index a int.
      */
     public synchronized void load(int index) {
-        List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().pickCurrentSaveFileObject(index).load();
+        List<RuntimeVariableStruct> loadedRuntimeVariableStructList = this.getGameManager().getSaveManager().pickCurrentSaveFileObject(index).load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
             this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
@@ -104,7 +113,7 @@ public class RuntimeManager {
      * load from the current SaveFileObject.
      */
     public synchronized void load() {
-        List<RuntimeVariableStruct> loadedRuntimeVariableStructList = gameManager.getSaveManager().getCurrentSaveFileObject().load();
+        List<RuntimeVariableStruct> loadedRuntimeVariableStructList = this.getGameManager().getSaveManager().getCurrentSaveFileObject().load();
         for (int i = 0; i < loadedRuntimeVariableStructList.size(); i++) {
             this.runtimeVariableStructList.get(i).loadFrom(loadedRuntimeVariableStructList.get(i));
         }
@@ -122,14 +131,14 @@ public class RuntimeManager {
      * @param index a int.
      */
     public synchronized void save(int index) {
-        gameManager.getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
+        this.getGameManager().getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
     }
 
     /**
      * save into the current SaveFileObject.
      */
     public synchronized void save() {
-        gameManager.getSaveManager().getCurrentSaveFileObject().save(this.runtimeVariableStructList);
+        this.getGameManager().getSaveManager().getCurrentSaveFileObject().save(this.runtimeVariableStructList);
     }
 
 }
