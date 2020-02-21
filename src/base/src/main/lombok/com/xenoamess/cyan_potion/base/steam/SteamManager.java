@@ -32,6 +32,10 @@ import com.xenoamess.cyan_potion.base.SubManager;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.vfs2.FileObject;
@@ -56,20 +60,38 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class SteamManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SteamManager.class);
-
+    @Getter
+    @Setter
     private SteamUser steamUser;
+    @Getter
+    @Setter
     private SteamUserStats steamUserStats;
+    @Getter
+    @Setter
     private SteamRemoteStorage steamRemoteStorage;
+    @Getter
+    @Setter
     private SteamUGC steamUGC;
+    @Getter
+    @Setter
     private SteamUtils steamUtils;
+    @Getter
+    @Setter
     private SteamApps steamApps;
+    @Getter
+    @Setter
     private SteamFriends steamFriends;
+    @Getter
+    @Setter
     private SteamLeaderboardHandle steamLeaderboardHandle = null;
-
+    @Getter
+    @Setter
     private SteamCallbacks steamCallbacks = new SteamCallbacks(this);
 
     /**
@@ -483,168 +505,6 @@ public class SteamManager extends SubManager {
             boolean subscribed = getSteamApps().isSubscribedApp(Integer.parseInt(appId));
             LOGGER.debug("user described to app #" + appId + ": " + (subscribed ? "yes" : "no"));
         }
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUser</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamUser} object.
-     */
-    public SteamUser getSteamUser() {
-        return steamUser;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUser</code>.</p>
-     *
-     * @param steamUser a {@link com.codedisaster.steamworks.SteamUser} object.
-     */
-    public void setSteamUser(SteamUser steamUser) {
-        this.steamUser = steamUser;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUserStats</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamUserStats} object.
-     */
-    public SteamUserStats getSteamUserStats() {
-        return steamUserStats;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUserStats</code>.</p>
-     *
-     * @param steamUserStats a {@link com.codedisaster.steamworks.SteamUserStats} object.
-     */
-    public void setSteamUserStats(SteamUserStats steamUserStats) {
-        this.steamUserStats = steamUserStats;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamRemoteStorage</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamRemoteStorage} object.
-     */
-    public SteamRemoteStorage getSteamRemoteStorage() {
-        return steamRemoteStorage;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamRemoteStorage</code>.</p>
-     *
-     * @param steamRemoteStorage a {@link com.codedisaster.steamworks.SteamRemoteStorage} object.
-     */
-    public void setSteamRemoteStorage(SteamRemoteStorage steamRemoteStorage) {
-        this.steamRemoteStorage = steamRemoteStorage;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUGC</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamUGC} object.
-     */
-    public SteamUGC getSteamUGC() {
-        return steamUGC;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUGC</code>.</p>
-     *
-     * @param steamUGC a {@link com.codedisaster.steamworks.SteamUGC} object.
-     */
-    public void setSteamUGC(SteamUGC steamUGC) {
-        this.steamUGC = steamUGC;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamUtils</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamUtils} object.
-     */
-    public SteamUtils getSteamUtils() {
-        return steamUtils;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamUtils</code>.</p>
-     *
-     * @param steamUtils a {@link com.codedisaster.steamworks.SteamUtils} object.
-     */
-    public void setSteamUtils(SteamUtils steamUtils) {
-        this.steamUtils = steamUtils;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamApps</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamApps} object.
-     */
-    public SteamApps getSteamApps() {
-        return steamApps;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamApps</code>.</p>
-     *
-     * @param steamApps a {@link com.codedisaster.steamworks.SteamApps} object.
-     */
-    public void setSteamApps(SteamApps steamApps) {
-        this.steamApps = steamApps;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamFriends</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamFriends} object.
-     */
-    public SteamFriends getSteamFriends() {
-        return steamFriends;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamFriends</code>.</p>
-     *
-     * @param steamFriends a {@link com.codedisaster.steamworks.SteamFriends} object.
-     */
-    public void setSteamFriends(SteamFriends steamFriends) {
-        this.steamFriends = steamFriends;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamLeaderboardHandle</code>.</p>
-     *
-     * @return a {@link com.codedisaster.steamworks.SteamLeaderboardHandle} object.
-     */
-    public SteamLeaderboardHandle getSteamLeaderboardHandle() {
-        return steamLeaderboardHandle;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamLeaderboardHandle</code>.</p>
-     *
-     * @param steamLeaderboardHandle a {@link com.codedisaster.steamworks.SteamLeaderboardHandle} object.
-     */
-    public void setSteamLeaderboardHandle(SteamLeaderboardHandle steamLeaderboardHandle) {
-        this.steamLeaderboardHandle = steamLeaderboardHandle;
-    }
-
-    /**
-     * <p>Getter for the field <code>steamCallbacks</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.steam.SteamCallbacks} object.
-     */
-    public SteamCallbacks getSteamCallbacks() {
-        return steamCallbacks;
-    }
-
-    /**
-     * <p>Setter for the field <code>steamCallbacks</code>.</p>
-     *
-     * @param steamCallbacks a {@link com.xenoamess.cyan_potion.base.steam.SteamCallbacks} object.
-     */
-    public void setSteamCallbacks(SteamCallbacks steamCallbacks) {
-        this.steamCallbacks = steamCallbacks;
     }
 
     /**

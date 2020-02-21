@@ -49,6 +49,10 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * @version 0.160.0-SNAPSHOT
  */
 public class SteamTextureUtils {
+    private SteamTextureUtils() {
+        //shall never.
+    }
+
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SteamTextureUtils.class);
