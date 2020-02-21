@@ -25,6 +25,7 @@
 /**
  * Package to hold classes about URL.
  * now I'm still considering deprecate/delete this package.
+ * Do not use things in this package!
  *
  * @since 0.148.8
  */
