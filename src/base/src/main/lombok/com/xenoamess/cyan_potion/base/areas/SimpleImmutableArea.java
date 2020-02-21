@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.areas;
 
+import lombok.Data;
+
 /**
  * a simple immutable area class
  * must create it from Areas.
@@ -34,6 +36,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * @see Areas#generateImmutableAreaFromLeftTop(float, float, float, float)
  * @see Areas#generateImmutableAreaFromArea(float, float, float, float)
  */
+@Data
 public final class SimpleImmutableArea implements AbstractImmutableArea {
     private final float leftTopPosX;
     private final float leftTopPosY;
@@ -67,35 +70,4 @@ public final class SimpleImmutableArea implements AbstractImmutableArea {
         this.height = height;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosX() {
-        return this.leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosY() {
-        return this.leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getWidth() {
-        return this.width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getHeight() {
-        return this.height;
-    }
 }

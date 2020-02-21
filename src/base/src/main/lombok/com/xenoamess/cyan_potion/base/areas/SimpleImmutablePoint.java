@@ -24,12 +24,15 @@
 
 package com.xenoamess.cyan_potion.base.areas;
 
+import lombok.Data;
+
 /**
  * <p>SimpleImmutablePoint class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public final class SimpleImmutablePoint implements AbstractImmutablePoint {
     private final float posX;
     private final float posY;
@@ -54,19 +57,4 @@ public final class SimpleImmutablePoint implements AbstractImmutablePoint {
         this.posY = posY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getPosX() {
-        return posX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getPosY() {
-        return posY;
-    }
 }

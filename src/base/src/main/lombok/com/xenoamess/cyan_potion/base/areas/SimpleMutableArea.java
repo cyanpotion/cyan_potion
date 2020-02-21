@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.base.areas;
 
+import lombok.Data;
+
 /**
  * a simple mutable area class
  * must create it from Areas.
@@ -34,6 +36,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * @see Areas#generateMutableAreaFromLeftTop(float, float, float, float)
  * @see Areas#generateMutableAreaFromArea(float, float, float, float)
  */
+@Data
 public final class SimpleMutableArea implements AbstractMutableArea {
     private float leftTopPosX;
     private float leftTopPosY;
@@ -64,67 +67,4 @@ public final class SimpleMutableArea implements AbstractMutableArea {
         this.height = height;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosX() {
-        return this.leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosY() {
-        return this.leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getWidth() {
-        return this.width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getHeight() {
-        return this.height;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosX(float leftTopPosX) {
-        this.leftTopPosX = leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosY(float leftTopPosY) {
-        this.leftTopPosY = leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setHeight(float height) {
-        this.height = height;
-    }
 }
