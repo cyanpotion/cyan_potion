@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.visual;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.lwjgl.stb.STBTruetype;
@@ -40,6 +41,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class DrawTextStruct {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -258,150 +260,6 @@ public class DrawTextStruct {
     }
 
     /**
-     * <p>Getter for the field <code>leftTopPosX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLeftTopPosX() {
-        return leftTopPosX;
-    }
-
-    /**
-     * <p>Setter for the field <code>leftTopPosX</code>.</p>
-     *
-     * @param leftTopPosX a float.
-     */
-    public void setLeftTopPosX(float leftTopPosX) {
-        this.leftTopPosX = leftTopPosX;
-    }
-
-    /**
-     * <p>Getter for the field <code>leftTopPosY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLeftTopPosY() {
-        return leftTopPosY;
-    }
-
-    /**
-     * <p>Setter for the field <code>leftTopPosY</code>.</p>
-     *
-     * @param leftTopPosY a float.
-     */
-    public void setLeftTopPosY(float leftTopPosY) {
-        this.leftTopPosY = leftTopPosY;
-    }
-
-    /**
-     * <p>Getter for the field <code>centerPosX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCenterPosX() {
-        return centerPosX;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPosX</code>.</p>
-     *
-     * @param centerPosX a float.
-     */
-    public void setCenterPosX(float centerPosX) {
-        this.centerPosX = centerPosX;
-    }
-
-    /**
-     * <p>Getter for the field <code>centerPosY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCenterPosY() {
-        return centerPosY;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPosY</code>.</p>
-     *
-     * @param centerPosY a float.
-     */
-    public void setCenterPosY(float centerPosY) {
-        this.centerPosY = centerPosY;
-    }
-
-    /**
-     * <p>Getter for the field <code>width</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getWidth() {
-        return width;
-    }
-
-    /**
-     * <p>Setter for the field <code>width</code>.</p>
-     *
-     * @param width a float.
-     */
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    /**
-     * <p>Getter for the field <code>height</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getHeight() {
-        return height;
-    }
-
-    /**
-     * <p>Setter for the field <code>height</code>.</p>
-     *
-     * @param height a float.
-     */
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    /**
-     * <p>Getter for the field <code>scaleX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getScaleX() {
-        return scaleX;
-    }
-
-    /**
-     * <p>Setter for the field <code>scaleX</code>.</p>
-     *
-     * @param scaleX a float.
-     */
-    public void setScaleX(float scaleX) {
-        this.scaleX = scaleX;
-    }
-
-    /**
-     * <p>Getter for the field <code>scaleY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getScaleY() {
-        return scaleY;
-    }
-
-    /**
-     * <p>Setter for the field <code>scaleY</code>.</p>
-     *
-     * @param scaleY a float.
-     */
-    public void setScaleY(float scaleY) {
-        this.scaleY = scaleY;
-    }
-
-    /**
      * <p>Getter for the field <code>color</code>.</p>
      *
      * @return a {@link org.joml.Vector4fc} object.
@@ -423,51 +281,6 @@ public class DrawTextStruct {
     }
 
     /**
-     * <p>Getter for the field <code>characterSpace</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCharacterSpace() {
-        return characterSpace;
-    }
-
-    /**
-     * <p>Setter for the field <code>characterSpace</code>.</p>
-     *
-     * @param characterSpace a float.
-     */
-    public void setCharacterSpace(float characterSpace) {
-        this.characterSpace = characterSpace;
-    }
-
-    /**
-     * <p>Getter for the field <code>text</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * <p>Setter for the field <code>text</code>.</p>
-     *
-     * @param text a {@link java.lang.String} object.
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    /**
-     * <p>Getter for the field <code>font</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     */
-    public Font getFont() {
-        return font;
-    }
-
-    /**
      * <p>Setter for the field <code>font</code>.</p>
      *
      * @param font a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
@@ -478,26 +291,4 @@ public class DrawTextStruct {
         }
         this.font = font;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "DrawTextStruct{" +
-                "font=" + getFont() +
-                ", leftTopPosX=" + getLeftTopPosX() +
-                ", leftTopPosY=" + getLeftTopPosY() +
-                ", centerPosX=" + getCenterPosX() +
-                ", centerPosY=" + getCenterPosY() +
-                ", width=" + getWidth() +
-                ", height=" + getHeight() +
-                ", scaleX=" + getScaleX() +
-                ", scaleY=" + getScaleY() +
-                ", characterSpace=" + getCharacterSpace() +
-                ", color=" + color +
-                ", text='" + getText() + '\'' +
-                '}';
-    }
-
 }
