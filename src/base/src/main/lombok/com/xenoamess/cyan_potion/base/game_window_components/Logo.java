@@ -32,6 +32,9 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -45,6 +48,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class Logo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
@@ -55,8 +60,9 @@ public final class Logo extends AbstractGameWindowComponent {
                     );
 
     private final Picture logoPicture;
-
+    @Getter
     private final long lifeTime;
+    @Getter
     private final long dieTimeStamp;
 
 
@@ -204,21 +210,4 @@ public final class Logo extends AbstractGameWindowComponent {
     }
 
 
-    /**
-     * <p>Getter for the field <code>lifeTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLifeTime() {
-        return lifeTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>dieTimeStamp</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getDieTimeStamp() {
-        return dieTimeStamp;
-    }
 }
