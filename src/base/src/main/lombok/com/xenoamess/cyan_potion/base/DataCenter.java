@@ -41,7 +41,7 @@ import lombok.ToString;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class DataCenter extends SubManager {
 

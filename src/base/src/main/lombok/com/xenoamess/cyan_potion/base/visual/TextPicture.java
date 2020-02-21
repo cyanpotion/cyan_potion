@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -36,12 +40,26 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class TextPicture extends AbstractPicture {
+    @Getter
+    @Setter
     private float centerPosX = Float.NaN;
+    @Getter
+    @Setter
     private float centerPosY = Float.NaN;
+    @Getter
+    @Setter
     private Font font = Font.getCurrentFont();
+    @Getter
+    @Setter
     private float characterSpace = Float.NaN;
+    @Getter
+    @Setter
     private final Vector4f color = new Vector4f(Colors.BLACK);
+    @Getter
+    @Setter
     private String text = "";
 
     /**
@@ -118,75 +136,6 @@ public class TextPicture extends AbstractPicture {
         drawTextStruct.draw();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosX() {
-        return centerPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosX(float centerPosX) {
-        this.centerPosX = centerPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getCenterPosY() {
-        return centerPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCenterPosY(float centerPosY) {
-        this.centerPosY = centerPosY;
-    }
-
-    /**
-     * <p>Getter for the field <code>font</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     */
-    public Font getFont() {
-        return font;
-    }
-
-    /**
-     * <p>Setter for the field <code>font</code>.</p>
-     *
-     * @param font a {@link com.xenoamess.cyan_potion.base.visual.Font} object.
-     */
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    /**
-     * <p>Getter for the field <code>characterSpace</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getCharacterSpace() {
-        return characterSpace;
-    }
-
-    /**
-     * <p>Setter for the field <code>characterSpace</code>.</p>
-     *
-     * @param characterSpace a float.
-     */
-    public void setCharacterSpace(float characterSpace) {
-        this.characterSpace = characterSpace;
-    }
-
     /**
      * <p>Getter for the field <code>color</code>.</p>
      *
@@ -203,23 +152,5 @@ public class TextPicture extends AbstractPicture {
      */
     public void setColor(Vector4f color) {
         this.color.set(color);
-    }
-
-    /**
-     * <p>Getter for the field <code>text</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * <p>Setter for the field <code>text</code>.</p>
-     *
-     * @param text a {@link java.lang.String} object.
-     */
-    public void setText(String text) {
-        this.text = text;
     }
 }

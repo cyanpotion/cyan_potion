@@ -46,9 +46,7 @@ import org.slf4j.LoggerFactory;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@Getter
-@Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class Callbacks extends SubManager {
     @JsonIgnore
@@ -79,21 +77,29 @@ public class Callbacks extends SubManager {
         //do nothing
     }
 
+    @Getter
+    @Setter
     private GLFWWindowCloseCallbackI windowCloseCallback =
             window -> {
                 LOGGER.debug("Alright I exit.");
                 getGameManager().shutdown();
             };
 
+    @Getter
+    @Setter
     private GLFWKeyCallbackI keyCallback =
             (long window, int key, int scancode, int action, int mods) -> {
                 Event event = new KeyboardEvent(window, key, scancode, action, mods);
                 getGameManager().eventListAdd(event);
             };
 
+    @Getter
+    @Setter
     private GLFWJoystickCallbackI joystickCallback =
             (int jid, int event) -> LOGGER.debug("jid : {}, event : {}", jid, event);
 
+    @Getter
+    @Setter
     private GLFWMouseButtonCallbackI mouseButtonCallback =
             (long window, int button, int action, int mods) -> {
                 GameWindow gameWindow = getGameManager().getGameWindow();
@@ -102,25 +108,32 @@ public class Callbacks extends SubManager {
                 getGameManager().eventListAdd(event);
             };
 
+    @Getter
+    @Setter
     private GLFWScrollCallbackI scrollCallback =
             (long window, double xoffset, double yoffset) -> {
                 Event event = new MouseScrollEvent(window, xoffset, yoffset);
                 getGameManager().eventListAdd(event);
             };
 
-
+    @Getter
+    @Setter
     private GLFWWindowSizeCallbackI windowSizeCallback =
             (long window, int width, int height) -> {
                 Event event = new WindowResizeEvent(window, width, height);
                 getGameManager().eventListAdd(event);
             };
 
+    @Getter
+    @Setter
     private GLFWCharCallbackI charCallback =
             (long window, int codepoint) -> {
                 Event event = new CharEvent(window, codepoint);
                 getGameManager().eventListAdd(event);
             };
 
+    @Getter
+    @Setter
     private GLFWDropCallbackI dropCallback =
             (long window, int count, long names) -> {
                 Event event = new DropFilesEvent(window, count, names);

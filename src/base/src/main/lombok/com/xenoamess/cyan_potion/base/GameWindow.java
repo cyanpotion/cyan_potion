@@ -70,7 +70,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
