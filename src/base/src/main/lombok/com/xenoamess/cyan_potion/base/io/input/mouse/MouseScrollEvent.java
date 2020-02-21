@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.Data;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class MouseScrollEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -90,32 +92,5 @@ public class MouseScrollEvent implements Event {
         LOGGER.debug("MouseScrollEvent : {} {} {}",
                 getWindow(), getXoffset(), getYoffset());
         return gameManager.getGameWindowComponentTree().process(this);
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>xoffset</code>.</p>
-     *
-     * @return a double.
-     */
-    public double getXoffset() {
-        return xoffset;
-    }
-
-    /**
-     * <p>Getter for the field <code>yoffset</code>.</p>
-     *
-     * @return a double.
-     */
-    public double getYoffset() {
-        return yoffset;
     }
 }
