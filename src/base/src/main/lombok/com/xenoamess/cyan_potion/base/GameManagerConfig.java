@@ -238,7 +238,7 @@ public class GameManagerConfig {
      * If exist this tag then does not start console thread when start up the
      * game.
      *
-     * @see com.xenoamess.cyan_potion.base.console.ConsoleThread
+     * @see com.xenoamess.cyan_potion.base.console.ConsoleTalkThreadManager
      */
     public static final String STRING_NO_CONSOLE_THREAD = "noConsoleThread";
 
