@@ -25,8 +25,10 @@
 package com.xenoamess.cyan_potion.base.visual;
 
 import com.xenoamess.cyan_potion.base.render.Bindable;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>Picture class.</p>
@@ -34,7 +36,11 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Picture extends AbstractBindablePicture {
+    @Getter
+    @Setter
     private Bindable bindable;
 
     /**
@@ -61,42 +67,4 @@ public class Picture extends AbstractBindablePicture {
         return this.getBindable();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Picture)) {
-            return false;
-        }
-        Picture picture = (Picture) o;
-        return Float.compare(picture.getCenterPosX(), getCenterPosX()) == 0 &&
-                Float.compare(picture.getCenterPosY(), getCenterPosY()) == 0 &&
-                Float.compare(picture.getWidth(), getWidth()) == 0 &&
-                Float.compare(picture.getHeight(), getHeight()) == 0 &&
-                Float.compare(picture.getRotateRadius(), getRotateRadius()) == 0 &&
-                Objects.equals(getBindable(), picture.getBindable()) &&
-                Objects.equals(getColorScale(), picture.getColorScale());
-    }
-
-    /**
-     * <p>Getter for the field <code>bindable</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     */
-    public Bindable getBindable() {
-        return bindable;
-    }
-
-    /**
-     * <p>Setter for the field <code>bindable</code>.</p>
-     *
-     * @param bindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     */
-    public void setBindable(Bindable bindable) {
-        this.bindable = bindable;
-    }
 }
