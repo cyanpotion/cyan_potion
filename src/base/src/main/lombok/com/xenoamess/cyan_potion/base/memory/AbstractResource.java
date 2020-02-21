@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base.memory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
 import com.xenoamess.cyan_potion.base.render.Bindable;
+import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,15 +44,23 @@ import java.util.function.Function;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);
 
+    @Getter
     private final ResourceManager resourceManager;
+    @Getter
     private final ResourceInfo resourceInfo;
+    @Getter
+    @Setter
     private long memorySize;
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
+    @Getter
+    @Setter
     private long lastUsedFrameIndex;
 
     /**
@@ -74,6 +83,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
 //        }
 //    }
 
+    @Getter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
     private FutureTask<Boolean> loadTask;
 
     /**
@@ -81,15 +91,6 @@ public abstract class AbstractResource implements Closeable, Bindable {
      */
     protected synchronized void createNewLoadTask() {
         loadTask = new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf);
-    }
-
-    /**
-     * <p>Getter for the field <code>loadTask</code>.</p>
-     *
-     * @return a {@link java.util.concurrent.FutureTask} object.
-     */
-    protected synchronized FutureTask<Boolean> getLoadTask() {
-        return this.loadTask;
     }
 
     /**
@@ -243,42 +244,6 @@ public abstract class AbstractResource implements Closeable, Bindable {
     protected abstract void forceClose();
 
     /**
-     * <p>Getter for the field <code>resourceManager</code>.</p>
-     *
-     * @return return
-     */
-    public ResourceManager getResourceManager() {
-        return this.resourceManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>resourceJson</code>.</p>
-     *
-     * @return return
-     */
-    public ResourceInfo getResourceInfo() {
-        return resourceInfo;
-    }
-
-    /**
-     * <p>Getter for the field <code>memorySize</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getMemorySize() {
-        return memorySize;
-    }
-
-    /**
-     * <p>Setter for the field <code>memorySize</code>.</p>
-     *
-     * @param memorySize a long.
-     */
-    public void setMemorySize(long memorySize) {
-        this.memorySize = memorySize;
-    }
-
-    /**
      * <p>isInMemory.</p>
      *
      * @return a boolean.
@@ -295,31 +260,4 @@ public abstract class AbstractResource implements Closeable, Bindable {
     public void setInMemory(boolean inMemory) {
         this.inMemory.set(inMemory);
     }
-
-    /**
-     * <p>Getter for the field <code>lastUsedFrameIndex</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLastUsedFrameIndex() {
-        return lastUsedFrameIndex;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastUsedFrameIndex</code>.</p>
-     *
-     * @param lastUsedFrameIndex a long.
-     */
-    public void setLastUsedFrameIndex(long lastUsedFrameIndex) {
-        this.lastUsedFrameIndex = lastUsedFrameIndex;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return this.getResourceInfo() == null ? "null" : this.getResourceInfo().toString();
-    }
-
 }
