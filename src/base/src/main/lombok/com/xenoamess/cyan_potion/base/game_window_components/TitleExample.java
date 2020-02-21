@@ -36,6 +36,10 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -50,7 +54,10 @@ import static org.lwjgl.opengl.GL11.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class TitleExample extends AbstractGameWindowComponent {
+    @Getter
     private final Texture saveSlotTexture =
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
@@ -58,7 +65,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
                             STRING_PICTURE,
                             "resources/www/img/pictures/saveSlot.png"
                     );
-
+    @Getter
     private final Picture saveSlotPicture = new Picture(saveSlotTexture);
 
     {
@@ -66,6 +73,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
         this.saveSlotPicture.setSize(250, 50);
     }
 
+    @Getter
     private final Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                     Texture.class,
@@ -75,8 +83,16 @@ public final class TitleExample extends AbstractGameWindowComponent {
                             "resources/www/img/pictures/saveStar.png"
                     )
             );
+
+    @Getter
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
             new ArrayList<>();
+    @Getter
+    @Setter
+    private int state = 0;
+    @Getter
+    @Setter
+    private int time = 0;
 
     /**
      * <p>Constructor for TitleExample.</p>
@@ -365,8 +381,6 @@ public final class TitleExample extends AbstractGameWindowComponent {
         );
     }
 
-    private int state = 0;
-    private int time = 0;
 
     void nextState() {
         if (getState() < 0) {
@@ -454,66 +468,4 @@ public final class TitleExample extends AbstractGameWindowComponent {
         world.enlargeAsFullWindow();
     }
 
-    /**
-     * <p>Getter for the field <code>saveSlotTexture</code>.</p>
-     *
-     * @return return
-     */
-    public Texture getSaveSlotTexture() {
-        return saveSlotTexture;
-    }
-
-    /**
-     * <p>Getter for the field <code>saveStarTexture</code>.</p>
-     *
-     * @return return
-     */
-    public Texture getSaveStarTexture() {
-        return saveStarTexture;
-    }
-
-    /**
-     * <p>Getter for the field <code>controllableGameWindowComponents</code>.</p>
-     *
-     * @return return
-     */
-    public ArrayList<AbstractControllableGameWindowComponent> getControllableGameWindowComponents() {
-        return controllableGameWindowComponents;
-    }
-
-    /**
-     * <p>Getter for the field <code>state</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getState() {
-        return state;
-    }
-
-    /**
-     * <p>Setter for the field <code>state</code>.</p>
-     *
-     * @param state a int.
-     */
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    /**
-     * <p>Getter for the field <code>time</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getTime() {
-        return time;
-    }
-
-    /**
-     * <p>Setter for the field <code>time</code>.</p>
-     *
-     * @param time a int.
-     */
-    public void setTime(int time) {
-        this.time = time;
-    }
 }

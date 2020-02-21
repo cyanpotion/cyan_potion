@@ -24,13 +24,20 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * <p>Abstract Updater class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class Updater<T> implements UpdaterInterface<T> {
+    @Getter
     private final UpdaterInterface<? super T> parentUpdater;
 
     /**
@@ -74,13 +81,4 @@ public abstract class Updater<T> implements UpdaterInterface<T> {
      * @see #update(Object)
      */
     public abstract boolean thisUpdate(T t);
-
-    /**
-     * <p>Getter for the field <code>parentUpdater</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
-     */
-    public UpdaterInterface<? super T> getParentUpdater() {
-        return parentUpdater;
-    }
 }
