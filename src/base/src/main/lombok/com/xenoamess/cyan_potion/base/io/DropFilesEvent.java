@@ -28,10 +28,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.Data;
 import org.lwjgl.PointerBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.lwjgl.system.MemoryUtil.*;
@@ -42,6 +45,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class DropFilesEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -94,58 +98,12 @@ public class DropFilesEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        //notice that scancode is ignored by this engine(at this version.)
-        //because we want to make it multi-platform.
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("DropFilesEvent:{");
-        stringBuilder.append("count:");
-        stringBuilder.append(this.getCount());
-        stringBuilder.append(",names:");
-        stringBuilder.append(this.getNames());
-        stringBuilder.append(",names:");
+    public List<String> getFileNames() {
+        ArrayList<String> fileNames = new ArrayList<>();
         PointerBuffer nameBuffer = memPointerBuffer(getNames(), getCount());
-        stringBuilder.append('[');
         for (int i = 0; i < getCount(); i++) {
-            stringBuilder.append(i);
-            stringBuilder.append(":");
-            stringBuilder.append(memUTF8(memByteBufferNT1(nameBuffer.get(i))));
-            stringBuilder.append(',');
+            fileNames.add(memUTF8(memByteBufferNT1(nameBuffer.get(i))));
         }
-        stringBuilder.append(']');
-        stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>count</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getCount() {
-        return count;
-    }
-
-    /**
-     * <p>Getter for the field <code>names</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getNames() {
-        return names;
+        return fileNames;
     }
 }
