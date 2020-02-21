@@ -24,6 +24,10 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -33,12 +37,28 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractPicture implements AbstractPictureInterface {
+    @Getter
+    @Setter
     private float leftTopPosX = Float.NaN;
+    @Getter
+    @Setter
     private float leftTopPosY = Float.NaN;
+    @Getter
+    @Setter
     private float width = Float.NaN;
+    @Getter
+    @Setter
     private float height = Float.NaN;
+    @Getter
+    @Setter
     private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
+    @Getter
+    @Setter
     private float rotateRadius = 0f;
 
     /**
@@ -61,75 +81,6 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
         this.setRotateRadius(newRotateRadius);
     }
 
-
-    //--- getters and setters ---
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>leftTopPosX</code>.</p>
-     */
-    @Override
-    public float getLeftTopPosX() {
-        return leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosX(float leftTopPosX) {
-        this.leftTopPosX = leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosY() {
-        return leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosY(float leftTopPosY) {
-        this.leftTopPosY = leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getWidth() {
-        return width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getHeight() {
-        return height;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -148,25 +99,5 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
     @Override
     public void setColorScale(Vector4fc colorScale) {
         this.colorScale.set(colorScale);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>rotateRadius</code>.</p>
-     */
-    @Override
-    public float getRotateRadius() {
-        return rotateRadius;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>rotateRadius</code>.</p>
-     */
-    @Override
-    public void setRotateRadius(float rotateRadius) {
-        this.rotateRadius = rotateRadius;
     }
 }
