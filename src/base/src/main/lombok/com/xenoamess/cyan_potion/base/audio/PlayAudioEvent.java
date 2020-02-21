@@ -30,6 +30,9 @@ import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.MainThreadEvent;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.joml.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class PlayAudioEvent implements MainThreadEvent {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -67,6 +71,8 @@ public class PlayAudioEvent implements MainThreadEvent {
      */
     public static final PlayAudioEvent EMPTY = new PlayAudioEvent.EmptyPlayAudioEvent();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private AudioManager audioManager;
     /**
      * the WaveData that will be played.
@@ -197,185 +203,5 @@ public class PlayAudioEvent implements MainThreadEvent {
         usedSource.setPlayOverEvent(this.getPlayOverEvent());
         usedSource.play();
         return null;
-    }
-
-    /**
-     * <p>Getter for the field <code>source</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.Source} object.
-     */
-    public Source getSource() {
-        return source;
-    }
-
-    /**
-     * <p>Getter for the field <code>waveData</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.WaveData} object.
-     */
-    public WaveData getWaveData() {
-        return waveData;
-    }
-
-    /**
-     * <p>Getter for the field <code>volume</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getVolume() {
-        return volume;
-    }
-
-    /**
-     * <p>Setter for the field <code>volume</code>.</p>
-     *
-     * @param volume a float.
-     */
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-
-    /**
-     * <p>Getter for the field <code>pitch</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getPitch() {
-        return pitch;
-    }
-
-    /**
-     * <p>Setter for the field <code>pitch</code>.</p>
-     *
-     * @param pitch a float.
-     */
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
-
-    /**
-     * <p>Getter for the field <code>position</code>.</p>
-     *
-     * @return a {@link org.joml.Vector3f} object.
-     */
-    public Vector3f getPosition() {
-        return position;
-    }
-
-    /**
-     * <p>Setter for the field <code>position</code>.</p>
-     *
-     * @param position a {@link org.joml.Vector3f} object.
-     */
-    public void setPosition(Vector3f position) {
-        this.position = position;
-    }
-
-    /**
-     * <p>Getter for the field <code>velocity</code>.</p>
-     *
-     * @return a {@link org.joml.Vector3f} object.
-     */
-    public Vector3f getVelocity() {
-        return velocity;
-    }
-
-    /**
-     * <p>Setter for the field <code>velocity</code>.</p>
-     *
-     * @param velocity a {@link org.joml.Vector3f} object.
-     */
-    public void setVelocity(Vector3f velocity) {
-        this.velocity = velocity;
-    }
-
-    /**
-     * <p>isRelative.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isRelative() {
-        return relative;
-    }
-
-    /**
-     * <p>Setter for the field <code>relative</code>.</p>
-     *
-     * @param relative a boolean.
-     */
-    public void setRelative(boolean relative) {
-        this.relative = relative;
-    }
-
-    /**
-     * <p>Getter for the field <code>rollOffFactor</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getRollOffFactor() {
-        return rollOffFactor;
-    }
-
-    /**
-     * <p>Setter for the field <code>rollOffFactor</code>.</p>
-     *
-     * @param rollOffFactor a float.
-     */
-    public void setRollOffFactor(float rollOffFactor) {
-        this.rollOffFactor = rollOffFactor;
-    }
-
-    /**
-     * <p>isLooping.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isLooping() {
-        return looping;
-    }
-
-    /**
-     * <p>Setter for the field <code>looping</code>.</p>
-     *
-     * @param looping a boolean.
-     */
-    public void setLooping(boolean looping) {
-        this.looping = looping;
-    }
-
-    /**
-     * <p>Getter for the field <code>playOverEvent</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     */
-    public Event getPlayOverEvent() {
-        return playOverEvent;
-    }
-
-    /**
-     * <p>Setter for the field <code>playOverEvent</code>.</p>
-     *
-     * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     */
-    public void setPlayOverEvent(Event playOverEvent) {
-        this.playOverEvent = playOverEvent;
-    }
-
-    /**
-     * <p>Getter for the field <code>audioManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.audio.AudioManager} object.
-     */
-    public AudioManager getAudioManager() {
-        return audioManager;
-    }
-
-    /**
-     * <p>Setter for the field <code>audioManager</code>.</p>
-     *
-     * @param audioManager a {@link com.xenoamess.cyan_potion.base.audio.AudioManager} object.
-     */
-    public void setAudioManager(AudioManager audioManager) {
-        this.audioManager = audioManager;
     }
 }
