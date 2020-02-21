@@ -30,6 +30,7 @@ import com.xenoamess.commonx.java.util.Arraysx;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.*;
 import org.joml.Vector3f;
 import org.lwjgl.openal.*;
 import org.lwjgl.system.MemoryUtil;
@@ -53,6 +54,8 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * @see #useSource()
  * @see #useSource(WaveData)
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class AudioManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -69,27 +72,38 @@ public class AudioManager extends SubManager {
      * It is really quite boring and can be done in a more elegant way.
      * So I'm just wondering if we shall delete it?
      */
+    @Getter(AccessLevel.PRIVATE)
     private final Map<String, Source> specialSources = new ConcurrentHashMap<>();
 
     /**
      * Unused sources.
      */
+    @Getter(AccessLevel.PRIVATE)
     private final Set<Source> unusedSources = ConcurrentHashMap.newKeySet();
     /**
      * Used sources.
      */
+    @Getter(AccessLevel.PRIVATE)
     private final Set<Source> usedSources = ConcurrentHashMap.newKeySet();
 
+    @Getter
+    @Setter
     private long openalDevice = -1L;
+    @Getter
+    @Setter
     private long openalContext = -1L;
+
     /**
      * Position of the listener.
      */
+    @Getter
     private Vector3f listenerPosition = null;
+
 
     /**
      * Velocity of the listener.
      */
+    @Getter
     private Vector3f listenerVelocity = null;
 
     /**
@@ -414,86 +428,5 @@ public class AudioManager extends SubManager {
         this.listenerVelocity = new Vector3f(listenerVelocity);
         AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x,
                 this.listenerVelocity.y, this.listenerVelocity.z);
-    }
-
-    /**
-     * <p>Getter for the field <code>specialSources</code>.</p>
-     *
-     * @return return
-     */
-    private Map<String, Source> getSpecialSources() {
-        return specialSources;
-    }
-
-    /**
-     * <p>Getter for the field <code>unusedSources</code>.</p>
-     *
-     * @return return
-     */
-    private Set<Source> getUnusedSources() {
-        return unusedSources;
-    }
-
-    /**
-     * <p>Getter for the field <code>usedSources</code>.</p>
-     *
-     * @return return
-     */
-    private Set<Source> getUsedSources() {
-        return usedSources;
-    }
-
-    /**
-     * <p>Getter for the field <code>openalDevice</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getOpenalDevice() {
-        return openalDevice;
-    }
-
-    /**
-     * <p>Setter for the field <code>openalDevice</code>.</p>
-     *
-     * @param openalDevice a long.
-     */
-    public void setOpenalDevice(long openalDevice) {
-        this.openalDevice = openalDevice;
-    }
-
-    /**
-     * <p>Getter for the field <code>openalContext</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getOpenalContext() {
-        return openalContext;
-    }
-
-    /**
-     * <p>Setter for the field <code>openalContext</code>.</p>
-     *
-     * @param openalContext a long.
-     */
-    public void setOpenalContext(long openalContext) {
-        this.openalContext = openalContext;
-    }
-
-    /**
-     * <p>Getter for the field <code>listenerPosition</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getListenerPosition() {
-        return listenerPosition;
-    }
-
-    /**
-     * <p>Getter for the field <code>listenerVelocity</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getListenerVelocity() {
-        return listenerVelocity;
     }
 }
