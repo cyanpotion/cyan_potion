@@ -32,6 +32,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,6 +113,8 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
  *
  * @see RuntimeVariableStruct
  */
+@EqualsAndHashCode
+@ToString
 @JsonSerialize(using = SaveFileContentSerializer.class)
 @JsonDeserialize(using = SaveFileContentDeserializer.class)
 class SaveFileContent {
@@ -135,11 +141,15 @@ class SaveFileContent {
     /**
      * saveTime means what time does it saved.
      */
+    @Getter
+    @Setter
     private long saveTime;
 
     /**
      * runtimeVariableStructList means what to save.
      */
+    @Getter
+    @Setter
     private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();
 
     /**
@@ -152,37 +162,10 @@ class SaveFileContent {
     /**
      * <p>Getter for the field <code>runtimeVariableStructList</code>.</p>
      *
-     * @return a {@link java.util.List} object.
-     */
-    public List<RuntimeVariableStruct> getRuntimeVariableStructList() {
-        return runtimeVariableStructList;
-    }
-
-    /**
-     * <p>Getter for the field <code>runtimeVariableStructList</code>.</p>
-     *
      * @param runtimeVariableStructList a {@link java.util.List} object.
      */
     public void setRuntimeVariableStructList(List<RuntimeVariableStruct> runtimeVariableStructList) {
         this.runtimeVariableStructList.clear();
         this.runtimeVariableStructList.addAll(runtimeVariableStructList);
-    }
-
-    /**
-     * <p>Getter for the field <code>saveTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getSaveTime() {
-        return saveTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>saveTime</code>.</p>
-     *
-     * @param saveTime a long.
-     */
-    public void setSaveTime(long saveTime) {
-        this.saveTime = saveTime;
     }
 }
