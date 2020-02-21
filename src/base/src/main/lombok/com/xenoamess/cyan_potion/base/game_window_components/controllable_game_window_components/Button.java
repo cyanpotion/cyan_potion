@@ -43,7 +43,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0-SNAPSHOT
+ * @version 0.160.0
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

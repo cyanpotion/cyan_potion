@@ -37,7 +37,7 @@ import java.util.Set;
  * that is done
  *
  * @author XenoAmess
- * @version 0.160.0-SNAPSHOT
+ * @version 0.160.0
  */
 @Data
 public class EventsEvent implements Event {

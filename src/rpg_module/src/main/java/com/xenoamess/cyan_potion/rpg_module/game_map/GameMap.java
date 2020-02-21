@@ -49,7 +49,7 @@ import java.util.TreeMap;
  * <p>GameMap class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0-SNAPSHOT
+ * @version 0.160.0
  */
 public class GameMap {
     @JsonIgnore
