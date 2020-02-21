@@ -25,8 +25,7 @@
 package com.xenoamess.cyan_potion.base.runtime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.xenoamess.cyan_potion.base.DataCenter;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @version 0.160.0-SNAPSHOT
  * @see SaveFileObject
  */
+@Data
 public class SaveFileObjectStatus {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -71,89 +71,4 @@ public class SaveFileObjectStatus {
         }
     }
 
-    /**
-     * <p>Getter for the field <code>lastSaveTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLastSaveTime() {
-        return lastSaveTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastSaveTime</code>.</p>
-     *
-     * @param lastSaveTime a long.
-     */
-    public void setLastSaveTime(long lastSaveTime) {
-        this.lastSaveTime = lastSaveTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>lastLoadTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLastLoadTime() {
-        return lastLoadTime;
-    }
-
-    /**
-     * <p>Setter for the field <code>lastLoadTime</code>.</p>
-     *
-     * @param lastLoadTime a long.
-     */
-    public void setLastLoadTime(long lastLoadTime) {
-        this.lastLoadTime = lastLoadTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>nowIndex</code>.</p>
-     *
-     * @return nowIndex
-     */
-    public int getNowIndex() {
-        return nowIndex;
-    }
-
-    /**
-     * <p>Setter for the field <code>nowIndex</code>.</p>
-     *
-     * @param nowIndex nowIndex
-     */
-    public void setNowIndex(int nowIndex) {
-        this.nowIndex = nowIndex;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        String result = "{}";
-        try {
-            result = DataCenter.getObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("SaveFileObjectStatus cannot toString() : version={}, lastLoadTime={}, lastSaveTime={}", this.version, this.lastLoadTime, this.lastSaveTime, e);
-        }
-        return result;
-    }
-
-    /**
-     * <p>Getter for the field <code>version</code>.</p>
-     *
-     * @return version
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * <p>Setter for the field <code>version</code>.</p>
-     *
-     * @param version version
-     */
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }
