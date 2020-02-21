@@ -25,11 +25,13 @@
 package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,12 +41,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class GameWindowComponentTreeNode implements Closeable {
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final GameWindowComponentTree gameWindowComponentTree;
-
+    @Getter
     private final GameWindowComponentTreeNode parent;
-    private final int depth;
+    @Getter
     private final AbstractGameWindowComponent gameWindowComponent;
+    @Getter
+    private final int depth;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final List<GameWindowComponentTreeNode> children =
             new ArrayList<>();
 
@@ -81,7 +93,7 @@ public class GameWindowComponentTreeNode implements Closeable {
      */
     @Override
     public void close() {
-        if (!this.getAlive()) {
+        if (!this.isAlive()) {
             return;
         }
         this.setAlive(false);
@@ -255,33 +267,6 @@ public class GameWindowComponentTreeNode implements Closeable {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof GameWindowComponentTreeNode)) {
-            return false;
-        }
-        GameWindowComponentTreeNode that = (GameWindowComponentTreeNode) o;
-        return getDepth() == that.getDepth() &&
-                Objects.equals(getGameWindowComponentTree(), that.getGameWindowComponentTree()) &&
-                Objects.equals(getParent(), that.getParent()) &&
-                Objects.equals(getGameWindowComponent(), that.getGameWindowComponent());
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindowComponent</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractGameWindowComponent getGameWindowComponent() {
-        return this.gameWindowComponent;
-    }
-
-    /**
      * <p>childrenCopy.</p>
      *
      * @return return
@@ -317,38 +302,11 @@ public class GameWindowComponentTreeNode implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>gameWindowComponentTree</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTree getGameWindowComponentTree() {
-        return gameWindowComponentTree;
-    }
-
-    /**
-     * <p>Getter for the field <code>parent</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTreeNode getParent() {
-        return parent;
-    }
-
-    /**
-     * <p>Getter for the field <code>depth</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getDepth() {
-        return depth;
-    }
-
-    /**
      * <p>Getter for the field <code>alive</code>.</p>
      *
      * @return a boolean.
      */
-    public boolean getAlive() {
+    public boolean isAlive() {
         return alive.get();
     }
 
