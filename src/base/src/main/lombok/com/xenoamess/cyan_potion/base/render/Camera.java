@@ -25,6 +25,10 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import com.xenoamess.cyan_potion.base.areas.AbstractMutablePoint;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>Camera class.</p>
@@ -32,8 +36,14 @@ import com.xenoamess.cyan_potion.base.areas.AbstractMutablePoint;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Camera implements AbstractMutablePoint {
+    @Getter
+    @Setter
     private float posX;
+    @Getter
+    @Setter
     private float posY;
 
     /**
@@ -45,37 +55,5 @@ public class Camera implements AbstractMutablePoint {
     public Camera(float initX, float initY) {
         this.setPosX(initX);
         this.setPosY(initY);
-    }
-
-    /**
-     * <p>Getter for the field <code>posX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getPosX() {
-        return posX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setPosX(float posX) {
-        this.posX = posX;
-    }
-
-    /**
-     * <p>Getter for the field <code>posY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getPosY() {
-        return posY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setPosY(float posY) {
-        this.posY = posY;
     }
 }
