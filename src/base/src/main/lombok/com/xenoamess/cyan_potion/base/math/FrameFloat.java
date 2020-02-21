@@ -25,6 +25,10 @@
 package com.xenoamess.cyan_potion.base.math;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * FrameFloat
@@ -35,8 +39,16 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+
+@EqualsAndHashCode
+@ToString
 public class FrameFloat {
+    @Getter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private final GameManager gameManager;
+    @Getter
+    @Setter
     private float valueFor1Second;
 
     /**
@@ -60,24 +72,6 @@ public class FrameFloat {
     }
 
     /**
-     * <p>Getter for the field <code>valueFor1Second</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getValueFor1Second() {
-        return valueFor1Second;
-    }
-
-    /**
-     * <p>Setter for the field <code>valueFor1Second</code>.</p>
-     *
-     * @param valueFor1Second a float.
-     */
-    public void setValueFor1Second(float valueFor1Second) {
-        this.valueFor1Second = valueFor1Second;
-    }
-
-    /**
      * <p>getValue.</p>
      *
      * @return a float.
@@ -85,15 +79,4 @@ public class FrameFloat {
     public float getValue() {
         return (float) this.getGameManager().getTimeToLastUpdate() * this.valueFor1Second;
     }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
-
-
 }
