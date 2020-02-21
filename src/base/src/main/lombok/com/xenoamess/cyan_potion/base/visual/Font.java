@@ -37,6 +37,7 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
+import lombok.*;
 import org.apache.commons.vfs2.FileObject;
 import org.joml.Vector4fc;
 import org.lwjgl.stb.STBTTAlignedQuad;
@@ -67,6 +68,8 @@ import static org.lwjgl.stb.STBTruetype.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Font extends AbstractResource {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -113,16 +116,33 @@ public class Font extends AbstractResource {
      */
     public static final float SCALE = 36.0f;
 
+    @Getter
     private final IntArrayList fontTextures = new IntArrayList();
+
+    @Getter
     private final List<STBTTPackedchar.Buffer> charDatas = new ArrayList<>();
 
+    @Getter
+    @Setter
     @AsFinalField
     private static Font defaultFont;
-
+    @Getter(onMethod_ = {@Synchronized})
+    @Setter(onMethod_ = {@Synchronized})
     private static Font currentFont;
 
-
+    @Getter
+    @Setter
     private GameWindow gameWindow;
+
+    @Getter
+    @Setter
+    private final STBTTAlignedQuad q = STBTTAlignedQuad.malloc();
+    @Getter
+    @Setter
+    private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
+    @Getter
+    @Setter
+    private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);
 
     /**
      * !!!NOTICE!!!
@@ -270,7 +290,7 @@ public class Font extends AbstractResource {
     public void bind(int sampler) {
         super.bind(sampler);
         Shader.unbind();
-        gameWindow.bindGlViewportToFullWindow();
+        getGameWindow().bindGlViewportToFullWindow();
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(
@@ -309,10 +329,6 @@ public class Font extends AbstractResource {
         glTexCoord2f(s0, t1);
         glVertex2f(x0, y1);
     }
-
-    private final STBTTAlignedQuad q = STBTTAlignedQuad.malloc();
-    private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
-    private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);
 
     /**
      * <p>drawText.</p>
@@ -498,110 +514,11 @@ public class Font extends AbstractResource {
     }
 
     /**
-     * <p>Getter for the field <code>defaultFont</code>.</p>
-     *
-     * @return return
-     */
-    public static Font getDefaultFont() {
-        return defaultFont;
-    }
-
-    /**
      * <p>Setter for the field <code>defaultFont</code>.</p>
      *
      * @param defaultFont defaultFont
      */
     public static void setDefaultFont(Font defaultFont) {
         asFinalFieldSet(Font.class, "defaultFont", defaultFont);
-    }
-
-    /**
-     * <p>Getter for the field <code>currentFont</code>.</p>
-     *
-     * @return return
-     */
-    public static synchronized Font getCurrentFont() {
-        return currentFont;
-    }
-
-    /**
-     * <p>Setter for the field <code>currentFont</code>.</p>
-     *
-     * @param currentFont currentFont
-     */
-    public static synchronized void setCurrentFont(Font currentFont) {
-        Font.currentFont = currentFont;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindow</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameWindow</code>.</p>
-     *
-     * @param gameWindow gameWindow
-     */
-    public void setGameWindow(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
-    }
-
-    /**
-     * <p>Setter for the field <code>maxCharHeight</code>.</p>
-     *
-     * @param maxCharHeight a float.
-     */
-    public void setMaxCharHeight(float maxCharHeight) {
-        this.maxCharHeight = maxCharHeight;
-    }
-
-    /**
-     * <p>Getter for the field <code>q</code>.</p>
-     *
-     * @return return
-     */
-    public STBTTAlignedQuad getQ() {
-        return q;
-    }
-
-    /**
-     * <p>Getter for the field <code>xb</code>.</p>
-     *
-     * @return return
-     */
-    public FloatBuffer getXb() {
-        return xb;
-    }
-
-    /**
-     * <p>Getter for the field <code>yb</code>.</p>
-     *
-     * @return return
-     */
-    public FloatBuffer getYb() {
-        return yb;
-    }
-
-    /**
-     * <p>Getter for the field <code>fontTextures</code>.</p>
-     *
-     * @return a {@link com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList} object.
-     */
-    public IntArrayList getFontTextures() {
-        return fontTextures;
-    }
-
-    /**
-     * <p>Getter for the field <code>charDatas</code>.</p>
-     *
-     * @return a {@link java.util.List} object.
-     */
-    public List<STBTTPackedchar.Buffer> getCharDatas() {
-        return charDatas;
     }
 }
