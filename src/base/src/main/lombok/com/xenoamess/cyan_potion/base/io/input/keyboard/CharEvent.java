@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.Data;
 import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class CharEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -74,7 +76,10 @@ public class CharEvent implements Event {
     private final long window;
     private final int codepoint;
 
-
+    /**
+     * id of this CharEvent.
+     * id of each CharEvent shall be unique, so can be used to distinct CharEvent
+     */
     private final long id;
 
     /**
@@ -93,17 +98,6 @@ public class CharEvent implements Event {
     }
 
     /**
-     * id of this CharEvent.
-     * id of each CharEvent shall be unique, so can be used to distinct CharEvent
-     *
-     * @return a long.
-     * @see CharEvent#CharEvent(long, int)
-     */
-    public long getId() {
-        return this.id;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -113,35 +107,5 @@ public class CharEvent implements Event {
             LOGGER.debug("{}", this);
         }
         return gameManager.getGameWindowComponentTree().process(this);
-    }
-
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>codepoint</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getCodepoint() {
-        return codepoint;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("CharEvent:{codepoint:");
-        stringBuilder.append((char) this.getCodepoint());
-        stringBuilder.append("}");
-        return stringBuilder.toString();
     }
 }
