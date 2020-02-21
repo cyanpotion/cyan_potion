@@ -31,6 +31,10 @@ import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -51,11 +55,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 0.160.0-SNAPSHOT
  * @see RadioButtonGroup
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class RadioButton extends Button {
     private final AtomicBoolean selected = new AtomicBoolean(false);
+    @Getter
     private final RadioButtonGroup radioButtonGroup;
-
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private Bindable bindableSelected;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private Bindable bindableDeselected;
 
     private final Vector4f textColorSelected = new Vector4f(this.getTextColor());
@@ -235,53 +249,6 @@ public class RadioButton extends Button {
     public void close() {
         super.close();
         this.deselect();
-    }
-
-    //-----getters and setters-----
-
-    /**
-     * <p>Getter for the field <code>radioButtonSet</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
-     */
-    public RadioButtonGroup getRadioButtonGroup() {
-        return radioButtonGroup;
-    }
-
-    /**
-     * <p>Getter for the field <code>bindableSelected</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     */
-    public Bindable getBindableSelected() {
-        return bindableSelected;
-    }
-
-    /**
-     * <p>Setter for the field <code>bindableSelected</code>.</p>
-     *
-     * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
-     */
-    public void setBindableSelected(Texture bindableSelected) {
-        this.bindableSelected = bindableSelected;
-    }
-
-    /**
-     * <p>Getter for the field <code>bindableDeselected</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
-     */
-    public Bindable getBindableDeselected() {
-        return bindableDeselected;
-    }
-
-    /**
-     * <p>Setter for the field <code>bindableDeselected</code>.</p>
-     *
-     * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
-     */
-    public void setBindableDeselected(Texture bindableDeselected) {
-        this.bindableDeselected = bindableDeselected;
     }
 
     /**

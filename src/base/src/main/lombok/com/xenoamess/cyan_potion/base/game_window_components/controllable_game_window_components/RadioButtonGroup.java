@@ -54,6 +54,8 @@ public class RadioButtonGroup implements Closeable {
      * usually just use 1 is enough.
      */
     private final AtomicInteger selectLimit = new AtomicInteger();
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @Getter
     private final ConcurrentLinkedDeque<RadioButton> selectedRadioButtons = new ConcurrentLinkedDeque<>();
 
