@@ -29,10 +29,13 @@ import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
-import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.impl.StandardFileSystemManager;
 import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
@@ -59,6 +62,8 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class ResourceManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -66,6 +71,7 @@ public class ResourceManager extends SubManager {
 
     private long maxTextureSize = 0;
 
+    @Getter
     private static final StandardFileSystemManager fileSystemManager = loadFileSystemManager();
 
     private static StandardFileSystemManager loadFileSystemManager() {
@@ -170,15 +176,6 @@ public class ResourceManager extends SubManager {
     }
 
     /**
-     * <p>Setter for the field <code>maxTextureSize</code>.</p>
-     *
-     * @param maxTextureSize a long.
-     */
-    public void setMaxTextureSize(long maxTextureSize) {
-        this.maxTextureSize = maxTextureSize;
-    }
-
-    /**
      * Constant <code>TOTAL_MEMORY_SIZE_LIMIT_POINT=8L * 1024 * 1024 * 1024</code>
      */
     public static final long TOTAL_MEMORY_SIZE_LIMIT_POINT =
@@ -194,10 +191,16 @@ public class ResourceManager extends SubManager {
     public static final long TOTAL_MEMORY_SIZE_DIST_POINT =
             2L * 1024 * 1024 * 1024;
 
+    @Getter
     private final GameManager gameManager;
+    @Getter
+    @Setter
     private long totalMemorySize = 0;
+    @Getter
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
+    @Getter
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
+    @Getter
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
     /**
@@ -597,53 +600,5 @@ public class ResourceManager extends SubManager {
         }
         this.getInMemoryResources().clear();
         this.getInMemoryResources().addAll(newInMemoryResources);
-    }
-
-
-    //getters and setters
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return return
-     */
-    public GameManager getGameManager() {
-        return gameManager;
-    }
-
-    /**
-     * <p>Getter for the field <code>totalMemorySize</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getTotalMemorySize() {
-        return totalMemorySize;
-    }
-
-    /**
-     * <p>Setter for the field <code>totalMemorySize</code>.</p>
-     *
-     * @param totalMemorySize a long.
-     */
-    public void setTotalMemorySize(long totalMemorySize) {
-        this.totalMemorySize = totalMemorySize;
-    }
-
-    /**
-     * <p>Getter for the field <code>inMemoryResources</code>.</p>
-     *
-     * @return return
-     */
-    public ArrayList<AbstractResource> getInMemoryResources() {
-        return inMemoryResources;
-    }
-
-    /**
-     * <p>Getter for the field <code>fileSystemManager</code>.</p>
-     *
-     * @return a {@link org.apache.commons.vfs2.FileSystemManager} object.
-     */
-    public static FileSystemManager getFileSystemManager() {
-        return fileSystemManager;
     }
 }
