@@ -24,13 +24,21 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * <p>Abstract Drawer class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+
+@EqualsAndHashCode
+@ToString
 public abstract class Drawer<T> implements DrawerInterface<T> {
+    @Getter
     private final DrawerInterface<? super T> parentDrawer;
 
     /**
@@ -75,12 +83,4 @@ public abstract class Drawer<T> implements DrawerInterface<T> {
      */
     public abstract boolean thisDraw(T t);
 
-    /**
-     * <p>Getter for the field <code>parentDrawer</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
-     */
-    public DrawerInterface<? super T> getParentDrawer() {
-        return parentDrawer;
-    }
 }

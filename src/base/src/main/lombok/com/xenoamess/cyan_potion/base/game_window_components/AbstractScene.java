@@ -28,6 +28,10 @@ import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Camera;
 import com.xenoamess.cyan_potion.base.render.Model;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -37,8 +41,14 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public abstract class AbstractScene extends AbstractGameWindowComponent {
+    @Getter
+    @Setter
     private Camera camera = new Camera(0, 0);
+    @Getter
+    @Setter
     private float scale;
 
     /**
@@ -283,39 +293,4 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
         return (absolutePosX - camera.getPosY()) * scale + this.getGameWindow().getLogicWindowHeight() / 2F;
     }
 
-    /**
-     * <p>Getter for the field <code>camera</code>.</p>
-     *
-     * @return return
-     */
-    public Camera getCamera() {
-        return camera;
-    }
-
-    /**
-     * <p>Setter for the field <code>camera</code>.</p>
-     *
-     * @param camera camera
-     */
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    /**
-     * <p>Getter for the field <code>scale</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getScale() {
-        return scale;
-    }
-
-    /**
-     * <p>Setter for the field <code>scale</code>.</p>
-     *
-     * @param scale a float.
-     */
-    public void setScale(float scale) {
-        this.scale = scale;
-    }
 }

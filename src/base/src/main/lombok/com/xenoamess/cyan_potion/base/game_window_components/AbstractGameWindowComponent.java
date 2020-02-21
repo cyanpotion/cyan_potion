@@ -35,6 +35,7 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.RemoteCallEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,22 +60,45 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 0.160.0-SNAPSHOT
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
-
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final GameWindow gameWindow;
     private final AtomicBoolean alive = new AtomicBoolean(true);
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private GameWindowComponentTreeNode gameWindowComponentTreeNode;
 
+    @Getter
+    @Setter
     private float leftTopPosX = Float.NaN;
+    @Getter
+    @Setter
     private float leftTopPosY = Float.NaN;
+
+    @Getter
+    @Setter
     private float width = Float.NaN;
+
+    @Getter
+    @Setter
     private float height = Float.NaN;
 
+    @Getter
+    @Setter
     private UpdaterInterface updater = DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT;
 
+    @Getter
+    @Setter
     private DrawerInterface drawer = DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT;
 
     /**
@@ -131,6 +155,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @see AbstractGameWindowComponent#registerProcessor(String, EventProcessor)
      * @see AbstractGameWindowComponent#registerProcessor(Class, EventProcessor)
      */
+    @Getter(AccessLevel.PROTECTED)
     private final Map<Class<? extends Event>, EventProcessor<? extends Event>> eventClassToProcessorMap = new ConcurrentHashMap<>();
 
 
@@ -352,19 +377,6 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     }
 
     /**
-     * don't use it if not necessary.
-     * just use eventClassToProcessorMapPut , eventClassToProcessorMapGet , eventClassToProcessorMapContainsKey if you can.
-     *
-     * @return this.eventClassToProcessorMap
-     * @see AbstractGameWindowComponent#eventClassToProcessorMapPut
-     * @see AbstractGameWindowComponent#eventClassToProcessorMapGet
-     * @see AbstractGameWindowComponent#eventClassToProcessorMapContainsKey
-     */
-    protected Map<Class<? extends Event>, EventProcessor<? extends Event>> getEventClassToProcessorMap() {
-        return eventClassToProcessorMap;
-    }
-
-    /**
      * <p>eventClassToProcessorMapPut.</p>
      *
      * @param eventClass     event class
@@ -454,8 +466,6 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
 
 //-----shortcuts ends-----
 
-//-----getters and setters starts-----
-
     /**
      * <p>Getter for the field <code>alive</code>.</p>
      *
@@ -473,141 +483,4 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     public void setAlive(boolean alive) {
         this.alive.set(alive);
     }
-
-    /**
-     * <p>Getter for the field <code>leftTopPosX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLeftTopPosX() {
-        return leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>leftTopPosX</code>.</p>
-     */
-    public void setLeftTopPosX(float leftTopPosX) {
-        this.leftTopPosX = leftTopPosX;
-    }
-
-    /**
-     * <p>Getter for the field <code>leftTopPosY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getLeftTopPosY() {
-        return leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>leftTopPosY</code>.</p>
-     */
-    public void setLeftTopPosY(float leftTopPosY) {
-        this.leftTopPosY = leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getWidth() {
-        return width;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>width</code>.</p>
-     */
-    @Override
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getHeight() {
-        return height;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>height</code>.</p>
-     */
-    @Override
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    /**
-     * <p>Getter for the field <code>updater</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
-     */
-    public UpdaterInterface getUpdater() {
-        return updater;
-    }
-
-    /**
-     * <p>Setter for the field <code>updater</code>.</p>
-     *
-     * @param updater a {@link com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface} object.
-     */
-    public void setUpdater(UpdaterInterface updater) {
-        this.updater = updater;
-    }
-
-    /**
-     * <p>Getter for the field <code>drawer</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
-     */
-    public DrawerInterface getDrawer() {
-        return drawer;
-    }
-
-    /**
-     * <p>Setter for the field <code>drawer</code>.</p>
-     *
-     * @param drawer a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
-     */
-    public void setDrawer(DrawerInterface drawer) {
-        this.drawer = drawer;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindow</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameWindowComponentTreeNode</code>.</p>
-     *
-     * @return return
-     */
-    public GameWindowComponentTreeNode getGameWindowComponentTreeNode() {
-        return gameWindowComponentTreeNode;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameWindowComponentTreeNode</code>.</p>
-     *
-     * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
-     */
-    public void setGameWindowComponentTreeNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        this.gameWindowComponentTreeNode = gameWindowComponentTreeNode;
-    }
-
-    //-----getters and setters ends-----
 }

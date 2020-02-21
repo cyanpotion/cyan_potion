@@ -24,12 +24,17 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * <p>Abstract DrawerBuilder class.</p>
  *
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class DrawerBuilder<T> {
     /**
      * <p>build.</p>
