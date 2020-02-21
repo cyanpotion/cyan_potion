@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.runtime;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.SubManager;
 
 /**
  * SaveManager
@@ -33,7 +34,7 @@ import com.xenoamess.cyan_potion.base.GameManager;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-public class SaveManager {
+public class SaveManager extends SubManager {
     /**
      * Constant <code>DEFAULT_SAVE_FILE_PATH="System.getProperty(user.home) + /AppData/Roaming/cyan_potion_saves/"</code>
      */
@@ -41,7 +42,7 @@ public class SaveManager {
 
     private String currentSaveFilePath = DEFAULT_SAVE_FILE_PATH;
 
-    private final GameManager gameManager;
+    private SaveFileObject currentSaveFileObject;
 
     /**
      * <p>Constructor for SaveManager.</p>
@@ -49,7 +50,7 @@ public class SaveManager {
      * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
      */
     public SaveManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
     }
 
     /**
@@ -63,7 +64,6 @@ public class SaveManager {
         this.currentSaveFilePath = currentSaveFilePath;
     }
 
-    private SaveFileObject currentSaveFileObject;
 
     /**
      * get SaveFileObject
@@ -82,8 +82,19 @@ public class SaveManager {
      * some games only have 1 save slot,
      * and this mechanism can make their life easier.
      */
+    @Override
     public void init() {
         this.pickCurrentSaveFileObject(0);
+    }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
+
+    @Override
+    public void close() {
+        //do nothing
     }
 
     /**
@@ -121,15 +132,6 @@ public class SaveManager {
      */
     protected void setCurrentSaveFileObject(SaveFileObject currentSaveFileObject) {
         this.currentSaveFileObject = currentSaveFileObject;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameManager</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     */
-    public GameManager getGameManager() {
-        return gameManager;
     }
 
     /**
