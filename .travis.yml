@@ -31,16 +31,16 @@ matrix:
     - jdk: openjdk9
     - jdk: openjdk-ea
 script:
-  - "./mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "./mvnw clean install -U -Dmaven.javadoc.skip=false"
   - "cd ./src/"
   - "cd ./base/"
-  - "../../mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean install -U -Dmaven.javadoc.skip=false"
   - "cd ../"
   - "cd ./coordinate"
-  - "../../mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean install -U -Dmaven.javadoc.skip=false"
   - "cd ../"
   - "cd ./rpg_module"
-  - "../../mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean install -U -Dmaven.javadoc.skip=false"
   - "cd ../"
   - "cd ./demo"
-  - "../../mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "../../mvnw clean install -U -Dmaven.javadoc.skip=false"
