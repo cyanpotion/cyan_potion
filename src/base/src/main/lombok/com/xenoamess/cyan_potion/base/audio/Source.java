@@ -26,6 +26,10 @@ package com.xenoamess.cyan_potion.base.audio;
 
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.events.Event;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 
@@ -39,22 +43,44 @@ import static org.lwjgl.openal.AL10.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class Source implements Closeable {
+    @Getter
+    @Setter
     private int alSourceInt = -1;
+    @Getter
+    @Setter
     private WaveData currentWaveData = null;
 
     /**
      * an event that will be inserted into the eventList (by source)
      * when this WaveData is played over.
      */
+    @Getter
+    @Setter
     private Event playOverEvent = null;
 
+    @Getter
+    @Setter
     private float volume;
+    @Getter
+    @Setter
     private float pitch;
+    @Getter
+    @Setter
     private Vector3f position;
+    @Getter
+    @Setter
     private Vector3f velocity;
+    @Getter
+    @Setter
     private boolean relative;
+    @Getter
+    @Setter
     private float rollOffFactor;
+    @Getter
+    @Setter
     private boolean looping;
 
     /**
@@ -95,15 +121,6 @@ public class Source implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>relative</code>.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isRelative() {
-        return this.relative;
-    }
-
-    /**
      * <p>Setter for the field <code>relative</code>.</p>
      *
      * @param relative a boolean.
@@ -115,16 +132,6 @@ public class Source implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>rollOffFactor</code>.</p>
-     *
-     * @return a float.
-     */
-    @MainThreadOnly
-    public float getRollOffFactor() {
-        return this.rollOffFactor;
-    }
-
-    /**
      * <p>Setter for the field <code>rollOffFactor</code>.</p>
      *
      * @param rollOffFactor a float.
@@ -133,16 +140,6 @@ public class Source implements Closeable {
     public void setRollOffFactor(float rollOffFactor) {
         this.rollOffFactor = rollOffFactor;
         alSourcef(this.getAlSourceInt(), AL10.AL_ROLLOFF_FACTOR, rollOffFactor);
-    }
-
-
-    /**
-     * <p>Getter for the field <code>volume</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getVolume() {
-        return this.volume;
     }
 
     /**
@@ -157,15 +154,6 @@ public class Source implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>pitch</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getPitch() {
-        return this.pitch;
-    }
-
-    /**
      * <p>setPitch.</p>
      *
      * @param pitch a float.
@@ -174,15 +162,6 @@ public class Source implements Closeable {
     public void setPitch(float pitch) {
         this.pitch = pitch;
         AL10.alSourcef(this.getAlSourceInt(), AL10.AL_PITCH, this.pitch);
-    }
-
-    /**
-     * <p>Getter for the field <code>looping</code>.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isLooping() {
-        return this.looping;
     }
 
     /**
@@ -198,15 +177,6 @@ public class Source implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>position</code>.</p>
-     *
-     * @return a {@link org.joml.Vector3f} object.
-     */
-    public Vector3f getPosition() {
-        return this.position;
-    }
-
-    /**
      * <p>setPosition.</p>
      *
      * @param position position
@@ -216,15 +186,6 @@ public class Source implements Closeable {
         this.position = position;
         AL10.alSource3f(this.getAlSourceInt(), AL10.AL_POSITION,
                 this.position.x, this.position.y, this.position.z);
-    }
-
-    /**
-     * <p>Getter for the field <code>velocity</code>.</p>
-     *
-     * @return a {@link org.joml.Vector3f} object.
-     */
-    public Vector3f getVelocity() {
-        return velocity;
     }
 
     /**
@@ -301,24 +262,6 @@ public class Source implements Closeable {
     }
 
     /**
-     * <p>Getter for the field <code>playOverEvent</code>.</p>
-     *
-     * @return a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     */
-    public Event getPlayOverEvent() {
-        return playOverEvent;
-    }
-
-    /**
-     * <p>Setter for the field <code>playOverEvent</code>.</p>
-     *
-     * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
-     */
-    public void setPlayOverEvent(Event playOverEvent) {
-        this.playOverEvent = playOverEvent;
-    }
-
-    /**
      * <p>play.</p>
      */
     @MainThreadOnly
@@ -360,52 +303,8 @@ public class Source implements Closeable {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (!object.getClass().equals(this.getClass())) {
-            return false;
-        }
-        final Source source = (Source) object;
-        return this.getAlSourceInt() == source.getAlSourceInt() && this.getCurrentWaveData() == source.getCurrentWaveData();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int hashCode() {
         return this.getAlSourceInt();
     }
-
-    /**
-     * <p>Getter for the field <code>alSourceInt</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getAlSourceInt() {
-        return alSourceInt;
-    }
-
-    /**
-     * <p>Setter for the field <code>alSourceInt</code>.</p>
-     *
-     * @param alSourceInt a int.
-     */
-    public void setAlSourceInt(int alSourceInt) {
-        this.alSourceInt = alSourceInt;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>currentWaveData</code>.</p>
-     *
-     * @return return
-     */
-    public WaveData getCurrentWaveData() {
-        return currentWaveData;
-    }
-
 
 }

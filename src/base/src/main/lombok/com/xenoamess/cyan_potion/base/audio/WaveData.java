@@ -59,7 +59,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class WaveData extends AbstractResource {
     @JsonIgnore
