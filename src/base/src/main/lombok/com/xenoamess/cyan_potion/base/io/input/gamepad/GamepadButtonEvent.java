@@ -29,7 +29,9 @@ import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
-import com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import net.jcip.annotations.GuardedBy;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -43,6 +45,7 @@ import java.util.Set;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@Data
 public class GamepadButtonEvent implements Event {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -84,6 +87,8 @@ public class GamepadButtonEvent implements Event {
      * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
      */
     private final int action;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private final AbstractGamepadDevice gamepadDevice;
 
     /**
@@ -124,66 +129,4 @@ public class GamepadButtonEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
-    /**
-     * <p>Getter for the field <code>window</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getWindow() {
-        return window;
-    }
-
-    /**
-     * <p>Getter for the field <code>key</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getKey() {
-        return key;
-    }
-
-    /**
-     * <p>Getter for the field <code>action</code>.</p>
-     *
-     * @return action of the GamepadButtonEvent
-     * The action is one of
-     * {@link org.lwjgl.glfw.GLFW#GLFW_PRESS},
-     * {@link org.lwjgl.glfw.GLFW#GLFW_REPEAT},
-     * {@link org.lwjgl.glfw.GLFW#GLFW_RELEASE}
-     * <p>
-     * Notice that this is not included in original GLFW.
-     * I just use JXInput to deal with it, and I manage to force it to follow
-     * such rules.
-     * @see com.xenoamess.cyan_potion.base.io.input.key.Keymap
-     * @see GLFW
-     * @see <a href="https://www.glfw.org/docs/latest/input_guide.html#input_key">GLFW documents</a>
-     */
-    public int getAction() {
-        return action;
-    }
-
-    /**
-     * <p>Getter for the field <code>gamepadDevice</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractGamepadDevice getGamepadDevice() {
-        return gamepadDevice;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("GamepadButtonEvent:{key:");
-        stringBuilder.append(JamepadGamepadKeyEnum.getStringByValue(this.getKey()));
-        stringBuilder.append(",action:");
-        stringBuilder.append(KeyActionEnum.getStringByValue(this.getAction()));
-        stringBuilder.append(",gamepadDevice:");
-        stringBuilder.append(this.getGamepadDevice());
-        stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
 }
