@@ -34,6 +34,9 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -46,6 +49,8 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
             this.getGameWindow().getGameManager().getResourceManager().
@@ -56,8 +61,9 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
-
+    @Getter
     private final long lifeTime;
+    @Getter
     private final long dieTimeStamp;
 
 
@@ -178,23 +184,5 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
         this.logoPicture.setColorScale(1, colorScale, colorScale, 1);
         this.logoPicture.draw(getGameWindow());
         return true;
-    }
-
-    /**
-     * <p>Getter for the field <code>lifeTime</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getLifeTime() {
-        return lifeTime;
-    }
-
-    /**
-     * <p>Getter for the field <code>dieTimeStamp</code>.</p>
-     *
-     * @return a long.
-     */
-    public long getDieTimeStamp() {
-        return dieTimeStamp;
     }
 }
