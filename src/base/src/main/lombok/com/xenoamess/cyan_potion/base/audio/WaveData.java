@@ -34,6 +34,10 @@ import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeExcept
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.lwjgl.openal.AL10;
@@ -55,15 +59,20 @@ import static org.lwjgl.stb.STBVorbis.*;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class WaveData extends AbstractResource {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
-
+    @Getter
+    @Setter
     private int alBufferInt = -1;
-
+    @Getter
+    @Setter
     private int format = -1;
-
+    @Getter
+    @Setter
     private int sampleRate = -1;
 
     /**
@@ -223,60 +232,5 @@ public class WaveData extends AbstractResource {
             this.setAlBufferInt(-1);
         }
         this.setMemorySize(0);
-    }
-
-
-    /**
-     * <p>Getter for the field <code>alBufferInt</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getAlBufferInt() {
-        return alBufferInt;
-    }
-
-    /**
-     * <p>Setter for the field <code>alBufferInt</code>.</p>
-     *
-     * @param alBufferInt a int.
-     */
-    public void setAlBufferInt(int alBufferInt) {
-        this.alBufferInt = alBufferInt;
-    }
-
-    /**
-     * <p>Getter for the field <code>format</code>.</p>
-     *
-     * @return format type of data
-     */
-    public int getFormat() {
-        return format;
-    }
-
-    /**
-     * <p>Setter for the field <code>format</code>.</p>
-     *
-     * @param format a int.
-     */
-    public void setFormat(int format) {
-        this.format = format;
-    }
-
-    /**
-     * sample rate of data
-     *
-     * @return return sample rate.
-     */
-    public int getSampleRate() {
-        return sampleRate;
-    }
-
-    /**
-     * <p>Setter for the field <code>sampleRate</code>.</p>
-     *
-     * @param sampleRate a int.
-     */
-    public void setSampleRate(int sampleRate) {
-        this.sampleRate = sampleRate;
     }
 }
