@@ -34,6 +34,7 @@ import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.visual.Colors;
+import lombok.*;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
@@ -57,6 +58,8 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * @author XenoAmess
  * @version 0.160.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Texture extends AbstractResource implements Bindable {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -71,18 +74,24 @@ public class Texture extends AbstractResource implements Bindable {
      */
     public static final int MAX_SAMPLER = 31;
 
+    @Getter
+    @Setter
     private int glTexture2DInt = -1;
 
     /**
      * the width of the raw texture pic.
      * notice that this value is irrelevant to the display height.
      */
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private int width;
 
     /**
      * the height of the raw texture pic.
      * notice that this value is irrelevant to the display height.
      */
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private int height;
 
 
@@ -129,15 +138,6 @@ public class Texture extends AbstractResource implements Bindable {
         super(resourceManager, resourceInfo);
     }
 
-
-    /**
-     * <p>Getter for the field <code>glTexture2DInt</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getGlTexture2DInt() {
-        return this.glTexture2DInt;
-    }
 
     /**
      * {@inheritDoc}
@@ -310,38 +310,4 @@ public class Texture extends AbstractResource implements Bindable {
         this.setMemorySize(0);
     }
 
-    /**
-     * <p>Setter for the field <code>glTexture2DInt</code>.</p>
-     *
-     * @param glTexture2DInt a int.
-     */
-    public void setGlTexture2DInt(int glTexture2DInt) {
-        this.glTexture2DInt = glTexture2DInt;
-    }
-
-    /**
-     * <p>Getter for the field <code>width</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    private void setWidth(int width) {
-        this.width = width;
-    }
-
-    /**
-     * <p>Getter for the field <code>height</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    private void setHeight(int height) {
-        this.height = height;
-    }
 }
