@@ -25,6 +25,10 @@
 package com.xenoamess.cyan_potion.rpg_module.game_map;
 
 import com.xenoamess.cyan_potion.base.render.Bindable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
@@ -34,10 +38,16 @@ import java.util.ArrayList;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class GameTile {
 
+    @Getter
+    @Setter
     private boolean solid = false;
 
+    @Getter
+    @Setter
     private ArrayList<Bindable> bindables = new ArrayList<>();
 
     /**
@@ -77,39 +87,4 @@ public class GameTile {
         return this;
     }
 
-    /**
-     * <p>isSolid.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isSolid() {
-        return solid;
-    }
-
-    /**
-     * <p>Setter for the field <code>solid</code>.</p>
-     *
-     * @param solid a boolean.
-     */
-    public void setSolid(boolean solid) {
-        this.solid = solid;
-    }
-
-    /**
-     * <p>Getter for the field <code>bindables</code>.</p>
-     *
-     * @return return
-     */
-    public ArrayList<Bindable> getBindables() {
-        return bindables;
-    }
-
-    /**
-     * <p>Setter for the field <code>bindables</code>.</p>
-     *
-     * @param bindables bindables
-     */
-    public void setBindables(ArrayList<Bindable> bindables) {
-        this.bindables = bindables;
-    }
 }
