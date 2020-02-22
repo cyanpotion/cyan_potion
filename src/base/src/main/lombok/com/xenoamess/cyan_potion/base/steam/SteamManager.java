@@ -312,9 +312,8 @@ public class SteamManager extends SubManager {
      * of course this function is from steamworks4j.
      *
      * @param input a {@link java.lang.String} object.
-     * @throws com.codedisaster.steamworks.SteamException if any.
      */
-    protected void processInput(String input) throws SteamException {
+    protected void processInput(String input) {
 
         if (input.startsWith("stats global ")) {
             String[] cmd = input.substring("stats global ".length()).split(" ");

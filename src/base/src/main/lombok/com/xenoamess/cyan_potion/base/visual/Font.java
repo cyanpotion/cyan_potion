@@ -214,7 +214,7 @@ public class Font extends AbstractResource {
         ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
         final ExecutorService executorService = Executors.newCachedThreadPool();
-        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<Callable<LoadBitmapPojo>>();
+        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<>();
         for (int i = 0; i < PIC_NUM; i++) {
             final int ti = i;
             returnValueList.add(
