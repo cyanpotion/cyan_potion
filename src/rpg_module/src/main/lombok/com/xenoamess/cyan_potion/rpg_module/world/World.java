@@ -428,7 +428,7 @@ public final class World extends AbstractEntityScene {
      */
     public void preparePlayerMovement(Unit player) {
         player.setMovement(0, 0);
-        if (this.getMenu().getShow()) {
+        if (this.getMenu().isShow()) {
             return;
         }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {
@@ -548,5 +548,4 @@ public final class World extends AbstractEntityScene {
         this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
         return true;
     }
-
 }

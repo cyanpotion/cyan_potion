@@ -33,10 +33,14 @@ import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>Unit class.</p>
@@ -44,6 +48,8 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Unit extends AbstractDynamicEntity {
     /**
      * Constant <code>DEFAULT_UNIT_LAYER=100</code>
@@ -51,14 +57,24 @@ public class Unit extends AbstractDynamicEntity {
     public static final int DEFAULT_UNIT_LAYER = 100;
     private static final float DEFAULT_UNIT_SPEED = 100F;
 
-    private boolean moving = false;
+    private final AtomicBoolean moving = new AtomicBoolean(false);
+
+    private final AtomicBoolean canMove = new AtomicBoolean(true);
+
+    @Getter
+    @Setter
     private float movementX;
+
+    @Getter
+    @Setter
     private float movementY;
 
-
+    @Getter
     private final FrameFloat moveSpeed;
+
+    @Getter
+    @Setter
     private int faceDir = 180;
-    private boolean canMove = true;
 
     /**
      * <p>Constructor for Unit.</p>
@@ -152,31 +168,6 @@ public class Unit extends AbstractDynamicEntity {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Unit unit = (Unit) o;
-        return isMoving() == unit.isMoving() &&
-                Float.compare(unit.getMovementX(), getMovementX()) == 0 &&
-                Float.compare(unit.getMovementY(), getMovementY()) == 0 &&
-                getFaceDir() == unit.getFaceDir() &&
-                isCanMove() == unit.isCanMove() &&
-                Objects.equals(getMoveSpeed(), unit.getMoveSpeed());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), isMoving(), getMovementX(), getMovementY(), getMoveSpeed(), getFaceDir(), isCanMove());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void update() {
         if (!this.isCanMove()) {
             this.setMovement(0, 0);
@@ -221,106 +212,6 @@ public class Unit extends AbstractDynamicEntity {
 
 
     /**
-     * <p>isMoving.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isMoving() {
-        return moving;
-    }
-
-    /**
-     * <p>Setter for the field <code>moving</code>.</p>
-     *
-     * @param moving a boolean.
-     */
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>moveSpeed</code>.</p>
-     *
-     * @return a float.
-     */
-    public FrameFloat getMoveSpeed() {
-        return moveSpeed;
-    }
-
-    /**
-     * <p>Getter for the field <code>faceDir</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getFaceDir() {
-        return faceDir;
-    }
-
-    /**
-     * <p>Setter for the field <code>faceDir</code>.</p>
-     *
-     * @param faceDir a int.
-     */
-    public void setFaceDir(int faceDir) {
-        this.faceDir = faceDir;
-    }
-
-    /**
-     * <p>isCanMove.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean isCanMove() {
-        return canMove;
-    }
-
-    /**
-     * <p>Setter for the field <code>canMove</code>.</p>
-     *
-     * @param canMove a boolean.
-     */
-    public void setCanMove(boolean canMove) {
-        this.canMove = canMove;
-    }
-
-    /**
-     * <p>Getter for the field <code>movementX</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getMovementX() {
-        return movementX;
-    }
-
-    /**
-     * <p>Setter for the field <code>movementX</code>.</p>
-     *
-     * @param movementX a float.
-     */
-    public void setMovementX(float movementX) {
-        this.movementX = movementX;
-    }
-
-    /**
-     * <p>Getter for the field <code>movementY</code>.</p>
-     *
-     * @return a float.
-     */
-    public float getMovementY() {
-        return movementY;
-    }
-
-    /**
-     * <p>Setter for the field <code>movementY</code>.</p>
-     *
-     * @param movementY a float.
-     */
-    public void setMovementY(float movementY) {
-        this.movementY = movementY;
-    }
-
-    /**
      * <p>setMovement.</p>
      *
      * @param movementX a float.
@@ -329,6 +220,42 @@ public class Unit extends AbstractDynamicEntity {
     public void setMovement(float movementX, float movementY) {
         this.setMovementX(movementX);
         this.setMovementY(movementY);
+    }
+
+    /**
+     * <p>isMoving.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isMoving() {
+        return moving.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>moving</code>.</p>
+     *
+     * @param moving a boolean.
+     */
+    public void setMoving(boolean moving) {
+        this.moving.set(moving);
+    }
+
+    /**
+     * <p>isCanMove.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean isCanMove() {
+        return canMove.get();
+    }
+
+    /**
+     * <p>Setter for the field <code>canMove</code>.</p>
+     *
+     * @param canMove a boolean.
+     */
+    public void setCanMove(boolean canMove) {
+        this.canMove.set(canMove);
     }
 }
 

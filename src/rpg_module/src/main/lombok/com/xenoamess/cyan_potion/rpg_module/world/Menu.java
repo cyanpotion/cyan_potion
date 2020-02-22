@@ -30,6 +30,10 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -42,8 +46,20 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class Menu extends AbstractGameWindowComponent {
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
+    private World world;
+
+    @EqualsAndHashCode.Exclude
     private final AtomicBoolean show = new AtomicBoolean(false);
+
+    @Getter
     private final Texture menuBackGroundTexture =
             this.getGameWindow().getGameManager().getResourceManager().
                     fetchResource(
@@ -51,10 +67,9 @@ public final class Menu extends AbstractGameWindowComponent {
                             STRING_PICTURE,
                             "resources/www/img/pictures/menuBackGround.png"
                     );
-
+    @Getter
     private final Picture menuBackGroundPicture = new Picture(menuBackGroundTexture);
 
-    private World world;
 
     /**
      * <p>Constructor for Menu.</p>
@@ -98,7 +113,7 @@ public final class Menu extends AbstractGameWindowComponent {
      */
     @Override
     public boolean draw() {
-        if (!getShow()) {
+        if (!isShow()) {
             return false;
         }
         this.menuBackGroundPicture.draw(this.getGameWindow());
@@ -110,7 +125,7 @@ public final class Menu extends AbstractGameWindowComponent {
      */
     @Override
     public Event process(Event event) {
-        if (!getShow()) {
+        if (!isShow()) {
             return event;
         }
         return super.process(event);
@@ -121,7 +136,7 @@ public final class Menu extends AbstractGameWindowComponent {
      *
      * @return a boolean.
      */
-    public boolean getShow() {
+    public boolean isShow() {
         return show.get();
     }
 
@@ -132,32 +147,5 @@ public final class Menu extends AbstractGameWindowComponent {
      */
     public void setShow(boolean show) {
         this.show.set(show);
-    }
-
-    /**
-     * <p>Getter for the field <code>menuBackGroundTexture</code>.</p>
-     *
-     * @return return
-     */
-    public Texture getMenuBackGroundTexture() {
-        return menuBackGroundTexture;
-    }
-
-    /**
-     * <p>Getter for the field <code>world</code>.</p>
-     *
-     * @return return
-     */
-    public World getWorld() {
-        return world;
-    }
-
-    /**
-     * <p>Setter for the field <code>world</code>.</p>
-     *
-     * @param world world
-     */
-    public void setWorld(World world) {
-        this.world = world;
     }
 }

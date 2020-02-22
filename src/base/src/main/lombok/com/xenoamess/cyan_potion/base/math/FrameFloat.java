@@ -43,9 +43,10 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class FrameFloat {
-    @Getter
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Getter
     private final GameManager gameManager;
     @Getter
     @Setter
