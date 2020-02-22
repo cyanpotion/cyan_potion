@@ -31,6 +31,7 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.rpg_module.event_unit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
+import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapInfoJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
 import lombok.EqualsAndHashCode;
@@ -43,7 +44,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -120,74 +120,6 @@ public class GameMap {
                 continue;
             }
             this.getEventUnits().add(new EventUnit(getWorld(), eventUnitJson));
-        }
-
-    }
-
-
-    static class GameMapInfoJson implements Serializable {
-        int id;
-        boolean expanded;
-        String name;
-        int order;
-        int parentId;
-        int scrollX;
-        int scrollY;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public boolean isExpanded() {
-            return expanded;
-        }
-
-        public void setExpanded(boolean expanded) {
-            this.expanded = expanded;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getOrder() {
-            return order;
-        }
-
-        public void setOrder(int order) {
-            this.order = order;
-        }
-
-        public int getParentId() {
-            return parentId;
-        }
-
-        public void setParentId(int parentId) {
-            this.parentId = parentId;
-        }
-
-        public int getScrollX() {
-            return scrollX;
-        }
-
-        public void setScrollX(int scrollX) {
-            this.scrollX = scrollX;
-        }
-
-        public int getScrollY() {
-            return scrollY;
-        }
-
-        public void setScrollY(int scrollY) {
-            this.scrollY = scrollY;
         }
     }
 
