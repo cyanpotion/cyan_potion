@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -120,7 +121,7 @@ public class CodePluginManager {
      * @param codePluginPosition codePluginPosition
      * @return return
      */
-    public ArrayList<Function<GameManager, Void>> getCodePluginFunctions(CodePluginPosition codePluginPosition) {
+    public List<Function<GameManager, Void>> getCodePluginFunctions(CodePluginPosition codePluginPosition) {
         return codePluginPositionFunctionHashMap.get(codePluginPosition);
     }
 
