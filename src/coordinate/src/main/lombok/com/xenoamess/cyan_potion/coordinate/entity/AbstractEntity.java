@@ -30,8 +30,10 @@ import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entity means some thing in your game, alive or not.
@@ -44,17 +46,40 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractEntity implements AbstractMutableArea {
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
     private final AbstractEntityScene scene;
+
+    @Getter
+    @Setter
     private float leftTopPosX;
+
+    @Getter
+    @Setter
     private float leftTopPosY;
 
+    @Getter
+    @Setter
     private int layer;
 
+    @Getter
+    @Setter
     private float width;
+
+    @Getter
+    @Setter
     private float height;
 
+    @Getter
+    @Setter
     private AbstractShape shape;
+
+    @Getter
+    @Setter
     private AbstractPictureInterface picture = new Picture();
 
 
@@ -91,6 +116,7 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         this.getPicture().cover(this);
     }
 
+
     /**
      * <p>Getter for the field <code>picture</code>.</p>
      *
@@ -101,15 +127,6 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         if (this.picture != null) {
             this.picture.cover(this);
         }
-    }
-
-    /**
-     * <p>Getter for the field <code>picture</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractPictureInterface getPicture() {
-        return this.picture;
     }
 
     /**
@@ -128,176 +145,5 @@ public abstract class AbstractEntity implements AbstractMutableArea {
         if (this.getShape() != null) {
             this.getShape().register();
         }
-    }
-
-
-    /**
-     * <p>Getter for the field <code>scene</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractEntityScene getScene() {
-        return scene;
-    }
-
-//    /**
-//     * <p>Getter for the field <code>centerPos</code>.</p>
-//     *
-//     * @return return
-//     */
-//    public Vector3fc getCenterPos() {
-//        return centerPos;
-//    }
-//
-//    /**
-//     * <p>Setter for the field <code>centerPos</code>.</p>
-//     *
-//     * @param centerPos centerPos
-//     */
-//    public void setCenterPos(Vector3f centerPos) {
-//        this.centerPos.set(centerPos);
-//    }
-//
-//    /**
-//     * <p>Getter for the field <code>size</code>.</p>
-//     *
-//     * @return return
-//     */
-//    public Vector3fc getSize() {
-//        return size;
-//    }
-//
-//    /**
-//     * <p>Setter for the field <code>size</code>.</p>
-//     *
-//     * @param size size
-//     */
-//    public void setSize(Vector3f size) {
-//        this.size.set(size);
-//    }
-
-    /**
-     * <p>Getter for the field <code>shape</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractShape getShape() {
-        return shape;
-    }
-
-    /**
-     * <p>Setter for the field <code>shape</code>.</p>
-     *
-     * @param shape shape
-     */
-    public void setShape(AbstractShape shape) {
-        this.shape = shape;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosX() {
-        return this.leftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getLeftTopPosY() {
-        return this.leftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosX(float newLeftTopPosX) {
-        this.leftTopPosX = newLeftTopPosX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setLeftTopPosY(float newLeftTopPosY) {
-        this.leftTopPosY = newLeftTopPosY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getWidth() {
-        return this.width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public float getHeight() {
-        return this.height;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setWidth(float newWidth) {
-        this.width = newWidth;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setHeight(float newHeight) {
-        this.height = newHeight;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractEntity that = (AbstractEntity) o;
-        return Float.compare(that.getLeftTopPosX(), getLeftTopPosX()) == 0 &&
-                Float.compare(that.getLeftTopPosY(), getLeftTopPosY()) == 0 &&
-                Float.compare(that.getWidth(), getWidth()) == 0 &&
-                Float.compare(that.getHeight(), getHeight()) == 0 &&
-                Objects.equals(getScene(), that.getScene()) &&
-                Objects.equals(getShape(), that.getShape()) &&
-                Objects.equals(getPicture(), that.getPicture());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
-    }
-
-    /**
-     * <p>Getter for the field <code>layer</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getLayer() {
-        return layer;
-    }
-
-    /**
-     * <p>Setter for the field <code>layer</code>.</p>
-     *
-     * @param layer a int.
-     */
-    public void setLayer(int layer) {
-        this.layer = layer;
     }
 }
