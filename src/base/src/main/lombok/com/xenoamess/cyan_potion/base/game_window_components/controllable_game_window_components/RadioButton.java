@@ -144,7 +144,7 @@ public class RadioButton extends Button {
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
     public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected, Texture bindableDeselected) {
-        this(gameWindow, radioButtonGroup, null, bindableSelected, null);
+        this(gameWindow, radioButtonGroup, null, bindableSelected, bindableDeselected);
     }
 
     /**
