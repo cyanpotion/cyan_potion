@@ -41,7 +41,7 @@ public class CyanPotionURLStreamHandler extends URLStreamHandler {
      */
     public static final String PROTOCOL_CYAN_POTION = "cyan_potion";
 
-    private String userDir;
+    private final String userDir;
 
     /**
      * <p>Constructor for CyanPotionURLStreamHandler.</p>

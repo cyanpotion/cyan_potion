@@ -43,7 +43,7 @@ import static com.xenoamess.cyan_potion.base.setting_file.SettingFIleParser_0_3_
 @EqualsAndHashCode
 @ToString
 public class SettingFileParsers {
-    private static Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
+    private static final Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
 
     static {
         settingFileParserMap.put(version_0_3_0, new SettingFIleParser_0_3_0());

@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
-    private int consolePort;
+    private final int consolePort;
 
     /**
      * <p>Constructor for Console.</p>

@@ -218,7 +218,7 @@ public class SteamManager extends SubManager {
         FileObject steam_appidFileObject = ResourceManager.resolveFile("steam_appid.txt");
         if (!StringUtils.isBlank(steam_appid)) {
             try (OutputStream outputStream = steam_appidFileObject.getContent().getOutputStream();
-                 PrintWriter printWriter = new PrintWriter(outputStream);
+                 PrintWriter printWriter = new PrintWriter(outputStream)
             ) {
                 printWriter.write(steam_appid.trim());
             } catch (IOException e) {
@@ -329,7 +329,7 @@ public class SteamManager extends SubManager {
                         int count = getSteamUserStats().getGlobalStatHistory(cmd[1], data);
                         System.out.print("global stat history (L) for " + count + " of " + days + " days:");
                         for (int i = 0; i < count; i++) {
-                            System.out.print(" " + Long.toString(data[i]));
+                            System.out.print(" " + data[i]);
                         }
                         LOGGER.debug("");
                     }
@@ -346,7 +346,7 @@ public class SteamManager extends SubManager {
                         int count = getSteamUserStats().getGlobalStatHistory(cmd[1], data);
                         System.out.print("global stat history (D) for " + count + " of " + days + " days:");
                         for (int i = 0; i < count; i++) {
-                            System.out.print(" " + Double.toString(data[i]));
+                            System.out.print(" " + data[i]);
                         }
                         LOGGER.debug("");
                     }

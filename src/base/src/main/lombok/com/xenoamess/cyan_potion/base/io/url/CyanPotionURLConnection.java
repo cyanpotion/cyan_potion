@@ -43,7 +43,7 @@ import static com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandler.a
  * @version 0.161.0-SNAPSHOT
  */
 public class CyanPotionURLConnection extends URLConnection {
-    private String userDir;
+    private final String userDir;
 
     /**
      * Constructs a URL connection to the specified URL. A connection to

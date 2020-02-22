@@ -50,13 +50,13 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * active means this AbstractControllableGameWindowComponent is active and can sole Events and can update.
      * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not update anymore.
      */
-    private AtomicBoolean active = new AtomicBoolean(true);
+    private final AtomicBoolean active = new AtomicBoolean(true);
 
     /**
      * visible means this AbstractControllableGameWindowComponent is visible and can draw(actually, can call ifVisibleThenDraw() ).
      * if visible == false then this AbstractControllableGameWindowComponent does not call ifVisibleThenDraw().
      */
-    private AtomicBoolean visible = new AtomicBoolean(true);
+    private final AtomicBoolean visible = new AtomicBoolean(true);
 
     /**
      * blockClick means this can block a {@link MouseButtonEvent} inside of it.
@@ -67,17 +67,17 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @see #processMouseButtonEventsInside(MouseButtonEvent)
      */
-    private AtomicBoolean blockClick = new AtomicBoolean(false);
+    private final AtomicBoolean blockClick = new AtomicBoolean(false);
 
     /**
      * inFocusNow means this AbstractControllableGameWindowComponent in
      */
-    private AtomicBoolean inFocusNow = new AtomicBoolean(false);
+    private final AtomicBoolean inFocusNow = new AtomicBoolean(false);
 
     /**
      * inFocusNow means this AbstractControllableGameWindowComponent will still in focus in next frame.
      */
-    private AtomicBoolean willStillInFocus = new AtomicBoolean(false);
+    private final AtomicBoolean willStillInFocus = new AtomicBoolean(false);
 
 
     /**
