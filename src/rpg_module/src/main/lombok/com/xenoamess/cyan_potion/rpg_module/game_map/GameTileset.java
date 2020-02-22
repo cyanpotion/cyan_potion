@@ -31,6 +31,10 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameTilesetJson;
 import com.xenoamess.cyan_potion.rpg_module.render.TextureUtils;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,14 +50,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+
+@EqualsAndHashCode
+@ToString
 public class GameTileset {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(GameTileset.class);
 
+    @Getter
+    @Setter
     private GameTilesetJson gameTilesetJson;
 
-    private Map<Integer, Texture> idTextureMap = new ConcurrentHashMap<>();
+    @Getter
+    private final Map<Integer, Texture> idTextureMap = new ConcurrentHashMap<>();
 
     private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
         return "resources/www/img/tilesets/" + gameMapInfoName + ".png";
@@ -201,40 +211,5 @@ public class GameTileset {
     }
 
 
-    /**
-     * <p>Getter for the field <code>gameTilesetJson</code>.</p>
-     *
-     * @return return
-     */
-    public GameTilesetJson getGameTilesetJson() {
-        return gameTilesetJson;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameTilesetJson</code>.</p>
-     *
-     * @param gameTilesetJson gameTilesetJson
-     */
-    public void setGameTilesetJson(GameTilesetJson gameTilesetJson) {
-        this.gameTilesetJson = gameTilesetJson;
-    }
-
-    /**
-     * <p>Getter for the field <code>idTextureMap</code>.</p>
-     *
-     * @return return
-     */
-    public Map<Integer, Texture> getIdTextureMap() {
-        return idTextureMap;
-    }
-
-    /**
-     * <p>Setter for the field <code>idTextureMap</code>.</p>
-     *
-     * @param idTextureMap idTextureMap
-     */
-    public void setIdTextureMap(Map<Integer, Texture> idTextureMap) {
-        this.idTextureMap = idTextureMap;
-    }
 }
 
