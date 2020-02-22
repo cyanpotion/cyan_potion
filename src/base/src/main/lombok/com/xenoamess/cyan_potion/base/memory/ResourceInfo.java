@@ -165,13 +165,13 @@ public final class ResourceInfo<T extends AbstractResource> {
         this.fileObject = ResourceManager.resolveFile(this.getFileString());
         this.values = values;
 
-        String toString = null;
+        String toStringLocal = null;
         try {
-            toString = getObjectMapper().writeValueAsString(this);
+            toStringLocal = getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             LOGGER.error("toString() fails, {},{}", this.getResourceClass(), this.getValues(), e);
         }
-        this.toString = toString;
+        this.toString = toStringLocal;
     }
 
     /**
