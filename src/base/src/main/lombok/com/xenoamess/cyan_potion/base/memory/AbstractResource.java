@@ -36,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * <p>Abstract AbstractResource class.</p>
@@ -239,11 +239,11 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     protected boolean forceLoad() {
-        Function<AbstractResource, Boolean> loader = (Function) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
+        Predicate<AbstractResource> loader = (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }
-        return loader.apply(this);
+        return loader.test(this);
     }
 
     /**
