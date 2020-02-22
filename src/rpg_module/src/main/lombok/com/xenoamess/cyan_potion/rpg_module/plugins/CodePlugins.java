@@ -39,6 +39,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.*;
  */
 public class CodePlugins {
     private CodePlugins() {
+        //shall never
     }
 
     /**
