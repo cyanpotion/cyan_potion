@@ -54,7 +54,7 @@ public class SteamTextureUtils {
     }
 
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SteamTextureUtils.class);
 
     /**

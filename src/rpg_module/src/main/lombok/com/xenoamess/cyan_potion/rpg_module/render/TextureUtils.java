@@ -74,7 +74,7 @@ public class TextureUtils {
     public static final String STRING_A2 = "A2";
 
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
 
     private TextureUtils() {

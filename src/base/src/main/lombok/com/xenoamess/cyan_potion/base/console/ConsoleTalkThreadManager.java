@@ -65,7 +65,7 @@ import java.nio.channels.CompletionHandler;
  */
 public class ConsoleTalkThreadManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThreadManager.class);
 
 

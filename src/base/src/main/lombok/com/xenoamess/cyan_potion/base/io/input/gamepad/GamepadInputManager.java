@@ -51,7 +51,7 @@ import java.util.ArrayList;
 @ToString
 public class GamepadInputManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
     @Getter
     @Setter

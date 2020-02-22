@@ -44,7 +44,7 @@ import java.util.Set;
 @Data
 public class MouseScrollEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(MouseScrollEvent.class);
 
     private static class EmptyMouseScrollEvent extends MouseScrollEvent implements EmptyEvent {

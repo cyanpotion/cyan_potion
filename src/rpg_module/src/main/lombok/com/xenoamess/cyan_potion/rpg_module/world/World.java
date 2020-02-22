@@ -84,7 +84,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @ToString
 public final class World extends AbstractEntityScene {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
      * "scale"

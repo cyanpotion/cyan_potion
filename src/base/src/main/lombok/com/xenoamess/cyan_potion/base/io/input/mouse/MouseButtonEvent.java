@@ -52,7 +52,7 @@ import java.util.Set;
 @Data
 public class MouseButtonEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(MouseButtonEvent.class);
 
     private static class EmptyMouseButtonEvent extends MouseButtonEvent implements EmptyEvent {

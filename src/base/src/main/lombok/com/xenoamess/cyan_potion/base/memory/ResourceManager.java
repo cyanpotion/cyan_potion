@@ -66,7 +66,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
 @ToString
 public class ResourceManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
 
     private long maxTextureSize = 0;

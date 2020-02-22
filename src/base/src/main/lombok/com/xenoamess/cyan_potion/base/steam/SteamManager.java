@@ -64,7 +64,7 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
 @ToString
 public class SteamManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SteamManager.class);
 
     @Getter

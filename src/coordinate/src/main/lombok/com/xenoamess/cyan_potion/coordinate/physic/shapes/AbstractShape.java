@@ -61,7 +61,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
 @ToString
 public abstract class AbstractShape implements AbstractMutableArea {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(AbstractShape.class);
 
     /**

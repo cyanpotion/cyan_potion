@@ -64,7 +64,7 @@ class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
 
 class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SaveFileContentDeserializer.class);
 
     /**

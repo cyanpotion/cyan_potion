@@ -63,7 +63,7 @@ import static org.lwjgl.stb.STBVorbis.*;
 @ToString
 public class WaveData extends AbstractResource {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     @Getter

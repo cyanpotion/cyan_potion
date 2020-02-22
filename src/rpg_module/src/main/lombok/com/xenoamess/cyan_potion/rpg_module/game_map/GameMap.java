@@ -59,7 +59,7 @@ import java.util.TreeMap;
 @ToString
 public class GameMap {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -58,7 +58,7 @@ import static org.lwjgl.glfw.GLFW.*;
 @ToString
 public class Keymap {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Keymap.class);
 
     /**

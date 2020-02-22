@@ -50,7 +50,7 @@ import static org.lwjgl.glfw.GLFW.*;
 @Data
 public class KeyboardEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(KeyboardEvent.class);
 
     private static class EmptyKeyboardEvent extends KeyboardEvent implements EmptyEvent {

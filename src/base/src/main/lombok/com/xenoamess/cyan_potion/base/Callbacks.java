@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
 @ToString
 public class Callbacks extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Callbacks.class);
 
     /**

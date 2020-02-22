@@ -42,7 +42,7 @@ import java.util.Set;
 @Data
 public class WindowResizeEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WindowResizeEvent.class);
 
     private static class EmptyWindowResizeEvent extends WindowResizeEvent implements EmptyEvent {

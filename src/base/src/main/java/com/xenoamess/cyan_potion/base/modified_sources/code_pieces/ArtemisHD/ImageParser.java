@@ -65,7 +65,7 @@ import static org.lwjgl.stb.STBImage.stbi_load;
  */
 public class ImageParser implements Closeable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ImageParser.class);
 
     private ByteBuffer image;

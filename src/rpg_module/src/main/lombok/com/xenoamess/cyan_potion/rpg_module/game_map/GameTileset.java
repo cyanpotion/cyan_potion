@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @ToString
 public class GameTileset {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameTileset.class);
 
     @Getter

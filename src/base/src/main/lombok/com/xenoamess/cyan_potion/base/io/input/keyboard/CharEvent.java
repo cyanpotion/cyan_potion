@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Data
 public class CharEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
 
     private static class EmptyCharEvent extends CharEvent implements EmptyEvent {

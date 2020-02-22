@@ -47,7 +47,7 @@ import java.util.function.Function;
 @ToString
 public class CodePluginManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(CodePluginManager.class);
 
     private final EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =

@@ -67,7 +67,7 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
 
 class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfoDeserializer.class);
 
     /**
@@ -126,7 +126,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
 @JsonDeserialize(using = ResourceInfoDeserializer.class)
 public final class ResourceInfo<T extends AbstractResource> {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
 
     @Getter

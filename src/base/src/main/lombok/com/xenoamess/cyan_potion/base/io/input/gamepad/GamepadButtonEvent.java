@@ -48,7 +48,7 @@ import java.util.Set;
 @Data
 public class GamepadButtonEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadButtonEvent.class);
 
     private static class EmptyGamepadButtonEvent extends GamepadButtonEvent implements EmptyEvent {

@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class GamepadInputManagerTest {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManagerTest.class);
 
     @Test

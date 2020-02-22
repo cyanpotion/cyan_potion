@@ -57,7 +57,7 @@ import java.io.Serializable;
 @Data
 public abstract class RuntimeVariableStruct implements Serializable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(RuntimeVariableStruct.class);
 
     /**

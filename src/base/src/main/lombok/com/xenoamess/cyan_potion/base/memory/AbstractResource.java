@@ -48,7 +48,7 @@ import java.util.function.Function;
 @ToString
 public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

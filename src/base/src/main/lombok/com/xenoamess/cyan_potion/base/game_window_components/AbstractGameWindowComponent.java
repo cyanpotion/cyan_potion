@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @ToString
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(AbstractGameWindowComponent.class);
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -50,7 +50,7 @@ import java.util.Set;
 @Data
 public class PlayAudioEvent implements MainThreadEvent {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(PlayAudioEvent.class);
 
     private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {

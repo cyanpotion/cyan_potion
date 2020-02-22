@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GrammarMap {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
 
     private GrammarMap() {
         //shall never

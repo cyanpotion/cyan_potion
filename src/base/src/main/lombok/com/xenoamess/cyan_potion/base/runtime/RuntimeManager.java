@@ -48,7 +48,7 @@ import java.util.List;
 @ToString
 public class RuntimeManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
 
     private final List<RuntimeVariableStruct> runtimeVariableStructList = new ArrayList<>();

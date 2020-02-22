@@ -54,7 +54,7 @@ import static org.lwjgl.opengl.GL20.*;
 @ToString
 public class Shader implements Closeable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Shader.class);
 
     /**

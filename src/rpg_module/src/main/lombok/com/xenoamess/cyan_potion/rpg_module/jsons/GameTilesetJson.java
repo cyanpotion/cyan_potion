@@ -48,7 +48,7 @@ import java.util.List;
 @Data
 public class GameTilesetJson implements Serializable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameTilesetJson.class);
 
     public int id;

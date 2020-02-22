@@ -58,7 +58,7 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
 @ToString
 public class AudioManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(AudioManager.class);
     /**
      * Initial used Source s' num.

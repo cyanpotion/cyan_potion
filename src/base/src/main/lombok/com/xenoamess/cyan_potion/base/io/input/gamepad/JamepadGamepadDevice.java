@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 @ToString
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(JamepadGamepadDevice.class);
     @Getter
     @Setter

@@ -42,7 +42,7 @@ import java.awt.datatransfer.Transferable;
  */
 public class ClipboardUtil {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ClipboardUtil.class);
 
     /**

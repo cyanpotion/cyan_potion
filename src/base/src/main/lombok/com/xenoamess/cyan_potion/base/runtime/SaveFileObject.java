@@ -62,7 +62,7 @@ import java.util.List;
 @ToString
 public class SaveFileObject {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObject.class);
 
     /**

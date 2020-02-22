@@ -62,7 +62,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 @ToString
 public class Texture extends AbstractResource implements Bindable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Texture.class);
 
     /**

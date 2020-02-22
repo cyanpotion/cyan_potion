@@ -73,7 +73,7 @@ import static org.lwjgl.stb.STBTruetype.*;
 public class Font extends AbstractResource {
 
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
 
     /**

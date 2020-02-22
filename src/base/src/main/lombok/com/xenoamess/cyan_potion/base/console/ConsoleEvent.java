@@ -44,7 +44,7 @@ import java.util.Set;
 @Data
 public class ConsoleEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ConsoleEvent.class);
 
     private static class EmptyConsoleEvent extends ConsoleEvent implements EmptyEvent {

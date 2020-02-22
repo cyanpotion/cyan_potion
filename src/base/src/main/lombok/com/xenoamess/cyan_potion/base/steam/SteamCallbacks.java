@@ -49,7 +49,7 @@ import java.nio.ByteBuffer;
 @ToString
 public class SteamCallbacks {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SteamCallbacks.class);
     @Getter
     @Setter

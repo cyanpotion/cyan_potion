@@ -75,7 +75,7 @@ import static org.lwjgl.opengl.GL11.*;
 @ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
     /**

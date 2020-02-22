@@ -55,7 +55,7 @@ import java.util.List;
 @ToString
 public class RadioButtonsPanel extends Panel {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(RadioButtonsPanel.class);
 
     @Getter

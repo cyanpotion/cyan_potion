@@ -46,7 +46,7 @@ import java.util.Set;
 @Data
 public class TextEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(TextEvent.class);
 
     private static class EmptyTextEvent extends TextEvent implements EmptyEvent {

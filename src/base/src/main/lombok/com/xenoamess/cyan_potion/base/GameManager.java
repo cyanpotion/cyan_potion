@@ -83,7 +83,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 @ToString
 public class GameManager implements Closeable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameManager.class);
 
     /**

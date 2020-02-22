@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(JXInputGamepadDevice.class);
     @Getter
     @Setter

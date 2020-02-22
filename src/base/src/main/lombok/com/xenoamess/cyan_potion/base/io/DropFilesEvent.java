@@ -48,7 +48,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 @Data
 public class DropFilesEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(DropFilesEvent.class);
 
     private final long window;

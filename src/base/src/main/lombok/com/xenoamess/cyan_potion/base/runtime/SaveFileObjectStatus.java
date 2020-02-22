@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 @Data
 public class SaveFileObjectStatus {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObjectStatus.class);
 
     private String version;

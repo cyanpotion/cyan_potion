@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
 
     /**

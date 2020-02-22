@@ -47,7 +47,7 @@ import java.util.ArrayList;
 @Data
 public class GameSystemJson implements Serializable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameSystemJson.class);
 
     static class ShipJson implements Serializable {

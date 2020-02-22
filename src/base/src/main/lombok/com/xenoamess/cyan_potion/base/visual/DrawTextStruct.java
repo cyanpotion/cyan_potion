@@ -44,7 +44,7 @@ import static org.lwjgl.opengl.GL11.*;
 @Data
 public class DrawTextStruct {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(DrawTextStruct.class);
 
     private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
