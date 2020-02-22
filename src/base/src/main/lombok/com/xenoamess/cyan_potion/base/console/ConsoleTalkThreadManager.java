@@ -126,9 +126,6 @@ public class ConsoleTalkThreadManager extends SubManager {
 
                             // Make the buffer ready to write
                             byteBuffer.clear();
-
-                            // Read the next line
-                            bytesRead = asynchronousSocketChannel.read(byteBuffer).get();
                         }
                     } catch (Exception e) {
                         LOGGER.error("fails to load commands.", e);
