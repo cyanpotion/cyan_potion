@@ -54,12 +54,16 @@ public abstract class AbstractResource implements Closeable, Bindable {
     @ToString.Exclude
     @Getter
     private final ResourceManager resourceManager;
+
     @Getter
     private final ResourceInfo resourceInfo;
+
     @Getter
     @Setter
     private long memorySize;
+
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
+
     @Getter
     @Setter
     private long lastUsedFrameIndex;

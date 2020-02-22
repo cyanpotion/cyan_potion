@@ -47,6 +47,8 @@ public class DrawTextStruct {
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(DrawTextStruct.class);
 
+    private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
+
     private Font font = Font.getCurrentFont();
     private float leftTopPosX = Float.NaN;
     private float leftTopPosY = Float.NaN;
@@ -58,7 +60,6 @@ public class DrawTextStruct {
     private float scaleY = Float.NaN;
     private float characterSpace = 0;
 
-    private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
     private final Vector4f color = new Vector4f(1, 1, 1, 1);
     private String text = "";
 
