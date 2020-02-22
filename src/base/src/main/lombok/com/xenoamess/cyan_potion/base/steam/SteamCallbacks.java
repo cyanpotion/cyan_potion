@@ -199,7 +199,7 @@ public class SteamCallbacks {
                                     LOGGER.debug("  ... small avatar retrieve avatar image failed!");
                                 }
                             } catch (SteamException e) {
-                                e.printStackTrace();
+                                LOGGER.error("Something's wrong.", e);
                             }
                         } else {
                             LOGGER.debug("  ... small avatar image not available!");

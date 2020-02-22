@@ -138,7 +138,7 @@ public class SteamManager extends SubManager {
                         LOGGER.error(errorString);
                         throw new SteamException(errorString);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOGGER.error("SteamManager.init() fails,", e);
                     }
                 }
 
@@ -391,7 +391,7 @@ public class SteamManager extends SubManager {
                     getSteamRemoteStorage().fileWriteStreamClose(remoteFile);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("SteamManager.processInput(String input) fails,{}", input, e);
             }
         } else if (input.startsWith("file delete ")) {
             String path = input.substring("file delete ".length());

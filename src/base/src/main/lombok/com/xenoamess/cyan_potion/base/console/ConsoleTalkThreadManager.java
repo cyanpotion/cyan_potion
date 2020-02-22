@@ -149,7 +149,7 @@ public class ConsoleTalkThreadManager extends SubManager {
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleTalkThreadManager.init() fails,", e);
         }
     }
 
