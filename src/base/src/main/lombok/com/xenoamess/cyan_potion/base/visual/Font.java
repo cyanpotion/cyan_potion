@@ -92,7 +92,7 @@ public class Font extends AbstractResource {
      */
     @Getter
     @Setter
-    public static boolean testPrintFontBmp = false;
+    private static boolean testPrintFontBmp = false;
 
     /**
      * size of each font pic.
