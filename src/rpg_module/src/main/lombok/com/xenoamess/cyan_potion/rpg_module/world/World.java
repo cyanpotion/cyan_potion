@@ -523,12 +523,12 @@ public final class World extends AbstractEntityScene {
 
         for (StaticEntity staticEntity : this.getStaticEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getLayer()), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(staticEntity.getLayer(), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getLayer()), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(dynamicEntity.getLayer(), k -> new ArrayList<>());
             entities.add(dynamicEntity);
         }
 
