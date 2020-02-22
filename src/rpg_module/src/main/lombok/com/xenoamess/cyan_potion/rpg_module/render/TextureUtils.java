@@ -744,7 +744,7 @@ public class TextureUtils {
                     Texture nowTexture =
                             resourceManager.fetchResource(
                                     Texture.class,
-                                    "characters",
+                                    STRING_CHARACTER,
                                     walkingTexturesFilepath,
                                     Integer.toString(k),
                                     Integer.toString(i * 3 + j)

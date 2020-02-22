@@ -73,6 +73,7 @@ import java.util.TreeMap;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
 
 /**
  * <p>World class.</p>
@@ -280,7 +281,7 @@ public final class World extends AbstractEntityScene {
                     Unit.DEFAULT_UNIT_LAYER,
                     new ResourceInfo(
                             WalkingAnimation4Dirs.class,
-                            "characters",
+                            STRING_CHARACTER,
                             "resources/www/img/characters/r2c_male_test.png",
                             "0"
                     ),

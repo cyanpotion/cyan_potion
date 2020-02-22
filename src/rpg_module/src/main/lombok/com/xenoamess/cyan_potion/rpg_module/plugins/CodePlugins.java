@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.rpg_module.plugins;
 
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import com.xenoamess.cyan_potion.rpg_module.render.TextureUtils;
 
 import java.util.function.Function;
 
@@ -47,19 +48,19 @@ public class CodePlugins {
      */
     public static final Function<GameManager, Void> PLUGIN_RPG_MODULE_TEXTURE_LOADERS = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_CHARACTER,
-                (Texture texture) -> loadAsWalkingTexture(texture)
+                TextureUtils::loadAsWalkingTexture
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_A5,
-                (Texture texture) -> loadAsTilesetTextures8(texture)
+                TextureUtils::loadAsTilesetTextures8
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_B,
-                (Texture texture) -> loadAsTilesetTextures8(texture)
+                TextureUtils::loadAsTilesetTextures8
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_C,
-                (Texture texture) -> loadAsTilesetTextures8(texture)
+                TextureUtils::loadAsTilesetTextures8
         );
         gameManager.getResourceManager().putResourceLoader(Texture.class, STRING_A2,
-                (Texture texture) -> loadAsTilesetTexturesA2(texture)
+                TextureUtils::loadAsTilesetTexturesA2
         );
         return null;
     };
