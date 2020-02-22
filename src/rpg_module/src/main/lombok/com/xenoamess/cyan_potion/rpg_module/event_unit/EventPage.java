@@ -25,6 +25,9 @@
 package com.xenoamess.cyan_potion.rpg_module.event_unit;
 
 import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * This class is designed here for this engine to have ability to deal with
@@ -36,9 +39,17 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class EventPage {
-    private PageJson pageJson;
-    private EventUnit eventUnit;
+
+    @Getter
+    private final PageJson pageJson;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    private final EventUnit eventUnit;
 
     /**
      * <p>Constructor for EventPage.</p>
@@ -47,44 +58,7 @@ public class EventPage {
      * @param eventUnit eventUnit
      */
     public EventPage(PageJson pageJson, EventUnit eventUnit) {
-        this.setPageJson(pageJson);
-        this.setEventUnit(eventUnit);
-    }
-
-
-    /**
-     * <p>Getter for the field <code>pageJson</code>.</p>
-     *
-     * @return return
-     */
-    public PageJson getPageJson() {
-        return pageJson;
-    }
-
-    /**
-     * <p>Setter for the field <code>pageJson</code>.</p>
-     *
-     * @param pageJson pageJson
-     */
-    public void setPageJson(PageJson pageJson) {
         this.pageJson = pageJson;
-    }
-
-    /**
-     * <p>Getter for the field <code>eventUnit</code>.</p>
-     *
-     * @return return
-     */
-    public EventUnit getEventUnit() {
-        return eventUnit;
-    }
-
-    /**
-     * <p>Setter for the field <code>eventUnit</code>.</p>
-     *
-     * @param eventUnit eventUnit
-     */
-    public void setEventUnit(EventUnit eventUnit) {
         this.eventUnit = eventUnit;
     }
 }

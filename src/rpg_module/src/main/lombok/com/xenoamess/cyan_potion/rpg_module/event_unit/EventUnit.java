@@ -88,8 +88,5 @@ public class EventUnit extends Unit {
         if (this.getEventUnitJson() != eventUnitJson) {
             this.setEventUnitJson(eventUnitJson);
         }
-        //        this.
     }
-
-
 }
