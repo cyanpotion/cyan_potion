@@ -43,10 +43,11 @@ import static org.lwjgl.openal.AL10.*;
  * @author XenoAmess
  * @version 0.161.1-SNAPSHOT
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Source implements Closeable {
 
+    @EqualsAndHashCode.Include
     @Getter
     @Setter
     private int alSourceInt = -1;
@@ -305,13 +306,5 @@ public class Source implements Closeable {
             AL10.alDeleteSources(getAlSourceInt());
             this.setAlSourceInt(-1);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return this.getAlSourceInt();
     }
 }

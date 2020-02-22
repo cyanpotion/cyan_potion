@@ -164,6 +164,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
             } catch (InterruptedException | ExecutionException e) {
                 result = false;
                 LOGGER.debug("load resource by load task failed! Resource:{}", this, e);
+                Thread.currentThread().interrupt();
             }
             if (!result) {
                 result = this.loadByLoadTaskOrSelf();
