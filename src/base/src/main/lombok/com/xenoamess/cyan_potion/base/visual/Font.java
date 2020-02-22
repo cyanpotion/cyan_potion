@@ -90,7 +90,9 @@ public class Font extends AbstractResource {
      * notice that open this shall create a lot of pictures onto your disk when loading your ttf.
      * Only open it when you are debugging a new ttf file.
      */
-    public static boolean TEST_PRINT_FONT_BMP = false;
+    @Getter
+    @Setter
+    public static boolean testPrintFontBmp = false;
 
     /**
      * size of each font pic.
@@ -230,7 +232,7 @@ public class Font extends AbstractResource {
                                 stbtt_PackFontRange(pc, ttf, 0, SCALE, ti * EACH_CHAR_NUM, charDataLocal);
 
                                 stbtt_PackEnd(pc);
-                                if (TEST_PRINT_FONT_BMP) {
+                                if (testPrintFontBmp) {
                                     stbi_write_bmp("font_texture" + ti + ".bmp", BITMAP_W, BITMAP_H, 1,
                                             bitmapLocal);
                                 }

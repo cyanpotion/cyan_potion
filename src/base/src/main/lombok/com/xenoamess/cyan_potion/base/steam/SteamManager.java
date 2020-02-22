@@ -66,30 +66,39 @@ public class SteamManager extends SubManager {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(SteamManager.class);
+
     @Getter
     @Setter
     private SteamUser steamUser;
+
     @Getter
     @Setter
     private SteamUserStats steamUserStats;
+
     @Getter
     @Setter
     private SteamRemoteStorage steamRemoteStorage;
+
     @Getter
     @Setter
     private SteamUGC steamUGC;
+
     @Getter
     @Setter
     private SteamUtils steamUtils;
+
     @Getter
     @Setter
     private SteamApps steamApps;
+
     @Getter
     @Setter
     private SteamFriends steamFriends;
+
     @Getter
     @Setter
     private SteamLeaderboardHandle steamLeaderboardHandle = null;
+
     @Getter
     @Setter
     private SteamCallbacks steamCallbacks = new SteamCallbacks(this);
