@@ -24,12 +24,15 @@
 
 package com.xenoamess.cyan_potion.rpg_module;
 
+import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.rpg_module.game_map.GameMap;
 import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
@@ -39,18 +42,35 @@ import java.util.ArrayList;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
-@Getter
-@Setter
+@EqualsAndHashCode
+@ToString
 public class RpgModuleDataCenter {
     /**
      * Constant <code>TILE_SIZE=32</code>
      */
     public static final int TILE_SIZE = 32;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private World world;
+
+    @Getter
+    @Setter
     private GameSystemJson gameSystemJson;
+
+    @Getter
+    @Setter
     private ArrayList<GameTileset> gameTilesets;
+
+    @Getter
+    @Setter
     private ArrayList<GameMap> gameMaps;
+
+    @Getter
+    @Setter
+    @AsFinalField
     private GameRuntime gameRuntime;
 
     /**
@@ -71,5 +91,4 @@ public class RpgModuleDataCenter {
     public GameTileset getGameTileset(int gameTilesetID) {
         return this.getGameTilesets().get(gameTilesetID);
     }
-
 }

@@ -29,6 +29,10 @@ import com.xenoamess.commons.primitive.collections.lists.array_lists.BooleanArra
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>GameRuntime class.</p>
@@ -36,11 +40,21 @@ import com.xenoamess.cyan_potion.base.runtime.RuntimeVariableStruct;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class GameRuntime extends RuntimeVariableStruct {
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     @JsonIgnore
     private transient DataCenter dataCenter;
 
+    @Getter
     private final BooleanArrayList runtimeSwitches = new BooleanArrayList();
+
+    @Getter
     private final IntArrayList runtimeIntegerVariables = new IntArrayList();
 
     /**
@@ -80,42 +94,6 @@ public class GameRuntime extends RuntimeVariableStruct {
     @Deprecated
     public void loadGameRuntime() {
         this.getDataCenter().getGameManager().getRuntimeManager().load();
-    }
-
-    /**
-     * <p>Getter for the field <code>dataCenter</code>.</p>
-     *
-     * @return return
-     */
-    public DataCenter getDataCenter() {
-        return dataCenter;
-    }
-
-    /**
-     * <p>Setter for the field <code>dataCenter</code>.</p>
-     *
-     * @param dataCenter dataCenter
-     */
-    public void setDataCenter(DataCenter dataCenter) {
-        this.dataCenter = dataCenter;
-    }
-
-    /**
-     * <p>Getter for the field <code>runtimeSwitches</code>.</p>
-     *
-     * @return return
-     */
-    public BooleanArrayList getRuntimeSwitches() {
-        return runtimeSwitches;
-    }
-
-    /**
-     * <p>Getter for the field <code>runtimeIntegerVariables</code>.</p>
-     *
-     * @return return
-     */
-    public IntArrayList getRuntimeIntegerVariables() {
-        return runtimeIntegerVariables;
     }
 
     /**
