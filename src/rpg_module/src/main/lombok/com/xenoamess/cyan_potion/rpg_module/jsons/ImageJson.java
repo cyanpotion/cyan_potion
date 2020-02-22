@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.rpg_module.jsons;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -38,6 +39,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@Data
 public class ImageJson implements Serializable {
     public int tileId;
     public String characterName;

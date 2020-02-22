@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -32,6 +34,7 @@ import java.io.Serializable;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@Data
 public class GameMusicJson implements Serializable {
     public String name;
     public int pan;

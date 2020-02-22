@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
+import lombok.Data;
 import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@Data
 public class GameTilesetJson implements Serializable {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -78,5 +80,4 @@ public class GameTilesetJson implements Serializable {
         }
         return res;
     }
-
 }

@@ -24,6 +24,8 @@
 
 package com.xenoamess.cyan_potion.rpg_module.jsons;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,6 +35,7 @@ import java.util.ArrayList;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@Data
 public class MoveRouteJson implements Serializable {
     public boolean repeat;
     public boolean skippable;
