@@ -147,7 +147,7 @@ public class RadioButtonGroup implements Closeable {
      * delete all RadioButtons
      */
     public synchronized void clear() {
-        while (selectedRadioButtons.size() > 0) {
+        while (!selectedRadioButtons.isEmpty()) {
             selectedRadioButtons.removeFirst().deselect();
         }
     }
