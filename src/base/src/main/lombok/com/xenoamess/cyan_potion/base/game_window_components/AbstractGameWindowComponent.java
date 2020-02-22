@@ -263,9 +263,9 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
         if (!this.alive.compareAndSet(true, false)) {
             return;
         }
-        GameWindowComponentTreeNode gameWindowComponentTreeNode = this.getGameWindowComponentTreeNode();
-        if (gameWindowComponentTreeNode != null) {
-            gameWindowComponentTreeNode.close();
+        GameWindowComponentTreeNode gameWindowComponentTreeNodeLocal = this.getGameWindowComponentTreeNode();
+        if (gameWindowComponentTreeNodeLocal != null) {
+            gameWindowComponentTreeNodeLocal.close();
         }
     }
 

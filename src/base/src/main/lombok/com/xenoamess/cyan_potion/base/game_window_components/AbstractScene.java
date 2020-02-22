@@ -187,7 +187,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                 posY,
                 width,
                 height,
-                Model.COMMON_MODEL,
+                model,
                 colorScale,
                 0
         );
