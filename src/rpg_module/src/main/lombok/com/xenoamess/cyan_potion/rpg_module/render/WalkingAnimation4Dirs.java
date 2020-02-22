@@ -32,6 +32,10 @@ import com.xenoamess.cyan_potion.base.visual.AbstractPictureInterface;
 import com.xenoamess.cyan_potion.base.visual.Animation;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +50,22 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class WalkingAnimation4Dirs extends Animation {
-    private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private Unit unit;
+
+    @Getter
+    @Setter
+    private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
+
+    @Getter
+    @Setter
     private int drawFaceDir;
 
     /**
@@ -148,60 +165,5 @@ public class WalkingAnimation4Dirs extends Animation {
             list = getFaceDirFrameMap().get(this.getDrawFaceDir());
         }
         return list.get(tmpTexturePointer);
-    }
-
-
-    /**
-     * <p>Getter for the field <code>faceDirFrameMap</code>.</p>
-     *
-     * @return return
-     */
-    public Map<Integer, List<AbstractPictureInterface>> getFaceDirFrameMap() {
-        return faceDirFrameMap;
-    }
-
-    /**
-     * <p>Setter for the field <code>faceDirFrameMap</code>.</p>
-     *
-     * @param faceDirFrameMap faceDirFrameMap
-     */
-    public void setFaceDirFrameMap(Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap) {
-        this.faceDirFrameMap = faceDirFrameMap;
-    }
-
-    /**
-     * <p>Getter for the field <code>unit</code>.</p>
-     *
-     * @return return
-     */
-    public Unit getUnit() {
-        return unit;
-    }
-
-    /**
-     * <p>Setter for the field <code>unit</code>.</p>
-     *
-     * @param unit unit
-     */
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    /**
-     * <p>Getter for the field <code>drawFaceDir</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getDrawFaceDir() {
-        return drawFaceDir;
-    }
-
-    /**
-     * <p>Setter for the field <code>drawFaceDir</code>.</p>
-     *
-     * @param drawFaceDir a int.
-     */
-    public void setDrawFaceDir(int drawFaceDir) {
-        this.drawFaceDir = drawFaceDir;
     }
 }
