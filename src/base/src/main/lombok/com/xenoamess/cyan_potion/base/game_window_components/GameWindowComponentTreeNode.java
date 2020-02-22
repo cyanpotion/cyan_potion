@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>GameWindowComponentTreeNode class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0
+ * @version 0.161.0-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

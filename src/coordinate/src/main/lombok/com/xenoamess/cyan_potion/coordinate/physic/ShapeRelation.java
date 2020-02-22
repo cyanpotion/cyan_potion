@@ -22,26 +22,20 @@
  * SOFTWARE.
  */
 
-package com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges;
-
-import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
+package com.xenoamess.cyan_potion.coordinate.physic;
 
 /**
- * <p>ShapeRelationJudge interface.</p>
+ * <p>ShapeRelation class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0
+ * @version 0.161.0-SNAPSHOT
  */
-public interface ShapeRelationJudge<K extends AbstractShape,
-        V extends AbstractShape> {
-    /**
-     * <p>relation.</p>
-     *
-     * @param k     a K object.
-     * @param v     a V object.
-     * @param rough a boolean.
-     * @return return
-     */
-    ShapeRelation relation(K k, V v, boolean rough);
+public enum ShapeRelation {
+    RELATION_UNDEFINED,
+    RELATION_NO_COLLIDE,
+    RELATION_COLLIDE,
+    RELATION_EQUAL,
+    RELATION_INNER,
+    RELATION_OUTER,
+    ;
 }

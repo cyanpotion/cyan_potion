@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * <p>GameTile class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0
+ * @version 0.161.0-SNAPSHOT
  */
 public class GameTile {
 

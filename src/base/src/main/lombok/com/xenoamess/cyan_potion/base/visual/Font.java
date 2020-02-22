@@ -66,7 +66,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.160.0
+ * @version 0.161.0-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
