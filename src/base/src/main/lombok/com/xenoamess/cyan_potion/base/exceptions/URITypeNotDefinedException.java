@@ -32,7 +32,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
  * The most common case is from loading AbstractResource, or CodePlugin.
  *
  * @author XenoAmess
- * @version 0.161.1-SNAPSHOT
+ * @version 0.161.1
  * @see AbstractResource#load()
  * @see com.xenoamess.cyan_potion.base.plugins.CodePluginManager#getCodePluginFunctionFromString(String)
  */

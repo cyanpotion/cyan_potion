@@ -37,7 +37,7 @@ import lombok.ToString;
  * for example if this FrameFloat means a speed, and its valueFor1Second is 100, then its speed is 100/second.
  *
  * @author XenoAmess
- * @version 0.161.1-SNAPSHOT
+ * @version 0.161.1
  */
 
 @EqualsAndHashCode

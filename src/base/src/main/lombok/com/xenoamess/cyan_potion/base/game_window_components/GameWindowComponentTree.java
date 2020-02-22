@@ -48,7 +48,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.161.1-SNAPSHOT
+ * @version 0.161.1
  */
 
 @EqualsAndHashCode(callSuper = true)

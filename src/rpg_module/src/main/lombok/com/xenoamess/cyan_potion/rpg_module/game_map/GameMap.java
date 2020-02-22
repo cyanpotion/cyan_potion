@@ -53,7 +53,7 @@ import java.util.TreeMap;
  * <p>GameMap class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1-SNAPSHOT
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString

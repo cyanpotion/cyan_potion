@@ -34,7 +34,7 @@ import lombok.ToString;
  * <p>Picture class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1-SNAPSHOT
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
