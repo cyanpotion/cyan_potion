@@ -109,9 +109,9 @@ public class GameWindowComponentTreeNode implements Closeable {
             au.close();
         }
 
-        AbstractGameWindowComponent gameWindowComponent = this.getGameWindowComponent();
-        if (gameWindowComponent != null) {
-            gameWindowComponent.close();
+        AbstractGameWindowComponent gameWindowComponentLocal = this.getGameWindowComponent();
+        if (gameWindowComponentLocal != null) {
+            gameWindowComponentLocal.close();
         }
 
         getGameWindowComponentTree().leafNodesRemove(this);
