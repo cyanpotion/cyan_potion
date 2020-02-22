@@ -33,6 +33,10 @@ import com.xenoamess.cyan_potion.rpg_module.event_unit.EventUnit;
 import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameMapJson;
 import com.xenoamess.cyan_potion.rpg_module.world.World;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,16 +55,30 @@ import java.util.TreeMap;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public class GameMap {
     @JsonIgnore
     private static transient final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
     private World world;
 
+    @Getter
+    @Setter
     private GameMapJson gameMapJson;
+
+    @Getter
+    @Setter
     private GameMapInfoJson gameMapInfoJson;
 
+    @Getter
     private final ArrayList<GameTile> gameTiles = new ArrayList<>();
+
+    @Getter
     private final ArrayList<EventUnit> eventUnits = new ArrayList<>();
 
     private static String gameMapInfoNameToGameMapJsonURI(String gameMapInfoName) {
@@ -104,78 +122,6 @@ public class GameMap {
             this.getEventUnits().add(new EventUnit(getWorld(), eventUnitJson));
         }
 
-    }
-
-    /**
-     * <p>Getter for the field <code>world</code>.</p>
-     *
-     * @return return
-     */
-    public World getWorld() {
-        return world;
-    }
-
-    /**
-     * <p>Setter for the field <code>world</code>.</p>
-     *
-     * @param world world
-     */
-    public void setWorld(World world) {
-        this.world = world;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameMapJson</code>.</p>
-     *
-     * @return return
-     */
-    public GameMapJson getGameMapJson() {
-        return gameMapJson;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameMapJson</code>.</p>
-     *
-     * @param gameMapJson gameMapJson
-     */
-    public void setGameMapJson(GameMapJson gameMapJson) {
-        this.gameMapJson = gameMapJson;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameMapInfoJson</code>.</p>
-     *
-     * @return return
-     */
-    public GameMapInfoJson getGameMapInfoJson() {
-        return gameMapInfoJson;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameMapInfoJson</code>.</p>
-     *
-     * @param gameMapInfoJson gameMapInfoJson
-     */
-    public void setGameMapInfoJson(GameMapInfoJson gameMapInfoJson) {
-        this.gameMapInfoJson = gameMapInfoJson;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameTiles</code>.</p>
-     *
-     * @return return
-     */
-    public ArrayList<GameTile> getGameTiles() {
-        return gameTiles;
-    }
-
-    /**
-     * <p>Getter for the field <code>eventUnits</code>.</p>
-     *
-     * @return return
-     */
-    public ArrayList<EventUnit> getEventUnits() {
-        return eventUnits;
     }
 
 
