@@ -44,7 +44,7 @@ import lombok.ToString;
  * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an Entity.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

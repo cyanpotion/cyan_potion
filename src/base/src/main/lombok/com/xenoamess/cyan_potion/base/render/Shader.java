@@ -48,7 +48,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Shader class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

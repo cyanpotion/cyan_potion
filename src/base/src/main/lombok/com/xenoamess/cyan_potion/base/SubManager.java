@@ -42,7 +42,7 @@ import java.io.Closeable;
  * some of them are not named this way, due to historical or other reasons.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

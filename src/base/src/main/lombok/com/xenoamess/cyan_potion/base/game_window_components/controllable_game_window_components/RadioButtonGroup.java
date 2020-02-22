@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * a manager of a group of radio buttons, and operations / management.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  * @see RadioButton
  */
 @EqualsAndHashCode

@@ -52,7 +52,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Keymap class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.161.0</version>
+    <version>0.161.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -90,7 +90,7 @@
         <eclipse-collections.version>10.2.0</eclipse-collections.version>
         <guava.version>28.2-jre</guava.version>
         <jackson.version>2.10.2</jackson.version>
-        <joml.version>1.9.20</joml.version>
+        <joml.version>1.9.21</joml.version>
         <log4j.version>2.13.0</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>

@@ -45,7 +45,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @Data
 public class KeyboardEvent implements Event {

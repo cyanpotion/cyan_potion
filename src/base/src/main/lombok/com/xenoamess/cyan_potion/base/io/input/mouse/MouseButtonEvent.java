@@ -47,7 +47,7 @@ import java.util.Set;
  * <p>MouseButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1-SNAPSHOT
  */
 @Data
 public class MouseButtonEvent implements Event {
