@@ -101,9 +101,9 @@ public class SteamImage {
         if (this.imageBuffer != null) {
             return this.imageBuffer;
         }
-        ByteBuffer imageBuffer = ByteBuffer.allocateDirect(this.getWidth(steamUtils) * this.getHeight(steamUtils) * 4);
-        if (steamUtils.getImageRGBA(getImageHandle(), imageBuffer)) {
-            this.imageBuffer = imageBuffer;
+        ByteBuffer imageBufferLocal = ByteBuffer.allocateDirect(this.getWidth(steamUtils) * this.getHeight(steamUtils) * 4);
+        if (steamUtils.getImageRGBA(getImageHandle(), imageBufferLocal)) {
+            this.imageBuffer = imageBufferLocal;
         }
         return this.imageBuffer;
     }
