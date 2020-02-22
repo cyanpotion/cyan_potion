@@ -449,7 +449,7 @@ public final class World extends AbstractEntityScene {
     }
 
 
-    static final float cameraLerp = 0.05f;
+    public static final float CAMERA_LERP = 0.05f;
 
     /**
      * {@inheritDoc}
