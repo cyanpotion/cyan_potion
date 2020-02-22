@@ -72,17 +72,17 @@ public class SteamCallbacks {
 
         @Override
         public void onValidateAuthTicket(SteamID steamID, SteamAuth.AuthSessionResponse authSessionResponse, SteamID ownerSteamID) {
-
+            //do nothing
         }
 
         @Override
         public void onMicroTxnAuthorization(int appID, long orderID, boolean authorized) {
-
+            //do nothing
         }
 
         @Override
         public void onEncryptedAppTicket(SteamResult result) {
-
+            //do nothing
         }
     };
 
@@ -238,12 +238,12 @@ public class SteamCallbacks {
     private SteamRemoteStorageCallback steamRemoteStorageCallback = new SteamRemoteStorageCallback() {
         @Override
         public void onFileWriteAsyncComplete(SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onFileReadAsyncComplete(SteamAPICall fileReadAsync, SteamResult result, int offset, int read) {
-
+            //do nothing
         }
 
         @Override
@@ -283,17 +283,17 @@ public class SteamCallbacks {
 
         @Override
         public void onPublishedFileSubscribed(SteamPublishedFileID publishedFileID, int appID) {
-
+            //do nothing
         }
 
         @Override
         public void onPublishedFileUnsubscribed(SteamPublishedFileID publishedFileID, int appID) {
-
+            //do nothing
         }
 
         @Override
         public void onPublishedFileDeleted(SteamPublishedFileID publishedFileID, int appID) {
-
+            //do nothing
         }
     };
 
@@ -333,32 +333,32 @@ public class SteamCallbacks {
 
         @Override
         public void onCreateItem(SteamPublishedFileID publishedFileID, boolean needsToAcceptWLA, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onSubmitItemUpdate(SteamPublishedFileID publishedFileID, boolean needsToAcceptWLA, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onDownloadItemResult(int appID, SteamPublishedFileID publishedFileID, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onUserFavoriteItemsListChanged(SteamPublishedFileID publishedFileID, boolean wasAddRequest, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onSetUserItemVote(SteamPublishedFileID publishedFileID, boolean voteUp, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onGetUserItemVote(SteamPublishedFileID publishedFileID, boolean votedUp, boolean votedDown, boolean voteSkipped, SteamResult result) {
-
+            //do nothing
         }
 
         private void printUGCDetails(String prefix, SteamUGCDetails details) {
@@ -377,22 +377,22 @@ public class SteamCallbacks {
 
         @Override
         public void onStartPlaytimeTracking(SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onStopPlaytimeTracking(SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onStopPlaytimeTrackingForAllItems(SteamResult result) {
-
+            //do nothing
         }
 
         @Override
         public void onDeleteItem(SteamPublishedFileID publishedFileID, SteamResult result) {
-
+            //do nothing
         }
     };
 
@@ -401,7 +401,7 @@ public class SteamCallbacks {
     private SteamFriendsCallback steamFriendsCallback = new SteamFriendsCallback() {
         @Override
         public void onSetPersonaNameResponse(boolean success, boolean localSuccess, SteamResult result) {
-
+            //do nothing
         }
 
         @Override
@@ -425,32 +425,32 @@ public class SteamCallbacks {
 
         @Override
         public void onGameOverlayActivated(boolean active) {
-
+            //do nothing
         }
 
         @Override
         public void onGameLobbyJoinRequested(SteamID steamIDLobby, SteamID steamIDFriend) {
-
+//do nothing
         }
 
         @Override
         public void onAvatarImageLoaded(SteamID steamID, int image, int width, int height) {
-
+            //do nothing
         }
 
         @Override
         public void onFriendRichPresenceUpdate(SteamID steamIDFriend, int appID) {
-
+            //do nothing
         }
 
         @Override
         public void onGameRichPresenceJoinRequested(SteamID steamIDFriend, String connect) {
-
+            //do nothing
         }
 
         @Override
         public void onGameServerChangeRequested(String server, String password) {
-
+            //do nothing
         }
     };
 

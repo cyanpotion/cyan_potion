@@ -45,6 +45,7 @@ public class GameManagerConfig {
      * Don't let anyone instantiate this class.
      */
     private GameManagerConfig() {
+        //shall never
     }
 
     /**

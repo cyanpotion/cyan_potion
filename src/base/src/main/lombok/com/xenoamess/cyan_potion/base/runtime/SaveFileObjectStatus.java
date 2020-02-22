@@ -55,6 +55,7 @@ public class SaveFileObjectStatus {
      * <p>Constructor for SaveFileObjectStatus.</p>
      */
     public SaveFileObjectStatus() {
+        //do nothing
     }
 
     /**

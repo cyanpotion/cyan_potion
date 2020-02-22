@@ -249,6 +249,7 @@ public class WaveData {
         try {
             ais.close();
         } catch (IOException ioe) {
+            //do nothing
         }
 
         return wavedata;

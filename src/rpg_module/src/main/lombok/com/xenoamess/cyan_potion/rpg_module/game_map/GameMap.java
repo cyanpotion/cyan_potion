@@ -135,6 +135,7 @@ public class GameMap {
         try (InputStream inputStream = gameMapInfosFile.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameMapInfoJson>>() {
+                        //do nothing
                     });
         } catch (IOException e) {
             LOGGER.error("GameMap.getGameMapInfoJsons(ObjectMapper objectMapper, FileObject gameMapInfosFile):{},{}",

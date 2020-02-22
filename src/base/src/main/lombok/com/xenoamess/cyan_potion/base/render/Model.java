@@ -82,7 +82,7 @@ public class Model implements Closeable {
      * <p>Constructor for Model.</p>
      */
     public Model() {
-
+        //do nothing
     }
 
     /**

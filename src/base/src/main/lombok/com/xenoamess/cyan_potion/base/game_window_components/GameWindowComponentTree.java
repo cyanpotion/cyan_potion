@@ -191,7 +191,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindow gameWindow
      */
     public void init(GameWindow gameWindow) {
-
+        //do nothing
     }
 
     /**

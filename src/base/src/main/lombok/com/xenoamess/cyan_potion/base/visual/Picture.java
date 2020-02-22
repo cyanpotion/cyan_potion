@@ -56,7 +56,7 @@ public class Picture extends AbstractBindablePicture {
      * <p>Constructor for Picture.</p>
      */
     public Picture() {
-
+        //do nothing
     }
 
     /**

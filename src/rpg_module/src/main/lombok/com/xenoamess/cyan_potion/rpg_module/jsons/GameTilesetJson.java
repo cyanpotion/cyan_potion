@@ -71,6 +71,7 @@ public class GameTilesetJson implements Serializable {
         try (InputStream inputStream = gameTileSetsFileObject.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameTilesetJson>>() {
+                        //do nothing
                     }
             );
         } catch (IOException e) {

@@ -32,6 +32,7 @@ package com.xenoamess.cyan_potion.base.areas;
  */
 public class Areas {
     private Areas() {
+        //shall never
     }
 
     /**

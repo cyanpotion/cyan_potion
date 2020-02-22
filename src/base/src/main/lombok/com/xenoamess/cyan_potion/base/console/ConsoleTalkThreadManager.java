@@ -145,7 +145,7 @@ public class ConsoleTalkThreadManager extends SubManager {
 
                 @Override
                 public void failed(Throwable exc, Void att) {
-
+                    //do nothing
                 }
             });
         } catch (IOException e) {

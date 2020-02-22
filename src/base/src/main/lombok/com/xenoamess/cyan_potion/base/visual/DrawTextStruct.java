@@ -67,7 +67,7 @@ public class DrawTextStruct {
      * <p>Constructor for DrawTextStruct.</p>
      */
     public DrawTextStruct() {
-
+        //do nothing
     }
 
     /**

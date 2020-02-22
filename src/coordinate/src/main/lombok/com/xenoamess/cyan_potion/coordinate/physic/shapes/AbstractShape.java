@@ -128,6 +128,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
             excludeMethod = AbstractShape.class.getMethod(
                     STRING_RELATION, AbstractShape.class, boolean.class);
         } catch (NoSuchMethodException e) {
+            //do nothing
         }
 
         Method method = null;
@@ -138,6 +139,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
                 method = null;
             }
         } catch (NoSuchMethodException e) {
+            //do nothing
         }
 
         if (method != null) {
@@ -158,6 +160,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
                 method = null;
             }
         } catch (NoSuchMethodException e) {
+            //do nothing
         }
 
         if (method != null) {

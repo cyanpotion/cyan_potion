@@ -49,6 +49,7 @@ public class ClipboardUtil {
      * Don't let anyone instantiate this class.
      */
     private ClipboardUtil() {
+        //shall never
     }
 
     /**

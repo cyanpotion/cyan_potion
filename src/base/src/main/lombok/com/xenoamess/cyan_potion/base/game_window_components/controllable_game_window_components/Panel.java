@@ -60,6 +60,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
         @Override
         protected void initProcessors() {
+            //do nothing
         }
     });
 

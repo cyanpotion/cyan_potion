@@ -63,7 +63,7 @@ public class GameTile {
      * <p>Constructor for GameTile.</p>
      */
     public GameTile() {
-
+        //do nothing
     }
 
 
