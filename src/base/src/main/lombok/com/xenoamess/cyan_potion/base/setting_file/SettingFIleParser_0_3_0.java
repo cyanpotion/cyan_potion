@@ -189,6 +189,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readViews(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         gameSettings.setLogicWindowWidth(
                 Integer.parseInt(
                         getString(
