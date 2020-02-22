@@ -43,6 +43,7 @@ public class GrammarMap {
     private static transient final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
 
     private GrammarMap() {
+        //shall never
     }
 
     private static final Map<Integer, String> METHOD_NUM_TO_METHOD_NAME_MAP =

@@ -32,6 +32,7 @@ package com.xenoamess.cyan_potion.rpg_module.event_unit_program_language_grammar
  */
 public class Grammar {
     private Grammar() {
+        //shall never
     }
 
     //Coding is so hard that I do hard coding
