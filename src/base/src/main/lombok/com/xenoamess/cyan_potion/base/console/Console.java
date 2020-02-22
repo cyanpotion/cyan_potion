@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>Console class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0-SNAPSHOT
+ * @version 0.161.0
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);

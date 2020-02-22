@@ -16,4 +16,7 @@ cd ../
 cd ./demo
 call mvn javadoc:fix
 
+cd ../
+cd ../
+delete_delombok.cmd
 pause

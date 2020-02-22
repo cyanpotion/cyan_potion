@@ -60,7 +60,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.161.0-SNAPSHOT
+ * @version 0.161.0
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

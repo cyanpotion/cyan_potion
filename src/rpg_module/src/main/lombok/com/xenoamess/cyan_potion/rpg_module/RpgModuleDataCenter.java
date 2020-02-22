@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * <p>RpgModuleDataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0-SNAPSHOT
+ * @version 0.161.0
  */
 @EqualsAndHashCode
 @ToString

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settingFile settingFormatVersion="0.3.0">
-    <commonSettings gameName="CyanPotionRpgModuleDemo" gameVersion="0.161.0-SNAPSHOT" titleTextID="0"
+    <commonSettings gameName="CyanPotionRpgModuleDemo" gameVersion="0.161.0" titleTextID="0"
                     textFilePath="resources/text/text.x8l"
                     defaultFontResourceURI="[&quot;com.xenoamess.cyan_potion.base.visual.Font&quot;,&quot;ttfFile&quot;,&quot;resources/www/fonts/SourceHanSans-Normal.ttc&quot;]"
                     language="english" gameWindowClassName="com.xenoamess.cyan_potion.base.GameWindow"
