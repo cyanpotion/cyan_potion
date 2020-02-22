@@ -27,8 +27,8 @@ package com.xenoamess.cyan_potion.coordinate.entity;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * <p>StaticEntity class.</p>
@@ -36,6 +36,8 @@ import java.util.Objects;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class StaticEntity extends AbstractEntity {
 
     /**
@@ -67,30 +69,4 @@ public class StaticEntity extends AbstractEntity {
                 shape
         );
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StaticEntity that = (StaticEntity) o;
-        return Float.compare(that.getLeftTopPosX(), getLeftTopPosX()) == 0 &&
-                Float.compare(that.getLeftTopPosY(), getLeftTopPosY()) == 0 &&
-                Float.compare(that.getWidth(), getWidth()) == 0 &&
-                Float.compare(that.getHeight(), getHeight()) == 0 &&
-                Objects.equals(getScene(), that.getScene()) &&
-                Objects.equals(getShape(), that.getShape()) &&
-                Objects.equals(getPicture(), that.getPicture());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getScene(), getLeftTopPosX(), getLeftTopPosY(), getWidth(), getHeight(), getShape(), getPicture());
-    }
-
 }
