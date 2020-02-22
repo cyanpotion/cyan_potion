@@ -31,6 +31,10 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.EventUnitJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.ImageJson;
 import com.xenoamess.cyan_potion.rpg_module.jsons.PageJson;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +45,16 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class EventUnit extends Unit {
+
+    @Getter
+    @Setter
     private EventUnitJson eventUnitJson;
+
+    @Getter
+    @Setter
     private List<EventPage> eventPages = new ArrayList<>();
 
     /**
@@ -80,39 +92,4 @@ public class EventUnit extends Unit {
     }
 
 
-    /**
-     * <p>Getter for the field <code>eventUnitJson</code>.</p>
-     *
-     * @return return
-     */
-    public EventUnitJson getEventUnitJson() {
-        return eventUnitJson;
-    }
-
-    /**
-     * <p>Setter for the field <code>eventUnitJson</code>.</p>
-     *
-     * @param eventUnitJson eventUnitJson
-     */
-    public void setEventUnitJson(EventUnitJson eventUnitJson) {
-        this.eventUnitJson = eventUnitJson;
-    }
-
-    /**
-     * <p>Getter for the field <code>eventPages</code>.</p>
-     *
-     * @return return
-     */
-    public List<EventPage> getEventPages() {
-        return eventPages;
-    }
-
-    /**
-     * <p>Setter for the field <code>eventPages</code>.</p>
-     *
-     * @param eventPages eventPages
-     */
-    public void setEventPages(List<EventPage> eventPages) {
-        this.eventPages = eventPages;
-    }
 }
