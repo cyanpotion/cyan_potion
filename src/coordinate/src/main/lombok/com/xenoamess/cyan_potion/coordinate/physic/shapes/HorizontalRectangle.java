@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.joml.Vector3f;
 
 /**
@@ -34,6 +36,8 @@ import org.joml.Vector3f;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class HorizontalRectangle extends AbstractShape {
     /**
      * <p>Constructor for HorizontalRectangle.</p>

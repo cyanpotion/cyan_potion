@@ -26,7 +26,9 @@ package com.xenoamess.cyan_potion.coordinate.physic.shapes;
 
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
-import org.apache.commons.collections4.CollectionUtils;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -40,7 +42,11 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class ShapeGroup extends AbstractShape {
+
+    @Getter
     private final List<AbstractShape> shapes = new ArrayList<>();
 
     /**
@@ -151,36 +157,5 @@ public class ShapeGroup extends AbstractShape {
             }
         }
         return false;
-    }
-
-    /**
-     * <p>Getter for the field <code>shapes</code>.</p>
-     *
-     * @return return
-     */
-    public List<AbstractShape> getShapes() {
-        return shapes;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return this.getShapes().hashCode() + 1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (!(object instanceof ShapeGroup)) {
-            return false;
-        }
-        return CollectionUtils.isEqualCollection(this.getShapes(), ((ShapeGroup) object).getShapes());
     }
 }

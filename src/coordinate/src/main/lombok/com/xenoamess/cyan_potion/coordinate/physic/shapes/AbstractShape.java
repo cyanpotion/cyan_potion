@@ -31,6 +31,10 @@ import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation;
 import com.xenoamess.cyan_potion.coordinate.physic.shape_relation_judges.ShapeRelationJudge;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joml.Vector3f;
@@ -40,7 +44,10 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
@@ -53,6 +60,8 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractShape implements AbstractMutableArea {
     @JsonIgnore
     private static transient final Logger LOGGER =
@@ -63,13 +72,23 @@ public abstract class AbstractShape implements AbstractMutableArea {
      */
     public static final String STRING_RELATION = "relation";
 
-    private AbstractEntity entity;
-    private Vector3f centerPos;
-    private Vector3f size;
-
-
-    private static Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
+    @Getter
+    private static final Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
             shapeRelationJudges = new ConcurrentHashMap<>();
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
+    private AbstractEntity entity;
+
+    @Getter
+    @Setter
+    private Vector3f centerPos;
+
+    @Getter
+    @Setter
+    private Vector3f size;
 
     /**
      * <p>Constructor for AbstractShape.</p>
@@ -418,96 +437,6 @@ public abstract class AbstractShape implements AbstractMutableArea {
         } else {
             return false;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof AbstractShape)) {
-            return false;
-        }
-        AbstractShape that = (AbstractShape) o;
-        return Objects.equals(getEntity(), that.getEntity()) &&
-                Objects.equals(getCenterPos(), that.getCenterPos()) &&
-                Objects.equals(getSize(), that.getSize());
-    }
-
-    /**
-     * <p>Getter for the field <code>entity</code>.</p>
-     *
-     * @return return
-     */
-    public AbstractEntity getEntity() {
-        return entity;
-    }
-
-    /**
-     * <p>Setter for the field <code>entity</code>.</p>
-     *
-     * @param entity entity
-     */
-    public void setEntity(AbstractEntity entity) {
-        this.entity = entity;
-    }
-
-    /**
-     * <p>Getter for the field <code>centerPos</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getCenterPos() {
-        return centerPos;
-    }
-
-    /**
-     * <p>Setter for the field <code>centerPos</code>.</p>
-     *
-     * @param centerPos centerPos
-     */
-    public void setCenterPos(Vector3f centerPos) {
-        this.centerPos = centerPos;
-    }
-
-    /**
-     * <p>Getter for the field <code>size</code>.</p>
-     *
-     * @return return
-     */
-    public Vector3f getSize() {
-        return size;
-    }
-
-    /**
-     * <p>Setter for the field <code>size</code>.</p>
-     *
-     * @param size size
-     */
-    public void setSize(Vector3f size) {
-        this.size = size;
-    }
-
-    /**
-     * <p>Getter for the field <code>shapeRelationJudges</code>.</p>
-     *
-     * @return return
-     */
-    public static Map<ImmutablePair<Class, Class>, ShapeRelationJudge> getShapeRelationJudges() {
-        return shapeRelationJudges;
-    }
-
-    /**
-     * <p>Setter for the field <code>shapeRelationJudges</code>.</p>
-     *
-     * @param shapeRelationJudges shapeRelationJudges
-     */
-    public static void setShapeRelationJudges(Map<ImmutablePair<Class,
-            Class>, ShapeRelationJudge> shapeRelationJudges) {
-        AbstractShape.shapeRelationJudges = shapeRelationJudges;
     }
 
     /**
