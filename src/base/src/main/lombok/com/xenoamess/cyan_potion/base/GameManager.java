@@ -94,69 +94,86 @@ public class GameManager implements Closeable {
     private final AtomicBoolean alive = new AtomicBoolean(false);
 
     private final AtomicBoolean ifSolvingEventList = new AtomicBoolean();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter(AccessLevel.PROTECTED)
     private final List<Event> eventList = new ArrayList<>();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter(AccessLevel.PROTECTED)
     private final List<Event> eventListCache = new ArrayList<>();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     @AsFinalField
     private ConsoleTalkThreadManager consoleTalkThreadManager;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     @AsFinalField
     private GameWindow gameWindow;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final Callbacks callbacks = new Callbacks(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final DataCenter dataCenter = new DataCenter(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final CodePluginManager codePluginManager = new CodePluginManager();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final Keymap keymap = new Keymap();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final GamepadInputManager gamepadInputManager = new GamepadInputManager(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final GameWindowComponentTree gameWindowComponentTree = new GameWindowComponentTree(this);
+
     @Getter
     @Setter
     private long nowFrameIndex = 0L;
+
     @Getter
     private final Map<String, String> argsMap = new HashMap<>();
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final AudioManager audioManager = new AudioManager(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final ResourceManager resourceManager = new ResourceManager(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final RuntimeManager runtimeManager = new RuntimeManager(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
     private final SaveManager saveManager = new SaveManager(this);
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter

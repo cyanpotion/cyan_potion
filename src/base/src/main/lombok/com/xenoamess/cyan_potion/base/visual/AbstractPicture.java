@@ -37,26 +37,30 @@ import org.joml.Vector4fc;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
-@Getter
-@Setter
 @EqualsAndHashCode
 @ToString
 public abstract class AbstractPicture implements AbstractPictureInterface {
+
     @Getter
     @Setter
     private float leftTopPosX = Float.NaN;
+
     @Getter
     @Setter
     private float leftTopPosY = Float.NaN;
+
     @Getter
     @Setter
     private float width = Float.NaN;
+
     @Getter
     @Setter
     private float height = Float.NaN;
+
     @Getter
     @Setter
     private final Vector4f colorScale = new Vector4f(1, 1, 1, 1);
+
     @Getter
     @Setter
     private float rotateRadius = 0f;

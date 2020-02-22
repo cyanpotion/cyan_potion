@@ -71,6 +71,7 @@ import static org.lwjgl.stb.STBTruetype.*;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class Font extends AbstractResource {
+
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
@@ -126,6 +127,7 @@ public class Font extends AbstractResource {
     @Setter
     @AsFinalField
     private static Font defaultFont;
+
     @Getter(onMethod_ = {@Synchronized})
     @Setter(onMethod_ = {@Synchronized})
     private static Font currentFont;
@@ -137,9 +139,11 @@ public class Font extends AbstractResource {
     @Getter
     @Setter
     private final STBTTAlignedQuad q = STBTTAlignedQuad.malloc();
+
     @Getter
     @Setter
     private final FloatBuffer xb = MemoryUtil.memAllocFloat(1);
+
     @Getter
     @Setter
     private final FloatBuffer yb = MemoryUtil.memAllocFloat(1);

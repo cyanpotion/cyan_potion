@@ -49,10 +49,13 @@ import java.util.Vector;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class Panel extends AbstractControllableGameWindowComponent {
+
     @Getter
     private final List<AbstractGameWindowComponent> contents = new Vector<>();
+
     @Getter
     private final Picture backgroundPicture = new Picture();
+
     @Getter(AccessLevel.PROTECTED)
     private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
         @Override

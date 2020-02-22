@@ -65,12 +65,15 @@ public class WaveData extends AbstractResource {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
+
     @Getter
     @Setter
     private int alBufferInt = -1;
+
     @Getter
     @Setter
     private int format = -1;
+
     @Getter
     @Setter
     private int sampleRate = -1;

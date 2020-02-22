@@ -100,12 +100,15 @@ public class DataCenter extends SubManager {
     @Getter
     @Setter
     private boolean usingJXInput = false;
+
     @Getter
     @Setter
     private X8lTree patchSettingsTree;
+
     @Getter
     @Setter
     private MultiLanguageStructure textStructure;
+
     @Getter
     @Setter
     @AsFinalField

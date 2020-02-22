@@ -40,18 +40,22 @@ import java.util.List;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class Animation extends AbstractPicture {
+
     @Getter
     @Setter
     private int texturePointer;
+
     @Getter
     @Setter
     private long lastTime = System.currentTimeMillis();
+
     @Getter
     @Setter
     private float fps;
+
     @Getter
     private final List<AbstractPictureInterface> frames = new ArrayList<>();
 

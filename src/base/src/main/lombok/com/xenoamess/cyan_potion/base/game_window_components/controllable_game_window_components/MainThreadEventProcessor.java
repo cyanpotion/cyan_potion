@@ -48,6 +48,7 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
     @ToString.Exclude
     @Getter
     private final GameManager gameManager;
+
     @Getter
     @Setter
     private EventProcessor<? super T> processor;

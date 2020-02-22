@@ -44,9 +44,11 @@ import org.joml.Vector4fc;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public abstract class AbstractScene extends AbstractGameWindowComponent {
+
     @Getter
     @Setter
     private Camera camera = new Camera(0, 0);
+
     @Getter
     @Setter
     private float scale;

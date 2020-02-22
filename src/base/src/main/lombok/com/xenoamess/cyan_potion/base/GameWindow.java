@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
@@ -89,35 +90,46 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     @Getter
     @Setter
     private long window;
+
     @Getter
     @Setter
     private int logicWindowWidth = 1280;
+
     @Getter
     @Setter
     private int logicWindowHeight = 1024;
+
     @Getter
     @Setter
     private int realWindowWidth = 1280;
+
     @Getter
     @Setter
     private int realWindowHeight = 1024;
+
     @Getter
     @Setter
     private boolean fullScreen;
+
     @Getter
     @Setter
     private Shader shader;
+
     @Getter
     @Setter
     private boolean showing = false;
+
     @Getter
     @Setter
     private boolean beingFocused = false;
+
+    @AsFinalField
     private GLFWErrorCallback glfwErrorCallback;
 
     @Getter
     @Setter
     private float lastMousePosX;
+
     @Getter
     @Setter
     private float lastMousePosY;

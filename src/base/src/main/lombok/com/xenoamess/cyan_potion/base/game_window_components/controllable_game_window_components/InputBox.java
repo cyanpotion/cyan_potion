@@ -63,32 +63,41 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * Constant <code>NEXT_LINE_STRING="\n"</code>
      */
     public static final String NEXT_LINE_STRING = "\n";
+
     /**
      * the time between every single slash shines.
      */
     @Getter
     @Setter
     private long cursorShineTime = 1000L;
+
     @Getter
     @Setter
     private String contentString = "";
+
     @Getter
     @Setter
     private int nowInsertPos = 0;
+
     @Getter
     @Setter
     private int nowSelectStartPos = -1;
+
     @Getter
     @Setter
     private int nowSelectEndPos = -1;
+
     @Getter
     @Setter
     private float charHeight =
             20.0f / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
 
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);
+
     private final Vector4f textSelectColor = new Vector4f(0.3f, 0.5f, 0.5f, 1);
+
     private final Vector4f cursorColor = new Vector4f(1f, 1f, 1f, 1);
+
     /**
      * if allowMultiLine is true then this InputBox allows multiline.
      * otherwise does not allow multiLine(all contents must be in one line. all /n will be deleted).
@@ -104,6 +113,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * and only chars in {@link #allowCharSet} are allowed in this InputBox.
      */
     private final AtomicBoolean useAllowCharSet = new AtomicBoolean(true);
+
     /**
      * @see #useAllowCharSet
      */

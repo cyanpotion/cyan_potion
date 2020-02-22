@@ -60,8 +60,10 @@ public final class Logo extends AbstractGameWindowComponent {
                     );
 
     private final Picture logoPicture;
+
     @Getter
     private final long lifeTime;
+
     @Getter
     private final long dieTimeStamp;
 

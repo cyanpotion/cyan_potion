@@ -43,21 +43,27 @@ import org.joml.Vector4fc;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class TextPicture extends AbstractPicture {
+
     @Getter
     @Setter
     private float centerPosX = Float.NaN;
+
     @Getter
     @Setter
     private float centerPosY = Float.NaN;
+
     @Getter
     @Setter
     private Font font = Font.getCurrentFont();
+
     @Getter
     @Setter
     private float characterSpace = Float.NaN;
+
     @Getter
     @Setter
     private final Vector4f color = new Vector4f(Colors.BLACK);
+
     @Getter
     @Setter
     private String text = "";

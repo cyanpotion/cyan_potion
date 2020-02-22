@@ -48,12 +48,16 @@ public class GameWindowComponentTreeNode implements Closeable {
     @ToString.Exclude
     @Getter
     private final GameWindowComponentTree gameWindowComponentTree;
+
     @Getter
     private final GameWindowComponentTreeNode parent;
+
     @Getter
     private final AbstractGameWindowComponent gameWindowComponent;
+
     @Getter
     private final int depth;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter

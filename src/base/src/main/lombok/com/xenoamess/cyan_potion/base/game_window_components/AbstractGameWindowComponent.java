@@ -70,6 +70,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     @ToString.Exclude
     @Getter
     private final GameWindow gameWindow;
+
     private final AtomicBoolean alive = new AtomicBoolean(true);
 
     @EqualsAndHashCode.Exclude
@@ -81,6 +82,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     @Getter
     @Setter
     private float leftTopPosX = Float.NaN;
+
     @Getter
     @Setter
     private float leftTopPosY = Float.NaN;

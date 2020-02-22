@@ -48,11 +48,14 @@ import org.joml.Vector4fc;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class Button extends AbstractControllableGameWindowComponent {
+
     @Getter
     private final Picture buttonPicture = new Picture();
+
     @Getter
     @Setter
     private String buttonText;
+
     /**
      * color of the buttonText drawn.
      */

@@ -193,13 +193,17 @@ public class ResourceManager extends SubManager {
 
     @Getter
     private final GameManager gameManager;
+
     @Getter
     @Setter
     private long totalMemorySize = 0;
+
     @Getter
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
+
     @Getter
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
+
     @Getter
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 

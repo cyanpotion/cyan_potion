@@ -87,9 +87,11 @@ public final class TitleExample extends AbstractGameWindowComponent {
     @Getter
     private final ArrayList<AbstractControllableGameWindowComponent> controllableGameWindowComponents =
             new ArrayList<>();
+
     @Getter
     @Setter
     private int state = 0;
+
     @Getter
     @Setter
     private int time = 0;

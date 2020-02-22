@@ -48,15 +48,19 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class TextBox extends AbstractControllableGameWindowComponent {
+
     @Getter
     @Setter
     private boolean wordWrap;
+
     @Getter
     @Setter
     private String contentString = "";
+
     @Getter
     @Setter
     private float charHeight = 20.0f;
+
     @Getter
     @Setter
     private final Vector4f textColor = new Vector4f(1, 1, 1, 1);

@@ -61,8 +61,10 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
+
     @Getter
     private final long lifeTime;
+
     @Getter
     private final long dieTimeStamp;
 

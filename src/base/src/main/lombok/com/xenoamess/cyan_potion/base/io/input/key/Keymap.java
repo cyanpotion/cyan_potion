@@ -113,16 +113,19 @@ public class Keymap {
      */
     public static final int XENOAMESS_MOUSE_BUTTON_MIDDLE =
             GLFW_KEY_LAST + 1 + GLFW_MOUSE_BUTTON_MIDDLE;
+
     /**
      * the map to convert raw-key-type to my-key-type
      */
     @Getter
     private final Map<Key, Key> keymap = new ConcurrentHashMap<>();
+
     /**
      * the map to convert my-key-type to raw-key-type
      */
     @Getter
     private final Map<Key, List> keymapReverse = new ConcurrentHashMap<>();
+
     @Getter
     private final AtomicBoolean[][] rawKeys =
             new AtomicBoolean[][]{
@@ -130,6 +133,7 @@ public class Keymap {
                     fillNewSelf(new AtomicBoolean[GLFW_MOUSE_BUTTON_LAST + 1]),
                     fillNewSelf(new AtomicBoolean[GLFW_JOYSTICK_LAST + 1]),
                     fillNewSelf(new AtomicBoolean[JXInputGamepadData.JXINPUT_KEY_LAST + 1])};
+
     @Getter
     private final AtomicBoolean[] myKeys = fillNewSelf(new AtomicBoolean[2000]);
 

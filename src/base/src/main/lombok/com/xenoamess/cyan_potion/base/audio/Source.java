@@ -66,21 +66,27 @@ public class Source implements Closeable {
     @Getter
     @Setter
     private float volume;
+
     @Getter
     @Setter
     private float pitch;
+
     @Getter
     @Setter
     private Vector3f position;
+
     @Getter
     @Setter
     private Vector3f velocity;
+
     @Getter
     @Setter
     private boolean relative;
+
     @Getter
     @Setter
     private float rollOffFactor;
+
     @Getter
     @Setter
     private boolean looping;

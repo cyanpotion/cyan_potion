@@ -54,8 +54,10 @@ import java.util.*;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class GameWindowComponentTree extends SubManager {
+
     @Getter
     private GameWindowComponentTreeNode root;
+
     private final Set<GameWindowComponentTreeNode> leafNodes = new HashSet<>();
 
     /**

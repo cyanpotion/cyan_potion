@@ -57,6 +57,7 @@ public class RadioButtonsPanel extends Panel {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(RadioButtonsPanel.class);
+
     @Getter
     private final RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
 
