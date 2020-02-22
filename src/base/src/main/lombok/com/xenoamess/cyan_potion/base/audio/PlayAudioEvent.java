@@ -143,7 +143,7 @@ public class PlayAudioEvent implements MainThreadEvent {
      * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
     public PlayAudioEvent(AudioManager audioManager, WaveData waveData, Event playOverEvent) {
-        this(audioManager, null, waveData, null);
+        this(audioManager, null, waveData, playOverEvent);
     }
 
     /**
@@ -154,7 +154,7 @@ public class PlayAudioEvent implements MainThreadEvent {
      * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
     public PlayAudioEvent(AudioManager audioManager, Source source, Event playOverEvent) {
-        this(audioManager, source, null, null);
+        this(audioManager, source, null, playOverEvent);
     }
 
     /**
