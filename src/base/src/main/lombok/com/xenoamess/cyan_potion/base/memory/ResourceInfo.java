@@ -33,6 +33,8 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,21 +121,31 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode
 @JsonSerialize(using = ResourceInfoSerializer.class)
 @JsonDeserialize(using = ResourceInfoDeserializer.class)
-public class ResourceInfo<T extends AbstractResource> {
+public final class ResourceInfo<T extends AbstractResource> {
     @JsonIgnore
     private static transient final Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
 
+    @Getter
     private final Class<T> resourceClass;
+
+    @Getter
     private final String type;
+
+    @Getter
     private final String fileString;
+
+    @Getter
     private final FileObject fileObject;
+
+    @Getter
     private final String[] values;
 
 
-    private String toString;
+    private final String toString;
 
     /**
      * <p>Constructor for ResourceInfo.</p>
@@ -153,11 +165,13 @@ public class ResourceInfo<T extends AbstractResource> {
         this.fileObject = ResourceManager.resolveFile(this.getFileString());
         this.values = values;
 
+        String toString = null;
         try {
-            this.toString = getObjectMapper().writeValueAsString(this);
+            toString = getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             LOGGER.error("toString() fails, {},{}", this.getResourceClass(), this.getValues(), e);
         }
+        this.toString = toString;
     }
 
     /**
@@ -218,42 +232,6 @@ public class ResourceInfo<T extends AbstractResource> {
     @Override
     public int hashCode() {
         return this.toString().hashCode();
-    }
-
-    /**
-     * <p>Getter for the field <code>resourceClass</code>.</p>
-     *
-     * @return resourceClass
-     */
-    public Class<T> getResourceClass() {
-        return resourceClass;
-    }
-
-    /**
-     * <p>Getter for the field <code>type</code>.</p>
-     *
-     * @return type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * <p>Getter for the field <code>type</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getFileString() {
-        return fileString;
-    }
-
-    /**
-     * <p>Getter for the field <code>fileString</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public FileObject getFileObject() {
-        return fileObject;
     }
 
     /**

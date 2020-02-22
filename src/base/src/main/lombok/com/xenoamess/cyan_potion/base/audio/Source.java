@@ -46,9 +46,11 @@ import static org.lwjgl.openal.AL10.*;
 @EqualsAndHashCode
 @ToString
 public class Source implements Closeable {
+
     @Getter
     @Setter
     private int alSourceInt = -1;
+
     @Getter
     @Setter
     private WaveData currentWaveData = null;
@@ -306,5 +308,4 @@ public class Source implements Closeable {
     public int hashCode() {
         return this.getAlSourceInt();
     }
-
 }
