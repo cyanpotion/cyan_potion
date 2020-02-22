@@ -44,10 +44,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
@@ -437,6 +434,31 @@ public abstract class AbstractShape implements AbstractMutableArea {
         } else {
             return false;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AbstractShape)) {
+            return false;
+        }
+        AbstractShape that = (AbstractShape) o;
+        return getEntity() == that.getEntity() &&
+                Objects.equals(getCenterPos(), that.getCenterPos()) &&
+                Objects.equals(getSize(), that.getSize());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     /**
