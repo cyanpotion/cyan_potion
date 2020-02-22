@@ -55,6 +55,10 @@ import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -76,6 +80,8 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * @author XenoAmess
  * @version 0.161.0-SNAPSHOT
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class World extends AbstractEntityScene {
     @JsonIgnore
     private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
@@ -95,42 +101,77 @@ public final class World extends AbstractEntityScene {
      */
     public static final float MIN_SCALE = 0.01F;
 
+    @Getter
+    @Setter
     private int viewX;
+
+    @Getter
+    @Setter
     private int viewY;
 
+    @Getter
+    @Setter
     private Player player;
+
+    @Getter
+    @Setter
     private GameMap gameMap;
+
+    @Getter
+    @Setter
     private Menu menu;
+
+    @Getter
+    @Setter
     private Matrix4f scaleMatrix4f;
+
+    @Getter
+    @Setter
     private RpgModuleDataCenter rpgModuleDataCenter;
 
-    final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
 
-    final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
 
-    final GlRectfRectangleBox glRectfRectangleBox = new GlRectfRectangleBox(
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final GlRectfRectangleBox glRectfRectangleBox = new GlRectfRectangleBox(
             this.getGameWindow(),
             new Vector4f(0, 1, 1, 1)
     );
 
-    final InputBox inputBox = new InputBox(this.getGameWindow());
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final InputBox inputBox = new InputBox(this.getGameWindow());
 
-    final Texture iconTexture = new ResourceInfo<>(
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Texture iconTexture = new ResourceInfo<>(
             Texture.class,
             STRING_PICTURE,
             this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
     ).fetchResource(this.getResourceManager());
 
-    final Texture pureColorTexture = new ResourceInfo<>(
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Texture pureColorTexture = new ResourceInfo<>(
             Texture.class,
             STRING_PURE_COLOR,
             "",
             "0.5,0.5,0.5,1"
     ).fetchResource(this.getResourceManager());
 
-    final PictureBox pureColorBox = new PictureBox(this.getGameWindow(), pureColorTexture);
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final PictureBox pureColorBox = new PictureBox(this.getGameWindow(), pureColorTexture);
 
-    final Button demoButton = new Button(this.getGameWindow(), iconTexture, "DEMO");
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Button demoButton = new Button(this.getGameWindow(), iconTexture, "DEMO");
 
     {
         demoButton.registerOnMouseEnterAreaCallback(
@@ -508,129 +549,4 @@ public final class World extends AbstractEntityScene {
         return true;
     }
 
-    /**
-     * <p>Getter for the field <code>viewX</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getViewX() {
-        return viewX;
-    }
-
-    /**
-     * <p>Setter for the field <code>viewX</code>.</p>
-     *
-     * @param viewX a int.
-     */
-    public void setViewX(int viewX) {
-        this.viewX = viewX;
-    }
-
-    /**
-     * <p>Getter for the field <code>viewY</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getViewY() {
-        return viewY;
-    }
-
-    /**
-     * <p>Setter for the field <code>viewY</code>.</p>
-     *
-     * @param viewY a int.
-     */
-    public void setViewY(int viewY) {
-        this.viewY = viewY;
-    }
-
-    /**
-     * <p>Getter for the field <code>player</code>.</p>
-     *
-     * @return return
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * <p>Setter for the field <code>player</code>.</p>
-     *
-     * @param player player
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    /**
-     * <p>Getter for the field <code>gameMap</code>.</p>
-     *
-     * @return return
-     */
-    public GameMap getGameMap() {
-        return gameMap;
-    }
-
-    /**
-     * <p>Setter for the field <code>gameMap</code>.</p>
-     *
-     * @param gameMap gameMap
-     */
-    public void setGameMap(GameMap gameMap) {
-        this.gameMap = gameMap;
-    }
-
-    /**
-     * <p>Getter for the field <code>menu</code>.</p>
-     *
-     * @return return
-     */
-    public Menu getMenu() {
-        return menu;
-    }
-
-    /**
-     * <p>Setter for the field <code>menu</code>.</p>
-     *
-     * @param menu menu
-     */
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    /**
-     * <p>Getter for the field <code>scaleMatrix4f</code>.</p>
-     *
-     * @return return
-     */
-    public Matrix4f getScaleMatrix4f() {
-        return scaleMatrix4f;
-    }
-
-    /**
-     * <p>Setter for the field <code>scaleMatrix4f</code>.</p>
-     *
-     * @param scaleMatrix4f scaleMatrix4f
-     */
-    public void setScaleMatrix4f(Matrix4f scaleMatrix4f) {
-        this.scaleMatrix4f = scaleMatrix4f;
-    }
-
-    /**
-     * <p>Getter for the field <code>rpgModuleDataCenter</code>.</p>
-     *
-     * @return return
-     */
-    public RpgModuleDataCenter getRpgModuleDataCenter() {
-        return rpgModuleDataCenter;
-    }
-
-    /**
-     * <p>Setter for the field <code>rpgModuleDataCenter</code>.</p>
-     *
-     * @param rpgModuleDataCenter rpgModuleDataCenter
-     */
-    public void setRpgModuleDataCenter(RpgModuleDataCenter rpgModuleDataCenter) {
-        this.rpgModuleDataCenter = rpgModuleDataCenter;
-    }
 }
