@@ -29,6 +29,7 @@ import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
@@ -99,7 +100,7 @@ public class SteamTextureUtils {
         if (!DataCenter.ifMainThread()) {
             return false;
         }
-        assert (texture != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(texture);
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
         assert (STRING_STEAM_AVATAR.equals(resourceInfo.getType()));
         final GameManager gameManager = texture.getResourceManager().getGameManager();

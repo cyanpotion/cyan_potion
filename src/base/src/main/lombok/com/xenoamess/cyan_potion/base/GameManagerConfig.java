@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base;
 
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.exceptions.ConfigFileBooleanValueStringIsNotBooleanException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -88,8 +89,7 @@ public class GameManagerConfig {
      */
     public static int getInteger(final Map<String, String> settingMap,
                                  final String key, int defaultValue) {
-        assert (settingMap != null);
-        assert (key != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingMap, key);
         if (!settingMap.containsKey(key)) {
             return defaultValue;
         }
@@ -136,8 +136,7 @@ public class GameManagerConfig {
      */
     public static float getFloat(final Map<String, String> settingMap,
                                  final String key, float defaultValue) {
-        assert (settingMap != null);
-        assert (key != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingMap, key);
         if (!settingMap.containsKey(key)) {
             return defaultValue;
         }
@@ -195,8 +194,7 @@ public class GameManagerConfig {
      */
     public static boolean getBoolean(final Map<String, String> settingMap,
                                      final String key, boolean defaultValue) {
-        assert (settingMap != null);
-        assert (key != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingMap, key);
         if (!settingMap.containsKey(key)) {
             return defaultValue;
         }
@@ -226,8 +224,7 @@ public class GameManagerConfig {
     public static String getString(final Map<String, String> settingMap,
                                    final String key,
                                    final String defaultValue) {
-        assert (settingMap != null);
-        assert (key != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingMap, key);
         if (!settingMap.containsKey(key)) {
             return defaultValue;
         }

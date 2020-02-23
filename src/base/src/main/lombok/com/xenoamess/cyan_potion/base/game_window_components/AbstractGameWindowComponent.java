@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -202,7 +203,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
                                                                                      String gameWindowComponentClassName) {
-        assert (gameWindowComponentClassName != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentClassName);
         AbstractGameWindowComponent gameWindowComponent = null;
         try {
             gameWindowComponent =
@@ -374,7 +375,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        assert (gameWindowComponentTreeNode != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentTreeNode);
         gameWindowComponentTreeNode.newNode(this);
     }
 

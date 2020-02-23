@@ -80,7 +80,7 @@ public abstract class RuntimeVariableStruct implements Serializable {
 
     /**
      * loadFrom means copy all things from a object of same class to this.
-     * assert (runtimeVariableStruct != null);
+     * IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(runtimeVariableStruct);
      * assert (runtimeVariableStruct.getClass().equals(this.getClass()));
      *
      * @param object the object you wanna copy from
