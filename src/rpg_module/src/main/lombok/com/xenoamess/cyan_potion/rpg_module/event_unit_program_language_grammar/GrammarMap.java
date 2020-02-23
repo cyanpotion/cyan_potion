@@ -36,11 +36,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GrammarMap class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 public class GrammarMap {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(GrammarMap.class);
 
     private GrammarMap() {
         //shall never

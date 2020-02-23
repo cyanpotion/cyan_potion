@@ -48,13 +48,13 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Shader class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
 public class Shader implements Closeable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Shader.class);
 
     /**

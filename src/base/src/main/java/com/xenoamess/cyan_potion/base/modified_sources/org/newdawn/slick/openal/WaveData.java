@@ -59,7 +59,7 @@ import java.nio.ShortBuffer;
  */
 public class WaveData {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     /**
@@ -249,6 +249,7 @@ public class WaveData {
         try {
             ais.close();
         } catch (IOException ioe) {
+            //do nothing
         }
 
         return wavedata;

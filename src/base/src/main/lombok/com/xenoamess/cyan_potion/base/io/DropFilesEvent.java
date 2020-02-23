@@ -43,12 +43,12 @@ import static org.lwjgl.system.MemoryUtil.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class DropFilesEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(DropFilesEvent.class);
 
     private final long window;

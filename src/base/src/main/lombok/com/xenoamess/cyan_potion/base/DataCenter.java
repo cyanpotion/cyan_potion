@@ -39,7 +39,7 @@ import lombok.ToString;
  * <p>DataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

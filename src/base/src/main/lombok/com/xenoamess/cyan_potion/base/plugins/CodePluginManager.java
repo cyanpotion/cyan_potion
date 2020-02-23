@@ -35,19 +35,20 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Function;
 
 /**
  * <p>CodePluginManager class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
 public class CodePluginManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(CodePluginManager.class);
 
     private final EnumMap<CodePluginPosition, ArrayList<Function<GameManager, Void>>> codePluginPositionFunctionHashMap =
@@ -120,7 +121,7 @@ public class CodePluginManager {
      * @param codePluginPosition codePluginPosition
      * @return return
      */
-    public ArrayList<Function<GameManager, Void>> getCodePluginFunctions(CodePluginPosition codePluginPosition) {
+    public List<Function<GameManager, Void>> getCodePluginFunctions(CodePluginPosition codePluginPosition) {
         return codePluginPositionFunctionHashMap.get(codePluginPosition);
     }
 

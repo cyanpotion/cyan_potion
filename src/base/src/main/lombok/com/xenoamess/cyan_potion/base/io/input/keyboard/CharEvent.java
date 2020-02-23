@@ -45,12 +45,12 @@ import java.util.concurrent.atomic.AtomicLong;
  * That will always make things easier for both of us.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class CharEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(CharEvent.class);
 
     private static class EmptyCharEvent extends CharEvent implements EmptyEvent {

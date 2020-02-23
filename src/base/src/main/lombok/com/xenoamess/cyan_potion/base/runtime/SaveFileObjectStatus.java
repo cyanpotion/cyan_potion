@@ -33,13 +33,13 @@ import org.slf4j.LoggerFactory;
  * status of SaveFileObject
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see SaveFileObject
  */
 @Data
 public class SaveFileObjectStatus {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObjectStatus.class);
 
     private String version;
@@ -55,6 +55,7 @@ public class SaveFileObjectStatus {
      * <p>Constructor for SaveFileObjectStatus.</p>
      */
     public SaveFileObjectStatus() {
+        //do nothing
     }
 
     /**

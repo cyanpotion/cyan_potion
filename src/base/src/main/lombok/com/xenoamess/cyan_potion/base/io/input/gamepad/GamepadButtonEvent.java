@@ -43,12 +43,12 @@ import java.util.Set;
  * <p>GamepadButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class GamepadButtonEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadButtonEvent.class);
 
     private static class EmptyGamepadButtonEvent extends GamepadButtonEvent implements EmptyEvent {

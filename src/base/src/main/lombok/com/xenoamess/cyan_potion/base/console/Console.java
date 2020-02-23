@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>Console class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
@@ -81,9 +81,8 @@ public class Console implements Runnable {
      */
     @Override
     public void run() {
-        AsynchronousSocketChannel socketChannel = null;
-        try {
-            socketChannel = AsynchronousSocketChannel.open();
+        try (AsynchronousSocketChannel socketChannel = AsynchronousSocketChannel.open()) {
+
             InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost", this.consolePort);
             socketChannel.connect(inetSocketAddress).get();
 

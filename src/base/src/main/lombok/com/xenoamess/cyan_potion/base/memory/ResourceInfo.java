@@ -67,7 +67,7 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
 
 class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfoDeserializer.class);
 
     /**
@@ -119,14 +119,14 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @JsonSerialize(using = ResourceInfoSerializer.class)
 @JsonDeserialize(using = ResourceInfoDeserializer.class)
 public final class ResourceInfo<T extends AbstractResource> {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
 
     @Getter
@@ -165,13 +165,13 @@ public final class ResourceInfo<T extends AbstractResource> {
         this.fileObject = ResourceManager.resolveFile(this.getFileString());
         this.values = values;
 
-        String toString = null;
+        String toStringLocal = null;
         try {
-            toString = getObjectMapper().writeValueAsString(this);
+            toStringLocal = getObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             LOGGER.error("toString() fails, {},{}", this.getResourceClass(), this.getValues(), e);
         }
-        this.toString = toString;
+        this.toString = toStringLocal;
     }
 
     /**

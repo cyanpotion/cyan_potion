@@ -39,12 +39,12 @@ import java.util.Set;
  * <p>MouseScrollEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class MouseScrollEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(MouseScrollEvent.class);
 
     private static class EmptyMouseScrollEvent extends MouseScrollEvent implements EmptyEvent {

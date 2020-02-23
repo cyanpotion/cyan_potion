@@ -44,7 +44,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -60,6 +60,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
     private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
         @Override
         protected void initProcessors() {
+            //do nothing
         }
     });
 

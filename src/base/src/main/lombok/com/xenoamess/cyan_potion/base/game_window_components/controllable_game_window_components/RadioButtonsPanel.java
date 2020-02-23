@@ -49,13 +49,13 @@ import java.util.List;
  * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class RadioButtonsPanel extends Panel {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(RadioButtonsPanel.class);
 
     @Getter

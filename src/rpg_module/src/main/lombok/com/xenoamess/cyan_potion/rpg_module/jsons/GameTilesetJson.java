@@ -43,12 +43,12 @@ import java.util.List;
  * <p>GameTilesetJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class GameTilesetJson implements Serializable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameTilesetJson.class);
 
     public int id;
@@ -71,6 +71,7 @@ public class GameTilesetJson implements Serializable {
         try (InputStream inputStream = gameTileSetsFileObject.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameTilesetJson>>() {
+                        //do nothing
                     }
             );
         } catch (IOException e) {

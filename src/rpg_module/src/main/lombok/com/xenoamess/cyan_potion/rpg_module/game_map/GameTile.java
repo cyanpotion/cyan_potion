@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * <p>GameTile class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
@@ -63,7 +63,7 @@ public class GameTile {
      * <p>Constructor for GameTile.</p>
      */
     public GameTile() {
-
+        //do nothing
     }
 
 

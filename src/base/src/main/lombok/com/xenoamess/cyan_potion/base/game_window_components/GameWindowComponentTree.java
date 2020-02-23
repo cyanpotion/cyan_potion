@@ -48,7 +48,7 @@ import java.util.*;
  * Please be careful about this situation when use.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 
 @EqualsAndHashCode(callSuper = true)
@@ -191,7 +191,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindow gameWindow
      */
     public void init(GameWindow gameWindow) {
-
+        //do nothing
     }
 
     /**

@@ -37,12 +37,12 @@ import java.util.Set;
  * Not implemented yet.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class WindowResizeEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WindowResizeEvent.class);
 
     private static class EmptyWindowResizeEvent extends WindowResizeEvent implements EmptyEvent {

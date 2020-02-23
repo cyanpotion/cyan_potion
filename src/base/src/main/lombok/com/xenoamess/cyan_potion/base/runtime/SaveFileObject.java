@@ -54,7 +54,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
@@ -62,7 +62,7 @@ import java.util.List;
 @ToString
 public class SaveFileObject {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SaveFileObject.class);
 
     /**

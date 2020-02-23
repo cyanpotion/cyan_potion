@@ -49,7 +49,7 @@ import java.util.List;
  * <p>TextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 public class TextureUtils {
     /**
@@ -74,7 +74,7 @@ public class TextureUtils {
     public static final String STRING_A2 = "A2";
 
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(TextureUtils.class);
 
     private TextureUtils() {
@@ -744,7 +744,7 @@ public class TextureUtils {
                     Texture nowTexture =
                             resourceManager.fetchResource(
                                     Texture.class,
-                                    "characters",
+                                    STRING_CHARACTER,
                                     walkingTexturesFilepath,
                                     Integer.toString(k),
                                     Integer.toString(i * 3 + j)

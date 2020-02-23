@@ -45,7 +45,7 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  * <p>SettingFIleParser_0_3_0 class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -67,6 +67,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      */
     @Override
     public GameSettings parse(X8lTree settingTree) {
+        assert (settingTree != null);
         GameSettings gameSettings = new GameSettings(settingTree);
 
         readCommonSettings(gameSettings, settingTree);
@@ -86,6 +87,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readCommonSettings(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("commonSettings")
         ) {
@@ -131,6 +133,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readKeymap(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("keymap")) {
             if (getBoolean(contentNode.getAttributes(), "using")) {
@@ -168,6 +171,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readOthers(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         gameSettings.setNoConsoleThread(
                 getBoolean(gameSettings.getSpecialSettings(), STRING_NO_CONSOLE_THREAD)
         );
@@ -189,6 +193,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readViews(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         gameSettings.setLogicWindowWidth(
                 Integer.parseInt(
                         getString(
@@ -252,6 +257,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readSteamSettings(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         gameSettings.setRunWithSteam(
                 getBoolean(
                         gameSettings.getCommonSettings(),
@@ -279,6 +285,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readClassNames(GameSettings gameSettings, X8lTree settingTree) {
+        assert (settingTree != null);
         gameSettings.setGameWindowClassName(
                 getString(
                         gameSettings.getCommonSettings(),

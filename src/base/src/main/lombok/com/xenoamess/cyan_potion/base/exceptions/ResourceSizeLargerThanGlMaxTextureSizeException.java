@@ -26,6 +26,8 @@ package com.xenoamess.cyan_potion.base.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +36,12 @@ import org.slf4j.LoggerFactory;
  * <p>ResourceSizeLargerThanGlMaxTextureSizeException class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see ResourceSizeLargerThanGlMaxTextureSizeException#check
  */
 public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeException {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceSizeLargerThanGlMaxTextureSizeException.class);
 
     /**
@@ -47,7 +49,9 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      * this shall be true only if you are testing,
      * or on some very special use cases.
      */
-    protected static boolean STRICT = false;
+    @Getter
+    @Setter
+    private static boolean strict = false;
 
     /**
      * check if resource.getMemorySize() &gt; resource.getResourceManager().getMaxTextureSize()
@@ -60,7 +64,7 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
 
         if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
             ResourceSizeLargerThanGlMaxTextureSizeException exception = new ResourceSizeLargerThanGlMaxTextureSizeException(resource);
-            if (isSTRICT()) {
+            if (isStrict()) {
                 LOGGER.error(exception.getMessage(), exception);
                 throw exception;
             } else {
@@ -76,23 +80,5 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      */
     private ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
-    }
-
-    /**
-     * <p>isSTRICT.</p>
-     *
-     * @return a boolean.
-     */
-    public static boolean isSTRICT() {
-        return STRICT;
-    }
-
-    /**
-     * <p>setSTRICT.</p>
-     *
-     * @param STRICT a boolean.
-     */
-    public static void setSTRICT(boolean STRICT) {
-        ResourceSizeLargerThanGlMaxTextureSizeException.STRICT = STRICT;
     }
 }

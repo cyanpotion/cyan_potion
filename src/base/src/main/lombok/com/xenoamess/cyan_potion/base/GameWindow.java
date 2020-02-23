@@ -57,8 +57,6 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -69,13 +67,13 @@ import static org.lwjgl.opengl.GL11.*;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
 
     /**
@@ -444,43 +442,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      */
     public void pollEvents() {
         glfwPollEvents();
-//        testGlfwJoyStick();
     }
-
-    /**
-     * glfw joysticks can work but can only accept buttons
-     * but cannot set vibrations.
-     * thus this is not used and become deprecated.
-     *
-     * @since 0.142.7
-     * @deprecated
-     */
-    @Deprecated
-    public static void testGlfwJoyStick() {
-        boolean present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-        if (present) {
-            LOGGER.debug("GLFW_JOYSTICK_1 present : {}", present);
-            LOGGER.debug("GLFW_JOYSTICK_1 is gamepad : {}",
-                    glfwJoystickIsGamepad(GLFW_JOYSTICK_1));
-            FloatBuffer axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1);
-            LOGGER.debug("axes : ");
-            LOGGER.debug("0 : {}", axes.get(0));
-            LOGGER.debug("1 : {}", axes.get(1));
-            LOGGER.debug("2 : {}", axes.get(2));
-            LOGGER.debug("3 : {}", axes.get(3));
-
-            ByteBuffer buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1);
-            LOGGER.debug("buttons : ");
-            for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
-                LOGGER.debug("{} : {}", i, buttons.get(i));
-            }
-            String name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-            LOGGER.debug("GLFW_JOYSTICK_1 name : {}", name);
-            ByteBuffer hats = glfwGetJoystickHats(GLFW_JOYSTICK_1);
-            LOGGER.debug("hats : {}", hats.get(0));
-        }
-    }
-
 
     /**
      * <p>changeFullScreen.</p>

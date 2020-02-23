@@ -37,7 +37,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Model class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
@@ -82,7 +82,7 @@ public class Model implements Closeable {
      * <p>Constructor for Model.</p>
      */
     public Model() {
-
+        //do nothing
     }
 
     /**

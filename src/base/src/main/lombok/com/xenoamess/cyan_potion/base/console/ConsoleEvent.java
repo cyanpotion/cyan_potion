@@ -39,12 +39,12 @@ import java.util.Set;
  * <p>ConsoleEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class ConsoleEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ConsoleEvent.class);
 
     private static class EmptyConsoleEvent extends ConsoleEvent implements EmptyEvent {

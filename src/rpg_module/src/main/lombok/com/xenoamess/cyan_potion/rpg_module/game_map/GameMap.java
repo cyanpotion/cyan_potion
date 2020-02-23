@@ -53,13 +53,13 @@ import java.util.TreeMap;
  * <p>GameMap class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
 public class GameMap {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(GameMap.class);
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -135,6 +135,7 @@ public class GameMap {
         try (InputStream inputStream = gameMapInfosFile.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream,
                     new TypeReference<List<GameMapInfoJson>>() {
+                        //do nothing
                     });
         } catch (IOException e) {
             LOGGER.error("GameMap.getGameMapInfoJsons(ObjectMapper objectMapper, FileObject gameMapInfosFile):{},{}",

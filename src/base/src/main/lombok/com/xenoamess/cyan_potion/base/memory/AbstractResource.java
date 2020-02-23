@@ -36,19 +36,19 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
 public abstract class AbstractResource implements Closeable, Bindable {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(AbstractResource.class);
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -164,6 +164,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
             } catch (InterruptedException | ExecutionException e) {
                 result = false;
                 LOGGER.debug("load resource by load task failed! Resource:{}", this, e);
+                Thread.currentThread().interrupt();
             }
             if (!result) {
                 result = this.loadByLoadTaskOrSelf();
@@ -238,11 +239,11 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     protected boolean forceLoad() {
-        Function<AbstractResource, Boolean> loader = (Function) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
+        Predicate<AbstractResource> loader = (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }
-        return loader.apply(this);
+        return loader.test(this);
     }
 
     /**

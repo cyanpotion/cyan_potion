@@ -45,12 +45,12 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class KeyboardEvent implements Event {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(KeyboardEvent.class);
 
     private static class EmptyKeyboardEvent extends KeyboardEvent implements EmptyEvent {

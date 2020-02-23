@@ -39,7 +39,7 @@ import org.joml.Vector4fc;
  * <p>Abstract AbstractScene class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -187,7 +187,7 @@ public abstract class AbstractScene extends AbstractGameWindowComponent {
                 posY,
                 width,
                 height,
-                Model.COMMON_MODEL,
+                model,
                 colorScale,
                 0
         );

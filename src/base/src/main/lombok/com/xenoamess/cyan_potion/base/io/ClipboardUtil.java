@@ -38,17 +38,18 @@ import java.awt.datatransfer.Transferable;
  * <p>ClipboardUtil class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 public class ClipboardUtil {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ClipboardUtil.class);
 
     /**
      * Don't let anyone instantiate this class.
      */
     private ClipboardUtil() {
+        //shall never
     }
 
     /**

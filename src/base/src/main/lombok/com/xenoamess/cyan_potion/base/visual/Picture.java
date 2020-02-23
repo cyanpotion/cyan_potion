@@ -34,7 +34,7 @@ import lombok.ToString;
  * <p>Picture class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -56,7 +56,7 @@ public class Picture extends AbstractBindablePicture {
      * <p>Constructor for Picture.</p>
      */
     public Picture() {
-
+        //do nothing
     }
 
     /**

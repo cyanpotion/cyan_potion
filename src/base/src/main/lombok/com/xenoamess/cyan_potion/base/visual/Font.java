@@ -66,14 +66,14 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class Font extends AbstractResource {
 
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
 
     /**
@@ -90,7 +90,9 @@ public class Font extends AbstractResource {
      * notice that open this shall create a lot of pictures onto your disk when loading your ttf.
      * Only open it when you are debugging a new ttf file.
      */
-    public static boolean TEST_PRINT_FONT_BMP = false;
+    @Getter
+    @Setter
+    private static boolean testPrintFontBmp = false;
 
     /**
      * size of each font pic.
@@ -212,7 +214,7 @@ public class Font extends AbstractResource {
         ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 
         final ExecutorService executorService = Executors.newCachedThreadPool();
-        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<Callable<LoadBitmapPojo>>();
+        final List<Callable<LoadBitmapPojo>> returnValueList = new ArrayList<>();
         for (int i = 0; i < PIC_NUM; i++) {
             final int ti = i;
             returnValueList.add(
@@ -230,7 +232,7 @@ public class Font extends AbstractResource {
                                 stbtt_PackFontRange(pc, ttf, 0, SCALE, ti * EACH_CHAR_NUM, charDataLocal);
 
                                 stbtt_PackEnd(pc);
-                                if (TEST_PRINT_FONT_BMP) {
+                                if (testPrintFontBmp) {
                                     stbi_write_bmp("font_texture" + ti + ".bmp", BITMAP_W, BITMAP_H, 1,
                                             bitmapLocal);
                                 }

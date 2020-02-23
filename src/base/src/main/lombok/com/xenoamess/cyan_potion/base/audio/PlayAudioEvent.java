@@ -45,12 +45,12 @@ import java.util.Set;
  * if this.waveData==null, then will use source.getCurrentWaveData() as waveData
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class PlayAudioEvent implements MainThreadEvent {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(PlayAudioEvent.class);
 
     private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {
@@ -143,7 +143,7 @@ public class PlayAudioEvent implements MainThreadEvent {
      * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
     public PlayAudioEvent(AudioManager audioManager, WaveData waveData, Event playOverEvent) {
-        this(audioManager, null, waveData, null);
+        this(audioManager, null, waveData, playOverEvent);
     }
 
     /**
@@ -154,7 +154,7 @@ public class PlayAudioEvent implements MainThreadEvent {
      * @param playOverEvent a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
     public PlayAudioEvent(AudioManager audioManager, Source source, Event playOverEvent) {
-        this(audioManager, source, null, null);
+        this(audioManager, source, null, playOverEvent);
     }
 
     /**

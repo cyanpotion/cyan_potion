@@ -27,6 +27,8 @@ package com.xenoamess.cyan_potion.base.visual;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
@@ -44,10 +46,12 @@ import static org.lwjgl.opengl.GL11.*;
  * And I suggest you use pure color Texture instead.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Deprecated
 public class GlRectfRectanglePicture extends AbstractPicture {
     private final Vector4f color = new Vector4f(0, 0, 0, 0);

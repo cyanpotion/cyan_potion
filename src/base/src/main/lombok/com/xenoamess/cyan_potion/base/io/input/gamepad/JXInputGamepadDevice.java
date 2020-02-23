@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * then you shall call DataCenter.setUsingJXInput(true) in code plugin rightBeforeGamepadInputInit.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see DataCenter#isUsingJXInput()
  * @deprecated
  */
@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 public class JXInputGamepadDevice extends AbstractGamepadDevice {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(JXInputGamepadDevice.class);
     @Getter
     @Setter

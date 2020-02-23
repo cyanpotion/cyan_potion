@@ -39,7 +39,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryUtil;
@@ -57,13 +56,13 @@ import static org.lwjgl.stb.STBVorbis.*;
  * <p>WaveData class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class WaveData extends AbstractResource {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);
 
     @Getter
@@ -191,10 +190,9 @@ public class WaveData extends AbstractResource {
      * <p>readVorbis.</p>
      *
      * @param resourceFileObject resourceFileObject
-     * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.
-     * @throws org.apache.commons.vfs2.FileSystemException                                  if any.
+     * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.     if any.
      */
-    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException, FileSystemException {
+    public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException {
         ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
@@ -217,7 +215,7 @@ public class WaveData extends AbstractResource {
         } catch (Exception e) {
             try {
                 this.readVorbis(resourceFileObject);
-            } catch (FailedToOpenOggVorbisFileException | FileSystemException ex) {
+            } catch (FailedToOpenOggVorbisFileException ex) {
                 LOGGER.error("failed to open ogg vorbis file : {}", resourceInfo, ex);
             }
         }

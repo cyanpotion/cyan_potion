@@ -73,18 +73,19 @@ import java.util.TreeMap;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
 
 /**
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public final class World extends AbstractEntityScene {
     @JsonIgnore
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(World.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(World.class);
 
     /**
      * "scale"
@@ -280,7 +281,7 @@ public final class World extends AbstractEntityScene {
                     Unit.DEFAULT_UNIT_LAYER,
                     new ResourceInfo(
                             WalkingAnimation4Dirs.class,
-                            "characters",
+                            STRING_CHARACTER,
                             "resources/www/img/characters/r2c_male_test.png",
                             "0"
                     ),
@@ -448,7 +449,7 @@ public final class World extends AbstractEntityScene {
     }
 
 
-    static final float cameraLerp = 0.05f;
+    public static final float CAMERA_LERP = 0.05f;
 
     /**
      * {@inheritDoc}
@@ -522,12 +523,12 @@ public final class World extends AbstractEntityScene {
 
         for (StaticEntity staticEntity : this.getStaticEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(staticEntity.getLayer()), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(staticEntity.getLayer(), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
         for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
             ArrayList<AbstractEntity> entities =
-                    layerToEntities.computeIfAbsent(Math.round(dynamicEntity.getLayer()), k -> new ArrayList<>());
+                    layerToEntities.computeIfAbsent(dynamicEntity.getLayer(), k -> new ArrayList<>());
             entities.add(dynamicEntity);
         }
 

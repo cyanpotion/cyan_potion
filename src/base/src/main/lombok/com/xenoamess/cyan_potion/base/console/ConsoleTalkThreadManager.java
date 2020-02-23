@@ -58,14 +58,14 @@ import java.nio.channels.CompletionHandler;
  * the thread.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  * @see Console
  * @see GameManager
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig
  */
 public class ConsoleTalkThreadManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThreadManager.class);
 
 
@@ -126,9 +126,6 @@ public class ConsoleTalkThreadManager extends SubManager {
 
                             // Make the buffer ready to write
                             byteBuffer.clear();
-
-                            // Read the next line
-                            bytesRead = asynchronousSocketChannel.read(byteBuffer).get();
                         }
                     } catch (Exception e) {
                         LOGGER.error("fails to load commands.", e);
@@ -145,11 +142,11 @@ public class ConsoleTalkThreadManager extends SubManager {
 
                 @Override
                 public void failed(Throwable exc, Void att) {
-
+                    //do nothing
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("ConsoleTalkThreadManager.init() fails,", e);
         }
     }
 

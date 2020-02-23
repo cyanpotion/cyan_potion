@@ -39,12 +39,12 @@ import static org.lwjgl.opengl.GL11.*;
  * DrawTextStruct is a struct to describe how to draw texts.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @Data
 public class DrawTextStruct {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(DrawTextStruct.class);
 
     private static final Vector4fc DEFAULT_TEXT_COLOR = Colors.BLACK;
@@ -67,7 +67,7 @@ public class DrawTextStruct {
      * <p>Constructor for DrawTextStruct.</p>
      */
     public DrawTextStruct() {
-
+        //do nothing
     }
 
     /**

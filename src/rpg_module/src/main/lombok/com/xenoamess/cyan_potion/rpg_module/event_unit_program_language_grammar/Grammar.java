@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.rpg_module.event_unit_program_language_grammar
  * <p>Grammar class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 public class Grammar {
     private Grammar() {

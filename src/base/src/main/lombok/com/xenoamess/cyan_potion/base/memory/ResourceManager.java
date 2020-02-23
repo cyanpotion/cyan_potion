@@ -52,6 +52,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static org.lwjgl.opengl.GL11.glGetIntegerv;
 
@@ -60,13 +61,13 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class ResourceManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceManager.class);
 
     private long maxTextureSize = 0;
@@ -205,7 +206,7 @@ public class ResourceManager extends SubManager {
     private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
 
     @Getter
-    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Predicate<? extends AbstractResource>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
     /**
      * <p>defaultResourcesURIMapGet.</p>
@@ -248,7 +249,7 @@ public class ResourceManager extends SubManager {
      * @param tClass resource class
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapGet(Class<T> tClass) {
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Predicate<T>> defaultResourcesLoaderMapGet(Class<T> tClass) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
     }
 
@@ -260,7 +261,7 @@ public class ResourceManager extends SubManager {
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    protected <T extends AbstractResource> ConcurrentHashMap<String, Function<T, Boolean>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
+    protected <T extends AbstractResource> ConcurrentHashMap<String, Predicate<T>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
 
@@ -283,8 +284,8 @@ public class ResourceManager extends SubManager {
      * @param resourceType resourceType
      * @param loader       a {@link java.util.function.Function} object.
      */
-    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Function<T, Boolean> loader) {
-        ConcurrentHashMap<String, Function<? extends AbstractResource, Boolean>> resourceLoaderMap =
+    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Predicate<T> loader) {
+        ConcurrentHashMap<String, Predicate<? extends AbstractResource>> resourceLoaderMap =
                 defaultResourcesLoaderMap.computeIfAbsent(
                         tClass, aClass -> new ConcurrentHashMap<>(8));
         resourceLoaderMap.put(resourceType, loader);
@@ -298,8 +299,8 @@ public class ResourceManager extends SubManager {
      * @param resourceType resourceType
      * @return return
      */
-    public <T extends AbstractResource> Function<T, Boolean> getResourceLoader(Class<T> tClass, String resourceType) {
-        ConcurrentHashMap<String, Function<T, Boolean>> resourceLoaderMap =
+    public <T extends AbstractResource> Predicate<T> getResourceLoader(Class<T> tClass, String resourceType) {
+        ConcurrentHashMap<String, Predicate<T>> resourceLoaderMap =
                 defaultResourcesLoaderMapGet(tClass);
         if (resourceLoaderMap == null) {
             return null;

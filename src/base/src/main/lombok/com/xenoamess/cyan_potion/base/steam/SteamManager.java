@@ -58,38 +58,47 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class SteamManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(SteamManager.class);
+
     @Getter
     @Setter
     private SteamUser steamUser;
+
     @Getter
     @Setter
     private SteamUserStats steamUserStats;
+
     @Getter
     @Setter
     private SteamRemoteStorage steamRemoteStorage;
+
     @Getter
     @Setter
     private SteamUGC steamUGC;
+
     @Getter
     @Setter
     private SteamUtils steamUtils;
+
     @Getter
     @Setter
     private SteamApps steamApps;
+
     @Getter
     @Setter
     private SteamFriends steamFriends;
+
     @Getter
     @Setter
     private SteamLeaderboardHandle steamLeaderboardHandle = null;
+
     @Getter
     @Setter
     private SteamCallbacks steamCallbacks = new SteamCallbacks(this);
@@ -138,7 +147,7 @@ public class SteamManager extends SubManager {
                         LOGGER.error(errorString);
                         throw new SteamException(errorString);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOGGER.error("SteamManager.init() fails,", e);
                     }
                 }
 
@@ -303,9 +312,8 @@ public class SteamManager extends SubManager {
      * of course this function is from steamworks4j.
      *
      * @param input a {@link java.lang.String} object.
-     * @throws com.codedisaster.steamworks.SteamException if any.
      */
-    protected void processInput(String input) throws SteamException {
+    protected void processInput(String input) {
 
         if (input.startsWith("stats global ")) {
             String[] cmd = input.substring("stats global ".length()).split(" ");
@@ -391,7 +399,7 @@ public class SteamManager extends SubManager {
                     getSteamRemoteStorage().fileWriteStreamClose(remoteFile);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("SteamManager.processInput(String input) fails,{}", input, e);
             }
         } else if (input.startsWith("file delete ")) {
             String path = input.substring("file delete ".length());

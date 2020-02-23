@@ -35,7 +35,7 @@ import java.util.Map;
  * <p>GameManagerConfig class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode
 @ToString
@@ -45,6 +45,7 @@ public class GameManagerConfig {
      * Don't let anyone instantiate this class.
      */
     private GameManagerConfig() {
+        //shall never
     }
 
     /**

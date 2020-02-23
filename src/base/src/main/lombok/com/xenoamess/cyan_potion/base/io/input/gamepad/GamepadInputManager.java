@@ -45,13 +45,13 @@ import java.util.ArrayList;
  * <p>GamepadInput class.</p>
  *
  * @author XenoAmess
- * @version 0.161.0
+ * @version 0.161.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class GamepadInputManager extends SubManager {
     @JsonIgnore
-    private static transient final Logger LOGGER =
+    private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
     @Getter
     @Setter
