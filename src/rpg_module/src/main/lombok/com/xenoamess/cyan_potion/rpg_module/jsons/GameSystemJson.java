@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * <p>GameSystemJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2-SNAPSHOT
+ * @version 0.161.2
  */
 @Data
 public class GameSystemJson implements Serializable {

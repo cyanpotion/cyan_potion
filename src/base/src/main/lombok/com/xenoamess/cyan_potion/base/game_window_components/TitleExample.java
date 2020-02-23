@@ -52,7 +52,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>TitleExample class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2-SNAPSHOT
+ * @version 0.161.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

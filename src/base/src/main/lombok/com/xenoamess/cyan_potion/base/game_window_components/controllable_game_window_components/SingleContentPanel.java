@@ -38,7 +38,7 @@ import lombok.ToString;
  * This class is used as a display panel or something.
  *
  * @author XenoAmess
- * @version 0.161.2-SNAPSHOT
+ * @version 0.161.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

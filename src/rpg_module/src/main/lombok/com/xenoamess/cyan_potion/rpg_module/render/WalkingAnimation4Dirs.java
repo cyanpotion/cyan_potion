@@ -48,7 +48,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>WalkingAnimation4Dirs class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2-SNAPSHOT
+ * @version 0.161.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

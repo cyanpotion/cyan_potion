@@ -58,7 +58,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
- * @version 0.161.2-SNAPSHOT
+ * @version 0.161.2
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 @EqualsAndHashCode
