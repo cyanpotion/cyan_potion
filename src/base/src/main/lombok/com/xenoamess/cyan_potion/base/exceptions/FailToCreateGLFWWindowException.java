@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.exceptions;
  * <p>FailToCreateGLFWWindowException class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.2-SNAPSHOT
  */
 public class FailToCreateGLFWWindowException extends RuntimeException {
     /**

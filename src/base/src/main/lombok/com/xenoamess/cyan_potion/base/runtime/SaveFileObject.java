@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.runtime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import lombok.AccessLevel;
@@ -54,7 +55,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.2-SNAPSHOT
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
@@ -174,10 +175,10 @@ public class SaveFileObject {
             LOGGER.error("cannot load SaveFileContent from : {}", fileObject, e);
         }
         updateStatusFile();
-        assert saveFileContent != null;
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(saveFileContent);
         List<RuntimeVariableStruct> result = saveFileContent.getRuntimeVariableStructList();
         for (RuntimeVariableStruct au : result) {
-            assert au != null;
+            IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(au);
         }
         return result;
     }

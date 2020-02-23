@@ -31,7 +31,7 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
  * <p>ShapeRelationJudge interface.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.2-SNAPSHOT
  */
 public interface ShapeRelationJudge<K extends AbstractShape,
         V extends AbstractShape> {
