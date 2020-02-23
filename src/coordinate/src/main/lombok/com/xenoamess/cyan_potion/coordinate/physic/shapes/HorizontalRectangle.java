@@ -34,7 +34,7 @@ import org.joml.Vector3f;
  * <p>HorizontalRectangle class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

@@ -38,7 +38,7 @@ import lombok.ToString;
  * <p>GameRuntime class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

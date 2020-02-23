@@ -37,7 +37,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>ImageJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 @Data
 public class ImageJson implements Serializable {

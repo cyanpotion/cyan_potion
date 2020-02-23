@@ -36,7 +36,7 @@ import java.util.Map;
  * <p>GameManagerConfig class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

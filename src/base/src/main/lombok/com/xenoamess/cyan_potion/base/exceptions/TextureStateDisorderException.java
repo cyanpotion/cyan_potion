@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.render.Texture;
  * <p>TextureStateDisorderException class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 public class TextureStateDisorderException extends RuntimeException {
     /**

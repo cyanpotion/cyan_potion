@@ -39,7 +39,7 @@ import org.joml.Vector4fc;
  * <p>Abstract AbstractScene class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

@@ -38,7 +38,7 @@ import java.awt.datatransfer.Transferable;
  * <p>ClipboardUtil class.</p>
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 public class ClipboardUtil {
     @JsonIgnore

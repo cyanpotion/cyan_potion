@@ -58,7 +58,7 @@ import java.nio.channels.CompletionHandler;
  * the thread.
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  * @see Console
  * @see GameManager
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig

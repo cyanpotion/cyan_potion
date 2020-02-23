@@ -32,7 +32,7 @@ import java.util.Set;
  * EmptyEvent means an Event which contains nothing meaningful in it.
  *
  * @author XenoAmess
- * @version 0.161.2
+ * @version 0.161.3-SNAPSHOT
  */
 public interface EmptyEvent extends Event {
     /**
