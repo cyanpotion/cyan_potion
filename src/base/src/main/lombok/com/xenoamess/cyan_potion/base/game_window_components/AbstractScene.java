@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Camera;
 import com.xenoamess.cyan_potion.base.render.Model;
@@ -43,7 +44,7 @@ import org.joml.Vector4fc;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public abstract class AbstractScene extends AbstractGameWindowComponent {
+public abstract class AbstractScene extends AbstractControllableGameWindowComponent {
 
     @Getter
     @Setter

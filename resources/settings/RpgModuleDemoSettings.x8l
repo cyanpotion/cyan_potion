@@ -7,7 +7,7 @@
         defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
         language=english
         gameWindowClassName=com.xenoamess.cyan_potion.base.GameWindow
-        titleClassName=com.xenoamess.cyan_potion.rpg_module.world.World
+        titleClassName=com.xenoamess.cyan_potion.demo.world.WorldForDemo
         steam_appid=480
         runWithSteam=1
         maxFPS=-1
