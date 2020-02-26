@@ -1150,9 +1150,5 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
             </url>
         </repository>
-        <!--        <repository>-->
-        <!--            <id>com.xenoamess</id>-->
-        <!--            <url>http://xenoamess.com:8081/repository/maven-releases/</url>-->
-        <!--        </repository>-->
     </distributionManagement>
 </project>
