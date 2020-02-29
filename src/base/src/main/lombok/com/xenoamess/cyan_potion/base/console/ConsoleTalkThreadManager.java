@@ -58,7 +58,7 @@ import java.nio.channels.CompletionHandler;
  * the thread.
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  * @see Console
  * @see GameManager
  * @see com.xenoamess.cyan_potion.base.GameManagerConfig
@@ -68,6 +68,7 @@ public class ConsoleTalkThreadManager extends SubManager {
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ConsoleTalkThreadManager.class);
 
+    private AsynchronousServerSocketChannel listener;
 
     /**
      * <p>Constructor for ConsoleThread.</p>
@@ -80,14 +81,14 @@ public class ConsoleTalkThreadManager extends SubManager {
 
     @Override
     public void init() {
-        try (final AsynchronousServerSocketChannel listener =
-                     AsynchronousServerSocketChannel.open().bind(
-                             new InetSocketAddress(
-                                     this.getGameManager().getDataCenter().getConsolePort()
-                             )
-                     )
-        ) {
-            listener.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
+        try {
+            this.listener =
+                    AsynchronousServerSocketChannel.open().bind(
+                            new InetSocketAddress(
+                                    this.getGameManager().getDataCenter().getConsolePort()
+                            )
+                    );
+            this.listener.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
                 @Override
                 public void completed(AsynchronousSocketChannel asynchronousSocketChannel, Void att) {
                     // Accept the next connection
@@ -166,6 +167,13 @@ public class ConsoleTalkThreadManager extends SubManager {
 
     @Override
     public void close() {
+        if (this.listener != null) {
+            try {
+                this.listener.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         //do nothing
     }
 }

@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +97,7 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
                     objectNode.get(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT).asText(),
                     structClass
             );
-            assert (runtimeVariableStruct != null);
+            IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(runtimeVariableStruct);
             result.getRuntimeVariableStructList().add(runtimeVariableStruct);
         }
         return result;

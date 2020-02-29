@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
@@ -57,7 +58,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 @EqualsAndHashCode
@@ -202,7 +203,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public static AbstractGameWindowComponent createGameWindowComponentFromClassName(GameWindow gameWindow,
                                                                                      String gameWindowComponentClassName) {
-        assert (gameWindowComponentClassName != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentClassName);
         AbstractGameWindowComponent gameWindowComponent = null;
         try {
             gameWindowComponent =
@@ -374,7 +375,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
-        assert (gameWindowComponentTreeNode != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentTreeNode);
         gameWindowComponentTreeNode.newNode(this);
     }
 

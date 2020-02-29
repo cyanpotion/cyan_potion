@@ -24,6 +24,7 @@
 
 package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components;
 
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.io.ClipboardUtil;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
@@ -53,7 +54,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -172,7 +173,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                             if (getNowSelectStartPos() < 0) {
                                 return null;
                             }
-                            assert (event != null);
+                            IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(event);
                             int releaseIndex =
                                     this.drawTextGivenHeightLeftTopAndGetIndex(event.getMousePosX(),
                                             event.getMousePosY(), false, null);

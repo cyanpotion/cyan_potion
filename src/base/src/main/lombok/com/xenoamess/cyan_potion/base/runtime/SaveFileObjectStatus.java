@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * status of SaveFileObject
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  * @see SaveFileObject
  */
 @Data

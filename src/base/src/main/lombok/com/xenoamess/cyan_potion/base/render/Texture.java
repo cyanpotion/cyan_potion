@@ -56,7 +56,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * <p>Texture class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -238,7 +238,7 @@ public class Texture extends AbstractResource implements Bindable {
      */
     @MainThreadOnly
     public static boolean loadAsPictureTexture(Texture texture) {
-        assert (texture != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(texture);
         if (!DataCenter.ifMainThread()) {
             return false;
         }
@@ -273,7 +273,7 @@ public class Texture extends AbstractResource implements Bindable {
      */
     @MainThreadOnly
     public static boolean loadAsPureColorTexture(Texture texture) {
-        assert (texture != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(texture);
         if (!DataCenter.ifMainThread()) {
             return false;
         }

@@ -43,7 +43,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 
 @EqualsAndHashCode(callSuper = true)

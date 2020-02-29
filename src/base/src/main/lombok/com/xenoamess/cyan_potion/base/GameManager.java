@@ -77,7 +77,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode
 @ToString
@@ -120,7 +120,7 @@ public class GameManager implements Closeable {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    private final Callbacks callbacks = new Callbacks(this);
+    private final CallbackManager callbackManager = new CallbackManager(this);
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -487,19 +487,21 @@ public class GameManager implements Closeable {
      */
     @Override
     public void close() {
-        this.getGameWindowComponentTree().close();
-        this.getResourceManager().close();
         if (Font.getDefaultFont() != null) {
             Font.getDefaultFont().close();
         }
-
-        this.getGameWindow().close();
         this.getAudioManager().close();
-        this.getGamepadInputManager().close();
-        this.getSteamManager().close();
+        this.getCallbackManager().close();
         this.getConsoleTalkThreadManager().close();
-
-        setAlive(false);
+        this.getDataCenter().close();
+        this.getResourceManager().close();
+        this.getGameWindowComponentTree().close();
+        this.getGameWindow().close();
+        this.getGamepadInputManager().close();
+        this.getRuntimeManager().close();
+        this.getSaveManager().close();
+        this.getSteamManager().close();
+        this.setAlive(false);
         this.getScheduledExecutorService().shutdown();
     }
 

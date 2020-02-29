@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.setting_file;
 
 import com.xenoamess.commons.version.Version;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
 import com.xenoamess.cyan_potion.base.visual.Font;
@@ -45,7 +46,7 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  * <p>SettingFIleParser_0_3_0 class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -67,7 +68,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      */
     @Override
     public GameSettings parse(X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         GameSettings gameSettings = new GameSettings(settingTree);
 
         readCommonSettings(gameSettings, settingTree);
@@ -76,9 +77,19 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
         readViews(gameSettings, settingTree);
         readSteamSettings(gameSettings, settingTree);
         readClassNames(gameSettings, settingTree);
+        setLwjglDebug(gameSettings);
         return gameSettings;
     }
 
+    public void setLwjglDebug(GameSettings gameSettings) {
+        Configuration.DEBUG.set(gameSettings.isDebug());
+        Configuration.DEBUG_LOADER.set(gameSettings.isDebug());
+        Configuration.DEBUG_STREAM.set(gameSettings.isDebug());
+        Configuration.DEBUG_MEMORY_ALLOCATOR.set(gameSettings.isDebug());
+        Configuration.DEBUG_MEMORY_ALLOCATOR_INTERNAL.set(gameSettings.isDebug());
+        Configuration.DEBUG_STACK.set(gameSettings.isDebug());
+        Configuration.DEBUG_FUNCTIONS.set(gameSettings.isDebug());
+    }
 
     /**
      * <p>readCommonSettings.</p>
@@ -87,7 +98,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readCommonSettings(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("commonSettings")
         ) {
@@ -133,7 +144,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readKeymap(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         ContentNode baseNode = settingTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("keymap")) {
             if (getBoolean(contentNode.getAttributes(), "using")) {
@@ -159,8 +170,6 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("debug")) {
             boolean debug = getBoolean(contentNode.getAttributes(), "debug");
             gameSettings.setDebug(debug);
-            Configuration.DEBUG.set(debug);
-            Configuration.DEBUG_LOADER.set(debug);
         }
     }
 
@@ -171,7 +180,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
      * @param settingTree  a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected void readOthers(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         gameSettings.setNoConsoleThread(
                 getBoolean(gameSettings.getSpecialSettings(), STRING_NO_CONSOLE_THREAD)
         );
@@ -193,7 +202,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readViews(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         gameSettings.setLogicWindowWidth(
                 Integer.parseInt(
                         getString(
@@ -257,7 +266,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readSteamSettings(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         gameSettings.setRunWithSteam(
                 getBoolean(
                         gameSettings.getCommonSettings(),
@@ -285,7 +294,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     }
 
     private void readClassNames(GameSettings gameSettings, X8lTree settingTree) {
-        assert (settingTree != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(settingTree);
         gameSettings.setGameWindowClassName(
                 getString(
                         gameSettings.getCommonSettings(),

@@ -31,7 +31,7 @@ import lombok.ToString;
  * <p>Abstract UpdaterBuilder class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode
 @ToString

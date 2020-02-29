@@ -52,7 +52,7 @@ import java.io.Serializable;
  * RuntimeVariableStruct must HAVE a empty constructor.
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @Data
 public abstract class RuntimeVariableStruct implements Serializable {
@@ -80,7 +80,7 @@ public abstract class RuntimeVariableStruct implements Serializable {
 
     /**
      * loadFrom means copy all things from a object of same class to this.
-     * assert (runtimeVariableStruct != null);
+     * IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(runtimeVariableStruct);
      * assert (runtimeVariableStruct.getClass().equals(this.getClass()));
      *
      * @param object the object you wanna copy from

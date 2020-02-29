@@ -28,20 +28,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.GlRectfRectangleBox;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.PictureBox;
 import com.xenoamess.cyan_potion.base.io.input.key.Key;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
-import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.math.FrameFloat;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
-import com.xenoamess.cyan_potion.base.render.Texture;
-import com.xenoamess.cyan_potion.base.steam.SteamManager;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.entity.AbstractEntity;
@@ -62,8 +54,6 @@ import lombok.ToString;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,19 +61,17 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
-import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
 
 /**
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public final class World extends AbstractEntityScene {
+public class World extends AbstractEntityScene {
     @JsonIgnore
     private static final transient Logger LOGGER = LoggerFactory.getLogger(World.class);
 
@@ -91,16 +79,6 @@ public final class World extends AbstractEntityScene {
      * "scale"
      */
     public static final String STRING_SCALE = "scale";
-
-    /**
-     * 10F
-     */
-    public static final float MAX_SCALE = 10F;
-
-    /**
-     * 0.01F
-     */
-    public static final float MIN_SCALE = 0.01F;
 
     @Getter
     @Setter
@@ -120,80 +98,11 @@ public final class World extends AbstractEntityScene {
 
     @Getter
     @Setter
-    private Menu menu;
-
-    @Getter
-    @Setter
     private Matrix4f scaleMatrix4f;
 
     @Getter
     @Setter
     private RpgModuleDataCenter rpgModuleDataCenter;
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final Texture avatarTexture = this.getGameManager().getSteamManager().getPlayerAvatarTextureLarge();
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final PictureBox pictureBox = new PictureBox(this.getGameWindow(), avatarTexture);
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final GlRectfRectangleBox glRectfRectangleBox = new GlRectfRectangleBox(
-            this.getGameWindow(),
-            new Vector4f(0, 1, 1, 1)
-    );
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final InputBox inputBox = new InputBox(this.getGameWindow());
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final Texture iconTexture = new ResourceInfo<>(
-            Texture.class,
-            STRING_PICTURE,
-            this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
-    ).fetchResource(this.getResourceManager());
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final Texture pureColorTexture = new ResourceInfo<>(
-            Texture.class,
-            STRING_PURE_COLOR,
-            "",
-            "0.5,0.5,0.5,1"
-    ).fetchResource(this.getResourceManager());
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final PictureBox pureColorBox = new PictureBox(this.getGameWindow(), pureColorTexture);
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private final Button demoButton = new Button(this.getGameWindow(), iconTexture, "DEMO");
-
-    {
-        demoButton.registerOnMouseEnterAreaCallback(
-                mouseButtonEvent -> {
-                    switch (demoButton.getButtonText()) {
-                        case "DEMO":
-                            demoButton.setButtonText("");
-                            break;
-                        case "":
-                            demoButton.getButtonPicture().setBindable(null);
-                            demoButton.setButtonText("LOL");
-                            break;
-                        case "LOL":
-                            demoButton.setButtonText("DEMO");
-                            demoButton.getButtonPicture().setBindable(iconTexture);
-                            break;
-                    }
-                    return null;
-                }
-        );
-    }
 
     /**
      * <p>recalculateScaleMatrix4f.</p>
@@ -290,12 +199,7 @@ public final class World extends AbstractEntityScene {
             getDynamicEntitySet().add(getPlayer());
 
             this.getCamera().setPos(this.getPlayer().getCenterPosX(), this.getPlayer().getCenterPosY());
-
         }
-
-        this.setMenu(new Menu(this));
-        this.fix();
-        inputBox.gainFocus();
     }
 
     /**
@@ -303,39 +207,7 @@ public final class World extends AbstractEntityScene {
      */
     @Override
     protected void initProcessors() {
-        this.registerProcessor(
-                KeyboardEvent.class,
-                (KeyboardEvent keyboardEvent) -> {
-                    switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
-                        case Keymap.XENOAMESS_KEY_ESCAPE:
-                            if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.getMods() == 0) {
-                                this.getMenu().setShow(true);
-                            }
-                            return null;
-                        default:
-                            return keyboardEvent;
-                    }
-                }
-        );
-        this.registerProcessor(
-                MouseScrollEvent.class,
-                (MouseScrollEvent mouseScrollEvent) -> {
-                    float newScale = this.getScale();
-                    if (mouseScrollEvent.getYoffset() > 0) {
-                        newScale += 0.1;
-                    } else if (mouseScrollEvent.getYoffset() < 0) {
-                        newScale -= 0.1;
-                    }
-
-                    if (newScale > MAX_SCALE) {
-                        newScale = MAX_SCALE;
-                    } else if (newScale < MIN_SCALE) {
-                        newScale = MIN_SCALE;
-                    }
-                    this.changeScale(newScale);
-                    return null;
-                }
-        );
+        //do nothing
     }
 
     /**
@@ -344,12 +216,6 @@ public final class World extends AbstractEntityScene {
     @Override
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         super.addToGameWindowComponentTree(gameWindowComponentTreeNode);
-        this.getMenu().addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.pictureBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.glRectfRectangleBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.inputBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.demoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.pureColorBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
     /**
@@ -421,7 +287,6 @@ public final class World extends AbstractEntityScene {
         return getGameMap().getGameTiles().get(ti);
     }
 
-
     /**
      * <p>preparePlayerMovement.</p>
      *
@@ -429,9 +294,6 @@ public final class World extends AbstractEntityScene {
      */
     public void preparePlayerMovement(Unit player) {
         player.setMovement(0, 0);
-        if (this.getMenu().isShow()) {
-            return;
-        }
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_UP))) {
             player.setMovementY(player.getMovementY() - player.getMoveSpeed().getValue());
         }
@@ -444,8 +306,6 @@ public final class World extends AbstractEntityScene {
         if (this.getGameWindow().getGameManager().getKeymap().isKeyDown(new Key(Keymap.XENOAMESS_KEY_RIGHT))) {
             player.setMovementX(player.getMovementX() + player.getMoveSpeed().getValue());
         }
-
-
     }
 
 
@@ -467,28 +327,8 @@ public final class World extends AbstractEntityScene {
 
         this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();
-        this.fix();
         return true;
     }
-
-    /**
-     * <p>fix.</p>
-     */
-    protected void fix() {
-        final int avatarPictureSize = 200;
-        this.pictureBox.setSize(avatarPictureSize);
-        this.pictureBox.moveToRightTopOf(this.getGameWindow());
-        this.glRectfRectangleBox.setSize(avatarPictureSize);
-        this.glRectfRectangleBox.moveToLeftBottomOf(this.getGameWindow());
-        this.inputBox.setSize(avatarPictureSize);
-        this.inputBox.moveToRightBottomOf(this.getGameWindow());
-        this.demoButton.setSize(avatarPictureSize);
-        this.demoButton.moveToLeftTopOf(this.getGameWindow());
-        this.pureColorBox.setSize(avatarPictureSize);
-        this.pureColorBox.setRotateRadius((float) Math.toRadians(45));
-        this.pureColorBox.moveToCenterBottomOf(this.getGameWindow());
-    }
-
 
     /**
      * {@inheritDoc}
@@ -539,14 +379,6 @@ public final class World extends AbstractEntityScene {
                 entity.draw(this);
             }
         }
-        SteamManager steamManager = this.getGameManager().getSteamManager();
-        String personName;
-        if (steamManager.isRunWithSteam()) {
-            personName = steamManager.getSteamFriends().getPersonaName();
-        } else {
-            personName = "RunSteamFirst";
-        }
-        this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
         return true;
     }
 }

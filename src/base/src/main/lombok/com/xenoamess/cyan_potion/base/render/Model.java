@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import lombok.*;
+import org.lwjgl.opengl.GL15;
 import org.lwjgl.system.MemoryStack;
 
 import java.io.Closeable;
@@ -37,7 +38,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Model class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode
 @ToString
@@ -108,34 +109,33 @@ public class Model implements Closeable {
             setDrawCount(indices.length);
 
             try (MemoryStack stack = MemoryStack.stackPush()) {
-                setVertexObject(glGenBuffers());
+                int[] intArray = new int[3];
+                GL15.glGenBuffers(intArray);
+
+                setVertexObject(intArray[0]);
                 glBindBuffer(GL_ARRAY_BUFFER, getVertexObject());
                 glBufferData(GL_ARRAY_BUFFER, stack.floats(vertices), GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-                setTextureCoordObject(glGenBuffers());
+                setTextureCoordObject(intArray[1]);
                 glBindBuffer(GL_ARRAY_BUFFER, getTextureCoordObject());
                 glBufferData(GL_ARRAY_BUFFER, stack.floats(texCoords), GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-                setIndexObject(glGenBuffers());
+                setIndexObject(intArray[2]);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getIndexObject());
                 glBufferData(GL_ELEMENT_ARRAY_BUFFER, stack.ints(indices), GL_STATIC_DRAW);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
-
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
-
     }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void close() {
-        glDeleteBuffers(getVertexObject());
-        glDeleteBuffers(getTextureCoordObject());
-        glDeleteBuffers(getIndexObject());
+        glDeleteBuffers(new int[]{getVertexObject(), getTextureCoordObject(), getIndexObject()});
     }
 
     /**

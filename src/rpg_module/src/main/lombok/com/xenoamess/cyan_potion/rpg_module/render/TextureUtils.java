@@ -26,6 +26,7 @@ package com.xenoamess.cyan_potion.rpg_module.render;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
+import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
@@ -49,7 +50,7 @@ import java.util.List;
  * <p>TextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 public class TextureUtils {
     /**
@@ -107,7 +108,7 @@ public class TextureUtils {
             LOGGER.error("TextureUtils.loadAsWalkingTexture(Texture texture, ResourceInfo resourceInfo) fails:{},{}",
                     texture, resourceInfo, e);
         }
-        assert (bufferedImage != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(bufferedImage);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 4 / 3;
@@ -197,7 +198,7 @@ public class TextureUtils {
                             "fails:{},{}",
                     texture, resourceInfo, e);
         }
-        assert (bufferedImage != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(bufferedImage);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / columnNum / 8;
@@ -675,7 +676,7 @@ public class TextureUtils {
                             "fails:{},{}",
                     texture, resourceInfo, e);
         }
-        assert (bufferedImage != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(bufferedImage);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / 8 / 2;
@@ -843,7 +844,7 @@ public class TextureUtils {
                             "String tilesetTexturesFilepath, int columnNum) fails:{},{},{},{}",
                     resourceManager, resourceType, tilesetTexturesFilepath, columnNum, e);
         }
-        assert (bufferedImage != null);
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(bufferedImage);
         final int entireWidth = bufferedImage.getWidth();
         final int entireHeight = bufferedImage.getHeight();
         final int singleWidth = entireWidth / columnNum / 8;

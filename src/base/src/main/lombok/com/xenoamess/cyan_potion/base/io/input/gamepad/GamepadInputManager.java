@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * <p>GamepadInput class.</p>
  *
  * @author XenoAmess
- * @version 0.161.1
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

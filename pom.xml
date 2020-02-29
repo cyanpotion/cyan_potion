@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.161.1</version>
+    <version>0.161.3</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -90,8 +90,8 @@
         <eclipse-collections.version>10.2.0</eclipse-collections.version>
         <guava.version>28.2-jre</guava.version>
         <jackson.version>2.10.2</jackson.version>
-        <joml.version>1.9.21</joml.version>
-        <log4j.version>2.13.0</log4j.version>
+        <joml.version>1.9.22</joml.version>
+        <log4j.version>2.13.1</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
@@ -101,7 +101,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.10.8</commonx.version>
+        <commonx.version>0.10.10</commonx.version>
         <multi_language.version>0.45.4</multi_language.version>
         <x8l.version>0.53.0</x8l.version>
         <SDL_GameControllerDB_Util.version>1.2.20200221</SDL_GameControllerDB_Util.version>
@@ -1150,9 +1150,5 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
             </url>
         </repository>
-        <!--        <repository>-->
-        <!--            <id>com.xenoamess</id>-->
-        <!--            <url>http://xenoamess.com:8081/repository/maven-releases/</url>-->
-        <!--        </repository>-->
     </distributionManagement>
 </project>
