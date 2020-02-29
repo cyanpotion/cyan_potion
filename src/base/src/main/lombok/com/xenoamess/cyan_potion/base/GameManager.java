@@ -487,18 +487,20 @@ public class GameManager implements Closeable {
      */
     @Override
     public void close() {
-        this.getGameWindowComponentTree().close();
-        this.getResourceManager().close();
         if (Font.getDefaultFont() != null) {
             Font.getDefaultFont().close();
         }
-
-        this.getGameWindow().close();
         this.getAudioManager().close();
-        this.getGamepadInputManager().close();
-        this.getSteamManager().close();
+        this.getCallbacks().close();
         this.getConsoleTalkThreadManager().close();
-
+        this.getDataCenter().close();
+        this.getGameWindow().close();
+        this.getGameWindowComponentTree().close();
+        this.getGamepadInputManager().close();
+        this.getResourceManager().close();
+        this.getRuntimeManager().close();
+        this.getSaveManager().close();
+        this.getSteamManager().close();
         setAlive(false);
         this.getScheduledExecutorService().shutdown();
     }
