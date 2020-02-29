@@ -49,7 +49,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3-SNAPSHOT
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

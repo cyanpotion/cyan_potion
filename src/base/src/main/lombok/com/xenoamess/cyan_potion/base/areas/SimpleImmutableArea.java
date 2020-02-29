@@ -31,7 +31,7 @@ import lombok.Data;
  * must create it from Areas.
  *
  * @author XenoAmess
- * @version 0.161.3-SNAPSHOT
+ * @version 0.161.3
  * @see Areas#generateImmutableAreaFromArea(AbstractArea)
  * @see Areas#generateImmutableAreaFromLeftTop(float, float, float, float)
  * @see Areas#generateImmutableAreaFromArea(float, float, float, float)

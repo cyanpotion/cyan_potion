@@ -67,7 +67,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3-SNAPSHOT
+ * @version 0.161.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
