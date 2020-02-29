@@ -37,8 +37,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.lwjgl.glfw.*;
+import org.lwjgl.system.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * <p>Callbacks class.</p>
@@ -48,17 +53,17 @@ import org.slf4j.LoggerFactory;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class Callbacks extends SubManager {
+public class CallbackManager extends SubManager {
     @JsonIgnore
     private static final transient Logger LOGGER =
-            LoggerFactory.getLogger(Callbacks.class);
+            LoggerFactory.getLogger(CallbackManager.class);
 
     /**
      * <p>Constructor for Callbacks.</p>
      *
      * @param gameManager gameManager
      */
-    public Callbacks(GameManager gameManager) {
+    public CallbackManager(GameManager gameManager) {
         super(gameManager);
     }
 
@@ -74,7 +79,8 @@ public class Callbacks extends SubManager {
 
     @Override
     public void close() {
-        //do nothing
+        glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
+        glfwSetKeyCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
     }
 
     @Getter
@@ -84,6 +90,12 @@ public class Callbacks extends SubManager {
                 LOGGER.debug("Alright I exit.");
                 getGameManager().shutdown();
             };
+
+
+    //-----CallbackIs
+    @Getter
+    @Setter
+    private GLFWErrorCallbackI errorCallback = null;
 
     @Getter
     @Setter
@@ -143,12 +155,21 @@ public class Callbacks extends SubManager {
     //-----wrap callback functions-----
 
     /**
+     * <p>wrapErrorCallback.</p>
+     *
+     * @return a {@link org.lwjgl.glfw.GLFWErrorCallbackI} object.
+     */
+    public GLFWErrorCallbackI wrapErrorCallback() {
+        return (error, description) -> CallbackManager.this.getErrorCallback().invoke(error, description);
+    }
+
+    /**
      * <p>wrapWindowCloseCallback.</p>
      *
      * @return a {@link org.lwjgl.glfw.GLFWWindowCloseCallbackI} object.
      */
     public GLFWWindowCloseCallbackI wrapWindowCloseCallback() {
-        return window -> Callbacks.this.getWindowCloseCallback().invoke(window);
+        return window -> CallbackManager.this.getWindowCloseCallback().invoke(window);
     }
 
     /**
@@ -157,7 +178,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
      */
     public GLFWKeyCallbackI wrapKeyCallback() {
-        return (window, key, scancode, action, mods) -> Callbacks.this.getKeyCallback().invoke(window, key, scancode, action, mods);
+        return (window, key, scancode, action, mods) -> CallbackManager.this.getKeyCallback().invoke(window, key, scancode, action, mods);
     }
 
     /**
@@ -166,7 +187,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWJoystickCallbackI} object.
      */
     public GLFWJoystickCallbackI wrapJoystickCallback() {
-        return (jid, event) -> Callbacks.this.getJoystickCallback().invoke(jid, event);
+        return (jid, event) -> CallbackManager.this.getJoystickCallback().invoke(jid, event);
     }
 
     /**
@@ -175,7 +196,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
      */
     public GLFWMouseButtonCallbackI wrapMouseButtonCallback() {
-        return (window, button, action, mods) -> Callbacks.this.getMouseButtonCallback().invoke(window, button, action, mods);
+        return (window, button, action, mods) -> CallbackManager.this.getMouseButtonCallback().invoke(window, button, action, mods);
     }
 
     /**
@@ -184,7 +205,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWScrollCallbackI} object.
      */
     public GLFWScrollCallbackI wrapScrollCallback() {
-        return (window, xoffset, yoffset) -> Callbacks.this.getScrollCallback().invoke(window, xoffset, yoffset);
+        return (window, xoffset, yoffset) -> CallbackManager.this.getScrollCallback().invoke(window, xoffset, yoffset);
     }
 
     /**
@@ -193,7 +214,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWWindowSizeCallbackI} object.
      */
     public GLFWWindowSizeCallbackI wrapWindowSizeCallback() {
-        return (window, width, height) -> Callbacks.this.getWindowSizeCallback().invoke(window, width, height);
+        return (window, width, height) -> CallbackManager.this.getWindowSizeCallback().invoke(window, width, height);
     }
 
     /**
@@ -202,7 +223,7 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWCharCallbackI} object.
      */
     public GLFWCharCallbackI wrapCharCallback() {
-        return (window, codepoint) -> Callbacks.this.getCharCallback().invoke(window, codepoint);
+        return (window, codepoint) -> CallbackManager.this.getCharCallback().invoke(window, codepoint);
     }
 
     /**
@@ -211,6 +232,168 @@ public class Callbacks extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWDropCallbackI} object.
      */
     public GLFWDropCallbackI wrapDropCallback() {
-        return (window, count, names) -> Callbacks.this.getDropCallback().invoke(window, count, names);
+        return (window, count, names) -> CallbackManager.this.getDropCallback().invoke(window, count, names);
+    }
+
+//    @AsFinalField
+//    private GLFWErrorCallback _GLFWErrorCallback;
+//    @AsFinalField
+//    private GLFWKeyCallback _GLFWKeyCallback;
+//    @AsFinalField
+//    private GLFWCharCallback _GLFWCharCallback;
+//    @AsFinalField
+//    private GLFWMouseButtonCallback _GLFWMouseButtonCallback;
+//    @AsFinalField
+//    private GLFWScrollCallback _GLFWScrollCallback;
+//    @AsFinalField
+//    private GLFWJoystickCallback _GLFWJoystickCallback;
+//    @AsFinalField
+//    private GLFWWindowCloseCallback _GLFWWindowCloseCallback;
+//    @AsFinalField
+//    private GLFWWindowSizeCallback _GLFWWindowSizeCallback;
+//    @AsFinalField
+//    private GLFWDropCallback _GLFWDropCallback;
+
+    public void setWrapperCallbacks(GameWindow gameWindow) {
+        glfwSetErrorCallback(
+                this.wrapErrorCallback()
+        );
+
+        glfwSetKeyCallback(
+                gameWindow.getWindow(),
+                this.wrapKeyCallback()
+        );
+
+        glfwSetCharCallback(
+                gameWindow.getWindow(),
+                this.wrapCharCallback()
+        );
+
+        glfwSetMouseButtonCallback(
+                gameWindow.getWindow(),
+                this.wrapMouseButtonCallback()
+        );
+
+        glfwSetScrollCallback(
+                gameWindow.getWindow(),
+                this.wrapScrollCallback()
+        );
+
+        glfwSetJoystickCallback(this.wrapJoystickCallback());
+
+        glfwSetWindowCloseCallback(
+                gameWindow.getWindow(),
+                this.wrapWindowCloseCallback()
+        );
+
+        glfwSetWindowSizeCallback(
+                gameWindow.getWindow(),
+                this.wrapWindowSizeCallback()
+        );
+
+        glfwSetDropCallback(
+                gameWindow.getWindow(),
+                this.wrapDropCallback()
+        );
+    }
+
+    public void freeWrapperCallbacks(GameWindow gameWindow) {
+
+        free(
+                glfwSetErrorCallback(
+                        null
+                )
+        );
+
+        free(
+                glfwSetKeyCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetCharCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetMouseButtonCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetScrollCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetJoystickCallback(
+                        null
+                )
+        );
+
+        free(
+                glfwSetWindowCloseCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetWindowSizeCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        free(
+                glfwSetDropCallback(
+                        gameWindow.getWindow(),
+                        null
+                )
+        );
+
+        //-----
+
+        free(errorCallback);
+        free(keyCallback);
+        free(joystickCallback);
+        free(mouseButtonCallback);
+        free(scrollCallback);
+        free(windowSizeCallback);
+        free(charCallback);
+        free(dropCallback);
+    }
+
+    public static void free(Callback callback) {
+        if (callback == null) {
+            return;
+        }
+        try {
+            Field field = callback.getClass().getDeclaredField("delegate");
+            field.setAccessible(true);
+            Object delegate = field.get(callback);
+            if (delegate instanceof Callback) {
+                free((Callback) delegate);
+            }
+        } catch (NoSuchFieldException e) {
+            //do nothing
+        } catch (IllegalAccessException e) {
+            LOGGER.error("failed to free delegate callback:{}", callback, e);
+        }
+        callback.free();
+    }
+
+    public static void free(Object callbackI) {
+        if (callbackI instanceof Callback) {
+            free((Callback) callbackI);
+        }
     }
 }

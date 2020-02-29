@@ -120,7 +120,7 @@ public class GameManager implements Closeable {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    private final Callbacks callbacks = new Callbacks(this);
+    private final CallbackManager callbackManager = new CallbackManager(this);
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -491,17 +491,17 @@ public class GameManager implements Closeable {
             Font.getDefaultFont().close();
         }
         this.getAudioManager().close();
-        this.getCallbacks().close();
+        this.getCallbackManager().close();
         this.getConsoleTalkThreadManager().close();
         this.getDataCenter().close();
-        this.getGameWindow().close();
-        this.getGameWindowComponentTree().close();
-        this.getGamepadInputManager().close();
         this.getResourceManager().close();
+        this.getGameWindowComponentTree().close();
+        this.getGameWindow().close();
+        this.getGamepadInputManager().close();
         this.getRuntimeManager().close();
         this.getSaveManager().close();
         this.getSteamManager().close();
-        setAlive(false);
+        this.setAlive(false);
         this.getScheduledExecutorService().shutdown();
     }
 

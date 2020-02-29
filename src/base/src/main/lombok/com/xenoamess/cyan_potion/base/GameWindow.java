@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.commons.as_final_field.AsFinalField;
 import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
@@ -52,7 +51,10 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLCapabilities;
 import org.lwjgl.opengl.GLUtil;
+import org.lwjgl.opengl.KHRDebug;
+import org.lwjgl.system.Callback;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +62,13 @@ import org.slf4j.LoggerFactory;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.AMDDebugOutput.glDebugMessageCallbackAMD;
+import static org.lwjgl.opengl.ARBDebugOutput.glDebugMessageCallbackARB;
+import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11C.glEnable;
+import static org.lwjgl.opengl.GL43C.glDebugMessageCallback;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * //TODO
@@ -75,6 +83,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameWindow.class);
+    private Callback debugMessageCallback;
 
     /**
      * <p>Constructor for GameWindow.</p>
@@ -120,9 +129,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     @Getter
     @Setter
     private boolean beingFocused = false;
-
-    @AsFinalField
-    private GLFWErrorCallback glfwErrorCallback;
 
     @Getter
     @Setter
@@ -193,24 +199,42 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         this.setBeingFocused(true);
     }
 
+    public void removeDebugMessageCallback() {
+        GLCapabilities caps = GL.getCapabilities();
+        if (caps.OpenGL43) {
+            glDebugMessageCallback(null, NULL);
+        } else if (caps.GL_KHR_debug) {
+            KHRDebug.glDebugMessageCallback(null, NULL);
+        } else if (caps.GL_ARB_debug_output) {
+            glDebugMessageCallbackARB(null, NULL);
+        } else if (caps.GL_AMD_debug_output) {
+            glDebugMessageCallbackAMD(null, NULL);
+        }
+        CallbackManager.free(this.debugMessageCallback);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void close() {
-        // Free the window callbacks and close the window
         Callbacks.glfwFreeCallbacks(getWindow());
         glfwDestroyWindow(getWindow());
-        // Terminate GLFW and free the error callback
-        glfwErrorCallback.close();
+
+        this.removeDebugMessageCallback();
+        this.getGameManager().getCallbackManager().freeWrapperCallbacks(this);
+
+
         glfwTerminate();
         this.getShader().close();
         Model.COMMON_MODEL.close();
+
         GL.destroy();
+        GL.setCapabilities(null);
     }
 
     private void initGlfw() {
-        glfwErrorCallback = GLFWErrorCallback.createPrint(System.err).set();
+        this.getGameManager().getCallbackManager().setErrorCallback(GLFWErrorCallback.createPrint(System.err));
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
@@ -267,23 +291,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
             throw new FailToCreateGLFWWindowException();
         }
 
-        glfwSetKeyCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapKeyCallback());
-        glfwSetCharCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapCharCallback());
-
-        glfwSetMouseButtonCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapMouseButtonCallback());
-        glfwSetScrollCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapScrollCallback());
-        glfwSetJoystickCallback(this.getGameManager().getCallbacks().wrapJoystickCallback());
-
-        glfwSetWindowCloseCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapWindowCloseCallback());
-        glfwSetWindowSizeCallback(getWindow(),
-                this.getGameManager().getCallbacks().wrapWindowSizeCallback());
-
-        glfwSetDropCallback(getWindow(), this.getGameManager().getCallbacks().wrapDropCallback());
+        this.getGameManager().getCallbackManager().setWrapperCallbacks(this);
 
         if (!isFullScreen()) {
             // make the window be at the center of the screen.
@@ -428,8 +436,8 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         //        glClear(GL_COLOR_BUFFER_BIT);
         //        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        GL.createCapabilities();
-        GLUtil.setupDebugMessageCallback();
+        createCapabilities();
+        this.debugMessageCallback = GLUtil.setupDebugMessageCallback();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_TEXTURE_2D);

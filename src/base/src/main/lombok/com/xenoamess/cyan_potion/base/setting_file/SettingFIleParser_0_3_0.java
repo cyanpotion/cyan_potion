@@ -77,9 +77,19 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
         readViews(gameSettings, settingTree);
         readSteamSettings(gameSettings, settingTree);
         readClassNames(gameSettings, settingTree);
+        setLwjglDebug(gameSettings);
         return gameSettings;
     }
 
+    public void setLwjglDebug(GameSettings gameSettings) {
+        Configuration.DEBUG.set(gameSettings.isDebug());
+        Configuration.DEBUG_LOADER.set(gameSettings.isDebug());
+        Configuration.DEBUG_STREAM.set(gameSettings.isDebug());
+        Configuration.DEBUG_MEMORY_ALLOCATOR.set(gameSettings.isDebug());
+        Configuration.DEBUG_MEMORY_ALLOCATOR_INTERNAL.set(gameSettings.isDebug());
+        Configuration.DEBUG_STACK.set(gameSettings.isDebug());
+        Configuration.DEBUG_FUNCTIONS.set(gameSettings.isDebug());
+    }
 
     /**
      * <p>readCommonSettings.</p>
@@ -160,8 +170,6 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
         for (ContentNode contentNode : baseNode.getContentNodesFromChildrenThatNameIs("debug")) {
             boolean debug = getBoolean(contentNode.getAttributes(), "debug");
             gameSettings.setDebug(debug);
-            Configuration.DEBUG.set(debug);
-            Configuration.DEBUG_LOADER.set(debug);
         }
     }
 
