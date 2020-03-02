@@ -33,7 +33,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * you can see implementations of this class for more details.
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 public interface AbstractArea {
     /**
