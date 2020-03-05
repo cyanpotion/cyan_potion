@@ -42,7 +42,7 @@ import java.util.function.Function;
  * <p>CodePluginManager class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 @EqualsAndHashCode
 @ToString

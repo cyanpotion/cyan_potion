@@ -39,7 +39,7 @@ import java.util.Set;
  * <p>MouseScrollEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 @Data
 public class MouseScrollEvent implements Event {

@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * <p>AbstractMutablePoint interface.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 public interface AbstractMutablePoint extends AbstractPoint {
 

@@ -41,15 +41,13 @@ import org.lwjgl.system.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -375,18 +373,6 @@ public class CallbackManager extends SubManager {
     public static void free(Callback callback) {
         if (callback == null) {
             return;
-        }
-        try {
-            Field field = callback.getClass().getDeclaredField("delegate");
-            field.setAccessible(true);
-            Object delegate = field.get(callback);
-            if (delegate instanceof Callback) {
-                free((Callback) delegate);
-            }
-        } catch (NoSuchFieldException e) {
-            //do nothing
-        } catch (IllegalAccessException e) {
-            LOGGER.error("failed to free delegate callback:{}", callback, e);
         }
         callback.free();
     }

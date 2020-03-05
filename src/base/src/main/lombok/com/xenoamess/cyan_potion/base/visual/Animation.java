@@ -38,7 +38,7 @@ import java.util.List;
  * <p>Animation class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

@@ -56,7 +56,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.3
+ * @version 0.161.4
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
