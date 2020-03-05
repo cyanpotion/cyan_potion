@@ -44,10 +44,15 @@ And no much materials for the inner logic for now.
 Notice about sonar cloud
 ----------
 Right now we (or I, exactly) decided just use sonar cloud as code smell detector or something.
+
 We do not care much about test coverage because it is really hard to write some auto-test for a GUI program,
+
 and this engine not works very well when there be no window(though it really can work but...).
+
 We might add some tests when repairing some bug and make sure it not happened again,
-but no plan for adding more tests just for gaining coverage and make the data looks more beautiful now.  
+but no plan for adding more tests just for gaining coverage and make the data looks more beautiful now. 
+
+But we will not reject all reasonable adding test pull requests.
 
 Demo
 ----------
