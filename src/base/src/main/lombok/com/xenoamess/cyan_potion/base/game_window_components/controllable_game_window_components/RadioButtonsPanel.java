@@ -46,10 +46,11 @@ import java.util.List;
  * a panel which can contains a set of radio buttons.
  * <p>
  * notice that if you want to use this class,
- * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
+ * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and
+ * {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

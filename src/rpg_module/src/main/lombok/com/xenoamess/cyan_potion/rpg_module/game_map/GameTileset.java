@@ -48,7 +48,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GameTileset class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 
 @EqualsAndHashCode

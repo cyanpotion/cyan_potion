@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.161.4</version>
+    <version>0.162.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -89,7 +89,7 @@
         <dom4j.version>2.1.1</dom4j.version>
         <eclipse-collections.version>10.2.0</eclipse-collections.version>
         <guava.version>28.2-jre</guava.version>
-        <jackson.version>2.10.2</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
         <joml.version>1.9.22</joml.version>
         <log4j.version>2.13.1</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
@@ -103,8 +103,9 @@
         <!--home made libraries versions-->
         <commonx.version>0.10.10</commonx.version>
         <multi_language.version>0.45.4</multi_language.version>
-        <x8l.version>0.53.0</x8l.version>
-        <SDL_GameControllerDB_Util.version>1.2.20200221</SDL_GameControllerDB_Util.version>
+        <x8l.version>2.1.1</x8l.version>
+        <SDL_GameControllerDB_Util.version>1.2.20200221
+        </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
@@ -182,16 +183,22 @@
                                     <goal>clean</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <excludeDefaultDirectories>true
+                                    </excludeDefaultDirectories>
                                     <filesets>
                                         <fileset>
-                                            <directory>${project.build.directory}/generated-sources/delombok</directory>
-                                            <followSymlinks>false</followSymlinks>
+                                            <directory>
+                                                ${project.build.directory}/generated-sources/delombok
+                                            </directory>
+                                            <followSymlinks>false
+                                            </followSymlinks>
                                         </fileset>
                                         <fileset>
-                                            <directory>${project.build.directory}/generated-test-sources/delombok
+                                            <directory>
+                                                ${project.build.directory}/generated-test-sources/delombok
                                             </directory>
-                                            <followSymlinks>false</followSymlinks>
+                                            <followSymlinks>false
+                                            </followSymlinks>
                                         </fileset>
                                     </filesets>
                                     <verbose>true</verbose>
@@ -1009,7 +1016,8 @@
                         <exclude>target/generated-sources/delombok</exclude>
                     </excludes>
                     <testExcludes>
-                        <testExclude>target/generated-test-sources/delombok</testExclude>
+                        <testExclude>target/generated-test-sources/delombok
+                        </testExclude>
                     </testExcludes>
                 </configuration>
             </plugin>
@@ -1049,8 +1057,12 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>${project.build.directory}/generated-sources/delombok</exclude>
-                        <exclude>${project.build.directory}/generated-test-sources/delombok</exclude>
+                        <exclude>
+                            ${project.build.directory}/generated-sources/delombok
+                        </exclude>
+                        <exclude>
+                            ${project.build.directory}/generated-test-sources/delombok
+                        </exclude>
                     </excludes>
                     <includes>
                         <include>${project.basedir}/src/main/lombok</include>

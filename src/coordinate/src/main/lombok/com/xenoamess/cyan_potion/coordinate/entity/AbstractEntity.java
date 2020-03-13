@@ -41,10 +41,11 @@ import lombok.ToString;
  * it can have size, have shape, have picture.
  * But you can also make it dont't have them.
  * Entity just mean a basic Object in cyan_potion.coordinate
- * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an Entity.
+ * If a thing wanna use functions in cyan_potion.coordinate like collided detect, then it is common to make it an
+ * Entity.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

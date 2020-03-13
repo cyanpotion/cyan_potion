@@ -40,7 +40,7 @@ import java.util.function.Function;
  * You can see how it works exactly in AbstractGameWindowComponent.initRemoteCallEventProcessor()
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 @Data
 public class RemoteCallEvent<T extends AbstractGameWindowComponent> implements Event {

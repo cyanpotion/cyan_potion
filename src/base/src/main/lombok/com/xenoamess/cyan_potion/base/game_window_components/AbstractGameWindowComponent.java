@@ -54,11 +54,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * if you want to override {@link #update()} / {@link #draw()} method,
  * Then you shall better go use {@link #setUpdater(UpdaterInterface)} / {@link #setDrawer(DrawerInterface)} instead.
  * to make life easier, we follow such a principle here.
- * 1. if you override the  {@link #update()} / {@link #draw()} method directly in a class, then this class MUST be a final class.
+ * 1. if you override the  {@link #update()} / {@link #draw()} method directly in a class, then this class MUST be a
+ * final class.
  * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 @EqualsAndHashCode

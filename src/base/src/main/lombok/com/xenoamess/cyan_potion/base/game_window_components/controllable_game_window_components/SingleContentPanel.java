@@ -32,13 +32,16 @@ import lombok.ToString;
 
 /**
  * SingleContentPanel
- * A {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel} who allow at most one {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} as content.
- * When adding a new {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, the exist ones will be closed automatically.
+ * A {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel} who
+ * allow at most one {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} as
+ * content.
+ * When adding a new {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, the
+ * exist ones will be closed automatically.
  * <p>
  * This class is used as a display panel or something.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

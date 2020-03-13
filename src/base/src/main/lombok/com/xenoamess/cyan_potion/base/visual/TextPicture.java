@@ -35,10 +35,12 @@ import org.joml.Vector4fc;
 
 /**
  * TextPicture
- * TextPicture is a class that allow you to pack up some text into an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}, and use it as an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
+ * TextPicture is a class that allow you to pack up some text into an
+ * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}, and use it as an
+ * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.0-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
