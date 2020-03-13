@@ -47,7 +47,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.162.0-SNAPSHOT
+ * @version 0.162.0
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

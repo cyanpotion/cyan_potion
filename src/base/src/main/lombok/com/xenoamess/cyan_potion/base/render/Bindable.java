@@ -33,7 +33,7 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
  * It is usually a kind of resource, a picture or something else that once bind, it can draw to something.
  *
  * @author XenoAmess
- * @version 0.162.0-SNAPSHOT
+ * @version 0.162.0
  */
 public interface Bindable {
 

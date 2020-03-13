@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base;
  * <p>GameEntrance class.</p>
  *
  * @author XenoAmess
- * @version 0.162.0-SNAPSHOT
+ * @version 0.162.0
  */
 public class GameEntrance {
     /**

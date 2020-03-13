@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * <p>GameMapJson class.</p>
  *
  * @author XenoAmess
- * @version 0.162.0-SNAPSHOT
+ * @version 0.162.0
  */
 @Data
 public class GameMapJson implements Serializable {

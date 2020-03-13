@@ -36,7 +36,7 @@ import lombok.ToString;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.162.0-SNAPSHOT
+ * @version 0.162.0
  * @see JXInputGamepadDevice
  * @deprecated
  */
