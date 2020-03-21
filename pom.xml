@@ -104,7 +104,7 @@
         <commonx.version>0.10.10</commonx.version>
         <multi_language.version>0.46.0</multi_language.version>
         <x8l.version>2.1.1</x8l.version>
-        <SDL_GameControllerDB_Util.version>1.2.20200221
+        <SDL_GameControllerDB_Util.version>[1.0.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
@@ -155,6 +155,9 @@
                             <allowSnapshots>false</allowSnapshots>
                             <excludes>
                                 <exclude>org.slf4j:*</exclude>
+                                <exclude>
+                                    com.xenoamess.cyan_potion:SDL_GameControllerDB_Util
+                                </exclude>
                             </excludes>
                         </configuration>
                         <executions>
