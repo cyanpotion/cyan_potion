@@ -38,7 +38,7 @@ import lombok.ToString;
  * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 
 @EqualsAndHashCode

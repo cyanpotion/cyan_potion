@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * That will always make things easier for both of us.
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 @Data
 public class CharEvent implements Event {

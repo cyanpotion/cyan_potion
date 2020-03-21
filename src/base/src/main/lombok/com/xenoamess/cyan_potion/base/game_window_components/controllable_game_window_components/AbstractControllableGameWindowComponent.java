@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

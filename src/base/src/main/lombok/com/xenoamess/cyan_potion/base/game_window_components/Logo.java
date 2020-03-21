@@ -46,7 +46,7 @@ import static org.lwjgl.opengl.GL11.*;
  * <p>Logo class.</p>
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

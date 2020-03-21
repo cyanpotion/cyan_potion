@@ -50,7 +50,7 @@ import java.util.List;
  * {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

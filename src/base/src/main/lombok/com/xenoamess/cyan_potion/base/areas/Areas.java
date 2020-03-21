@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * Utility class for Area.
  *
  * @author XenoAmess
- * @version 0.162.0
+ * @version 0.162.1-SNAPSHOT
  */
 public class Areas {
     private Areas() {
