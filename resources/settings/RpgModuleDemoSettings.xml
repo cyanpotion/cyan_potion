@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settingFile settingFormatVersion="0.3.0">
-    <commonSettings gameName="CyanPotionRpgModuleDemo"
-                    gameVersion="0.162.1-SNAPSHOT" titleTextID="0"
+    <commonSettings gameName="CyanPotionRpgModuleDemo" gameVersion="0.162.1-SNAPSHOT" titleTextID="0"
                     textFilePath="resources/text/text.x8l"
                     defaultFontResourceURI="[&quot;com.xenoamess.cyan_potion.base.visual.Font&quot;,&quot;ttfFile&quot;,&quot;resources/www/fonts/SourceHanSans-Normal.ttc&quot;]"
-                    language="english"
-                    gameWindowClassName="com.xenoamess.cyan_potion.base.GameWindow"
-                    titleClassName="com.xenoamess.cyan_potion.demo.world.WorldForDemo"
-                    steam_appid="480" runWithSteam="1" maxFPS="-1"/>
-    <views logicWindowWidth="1280" logicWindowHeight="1024"
-           realWindowWidth="1280" realWindowHeight="1024" scale="2.0"
+                    language="english" gameWindowClassName="com.xenoamess.cyan_potion.base.GameWindow"
+                    titleClassName="com.xenoamess.cyan_potion.demo.world.WorldForDemo" steam_appid="480"
+                    runWithSteam="1" maxFPS="-1"/>
+    <views logicWindowWidth="1280" logicWindowHeight="1024" realWindowWidth="1280" realWindowHeight="1024" scale="2.0"
            fullScreen="0" gameWindowResizable="1"/>
     <specialSettings/>
     <codePlugins>
@@ -44,12 +41,9 @@
         <GLFW_KEY_SPACE>XENOAMESS_KEY_SPACE</GLFW_KEY_SPACE>
         <GLFW_KEY_LEFT_SHIFT>XENOAMESS_KEY_LEFT_SHIFT</GLFW_KEY_LEFT_SHIFT>
         <GLFW_KEY_RIGHT_SHIFT>XENOAMESS_KEY_RIGHT_SHIFT</GLFW_KEY_RIGHT_SHIFT>
-        <GLFW_MOUSE_BUTTON_LEFT>XENOAMESS_MOUSE_BUTTON_LEFT
-        </GLFW_MOUSE_BUTTON_LEFT>
-        <GLFW_MOUSE_BUTTON_RIGHT>XENOAMESS_MOUSE_BUTTON_RIGHT
-        </GLFW_MOUSE_BUTTON_RIGHT>
-        <GLFW_MOUSE_BUTTON_MIDDLE>XENOAMESS_MOUSE_BUTTON_MIDDLE
-        </GLFW_MOUSE_BUTTON_MIDDLE>
+        <GLFW_MOUSE_BUTTON_LEFT>XENOAMESS_MOUSE_BUTTON_LEFT</GLFW_MOUSE_BUTTON_LEFT>
+        <GLFW_MOUSE_BUTTON_RIGHT>XENOAMESS_MOUSE_BUTTON_RIGHT</GLFW_MOUSE_BUTTON_RIGHT>
+        <GLFW_MOUSE_BUTTON_MIDDLE>XENOAMESS_MOUSE_BUTTON_MIDDLE</GLFW_MOUSE_BUTTON_MIDDLE>
         <JXINPUT_KEY_UP>XENOAMESS_KEY_UP</JXINPUT_KEY_UP>
         <JXINPUT_KEY_LEFT>XENOAMESS_KEY_LEFT</JXINPUT_KEY_LEFT>
         <JXINPUT_KEY_DOWN>XENOAMESS_KEY_DOWN</JXINPUT_KEY_DOWN>

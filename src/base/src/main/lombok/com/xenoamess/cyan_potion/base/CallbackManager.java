@@ -77,8 +77,14 @@ public class CallbackManager extends SubManager {
 
     @Override
     public void close() {
-        glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
-        glfwSetKeyCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
+        GLFWWindowCloseCallback glfwWindowCloseCallback = glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null);
+        if (glfwWindowCloseCallback != null) {
+            glfwWindowCloseCallback.free();
+        }
+        GLFWKeyCallback glfwKeyCallback = glfwSetKeyCallback(this.getGameManager().getGameWindow().getWindow(), null);
+        if (glfwKeyCallback != null) {
+            glfwKeyCallback.free();
+        }
     }
 
     @Getter

@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.base;
 import com.codedisaster.steamworks.SteamApps;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleTalkThreadManager;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -39,7 +38,6 @@ import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
-import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -72,6 +70,8 @@ import java.util.stream.Collectors;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
+
+//import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
 
 /**
  * <p>GameManager class.</p>
@@ -314,12 +314,12 @@ public class GameManager implements Closeable {
      * <p>registerCyanPotionURLStreamHandlerFactory.</p>
      */
     public void registerCyanPotionURLStreamHandlerFactory() {
-        try {
-            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
-            factorySet.register(new CyanPotionURLStreamHandlerFactory());
-        } catch (IllegalAccessException e) {
-            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
-        }
+//        try {
+//            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
+//            factorySet.register(new CyanPotionURLStreamHandlerFactory());
+//        } catch (IllegalAccessException e) {
+//            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
+//        }
     }
 
     /**
