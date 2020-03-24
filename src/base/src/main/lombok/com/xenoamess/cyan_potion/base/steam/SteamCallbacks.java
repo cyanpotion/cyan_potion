@@ -406,9 +406,8 @@ public class SteamCallbacks {
 
         @Override
         public void onPersonaStateChange(SteamID steamID, SteamFriends.PersonaChange change) {
-
+            //noinspection SwitchStatementWithTooFewBranches
             switch (change) {
-
                 case Name:
                     LOGGER.debug("Persona name received: " +
                             "accountID=" + steamID.getAccountID() +

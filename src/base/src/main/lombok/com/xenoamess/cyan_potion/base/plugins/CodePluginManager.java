@@ -70,10 +70,12 @@ public class CodePluginManager {
      * @param codePluginString codePluginString
      * @return return
      */
+    @SuppressWarnings("unchecked")
     public Function<GameManager, Void> getCodePluginFunctionFromString(String codePluginString) {
         Function<GameManager, Void> res = null;
         String[] codePluginStrings = codePluginString.split(":");
 
+        //noinspection SwitchStatementWithTooFewBranches
         switch (codePluginStrings[0]) {
             case "SimpleFunctionObject":
                 try {

@@ -63,6 +63,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * @author XenoAmess
  * @version 0.162.1-SNAPSHOT
  */
+@SuppressWarnings("rawtypes")
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class ResourceManager extends SubManager {
@@ -215,6 +216,7 @@ public class ResourceManager extends SubManager {
      * @param tClass resource class
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapGet(Class<T> tClass) {
         return (ConcurrentHashMap) defaultResourcesURIMap.get(tClass);
     }
@@ -227,6 +229,7 @@ public class ResourceManager extends SubManager {
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapPut(Class<T> tClass, ConcurrentHashMap<ResourceInfo<T>, T> map) {
         return defaultResourcesURIMap.put(tClass, (ConcurrentHashMap) map);
     }
@@ -249,6 +252,7 @@ public class ResourceManager extends SubManager {
      * @param tClass resource class
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends AbstractResource> ConcurrentHashMap<String, Predicate<T>> defaultResourcesLoaderMapGet(Class<T> tClass) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.get(tClass);
     }
@@ -261,6 +265,7 @@ public class ResourceManager extends SubManager {
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends AbstractResource> ConcurrentHashMap<String, Predicate<T>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
@@ -315,6 +320,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfo resourceInfo
      * @param t            resource
      */
+    @SuppressWarnings("unchecked")
     public <T extends AbstractResource> void putResource(ResourceInfo<T> resourceInfo, T t) {
         ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
                 defaultResourcesURIMapGet((Class<T>) t.getClass());
@@ -332,6 +338,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfo
      * @param t                resource
      */
+    @SuppressWarnings("unchecked")
     public <T extends AbstractResource> void putResource(String resourceInfoJson, T t) {
         this.putResource((ResourceInfo<T>) ResourceInfo.of(resourceInfoJson), t);
     }
@@ -375,6 +382,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfo
      * @return resource
      */
+    @SuppressWarnings("unchecked")
     public <T extends AbstractResource> T getResource(Class<T> tClass,
                                                       String resourceInfoJson) {
         return this.getResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
@@ -403,6 +411,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfoJson
      * @return a boolean.
      */
+    @SuppressWarnings("unchecked")
     public boolean ifExistResource(String resourceInfoJson) {
         return this.ifExistResource(ResourceInfo.of(resourceInfoJson));
     }
@@ -454,6 +463,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resource Info Json String
      * @return resource
      */
+    @SuppressWarnings("unchecked")
     public <T extends AbstractResource> T fetchResource(Class<T> tClass, String resourceInfoJson) {
         return this.fetchResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
     }

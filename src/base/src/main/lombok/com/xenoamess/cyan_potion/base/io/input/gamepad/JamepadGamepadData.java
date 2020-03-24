@@ -335,13 +335,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.b != tempJamepadGamepadData.b) {
             if (tempJamepadGamepadData.b) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_B, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_B, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_B, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.b) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_B, action,
@@ -351,13 +349,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.x != tempJamepadGamepadData.x) {
             if (tempJamepadGamepadData.x) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_X, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_X, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_X, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.x) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_X, action,
@@ -367,13 +363,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.y != tempJamepadGamepadData.y) {
             if (tempJamepadGamepadData.y) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_Y, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_Y, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_Y, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.y) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_Y, action,
@@ -383,13 +377,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.back != tempJamepadGamepadData.back) {
             if (tempJamepadGamepadData.back) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_BACK, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_BACK, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_BACK, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.back) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_BACK, action,
@@ -399,13 +391,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.start != tempJamepadGamepadData.start) {
             if (tempJamepadGamepadData.start) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_START, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_START, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_START, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.start) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_START, action,
@@ -415,13 +405,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.lShoulder != tempJamepadGamepadData.lShoulder) {
             if (tempJamepadGamepadData.lShoulder) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LB, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LB, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LB, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.lShoulder) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LB, action,
@@ -431,13 +419,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.rShoulder != tempJamepadGamepadData.rShoulder) {
             if (tempJamepadGamepadData.rShoulder) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RB, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RB, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RB, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.rShoulder) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RB, action,
@@ -447,13 +433,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.lThumb != tempJamepadGamepadData.lThumb) {
             if (tempJamepadGamepadData.lThumb) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_L, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_L, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_L, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.lThumb) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_L, action,
@@ -463,13 +447,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.rThumb != tempJamepadGamepadData.rThumb) {
             if (tempJamepadGamepadData.rThumb) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_R, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_R, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_R, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.rThumb) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_R, action,
@@ -479,13 +461,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.up != tempJamepadGamepadData.up) {
             if (tempJamepadGamepadData.up) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UP, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UP, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UP, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.up) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UP, action,
@@ -495,13 +475,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.down != tempJamepadGamepadData.down) {
             if (tempJamepadGamepadData.down) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_DOWN, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_DOWN, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_DOWN, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.down) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_DOWN, action,
@@ -511,13 +489,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.left != tempJamepadGamepadData.left) {
             if (tempJamepadGamepadData.left) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LEFT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LEFT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LEFT, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.left) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LEFT, action,
@@ -527,13 +503,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.right != tempJamepadGamepadData.right) {
             if (tempJamepadGamepadData.right) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RIGHT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RIGHT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RIGHT, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.right) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RIGHT, action,
@@ -543,13 +517,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.guide != tempJamepadGamepadData.guide) {
             if (tempJamepadGamepadData.guide) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_GUIDE, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_GUIDE, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_GUIDE, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.guide) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_GUIDE, action,
@@ -559,13 +531,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (this.unknown != tempJamepadGamepadData.unknown) {
             if (tempJamepadGamepadData.unknown) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UNKNOWN, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UNKNOWN, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UNKNOWN, action,
+                    this.getGamepadDevice()));
         } else if (tempJamepadGamepadData.unknown) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_UNKNOWN, action,
@@ -578,13 +548,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (ifLtNow != ifLtNext) {
             if (ifLtNext) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LT, action,
+                    this.getGamepadDevice()));
         } else if (ifLtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_LT, action,
@@ -597,13 +565,11 @@ public class JamepadGamepadData extends AbstractGamepadData {
         if (ifRtNow != ifRtNext) {
             if (ifRtNext) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RT, action,
+                    this.getGamepadDevice()));
         } else if (ifRtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JAMEPAD_KEY_RT, action,

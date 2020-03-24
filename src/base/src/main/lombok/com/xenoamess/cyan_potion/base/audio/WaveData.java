@@ -116,6 +116,7 @@ public class WaveData extends AbstractResource {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unchecked")
     public static final Function<GameManager, Void> PUT_WAVEDATA_LOADER_MUSIC = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(WaveData.class, STRING_MUSIC,
                 (WaveData waveData) -> waveData.loadAsMusicWaveData(waveData.getResourceInfo())

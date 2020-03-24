@@ -471,7 +471,7 @@ public class SteamManager extends SubManager {
                 getSteamUGC().sendQueryUGCRequest(query);
             }
         } else if (input.startsWith("ugc info ")) {
-            Long id = Long.parseLong(input.substring("ugc info ".length()), 16);
+            long id = Long.parseLong(input.substring("ugc info ".length()), 16);
             SteamUGC.ItemInstallInfo installInfo = new SteamUGC.ItemInstallInfo();
             if (getSteamUGC().getItemInstallInfo(new SteamPublishedFileID(id), installInfo)) {
                 LOGGER.debug("  folder: " + installInfo.getFolder());

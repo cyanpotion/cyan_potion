@@ -173,6 +173,7 @@ public class Font extends AbstractResource {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unchecked")
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
                 (Font font) -> font.loadAsTtfFileFont(font.getResourceInfo())
@@ -220,7 +221,7 @@ public class Font extends AbstractResource {
             returnValueList.add(
                     new Callable<LoadBitmapPojo>() {
                         @Override
-                        public LoadBitmapPojo call() throws Exception {
+                        public LoadBitmapPojo call() {
                             try (STBTTPackContext pc = STBTTPackContext.malloc()) {
                                 ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
                                 stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
@@ -514,7 +515,7 @@ public class Font extends AbstractResource {
 
         IntIterator it = this.getFontTextures().iterator();
         while (it.hasNext()) {
-            glDeleteTextures(it.next());
+            glDeleteTextures(it.nextPrimitive());
         }
         this.getFontTextures().clear();
     }

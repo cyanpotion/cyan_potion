@@ -44,6 +44,7 @@ import java.util.Arrays;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
+@SuppressWarnings("rawtypes")
 class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
     /**
      * {@inheritDoc}
@@ -65,6 +66,7 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
     }
 }
 
+@SuppressWarnings("rawtypes")
 class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     @JsonIgnore
     private static final transient Logger LOGGER =
@@ -73,6 +75,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public ResourceInfo deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
@@ -190,6 +193,7 @@ public final class ResourceInfo<T extends AbstractResource> {
      * @param json json String.
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
      */
+    @SuppressWarnings("rawtypes")
     public static ResourceInfo of(String json) {
         ResourceInfo resourceInfo = null;
         try {

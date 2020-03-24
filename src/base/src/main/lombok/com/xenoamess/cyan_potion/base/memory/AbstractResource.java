@@ -55,6 +55,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     @Getter
     private final ResourceManager resourceManager;
 
+    @SuppressWarnings("rawtypes")
     @Getter
     private final ResourceInfo resourceInfo;
 
@@ -117,6 +118,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @param resourceInfo    Resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
+    @SuppressWarnings("rawtypes")
     public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
         this.resourceInfo = resourceInfo;
@@ -238,6 +240,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return a boolean.
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
+    @SuppressWarnings("unchecked")
     protected boolean forceLoad() {
         Predicate<AbstractResource> loader = (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
         if (loader == null) {

@@ -80,8 +80,7 @@ public class SaveManager extends SubManager {
      */
     public SaveFileObject getSaveFileObject(int index) {
         String saveFolderPath = currentSaveFilePath + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
-        SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
-        return saveFileObject;
+        return new SaveFileObject(this, saveFolderPath);
     }
 
     /**

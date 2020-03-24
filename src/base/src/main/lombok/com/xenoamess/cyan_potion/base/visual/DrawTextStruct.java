@@ -204,6 +204,7 @@ public class DrawTextStruct {
             x3 = Math.max(x3, nowX0 + charWidthShould);
             y3 = Math.max(y3, nowY0 + charHeightShould);
             lastXReal = nowX0 + charWidthShould * 1;
+            //noinspection UnusedAssignment
             lastYReal = 0;
             lastXShould = getFont().getQ().x1();
             lastYShould = 0;
@@ -213,8 +214,10 @@ public class DrawTextStruct {
         float calculatedScaleX = Float.isNaN(this.getWidth()) ? Float.NaN : this.getWidth() / (x3 - 0);
         float calculatedScaleY = Float.isNaN(this.getHeight()) ? Float.NaN : this.getHeight() / (y3 - 0);
         if (Float.isNaN(calculatedScaleX)) {
+            //noinspection SuspiciousNameCombination
             calculatedScaleX = calculatedScaleY;
         } else if (Float.isNaN(calculatedScaleY)) {
+            //noinspection SuspiciousNameCombination
             calculatedScaleY = calculatedScaleX;
         }
         this.setScaleXY(calculatedScaleX, calculatedScaleY);
