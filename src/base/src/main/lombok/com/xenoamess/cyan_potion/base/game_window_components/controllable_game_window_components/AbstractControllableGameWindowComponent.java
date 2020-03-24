@@ -164,12 +164,14 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     public AbstractControllableGameWindowComponent(GameWindow gameWindow) {
         super(gameWindow);
 
+        //noinspection unchecked
         this.setUpdater(
                 UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(
                         super.getUpdater()
                 )
         );
 
+        //noinspection unchecked
         this.setDrawer(
                 DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(
                         super.getDrawer()
