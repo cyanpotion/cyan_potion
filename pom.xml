@@ -86,9 +86,9 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
+        <httpclient.version>4.5.12</httpclient.version>
+        <jcip-annotations.version>1.0</jcip-annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <!--        <eclipse-collections.version>10.2.0</eclipse-collections.version>-->
-        <!--        <guava.version>28.2-jre</guava.version>-->
         <jackson.version>2.11.0.rc1</jackson.version>
         <joml.version>1.9.24</joml.version>
         <log4j.version>2.13.1</log4j.version>
@@ -125,6 +125,7 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -659,7 +660,7 @@
             <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>1.0</version>
+            <version>${jcip-annotations.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -864,7 +865,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.11</version>
+            <version>${httpclient.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -1041,7 +1042,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>${jacoco-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
