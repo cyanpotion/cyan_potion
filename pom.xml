@@ -84,13 +84,13 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <dom4j.version>2.1.1</dom4j.version>
         <!--        <eclipse-collections.version>10.2.0</eclipse-collections.version>-->
         <!--        <guava.version>28.2-jre</guava.version>-->
         <jackson.version>2.11.0.rc1</jackson.version>
-        <joml.version>1.9.22</joml.version>
+        <joml.version>1.9.24</joml.version>
         <log4j.version>2.13.1</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -105,13 +105,13 @@
         <!--home made libraries versions-->
         <commonx.version>0.10.10</commonx.version>
         <multi_language.version>0.46.0</multi_language.version>
-        <x8l.version>2.1.1</x8l.version>
+        <x8l.version>2.1.2</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.1.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.6.1</junit-jupiter.version>
+        <junit-jupiter.version>5.6.2</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
