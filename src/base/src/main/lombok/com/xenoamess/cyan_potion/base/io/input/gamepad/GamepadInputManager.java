@@ -122,6 +122,7 @@ public class GamepadInputManager extends SubManager {
     /**
      * <p>update.</p>
      */
+    @Override
     public void update() {
         for (AbstractGamepadData gamepadData : this.getGamepadDatas()) {
             gamepadData.update(this.getGameManager().getGameWindow());

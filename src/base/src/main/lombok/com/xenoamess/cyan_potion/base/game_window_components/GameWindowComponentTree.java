@@ -221,6 +221,7 @@ public class GameWindowComponentTree extends SubManager {
     /**
      * <p>update.</p>
      */
+    @Override
     public void update() {
         getRoot().update();
     }

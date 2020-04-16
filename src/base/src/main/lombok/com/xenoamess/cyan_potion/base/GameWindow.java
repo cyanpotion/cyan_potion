@@ -169,6 +169,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     /**
      * <p>init.</p>
      */
+    @Override
     public void init() {
         initGlfw();
         initGlfwWindow();
@@ -510,6 +511,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     /**
      * <p>update.</p>
      */
+    @Override
     public void update() {
         this.updateMousePos();
     }

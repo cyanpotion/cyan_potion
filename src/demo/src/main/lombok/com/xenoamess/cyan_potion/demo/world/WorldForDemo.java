@@ -218,6 +218,7 @@ public final class WorldForDemo extends World {
         this.pureColorBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
+    @Override
     public boolean update() {
         boolean res = super.update();
         fix();

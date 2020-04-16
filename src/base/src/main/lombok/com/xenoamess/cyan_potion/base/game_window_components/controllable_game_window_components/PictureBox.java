@@ -121,6 +121,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @Override
     public void draw(GameWindow gameWindow) {
         this.picture.draw(gameWindow);
     }
@@ -128,6 +129,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @Override
     public void draw(AbstractScene abstractScene) {
         this.picture.draw(abstractScene);
     }
