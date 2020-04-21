@@ -181,10 +181,21 @@ public class DrawTextStruct {
             if (this.getText().charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / Font.EACH_CHAR_NUM));
+            glBindTexture(
+                    GL_TEXTURE_2D,
+                    getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / Font.EACH_CHAR_NUM)
+            );
             glBegin(GL_QUADS);
-            STBTruetype.stbtt_GetPackedQuad(getFont().getCharDatas().get(this.getText().charAt(i) / Font.EACH_CHAR_NUM), Font.BITMAP_W, Font.BITMAP_H,
-                    this.getText().charAt(i) % Font.EACH_CHAR_NUM, getFont().getXb(), getFont().getYb(), getFont().getQ(), false);
+            STBTruetype.stbtt_GetPackedQuad(
+                    getFont().getCharDatas().get(this.getText().charAt(i) / Font.EACH_CHAR_NUM),
+                    Font.BITMAP_W,
+                    Font.BITMAP_H,
+                    this.getText().charAt(i) % Font.EACH_CHAR_NUM,
+                    getFont().getXb(),
+                    getFont().getYb(),
+                    getFont().getQ(),
+                    false
+            );
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getFont().getQ().x1() - getFont().getQ().x0();

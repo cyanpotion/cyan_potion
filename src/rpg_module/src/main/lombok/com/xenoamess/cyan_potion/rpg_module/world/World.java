@@ -323,7 +323,11 @@ public class World extends AbstractEntityScene {
         }
 
         final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
-        Vector2f vector2f = new Vector2f(this.getCamera().getPosX(), this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()), lerpFloat.getValue());
+        Vector2f vector2f = new Vector2f(
+                this.getCamera().getPosX(),
+                this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()),
+                lerpFloat.getValue()
+        );
 
         this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();

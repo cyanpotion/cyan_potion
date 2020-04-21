@@ -58,7 +58,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
 
 
     /**
-     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * UpdaterBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterBuilder<PictureBox> UPDATER_BUILDER_PICTUREBOX = new UpdaterBuilder<PictureBox>() {
         @Override
@@ -75,9 +76,11 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
 
 
     /**
-     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Updater for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
-    public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTUREBOX = UPDATER_BUILDER_PICTUREBOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTUREBOX =
+            UPDATER_BUILDER_PICTUREBOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
 
     /**

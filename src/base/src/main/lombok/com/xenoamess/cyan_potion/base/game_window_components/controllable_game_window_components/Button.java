@@ -80,9 +80,11 @@ public class Button extends AbstractControllableGameWindowComponent {
 
 
     /**
-     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Updater for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
-    public static final UpdaterInterface<Button> DEFAULT_UPDATER_BUTTON = UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<Button> DEFAULT_UPDATER_BUTTON =
+            UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
 
     /**

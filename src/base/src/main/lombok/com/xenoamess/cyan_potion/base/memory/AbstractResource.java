@@ -171,7 +171,8 @@ public abstract class AbstractResource implements Closeable, Bindable {
             if (!result) {
                 result = this.loadByLoadTaskOrSelf();
                 if (!result) {
-                    LOGGER.error("load resource by self failed too! This means we can never load this resource! Resource:{}", this);
+                    LOGGER.error("load resource by self failed too! This means we can never load this resource! " +
+                            "Resource:{}", this);
                 }
             }
         } else {
@@ -242,7 +243,11 @@ public abstract class AbstractResource implements Closeable, Bindable {
      */
     @SuppressWarnings("unchecked")
     protected boolean forceLoad() {
-        Predicate<AbstractResource> loader = (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
+        Predicate<AbstractResource> loader =
+                (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(
+                        this.getClass(),
+                        this.getResourceInfo().getType()
+                );
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }

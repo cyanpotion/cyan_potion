@@ -384,7 +384,12 @@ public class Font extends AbstractResource {
         glEnable(GL_TEXTURE_2D);
 
         if (drawTextStruct.getColor() != null) {
-            glColor4f(drawTextStruct.getColor().x(), drawTextStruct.getColor().y(), drawTextStruct.getColor().z(), drawTextStruct.getColor().w());
+            glColor4f(
+                    drawTextStruct.getColor().x(),
+                    drawTextStruct.getColor().y(),
+                    drawTextStruct.getColor().z(),
+                    drawTextStruct.getColor().w()
+            );
         }
 
         float lastXReal = drawTextStruct.getLeftTopPosX();
@@ -395,10 +400,21 @@ public class Font extends AbstractResource {
             if (drawTextStruct.getText().charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM));
+            glBindTexture(
+                    GL_TEXTURE_2D,
+                    getFontTextures().getPrimitive(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM)
+            );
             glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    drawTextStruct.getText().charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+            stbtt_GetPackedQuad(
+                    getCharDatas().get(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM),
+                    BITMAP_W,
+                    BITMAP_H,
+                    drawTextStruct.getText().charAt(i) % EACH_CHAR_NUM,
+                    getXb(),
+                    getYb(),
+                    getQ(),
+                    false
+            );
 
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();

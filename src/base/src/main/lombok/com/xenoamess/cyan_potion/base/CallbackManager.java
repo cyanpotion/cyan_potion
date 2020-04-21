@@ -77,7 +77,8 @@ public class CallbackManager extends SubManager {
 
     @Override
     public void close() {
-        GLFWWindowCloseCallback glfwWindowCloseCallback = glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null);
+        GLFWWindowCloseCallback glfwWindowCloseCallback =
+                glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null);
         if (glfwWindowCloseCallback != null) {
             glfwWindowCloseCallback.free();
         }
@@ -182,7 +183,18 @@ public class CallbackManager extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
      */
     public GLFWKeyCallbackI wrapKeyCallback() {
-        return (window, key, scancode, action, mods) -> CallbackManager.this.getKeyCallback().invoke(window, key, scancode, action, mods);
+        return (window,
+                key,
+                scancode,
+                action,
+                mods) ->
+                CallbackManager.this.getKeyCallback().invoke(
+                        window,
+                        key,
+                        scancode,
+                        action,
+                        mods
+                );
     }
 
     /**
@@ -200,7 +212,16 @@ public class CallbackManager extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
      */
     public GLFWMouseButtonCallbackI wrapMouseButtonCallback() {
-        return (window, button, action, mods) -> CallbackManager.this.getMouseButtonCallback().invoke(window, button, action, mods);
+        return (window,
+                button,
+                action,
+                mods) ->
+                CallbackManager.this.getMouseButtonCallback().invoke(
+                        window,
+                        button,
+                        action,
+                        mods
+                );
     }
 
     /**

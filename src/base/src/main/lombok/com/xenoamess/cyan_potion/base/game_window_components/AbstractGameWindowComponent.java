@@ -108,43 +108,49 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     /**
      * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final UpdaterBuilder<AbstractGameWindowComponent> UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT = new UpdaterBuilder<AbstractGameWindowComponent>() {
-        @Override
-        public UpdaterInterface<AbstractGameWindowComponent> build(UpdaterInterface<? super AbstractGameWindowComponent> superUpdater) {
-            return new Updater<AbstractGameWindowComponent>() {
+    public static final UpdaterBuilder<AbstractGameWindowComponent> UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT =
+            new UpdaterBuilder<AbstractGameWindowComponent>() {
                 @Override
-                public boolean thisUpdate(AbstractGameWindowComponent abstractGameWindowComponent) {
-                    return true;
+                public UpdaterInterface<AbstractGameWindowComponent> build(UpdaterInterface<?
+                        super AbstractGameWindowComponent> superUpdater) {
+                    return new Updater<AbstractGameWindowComponent>() {
+                        @Override
+                        public boolean thisUpdate(AbstractGameWindowComponent abstractGameWindowComponent) {
+                            return true;
+                        }
+                    };
                 }
             };
-        }
-    };
 
     /**
      * DrawerBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT = new DrawerBuilder<AbstractGameWindowComponent>() {
-        @Override
-        public DrawerInterface<AbstractGameWindowComponent> build(DrawerInterface<? super AbstractGameWindowComponent> superUpdater) {
-            return new Drawer<AbstractGameWindowComponent>() {
+    public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT =
+            new DrawerBuilder<AbstractGameWindowComponent>() {
                 @Override
-                public boolean thisDraw(AbstractGameWindowComponent abstractGameWindowComponent) {
-                    return true;
+                public DrawerInterface<AbstractGameWindowComponent> build(DrawerInterface<?
+                        super AbstractGameWindowComponent> superUpdater) {
+                    return new Drawer<AbstractGameWindowComponent>() {
+                        @Override
+                        public boolean thisDraw(AbstractGameWindowComponent abstractGameWindowComponent) {
+                            return true;
+                        }
+                    };
                 }
             };
-        }
-    };
 
 
     /**
      * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT = UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT =
+            UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
 
     /**
      * default Drawer for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT = DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT =
+            DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
 
 
     /**
@@ -160,7 +166,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @see AbstractGameWindowComponent#registerProcessor(Class, EventProcessor)
      */
     @Getter(AccessLevel.PROTECTED)
-    private final Map<Class<? extends Event>, EventProcessor<? extends Event>> eventClassToProcessorMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Event>, EventProcessor<? extends Event>> eventClassToProcessorMap =
+            new ConcurrentHashMap<>();
 
 
     /**
@@ -388,7 +395,10 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param <T>            event class
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
      */
-    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(Class<T> eventClass, EventProcessor<? super T> eventProcessor) {
+    protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(
+            Class<T> eventClass,
+            EventProcessor<? super T> eventProcessor
+    ) {
         return (EventProcessor) this.getEventClassToProcessorMap().put(eventClass, eventProcessor);
     }
 

@@ -204,10 +204,12 @@ public class ResourceManager extends SubManager {
     private final ArrayList<AbstractResource> inMemoryResources = new ArrayList<>();
 
     @Getter
-    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<? extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<ResourceInfo<?
+            extends AbstractResource>, ? extends AbstractResource>> defaultResourcesURIMap = new ConcurrentHashMap<>();
 
     @Getter
-    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Predicate<? extends AbstractResource>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends AbstractResource>, ConcurrentHashMap<String, Predicate<?
+            extends AbstractResource>>> defaultResourcesLoaderMap = new ConcurrentHashMap<>();
 
     /**
      * <p>defaultResourcesURIMapGet.</p>
@@ -289,7 +291,11 @@ public class ResourceManager extends SubManager {
      * @param resourceType resourceType
      * @param loader       a {@link java.util.function.Function} object.
      */
-    public <T extends AbstractResource> void putResourceLoader(Class<T> tClass, String resourceType, Predicate<T> loader) {
+    public <T extends AbstractResource> void putResourceLoader(
+            Class<T> tClass,
+            String resourceType,
+            Predicate<T> loader
+    ) {
         ConcurrentHashMap<String, Predicate<? extends AbstractResource>> resourceLoaderMap =
                 defaultResourcesLoaderMap.computeIfAbsent(
                         tClass, aClass -> new ConcurrentHashMap<>(8));

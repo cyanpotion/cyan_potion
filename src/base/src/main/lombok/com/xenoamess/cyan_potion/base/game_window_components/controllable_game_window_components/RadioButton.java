@@ -83,7 +83,8 @@ public class RadioButton extends Button {
 
 
     /**
-     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * UpdaterBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterBuilder<RadioButton> UPDATER_BUILDER_RADIOBUTTON = new UpdaterBuilder<RadioButton>() {
         @Override
@@ -101,16 +102,19 @@ public class RadioButton extends Button {
 
 
     /**
-     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Updater for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
-    public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIOBUTTO = UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIOBUTTO =
+            UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
 
     /**
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
+     * @param radioButtonGroup a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      */
     public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup) {
         this(gameWindow, radioButtonGroup, null);
@@ -120,7 +124,8 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
+     * @param radioButtonGroup a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
     public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected) {
@@ -132,11 +137,17 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow       a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
+     * @param radioButtonGroup a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param buttonText       a {@link java.lang.String} object.
      * @param bindableSelected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, String buttonText, Texture bindableSelected) {
+    public RadioButton(
+            GameWindow gameWindow,
+            RadioButtonGroup radioButtonGroup,
+            String buttonText,
+            Texture bindableSelected
+    ) {
         this(gameWindow, radioButtonGroup, buttonText, bindableSelected, null);
     }
 
@@ -144,11 +155,17 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup   a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
+     * @param radioButtonGroup   a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, Texture bindableSelected, Texture bindableDeselected) {
+    public RadioButton(
+            GameWindow gameWindow,
+            RadioButtonGroup radioButtonGroup,
+            Texture bindableSelected,
+            Texture bindableDeselected
+    ) {
         this(gameWindow, radioButtonGroup, null, bindableSelected, bindableDeselected);
     }
 
@@ -156,12 +173,19 @@ public class RadioButton extends Button {
      * <p>Constructor for RadioButton.</p>
      *
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
-     * @param radioButtonGroup   a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
+     * @param radioButtonGroup   a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButtonGroup} object.
      * @param buttonText         a {@link java.lang.String} object.
      * @param bindableSelected   a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
-    public RadioButton(GameWindow gameWindow, RadioButtonGroup radioButtonGroup, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
+    public RadioButton(
+            GameWindow gameWindow,
+            RadioButtonGroup radioButtonGroup,
+            String buttonText,
+            Texture bindableSelected,
+            Texture bindableDeselected
+    ) {
         super(gameWindow, bindableSelected, buttonText);
         this.radioButtonGroup = radioButtonGroup;
         this.setBindableSelected(bindableSelected);

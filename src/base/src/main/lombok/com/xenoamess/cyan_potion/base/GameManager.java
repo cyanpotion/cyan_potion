@@ -366,7 +366,8 @@ public class GameManager implements Closeable {
         this.getGameWindowComponentTree().init();
 
         this.setStartingContent();
-        final String defaultFontResourceJsonString = this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
+        final String defaultFontResourceJsonString =
+                this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
 
         if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
             Font.setDefaultFont(this.getResourceManager().fetchResource(Font.class, defaultFontResourceJsonString));
@@ -384,7 +385,11 @@ public class GameManager implements Closeable {
      * @return a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected X8lTree loadSettingTree(DataCenter dataCenter) {
-        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
+        String settingFilePath = getString(
+                this.getArgsMap(),
+                "SettingFilePath",
+                "resources/settings/DefaultSettings.x8l"
+        );
 
         LOGGER.debug("SettingsFilePath : {}", settingFilePath);
 
@@ -393,7 +398,8 @@ public class GameManager implements Closeable {
         try {
             settingsTree = X8lTree.load(settingFileObject);
             settingsTree.trimForce();
-            ContentNode settingNode = settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
+            ContentNode settingNode =
+                    settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
             if (dataCenter.getPatchSettingsTree() != null) {
                 settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
             }
@@ -426,7 +432,9 @@ public class GameManager implements Closeable {
      * <p>initCodePluginManager.</p>
      */
     protected void initCodePluginManager() {
-        for (Pair<CodePluginPosition, String> entry : this.getDataCenter().getGameSettings().getCodePluginManagerSettings()) {
+        for (Pair<CodePluginPosition, String> entry :
+                this.getDataCenter().getGameSettings().getCodePluginManagerSettings()
+        ) {
             this.codePluginManager.putCodePlugin(entry.getKey(), entry.getValue());
         }
     }

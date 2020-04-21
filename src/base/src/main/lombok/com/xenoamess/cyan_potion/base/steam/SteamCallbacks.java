@@ -71,7 +71,11 @@ public class SteamCallbacks {
     private SteamUserCallback steamUserCallback = new SteamUserCallback() {
 
         @Override
-        public void onValidateAuthTicket(SteamID steamID, SteamAuth.AuthSessionResponse authSessionResponse, SteamID ownerSteamID) {
+        public void onValidateAuthTicket(
+                SteamID steamID,
+                SteamAuth.AuthSessionResponse authSessionResponse,
+                SteamID ownerSteamID
+        ) {
             //do nothing
         }
 
@@ -168,7 +172,8 @@ public class SteamCallbacks {
                         LOGGER.debug("  ... user name is '" +
                                 getSteamManager().getSteamFriends().getFriendPersonaName(entry.getSteamIDUser()) + "'");
 
-                        int smallAvatar = getSteamManager().getSteamFriends().getSmallFriendAvatar(entry.getSteamIDUser());
+                        int smallAvatar =
+                                getSteamManager().getSteamFriends().getSmallFriendAvatar(entry.getSteamIDUser());
                         if (smallAvatar != 0) {
                             int w = getSteamManager().getSteamUtils().getImageWidth(smallAvatar);
                             int h = getSteamManager().getSteamUtils().getImageHeight(smallAvatar);
@@ -261,8 +266,13 @@ public class SteamCallbacks {
             int offset = 0, bytesRead;
 
             do {
-                bytesRead = getSteamManager().getSteamRemoteStorage().ugcRead(fileHandle, buffer, buffer.limit(), offset,
-                        SteamRemoteStorage.UGCReadAction.ContinueReadingUntilFinished);
+                bytesRead = getSteamManager().getSteamRemoteStorage().ugcRead(
+                        fileHandle,
+                        buffer,
+                        buffer.limit(),
+                        offset,
+                        SteamRemoteStorage.UGCReadAction.ContinueReadingUntilFinished
+                );
                 offset += bytesRead;
             } while (bytesRead > 0);
 
@@ -270,13 +280,21 @@ public class SteamCallbacks {
         }
 
         @Override
-        public void onPublishFileResult(SteamPublishedFileID publishedFileID, boolean needsToAcceptWLA, SteamResult result) {
+        public void onPublishFileResult(
+                SteamPublishedFileID publishedFileID,
+                boolean needsToAcceptWLA,
+                SteamResult result
+        ) {
             LOGGER.debug("Remote storage publish file result: publishedFileID=" + publishedFileID.toString() +
                     ", needsToAcceptWLA=" + needsToAcceptWLA + ", result=" + result.toString());
         }
 
         @Override
-        public void onUpdatePublishedFileResult(SteamPublishedFileID publishedFileID, boolean needsToAcceptWLA, SteamResult result) {
+        public void onUpdatePublishedFileResult(
+                SteamPublishedFileID publishedFileID,
+                boolean needsToAcceptWLA,
+                SteamResult result
+        ) {
             LOGGER.debug("Remote storage update published file result: publishedFileID=" + publishedFileID.toString() +
                     ", needsToAcceptWLA=" + needsToAcceptWLA + ", result=" + result.toString());
         }
@@ -337,7 +355,11 @@ public class SteamCallbacks {
         }
 
         @Override
-        public void onSubmitItemUpdate(SteamPublishedFileID publishedFileID, boolean needsToAcceptWLA, SteamResult result) {
+        public void onSubmitItemUpdate(
+                SteamPublishedFileID publishedFileID,
+                boolean needsToAcceptWLA,
+                SteamResult result
+        ) {
             //do nothing
         }
 
@@ -347,7 +369,11 @@ public class SteamCallbacks {
         }
 
         @Override
-        public void onUserFavoriteItemsListChanged(SteamPublishedFileID publishedFileID, boolean wasAddRequest, SteamResult result) {
+        public void onUserFavoriteItemsListChanged(
+                SteamPublishedFileID publishedFileID,
+                boolean wasAddRequest,
+                SteamResult result
+        ) {
             //do nothing
         }
 
@@ -357,7 +383,13 @@ public class SteamCallbacks {
         }
 
         @Override
-        public void onGetUserItemVote(SteamPublishedFileID publishedFileID, boolean votedUp, boolean votedDown, boolean voteSkipped, SteamResult result) {
+        public void onGetUserItemVote(
+                SteamPublishedFileID publishedFileID,
+                boolean votedUp,
+                boolean votedDown,
+                boolean voteSkipped,
+                SteamResult result
+        ) {
             //do nothing
         }
 

@@ -48,12 +48,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class AbstractControllableGameWindowComponent extends AbstractGameWindowComponent {
     /**
      * active means this AbstractControllableGameWindowComponent is active and can sole Events and can update.
-     * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not update anymore.
+     * if active == false then this AbstractControllableGameWindowComponent does not process events, and does not
+     * update anymore.
      */
     private final AtomicBoolean active = new AtomicBoolean(true);
 
     /**
-     * visible means this AbstractControllableGameWindowComponent is visible and can draw(actually, can call ifVisibleThenDraw() ).
+     * visible means this AbstractControllableGameWindowComponent is visible and can draw(actually, can call
+     * ifVisibleThenDraw() ).
      * if visible == false then this AbstractControllableGameWindowComponent does not call ifVisibleThenDraw().
      */
     private final AtomicBoolean visible = new AtomicBoolean(true);
@@ -81,11 +83,14 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
 
     /**
-     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * UpdaterBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterBuilder<AbstractControllableGameWindowComponent> UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = new UpdaterBuilder<AbstractControllableGameWindowComponent>() {
         @Override
-        public UpdaterInterface<AbstractControllableGameWindowComponent> build(UpdaterInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
+        public UpdaterInterface<AbstractControllableGameWindowComponent> build(
+                UpdaterInterface<? super AbstractControllableGameWindowComponent> superUpdater
+        ) {
             return new Updater<AbstractControllableGameWindowComponent>(superUpdater) {
                 @Override
                 public boolean thisUpdate(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
@@ -127,11 +132,13 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
     };
 
     /**
-     * DrawerBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * DrawerBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final DrawerBuilder<AbstractControllableGameWindowComponent> DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = new DrawerBuilder<AbstractControllableGameWindowComponent>() {
         @Override
-        public DrawerInterface<AbstractControllableGameWindowComponent> build(DrawerInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
+        public DrawerInterface<AbstractControllableGameWindowComponent> build(
+                DrawerInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
             return new Drawer<AbstractControllableGameWindowComponent>() {
                 @Override
                 public boolean thisDraw(AbstractControllableGameWindowComponent abstractControllableGameWindowComponent) {
@@ -146,12 +153,14 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
 
 
     /**
-     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Updater for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterInterface<AbstractControllableGameWindowComponent> DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = UPDATER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(AbstractGameWindowComponent.DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT);
 
     /**
-     * default Drawer for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Drawer for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final DrawerInterface<AbstractControllableGameWindowComponent> DEFAULT_DRAWER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(AbstractGameWindowComponent.DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT);
 

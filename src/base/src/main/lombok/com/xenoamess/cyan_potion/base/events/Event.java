@@ -60,7 +60,9 @@ public interface Event extends Function<GameManager, Set<Event>> {
      * <p>
      * apply means this Event invoke itself onto your GameManager.
      * Usually we will just put it onto your {@link GameManager#getGameWindowComponentTree()},
-     * And let the tree pass it to all {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, and let them process it.
+     * And let the tree pass it to all
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, and let them
+     * process it.
      * of course you can do something before you put it to tree, or just do never put it to tree.
      * for example see {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent#apply(GameManager)}
      * <p>

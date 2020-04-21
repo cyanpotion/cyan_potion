@@ -121,16 +121,30 @@ public class TextPicture extends AbstractPicture {
      * @param color          a {@link org.joml.Vector4fc} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public static void draw(GameWindow gameWindow, float leftTopPosX, float leftTopPosY, float centerPosX, float centerPosY, float width, float height, float characterSpace, Font font, Vector4fc color, String text) {
+    public static void draw(
+            GameWindow gameWindow,
+            float leftTopPosX,
+            float leftTopPosY,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Font font,
+            Vector4fc color,
+            String text
+    ) {
         leftTopPosX = leftTopPosX / (float) gameWindow.getLogicWindowWidth() * (float) gameWindow.getRealWindowWidth();
-        leftTopPosY = leftTopPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
+        leftTopPosY =
+                leftTopPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
         centerPosX = centerPosX / (float) gameWindow.getLogicWindowWidth() * (float) gameWindow.getRealWindowWidth();
         centerPosY = centerPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
         width = width / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
         height = height / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
-        characterSpace = characterSpace / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
+        characterSpace =
+                characterSpace / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
         DrawTextStruct drawTextStruct = new DrawTextStruct();
         drawTextStruct.setFont(font);

@@ -78,7 +78,9 @@ public class RadioButtonGroup implements Closeable {
     /**
      * select a RadioButton.
      *
-     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @param radioButton a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *                   object.
      * @return select succeed.
      */
     public synchronized boolean select(RadioButton radioButton) {
@@ -100,7 +102,9 @@ public class RadioButtonGroup implements Closeable {
     /**
      * deselect a RadioButton.
      *
-     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @param radioButton a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *                   object.
      * @return deselect succeed.
      */
     public synchronized boolean deselect(RadioButton radioButton) {

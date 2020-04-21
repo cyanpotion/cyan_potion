@@ -138,7 +138,10 @@ public class SteamManager extends SubManager {
                 SteamAPI.loadLibraries();
                 if (!SteamAPI.init()) {
                     try (StringWriter stringWriter = new StringWriter();
-                         WriterOutputStream writerOutputStream = new WriterOutputStream(stringWriter, StandardCharsets.UTF_8);
+                         WriterOutputStream writerOutputStream = new WriterOutputStream(
+                                 stringWriter,
+                                 StandardCharsets.UTF_8
+                         );
                          PrintStream printStream = new PrintStream(writerOutputStream)) {
                         SteamAPI.printDebugInfo(printStream);
                         printStream.flush();
@@ -199,7 +202,8 @@ public class SteamManager extends SubManager {
         }
 
 
-        long steamRunCallbacksNanoLong = this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
+        long steamRunCallbacksNanoLong =
+                this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
         if (this.isRunWithSteam()) {
             this.getGameManager().getScheduledExecutorService().scheduleAtFixedRate(
                     this::steamRunCallbacks,
@@ -238,11 +242,13 @@ public class SteamManager extends SubManager {
             try {
                 steam_appid = steam_appidFileObject.getContent().getString(StandardCharsets.UTF_8).trim();
             } catch (IOException e) {
-                LOGGER.error("[steam]read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
+                LOGGER.error("[steam]read from steam_appid.txt failed! If you are not using steam, please set " +
+                        "runWithSteam=false in common setting.", e);
             }
         }
         if (StringUtils.isBlank(steam_appid)) {
-            LOGGER.error("[steam]OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
+            LOGGER.error("[steam]OMG, steam_appid is still empty??? I really suggest you go check steam_works " +
+                    "documents about [steam_appid.txt]'s format.");
         }
     }
 

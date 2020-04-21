@@ -233,7 +233,8 @@ public class TextureUtils {
                     ) {
                         boolean a = nowTexture.getResourceInfo().equals(texture.getResourceInfo());
                         boolean b = nowTexture.getResourceInfo().hashCode() == texture.getResourceInfo().hashCode();
-                        LOGGER.error("severe error! get two different Texture object for one same resourceInfo, equals:{}, hashCode:{}", a, b);
+                        LOGGER.error("severe error! get two different Texture object for one same resourceInfo, " +
+                                "equals:{}, hashCode:{}", a, b);
                         System.exit(1);
                     }
 
@@ -259,7 +260,8 @@ public class TextureUtils {
 
     @MainThreadOnly
     private static boolean loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
-                                                            int kk, int ti, int singleSingleWidth, int singleSingleHeight,
+                                                            int kk, int ti, int singleSingleWidth,
+                                                            int singleSingleHeight,
                                                             int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
                                                             int[] pixelsRaws3) {
         if (!DataCenter.ifMainThread()) {
@@ -837,7 +839,8 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = ResourceManager.resolveFile(tilesetTexturesFilepath).getContent().getInputStream()) {
+        try (InputStream inputStream =
+                     ResourceManager.resolveFile(tilesetTexturesFilepath).getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +

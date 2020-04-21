@@ -70,7 +70,10 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param gameWindowComponent gameWindowComponent
      * @param processor           processor
      */
-    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<? super T> processor) {
+    public MainThreadEventProcessor(
+            AbstractGameWindowComponent gameWindowComponent,
+            EventProcessor<? super T> processor
+    ) {
         this(gameWindowComponent.getGameWindow().getGameManager(), processor);
     }
 
