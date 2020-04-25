@@ -43,7 +43,7 @@ import java.util.List;
  * <p>GameTilesetJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class GameTilesetJson implements Serializable {
@@ -66,7 +66,10 @@ public class GameTilesetJson implements Serializable {
      * @param gameTileSetsFileObject gameTileSetsFileObject
      * @return return
      */
-    public static List<GameTilesetJson> getGameTileSetJsons(ObjectMapper objectMapper, FileObject gameTileSetsFileObject) {
+    public static List<GameTilesetJson> getGameTileSetJsons(
+            ObjectMapper objectMapper,
+            FileObject gameTileSetsFileObject
+    ) {
         List<GameTilesetJson> res = new ArrayList<>();
         try (InputStream inputStream = gameTileSetsFileObject.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream,
@@ -75,7 +78,10 @@ public class GameTilesetJson implements Serializable {
                     }
             );
         } catch (IOException e) {
-            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(ObjectMapper objectMapper, FileObject gameTileSetsFileObject) " +
+            LOGGER.warn("GameTilesetJson.getGameTileSetJsons(" +
+                            "ObjectMapper objectMapper," +
+                            " FileObject gameTileSetsFileObject" +
+                            ") " +
                             "fails:{},{}",
                     objectMapper, gameTileSetsFileObject, e);
         }

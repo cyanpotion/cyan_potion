@@ -56,7 +56,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -218,6 +218,7 @@ public final class WorldForDemo extends World {
         this.pureColorBox.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
+    @Override
     public boolean update() {
         boolean res = super.update();
         fix();
@@ -256,7 +257,13 @@ public final class WorldForDemo extends World {
         } else {
             personName = "RunSteamFirst";
         }
-        this.getGameWindow().drawTextCenter(null, pictureBox.getCenterBottomPosX(), pictureBox.getCenterBottomPosY() + 12.5F, 25, personName);
+        this.getGameWindow().drawTextCenter(
+                null,
+                pictureBox.getCenterBottomPosX(),
+                pictureBox.getCenterBottomPosY() + 12.5F,
+                25,
+                personName
+        );
         return true;
     }
 }

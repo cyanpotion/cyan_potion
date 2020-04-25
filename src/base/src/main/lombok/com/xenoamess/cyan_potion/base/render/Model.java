@@ -30,15 +30,13 @@ import org.lwjgl.system.MemoryStack;
 
 import java.io.Closeable;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
  * <p>Model class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString

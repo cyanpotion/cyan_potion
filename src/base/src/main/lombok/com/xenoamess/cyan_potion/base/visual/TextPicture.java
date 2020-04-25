@@ -35,10 +35,12 @@ import org.joml.Vector4fc;
 
 /**
  * TextPicture
- * TextPicture is a class that allow you to pack up some text into an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}, and use it as an {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
+ * TextPicture is a class that allow you to pack up some text into an
+ * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}, and use it as an
+ * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -119,16 +121,30 @@ public class TextPicture extends AbstractPicture {
      * @param color          a {@link org.joml.Vector4fc} object.
      * @param text           a {@link java.lang.String} object.
      */
-    public static void draw(GameWindow gameWindow, float leftTopPosX, float leftTopPosY, float centerPosX, float centerPosY, float width, float height, float characterSpace, Font font, Vector4fc color, String text) {
+    public static void draw(
+            GameWindow gameWindow,
+            float leftTopPosX,
+            float leftTopPosY,
+            float centerPosX,
+            float centerPosY,
+            float width,
+            float height,
+            float characterSpace,
+            Font font,
+            Vector4fc color,
+            String text
+    ) {
         leftTopPosX = leftTopPosX / (float) gameWindow.getLogicWindowWidth() * (float) gameWindow.getRealWindowWidth();
-        leftTopPosY = leftTopPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
+        leftTopPosY =
+                leftTopPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
         centerPosX = centerPosX / (float) gameWindow.getLogicWindowWidth() * (float) gameWindow.getRealWindowWidth();
         centerPosY = centerPosY / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
         width = width / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
         height = height / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
-        characterSpace = characterSpace / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
+        characterSpace =
+                characterSpace / (float) gameWindow.getLogicWindowHeight() * (float) gameWindow.getRealWindowHeight();
 
         DrawTextStruct drawTextStruct = new DrawTextStruct();
         drawTextStruct.setFont(font);

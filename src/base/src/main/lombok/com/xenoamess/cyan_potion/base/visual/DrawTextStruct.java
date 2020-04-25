@@ -39,7 +39,7 @@ import static org.lwjgl.opengl.GL11.*;
  * DrawTextStruct is a struct to describe how to draw texts.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class DrawTextStruct {
@@ -181,10 +181,21 @@ public class DrawTextStruct {
             if (this.getText().charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / Font.EACH_CHAR_NUM));
+            glBindTexture(
+                    GL_TEXTURE_2D,
+                    getFont().getFontTextures().getPrimitive(this.getText().charAt(i) / Font.EACH_CHAR_NUM)
+            );
             glBegin(GL_QUADS);
-            STBTruetype.stbtt_GetPackedQuad(getFont().getCharDatas().get(this.getText().charAt(i) / Font.EACH_CHAR_NUM), Font.BITMAP_W, Font.BITMAP_H,
-                    this.getText().charAt(i) % Font.EACH_CHAR_NUM, getFont().getXb(), getFont().getYb(), getFont().getQ(), false);
+            STBTruetype.stbtt_GetPackedQuad(
+                    getFont().getCharDatas().get(this.getText().charAt(i) / Font.EACH_CHAR_NUM),
+                    Font.BITMAP_W,
+                    Font.BITMAP_H,
+                    this.getText().charAt(i) % Font.EACH_CHAR_NUM,
+                    getFont().getXb(),
+                    getFont().getYb(),
+                    getFont().getQ(),
+                    false
+            );
 //            LOGGER.debug("x0:" + q.x0() + " x1:" + q.x1() + " y0:" +
 //            q.y0() + " y1:" + q.y1());
             float charWidthShould = getFont().getQ().x1() - getFont().getQ().x0();
@@ -204,6 +215,7 @@ public class DrawTextStruct {
             x3 = Math.max(x3, nowX0 + charWidthShould);
             y3 = Math.max(y3, nowY0 + charHeightShould);
             lastXReal = nowX0 + charWidthShould * 1;
+            //noinspection UnusedAssignment
             lastYReal = 0;
             lastXShould = getFont().getQ().x1();
             lastYShould = 0;
@@ -213,8 +225,10 @@ public class DrawTextStruct {
         float calculatedScaleX = Float.isNaN(this.getWidth()) ? Float.NaN : this.getWidth() / (x3 - 0);
         float calculatedScaleY = Float.isNaN(this.getHeight()) ? Float.NaN : this.getHeight() / (y3 - 0);
         if (Float.isNaN(calculatedScaleX)) {
+            //noinspection SuspiciousNameCombination
             calculatedScaleX = calculatedScaleY;
         } else if (Float.isNaN(calculatedScaleY)) {
+            //noinspection SuspiciousNameCombination
             calculatedScaleY = calculatedScaleX;
         }
         this.setScaleXY(calculatedScaleX, calculatedScaleY);

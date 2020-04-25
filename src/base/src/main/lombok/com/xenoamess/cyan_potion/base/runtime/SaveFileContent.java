@@ -54,8 +54,14 @@ class SaveFileContentSerializer extends JsonSerializer<SaveFileContent> {
         jsonGenerator.writeArrayFieldStart(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT_LIST);
         for (RuntimeVariableStruct runtimeVariableStruct : value.getRuntimeVariableStructList()) {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField(SaveFileContent.STRING_CLASS_NAME, runtimeVariableStruct.getClass().getCanonicalName());
-            jsonGenerator.writeStringField(SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT, runtimeVariableStruct.saveToString());
+            jsonGenerator.writeStringField(
+                    SaveFileContent.STRING_CLASS_NAME,
+                    runtimeVariableStruct.getClass().getCanonicalName()
+            );
+            jsonGenerator.writeStringField(
+                    SaveFileContent.STRING_RUNTIME_VARIABLE_STRUCT,
+                    runtimeVariableStruct.saveToString()
+            );
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();
@@ -107,7 +113,8 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
 /**
  * SaveFileContent is a class used as a bridge / pojo between json string and saveTime / runtimeVariableStructList
  * I don't think user have any need to change / invoke this class.
- * If you wanna store some more information please go build your own RuntimeVariableStruct and register it into ResourceManager.
+ * If you wanna store some more information please go build your own RuntimeVariableStruct and register it into
+ * ResourceManager.
  *
  * @see RuntimeVariableStruct
  */

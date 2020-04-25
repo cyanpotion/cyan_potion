@@ -1,7 +1,7 @@
 <settingFile settingFormatVersion=0.3.0>
     <commonSettings
         gameName=CyanPotionRpgModuleDemo
-        gameVersion=0.161.4
+        gameVersion=0.162.1
         titleTextID=0
         textFilePath=resources/text/text.x8l
         defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
@@ -47,7 +47,6 @@
         <GLFW_MOUSE_BUTTON_LEFT>XENOAMESS_MOUSE_BUTTON_LEFT>
         <GLFW_MOUSE_BUTTON_RIGHT>XENOAMESS_MOUSE_BUTTON_RIGHT>
         <GLFW_MOUSE_BUTTON_MIDDLE>XENOAMESS_MOUSE_BUTTON_MIDDLE>
-
         <JXINPUT_KEY_UP>XENOAMESS_KEY_UP>
         <JXINPUT_KEY_LEFT>XENOAMESS_KEY_LEFT>
         <JXINPUT_KEY_DOWN>XENOAMESS_KEY_DOWN>

@@ -43,7 +43,7 @@ import java.util.Set;
  * <p>GamepadButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class GamepadButtonEvent implements Event {
@@ -67,7 +67,7 @@ public class GamepadButtonEvent implements Event {
      *
      * @see EmptyEvent
      */
-    public static final EmptyGamepadButtonEvent EMPTY = new GamepadButtonEvent.EmptyGamepadButtonEvent();
+    public static final GamepadButtonEvent EMPTY = new GamepadButtonEvent.EmptyGamepadButtonEvent();
 
     private final long window;
     private final int key;

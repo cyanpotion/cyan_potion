@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.161.4</version>
+    <version>0.162.1</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -72,10 +72,11 @@
     </repositories>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8
-        </project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>${maven.compiler.encoding}
+        </project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${maven.compiler.encoding}
+        </project.reporting.outputEncoding>
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -84,31 +85,34 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
+        <httpclient.version>4.5.12</httpclient.version>
+        <jcip-annotations.version>1.0</jcip-annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <eclipse-collections.version>10.2.0</eclipse-collections.version>
-        <guava.version>28.2-jre</guava.version>
-        <jackson.version>2.10.2</jackson.version>
-        <joml.version>1.9.22</joml.version>
-        <log4j.version>2.13.1</log4j.version>
+        <jackson.version>2.11.0.rc1</jackson.version>
+        <joml.version>1.9.24</joml.version>
+        <log4j.version>2.13.2</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
         <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
+        <lombok.version>1.18.12</lombok.version>
+        <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.10.10</commonx.version>
-        <multi_language.version>0.45.4</multi_language.version>
-        <x8l.version>0.53.0</x8l.version>
-        <SDL_GameControllerDB_Util.version>1.2.20200221</SDL_GameControllerDB_Util.version>
+        <commonx.version>0.10.11</commonx.version>
+        <multi_language.version>0.46.0</multi_language.version>
+        <x8l.version>2.2.1</x8l.version>
+        <SDL_GameControllerDB_Util.version>[1.1.0,)
+        </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.6.0</junit-jupiter.version>
+        <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
@@ -122,8 +126,7 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
-        <lombok.version>1.18.12</lombok.version>
-        <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -154,6 +157,9 @@
                             <allowSnapshots>false</allowSnapshots>
                             <excludes>
                                 <exclude>org.slf4j:*</exclude>
+                                <exclude>
+                                    com.xenoamess.cyan_potion:SDL_GameControllerDB_Util
+                                </exclude>
                             </excludes>
                         </configuration>
                         <executions>
@@ -182,16 +188,22 @@
                                     <goal>clean</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <excludeDefaultDirectories>true
+                                    </excludeDefaultDirectories>
                                     <filesets>
                                         <fileset>
-                                            <directory>${project.build.directory}/generated-sources/delombok</directory>
-                                            <followSymlinks>false</followSymlinks>
+                                            <directory>
+                                                ${project.build.directory}/generated-sources/delombok
+                                            </directory>
+                                            <followSymlinks>false
+                                            </followSymlinks>
                                         </fileset>
                                         <fileset>
-                                            <directory>${project.build.directory}/generated-test-sources/delombok
+                                            <directory>
+                                                ${project.build.directory}/generated-test-sources/delombok
                                             </directory>
-                                            <followSymlinks>false</followSymlinks>
+                                            <followSymlinks>false
+                                            </followSymlinks>
                                         </fileset>
                                     </filesets>
                                     <verbose>true</verbose>
@@ -649,7 +661,7 @@
             <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>1.0</version>
+            <version>${jcip-annotations.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -686,11 +698,11 @@
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.google.guava</groupId>-->
+        <!--            <artifactId>guava</artifactId>-->
+        <!--            <version>${guava.version}</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>com.xenoamess</groupId>
@@ -818,43 +830,43 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.collections</groupId>
-            <artifactId>eclipse-collections-api</artifactId>
-            <version>${eclipse-collections.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.collections</groupId>
-            <artifactId>eclipse-collections</artifactId>
-            <version>${eclipse-collections.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>versions-maven-plugin</artifactId>
-            <version>${versions-maven-plugin.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-nop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-jdk14</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j-impl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-nop</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.eclipse.collections</groupId>-->
+        <!--            <artifactId>eclipse-collections-api</artifactId>-->
+        <!--            <version>${eclipse-collections.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.eclipse.collections</groupId>-->
+        <!--            <artifactId>eclipse-collections</artifactId>-->
+        <!--            <version>${eclipse-collections.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.codehaus.mojo</groupId>-->
+        <!--            <artifactId>versions-maven-plugin</artifactId>-->
+        <!--            <version>${versions-maven-plugin.version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.slf4j</groupId>-->
+        <!--                    <artifactId>slf4j-nop</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.slf4j</groupId>-->
+        <!--                    <artifactId>slf4j-jdk14</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.apache.logging.log4j</groupId>-->
+        <!--                    <artifactId>log4j-slf4j-impl</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.slf4j</groupId>-->
+        <!--                    <artifactId>slf4j-nop</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.11</version>
+            <version>${httpclient.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -1001,15 +1013,14 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}
-                    </source>
-                    <target>${maven.compiler.target}
-                    </target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <excludes>
                         <exclude>target/generated-sources/delombok</exclude>
                     </excludes>
                     <testExcludes>
-                        <testExclude>target/generated-test-sources/delombok</testExclude>
+                        <testExclude>target/generated-test-sources/delombok
+                        </testExclude>
                     </testExcludes>
                 </configuration>
             </plugin>
@@ -1030,7 +1041,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>${jacoco-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -1049,8 +1060,12 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>${project.build.directory}/generated-sources/delombok</exclude>
-                        <exclude>${project.build.directory}/generated-test-sources/delombok</exclude>
+                        <exclude>
+                            ${project.build.directory}/generated-sources/delombok
+                        </exclude>
+                        <exclude>
+                            ${project.build.directory}/generated-test-sources/delombok
+                        </exclude>
                     </excludes>
                     <includes>
                         <include>${project.basedir}/src/main/lombok</include>

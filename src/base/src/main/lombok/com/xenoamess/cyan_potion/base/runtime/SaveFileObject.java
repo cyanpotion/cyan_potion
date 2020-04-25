@@ -55,7 +55,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
@@ -140,7 +140,10 @@ public class SaveFileObject {
 
         SaveFileObjectStatus loadedSaveFileObjectStatus = null;
         try (InputStream inputStream = fileObject.getContent().getInputStream()) {
-            loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(inputStream, SaveFileObjectStatus.class);
+            loadedSaveFileObjectStatus = DataCenter.getObjectMapper().readValue(
+                    inputStream,
+                    SaveFileObjectStatus.class
+            );
         } catch (IOException e) {
             LOGGER.error("cannot create file : {}", fileObject, e);
         }
@@ -157,7 +160,8 @@ public class SaveFileObject {
     /**
      * load from current saveFileObjectStatus.getNowIndex()
      * notice that this function will not change saveFileObjectStatus.getNowIndex() after load.
-     * please make sure the file [path + saveFileObjectStatus.getNowIndex()] really exist and really have saved something.
+     * please make sure the file [path + saveFileObjectStatus.getNowIndex()] really exist and really have saved
+     * something.
      * Otherwise bomb.
      *
      * @return loaded RuntimeVariableStructList

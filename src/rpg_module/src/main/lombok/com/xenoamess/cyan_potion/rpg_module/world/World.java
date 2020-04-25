@@ -67,7 +67,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -323,7 +323,11 @@ public class World extends AbstractEntityScene {
         }
 
         final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
-        Vector2f vector2f = new Vector2f(this.getCamera().getPosX(), this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()), lerpFloat.getValue());
+        Vector2f vector2f = new Vector2f(
+                this.getCamera().getPosX(),
+                this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()),
+                lerpFloat.getValue()
+        );
 
         this.getCamera().setPos(vector2f.x, vector2f.y);
         this.correctCamera();

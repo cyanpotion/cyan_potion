@@ -32,13 +32,13 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xenoamess.cyan_potion.base.setting_file.SettingFIleParser_0_3_0.version_0_3_0;
+import static com.xenoamess.cyan_potion.base.setting_file.SettingFileParser_0_3_0.version_0_3_0;
 
 /**
  * <p>SettingFileParsers class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString
@@ -46,7 +46,7 @@ public class SettingFileParsers {
     private static final Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
 
     static {
-        settingFileParserMap.put(version_0_3_0, new SettingFIleParser_0_3_0());
+        settingFileParserMap.put(version_0_3_0, new SettingFileParser_0_3_0());
     }
 
     /**

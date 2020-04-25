@@ -42,7 +42,7 @@ import java.util.function.Function;
  * <p>CodePluginManager class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString
@@ -70,10 +70,12 @@ public class CodePluginManager {
      * @param codePluginString codePluginString
      * @return return
      */
+    @SuppressWarnings("unchecked")
     public Function<GameManager, Void> getCodePluginFunctionFromString(String codePluginString) {
         Function<GameManager, Void> res = null;
         String[] codePluginStrings = codePluginString.split(":");
 
+        //noinspection SwitchStatementWithTooFewBranches
         switch (codePluginStrings[0]) {
             case "SimpleFunctionObject":
                 try {

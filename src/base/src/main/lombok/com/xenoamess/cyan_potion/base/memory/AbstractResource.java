@@ -42,7 +42,7 @@ import java.util.function.Predicate;
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString
@@ -55,6 +55,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     @Getter
     private final ResourceManager resourceManager;
 
+    @SuppressWarnings("rawtypes")
     @Getter
     private final ResourceInfo resourceInfo;
 
@@ -117,6 +118,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @param resourceInfo    Resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
+    @SuppressWarnings("rawtypes")
     public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
         this.resourceInfo = resourceInfo;
@@ -169,7 +171,8 @@ public abstract class AbstractResource implements Closeable, Bindable {
             if (!result) {
                 result = this.loadByLoadTaskOrSelf();
                 if (!result) {
-                    LOGGER.error("load resource by self failed too! This means we can never load this resource! Resource:{}", this);
+                    LOGGER.error("load resource by self failed too! This means we can never load this resource! " +
+                            "Resource:{}", this);
                 }
             }
         } else {
@@ -238,8 +241,13 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return a boolean.
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
+    @SuppressWarnings("unchecked")
     protected boolean forceLoad() {
-        Predicate<AbstractResource> loader = (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(this.getClass(), this.getResourceInfo().getType());
+        Predicate<AbstractResource> loader =
+                (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(
+                        this.getClass(),
+                        this.getResourceInfo().getType()
+                );
         if (loader == null) {
             throw new URITypeNotDefinedException(this.getResourceInfo());
         }

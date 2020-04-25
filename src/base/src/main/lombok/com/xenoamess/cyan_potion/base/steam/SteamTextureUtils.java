@@ -47,7 +47,7 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * <p>SteamTextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 public class SteamTextureUtils {
     private SteamTextureUtils() {
@@ -131,7 +131,11 @@ public class SteamTextureUtils {
                     steamImage = new SteamImage(steamManager.getSteamFriends().getLargeFriendAvatar(steamUserID));
                     break;
                 default:
-                    LOGGER.error("[steam]cannot understand sizeString:{}. can only accept {}/{}/{} here.", sizeString, STRING_SMALL, STRING_MEDIUM, STRING_LARGE);
+                    LOGGER.error("[steam]cannot understand sizeString:{}. can only accept {}/{}/{} here.",
+                            sizeString,
+                            STRING_SMALL,
+                            STRING_MEDIUM,
+                            STRING_LARGE);
             }
             SteamUtils steamUtils = steamManager.getSteamUtils();
             try {
@@ -154,7 +158,8 @@ public class SteamTextureUtils {
     }
 
     private static void loadAsPureWhite(Texture texture) {
-        LOGGER.error("[steam]cannot getImageBuffer from avatar:{}, generate a white texture instead.", texture.getResourceInfo());
+        LOGGER.error("[steam]cannot getImageBuffer from avatar:{}, generate a white texture instead.",
+                texture.getResourceInfo());
         int width = 1;
         int height = 1;
         ByteBuffer byteBuffer = MemoryUtil.memAlloc(width * height * 4);

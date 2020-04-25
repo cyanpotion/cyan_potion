@@ -36,7 +36,7 @@ import lombok.ToString;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  * @see JXInputGamepadDevice
  * @deprecated
  */
@@ -337,13 +337,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.a != buttons.a) {
             if (buttons.a) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_A, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_A, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_A, action,
+                    this.getGamepadDevice()));
         } else if (buttons.a) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_A, action,
@@ -354,13 +352,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.b != buttons.b) {
             if (buttons.b) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_B, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_B, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_B, action,
+                    this.getGamepadDevice()));
         } else if (buttons.b) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_B, action,
@@ -370,13 +366,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.x != buttons.x) {
             if (buttons.x) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_X, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_X, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_X, action,
+                    this.getGamepadDevice()));
         } else if (buttons.x) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_X, action,
@@ -386,13 +380,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.y != buttons.y) {
             if (buttons.y) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_Y, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_Y, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_Y, action,
+                    this.getGamepadDevice()));
         } else if (buttons.y) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_Y, action,
@@ -402,13 +394,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.back != buttons.back) {
             if (buttons.back) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_BACK, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_BACK, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_BACK, action,
+                    this.getGamepadDevice()));
         } else if (buttons.back) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_BACK, action,
@@ -418,13 +408,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.start != buttons.start) {
             if (buttons.start) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_START, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_START, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_START, action,
+                    this.getGamepadDevice()));
         } else if (buttons.start) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_START, action,
@@ -434,13 +422,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.lShoulder != buttons.lShoulder) {
             if (buttons.lShoulder) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LB, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LB, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LB, action,
+                    this.getGamepadDevice()));
         } else if (buttons.lShoulder) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LB, action,
@@ -450,13 +436,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.rShoulder != buttons.rShoulder) {
             if (buttons.rShoulder) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RB, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RB, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RB, action,
+                    this.getGamepadDevice()));
         } else if (buttons.rShoulder) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RB, action,
@@ -466,13 +450,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.lThumb != buttons.lThumb) {
             if (buttons.lThumb) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_L, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_L, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_L, action,
+                    this.getGamepadDevice()));
         } else if (buttons.lThumb) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_L, action,
@@ -482,13 +464,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.rThumb != buttons.rThumb) {
             if (buttons.rThumb) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_R, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_R, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_R, action,
+                    this.getGamepadDevice()));
         } else if (buttons.rThumb) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_R, action,
@@ -498,13 +478,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.up != buttons.up) {
             if (buttons.up) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UP, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UP, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UP, action,
+                    this.getGamepadDevice()));
         } else if (buttons.up) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UP, action,
@@ -514,13 +492,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.down != buttons.down) {
             if (buttons.down) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_DOWN, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_DOWN, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_DOWN, action,
+                    this.getGamepadDevice()));
         } else if (buttons.down) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_DOWN, action,
@@ -530,13 +506,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.left != buttons.left) {
             if (buttons.left) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LEFT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LEFT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LEFT, action,
+                    this.getGamepadDevice()));
         } else if (buttons.left) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LEFT, action,
@@ -546,13 +520,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.right != buttons.right) {
             if (buttons.right) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RIGHT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RIGHT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RIGHT, action,
+                    this.getGamepadDevice()));
         } else if (buttons.right) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RIGHT, action,
@@ -562,13 +534,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.guide != buttons.guide) {
             if (buttons.guide) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_GUIDE, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_GUIDE, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_GUIDE, action,
+                    this.getGamepadDevice()));
         } else if (buttons.guide) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_GUIDE, action,
@@ -578,13 +548,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (this.unknown != buttons.unknown) {
             if (buttons.unknown) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UNKNOWN, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UNKNOWN, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UNKNOWN, action,
+                    this.getGamepadDevice()));
         } else if (buttons.unknown) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_UNKNOWN, action,
@@ -597,13 +565,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (ifLtNow != ifLtNext) {
             if (ifLtNext) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
+                    this.getGamepadDevice()));
         } else if (ifLtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_LT, action,
@@ -616,13 +582,11 @@ public class JXInputGamepadData extends AbstractGamepadData {
         if (ifRtNow != ifRtNext) {
             if (ifRtNext) {
                 action = 1;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
-                        this.getGamepadDevice()));
             } else {
                 action = 0;
-                gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
-                        this.getGamepadDevice()));
             }
+            gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,
+                    this.getGamepadDevice()));
         } else if (ifRtNext) {
             action = 2;
             gameWindow.getGameManager().eventListAdd(new GamepadButtonEvent(window, JXINPUT_KEY_RT, action,

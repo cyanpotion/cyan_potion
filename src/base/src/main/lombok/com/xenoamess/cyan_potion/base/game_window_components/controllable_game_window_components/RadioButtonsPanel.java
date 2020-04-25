@@ -46,10 +46,11 @@ import java.util.List;
  * a panel which can contains a set of radio buttons.
  * <p>
  * notice that if you want to use this class,
- * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
+ * you might must have some knowledge about {@link com.xenoamess.cyan_potion.base.game_window_components.Drawer} and
+ * {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -89,7 +90,13 @@ public class RadioButtonsPanel extends Panel {
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
      */
     public RadioButton createNewRadioButton(String buttonText, Texture bindableSelected, Texture bindableDeselected) {
-        RadioButton radioButton = new RadioButton(this.getGameWindow(), this.getRadioButtonGroup(), buttonText, bindableSelected, bindableDeselected);
+        RadioButton radioButton = new RadioButton(
+                this.getGameWindow(),
+                this.getRadioButtonGroup(),
+                buttonText,
+                bindableSelected,
+                bindableDeselected
+        );
         this.addContent(radioButton);
         return radioButton;
     }
@@ -104,14 +111,32 @@ public class RadioButtonsPanel extends Panel {
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
      */
-    public <T extends RadioButton> T createNewRadioButton(Class<T> tClass, String buttonText, Texture bindableSelected, Texture bindableDeselected) {
+    public <T extends RadioButton> T createNewRadioButton(
+            Class<T> tClass,
+            String buttonText,
+            Texture bindableSelected,
+            Texture bindableDeselected
+    ) {
         T radioButton = null;
         try {
-            Constructor<T> constructor = tClass.getConstructor(GameWindow.class, RadioButtonGroup.class, String.class, Texture.class, Texture.class);
-            radioButton = constructor.newInstance(this.getGameWindow(), this.getRadioButtonGroup(), buttonText, bindableSelected, bindableDeselected);
+            Constructor<T> constructor = tClass.getConstructor(
+                    GameWindow.class,
+                    RadioButtonGroup.class,
+                    String.class,
+                    Texture.class,
+                    Texture.class
+            );
+            radioButton = constructor.newInstance(
+                    this.getGameWindow(),
+                    this.getRadioButtonGroup(),
+                    buttonText,
+                    bindableSelected,
+                    bindableDeselected
+            );
             this.addContent(radioButton);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            LOGGER.error("cannot create RadioButton from (GameWindow,RadioButtonGroup,String,Texture,Texture), class:{}", tClass, e);
+            LOGGER.error("cannot create RadioButton from (GameWindow,RadioButtonGroup,String,Texture,Texture), " +
+                    "class:{}", tClass, e);
         }
         return radioButton;
     }
@@ -141,7 +166,9 @@ public class RadioButtonsPanel extends Panel {
     /**
      * <p>removeRadioButton.</p>
      *
-     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @param radioButton a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *                    object.
      * @return a boolean.
      */
     public boolean removeRadioButton(RadioButton radioButton) {

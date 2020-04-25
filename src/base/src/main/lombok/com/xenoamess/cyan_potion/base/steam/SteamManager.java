@@ -58,7 +58,7 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -129,6 +129,7 @@ public class SteamManager extends SubManager {
      * -- else
      * ---- exit 1
      */
+    @Override
     public void init() {
         if (this.getGameManager().getDataCenter().getGameSettings().isRunWithSteam()) {
             this.renewSteam_appid();
@@ -137,7 +138,10 @@ public class SteamManager extends SubManager {
                 SteamAPI.loadLibraries();
                 if (!SteamAPI.init()) {
                     try (StringWriter stringWriter = new StringWriter();
-                         WriterOutputStream writerOutputStream = new WriterOutputStream(stringWriter, StandardCharsets.UTF_8);
+                         WriterOutputStream writerOutputStream = new WriterOutputStream(
+                                 stringWriter,
+                                 StandardCharsets.UTF_8
+                         );
                          PrintStream printStream = new PrintStream(writerOutputStream)) {
                         SteamAPI.printDebugInfo(printStream);
                         printStream.flush();
@@ -198,7 +202,8 @@ public class SteamManager extends SubManager {
         }
 
 
-        long steamRunCallbacksNanoLong = this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
+        long steamRunCallbacksNanoLong =
+                this.getGameManager().getDataCenter().getGameSettings().getSteamRunCallbacksNanoLong();
         if (this.isRunWithSteam()) {
             this.getGameManager().getScheduledExecutorService().scheduleAtFixedRate(
                     this::steamRunCallbacks,
@@ -237,11 +242,13 @@ public class SteamManager extends SubManager {
             try {
                 steam_appid = steam_appidFileObject.getContent().getString(StandardCharsets.UTF_8).trim();
             } catch (IOException e) {
-                LOGGER.error("[steam]read from steam_appid.txt failed! If you are not using steam, please set runWithSteam=false in common setting.", e);
+                LOGGER.error("[steam]read from steam_appid.txt failed! If you are not using steam, please set " +
+                        "runWithSteam=false in common setting.", e);
             }
         }
         if (StringUtils.isBlank(steam_appid)) {
-            LOGGER.error("[steam]OMG, steam_appid is still empty??? I really suggest you go check steam_works documents about [steam_appid.txt]'s format.");
+            LOGGER.error("[steam]OMG, steam_appid is still empty??? I really suggest you go check steam_works " +
+                    "documents about [steam_appid.txt]'s format.");
         }
     }
 
@@ -273,6 +280,7 @@ public class SteamManager extends SubManager {
     /**
      * <p>update.</p>
      */
+    @Override
     public void update() {
         //do nothing
     }
@@ -318,13 +326,13 @@ public class SteamManager extends SubManager {
         if (input.startsWith("stats global ")) {
             String[] cmd = input.substring("stats global ".length()).split(" ");
             if (cmd.length > 0) {
-                if (cmd[0].equals("request")) {
+                if ("request".equals(cmd[0])) {
                     int days = 0;
                     if (cmd.length > 1) {
                         days = Integer.parseInt(cmd[1]);
                     }
                     getSteamUserStats().requestGlobalStats(days);
-                } else if (cmd[0].equals("lget") && cmd.length > 1) {
+                } else if ("lget".equals(cmd[0]) && cmd.length > 1) {
                     int days = 0;
                     if (cmd.length > 2) {
                         days = Integer.parseInt(cmd[2]);
@@ -341,7 +349,7 @@ public class SteamManager extends SubManager {
                         }
                         LOGGER.debug("");
                     }
-                } else if (cmd[0].equals("dget") && cmd.length > 1) {
+                } else if ("dget".equals(cmd[0]) && cmd.length > 1) {
                     int days = 0;
                     if (cmd.length > 2) {
                         days = Integer.parseInt(cmd[2]);
@@ -360,9 +368,9 @@ public class SteamManager extends SubManager {
                     }
                 }
             }
-        } else if (input.equals("stats request")) {
+        } else if ("stats request".equals(input)) {
             getSteamUserStats().requestCurrentStats();
-        } else if (input.equals("stats store")) {
+        } else if ("stats store".equals(input)) {
             getSteamUserStats().storeStats();
         } else if (input.startsWith("achievement set ")) {
             String achievementName = input.substring("achievement set ".length());
@@ -372,7 +380,7 @@ public class SteamManager extends SubManager {
             String achievementName = input.substring("achievement clear ".length());
             LOGGER.debug("- clearing " + achievementName);
             getSteamUserStats().clearAchievement(achievementName);
-        } else if (input.equals("file list")) {
+        } else if ("file list".equals(input)) {
             int numFiles = getSteamRemoteStorage().getFileCount();
             LOGGER.debug("Num of files: " + numFiles);
 
@@ -380,7 +388,8 @@ public class SteamManager extends SubManager {
                 int[] sizes = new int[1];
                 String file = getSteamRemoteStorage().getFileNameAndSize(i, sizes);
                 boolean exists = getSteamRemoteStorage().fileExists(file);
-                LOGGER.debug("# " + i + " : name=" + file + ", size=" + sizes[0] + ", exists=" + (exists ? "yes" : "no"));
+                LOGGER.debug("# " + i + " : name=" + file + ", size=" + sizes[0] + ", exists=" + (exists ? "yes" :
+                        "no"));
             }
         } else if (input.startsWith("file write ")) {
             String path = input.substring("file write ".length());
@@ -424,17 +433,20 @@ public class SteamManager extends SubManager {
 
                 SteamPublishedFileID fileID = new SteamPublishedFileID(Long.parseLong(paths[0]));
 
-                SteamPublishedFileUpdateHandle updateHandle = getSteamRemoteStorage().createPublishedFileUpdateRequest(fileID);
+                SteamPublishedFileUpdateHandle updateHandle =
+                        getSteamRemoteStorage().createPublishedFileUpdateRequest(fileID);
                 if (updateHandle != null) {
                     getSteamRemoteStorage().updatePublishedFileFile(updateHandle, paths[1]);
                     getSteamRemoteStorage().updatePublishedFilePreviewFile(updateHandle, paths[2]);
                     getSteamRemoteStorage().updatePublishedFileTitle(updateHandle, "Updated Test UGC!");
-                    getSteamRemoteStorage().updatePublishedFileDescription(updateHandle, "Dummy UGC file *updated* by test application.");
+                    getSteamRemoteStorage().updatePublishedFileDescription(updateHandle, "Dummy UGC file *updated* by" +
+                            " test application.");
                     getSteamRemoteStorage().commitPublishedFileUpdate(updateHandle);
                 }
             }
-        } else if (input.equals("ugc query")) {
-            SteamUGCQuery query = getSteamUGC().createQueryUserUGCRequest(getSteamUser().getSteamID().getAccountID(), SteamUGC.UserUGCList.Subscribed,
+        } else if ("ugc query".equals(input)) {
+            SteamUGCQuery query = getSteamUGC().createQueryUserUGCRequest(getSteamUser().getSteamID().getAccountID(),
+                    SteamUGC.UserUGCList.Subscribed,
                     SteamUGC.MatchingUGCType.UsableInGame, SteamUGC.UserUGCListSortOrder.TitleAsc,
                     getSteamUtils().getAppID(), getSteamUtils().getAppID(), 1);
 
@@ -471,7 +483,7 @@ public class SteamManager extends SubManager {
                 getSteamUGC().sendQueryUGCRequest(query);
             }
         } else if (input.startsWith("ugc info ")) {
-            Long id = Long.parseLong(input.substring("ugc info ".length()), 16);
+            long id = Long.parseLong(input.substring("ugc info ".length()), 16);
             SteamUGC.ItemInstallInfo installInfo = new SteamUGC.ItemInstallInfo();
             if (getSteamUGC().getItemInstallInfo(new SteamPublishedFileID(id), installInfo)) {
                 LOGGER.debug("  folder: " + installInfo.getFolder());

@@ -39,7 +39,7 @@ import java.util.Set;
  * <p>ConsoleEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class ConsoleEvent implements Event {

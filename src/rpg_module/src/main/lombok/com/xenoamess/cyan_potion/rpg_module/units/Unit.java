@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>Unit class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -139,7 +139,8 @@ public class Unit extends AbstractDynamicEntity {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene}
+     *                                         object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      * @param centerPosX                        a float.

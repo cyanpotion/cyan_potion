@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * <p>GameMapJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class GameMapJson implements Serializable {
@@ -117,9 +117,15 @@ public class GameMapJson implements Serializable {
         try (InputStream inputStream = gameMapFileObject.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream, GameMapJson.class);
         } catch (IOException e) {
-            LOGGER.error("GameMapJson.getGameMapJson(ObjectMapper objectMapper, FileObject gameMapFileObject) fails:{},{}",
-                    objectMapper
-                    , gameMapFileObject, e);
+            LOGGER.error("GameMapJson.getGameMapJson(" +
+                            "ObjectMapper objectMapper," +
+                            " FileObject gameMapFileObject" +
+                            ") " +
+                            "fails:{},{}",
+                    objectMapper,
+                    gameMapFileObject,
+                    e
+            );
         }
         return res;
     }

@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.base;
 import com.codedisaster.steamworks.SteamApps;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.java.net.URLStreamHandlerFactorySet;
 import com.xenoamess.cyan_potion.base.audio.AudioManager;
 import com.xenoamess.cyan_potion.base.console.ConsoleTalkThreadManager;
 import com.xenoamess.cyan_potion.base.events.Event;
@@ -39,7 +38,6 @@ import com.xenoamess.cyan_potion.base.io.input.gamepad.GamepadInputManager;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.CharEvent;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.TextEvent;
-import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
@@ -73,11 +71,13 @@ import java.util.stream.Collectors;
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
 
+//import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
+
 /**
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString
@@ -314,12 +314,12 @@ public class GameManager implements Closeable {
      * <p>registerCyanPotionURLStreamHandlerFactory.</p>
      */
     public void registerCyanPotionURLStreamHandlerFactory() {
-        try {
-            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
-            factorySet.register(new CyanPotionURLStreamHandlerFactory());
-        } catch (IllegalAccessException e) {
-            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
-        }
+//        try {
+//            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
+//            factorySet.register(new CyanPotionURLStreamHandlerFactory());
+//        } catch (IllegalAccessException e) {
+//            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
+//        }
     }
 
     /**
@@ -366,7 +366,8 @@ public class GameManager implements Closeable {
         this.getGameWindowComponentTree().init();
 
         this.setStartingContent();
-        final String defaultFontResourceJsonString = this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
+        final String defaultFontResourceJsonString =
+                this.getDataCenter().getGameSettings().getDefaultFontResourceJsonString();
 
         if (!StringUtils.isBlank(defaultFontResourceJsonString)) {
             Font.setDefaultFont(this.getResourceManager().fetchResource(Font.class, defaultFontResourceJsonString));
@@ -384,7 +385,11 @@ public class GameManager implements Closeable {
      * @return a {@link com.xenoamess.x8l.X8lTree} object.
      */
     protected X8lTree loadSettingTree(DataCenter dataCenter) {
-        String settingFilePath = getString(this.getArgsMap(), "SettingFilePath", "resources/settings/DefaultSettings.x8l");
+        String settingFilePath = getString(
+                this.getArgsMap(),
+                "SettingFilePath",
+                "resources/settings/DefaultSettings.x8l"
+        );
 
         LOGGER.debug("SettingsFilePath : {}", settingFilePath);
 
@@ -393,7 +398,8 @@ public class GameManager implements Closeable {
         try {
             settingsTree = X8lTree.load(settingFileObject);
             settingsTree.trimForce();
-            ContentNode settingNode = settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
+            ContentNode settingNode =
+                    settingsTree.getRoot().getContentNodesFromChildrenThatNameIs("settingFile").get(0);
             if (dataCenter.getPatchSettingsTree() != null) {
                 settingNode.append(dataCenter.getPatchSettingsTree().getRoot().getChildren().get(0));
             }
@@ -426,7 +432,9 @@ public class GameManager implements Closeable {
      * <p>initCodePluginManager.</p>
      */
     protected void initCodePluginManager() {
-        for (Pair<CodePluginPosition, String> entry : this.getDataCenter().getGameSettings().getCodePluginManagerSettings()) {
+        for (Pair<CodePluginPosition, String> entry :
+                this.getDataCenter().getGameSettings().getCodePluginManagerSettings()
+        ) {
             this.codePluginManager.putCodePlugin(entry.getKey(), entry.getValue());
         }
     }

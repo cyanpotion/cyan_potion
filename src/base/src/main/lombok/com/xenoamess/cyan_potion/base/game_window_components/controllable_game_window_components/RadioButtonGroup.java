@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * a manager of a group of radio buttons, and operations / management.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  * @see RadioButton
  */
 @EqualsAndHashCode
@@ -78,7 +78,9 @@ public class RadioButtonGroup implements Closeable {
     /**
      * select a RadioButton.
      *
-     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @param radioButton a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *                   object.
      * @return select succeed.
      */
     public synchronized boolean select(RadioButton radioButton) {
@@ -100,7 +102,9 @@ public class RadioButtonGroup implements Closeable {
     /**
      * deselect a RadioButton.
      *
-     * @param radioButton a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
+     * @param radioButton a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *                   object.
      * @return deselect succeed.
      */
     public synchronized boolean deselect(RadioButton radioButton) {

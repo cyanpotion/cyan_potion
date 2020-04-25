@@ -75,7 +75,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -169,6 +169,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     /**
      * <p>init.</p>
      */
+    @Override
     public void init() {
         initGlfw();
         initGlfwWindow();
@@ -510,6 +511,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
     /**
      * <p>update.</p>
      */
+    @Override
     public void update() {
         this.updateMousePos();
     }

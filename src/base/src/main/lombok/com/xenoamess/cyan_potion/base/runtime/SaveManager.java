@@ -33,15 +33,19 @@ import lombok.*;
  * A manager class for saving and loading, and other save file operations.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class SaveManager extends SubManager {
     /**
-     * Constant <code>DEFAULT_SAVE_FILE_PATH="System.getProperty(user.home) + /AppData/Roaming/cyan_potion_saves/"</code>
+     * Constant <code>DEFAULT_SAVE_FILE_PATH="System.getProperty(user.home) +
+     * /AppData/Roaming/cyan_potion_saves/"</code>
      */
-    public static final String DEFAULT_SAVE_FILE_PATH = System.getProperty("user.home") + "/AppData/Roaming/cyan_potion_saves/";
+    public static final String DEFAULT_SAVE_FILE_PATH =
+            System.getProperty("user.home")
+                    + "/AppData/Roaming"
+                    + "/cyan_potion_saves/";
 
     @Getter
     @Setter
@@ -79,9 +83,9 @@ public class SaveManager extends SubManager {
      * @return a {@link com.xenoamess.cyan_potion.base.runtime.SaveFileObject} object.
      */
     public SaveFileObject getSaveFileObject(int index) {
-        String saveFolderPath = currentSaveFilePath + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
-        SaveFileObject saveFileObject = new SaveFileObject(this, saveFolderPath);
-        return saveFileObject;
+        String saveFolderPath =
+                currentSaveFilePath + this.getGameManager().getDataCenter().getGameSettings().getGameName() + "/" + index + "/";
+        return new SaveFileObject(this, saveFolderPath);
     }
 
     /**

@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * <p>GameSystemJson class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @Data
 public class GameSystemJson implements Serializable {
@@ -213,7 +213,10 @@ public class GameSystemJson implements Serializable {
         try (InputStream inputStream = getGameSystemJsonFile.getContent().getInputStream()) {
             res = objectMapper.readValue(inputStream, GameSystemJson.class);
         } catch (IOException e) {
-            LOGGER.warn("GameSystemJson.getGameSystemJson(ObjectMapper objectMapper, FileObject getGameSystemJsonFile)) " +
+            LOGGER.warn("GameSystemJson.getGameSystemJson(" +
+                            "ObjectMapper objectMapper," +
+                            " FileObject getGameSystemJsonFile" +
+                            ") " +
                             "fails:{},{}",
                     objectMapper, getGameSystemJsonFile, e);
         }

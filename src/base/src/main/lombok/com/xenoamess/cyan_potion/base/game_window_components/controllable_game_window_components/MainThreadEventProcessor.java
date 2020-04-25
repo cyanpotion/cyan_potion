@@ -38,7 +38,7 @@ import lombok.ToString;
  * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 
 @EqualsAndHashCode
@@ -70,7 +70,10 @@ public class MainThreadEventProcessor<T extends Event> implements EventProcessor
      * @param gameWindowComponent gameWindowComponent
      * @param processor           processor
      */
-    public MainThreadEventProcessor(AbstractGameWindowComponent gameWindowComponent, EventProcessor<? super T> processor) {
+    public MainThreadEventProcessor(
+            AbstractGameWindowComponent gameWindowComponent,
+            EventProcessor<? super T> processor
+    ) {
         this(gameWindowComponent.getGameWindow().getGameManager(), processor);
     }
 

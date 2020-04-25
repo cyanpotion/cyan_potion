@@ -44,7 +44,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -57,15 +57,19 @@ public class Panel extends AbstractControllableGameWindowComponent {
     private final Picture backgroundPicture = new Picture();
 
     @Getter(AccessLevel.PROTECTED)
-    private final GameWindowComponentTree subGameWindowComponentTree = new GameWindowComponentTree(this.getGameManager(), new AbstractGameWindowComponent(this.getGameWindow()) {
-        @Override
-        protected void initProcessors() {
-            //do nothing
-        }
-    });
+    private final GameWindowComponentTree subGameWindowComponentTree =
+            new GameWindowComponentTree(
+                    this.getGameManager(),
+                    new AbstractGameWindowComponent(this.getGameWindow()) {
+                        @Override
+                        protected void initProcessors() {
+                            //do nothing
+                        }
+                    });
 
     /**
-     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * UpdaterBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterBuilder<Panel> UPDATER_BUILDER_PANEL = new UpdaterBuilder<Panel>() {
         @Override
@@ -88,9 +92,11 @@ public class Panel extends AbstractControllableGameWindowComponent {
 
 
     /**
-     * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * default Updater for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
-    public static final UpdaterInterface<Panel> DEFAULT_UPDATER_PANEL = UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<Panel> DEFAULT_UPDATER_PANEL =
+            UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
 
     /**
@@ -153,7 +159,8 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * return this.contents.remove(gameWindowComponent);
      *
-     * @param gameWindowComponent a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @param gameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
      * @return this.contents.remove(gameWindowComponent);
      * @see #contents
      * @see List#remove(Object)

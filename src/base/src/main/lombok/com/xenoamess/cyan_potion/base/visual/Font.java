@@ -66,7 +66,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -173,6 +173,7 @@ public class Font extends AbstractResource {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unchecked")
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
                 (Font font) -> font.loadAsTtfFileFont(font.getResourceInfo())
@@ -220,7 +221,7 @@ public class Font extends AbstractResource {
             returnValueList.add(
                     new Callable<LoadBitmapPojo>() {
                         @Override
-                        public LoadBitmapPojo call() throws Exception {
+                        public LoadBitmapPojo call() {
                             try (STBTTPackContext pc = STBTTPackContext.malloc()) {
                                 ByteBuffer bitmapLocal = MemoryUtil.memAlloc(BITMAP_W * BITMAP_H);
                                 stbtt_PackBegin(pc, bitmapLocal, BITMAP_W, BITMAP_H, 0, 1, 0);
@@ -383,7 +384,12 @@ public class Font extends AbstractResource {
         glEnable(GL_TEXTURE_2D);
 
         if (drawTextStruct.getColor() != null) {
-            glColor4f(drawTextStruct.getColor().x(), drawTextStruct.getColor().y(), drawTextStruct.getColor().z(), drawTextStruct.getColor().w());
+            glColor4f(
+                    drawTextStruct.getColor().x(),
+                    drawTextStruct.getColor().y(),
+                    drawTextStruct.getColor().z(),
+                    drawTextStruct.getColor().w()
+            );
         }
 
         float lastXReal = drawTextStruct.getLeftTopPosX();
@@ -394,10 +400,21 @@ public class Font extends AbstractResource {
             if (drawTextStruct.getText().charAt(i) < 32) {
                 continue;
             }
-            glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM));
+            glBindTexture(
+                    GL_TEXTURE_2D,
+                    getFontTextures().getPrimitive(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM)
+            );
             glBegin(GL_QUADS);
-            stbtt_GetPackedQuad(getCharDatas().get(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
-                    drawTextStruct.getText().charAt(i) % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);
+            stbtt_GetPackedQuad(
+                    getCharDatas().get(drawTextStruct.getText().charAt(i) / EACH_CHAR_NUM),
+                    BITMAP_W,
+                    BITMAP_H,
+                    drawTextStruct.getText().charAt(i) % EACH_CHAR_NUM,
+                    getXb(),
+                    getYb(),
+                    getQ(),
+                    false
+            );
 
             float charWidthShould = getQ().x1() - getQ().x0();
             float charHeightShould = getQ().y1() - getQ().y0();
@@ -514,7 +531,7 @@ public class Font extends AbstractResource {
 
         IntIterator it = this.getFontTextures().iterator();
         while (it.hasNext()) {
-            glDeleteTextures(it.next());
+            glDeleteTextures(it.nextPrimitive());
         }
         this.getFontTextures().clear();
     }

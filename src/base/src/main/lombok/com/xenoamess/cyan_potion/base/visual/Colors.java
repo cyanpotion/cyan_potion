@@ -37,7 +37,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
  * <p>Colors class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 public class Colors {
 
@@ -88,7 +88,12 @@ public class Colors {
      * @return a {@link org.joml.Vector4fc} object.
      */
     public static Vector4fc colorAwtToColorVector4f(Color colorAwt) {
-        return new Vector4f(colorAwt.getRed() / 255F, colorAwt.getGreen() / 255F, colorAwt.getBlue() / 255F, colorAwt.getAlpha() / 255F);
+        return new Vector4f(
+                colorAwt.getRed() / 255F,
+                colorAwt.getGreen() / 255F,
+                colorAwt.getBlue() / 255F,
+                colorAwt.getAlpha() / 255F
+        );
     }
 
     /**
@@ -144,13 +149,12 @@ public class Colors {
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
      */
     public static ResourceInfo<Texture> getPureColorTextureResourceInfo(String colorString) {
-        ResourceInfo<Texture> resourceInfo = new ResourceInfo<>(
+        return new ResourceInfo<>(
                 Texture.class,
                 STRING_PURE_COLOR,
                 "",
                 colorString
         );
-        return resourceInfo;
     }
 
 
@@ -211,7 +215,8 @@ public class Colors {
     /**
      * The color light gray.
      */
-    public static final ResourceInfo<Texture> RESOURCE_INFO_LIGHT_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_LIGHT_GRAY);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_LIGHT_GRAY =
+            getPureColorTextureResourceInfo(COLOR_STRING_LIGHT_GRAY);
 
 
     /**
@@ -250,7 +255,8 @@ public class Colors {
     /**
      * The color dark gray.
      */
-    public static final ResourceInfo<Texture> RESOURCE_INFO_DARK_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_DARK_GRAY);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_DARK_GRAY =
+            getPureColorTextureResourceInfo(COLOR_STRING_DARK_GRAY);
 
 
     /**
@@ -330,7 +336,8 @@ public class Colors {
     /**
      * The color orange.
      */
-    public static final ResourceInfo<Texture> RESOURCE_INFO_ORANGE = getPureColorTextureResourceInfo(COLOR_STRING_ORANGE);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_ORANGE =
+            getPureColorTextureResourceInfo(COLOR_STRING_ORANGE);
 
 
     /**
@@ -350,7 +357,8 @@ public class Colors {
     /**
      * The color yellow.
      */
-    public static final ResourceInfo<Texture> RESOURCE_INFO_YELLOW = getPureColorTextureResourceInfo(COLOR_STRING_YELLOW);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_YELLOW =
+            getPureColorTextureResourceInfo(COLOR_STRING_YELLOW);
 
 
     /**
@@ -390,7 +398,8 @@ public class Colors {
     /**
      * The color magenta.
      */
-    public static final ResourceInfo<Texture> RESOURCE_INFO_MAGENTA = getPureColorTextureResourceInfo(COLOR_STRING_MAGENTA);
+    public static final ResourceInfo<Texture> RESOURCE_INFO_MAGENTA =
+            getPureColorTextureResourceInfo(COLOR_STRING_MAGENTA);
 
 
     /**

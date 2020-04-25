@@ -50,7 +50,7 @@ import java.util.List;
  * <p>TextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 public class TextureUtils {
     /**
@@ -233,7 +233,8 @@ public class TextureUtils {
                     ) {
                         boolean a = nowTexture.getResourceInfo().equals(texture.getResourceInfo());
                         boolean b = nowTexture.getResourceInfo().hashCode() == texture.getResourceInfo().hashCode();
-                        LOGGER.error("severe error! get two different Texture object for one same resourceInfo, equals:{}, hashCode:{}", a, b);
+                        LOGGER.error("severe error! get two different Texture object for one same resourceInfo, " +
+                                "equals:{}, hashCode:{}", a, b);
                         System.exit(1);
                     }
 
@@ -259,7 +260,8 @@ public class TextureUtils {
 
     @MainThreadOnly
     private static boolean loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
-                                                            int kk, int ti, int singleSingleWidth, int singleSingleHeight,
+                                                            int kk, int ti, int singleSingleWidth,
+                                                            int singleSingleHeight,
                                                             int[] pixelsRaws0, int[] pixelsRaws1, int[] pixelsRaws2,
                                                             int[] pixelsRaws3) {
         if (!DataCenter.ifMainThread()) {
@@ -286,33 +288,53 @@ public class TextureUtils {
         for (int i = 0; i < singleSingleHeight; i++) {
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws0[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws1[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
         }
         for (int i = 0; i < singleSingleHeight; i++) {
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws2[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws3[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
         }
         byteBuffer.flip();
@@ -837,7 +859,8 @@ public class TextureUtils {
 
         BufferedImage bufferedImage = null;
 
-        try (InputStream inputStream = ResourceManager.resolveFile(tilesetTexturesFilepath).getContent().getInputStream()) {
+        try (InputStream inputStream =
+                     ResourceManager.resolveFile(tilesetTexturesFilepath).getContent().getInputStream()) {
             bufferedImage = ImageIO.read(inputStream);
         } catch (IOException e) {
             LOGGER.error("TextureUtils.getTilesetTextures8(ResourceManager resourceManager, String resourceType, " +

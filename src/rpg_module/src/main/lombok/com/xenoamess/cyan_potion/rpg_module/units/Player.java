@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
  * <p>Player class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 public class Player extends Unit {
     /**
@@ -94,7 +94,8 @@ public class Player extends Unit {
     /**
      * <p>Constructor for Unit.</p>
      *
-     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene} object.
+     * @param scene                             a {@link com.xenoamess.cyan_potion.coordinate.AbstractEntityScene}
+     *                                         object.
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      * @param centerPosX                        a float.

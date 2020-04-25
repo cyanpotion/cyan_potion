@@ -47,7 +47,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -77,8 +77,15 @@ public class CallbackManager extends SubManager {
 
     @Override
     public void close() {
-        glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
-        glfwSetKeyCallback(this.getGameManager().getGameWindow().getWindow(), null).free();
+        GLFWWindowCloseCallback glfwWindowCloseCallback =
+                glfwSetWindowCloseCallback(this.getGameManager().getGameWindow().getWindow(), null);
+        if (glfwWindowCloseCallback != null) {
+            glfwWindowCloseCallback.free();
+        }
+        GLFWKeyCallback glfwKeyCallback = glfwSetKeyCallback(this.getGameManager().getGameWindow().getWindow(), null);
+        if (glfwKeyCallback != null) {
+            glfwKeyCallback.free();
+        }
     }
 
     @Getter
@@ -176,7 +183,18 @@ public class CallbackManager extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWKeyCallbackI} object.
      */
     public GLFWKeyCallbackI wrapKeyCallback() {
-        return (window, key, scancode, action, mods) -> CallbackManager.this.getKeyCallback().invoke(window, key, scancode, action, mods);
+        return (window,
+                key,
+                scancode,
+                action,
+                mods) ->
+                CallbackManager.this.getKeyCallback().invoke(
+                        window,
+                        key,
+                        scancode,
+                        action,
+                        mods
+                );
     }
 
     /**
@@ -194,7 +212,16 @@ public class CallbackManager extends SubManager {
      * @return a {@link org.lwjgl.glfw.GLFWMouseButtonCallbackI} object.
      */
     public GLFWMouseButtonCallbackI wrapMouseButtonCallback() {
-        return (window, button, action, mods) -> CallbackManager.this.getMouseButtonCallback().invoke(window, button, action, mods);
+        return (window,
+                button,
+                action,
+                mods) ->
+                CallbackManager.this.getMouseButtonCallback().invoke(
+                        window,
+                        button,
+                        action,
+                        mods
+                );
     }
 
     /**

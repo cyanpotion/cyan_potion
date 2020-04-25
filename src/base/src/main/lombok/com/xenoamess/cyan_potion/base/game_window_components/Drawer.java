@@ -32,7 +32,7 @@ import lombok.ToString;
  * <p>Abstract Drawer class.</p>
  *
  * @author XenoAmess
- * @version 0.161.4
+ * @version 0.162.1
  */
 
 @EqualsAndHashCode
