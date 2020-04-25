@@ -92,7 +92,7 @@
         <dom4j.version>2.1.1</dom4j.version>
         <jackson.version>2.11.0.rc1</jackson.version>
         <joml.version>1.9.24</joml.version>
-        <log4j.version>2.13.1</log4j.version>
+        <log4j.version>2.13.2</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
@@ -104,9 +104,9 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.10.10</commonx.version>
+        <commonx.version>0.10.11</commonx.version>
         <multi_language.version>0.46.0</multi_language.version>
-        <x8l.version>2.1.2</x8l.version>
+        <x8l.version>2.2.0</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.1.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
