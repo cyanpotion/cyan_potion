@@ -30,7 +30,7 @@ import com.github.strikerx3.jxinput.XInputButtons;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

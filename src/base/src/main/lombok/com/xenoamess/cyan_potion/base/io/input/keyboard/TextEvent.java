@@ -30,7 +30,7 @@ import com.xenoamess.cyan_potion.base.events.EmptyEvent;
 import com.xenoamess.cyan_potion.base.events.Event;
 import lombok.Data;
 import net.jcip.annotations.GuardedBy;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
