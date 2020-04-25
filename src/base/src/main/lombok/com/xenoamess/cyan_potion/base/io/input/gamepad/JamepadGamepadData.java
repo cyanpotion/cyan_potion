@@ -35,7 +35,7 @@ import lombok.ToString;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  * @see JamepadGamepadDevice
  */
 @EqualsAndHashCode

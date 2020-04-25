@@ -33,7 +33,7 @@ import lombok.*;
  * A manager class for saving and loading, and other save file operations.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

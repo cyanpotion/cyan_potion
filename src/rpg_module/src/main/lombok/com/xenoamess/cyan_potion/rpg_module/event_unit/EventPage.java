@@ -37,7 +37,7 @@ import lombok.ToString;
  * as less as possible.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  */
 @EqualsAndHashCode
 @ToString

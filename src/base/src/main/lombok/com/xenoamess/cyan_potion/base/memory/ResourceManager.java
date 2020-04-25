@@ -61,7 +61,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  */
 @SuppressWarnings("rawtypes")
 @EqualsAndHashCode(callSuper = true)

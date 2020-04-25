@@ -56,7 +56,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  * <p>Texture class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

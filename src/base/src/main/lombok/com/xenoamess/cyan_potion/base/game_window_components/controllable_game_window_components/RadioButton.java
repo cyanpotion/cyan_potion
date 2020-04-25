@@ -57,7 +57,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * it will deselect the overdose RadioButton one by one according to the timeline.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  * @see RadioButtonGroup
  */
 @EqualsAndHashCode(callSuper = true)

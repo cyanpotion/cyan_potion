@@ -55,7 +55,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */

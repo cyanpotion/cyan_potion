@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
  * <p>DrawerInterface interface.</p>
  *
  * @author XenoAmess
- * @version 0.162.1-SNAPSHOT
+ * @version 0.162.1
  */
 public interface DrawerInterface<T> {
     /**
