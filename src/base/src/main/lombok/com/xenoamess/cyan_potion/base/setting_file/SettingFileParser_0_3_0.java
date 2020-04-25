@@ -50,7 +50,7 @@ import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
+public class SettingFileParser_0_3_0 extends AbstractSettingFileParser {
     /**
      * Constant <code>version_0_3_0</code>
      */
@@ -59,7 +59,7 @@ public class SettingFIleParser_0_3_0 extends AbstractSettingFileParser {
     /**
      * <p>Constructor for SettingFIleParser_0_3_0.</p>
      */
-    protected SettingFIleParser_0_3_0() {
+    protected SettingFileParser_0_3_0() {
         super(version_0_3_0);
     }
 

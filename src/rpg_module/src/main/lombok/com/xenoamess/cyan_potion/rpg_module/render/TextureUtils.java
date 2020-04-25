@@ -288,33 +288,53 @@ public class TextureUtils {
         for (int i = 0; i < singleSingleHeight; i++) {
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws0[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws1[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
         }
         for (int i = 0; i < singleSingleHeight; i++) {
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws2[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
             for (int j = 0; j < singleSingleWidth; j++) {
                 int pixel = pixelsRaws3[i * singleSingleWidth + j];
-                byteBuffer.put((byte) ((pixel >> 16) & 0xFF)); // RED
-                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));  // GREEN
-                byteBuffer.put((byte) (pixel & 0xFF));          // BLUE
-                byteBuffer.put((byte) ((pixel >> 24) & 0xFF)); // ALPHA
+
+                // RED
+                byteBuffer.put((byte) ((pixel >> 16) & 0xFF));
+                // GREEN
+                byteBuffer.put((byte) ((pixel >> 8) & 0xFF));
+                // BLUE
+                byteBuffer.put((byte) (pixel & 0xFF));
+                // ALPHA
+                byteBuffer.put((byte) ((pixel >> 24) & 0xFF));
             }
         }
         byteBuffer.flip();

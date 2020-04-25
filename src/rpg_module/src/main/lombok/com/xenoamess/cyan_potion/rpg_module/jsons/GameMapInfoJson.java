@@ -28,6 +28,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author XenoAmess
+ */
 @Data
 public class GameMapInfoJson implements Serializable {
     public int id;
