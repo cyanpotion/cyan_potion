@@ -133,7 +133,7 @@ public class World extends AbstractEntityScene {
         for (AbstractDynamicEntity au : gameMap.getEventUnits()) {
             au.registerShape();
         }
-        this.getDynamicEntitySet().addAll(gameMap.getEventUnits());
+        this.getDynamicEntityList().addAll(gameMap.getEventUnits());
     }
 
 
@@ -196,7 +196,7 @@ public class World extends AbstractEntityScene {
                     ),
                     this.getGameWindow().getGameManager().getResourceManager()));
             this.getPlayer().registerShape();
-            getDynamicEntitySet().add(getPlayer());
+            getDynamicEntityList().add(getPlayer());
 
             this.getCamera().setPos(this.getPlayer().getCenterPosX(), this.getPlayer().getCenterPosY());
         }
@@ -318,7 +318,7 @@ public class World extends AbstractEntityScene {
     public boolean update() {
         this.preparePlayerMovement(this.getPlayer());
 
-        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
+        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntityList()) {
             dynamicEntity.update();
         }
 
@@ -365,12 +365,12 @@ public class World extends AbstractEntityScene {
         TreeMap<Integer, ArrayList<AbstractEntity>> layerToEntities =
                 new TreeMap<>();
 
-        for (StaticEntity staticEntity : this.getStaticEntitySet()) {
+        for (StaticEntity staticEntity : this.getStaticEntitySetList()) {
             ArrayList<AbstractEntity> entities =
                     layerToEntities.computeIfAbsent(staticEntity.getLayer(), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
-        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
+        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntityList()) {
             ArrayList<AbstractEntity> entities =
                     layerToEntities.computeIfAbsent(dynamicEntity.getLayer(), k -> new ArrayList<>());
             entities.add(dynamicEntity);

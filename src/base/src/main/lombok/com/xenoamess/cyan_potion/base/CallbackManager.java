@@ -98,6 +98,7 @@ public class CallbackManager extends SubManager {
 
 
     //-----CallbackIs
+
     @Getter
     @Setter
     private GLFWErrorCallbackI errorCallback = null;
@@ -259,25 +260,6 @@ public class CallbackManager extends SubManager {
     public GLFWDropCallbackI wrapDropCallback() {
         return (window, count, names) -> CallbackManager.this.getDropCallback().invoke(window, count, names);
     }
-
-//    @AsFinalField
-//    private GLFWErrorCallback _GLFWErrorCallback;
-//    @AsFinalField
-//    private GLFWKeyCallback _GLFWKeyCallback;
-//    @AsFinalField
-//    private GLFWCharCallback _GLFWCharCallback;
-//    @AsFinalField
-//    private GLFWMouseButtonCallback _GLFWMouseButtonCallback;
-//    @AsFinalField
-//    private GLFWScrollCallback _GLFWScrollCallback;
-//    @AsFinalField
-//    private GLFWJoystickCallback _GLFWJoystickCallback;
-//    @AsFinalField
-//    private GLFWWindowCloseCallback _GLFWWindowCloseCallback;
-//    @AsFinalField
-//    private GLFWWindowSizeCallback _GLFWWindowSizeCallback;
-//    @AsFinalField
-//    private GLFWDropCallback _GLFWDropCallback;
 
     public void setWrapperCallbacks(GameWindow gameWindow) {
         glfwSetErrorCallback(

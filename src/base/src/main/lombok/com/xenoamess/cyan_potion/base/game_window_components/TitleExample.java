@@ -445,12 +445,21 @@ public final class TitleExample extends AbstractGameWindowComponent {
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (!(this.getState() >= 0 && this.getState() <= 4) && getState() == -101) {
+        if (
+                !(this.getState() >= 0 && this.getState() <= 4)
+                        && getState() == -101
+        ) {
             this.saveSlotPicture.draw(this.getGameWindow());
-            this.getGameWindow().drawTextFillAreaCenter(Font.getCurrentFont(),
+            this.getGameWindow().drawTextFillAreaCenter(
+                    Font.getCurrentFont(),
                     this.getGameWindow().getLogicWindowWidth() / 2F,
-                    this.getGameWindow().getLogicWindowHeight() / 2F, 250, 50,
-                    0, new Vector4f(1, 1, 1, 1F), "校准文本BeEf");
+                    this.getGameWindow().getLogicWindowHeight() / 2F,
+                    250,
+                    50,
+                    0,
+                    new Vector4f(1, 1, 1, 1F),
+                    "校准文本BeEf"
+            );
         }
         return true;
     }

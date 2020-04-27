@@ -446,7 +446,6 @@ public class GameManager implements Closeable {
      * then set text structure's current language as current language from steam api.
      * all languages are String typed.
      */
-    //todo
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {

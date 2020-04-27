@@ -145,6 +145,8 @@ public final class WorldForDemo extends World {
                             demoButton.setButtonText("DEMO");
                             demoButton.getButtonPicture().setBindable(iconTexture);
                             break;
+                        default:
+                            //shall never
                     }
                     return null;
                 }

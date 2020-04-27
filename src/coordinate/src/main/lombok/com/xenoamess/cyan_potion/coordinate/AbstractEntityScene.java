@@ -34,7 +34,8 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,12 +57,12 @@ public abstract class AbstractEntityScene extends AbstractScene {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    private final Set<StaticEntity> staticEntitySet = new HashSet<>();
+    private final List<StaticEntity> staticEntitySetList = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    private final Set<AbstractDynamicEntity> dynamicEntitySet = new HashSet<>();
+    private final List<AbstractDynamicEntity> dynamicEntityList = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

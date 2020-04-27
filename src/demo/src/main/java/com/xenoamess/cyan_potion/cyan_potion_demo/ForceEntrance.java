@@ -59,6 +59,8 @@ public class ForceEntrance {
             case 2:
                 argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.xml");
                 break;
+            default:
+                //shall never
         }
         System.out.println(argsMap);
         GameManager gameManager = new GameManager(argsMap);

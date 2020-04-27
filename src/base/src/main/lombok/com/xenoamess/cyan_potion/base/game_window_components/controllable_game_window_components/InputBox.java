@@ -163,7 +163,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
 //        this.registerOnMouseLeaveAreaCallback(
-//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()))
+//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent
+//                .generateEmptyMouseButtonEvent(this.getGameWindow()))
 //        );
 
         this.registerOnMouseButtonLeftUpCallback(
@@ -509,14 +510,30 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
                 float nowY0 = y + spaceUpToCharShould * scaleY;
 
-                if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                    glColor4f(this.getTextSelectColor().x(),
+                if (
+                        (
+                                index >= getNowSelectStartPos()
+                                        && index < getNowSelectEndPos()
+                        )
+                                ||
+                                (
+                                        index < getNowSelectStartPos()
+                                                && index >= getNowSelectEndPos()
+                                )
+                ) {
+                    glColor4f(
+                            this.getTextSelectColor().x(),
                             this.getTextSelectColor().y(),
                             this.getTextSelectColor().z(),
-                            this.getTextSelectColor().w());
+                            this.getTextSelectColor().w()
+                    );
                 } else {
-                    glColor4f(this.getTextColor().x(), this.getTextColor().y(),
-                            this.getTextColor().z(), this.getTextColor().w());
+                    glColor4f(
+                            this.getTextColor().x(),
+                            this.getTextColor().y(),
+                            this.getTextColor().z(),
+                            this.getTextColor().w()
+                    );
                 }
                 if (ifDraw) {
                     Font.drawBoxTC(

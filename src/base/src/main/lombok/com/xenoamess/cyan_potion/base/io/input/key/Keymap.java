@@ -176,12 +176,18 @@ public class Keymap {
         }
         if (rawInputI == null) {
             try {
-                if ("GLFW_MOUSE_BUTTON_LEFT".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_1";
-                } else if ("GLFW_MOUSE_BUTTON_RIGHT".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_2";
-                } else if ("GLFW_MOUSE_BUTTON_MIDDLE".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_3";
+                switch (rawInput) {
+                    case "GLFW_MOUSE_BUTTON_LEFT":
+                        rawInput = "GLFW_MOUSE_BUTTON_1";
+                        break;
+                    case "GLFW_MOUSE_BUTTON_RIGHT":
+                        rawInput = "GLFW_MOUSE_BUTTON_2";
+                        break;
+                    case "GLFW_MOUSE_BUTTON_MIDDLE":
+                        rawInput = "GLFW_MOUSE_BUTTON_3";
+                        break;
+                    default:
+                        //do nothing
                 }
 
                 rawInputI = MouseButtonKeyEnum.valueOf(rawInput).value;

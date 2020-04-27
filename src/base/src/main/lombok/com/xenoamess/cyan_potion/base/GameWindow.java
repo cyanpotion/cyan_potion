@@ -825,6 +825,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param colorScale   a {@link org.joml.Vector4f} object.
      * @param rotateRadius a float.
      */
+    @SuppressWarnings("AlibabaAvoidDoubleOrFloatEqualCompare")
     public void drawBindableRelativeCenter(
             Bindable bindable,
             float centerPosX,
@@ -852,7 +853,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         this.getShader().bind();
         bindable.bind();
 
-        if (rotateRadius == 0f) {
+        if (Float.compare(rotateRadius, 0f) == 0) {
             Matrix4f projection = new Matrix4f(
                     width / (float) this.getLogicWindowWidth(), 0, 0, 0,
                     0, height / (float) this.getLogicWindowHeight(), 0, 0,
