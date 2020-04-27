@@ -633,16 +633,30 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                         nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
                         nowY0 = y + spaceUpToCharShould * scaleY;
 
-                        if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                            glColor4f(this.getTextSelectColor().x(),
+                        if (
+                                (
+                                        index >= getNowSelectStartPos()
+                                                && index < getNowSelectEndPos()
+                                )
+                                        ||
+                                        (
+                                                index < getNowSelectStartPos()
+                                                        && index >= getNowSelectEndPos()
+                                        )
+                        ) {
+                            glColor4f(
+                                    this.getTextSelectColor().x(),
                                     this.getTextSelectColor().y(),
                                     this.getTextSelectColor().z(),
-                                    this.getTextSelectColor().w());
+                                    this.getTextSelectColor().w()
+                            );
                         } else {
-                            glColor4f(this.getTextColor().x(),
+                            glColor4f(
+                                    this.getTextColor().x(),
                                     this.getTextColor().y(),
                                     this.getTextColor().z(),
-                                    this.getTextColor().w());
+                                    this.getTextColor().w()
+                            );
                         }
                         float nowDist = Math.abs(distPosX - nowX0);
                         if (nowDist < minDist) {
