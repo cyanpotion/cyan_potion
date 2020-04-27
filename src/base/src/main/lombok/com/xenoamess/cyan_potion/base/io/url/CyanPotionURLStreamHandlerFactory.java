@@ -35,7 +35,7 @@
 // * TODO This class is not stable yet. Will be removed or modified in future.
 // *
 // * @author XenoAmess
-// * @version 0.162.1
+// * @version 0.162.2-SNAPSHOT
 // */
 //public class CyanPotionURLStreamHandlerFactory implements URLStreamHandlerFactory {
 //    private String userDir;

@@ -37,7 +37,7 @@ import org.joml.Vector3f;
  * .size.x logically.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

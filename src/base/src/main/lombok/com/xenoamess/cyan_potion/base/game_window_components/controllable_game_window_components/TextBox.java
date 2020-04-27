@@ -42,7 +42,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>TextBox class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2-SNAPSHOT
  */
 
 @EqualsAndHashCode(callSuper = true)

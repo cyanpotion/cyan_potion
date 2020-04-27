@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
  * <p>Player class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2-SNAPSHOT
  */
 public class Player extends Unit {
     /**

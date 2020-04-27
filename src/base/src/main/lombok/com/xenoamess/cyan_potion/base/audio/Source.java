@@ -41,7 +41,7 @@ import static org.lwjgl.openal.AL10.*;
  * <p>Source class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2-SNAPSHOT
  */
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
