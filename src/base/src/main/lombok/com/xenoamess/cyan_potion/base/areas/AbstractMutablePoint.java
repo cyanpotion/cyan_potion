@@ -35,6 +35,7 @@ public interface AbstractMutablePoint extends AbstractPoint {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return true;
@@ -79,6 +80,7 @@ public interface AbstractMutablePoint extends AbstractPoint {
      *
      * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
      */
+    @SuppressWarnings("unused")
     default void cover(AbstractPoint point) {
         this.setPos(point);
     }

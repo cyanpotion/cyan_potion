@@ -182,6 +182,7 @@ public class GameWindowComponentTreeNode implements Closeable {
      * @param gameWindowComponent gameWindowComponent
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         return new GameWindowComponentTreeNode(this.getGameWindowComponentTree(), this, gameWindowComponent);
     }

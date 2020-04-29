@@ -173,7 +173,7 @@ public class Font extends AbstractResource {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked"})
     public static final Function<GameManager, Void> PUT_FONT_LOADER_TTF_FILE = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(Font.class, STRING_TTF_FILE,
                 (Font font) -> font.loadAsTtfFileFont(font.getResourceInfo())
@@ -349,6 +349,7 @@ public class Font extends AbstractResource {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextLeftTop(
             float leftTopPosX,
             float leftTopPosY,
@@ -375,6 +376,7 @@ public class Font extends AbstractResource {
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      * @see Font#drawTextLeftTop(float, float, float, float, float, Vector4fc, String)
      */
+    @SuppressWarnings("UnusedReturnValue")
     public DrawTextStruct drawTextLeftTop(DrawTextStruct drawTextStruct) {
         this.bind();
 
@@ -452,6 +454,7 @@ public class Font extends AbstractResource {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextFillAreaLeftTop(
             float leftTopPosX,
             float leftTopPosY,
@@ -488,7 +491,9 @@ public class Font extends AbstractResource {
 
 //            glBegin(GL_QUADS);
 
+            //noinspection unused
             float x3 = Float.MIN_VALUE;
+            //noinspection unused
             float y3 = Float.MIN_VALUE;
             String text =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

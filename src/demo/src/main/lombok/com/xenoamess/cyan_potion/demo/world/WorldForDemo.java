@@ -61,6 +61,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public final class WorldForDemo extends World {
+    @SuppressWarnings("unused")
     @JsonIgnore
     private static final transient Logger LOGGER = LoggerFactory.getLogger(WorldForDemo.class);
 
@@ -174,6 +175,7 @@ public final class WorldForDemo extends World {
         this.registerProcessor(
                 KeyboardEvent.class,
                 (KeyboardEvent keyboardEvent) -> {
+                    //noinspection SwitchStatementWithTooFewBranches
                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                         case Keymap.XENOAMESS_KEY_ESCAPE:
                             if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.getMods() == 0) {

@@ -170,6 +170,7 @@ public class DrawTextStruct {
         glEnable(GL_TEXTURE_2D);
 
         float lastXReal = 0;
+        //noinspection unused
         float lastYReal = 0;
         float lastXShould = 0;
         float lastYShould = 0;
@@ -201,6 +202,7 @@ public class DrawTextStruct {
             float charWidthShould = getFont().getQ().x1() - getFont().getQ().x0();
             float charHeightShould = getFont().getQ().y1() - getFont().getQ().y0();
             float spaceLeftToCharShould = getFont().getQ().x0() - lastXShould;
+            //noinspection unused
             float spaceUpToCharShould = getFont().getQ().y0() - lastYShould;
             float nowX0 = lastXReal + spaceLeftToCharShould;
             float nowY0 = 0;

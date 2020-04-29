@@ -42,5 +42,6 @@ public abstract class DrawerBuilder<T> {
      * @param superUpdater a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
      */
+    @SuppressWarnings("unused")
     public abstract DrawerInterface<T> build(DrawerInterface<? super T> superUpdater);
 }

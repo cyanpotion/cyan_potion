@@ -70,6 +70,7 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
      *
      * <p>rotate.</p>
      */
+    @SuppressWarnings("unused")
     @Override
     public void rotate(float newRotateRadius) {
         this.setRotateRadius(this.getRotateRadius() + newRotateRadius);
@@ -80,6 +81,7 @@ public abstract class AbstractPicture implements AbstractPictureInterface {
      *
      * <p>rotateTo.</p>
      */
+    @SuppressWarnings("unused")
     @Override
     public void rotateTo(float newRotateRadius) {
         this.setRotateRadius(newRotateRadius);

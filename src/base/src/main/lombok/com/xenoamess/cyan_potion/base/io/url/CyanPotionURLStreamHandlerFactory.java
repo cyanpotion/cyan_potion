@@ -62,7 +62,8 @@
 //        return userDir;
 //    }
 //
-//    private final CyanPotionURLStreamHandler cyanPotionURLStreamHandler = new CyanPotionURLStreamHandler(this.userDir);
+//    private final CyanPotionURLStreamHandler cyanPotionURLStreamHandler = new CyanPotionURLStreamHandler(this
+//    .userDir);
 //
 //    /**
 //     * {@inheritDoc}

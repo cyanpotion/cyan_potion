@@ -109,6 +109,7 @@ public class Texture extends AbstractResource implements Bindable {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unused")
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADERS = (GameManager gameManager) -> {
         ResourceManager resourceManager = gameManager.getResourceManager();
         resourceManager.putResourceLoader(
@@ -185,6 +186,7 @@ public class Texture extends AbstractResource implements Bindable {
      * @param startHeight  a int.
      * @param pixelsRaw    an array of {@link int} objects.
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public void bake(int singleWidth, int singleHeight, int entireWidth,
                      int entireHeight, int startWidth, int startHeight,

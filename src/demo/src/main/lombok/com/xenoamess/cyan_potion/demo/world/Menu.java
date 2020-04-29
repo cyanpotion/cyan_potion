@@ -137,6 +137,7 @@ public final class Menu extends AbstractGameWindowComponent {
      *
      * @return a boolean.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isShow() {
         return show.get();
     }

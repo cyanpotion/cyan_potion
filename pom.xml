@@ -90,7 +90,7 @@
         <httpclient.version>4.5.12</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.11.0.rc1</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
         <joml.version>1.9.24</joml.version>
         <log4j.version>2.13.2</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
@@ -106,7 +106,7 @@
         <!--home made libraries versions-->
         <commonx.version>0.10.11</commonx.version>
         <multi_language.version>0.46.0</multi_language.version>
-        <x8l.version>2.2.1</x8l.version>
+        <x8l.version>2.2.2</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.1.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->

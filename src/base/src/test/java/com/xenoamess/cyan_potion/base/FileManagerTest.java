@@ -27,6 +27,7 @@ package com.xenoamess.cyan_potion.base;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -36,40 +37,22 @@ import java.net.URL;
 
 public class FileManagerTest {
     @Test
-    public void test() {
+    public void test() throws MalformedURLException, FileSystemException, URISyntaxException {
         System.out.println(org.apache.commons.httpclient.HttpClient.class);
         System.out.println(org.apache.jackrabbit.webdav.client.methods.DavMethod.class);
-        FileSystemManager fileSystemManager = ResourceManager.getFileSystemManager();
+        FileSystemManager fileSystemManager = ResourceManager.getFILE_SYSTEM_MANAGER();
 
-        URL url2 = null;
-        URL url1 = null;
+        final URL url2 = new File("D:/1 1.txt").toURI().toURL();
+        System.out.println("File : " + url2);
 
-        try {
-            url2 = new File("D:/1 1.txt").toURI().toURL();
-            System.out.println("File : " + url2);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        final URL url1 = fileSystemManager.resolveFile("D:/1 1.txt").getURL();
+        System.out.println("FileObject : " + url1);
 
-        try {
-            url1 = fileSystemManager.resolveFile("D:/1 1.txt").getURL();
-            System.out.println("FileObject : " + url1);
-        } catch (FileSystemException e) {
-            e.printStackTrace();
-        }
+        System.out.println(new File(url2.toURI()));
 
-        try {
-            System.out.println(new File(url2.toURI()));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            System.out.println(new File(url1.toURI()));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-
+        Assertions.assertThrows(
+                URISyntaxException.class,
+                () -> System.out.println(new File(url1.toURI()))
+        );
     }
 }

@@ -150,6 +150,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param windowWidth  a int.
      * @param windowHeight a int.
      */
+    @SuppressWarnings("unused")
     public void setLogicWindowSize(int windowWidth, int windowHeight) {
         this.setLogicWindowWidth(windowWidth);
         this.setLogicWindowHeight(windowHeight);
@@ -161,6 +162,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param windowWidth  a int.
      * @param windowHeight a int.
      */
+    @SuppressWarnings("unused")
     public void setRealWindowSize(int windowWidth, int windowHeight) {
         this.setRealWindowWidth(windowWidth);
         this.setRealWindowWidth(windowHeight);
@@ -248,6 +250,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      *
      * @param openglVersion openglVersion
      */
+    @SuppressWarnings("unused")
     public static void setOpenglVersion(String openglVersion) {
         try {
             int openglVersionMajor = Integer.parseInt(openglVersion.split("\\.")[0]);
@@ -553,6 +556,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param width       a float.
      * @param height      a float.
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeLeftTop(
             Bindable bindable,
             float leftTopPosX,
@@ -580,6 +584,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param width      a float.
      * @param height     a float.
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeCenter(
             Bindable bindable,
             float centerPosX,
@@ -608,6 +613,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height      a float.
      * @param model       a {@link com.xenoamess.cyan_potion.base.render.Model} object.
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeLeftTop(
             Bindable bindable,
             float leftTopPosX,
@@ -637,6 +643,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height     a float.
      * @param model      a {@link com.xenoamess.cyan_potion.base.render.Model} object.
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeCenter(
             Bindable bindable,
             float centerPosX,
@@ -666,6 +673,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height      a float.
      * @param colorScale  colorScale
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeLeftTop(
             Bindable bindable,
             float leftTopPosX,
@@ -695,6 +703,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param height     a float.
      * @param colorScale colorScale
      */
+    @SuppressWarnings("unused")
     public void drawBindableRelativeCenter(
             Bindable bindable,
             float centerPosX,
@@ -825,7 +834,6 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param colorScale   a {@link org.joml.Vector4f} object.
      * @param rotateRadius a float.
      */
-    @SuppressWarnings("AlibabaAvoidDoubleOrFloatEqualCompare")
     public void drawBindableRelativeCenter(
             Bindable bindable,
             float centerPosX,
@@ -908,6 +916,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public DrawTextStruct drawTextFillAreaLeftTop(
             Font font,
             float leftTopPosX,
@@ -948,6 +957,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public DrawTextStruct drawTextFillAreaCenter(
             Font font,
             float centerPosX,
@@ -1066,6 +1076,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextLeftTop(
             Font font,
             float leftTopPosX,
@@ -1107,6 +1118,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text           a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextCenter(
             Font font,
             float centerPosX,
@@ -1228,6 +1240,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text        text
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextLeftTop(
             Font font,
             float leftTopPosX,
@@ -1246,6 +1259,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      * @param text       text
      * @return a {@link com.xenoamess.cyan_potion.base.visual.DrawTextStruct} object.
      */
+    @SuppressWarnings("unused")
     public DrawTextStruct drawTextCenter(
             Font font,
             float centerPosX,
@@ -1271,6 +1285,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      *
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
+    @SuppressWarnings("unused")
     public ResourceManager getResourceManager() {
         return this.getGameManager().getResourceManager();
     }
@@ -1280,6 +1295,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
      *
      * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
      */
+    @SuppressWarnings("unused")
     public DataCenter getDataCenter() {
         return this.getGameManager().getDataCenter();
     }

@@ -69,6 +69,7 @@ public class GrammarMap {
      * @param methodName methodName
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public static Integer getMethodNum(String methodName) {
         checkInit();
         return METHOD_NAME_TO_METHOD_NUM_MAP.get(methodName);

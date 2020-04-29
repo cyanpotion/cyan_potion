@@ -52,6 +52,7 @@ public class SingleContentPanel extends Panel {
      *
      * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
      */
+    @SuppressWarnings("unused")
     public SingleContentPanel(GameWindow gameWindow) {
         super(gameWindow);
     }
@@ -62,6 +63,7 @@ public class SingleContentPanel extends Panel {
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
      * @param backgroundBindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      */
+    @SuppressWarnings("unused")
     public SingleContentPanel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow, backgroundBindable);
     }
@@ -69,6 +71,7 @@ public class SingleContentPanel extends Panel {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.clearContents();

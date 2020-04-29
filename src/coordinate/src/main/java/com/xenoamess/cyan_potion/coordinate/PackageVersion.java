@@ -39,10 +39,12 @@ import com.xenoamess.commons.version.Version;
  * @author XenoAmess
  * @version 0.6.0
  */
+@SuppressWarnings("unused")
 public class PackageVersion {
 
     /**
      * current version of this component.
      */
+    @SuppressWarnings("unused")
     public static final Version VERSION = Version.loadPackageVersion(PackageVersion.class);
 }

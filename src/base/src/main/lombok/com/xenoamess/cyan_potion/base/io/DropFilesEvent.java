@@ -98,6 +98,7 @@ public class DropFilesEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    @SuppressWarnings("unused")
     public List<String> getFileNames() {
         ArrayList<String> fileNames = new ArrayList<>();
         PointerBuffer nameBuffer = memPointerBuffer(getNames(), getCount());

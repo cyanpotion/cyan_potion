@@ -54,7 +54,6 @@ public class GamepadInputManager extends SubManager {
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
     @Getter
-    @Setter
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
     @Getter
     @Setter

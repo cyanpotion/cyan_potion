@@ -35,6 +35,7 @@ public interface AbstractImmutableArea extends AbstractArea {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return false;

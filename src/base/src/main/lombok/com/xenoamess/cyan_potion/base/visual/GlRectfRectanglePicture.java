@@ -122,6 +122,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
      *
      * @param color a {@link org.joml.Vector4fc} object.
      */
+    @SuppressWarnings("unused")
     public void setColor(Vector4fc color) {
         this.color.set(color);
     }

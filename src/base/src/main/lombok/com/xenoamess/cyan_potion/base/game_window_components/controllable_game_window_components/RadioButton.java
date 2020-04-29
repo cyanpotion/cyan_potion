@@ -105,6 +105,7 @@ public class RadioButton extends Button {
      * default Updater for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
+    @SuppressWarnings("unused")
     public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIOBUTTO =
             UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
@@ -210,6 +211,7 @@ public class RadioButton extends Button {
      *
      * @return select succeed.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean select() {
         synchronized (this) {
             boolean res = this.selected.compareAndSet(false, true);
@@ -225,6 +227,7 @@ public class RadioButton extends Button {
      *
      * @return deselect succeed.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean deselect() {
         synchronized (this) {
             boolean res = this.selected.compareAndSet(true, false);
@@ -303,6 +306,7 @@ public class RadioButton extends Button {
      *
      * @param textColorSelected a {@link org.joml.Vector4fc} object.
      */
+    @SuppressWarnings("unused")
     public void setTextColorSelected(Vector4fc textColorSelected) {
         this.textColorSelected.set(textColorSelected);
     }
@@ -321,6 +325,7 @@ public class RadioButton extends Button {
      *
      * @param textColorDeselected a {@link org.joml.Vector4fc} object.
      */
+    @SuppressWarnings("unused")
     public void setTextColorDeselected(Vector4fc textColorDeselected) {
         this.textColorDeselected.set(textColorDeselected);
     }

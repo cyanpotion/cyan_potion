@@ -38,7 +38,7 @@ import lombok.ToString;
  * @version 0.162.2-SNAPSHOT
  * @see JamepadGamepadDevice
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class JamepadGamepadData extends AbstractGamepadData {
     /**
@@ -116,6 +116,7 @@ public class JamepadGamepadData extends AbstractGamepadData {
     /**
      * Constant <code>JAMEPAD_KEY_LAST=17</code>
      */
+    @SuppressWarnings("unused")
     public static final int JAMEPAD_KEY_LAST = 17;
 
 

@@ -57,6 +57,7 @@ public class ShapeGroup extends AbstractShape {
      * @param size      a {@link org.joml.Vector3f} object.
      * @param shapes    a {@link java.util.Collection} object.
      */
+    @SuppressWarnings("unused")
     public ShapeGroup(AbstractEntity entity, Vector3f centerPos,
                       Vector3f size, Collection shapes) {
         super(entity, centerPos, size);
@@ -68,6 +69,7 @@ public class ShapeGroup extends AbstractShape {
      *
      * @param shapeGroup shapeGroup
      */
+    @SuppressWarnings("unused")
     public ShapeGroup(ShapeGroup shapeGroup) {
         super(shapeGroup);
         for (AbstractShape au : shapeGroup.getShapes()) {
@@ -83,6 +85,7 @@ public class ShapeGroup extends AbstractShape {
      * for more information about rough, please go and see relation function
      * in class AbstractShape
      */
+    @SuppressWarnings("unused")
     @Override
     public ShapeRelation relation(AbstractShape shape, boolean rough) {
         rough = true;
@@ -99,6 +102,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public float minX() {
         float minX = Float.MAX_VALUE;
@@ -111,6 +115,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public float maxX() {
         float maxX = Float.MIN_VALUE;
@@ -123,6 +128,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public float minY() {
         float minY = Float.MAX_VALUE;
@@ -135,6 +141,7 @@ public class ShapeGroup extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public float maxY() {
         float maxY = Float.MIN_VALUE;
@@ -149,6 +156,7 @@ public class ShapeGroup extends AbstractShape {
      * <p>
      * detect if a point is in the shape.
      */
+    @SuppressWarnings("unused")
     @Override
     public boolean ifIn(Vector3f point) {
         for (AbstractShape au : getShapes()) {

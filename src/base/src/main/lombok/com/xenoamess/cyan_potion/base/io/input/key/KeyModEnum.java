@@ -78,8 +78,9 @@ public enum KeyModEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final KeyModEnum[] values = generateValues();
+    private static final KeyModEnum[] VALUES = generateValues();
 
+    @SuppressWarnings("unused")
     KeyModEnum(int value) {
         this.value = value;
     }
@@ -90,7 +91,7 @@ public enum KeyModEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.key.KeyModEnum} objects.
      */
     public static KeyModEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -98,6 +99,7 @@ public enum KeyModEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -138,6 +140,7 @@ public enum KeyModEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

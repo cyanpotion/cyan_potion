@@ -224,6 +224,7 @@ public class Source implements Closeable {
      *
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public boolean isInitial() {
         return this.getState() == AL10.AL_INITIAL;
@@ -264,6 +265,7 @@ public class Source implements Closeable {
      *
      * @param waveData waveData
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public void play(WaveData waveData) {
         this.setCurrentWaveData(waveData);

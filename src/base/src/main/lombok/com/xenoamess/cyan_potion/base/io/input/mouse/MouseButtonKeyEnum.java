@@ -61,7 +61,7 @@ public enum MouseButtonKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final MouseButtonKeyEnum[] values = generateValues();
+    private static final MouseButtonKeyEnum[] VALUES = generateValues();
 
     MouseButtonKeyEnum(int value) {
         this.value = value;
@@ -73,7 +73,7 @@ public enum MouseButtonKeyEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonKeyEnum} objects.
      */
     public static MouseButtonKeyEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -81,6 +81,7 @@ public enum MouseButtonKeyEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -105,6 +106,7 @@ public enum MouseButtonKeyEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

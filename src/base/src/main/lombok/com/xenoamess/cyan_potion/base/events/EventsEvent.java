@@ -64,6 +64,7 @@ public class EventsEvent implements Event {
      *
      * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      */
+    @SuppressWarnings("unused")
     public void addEvent(Event event) {
         this.events.add(event);
     }
@@ -73,6 +74,7 @@ public class EventsEvent implements Event {
      *
      * @param events a {@link java.util.Collection} object.
      */
+    @SuppressWarnings("unused")
     public void addEvents(Collection<Event> events) {
         this.events.addAll(events);
     }
@@ -90,6 +92,7 @@ public class EventsEvent implements Event {
      *
      * @return a {@link java.util.Set} object.
      */
+    @SuppressWarnings("unused")
     public Set<Event> getEvents() {
         return new HashSet<>(this.events);
     }

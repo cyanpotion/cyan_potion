@@ -64,7 +64,7 @@ public class CharEvent implements Event {
         }
     }
 
-    private static final AtomicLong currentId = new AtomicLong(0L);
+    private static final AtomicLong CURRENT_ID = new AtomicLong(0L);
 
     /**
      * use this instead of null for safety.
@@ -92,8 +92,8 @@ public class CharEvent implements Event {
         super();
         this.window = window;
         this.codepoint = codepoint;
-        synchronized (currentId) {
-            this.id = currentId.getAndAdd(1L);
+        synchronized (CURRENT_ID) {
+            this.id = CURRENT_ID.getAndAdd(1L);
         }
     }
 

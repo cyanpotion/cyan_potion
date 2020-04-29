@@ -63,6 +63,7 @@ public abstract class AbstractGamepadDevice {
      * @param leftVibration  a int.
      * @param rightVibration a int.
      */
+    @SuppressWarnings("unused")
     public abstract void setVibration(int leftVibration, int rightVibration);
 
     /**

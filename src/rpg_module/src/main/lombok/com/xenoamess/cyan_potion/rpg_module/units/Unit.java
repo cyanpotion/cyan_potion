@@ -255,6 +255,7 @@ public class Unit extends AbstractDynamicEntity {
      *
      * @param canMove a boolean.
      */
+    @SuppressWarnings("unused")
     public void setCanMove(boolean canMove) {
         this.canMove.set(canMove);
     }

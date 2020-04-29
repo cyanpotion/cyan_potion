@@ -48,6 +48,7 @@ public class DataCenter extends SubManager {
     /**
      * Constant <code>MAIN_THREAD_NAME="main"</code>
      */
+    @SuppressWarnings("unused")
     public static final String MAIN_THREAD_NAME = "main";
     /**
      * Constant <code>MAIN_THREAD_ID=1</code>

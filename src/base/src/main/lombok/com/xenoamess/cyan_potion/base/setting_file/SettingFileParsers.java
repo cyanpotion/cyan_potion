@@ -32,7 +32,7 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xenoamess.cyan_potion.base.setting_file.SettingFileParser_0_3_0.version_0_3_0;
+import static com.xenoamess.cyan_potion.base.setting_file.SettingFileParser_0_3_0.VERSION_0_3_0;
 
 /**
  * <p>SettingFileParsers class.</p>
@@ -43,10 +43,10 @@ import static com.xenoamess.cyan_potion.base.setting_file.SettingFileParser_0_3_
 @EqualsAndHashCode
 @ToString
 public class SettingFileParsers {
-    private static final Map<Version, AbstractSettingFileParser> settingFileParserMap = new HashMap<>();
+    private static final Map<Version, AbstractSettingFileParser> SETTING_FILE_PARSER_MAP = new HashMap<>();
 
     static {
-        settingFileParserMap.put(version_0_3_0, new SettingFileParser_0_3_0());
+        SETTING_FILE_PARSER_MAP.put(VERSION_0_3_0, new SettingFileParser_0_3_0());
     }
 
     /**
@@ -55,6 +55,7 @@ public class SettingFileParsers {
      * @param versionString a {@link java.lang.String} object.
      * @return a {@link com.xenoamess.cyan_potion.base.setting_file.AbstractSettingFileParser} object.
      */
+    @SuppressWarnings("unused")
     public static AbstractSettingFileParser getParser(String versionString) {
         return getParser(new Version(versionString));
     }
@@ -66,7 +67,7 @@ public class SettingFileParsers {
      * @return a {@link com.xenoamess.cyan_potion.base.setting_file.AbstractSettingFileParser} object.
      */
     public static AbstractSettingFileParser getParser(Version version) {
-        return settingFileParserMap.get(version);
+        return SETTING_FILE_PARSER_MAP.get(version);
     }
 
     /**

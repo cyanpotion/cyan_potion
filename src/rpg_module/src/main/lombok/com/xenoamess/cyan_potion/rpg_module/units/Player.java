@@ -49,6 +49,7 @@ public class Player extends Unit {
      * @param height     a float.
      * @param layer      a int.
      */
+    @SuppressWarnings("unused")
     public Player(
             AbstractEntityScene scene,
             float centerPosX, float centerPosY,
@@ -76,6 +77,7 @@ public class Player extends Unit {
      * @param height     a float.
      * @param layer      a int.
      */
+    @SuppressWarnings("unused")
     public Player(
             AbstractEntityScene scene,
             float centerPosX, float centerPosY,

@@ -35,6 +35,7 @@ public interface AbstractImmutablePoint extends AbstractPoint {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return false;

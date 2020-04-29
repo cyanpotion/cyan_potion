@@ -56,6 +56,7 @@ public interface MainThreadEvent extends Event {
      *
      * @see EmptyEvent
      */
+    @SuppressWarnings("unused")
     MainThreadEvent EMPTY = new MainThreadEvent.EmptyMainThreadEvent();
 
     /**

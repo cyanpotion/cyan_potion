@@ -158,6 +158,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return after the function, if this Resource loaded correctly and is in memory, then true.
      * otherwise if cannot load correctly, then false.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public synchronized boolean load() {
         boolean result;
         if (startLoad()) {
@@ -212,6 +213,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     /**
      * <p>reload.</p>
      */
+    @SuppressWarnings("unused")
     public synchronized void reload() {
         this.close();
         this.load();

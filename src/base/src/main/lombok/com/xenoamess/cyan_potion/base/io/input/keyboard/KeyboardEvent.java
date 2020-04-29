@@ -431,6 +431,7 @@ public class KeyboardEvent implements Event {
      *
      * @return a {@link java.util.Collection} object.
      */
+    @SuppressWarnings("unused")
     public Collection<KeyModEnum> getModEnums() {
         return KeyModEnum.getModEnumsByValue(this.getMods());
     }

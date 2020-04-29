@@ -70,6 +70,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      *
      * @param gameWindow gameWindow
      */
+    @SuppressWarnings("unused")
     public TextBox(GameWindow gameWindow) {
         super(gameWindow);
         this.setWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().ifLanguageNeedWordWrap(this.getGameWindow().getGameManager().getDataCenter().getTextStructure().getCurrentLanguage()));
@@ -95,6 +96,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                 this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
         float realWidth =
                 this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        //noinspection unused
         float realHeight =
                 this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
         float realCharHeight =
@@ -205,10 +207,12 @@ public class TextBox extends AbstractControllableGameWindowComponent {
                         nowChar % EACH_CHAR_NUM,
                         font.getXb(), font.getYb(), font.getQ(), false);
                 float charWidthShould = font.getQ().x1() - font.getQ().x0();
+                //noinspection unused
                 float charHeightShould = font.getQ().y1() - font.getQ().y0();
                 float spaceLeftToCharShould = font.getQ().x0() - lastXShould;
                 float spaceUpToCharShould = font.getQ().y0() - lastYShould;
                 float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
+                //noinspection unused
                 float nowY0 = lineStartPosY + spaceUpToCharShould * scaleY;
 
                 lastXReal = nowX0 + charWidthShould * scaleX;
@@ -293,6 +297,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      *
      * @param textColor textColor
      */
+    @SuppressWarnings("unused")
     public void setTextColor(Vector4fc textColor) {
         this.textColor.set(textColor);
     }
@@ -305,6 +310,7 @@ public class TextBox extends AbstractControllableGameWindowComponent {
      * @param z textColor.z
      * @param w textColor.w
      */
+    @SuppressWarnings("unused")
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }

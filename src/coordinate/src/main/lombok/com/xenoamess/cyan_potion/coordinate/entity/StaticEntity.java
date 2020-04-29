@@ -52,6 +52,7 @@ public class StaticEntity extends AbstractEntity {
      * @param height      a float.
      * @param layer       a int.
      */
+    @SuppressWarnings("unused")
     public StaticEntity(
             AbstractEntityScene scene,
             float leftTopPosX, float leftTopPosY,

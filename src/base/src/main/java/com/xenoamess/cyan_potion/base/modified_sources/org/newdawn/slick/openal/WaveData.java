@@ -93,6 +93,7 @@ public class WaveData {
     /**
      * Disposes the WaveData
      */
+    @SuppressWarnings("unused")
     public void dispose() {
         data.clear();
     }
@@ -121,6 +122,7 @@ public class WaveData {
      * @param path path to file (relative, and in classpath)
      * @return WaveData containing data, or null if a failure occurred
      */
+    @SuppressWarnings("unused")
     public static WaveData create(String path) {
         return create(WaveData.class.getClassLoader().getResource(path));
     }
@@ -168,6 +170,7 @@ public class WaveData {
      * @param buffer ByteBuffer containing sound file
      * @return WaveData containing data, or null if a failure occurred
      */
+    @SuppressWarnings("unused")
     public static WaveData create(ByteBuffer buffer) {
         WaveData res = null;
         try {

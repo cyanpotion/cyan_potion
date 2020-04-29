@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
  * @see DataCenter#isUsingJXInput()
  * @deprecated
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Deprecated
@@ -102,6 +103,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
         this.getRawXInputDevice().setVibration(fixVibrationPower(leftVibration), fixVibrationPower(rightVibration));

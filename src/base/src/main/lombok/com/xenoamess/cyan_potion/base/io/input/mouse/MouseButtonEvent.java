@@ -75,6 +75,7 @@ public class MouseButtonEvent implements Event {
      * @return a {@link com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent} object.
      * @see EmptyEvent
      */
+    @SuppressWarnings("unused")
     public static MouseButtonEvent generateEmptyMouseButtonEvent(float mousePosX, float mousePosY) {
         return new EmptyMouseButtonEvent(mousePosX, mousePosY);
     }
@@ -210,6 +211,7 @@ public class MouseButtonEvent implements Event {
      *
      * @return a {@link java.util.Collection} object.
      */
+    @SuppressWarnings("unused")
     public Collection<KeyModEnum> getModEnums() {
         return KeyModEnum.getModEnumsByValue(this.getMods());
     }

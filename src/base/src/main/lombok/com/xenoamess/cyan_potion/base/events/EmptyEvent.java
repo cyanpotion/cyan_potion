@@ -42,6 +42,7 @@ public interface EmptyEvent extends Event {
      * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     static boolean isNullOrEmpty(Event event) {
         return event == null || event instanceof EmptyEvent;
     }

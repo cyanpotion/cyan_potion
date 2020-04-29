@@ -159,7 +159,7 @@ public enum KeyboardKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final KeyboardKeyEnum[] values = generateValues();
+    private static final KeyboardKeyEnum[] VALUES = generateValues();
 
     KeyboardKeyEnum(int value) {
         this.value = value;
@@ -171,7 +171,7 @@ public enum KeyboardKeyEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum} objects.
      */
     public static KeyboardKeyEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -179,6 +179,7 @@ public enum KeyboardKeyEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -203,6 +204,7 @@ public enum KeyboardKeyEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

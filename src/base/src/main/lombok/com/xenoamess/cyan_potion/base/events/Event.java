@@ -51,6 +51,7 @@ public interface Event extends Function<GameManager, Set<Event>> {
      *
      * @see EmptyEvent
      */
+    @SuppressWarnings("unused")
     Event EMPTY = new EmptyEvent() {
         //do nothing
     };

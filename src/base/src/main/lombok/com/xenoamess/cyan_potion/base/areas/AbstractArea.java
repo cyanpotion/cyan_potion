@@ -41,6 +41,7 @@ public interface AbstractArea {
      *
      * @return true if mutable
      */
+    @SuppressWarnings("unused")
     boolean ifMutable();
 
     /**
@@ -274,6 +275,7 @@ public interface AbstractArea {
      *
      * @return SimpleImmutableArea built from this area.
      */
+    @SuppressWarnings("unused")
     default SimpleImmutableArea copyArea() {
         return new SimpleImmutableArea(this);
     }

@@ -308,8 +308,8 @@ public class World extends AbstractEntityScene {
         }
     }
 
-
-    public static final float CAMERA_LERP = 0.05f;
+    @SuppressWarnings("unused")
+    public static final float CAMERA_LERP = 5F;
 
     /**
      * {@inheritDoc}
@@ -322,7 +322,7 @@ public class World extends AbstractEntityScene {
             dynamicEntity.update();
         }
 
-        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
+        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), CAMERA_LERP);
         Vector2f vector2f = new Vector2f(
                 this.getCamera().getPosX(),
                 this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()),

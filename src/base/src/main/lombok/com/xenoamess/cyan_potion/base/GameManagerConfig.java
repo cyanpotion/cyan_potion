@@ -74,6 +74,7 @@ public class GameManagerConfig {
      * @param key        a {@link java.lang.String} object.
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public static int getInteger(final Map<String, String> settingMap,
                                  final String key) {
         return getInteger(settingMap, key, -1);
@@ -121,6 +122,7 @@ public class GameManagerConfig {
      * @param key        a {@link java.lang.String} object.
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public static float getFloat(final Map<String, String> settingMap,
                                  final String key) {
         return getFloat(settingMap, key, Float.NaN);

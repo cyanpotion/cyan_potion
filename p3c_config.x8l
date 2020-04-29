@@ -42,10 +42,22 @@
         Console
     >
     <rule_class_pair_blacklist>
+        <JamepadGamepadKeyEnum>EnumConstantsMustHaveCommentRule>
+        <JXInputGamepadKeyEnum>EnumConstantsMustHaveCommentRule>
+        <KeyActionEnum>EnumConstantsMustHaveCommentRule>
+        <KeyboardKeyEnum>EnumConstantsMustHaveCommentRule>
+        <CodePluginPosition>EnumConstantsMustHaveCommentRule>
+        <ShapeRelation>EnumConstantsMustHaveCommentRule>
+
+        <WaveData>UndefineMagicConstantRule>
+
         <FileUtils>AvoidUseDeprecationRule>
+
         <Font>AvoidUseDeprecationRule>
-        <GameInputManager>LowerCamelCaseVariableNamingRule&AvoidUseDeprecationRule>
         <Keymap>AvoidUseDeprecationRule>
         <WorldForDemo>AvoidUseDeprecationRule>
+
+        <GameInputManager>LowerCamelCaseVariableNamingRule&AvoidUseDeprecationRule>
+
     >
 >

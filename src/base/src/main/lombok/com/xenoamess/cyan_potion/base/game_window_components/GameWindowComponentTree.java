@@ -81,6 +81,7 @@ public class GameWindowComponentTree extends SubManager {
                     protected void initProcessors() {
                         this.registerProcessor(KeyboardEvent.class,
                                 (KeyboardEvent keyboardEvent) -> {
+                                    //noinspection SwitchStatementWithTooFewBranches
                                     switch (keyboardEvent.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()) {
                                         case Keymap.XENOAMESS_KEY_ENTER:
                                             if (keyboardEvent.getAction() == GLFW.GLFW_PRESS && keyboardEvent.checkMods(GLFW.GLFW_MOD_ALT)) {
@@ -112,7 +113,8 @@ public class GameWindowComponentTree extends SubManager {
      * <p>Constructor for GameWindowComponentTree.</p>
      *
      * @param gameManager                 a {@link com.xenoamess.cyan_potion.base.GameManager} object.
-     * @param abstractGameWindowComponent a {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     * @param abstractGameWindowComponent a
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
      */
     public GameWindowComponentTree(GameManager gameManager, AbstractGameWindowComponent abstractGameWindowComponent) {
         super(gameManager);
@@ -146,6 +148,7 @@ public class GameWindowComponentTree extends SubManager {
      *
      * @return return
      */
+    @SuppressWarnings("unused")
     protected GameWindowComponentTreeNode leafNodesFirst() {
         GameWindowComponentTreeNode res = null;
         synchronized (leafNodes) {
@@ -160,6 +163,7 @@ public class GameWindowComponentTree extends SubManager {
     /**
      * <p>leafNodesClear.</p>
      */
+    @SuppressWarnings("unused")
     protected void leafNodesClear() {
         synchronized (leafNodes) {
             leafNodes.clear();
@@ -171,6 +175,7 @@ public class GameWindowComponentTree extends SubManager {
      *
      * @return return
      */
+    @SuppressWarnings("unused")
     public List<GameWindowComponentTreeNode> getAllNodes() {
         List<GameWindowComponentTreeNode> res = new ArrayList<>();
         this.getAllNodes(this.getRoot(), res);
@@ -190,7 +195,7 @@ public class GameWindowComponentTree extends SubManager {
      *
      * @param gameWindow gameWindow
      */
-    public void init(GameWindow gameWindow) {
+    public void init(@SuppressWarnings("unused") GameWindow gameWindow) {
         //do nothing
     }
 
@@ -249,6 +254,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindowComponent gameWindowComponent
      * @return return
      */
+    @SuppressWarnings("unused")
     public GameWindowComponentTreeNode findNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().findNode(gameWindowComponent);
     }
@@ -259,6 +265,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public boolean contains(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         return this.getRoot().childrenTreeContains(gameWindowComponentTreeNode);
     }
@@ -269,6 +276,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindowComponent gameWindowComponent
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public boolean deleteNode(AbstractGameWindowComponent gameWindowComponent) {
         return this.getRoot().deleteNode(gameWindowComponent);
     }
@@ -279,6 +287,7 @@ public class GameWindowComponentTree extends SubManager {
      * @param gameWindowComponentTreeNode gameWindowComponentTreeNode
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public boolean deleteNode(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         return this.getRoot().deleteNode(gameWindowComponentTreeNode);
     }

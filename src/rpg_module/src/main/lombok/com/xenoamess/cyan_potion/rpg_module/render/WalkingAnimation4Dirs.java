@@ -92,6 +92,7 @@ public class WalkingAnimation4Dirs extends Animation {
         super(fps);
         this.setUnit(unit);
         String resourceFilePath = resourceInfo.getFileString();
+        //noinspection SwitchStatementWithTooFewBranches
         switch (resourceInfo.getType()) {
             case STRING_CHARACTER:
                 int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);

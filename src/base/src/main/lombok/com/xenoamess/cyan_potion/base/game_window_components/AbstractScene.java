@@ -94,6 +94,7 @@ public abstract class AbstractScene extends AbstractControllableGameWindowCompon
      * @param size       a float.
      * @param colorScale colorScale
      */
+    @SuppressWarnings("unused")
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,

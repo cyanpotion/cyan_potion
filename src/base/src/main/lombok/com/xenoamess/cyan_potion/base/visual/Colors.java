@@ -61,6 +61,7 @@ public class Colors {
      * @param colorString a {@link java.lang.String} object.
      * @return a {@link org.joml.Vector4fc} object.
      */
+    @SuppressWarnings("unused")
     public static Vector4fc colorStringToColorVector4f(String colorString) {
         String[] strings = colorString.split(",");
         return new Vector4f(
@@ -77,6 +78,7 @@ public class Colors {
      * @param colorVector a {@link org.joml.Vector4fc} object.
      * @return a {@link java.awt.Color} object.
      */
+    @SuppressWarnings("unused")
     public static Color colorVector4fToColorAwt(Vector4fc colorVector) {
         return new Color(colorVector.x(), colorVector.y(), colorVector.z(), colorVector.w());
     }
@@ -128,6 +130,7 @@ public class Colors {
      * @param colorAWT a {@link java.awt.Color} object.
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
      */
+    @SuppressWarnings("unused")
     public static ResourceInfo<Texture> getPureColorTextureResourceInfo(Color colorAWT) {
         return getPureColorTextureResourceInfo(colorAwtToColorString(colorAWT));
     }
@@ -138,6 +141,7 @@ public class Colors {
      * @param colorVector a {@link org.joml.Vector4fc} object.
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
      */
+    @SuppressWarnings("unused")
     public static ResourceInfo<Texture> getPureColorTextureResourceInfo(Vector4fc colorVector) {
         return getPureColorTextureResourceInfo(colorVector4fToColorString(colorVector));
     }
@@ -161,60 +165,72 @@ public class Colors {
     /**
      * The color (0,0,0,0)
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc empty = colorAwtToColorVector4f(Color.white);
 
     /**
      * The color (0,0,0,0)
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc EMPTY = empty;
 
     /**
      * The color (0,0,0,0)
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_EMPTY = colorVector4fToColorString(empty);
 
     /**
      * The color (0,0,0,0)
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_EMPTY = getPureColorTextureResourceInfo(COLOR_STRING_EMPTY);
 
 
     /**
      * The color white.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc white = colorAwtToColorVector4f(Color.white);
 
     /**
      * The color white.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc WHITE = white;
 
     /**
      * The color white.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_WHITE = colorVector4fToColorString(white);
     /**
      * The color white.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_WHITE = getPureColorTextureResourceInfo(COLOR_STRING_WHITE);
 
     /**
      * The color light gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc lightGray = colorAwtToColorVector4f(Color.lightGray);
 
     /**
      * The color light gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc LIGHT_GRAY = lightGray;
 
     /**
      * The color light gray.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_LIGHT_GRAY = colorVector4fToColorString(lightGray);
     /**
      * The color light gray.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_LIGHT_GRAY =
             getPureColorTextureResourceInfo(COLOR_STRING_LIGHT_GRAY);
 
@@ -222,39 +238,47 @@ public class Colors {
     /**
      * The color gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc gray = colorAwtToColorVector4f(Color.gray);
 
     /**
      * The color gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc GRAY = gray;
 
     /**
      * The color gray.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_GRAY = colorVector4fToColorString(gray);
     /**
      * The color gray.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_GRAY = getPureColorTextureResourceInfo(COLOR_STRING_GRAY);
 
     /**
      * The color dark gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc darkGray = colorAwtToColorVector4f(Color.darkGray);
 
     /**
      * The color dark gray.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc DARK_GRAY = darkGray;
 
     /**
      * The color dark gray.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_DARK_GRAY = colorVector4fToColorString(darkGray);
     /**
      * The color dark gray.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_DARK_GRAY =
             getPureColorTextureResourceInfo(COLOR_STRING_DARK_GRAY);
 
@@ -262,80 +286,96 @@ public class Colors {
     /**
      * The color black.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc black = colorAwtToColorVector4f(Color.black);
 
     /**
      * The color black.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc BLACK = black;
 
     /**
      * The color black.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_BLACK = colorVector4fToColorString(black);
     /**
      * The color black.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_BLACK = getPureColorTextureResourceInfo(COLOR_STRING_BLACK);
 
 
     /**
      * The color red.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc red = colorAwtToColorVector4f(Color.red);
 
     /**
      * The color red.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc RED = red;
 
     /**
      * The color red.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_RED = colorVector4fToColorString(red);
     /**
      * The color red.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_RED = getPureColorTextureResourceInfo(COLOR_STRING_RED);
 
 
     /**
      * The color pink.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc pink = colorAwtToColorVector4f(Color.pink);
 
     /**
      * The color pink.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc PINK = pink;
 
     /**
      * The color pink.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_PINK = colorVector4fToColorString(pink);
     /**
      * The color pink.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_PINK = getPureColorTextureResourceInfo(COLOR_STRING_PINK);
 
 
     /**
      * The color orange.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc orange = colorAwtToColorVector4f(Color.orange);
 
     /**
      * The color orange.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc ORANGE = orange;
 
     /**
      * The color orange.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_ORANGE = colorVector4fToColorString(orange);
     /**
      * The color orange.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_ORANGE =
             getPureColorTextureResourceInfo(COLOR_STRING_ORANGE);
 
@@ -343,20 +383,24 @@ public class Colors {
     /**
      * The color yellow.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc yellow = colorAwtToColorVector4f(Color.yellow);
 
     /**
      * The color yellow.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc YELLOW = yellow;
 
     /**
      * The color yellow.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_YELLOW = colorVector4fToColorString(yellow);
     /**
      * The color yellow.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_YELLOW =
             getPureColorTextureResourceInfo(COLOR_STRING_YELLOW);
 
@@ -364,40 +408,48 @@ public class Colors {
     /**
      * The color green.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc green = colorAwtToColorVector4f(Color.green);
 
     /**
      * The color green.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc GREEN = green;
 
     /**
      * The color green.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_GREEN = colorVector4fToColorString(green);
     /**
      * The color green.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_GREEN = getPureColorTextureResourceInfo(COLOR_STRING_GREEN);
 
 
     /**
      * The color magenta.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc magenta = colorAwtToColorVector4f(Color.magenta);
 
     /**
      * The color magenta.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc MAGENTA = magenta;
 
     /**
      * The color magenta.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_MAGENTA = colorVector4fToColorString(magenta);
     /**
      * The color magenta.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_MAGENTA =
             getPureColorTextureResourceInfo(COLOR_STRING_MAGENTA);
 
@@ -405,40 +457,48 @@ public class Colors {
     /**
      * The color cyan.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc cyan = colorAwtToColorVector4f(Color.cyan);
 
     /**
      * The color cyan.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc CYAN = cyan;
 
     /**
      * The color cyan.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_CYAN = colorVector4fToColorString(cyan);
     /**
      * The color cyan.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_CYAN = getPureColorTextureResourceInfo(COLOR_STRING_CYAN);
 
 
     /**
      * The color blue.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc blue = colorAwtToColorVector4f(Color.blue);
 
     /**
      * The color blue.  In the default sRGB space.
      */
+    @SuppressWarnings("unused")
     public static final Vector4fc BLUE = blue;
 
     /**
      * The color blue.
      */
+    @SuppressWarnings("unused")
     public static final String COLOR_STRING_BLUE = colorVector4fToColorString(blue);
     /**
      * The color blue.
      */
+    @SuppressWarnings("unused")
     public static final ResourceInfo<Texture> RESOURCE_INFO_BLUE = getPureColorTextureResourceInfo(COLOR_STRING_BLUE);
 
 }

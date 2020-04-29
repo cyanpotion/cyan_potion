@@ -79,6 +79,7 @@ public class SteamTextureUtils {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unused")
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_STEAM_AVATAR = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(
                 Texture.class,

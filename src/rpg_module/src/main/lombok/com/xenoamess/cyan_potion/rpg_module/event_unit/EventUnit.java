@@ -84,6 +84,7 @@ public class EventUnit extends Unit {
         }
     }
 
+    @SuppressWarnings("unused")
     void initFromEventUnitJson(EventUnitJson eventUnitJson) {
         if (this.getEventUnitJson() != eventUnitJson) {
             this.setEventUnitJson(eventUnitJson);

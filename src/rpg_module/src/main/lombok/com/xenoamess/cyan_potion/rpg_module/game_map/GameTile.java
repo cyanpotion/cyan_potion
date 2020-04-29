@@ -72,6 +72,7 @@ public class GameTile {
      *
      * @param bindable bindable
      */
+    @SuppressWarnings("unused")
     public GameTile(Bindable bindable) {
         this();
         this.addBindable(bindable);
@@ -82,6 +83,7 @@ public class GameTile {
      *
      * @return return
      */
+    @SuppressWarnings("unused")
     public GameTile setSolid() {
         this.setSolid(true);
         return this;

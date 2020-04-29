@@ -36,6 +36,7 @@ public interface AbstractPoint {
      *
      * @return true if mutable
      */
+    @SuppressWarnings("unused")
     boolean ifMutable();
 
     /**
@@ -60,6 +61,7 @@ public interface AbstractPoint {
      * @param area area
      * @return whether point (posX,posY) in this area.
      */
+    @SuppressWarnings("unused")
     default boolean ifPointInArea(AbstractArea area) {
         return area.ifPosXInArea(this.getPosX()) && area.ifPosYInArea(this.getPosY());
     }

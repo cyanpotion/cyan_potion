@@ -64,11 +64,13 @@ public abstract class SubManager implements Closeable {
     /**
      * <p>init.</p>
      */
+    @SuppressWarnings("unused")
     public abstract void init();
 
     /**
      * <p>update.</p>
      */
+    @SuppressWarnings("unused")
     public abstract void update();
 
     /**

@@ -35,6 +35,7 @@ import java.util.ArrayList;
  * @author XenoAmess
  * @version 0.162.2-SNAPSHOT
  */
+@SuppressWarnings("unused")
 @Data
 public class MoveRouteJson implements Serializable {
     public boolean repeat;

@@ -92,6 +92,7 @@ public abstract class RuntimeVariableStruct implements Serializable {
      *
      * @param string json string
      */
+    @SuppressWarnings("unused")
     public void loadFrom(String string) {
         this.loadFrom(RuntimeVariableStruct.loadFromString(string, this.getClass()));
     }

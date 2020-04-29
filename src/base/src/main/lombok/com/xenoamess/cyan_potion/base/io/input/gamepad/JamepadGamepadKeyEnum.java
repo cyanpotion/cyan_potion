@@ -58,7 +58,7 @@ public enum JamepadGamepadKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final JamepadGamepadKeyEnum[] values = generateValues();
+    private static final JamepadGamepadKeyEnum[] VALUES = generateValues();
 
     JamepadGamepadKeyEnum(int value) {
         this.value = value;
@@ -70,7 +70,7 @@ public enum JamepadGamepadKeyEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.gamepad.JamepadGamepadKeyEnum} objects.
      */
     public static JamepadGamepadKeyEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -78,6 +78,7 @@ public enum JamepadGamepadKeyEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -102,6 +103,7 @@ public enum JamepadGamepadKeyEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

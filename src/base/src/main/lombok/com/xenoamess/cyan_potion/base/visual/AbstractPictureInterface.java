@@ -43,6 +43,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @param gameWindow gameWindow
      */
+    @SuppressWarnings("unused")
     void draw(GameWindow gameWindow);
 
     /**
@@ -59,6 +60,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @param newRotateRadius a float.
      */
+    @SuppressWarnings("unused")
     void rotate(float newRotateRadius);
 
     /**
@@ -66,6 +68,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @param newRotateRadius a float.
      */
+    @SuppressWarnings("unused")
     void rotateTo(float newRotateRadius);
 
     /**
@@ -73,6 +76,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @return a {@link org.joml.Vector4f} object.
      */
+    @SuppressWarnings("unused")
     Vector4fc getColorScale();
 
     /**
@@ -99,6 +103,7 @@ public interface AbstractPictureInterface extends AbstractMutableArea {
      *
      * @return a float.
      */
+    @SuppressWarnings("unused")
     float getRotateRadius();
 
     /**
