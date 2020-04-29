@@ -59,6 +59,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void draw(GameWindow gameWindow) {
         Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());

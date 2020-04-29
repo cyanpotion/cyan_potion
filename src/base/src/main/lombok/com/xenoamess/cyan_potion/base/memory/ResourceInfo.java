@@ -189,6 +189,7 @@ public final class ResourceInfo<T extends AbstractResource> {
      * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      * @return a T object.
      */
+    @SuppressWarnings("unused")
     public T fetchResource(ResourceManager resourceManager) {
         return resourceManager.fetchResource(this);
     }

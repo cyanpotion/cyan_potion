@@ -124,11 +124,13 @@ public class DataCenter extends SubManager {
         super(gameManager);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void init() {
         //do nothing
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing

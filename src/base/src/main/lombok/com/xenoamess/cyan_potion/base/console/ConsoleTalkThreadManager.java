@@ -160,6 +160,7 @@ public class ConsoleTalkThreadManager extends SubManager {
         this.getGameManager().eventListAdd(new ConsoleEvent(command));
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing

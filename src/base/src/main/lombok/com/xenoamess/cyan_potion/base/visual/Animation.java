@@ -74,6 +74,7 @@ public class Animation extends AbstractPicture {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void draw(GameWindow gameWindow) {
         AbstractPictureInterface pictureInterface = this.getCurrentPicture();

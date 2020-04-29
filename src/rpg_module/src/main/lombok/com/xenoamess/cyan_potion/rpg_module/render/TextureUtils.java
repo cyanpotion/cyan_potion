@@ -356,7 +356,7 @@ public class TextureUtils {
     private static boolean loadTilesetTexturesA2Single(ResourceManager resourceManager,
                                                        String fileString, int kk, int singleWidth,
                                                        int singleHeight, int entireWidth,
-                                                       int entireHeight, int startWidth,
+                                                       @SuppressWarnings("unused") int entireHeight, int startWidth,
                                                        int startHeight, int[] pixelsRaw) {
         if (!DataCenter.ifMainThread()) {
             return false;

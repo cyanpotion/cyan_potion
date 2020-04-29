@@ -546,6 +546,7 @@ public class ResourceManager extends SubManager {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing

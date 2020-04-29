@@ -98,6 +98,7 @@ public class SaveManager extends SubManager {
         this.pickCurrentSaveFileObject(0);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing
