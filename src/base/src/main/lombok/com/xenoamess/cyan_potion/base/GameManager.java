@@ -77,7 +77,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2-SNAPSHOT
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString

@@ -40,7 +40,7 @@ import java.util.List;
  * as simple AbstractShape,thus as a group of shapes.
  *
  * @author XenoAmess
- * @version 0.162.2-SNAPSHOT
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

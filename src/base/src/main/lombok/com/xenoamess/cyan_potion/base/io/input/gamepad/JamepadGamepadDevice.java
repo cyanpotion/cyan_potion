@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * <p>JamepadGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2-SNAPSHOT
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

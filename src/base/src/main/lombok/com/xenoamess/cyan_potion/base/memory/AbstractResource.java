@@ -42,7 +42,7 @@ import java.util.function.Predicate;
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2-SNAPSHOT
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString

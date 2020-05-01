@@ -33,7 +33,7 @@ import lombok.ToString;
  * <p>Abstract AbstractGamepadData class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2-SNAPSHOT
+ * @version 0.162.2
  */
 
 @EqualsAndHashCode
