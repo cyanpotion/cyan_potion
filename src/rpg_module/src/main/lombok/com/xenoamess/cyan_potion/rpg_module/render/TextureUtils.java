@@ -50,7 +50,7 @@ import java.util.List;
  * <p>TextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class TextureUtils {
     /**
@@ -96,7 +96,9 @@ public class TextureUtils {
 
         ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
 
+        //noinspection unused
         final int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
+        //noinspection unused
         final int textureIndex = Integer.parseInt(resourceInfo.getValues()[1]);
 
 
@@ -258,6 +260,7 @@ public class TextureUtils {
         return true;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     @MainThreadOnly
     private static boolean loadTilesetTextureA2SingleSingle(ResourceManager resourceManager, String fileString,
                                                             int kk, int ti, int singleSingleWidth,
@@ -348,11 +351,12 @@ public class TextureUtils {
         return true;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     @MainThreadOnly
     private static boolean loadTilesetTexturesA2Single(ResourceManager resourceManager,
                                                        String fileString, int kk, int singleWidth,
                                                        int singleHeight, int entireWidth,
-                                                       int entireHeight, int startWidth,
+                                                       @SuppressWarnings("unused") int entireHeight, int startWidth,
                                                        int startHeight, int[] pixelsRaw) {
         if (!DataCenter.ifMainThread()) {
             return false;
@@ -709,6 +713,7 @@ public class TextureUtils {
 
 
         int startStartPosX = 0;
+        //noinspection unused
         int startStartPosY = 0;
         int startPosX = 0;
         int startPosY = 0;

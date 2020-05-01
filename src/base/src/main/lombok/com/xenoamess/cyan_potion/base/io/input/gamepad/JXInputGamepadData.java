@@ -36,10 +36,11 @@ import lombok.ToString;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see JXInputGamepadDevice
  * @deprecated
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Deprecated
@@ -195,6 +196,7 @@ public class JXInputGamepadData extends AbstractGamepadData {
      * @param right the right button state
      * @return one of the <code>DPAD_*</code> values of this class
      */
+    @SuppressWarnings("unused")
     public static int dpadFromButtons(final boolean up, final boolean down,
                                       final boolean left, final boolean right) {
         boolean u = up;

@@ -31,7 +31,7 @@ import lombok.ToString;
  * <p>Abstract DrawerBuilder class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -42,5 +42,6 @@ public abstract class DrawerBuilder<T> {
      * @param superUpdater a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface} object.
      */
+    @SuppressWarnings("unused")
     public abstract DrawerInterface<T> build(DrawerInterface<? super T> superUpdater);
 }

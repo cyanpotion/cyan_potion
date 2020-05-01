@@ -77,7 +77,7 @@ import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
  * <p>GameManager class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -219,6 +219,7 @@ public class GameManager implements Closeable {
      * @param argsMap argsMap.
      * @return return
      */
+    @SuppressWarnings("unused")
     public static String[] generateArgsArray(Map<String, String> argsMap) {
         ArrayList<String> res = new ArrayList<>();
         if (argsMap == null) {
@@ -288,11 +289,13 @@ public class GameManager implements Closeable {
         }
         if (!ifSolvingEventList.get()) {
             List<Event> localEventList = getEventList();
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (localEventList) {
                 localEventList.add(event);
             }
         } else {
             List<Event> localEventListCache = getEventListCache();
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (localEventListCache) {
                 localEventListCache.add(event);
             }
@@ -310,17 +313,17 @@ public class GameManager implements Closeable {
         }
     }
 
-    /**
-     * <p>registerCyanPotionURLStreamHandlerFactory.</p>
-     */
-    public void registerCyanPotionURLStreamHandlerFactory() {
+//    /**
+//     * <p>registerCyanPotionURLStreamHandlerFactory.</p>
+//     */
+//    public void registerCyanPotionURLStreamHandlerFactory() {
 //        try {
 //            URLStreamHandlerFactorySet factorySet = URLStreamHandlerFactorySet.wrapURLStreamHandlerFactory();
 //            factorySet.register(new CyanPotionURLStreamHandlerFactory());
 //        } catch (IllegalAccessException e) {
 //            LOGGER.error("URLStreamHandlerFactorySet wrapURLStreamHandlerFactory failed.", e);
 //        }
-    }
+//    }
 
     /**
      * <p>startup.</p>
@@ -331,7 +334,7 @@ public class GameManager implements Closeable {
         }
         setAlive(true);
 
-        this.registerCyanPotionURLStreamHandlerFactory();
+//        this.registerCyanPotionURLStreamHandlerFactory();
 
         this.initGameSettings();
 
@@ -446,7 +449,6 @@ public class GameManager implements Closeable {
      * then set text structure's current language as current language from steam api.
      * all languages are String typed.
      */
-    //todo
     protected void loadText() {
         MultiLanguageX8lFileUtil multiLanguageUtil = new MultiLanguageX8lFileUtil();
         try {

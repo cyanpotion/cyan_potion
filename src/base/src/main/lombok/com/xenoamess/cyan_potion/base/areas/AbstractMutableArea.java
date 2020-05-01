@@ -28,13 +28,14 @@ package com.xenoamess.cyan_potion.base.areas;
  * Mutable Area
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractMutableArea extends AbstractArea {
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return true;
@@ -516,6 +517,7 @@ public interface AbstractMutableArea extends AbstractArea {
      *
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
+    @SuppressWarnings("unused")
     default void moveToLeftCenterOf(AbstractArea abstractArea) {
         this.setLeftCenterPos(abstractArea.getLeftCenterPosX(), abstractArea.getLeftCenterPosY());
     }
@@ -525,6 +527,7 @@ public interface AbstractMutableArea extends AbstractArea {
      *
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
+    @SuppressWarnings("unused")
     default void moveToRightCenterOf(AbstractArea abstractArea) {
         this.setRightCenterPos(abstractArea.getRightCenterPosX(), abstractArea.getRightCenterPosY());
     }
@@ -534,6 +537,7 @@ public interface AbstractMutableArea extends AbstractArea {
      *
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
+    @SuppressWarnings("unused")
     default void moveToCenterTopOf(AbstractArea abstractArea) {
         this.setCenterTopPos(abstractArea.getCenterTopPosX(), abstractArea.getCenterTopPosY());
     }
@@ -552,6 +556,7 @@ public interface AbstractMutableArea extends AbstractArea {
      *
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
+    @SuppressWarnings("unused")
     default void moveToCenterCentorOf(AbstractArea abstractArea) {
         this.setCenter(abstractArea);
     }
@@ -596,6 +601,7 @@ public interface AbstractMutableArea extends AbstractArea {
      * @param enlargedWidth  a float.
      * @param enlargedHeight a float.
      */
+    @SuppressWarnings("unused")
     default void enlargeSize(float enlargedWidth, float enlargedHeight) {
         this.enlargeWidth(enlargedWidth);
         this.enlargeHeight(enlargedHeight);
@@ -624,6 +630,7 @@ public interface AbstractMutableArea extends AbstractArea {
      *
      * @param ratio ratio
      */
+    @SuppressWarnings("unused")
     default void scaleSize(float ratio) {
         this.scaleWidth(ratio);
         this.scaleHeight(ratio);

@@ -34,7 +34,7 @@ import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
  * <p>Player class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class Player extends Unit {
     /**
@@ -49,6 +49,7 @@ public class Player extends Unit {
      * @param height     a float.
      * @param layer      a int.
      */
+    @SuppressWarnings("unused")
     public Player(
             AbstractEntityScene scene,
             float centerPosX, float centerPosY,
@@ -76,6 +77,7 @@ public class Player extends Unit {
      * @param height     a float.
      * @param layer      a int.
      */
+    @SuppressWarnings("unused")
     public Player(
             AbstractEntityScene scene,
             float centerPosX, float centerPosY,

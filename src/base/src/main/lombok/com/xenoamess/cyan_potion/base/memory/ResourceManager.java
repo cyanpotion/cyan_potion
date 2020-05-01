@@ -61,7 +61,7 @@ import static org.lwjgl.opengl.GL11.glGetIntegerv;
  * manager of resources.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @SuppressWarnings("rawtypes")
 @EqualsAndHashCode(callSuper = true)
@@ -74,7 +74,7 @@ public class ResourceManager extends SubManager {
     private long maxTextureSize = 0;
 
     @Getter
-    private static final StandardFileSystemManager fileSystemManager = loadFileSystemManager();
+    private static final StandardFileSystemManager FILE_SYSTEM_MANAGER = loadFileSystemManager();
 
     private static StandardFileSystemManager loadFileSystemManager() {
         StandardFileSystemManager fileSystemManager = new org.apache.commons.vfs2.impl.StandardFileSystemManager();
@@ -97,7 +97,7 @@ public class ResourceManager extends SubManager {
     public static FileObject resolveFile(String fileString) {
         FileObject result = null;
         try {
-            result = getFileSystemManager().resolveFile(fileString);
+            result = getFILE_SYSTEM_MANAGER().resolveFile(fileString);
         } catch (FileSystemException e) {
             LOGGER.error("resolveFile(String fileString) fails: {}", fileString, e);
         }
@@ -231,7 +231,7 @@ public class ResourceManager extends SubManager {
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "UnusedReturnValue"})
     protected <T extends AbstractResource> ConcurrentHashMap<ResourceInfo<T>, T> defaultResourcesURIMapPut(Class<T> tClass, ConcurrentHashMap<ResourceInfo<T>, T> map) {
         return defaultResourcesURIMap.put(tClass, (ConcurrentHashMap) map);
     }
@@ -243,6 +243,7 @@ public class ResourceManager extends SubManager {
      * @param tClass resource class
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     protected <T extends AbstractResource> boolean defaultResourcesURIMapContainsKey(Class<T> tClass) {
         return defaultResourcesURIMap.containsKey(tClass);
     }
@@ -267,7 +268,7 @@ public class ResourceManager extends SubManager {
      * @param map    a {@link java.util.concurrent.ConcurrentHashMap} object.
      * @return a {@link java.util.concurrent.ConcurrentHashMap} object.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked"})
     protected <T extends AbstractResource> ConcurrentHashMap<String, Predicate<T>> defaultResourcesLoaderMapPut(Class<T> tClass, ConcurrentHashMap<String, Function<T, Boolean>> map) {
         return (ConcurrentHashMap) defaultResourcesLoaderMap.put(tClass, (ConcurrentHashMap) map);
     }
@@ -279,6 +280,7 @@ public class ResourceManager extends SubManager {
      * @param tClass resource class
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     protected <T extends AbstractResource> boolean defaultResourcesLoaderMapContainsKey(Class<T> tClass) {
         return defaultResourcesLoaderMap.containsKey(tClass);
     }
@@ -344,7 +346,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfo
      * @param t                resource
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked"})
     public <T extends AbstractResource> void putResource(String resourceInfoJson, T t) {
         this.putResource((ResourceInfo<T>) ResourceInfo.of(resourceInfoJson), t);
     }
@@ -376,6 +378,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfo resourceInfo
      * @return resource
      */
+    @SuppressWarnings("unused")
     public <T extends AbstractResource> T getResource(ResourceInfo<T> resourceInfo) {
         return this.getResource(resourceInfo.getResourceClass(), resourceInfo);
     }
@@ -388,7 +391,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfo
      * @return resource
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked"})
     public <T extends AbstractResource> T getResource(Class<T> tClass,
                                                       String resourceInfoJson) {
         return this.getResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
@@ -417,7 +420,7 @@ public class ResourceManager extends SubManager {
      * @param resourceInfoJson resourceInfoJson
      * @return a boolean.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked"})
     public boolean ifExistResource(String resourceInfoJson) {
         return this.ifExistResource(ResourceInfo.of(resourceInfoJson));
     }
@@ -543,6 +546,7 @@ public class ResourceManager extends SubManager {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing

@@ -43,7 +43,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public class DropFilesEvent implements Event {
@@ -98,6 +98,7 @@ public class DropFilesEvent implements Event {
         return gameManager.getGameWindowComponentTree().process(this);
     }
 
+    @SuppressWarnings("unused")
     public List<String> getFileNames() {
         ArrayList<String> fileNames = new ArrayList<>();
         PointerBuffer nameBuffer = memPointerBuffer(getNames(), getCount());

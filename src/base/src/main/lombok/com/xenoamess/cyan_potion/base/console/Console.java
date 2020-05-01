@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>Console class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class Console implements Runnable {
     private final AtomicBoolean alive = new AtomicBoolean(true);
@@ -45,6 +45,7 @@ public class Console implements Runnable {
     /**
      * <p>Constructor for Console.</p>
      */
+    @SuppressWarnings("unused")
     public Console() {
         this(DataCenter.DEFAULT_CONSOLE_PORT);
     }
@@ -72,6 +73,7 @@ public class Console implements Runnable {
      *
      * @param alive a boolean.
      */
+    @SuppressWarnings("unused")
     public void setAlive(boolean alive) {
         this.alive.set(alive);
     }

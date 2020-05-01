@@ -34,7 +34,7 @@ import org.joml.Vector3f;
  * <p>HorizontalRectangle class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -57,6 +57,7 @@ public class HorizontalRectangle extends AbstractShape {
      * @param horizontalRectangle a {@link com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle}
      *                            object.
      */
+    @SuppressWarnings("unused")
     public HorizontalRectangle(HorizontalRectangle horizontalRectangle) {
         super(horizontalRectangle);
     }
@@ -64,6 +65,7 @@ public class HorizontalRectangle extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public boolean ifIn(Vector3f point) {
         if (point.x < this.minX()) {
@@ -81,6 +83,7 @@ public class HorizontalRectangle extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     public ShapeRelation relation(HorizontalRectangle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;
@@ -116,6 +119,7 @@ public class HorizontalRectangle extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;

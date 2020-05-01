@@ -32,7 +32,7 @@ import lombok.ToString;
  * <p>Abstract Drawer class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 
 @EqualsAndHashCode
@@ -44,6 +44,7 @@ public abstract class Drawer<T> implements DrawerInterface<T> {
     /**
      * <p>Constructor for Drawer.</p>
      */
+    @SuppressWarnings("unused")
     public Drawer() {
         this(null);
     }
@@ -60,6 +61,7 @@ public abstract class Drawer<T> implements DrawerInterface<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public boolean draw(T t) {
         if (getParentDrawer() == null || getParentDrawer().draw(t)) {

@@ -38,11 +38,12 @@ import org.slf4j.LoggerFactory;
  * <p>JamepadGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class JamepadGamepadDevice extends AbstractGamepadDevice {
+    @SuppressWarnings("unused")
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(JamepadGamepadDevice.class);
@@ -95,6 +96,7 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
      *
      * <p>setVibration.</p>
      */
+    @SuppressWarnings("unused")
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
         this.setVibration(leftVibration, rightVibration, Integer.MAX_VALUE);

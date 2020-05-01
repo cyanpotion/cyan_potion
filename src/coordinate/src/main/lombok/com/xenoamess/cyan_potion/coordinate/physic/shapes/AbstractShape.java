@@ -55,7 +55,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * every etity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -71,7 +71,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
 
     @Getter
     private static final Map<ImmutablePair<Class, Class>, ShapeRelationJudge>
-            shapeRelationJudges = new ConcurrentHashMap<>();
+            SHAPE_RELATION_JUDGES = new ConcurrentHashMap<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -182,11 +182,11 @@ public abstract class AbstractShape implements AbstractMutableArea {
         //if cannot find the relation function in it,then goto
 
         ShapeRelationJudge shapeComparator =
-                getShapeRelationJudges().get(
+                getSHAPE_RELATION_JUDGES().get(
                         new ImmutablePair(k.getClass(), v.getClass()));
         if (shapeComparator == null) {
             shapeComparator =
-                    getShapeRelationJudges().get(
+                    getSHAPE_RELATION_JUDGES().get(
                             new ImmutablePair(v.getClass(), k.getClass()));
             if (shapeComparator == null) {
                 return RELATION_UNDEFINED;
@@ -259,6 +259,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
      * @param point the point
      * @return true/false
      */
+    @SuppressWarnings("unused")
     public abstract boolean ifIn(Vector3f point);
 
     /**
@@ -316,6 +317,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
      * else (it collide with exist shape then) return false, but it will
      * still register.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean register() {
         boolean res = true;
         Set<ImmutablePair<Integer, Integer>> newBoxes = this.getBoxes();
@@ -430,6 +432,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
      * @param movementY a float.
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public boolean tryMove(float movementX, float movementY) {
         if (this.canMove(movementX, movementY)) {
             this.forceMove(movementX, movementY);
@@ -459,6 +462,7 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("EmptyMethod")
     @Override
     public int hashCode() {
         return super.hashCode();

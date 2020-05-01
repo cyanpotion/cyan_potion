@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * <p>GameSystemJson class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public class GameSystemJson implements Serializable {
@@ -50,20 +50,30 @@ public class GameSystemJson implements Serializable {
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GameSystemJson.class);
 
+    @SuppressWarnings("unused")
     static class ShipJson implements Serializable {
+        @SuppressWarnings("unused")
         public GameMusicJson bgm;
+        @SuppressWarnings("unused")
         public int characterIndex;
+        @SuppressWarnings("unused")
         public String characterName;
+        @SuppressWarnings("unused")
         public int startMapId;
+        @SuppressWarnings("unused")
         public int startX;
+        @SuppressWarnings("unused")
         public int startY;
     }
 
     public ShipJson airship;
     public ArrayList<String> armorTypes;
 
+    @SuppressWarnings("unused")
     static class AttackMotionsJson implements Serializable {
+        @SuppressWarnings("unused")
         public int type;
+        @SuppressWarnings("unused")
         public int weaponImageId;
     }
 
@@ -80,10 +90,15 @@ public class GameSystemJson implements Serializable {
 
     public String currencyUnit;
 
+    @SuppressWarnings("unused")
     static class DefeatMe implements Serializable {
+        @SuppressWarnings("unused")
         public String name;
+        @SuppressWarnings("unused")
         public int pan;
+        @SuppressWarnings("unused")
         public int pitch;
+        @SuppressWarnings("unused")
         public int volume;
     }
 
@@ -117,73 +132,134 @@ public class GameSystemJson implements Serializable {
 
     public ArrayList<String> switches;
 
+    @SuppressWarnings("unused")
     static class TermsJson implements Serializable {
+        @SuppressWarnings("unused")
         public ArrayList<String> basic;
+        @SuppressWarnings("unused")
         public ArrayList<String> commands;
+        @SuppressWarnings("unused")
         public ArrayList<String> params;
 
+        @SuppressWarnings("unused")
         static class MessageJson implements Serializable {
+            @SuppressWarnings("unused")
             public String actionFailure;
+            @SuppressWarnings("unused")
             public String actorDamage;
+            @SuppressWarnings("unused")
             public String actorDrain;
+            @SuppressWarnings("unused")
             public String actorGain;
+            @SuppressWarnings("unused")
             public String actorLoss;
+            @SuppressWarnings("unused")
             public String actorNoDamage;
+            @SuppressWarnings("unused")
             public String actorNoHit;
+            @SuppressWarnings("unused")
             public String actorRecovery;
+            @SuppressWarnings("unused")
             public String alwaysDash;
+            @SuppressWarnings("unused")
             public String bgmVolume;
+            @SuppressWarnings("unused")
             public String bgsVolume;
+            @SuppressWarnings("unused")
             public String buffAdd;
+            @SuppressWarnings("unused")
             public String buffRemove;
+            @SuppressWarnings("unused")
             public String commandRemember;
+            @SuppressWarnings("unused")
             public String counterAttack;
+            @SuppressWarnings("unused")
             public String criticalToActor;
+            @SuppressWarnings("unused")
             public String criticalToEnemy;
+            @SuppressWarnings("unused")
             public String debuffAdd;
+            @SuppressWarnings("unused")
             public String defeat;
+            @SuppressWarnings("unused")
             public String emerge;
+            @SuppressWarnings("unused")
             public String enemyDamage;
+            @SuppressWarnings("unused")
             public String enemyDrain;
+            @SuppressWarnings("unused")
             public String enemyGain;
+            @SuppressWarnings("unused")
             public String enemyLoss;
+            @SuppressWarnings("unused")
             public String enemyNoDamage;
+            @SuppressWarnings("unused")
             public String enemyNoHit;
+            @SuppressWarnings("unused")
             public String enemyRecovery;
+            @SuppressWarnings("unused")
             public String escapeFailure;
+            @SuppressWarnings("unused")
             public String escapeStart;
+            @SuppressWarnings("unused")
             public String evasion;
+            @SuppressWarnings("unused")
             public String expNext;
+            @SuppressWarnings("unused")
             public String expTotal;
+            @SuppressWarnings("unused")
             public String file;
+            @SuppressWarnings("unused")
             public String levelUp;
+            @SuppressWarnings("unused")
             public String loadMessage;
+            @SuppressWarnings("unused")
             public String magicEvasion;
+            @SuppressWarnings("unused")
             public String magicReflection;
+            @SuppressWarnings("unused")
             public String meVolume;
+            @SuppressWarnings("unused")
             public String obtainExp;
+            @SuppressWarnings("unused")
             public String obtainGold;
+            @SuppressWarnings("unused")
             public String obtainItem;
+            @SuppressWarnings("unused")
             public String obtainSkill;
+            @SuppressWarnings("unused")
             public String partyName;
+            @SuppressWarnings("unused")
             public String possession;
+            @SuppressWarnings("unused")
             public String preemptive;
+            @SuppressWarnings("unused")
             public String saveMessage;
+            @SuppressWarnings("unused")
             public String seVolume;
+            @SuppressWarnings("unused")
             public String substitute;
+            @SuppressWarnings("unused")
             public String surprise;
+            @SuppressWarnings("unused")
             public String useItem;
+            @SuppressWarnings("unused")
             public String victory;
         }
 
+        @SuppressWarnings("unused")
         public MessageJson messages;
     }
 
     public TermsJson terms;
 
+    @SuppressWarnings("unused")
     static class BattlerJson implements Serializable {
+        @SuppressWarnings("unused")
         public int actorId;
+        @SuppressWarnings("unused")
         public IntArrayList equips;
+        @SuppressWarnings("unused")
         public int level;
     }
 

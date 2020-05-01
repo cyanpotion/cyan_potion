@@ -40,7 +40,7 @@ import org.joml.Vector4fc;
  * <p>Abstract AbstractScene class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -94,6 +94,7 @@ public abstract class AbstractScene extends AbstractControllableGameWindowCompon
      * @param size       a float.
      * @param colorScale colorScale
      */
+    @SuppressWarnings("unused")
     public void drawBindableAbsolute(Camera camera,
                                      float scale,
                                      Bindable bindable,

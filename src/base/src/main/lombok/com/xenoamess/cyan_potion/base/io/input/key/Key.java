@@ -30,7 +30,7 @@ import lombok.Data;
  * <p>Key class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public class Key {

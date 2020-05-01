@@ -45,7 +45,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>KeyboardEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public class KeyboardEvent implements Event {
@@ -431,6 +431,7 @@ public class KeyboardEvent implements Event {
      *
      * @return a {@link java.util.Collection} object.
      */
+    @SuppressWarnings("unused")
     public Collection<KeyModEnum> getModEnums() {
         return KeyModEnum.getModEnumsByValue(this.getMods());
     }

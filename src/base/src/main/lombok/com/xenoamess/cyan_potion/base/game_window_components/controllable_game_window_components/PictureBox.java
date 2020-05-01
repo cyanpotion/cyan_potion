@@ -43,7 +43,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 
 @EqualsAndHashCode(callSuper = true)
@@ -79,6 +79,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * default Updater for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
+    @SuppressWarnings("unused")
     public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTUREBOX =
             UPDATER_BUILDER_PICTUREBOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
@@ -88,6 +89,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      *
      * @param gameWindow gameWindow
      */
+    @SuppressWarnings("unused")
     public PictureBox(GameWindow gameWindow) {
         this(gameWindow, (Bindable) null);
     }
@@ -140,6 +142,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void rotate(float newRotateRadius) {
         this.getPicture().rotate(newRotateRadius);
@@ -148,6 +151,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void rotateTo(float newRotateRadius) {
         this.getPicture().rotateTo(newRotateRadius);
@@ -156,6 +160,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public Vector4fc getColorScale() {
         return this.getPicture().getColorScale();
@@ -180,6 +185,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public float getRotateRadius() {
         return this.getPicture().getRotateRadius();

@@ -41,7 +41,7 @@ import lombok.ToString;
  * This class is used as a display panel or something.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -52,6 +52,7 @@ public class SingleContentPanel extends Panel {
      *
      * @param gameWindow a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
      */
+    @SuppressWarnings("unused")
     public SingleContentPanel(GameWindow gameWindow) {
         super(gameWindow);
     }
@@ -62,6 +63,7 @@ public class SingleContentPanel extends Panel {
      * @param gameWindow         a {@link com.xenoamess.cyan_potion.base.GameWindow} object.
      * @param backgroundBindable a {@link com.xenoamess.cyan_potion.base.render.Bindable} object.
      */
+    @SuppressWarnings("unused")
     public SingleContentPanel(GameWindow gameWindow, Bindable backgroundBindable) {
         super(gameWindow, backgroundBindable);
     }
@@ -69,6 +71,7 @@ public class SingleContentPanel extends Panel {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public boolean addContent(AbstractGameWindowComponent gameWindowComponent) {
         this.clearContents();

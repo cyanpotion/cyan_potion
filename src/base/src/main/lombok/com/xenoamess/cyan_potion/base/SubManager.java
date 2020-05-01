@@ -42,7 +42,7 @@ import java.io.Closeable;
  * some of them are not named this way, due to historical or other reasons.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -64,11 +64,13 @@ public abstract class SubManager implements Closeable {
     /**
      * <p>init.</p>
      */
+    @SuppressWarnings("unused")
     public abstract void init();
 
     /**
      * <p>update.</p>
      */
+    @SuppressWarnings("unused")
     public abstract void update();
 
     /**

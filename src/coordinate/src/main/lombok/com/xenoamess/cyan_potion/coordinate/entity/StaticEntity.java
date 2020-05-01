@@ -34,7 +34,7 @@ import lombok.ToString;
  * <p>StaticEntity class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -52,6 +52,7 @@ public class StaticEntity extends AbstractEntity {
      * @param height      a float.
      * @param layer       a int.
      */
+    @SuppressWarnings("unused")
     public StaticEntity(
             AbstractEntityScene scene,
             float leftTopPosX, float leftTopPosY,

@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * <p>AbstractPoint interface.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractPoint {
     /**
@@ -36,6 +36,7 @@ public interface AbstractPoint {
      *
      * @return true if mutable
      */
+    @SuppressWarnings("unused")
     boolean ifMutable();
 
     /**
@@ -60,6 +61,7 @@ public interface AbstractPoint {
      * @param area area
      * @return whether point (posX,posY) in this area.
      */
+    @SuppressWarnings("unused")
     default boolean ifPointInArea(AbstractArea area) {
         return area.ifPosXInArea(this.getPosX()) && area.ifPosYInArea(this.getPosY());
     }

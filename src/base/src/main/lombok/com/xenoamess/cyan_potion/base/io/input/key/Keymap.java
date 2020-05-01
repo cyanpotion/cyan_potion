@@ -52,7 +52,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Keymap class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -76,10 +76,12 @@ public class Keymap {
     /**
      * Constant <code>XENOAMESS_KEY_LEFT_SHIFT=GLFW_KEY_LEFT_SHIFT</code>
      */
+    @SuppressWarnings("unused")
     public static final int XENOAMESS_KEY_LEFT_SHIFT = GLFW_KEY_LEFT_SHIFT;
     /**
      * Constant <code>XENOAMESS_KEY_RIGHT_SHIFT=GLFW_KEY_RIGHT_SHIFT</code>
      */
+    @SuppressWarnings("unused")
     public static final int XENOAMESS_KEY_RIGHT_SHIFT = GLFW_KEY_RIGHT_SHIFT;
 
     /**
@@ -124,7 +126,7 @@ public class Keymap {
      * the map to convert my-key-type to raw-key-type
      */
     @Getter
-    private final Map<Key, List> keymapReverse = new ConcurrentHashMap<>();
+    private final Map<Key, List<Key>> keymapReverse = new ConcurrentHashMap<>();
 
     @Getter
     private final AtomicBoolean[][] rawKeys =
@@ -158,6 +160,7 @@ public class Keymap {
      * @param myInput  a {@link java.lang.String} object.
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public Key put(String rawInput, String myInput) {
         if (rawInput == null || myInput == null) {
             return null;
@@ -166,22 +169,27 @@ public class Keymap {
         Integer myInputI = null;
         int type = -1;
 
-        if (rawInputI == null) {
-            try {
-                rawInputI = KeyboardKeyEnum.valueOf(rawInput).value;
-                type = Key.TYPE_KEY;
-            } catch (Exception e) {
-                LOGGER.debug("rawInput {} is not a Keyboard key.", rawInputI);
-            }
+        try {
+            rawInputI = KeyboardKeyEnum.valueOf(rawInput).value;
+            type = Key.TYPE_KEY;
+        } catch (Exception e) {
+            LOGGER.debug("rawInput {} is not a Keyboard key.", rawInputI);
         }
+
         if (rawInputI == null) {
             try {
-                if ("GLFW_MOUSE_BUTTON_LEFT".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_1";
-                } else if ("GLFW_MOUSE_BUTTON_RIGHT".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_2";
-                } else if ("GLFW_MOUSE_BUTTON_MIDDLE".equals(rawInput)) {
-                    rawInput = "GLFW_MOUSE_BUTTON_3";
+                switch (rawInput) {
+                    case "GLFW_MOUSE_BUTTON_LEFT":
+                        rawInput = "GLFW_MOUSE_BUTTON_1";
+                        break;
+                    case "GLFW_MOUSE_BUTTON_RIGHT":
+                        rawInput = "GLFW_MOUSE_BUTTON_2";
+                        break;
+                    case "GLFW_MOUSE_BUTTON_MIDDLE":
+                        rawInput = "GLFW_MOUSE_BUTTON_3";
+                        break;
+                    default:
+                        //do nothing
                 }
 
                 rawInputI = MouseButtonKeyEnum.valueOf(rawInput).value;
@@ -287,6 +295,7 @@ public class Keymap {
      * @param rawKey rawKey
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     public boolean isKeyDownRaw(Key rawKey) {
         return getRawKeys()[rawKey.getType()][rawKey.getKey()].get();
     }

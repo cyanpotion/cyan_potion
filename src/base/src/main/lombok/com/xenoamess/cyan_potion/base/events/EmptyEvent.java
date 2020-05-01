@@ -32,7 +32,7 @@ import java.util.Set;
  * EmptyEvent means an Event which contains nothing meaningful in it.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface EmptyEvent extends Event {
     /**
@@ -42,6 +42,7 @@ public interface EmptyEvent extends Event {
      * @param event a {@link com.xenoamess.cyan_potion.base.events.Event} object.
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     static boolean isNullOrEmpty(Event event) {
         return event == null || event instanceof EmptyEvent;
     }

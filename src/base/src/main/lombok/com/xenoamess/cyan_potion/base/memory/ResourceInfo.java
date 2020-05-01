@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.vfs2.FileObject;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,7 +128,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @JsonSerialize(using = ResourceInfoSerializer.class)
@@ -188,6 +189,7 @@ public final class ResourceInfo<T extends AbstractResource> {
      * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      * @return a T object.
      */
+    @SuppressWarnings("unused")
     public T fetchResource(ResourceManager resourceManager) {
         return resourceManager.fetchResource(this);
     }
@@ -248,7 +250,7 @@ public final class ResourceInfo<T extends AbstractResource> {
      *
      * @return a {@link org.apache.commons.vfs2.FileObject} object.
      */
-    public String[] getValues() {
+    public @NotNull String[] getValues() {
         return Arrays.copyOf(values, values.length);
     }
 }

@@ -30,7 +30,7 @@ import java.util.Arrays;
  * <p>KeyActionEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public enum KeyActionEnum {
     GLFW_RELEASE(0),
@@ -41,8 +41,9 @@ public enum KeyActionEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final KeyActionEnum[] values = generateValues();
+    private static final KeyActionEnum[] VALUES = generateValues();
 
+    @SuppressWarnings("unused")
     KeyActionEnum(int value) {
         this.value = value;
     }
@@ -53,7 +54,7 @@ public enum KeyActionEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.key.KeyActionEnum} objects.
      */
     public static KeyActionEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -61,6 +62,7 @@ public enum KeyActionEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -85,6 +87,7 @@ public enum KeyActionEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

@@ -54,7 +54,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -163,7 +163,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
         );
 
 //        this.registerOnMouseLeaveAreaCallback(
-//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent.generateEmptyMouseButtonEvent(this.getGameWindow()))
+//                (MouseButtonEvent event) -> InputBox.this.onMouseButtonLeftUp(MouseButtonEvent
+//                .generateEmptyMouseButtonEvent(this.getGameWindow()))
 //        );
 
         this.registerOnMouseButtonLeftUpCallback(
@@ -435,8 +436,10 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 this.getLeftTopPosX() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
         float realLeftTopPosY =
                 this.getLeftTopPosY() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
+        //noinspection unused
         float realWidth =
                 this.getWidth() / this.getGameWindow().getLogicWindowWidth() * this.getGameWindow().getRealWindowWidth();
+        //noinspection unused
         float realHeight =
                 this.getHeight() / this.getGameWindow().getLogicWindowHeight() * this.getGameWindow().getRealWindowHeight();
         float realCharHeight =
@@ -463,6 +466,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             float x1 = realLeftTopPosX;
             float y1 = realLeftTopPosY + realCharHeight * j;
             float height = realCharHeight;
+            //noinspection unused
             float characterSpace = 0;
             String text = line;
 
@@ -488,6 +492,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
             }
             glBegin(GL_QUADS);
             float lastXReal = x;
+            //noinspection unused
             float lastYReal = y;
             float lastXShould = x;
             float lastYShould = y;
@@ -509,14 +514,30 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 float nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
                 float nowY0 = y + spaceUpToCharShould * scaleY;
 
-                if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                    glColor4f(this.getTextSelectColor().x(),
+                if (
+                        (
+                                index >= getNowSelectStartPos()
+                                        && index < getNowSelectEndPos()
+                        )
+                                ||
+                                (
+                                        index < getNowSelectStartPos()
+                                                && index >= getNowSelectEndPos()
+                                )
+                ) {
+                    glColor4f(
+                            this.getTextSelectColor().x(),
                             this.getTextSelectColor().y(),
                             this.getTextSelectColor().z(),
-                            this.getTextSelectColor().w());
+                            this.getTextSelectColor().w()
+                    );
                 } else {
-                    glColor4f(this.getTextColor().x(), this.getTextColor().y(),
-                            this.getTextColor().z(), this.getTextColor().w());
+                    glColor4f(
+                            this.getTextColor().x(),
+                            this.getTextColor().y(),
+                            this.getTextColor().z(),
+                            this.getTextColor().w()
+                    );
                 }
                 if (ifDraw) {
                     Font.drawBoxTC(
@@ -616,16 +637,30 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                         nowX0 = lastXReal + spaceLeftToCharShould * scaleX;
                         nowY0 = y + spaceUpToCharShould * scaleY;
 
-                        if ((index >= getNowSelectStartPos() && index < getNowSelectEndPos()) || (index < getNowSelectStartPos() && index >= getNowSelectEndPos())) {
-                            glColor4f(this.getTextSelectColor().x(),
+                        if (
+                                (
+                                        index >= getNowSelectStartPos()
+                                                && index < getNowSelectEndPos()
+                                )
+                                        ||
+                                        (
+                                                index < getNowSelectStartPos()
+                                                        && index >= getNowSelectEndPos()
+                                        )
+                        ) {
+                            glColor4f(
+                                    this.getTextSelectColor().x(),
                                     this.getTextSelectColor().y(),
                                     this.getTextSelectColor().z(),
-                                    this.getTextSelectColor().w());
+                                    this.getTextSelectColor().w()
+                            );
                         } else {
-                            glColor4f(this.getTextColor().x(),
+                            glColor4f(
+                                    this.getTextColor().x(),
                                     this.getTextColor().y(),
                                     this.getTextColor().z(),
-                                    this.getTextColor().w());
+                                    this.getTextColor().w()
+                            );
                         }
                         float nowDist = Math.abs(distPosX - nowX0);
                         if (nowDist < minDist) {
@@ -649,7 +684,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 float nowX0 = x;
                 float nowY0 = y;
 
+                //noinspection unused
                 float newX0 = nowX0;
+                //noinspection unused
                 float newX1 = nowX0 + realCharHeight * scaleX;
                 float newY0 = nowY0 + height * 0.8f;
                 float newY1 = nowY0 + realCharHeight * scaleY + height * 0.8f;
@@ -803,6 +840,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param textColor textColor
      */
+    @SuppressWarnings("unused")
     public void setTextColor(Vector4fc textColor) {
         this.textColor.set(textColor);
     }
@@ -815,6 +853,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * @param z textColor.x
      * @param w textColor.x
      */
+    @SuppressWarnings("unused")
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }
@@ -833,6 +872,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param textSelectColor textSelectColor
      */
+    @SuppressWarnings("unused")
     public void setTextSelectColor(Vector4fc textSelectColor) {
         this.textSelectColor.set(textSelectColor);
     }
@@ -845,6 +885,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * @param z textSelectColor.z
      * @param w textSelectColor.w
      */
+    @SuppressWarnings("unused")
     public void setTextSelectColor(float x, float y, float z, float w) {
         this.textSelectColor.set(x, y, z, w);
     }
@@ -863,6 +904,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param cursorColor insertColor
      */
+    @SuppressWarnings("unused")
     public void setCursorColor(Vector4fc cursorColor) {
         this.cursorColor.set(cursorColor);
     }
@@ -875,6 +917,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      * @param z cursorColor.z
      * @param w cursorColor.w
      */
+    @SuppressWarnings("unused")
     public void setCursorColor(float x, float y, float z, float w) {
         this.cursorColor.set(x, y, z, w);
     }
@@ -893,6 +936,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param allowMultiLine a boolean.
      */
+    @SuppressWarnings("unused")
     public void setAllowMultiLine(boolean allowMultiLine) {
         this.allowMultiLine.set(allowMultiLine);
     }
@@ -911,6 +955,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param useAllowCharSet a boolean.
      */
+    @SuppressWarnings("unused")
     public void setUseAllowCharSet(boolean useAllowCharSet) {
         this.useAllowCharSet.set(useAllowCharSet);
     }
@@ -929,6 +974,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      *
      * @param useDisallowCharSet a boolean.
      */
+    @SuppressWarnings("unused")
     public void setUseDisallowCharSet(boolean useDisallowCharSet) {
         this.useDisallowCharSet.set(useDisallowCharSet);
     }

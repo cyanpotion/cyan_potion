@@ -58,7 +58,7 @@ import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
  * you can go https://github.com/code-disaster/steamworks4j for more info about steamworks4j.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -321,6 +321,7 @@ public class SteamManager extends SubManager {
      *
      * @param input a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     protected void processInput(String input) {
 
         if (input.startsWith("stats global ")) {
@@ -474,7 +475,7 @@ public class SteamManager extends SubManager {
             }
         } else if (input.startsWith("ugc details ")) {
             LOGGER.debug("requesting UGC details (deprecated API call)");
-            Long id = Long.parseLong(input.substring("ugc details ".length()), 16);
+            long id = Long.parseLong(input.substring("ugc details ".length()), 16);
             getSteamUGC().requestUGCDetails(new SteamPublishedFileID(id), 0);
 
             SteamUGCQuery query = getSteamUGC().createQueryUGCDetailsRequest(new SteamPublishedFileID(id));
@@ -541,6 +542,7 @@ public class SteamManager extends SubManager {
      *
      * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
+    @SuppressWarnings("unused")
     public Texture getPlayerAvatarTextureMedium() {
         return getPlayerAvatarTexture(STRING_MEDIUM);
     }
@@ -550,6 +552,7 @@ public class SteamManager extends SubManager {
      *
      * @return a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      */
+    @SuppressWarnings("unused")
     public Texture getPlayerAvatarTextureSmall() {
         return getPlayerAvatarTexture(STRING_SMALL);
     }
@@ -593,10 +596,12 @@ public class SteamManager extends SubManager {
         ).fetchResource(this.getGameManager().getResourceManager());
     }
 
+    @SuppressWarnings("unused")
     public String getPlayerName() {
         return this.getSteamFriends().getPersonaName();
     }
 
+    @SuppressWarnings("unused")
     public String getUserName(SteamID steamID) {
         return this.getSteamFriends().getFriendPersonaName(steamID);
     }

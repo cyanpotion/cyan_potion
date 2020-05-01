@@ -33,7 +33,7 @@ import lombok.ToString;
  * TODO This class is not stable yet. Will be removed or modified in future.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -47,6 +47,7 @@ public abstract class ResourceHandler {
      *
      * @param resourceManager a {@link com.xenoamess.cyan_potion.base.memory.ResourceManager} object.
      */
+    @SuppressWarnings("unused")
     public ResourceHandler(ResourceManager resourceManager) {
         this.resourceManager = resourceManager;
     }

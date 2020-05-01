@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GrammarMap class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class GrammarMap {
     @JsonIgnore
@@ -69,6 +69,7 @@ public class GrammarMap {
      * @param methodName methodName
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public static Integer getMethodNum(String methodName) {
         checkInit();
         return METHOD_NAME_TO_METHOD_NUM_MAP.get(methodName);

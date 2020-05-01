@@ -38,7 +38,7 @@ import java.util.Random;
  * <p>ForceEntrance class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class ForceEntrance {
     /**
@@ -59,6 +59,8 @@ public class ForceEntrance {
             case 2:
                 argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.xml");
                 break;
+            default:
+                //shall never
         }
         System.out.println(argsMap);
         GameManager gameManager = new GameManager(argsMap);

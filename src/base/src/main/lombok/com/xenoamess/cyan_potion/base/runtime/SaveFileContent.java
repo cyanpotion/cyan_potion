@@ -164,6 +164,7 @@ class SaveFileContent {
      *
      * @param runtimeVariableStructList a {@link java.util.List} object.
      */
+    @SuppressWarnings("unused")
     public void setRuntimeVariableStructList(List<RuntimeVariableStruct> runtimeVariableStructList) {
         this.runtimeVariableStructList.clear();
         this.runtimeVariableStructList.addAll(runtimeVariableStructList);

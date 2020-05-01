@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * a manager of a group of radio buttons, and operations / management.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see RadioButton
  */
 @EqualsAndHashCode
@@ -83,6 +83,7 @@ public class RadioButtonGroup implements Closeable {
      *                   object.
      * @return select succeed.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public synchronized boolean select(RadioButton radioButton) {
         assert (radioButton.getRadioButtonGroup() == this);
         if (!this.selectedRadioButtons.contains(radioButton)) {
@@ -107,6 +108,7 @@ public class RadioButtonGroup implements Closeable {
      *                   object.
      * @return deselect succeed.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public synchronized boolean deselect(RadioButton radioButton) {
         assert (radioButton.getRadioButtonGroup() == this);
         if (this.selectedRadioButtons.contains(radioButton)) {

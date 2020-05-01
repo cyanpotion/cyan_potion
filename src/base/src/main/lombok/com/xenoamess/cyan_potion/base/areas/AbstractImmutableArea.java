@@ -28,13 +28,14 @@ package com.xenoamess.cyan_potion.base.areas;
  * Immutable Area
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractImmutableArea extends AbstractArea {
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return false;

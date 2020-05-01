@@ -32,84 +32,103 @@ import com.xenoamess.cyan_potion.base.GameWindow;
  * TODO But really it is not at high priority, as steam controller is not well accepted.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class SteamGamepadData extends AbstractGamepadData {
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_A=0</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_A = 0;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_B=1</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_B = 1;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_X=2</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_X = 2;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_Y=3</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_Y = 3;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_BACK=4</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_BACK = 4;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_START=5</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_START = 5;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_LB=6</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_LB = 6;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_RB=7</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_RB = 7;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_L=8</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_L = 8;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_R=9</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_R = 9;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_UP=10</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_UP = 10;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_DOWN=11</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_DOWN = 11;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_LEFT=12</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_LEFT = 12;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_RIGHT=13</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_RIGHT = 13;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_GUIDE=14</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_GUIDE = 14;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_UNKNOWN=15</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_UNKNOWN = 15;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_LT=16</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_LT = 16;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_RT=17</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_RT = 17;
     /**
      * Constant <code>STEAM_GAMEPAD_KEY_LAST=17</code>
      */
+    @SuppressWarnings("unused")
     public static final int STEAM_GAMEPAD_KEY_LAST = 17;
 
     /**
@@ -117,6 +136,7 @@ public class SteamGamepadData extends AbstractGamepadData {
      *
      * @param gamepadDevice gamepadDevice
      */
+    @SuppressWarnings("unused")
     public SteamGamepadData(AbstractGamepadDevice gamepadDevice) {
         super(gamepadDevice);
     }
@@ -124,6 +144,7 @@ public class SteamGamepadData extends AbstractGamepadData {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void updateGamepadStatus(GameWindow gameWindow) {
         //TODO
@@ -132,6 +153,7 @@ public class SteamGamepadData extends AbstractGamepadData {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void reset() {
         //TODO
@@ -140,6 +162,7 @@ public class SteamGamepadData extends AbstractGamepadData {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void update(GameWindow gameWindow) {
         //TODO

@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * <p>GamepadInput class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -54,7 +54,6 @@ public class GamepadInputManager extends SubManager {
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(GamepadInputManager.class);
     @Getter
-    @Setter
     private final ArrayList<AbstractGamepadData> gamepadDatas = new ArrayList<>();
     @Getter
     @Setter

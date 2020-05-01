@@ -46,7 +46,7 @@ import static org.lwjgl.opengl.GL11.*;
  * And I suggest you use pure color Texture instead.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
@@ -59,6 +59,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void draw(GameWindow gameWindow) {
         Vector4fc drawColor = this.getColor().mul(this.getColorScale(), new Vector4f());
@@ -122,6 +123,7 @@ public class GlRectfRectanglePicture extends AbstractPicture {
      *
      * @param color a {@link org.joml.Vector4fc} object.
      */
+    @SuppressWarnings("unused")
     public void setColor(Vector4fc color) {
         this.color.set(color);
     }

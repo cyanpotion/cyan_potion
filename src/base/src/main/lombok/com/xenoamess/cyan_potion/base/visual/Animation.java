@@ -38,7 +38,7 @@ import java.util.List;
  * <p>Animation class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -74,6 +74,7 @@ public class Animation extends AbstractPicture {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void draw(GameWindow gameWindow) {
         AbstractPictureInterface pictureInterface = this.getCurrentPicture();

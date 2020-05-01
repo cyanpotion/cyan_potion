@@ -50,7 +50,7 @@ import static org.lwjgl.openal.EXTThreadLocalContext.alcSetThreadContext;
  * Audios Manager is manager class of some SE audio.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see #useSource()
  * @see #useSource(WaveData)
  */
@@ -329,6 +329,7 @@ public class AudioManager extends SubManager {
      * @param waveData the WaveData you wanna play.
      * @return the generated {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
      */
+    @SuppressWarnings("unused")
     public PlayAudioEvent generatePlayAudioEvent(WaveData waveData) {
         return this.generatePlayAudioEvent(waveData, null);
     }
@@ -350,6 +351,7 @@ public class AudioManager extends SubManager {
      * @param waveDatas the WaveData List you wanna play, one by one
      * @return the generated {@link com.xenoamess.cyan_potion.base.audio.PlayAudioEvent} object.
      */
+    @SuppressWarnings("unused")
     public PlayAudioEvent generatePlayAudioEvent(List<WaveData> waveDatas) {
         if (waveDatas == null || waveDatas.isEmpty()) {
             return null;
@@ -377,6 +379,7 @@ public class AudioManager extends SubManager {
     /**
      * pause all playing sources.
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public void pauseAll() {
         for (Source au : getUsedSources()) {
@@ -389,6 +392,7 @@ public class AudioManager extends SubManager {
     /**
      * resume all paused sources.
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public void resumeAll() {
         for (Source au : getUsedSources()) {
@@ -401,6 +405,7 @@ public class AudioManager extends SubManager {
     /**
      * stop all sources.
      */
+    @SuppressWarnings("unused")
     @MainThreadOnly
     public void stopAll() {
         for (Source au : getUsedSources()) {

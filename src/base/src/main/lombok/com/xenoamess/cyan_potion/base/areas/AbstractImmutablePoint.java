@@ -28,13 +28,14 @@ package com.xenoamess.cyan_potion.base.areas;
  * <p>AbstractImmutablePoint interface.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractImmutablePoint extends AbstractPoint {
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return false;

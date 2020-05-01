@@ -40,8 +40,9 @@ import org.joml.Vector4fc;
  * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
+@SuppressWarnings("unused")
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class TextPicture extends AbstractPicture {
@@ -91,6 +92,7 @@ public class TextPicture extends AbstractPicture {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void draw(AbstractScene scene) {
         TextPicture.draw(scene.getGameWindow(),
@@ -172,6 +174,7 @@ public class TextPicture extends AbstractPicture {
      *
      * @param color a {@link org.joml.Vector4f} object.
      */
+    @SuppressWarnings("unused")
     public void setColor(Vector4f color) {
         this.color.set(color);
     }

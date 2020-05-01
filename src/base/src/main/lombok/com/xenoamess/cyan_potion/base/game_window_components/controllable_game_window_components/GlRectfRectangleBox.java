@@ -44,7 +44,7 @@ import static org.lwjgl.opengl.GL11.*;
  * And I suggest you use pure color Texture (and PictureBox) instead.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see com.xenoamess.cyan_potion.base.render.Texture#loadAsPureColorTexture(com.xenoamess.cyan_potion.base.render.Texture)
  * @deprecated
  */
@@ -90,6 +90,7 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      *
      * @return a {@link org.joml.Vector4f} object.
      */
+    @SuppressWarnings("unused")
     public Vector4fc getColor() {
         return new Vector4f(color);
     }
@@ -111,6 +112,7 @@ public class GlRectfRectangleBox extends AbstractControllableGameWindowComponent
      * @param z a int.
      * @param w a int.
      */
+    @SuppressWarnings("unused")
     public void setColor(int x, int y, int z, int w) {
         this.color.set(x, y, z, w);
     }

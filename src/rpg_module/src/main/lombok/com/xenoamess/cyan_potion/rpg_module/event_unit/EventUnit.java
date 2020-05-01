@@ -43,7 +43,7 @@ import java.util.List;
  * <p>EventUnit class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -84,6 +84,7 @@ public class EventUnit extends Unit {
         }
     }
 
+    @SuppressWarnings("unused")
     void initFromEventUnitJson(EventUnitJson eventUnitJson) {
         if (this.getEventUnitJson() != eventUnitJson) {
             this.setEventUnitJson(eventUnitJson);

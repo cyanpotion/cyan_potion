@@ -28,13 +28,14 @@ package com.xenoamess.cyan_potion.base.areas;
  * <p>AbstractMutablePoint interface.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractMutablePoint extends AbstractPoint {
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     default boolean ifMutable() {
         return true;
@@ -79,6 +80,7 @@ public interface AbstractMutablePoint extends AbstractPoint {
      *
      * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
      */
+    @SuppressWarnings("unused")
     default void cover(AbstractPoint point) {
         this.setPos(point);
     }

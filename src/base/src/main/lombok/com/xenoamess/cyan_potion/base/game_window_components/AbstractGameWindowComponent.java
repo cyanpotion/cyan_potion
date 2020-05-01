@@ -59,7 +59,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 @EqualsAndHashCode
@@ -127,6 +127,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT =
             new DrawerBuilder<AbstractGameWindowComponent>() {
+                @SuppressWarnings("unused")
                 @Override
                 public DrawerInterface<AbstractGameWindowComponent> build(DrawerInterface<?
                         super AbstractGameWindowComponent> superUpdater) {
@@ -235,6 +236,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param height      a float.
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public AbstractGameWindowComponent init(float leftTopPosX,
                                             float leftTopPosY, float width,
                                             float height) {
@@ -260,6 +262,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      *
      * @return if draw succeed
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean draw() {
         return this.getDrawer().draw(this);
     }
@@ -290,6 +293,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param processor        event processor
      * @param <P>              event Class
      */
+    @SuppressWarnings("unused")
     public <P extends Event> void registerProcessor(String eventClassString, EventProcessor<P> processor) {
         try {
             this.eventClassToProcessorMapPut((Class<? extends P>) Class.forName(eventClassString), processor);
@@ -317,6 +321,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param <P>              event Class
      * @return EventProcessor
      */
+    @SuppressWarnings("unused")
     public <P extends Event> EventProcessor<P> getProcessor(String eventClassString) {
         EventProcessor<P> res = null;
         try {
@@ -395,6 +400,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param <T>            event class
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor} object.
      */
+    @SuppressWarnings("UnusedReturnValue")
     protected <T extends Event> EventProcessor<? super T> eventClassToProcessorMapPut(
             Class<T> eventClass,
             EventProcessor<? super T> eventProcessor
@@ -420,6 +426,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @param <T>        event class
      * @return a boolean.
      */
+    @SuppressWarnings("unused")
     protected <T extends Event> boolean eventClassToProcessorMapContainsKey(Class<T> eventClass) {
         return this.getEventClassToProcessorMap().containsKey(eventClass);
     }
@@ -447,6 +454,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      *
      * @see #setCenter(AbstractArea)
      */
+    @SuppressWarnings("unused")
     public void moveToCenterOfFullWindow() {
         this.setCenter(this.getGameWindow());
     }
@@ -474,6 +482,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      *
      * @return a {@link com.xenoamess.cyan_potion.base.DataCenter} object.
      */
+    @SuppressWarnings("unused")
     public DataCenter getDataCenter() {
         return this.getGameWindow().getGameManager().getDataCenter();
     }
@@ -485,6 +494,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      *
      * @return alive
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isAlive() {
         return alive.get();
     }

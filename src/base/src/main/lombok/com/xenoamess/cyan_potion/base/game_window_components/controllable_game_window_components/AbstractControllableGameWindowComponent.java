@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Controllable here means you can left click it, right click it, enter key on it, or something else.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -136,6 +136,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final DrawerBuilder<AbstractControllableGameWindowComponent> DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = new DrawerBuilder<AbstractControllableGameWindowComponent>() {
+        @SuppressWarnings("unused")
         @Override
         public DrawerInterface<AbstractControllableGameWindowComponent> build(
                 DrawerInterface<? super AbstractControllableGameWindowComponent> superUpdater) {
@@ -162,6 +163,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * default Drawer for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
+    @SuppressWarnings("unused")
     public static final DrawerInterface<AbstractControllableGameWindowComponent> DEFAULT_DRAWER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT = DRAWER_BUILDER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT.build(AbstractGameWindowComponent.DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT);
 
 
@@ -302,6 +304,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonRightDownCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonRightDownEventProcessor = eventProcessor;
     }
@@ -329,6 +332,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonRightUpCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonRightUpEventProcessor = eventProcessor;
     }
@@ -352,6 +356,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonRightPressingCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonRightPressingEventProcessor = eventProcessor;
     }
@@ -381,6 +386,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonMiddleDownCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonMiddleDownEventProcessor = eventProcessor;
     }
@@ -408,6 +414,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonMiddleUpCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonMiddleUpEventProcessor = eventProcessor;
     }
@@ -431,6 +438,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnMouseButtonMiddlePressingCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onMouseButtonMiddlePressingEventProcessor = eventProcessor;
     }
@@ -469,6 +477,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnGainFocusCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onGainFocusEventProcessor = eventProcessor;
     }
@@ -496,6 +505,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param eventProcessor eventProcessor
      */
+    @SuppressWarnings("unused")
     public void registerOnLoseFocusCallback(EventProcessor<MouseButtonEvent> eventProcessor) {
         this.onLoseFocusEventProcessor = eventProcessor;
     }
@@ -740,6 +750,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @see AbstractControllableGameWindowComponent#draw()
      * @see AbstractControllableGameWindowComponent#visible
      */
+    @SuppressWarnings("SameReturnValue")
     public boolean ifVisibleThenDraw() {
         return true;
     }
@@ -751,6 +762,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @return a boolean.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isActive() {
         return active.get();
     }
@@ -760,6 +772,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param active a boolean.
      */
+    @SuppressWarnings("unused")
     public void setActive(boolean active) {
         this.active.set(active);
     }
@@ -778,6 +791,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param visible a boolean.
      */
+    @SuppressWarnings("unused")
     public void setVisible(boolean visible) {
         this.visible.set(visible);
     }
@@ -833,6 +847,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      *
      * @param blockClick blockClick
      */
+    @SuppressWarnings("unused")
     public void setBlockClick(boolean blockClick) {
         this.blockClick.set(blockClick);
     }

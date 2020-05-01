@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * That will always make things easier for both of us.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public class CharEvent implements Event {
@@ -64,7 +64,7 @@ public class CharEvent implements Event {
         }
     }
 
-    private static final AtomicLong currentId = new AtomicLong(0L);
+    private static final AtomicLong CURRENT_ID = new AtomicLong(0L);
 
     /**
      * use this instead of null for safety.
@@ -92,8 +92,8 @@ public class CharEvent implements Event {
         super();
         this.window = window;
         this.codepoint = codepoint;
-        synchronized (currentId) {
-            this.id = currentId.getAndAdd(1L);
+        synchronized (CURRENT_ID) {
+            this.id = CURRENT_ID.getAndAdd(1L);
         }
     }
 

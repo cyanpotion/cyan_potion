@@ -48,7 +48,7 @@ import static org.lwjgl.opengl.GL20.*;
  * <p>Shader class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -186,6 +186,7 @@ public class Shader implements Closeable {
      * @param uniformName uniformName
      * @param value       a {@link org.joml.Vector3f} object.
      */
+    @SuppressWarnings("unused")
     public void setUniform(String uniformName, Vector3f value) {
         int location = iGetUniformLocation(uniformName);
         if (location != -1) {

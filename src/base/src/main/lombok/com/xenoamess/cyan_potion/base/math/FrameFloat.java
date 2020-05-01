@@ -37,7 +37,7 @@ import lombok.ToString;
  * for example if this FrameFloat means a speed, and its valueFor1Second is 100, then its speed is 100/second.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 
 @EqualsAndHashCode
@@ -57,6 +57,7 @@ public class FrameFloat {
      *
      * @param gameManager a {@link com.xenoamess.cyan_potion.base.GameManager} object.
      */
+    @SuppressWarnings("unused")
     public FrameFloat(GameManager gameManager) {
         this(gameManager, Float.NaN);
     }

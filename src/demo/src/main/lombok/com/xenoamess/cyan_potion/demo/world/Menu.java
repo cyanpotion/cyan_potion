@@ -45,7 +45,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>Menu class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -137,6 +137,7 @@ public final class Menu extends AbstractGameWindowComponent {
      *
      * @return a boolean.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isShow() {
         return show.get();
     }

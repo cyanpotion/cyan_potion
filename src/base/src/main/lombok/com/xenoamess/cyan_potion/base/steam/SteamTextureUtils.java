@@ -47,7 +47,7 @@ import static com.codedisaster.steamworks.SteamID.createFromNativeHandle;
  * <p>SteamTextureUtils class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class SteamTextureUtils {
     private SteamTextureUtils() {
@@ -79,6 +79,7 @@ public class SteamTextureUtils {
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
+    @SuppressWarnings("unused")
     public static final Function<GameManager, Void> PUT_TEXTURE_LOADER_STEAM_AVATAR = (GameManager gameManager) -> {
         gameManager.getResourceManager().putResourceLoader(
                 Texture.class,

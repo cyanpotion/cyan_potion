@@ -43,7 +43,7 @@ import org.joml.Vector4fc;
  * <p>Button class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -63,7 +63,8 @@ public class Button extends AbstractControllableGameWindowComponent {
 
 
     /**
-     * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
+     * UpdaterBuilder for
+     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     public static final UpdaterBuilder<Button> UPDATER_BUILDER_BUTTON = new UpdaterBuilder<Button>() {
         @Override
@@ -83,6 +84,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * default Updater for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
+    @SuppressWarnings("unused")
     public static final UpdaterInterface<Button> DEFAULT_UPDATER_BUTTON =
             UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
@@ -92,6 +94,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      *
      * @param gameWindow gameWindow
      */
+    @SuppressWarnings("unused")
     public Button(GameWindow gameWindow) {
         this(gameWindow, null);
     }
@@ -166,6 +169,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      * @param z a float.
      * @param w a float.
      */
+    @SuppressWarnings("unused")
     public void setTextColor(float x, float y, float z, float w) {
         this.textColor.set(x, y, z, w);
     }

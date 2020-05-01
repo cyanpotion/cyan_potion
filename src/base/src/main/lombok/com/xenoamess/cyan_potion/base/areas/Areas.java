@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * Utility class for Area.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public class Areas {
     private Areas() {
@@ -44,6 +44,7 @@ public class Areas {
      * @param height     a float.
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleImmutableArea generateImmutableAreaFromArea(
             float centerPosX, float centerPosY, float width, float height) {
         return new SimpleImmutableArea(centerPosX - height / 2F, centerPosY - height / 2F, width, height);
@@ -55,6 +56,7 @@ public class Areas {
      * @param abstractArea area
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleImmutableArea generateImmutableAreaFromArea(
             AbstractArea abstractArea) {
         return new SimpleImmutableArea(abstractArea);
@@ -69,6 +71,7 @@ public class Areas {
      * @param height      a float.
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleImmutableArea generateImmutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {
         return new SimpleImmutableArea(leftTopPosX, leftTopPosY, width, height);
@@ -83,6 +86,7 @@ public class Areas {
      * @param height     a float.
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleMutableArea generateMutableAreaFromArea(
             float centerPosX, float centerPosY, float width, float height) {
         return new SimpleMutableArea(centerPosX - height / 2F, centerPosY - width / 2F, width, height);
@@ -94,6 +98,7 @@ public class Areas {
      * @param abstractArea area
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleMutableArea generateMutableAreaFromArea(
             AbstractArea abstractArea) {
         return new SimpleMutableArea(abstractArea);
@@ -108,6 +113,7 @@ public class Areas {
      * @param height      a float.
      * @return return
      */
+    @SuppressWarnings("unused")
     public static SimpleMutableArea generateMutableAreaFromLeftTop(
             float leftTopPosX, float leftTopPosY, float width, float height) {
         return new SimpleMutableArea(leftTopPosX, leftTopPosY, width, height);

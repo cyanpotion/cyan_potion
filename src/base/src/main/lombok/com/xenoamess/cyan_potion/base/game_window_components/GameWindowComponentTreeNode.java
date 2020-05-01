@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>GameWindowComponentTreeNode class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -182,6 +182,7 @@ public class GameWindowComponentTreeNode implements Closeable {
      * @param gameWindowComponent gameWindowComponent
      * @return return
      */
+    @SuppressWarnings("UnusedReturnValue")
     public GameWindowComponentTreeNode newNode(AbstractGameWindowComponent gameWindowComponent) {
         return new GameWindowComponentTreeNode(this.getGameWindowComponentTree(), this, gameWindowComponent);
     }

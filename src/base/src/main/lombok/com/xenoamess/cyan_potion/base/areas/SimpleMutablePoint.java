@@ -30,7 +30,7 @@ import lombok.Data;
  * <p>SimpleMutablePoint class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @Data
 public final class SimpleMutablePoint implements AbstractMutablePoint {
@@ -42,6 +42,7 @@ public final class SimpleMutablePoint implements AbstractMutablePoint {
      *
      * @param point a {@link com.xenoamess.cyan_potion.base.areas.AbstractPoint} object.
      */
+    @SuppressWarnings("unused")
     public SimpleMutablePoint(AbstractPoint point) {
         this(point.getPosX(), point.getPosY());
     }

@@ -67,7 +67,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>World class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -133,7 +133,7 @@ public class World extends AbstractEntityScene {
         for (AbstractDynamicEntity au : gameMap.getEventUnits()) {
             au.registerShape();
         }
-        this.getDynamicEntitySet().addAll(gameMap.getEventUnits());
+        this.getDynamicEntityList().addAll(gameMap.getEventUnits());
     }
 
 
@@ -196,7 +196,7 @@ public class World extends AbstractEntityScene {
                     ),
                     this.getGameWindow().getGameManager().getResourceManager()));
             this.getPlayer().registerShape();
-            getDynamicEntitySet().add(getPlayer());
+            getDynamicEntityList().add(getPlayer());
 
             this.getCamera().setPos(this.getPlayer().getCenterPosX(), this.getPlayer().getCenterPosY());
         }
@@ -308,8 +308,8 @@ public class World extends AbstractEntityScene {
         }
     }
 
-
-    public static final float CAMERA_LERP = 0.05f;
+    @SuppressWarnings("unused")
+    public static final float CAMERA_LERP = 5F;
 
     /**
      * {@inheritDoc}
@@ -318,11 +318,11 @@ public class World extends AbstractEntityScene {
     public boolean update() {
         this.preparePlayerMovement(this.getPlayer());
 
-        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
+        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntityList()) {
             dynamicEntity.update();
         }
 
-        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), 5F);
+        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), CAMERA_LERP);
         Vector2f vector2f = new Vector2f(
                 this.getCamera().getPosX(),
                 this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()),
@@ -365,12 +365,12 @@ public class World extends AbstractEntityScene {
         TreeMap<Integer, ArrayList<AbstractEntity>> layerToEntities =
                 new TreeMap<>();
 
-        for (StaticEntity staticEntity : this.getStaticEntitySet()) {
+        for (StaticEntity staticEntity : this.getStaticEntitySetList()) {
             ArrayList<AbstractEntity> entities =
                     layerToEntities.computeIfAbsent(staticEntity.getLayer(), k -> new ArrayList<>());
             entities.add(staticEntity);
         }
-        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntitySet()) {
+        for (AbstractDynamicEntity dynamicEntity : this.getDynamicEntityList()) {
             ArrayList<AbstractEntity> entities =
                     layerToEntities.computeIfAbsent(dynamicEntity.getLayer(), k -> new ArrayList<>());
             entities.add(dynamicEntity);

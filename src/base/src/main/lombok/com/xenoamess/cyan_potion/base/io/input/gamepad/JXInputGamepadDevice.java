@@ -46,10 +46,11 @@ import org.slf4j.LoggerFactory;
  * then you shall call DataCenter.setUsingJXInput(true) in code plugin rightBeforeGamepadInputInit.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see DataCenter#isUsingJXInput()
  * @deprecated
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Deprecated
@@ -102,6 +103,7 @@ public class JXInputGamepadDevice extends AbstractGamepadDevice {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     @Override
     public void setVibration(int leftVibration, int rightVibration) {
         this.getRawXInputDevice().setVibration(fixVibrationPower(leftVibration), fixVibrationPower(rightVibration));

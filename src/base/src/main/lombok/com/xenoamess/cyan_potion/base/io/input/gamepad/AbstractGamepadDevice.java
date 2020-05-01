@@ -31,7 +31,7 @@ import lombok.ToString;
  * <p>Abstract AbstractGamepadDevice class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -63,6 +63,7 @@ public abstract class AbstractGamepadDevice {
      * @param leftVibration  a int.
      * @param rightVibration a int.
      */
+    @SuppressWarnings("unused")
     public abstract void setVibration(int leftVibration, int rightVibration);
 
     /**

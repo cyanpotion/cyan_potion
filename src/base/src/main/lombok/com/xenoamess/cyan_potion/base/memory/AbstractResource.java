@@ -42,7 +42,7 @@ import java.util.function.Predicate;
  * <p>Abstract AbstractResource class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode
 @ToString
@@ -158,6 +158,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return after the function, if this Resource loaded correctly and is in memory, then true.
      * otherwise if cannot load correctly, then false.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public synchronized boolean load() {
         boolean result;
         if (startLoad()) {
@@ -212,6 +213,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     /**
      * <p>reload.</p>
      */
+    @SuppressWarnings("unused")
     public synchronized void reload() {
         this.close();
         this.load();

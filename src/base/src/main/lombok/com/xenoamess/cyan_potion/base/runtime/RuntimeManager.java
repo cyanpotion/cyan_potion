@@ -42,11 +42,12 @@ import java.util.List;
  * (invoking functions in SaveManager).
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class RuntimeManager extends SubManager {
+    @SuppressWarnings("unused")
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(RuntimeManager.class);
@@ -62,11 +63,13 @@ public class RuntimeManager extends SubManager {
         super(gameManager);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void init() {
         //do nothing
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing
@@ -103,6 +106,7 @@ public class RuntimeManager extends SubManager {
      *
      * @param index a int.
      */
+    @SuppressWarnings("unused")
     public synchronized void load(int index) {
         List<RuntimeVariableStruct> loadedRuntimeVariableStructList =
                 this.getGameManager().getSaveManager().pickCurrentSaveFileObject(index).load();
@@ -134,6 +138,7 @@ public class RuntimeManager extends SubManager {
      *
      * @param index a int.
      */
+    @SuppressWarnings("unused")
     public synchronized void save(int index) {
         this.getGameManager().getSaveManager().pickCurrentSaveFileObject(index).save(this.runtimeVariableStructList);
     }

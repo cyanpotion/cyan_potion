@@ -44,7 +44,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -95,6 +95,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * default Updater for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
+    @SuppressWarnings("unused")
     public static final UpdaterInterface<Panel> DEFAULT_UPDATER_PANEL =
             UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
 
@@ -148,6 +149,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * @see #contents
      * @see List#remove(int)
      */
+    @SuppressWarnings("unused")
     public AbstractGameWindowComponent removeContent(int index) {
         synchronized (this.contents) {
             AbstractGameWindowComponent result = this.contents.remove(index);

@@ -34,7 +34,7 @@ import lombok.ToString;
  * <p>Abstract AbstractDynamicEntity class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -94,6 +94,7 @@ public abstract class AbstractDynamicEntity extends AbstractEntity {
      * @param movementY a float.
      * @return a boolean.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean tryMove(float movementX, float movementY) {
         if (this.canMove(movementX, movementY)) {
             this.forceMove(movementX, movementY);

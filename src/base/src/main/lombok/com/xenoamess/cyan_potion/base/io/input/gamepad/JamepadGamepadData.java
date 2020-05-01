@@ -35,10 +35,10 @@ import lombok.ToString;
  * thus it will not be fully encapsulated.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see JamepadGamepadDevice
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class JamepadGamepadData extends AbstractGamepadData {
     /**
@@ -116,6 +116,7 @@ public class JamepadGamepadData extends AbstractGamepadData {
     /**
      * Constant <code>JAMEPAD_KEY_LAST=17</code>
      */
+    @SuppressWarnings("unused")
     public static final int JAMEPAD_KEY_LAST = 17;
 
 

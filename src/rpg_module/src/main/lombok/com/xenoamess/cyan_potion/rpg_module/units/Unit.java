@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>Unit class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -255,6 +255,7 @@ public class Unit extends AbstractDynamicEntity {
      *
      * @param canMove a boolean.
      */
+    @SuppressWarnings("unused")
     public void setCanMove(boolean canMove) {
         this.canMove.set(canMove);
     }

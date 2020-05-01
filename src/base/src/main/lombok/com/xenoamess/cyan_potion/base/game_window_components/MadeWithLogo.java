@@ -47,7 +47,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
  * <p>MadeWithLogo class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -91,8 +91,8 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
         );
     }
 
-    private static final long stayTime = 1500L;
-    private static final long fadeTime = 750L;
+    private static final long STAY_TIME = 1500L;
+    private static final long FADE_TIME = 750L;
 
     /**
      * <p>Constructor for MadeWithLogo.</p>
@@ -100,7 +100,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
      * @param gameWindow gameWindow
      */
     public MadeWithLogo(GameWindow gameWindow) {
-        this(gameWindow, stayTime + fadeTime);
+        this(gameWindow, STAY_TIME + FADE_TIME);
     }
 
     /**
@@ -177,10 +177,10 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
         long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
         float colorScale;
 
-        if (t < stayTime) {
+        if (t < STAY_TIME) {
             colorScale = 1;
         } else {
-            colorScale = 1 + ((float) (t - stayTime)) / fadeTime * 400;
+            colorScale = 1 + ((float) (t - STAY_TIME)) / FADE_TIME * 400;
         }
 
         this.logoPicture.setColorScale(1, colorScale, colorScale, 1);

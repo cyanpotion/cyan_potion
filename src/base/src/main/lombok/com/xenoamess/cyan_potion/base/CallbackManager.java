@@ -47,7 +47,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * <p>Callbacks class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -65,11 +65,13 @@ public class CallbackManager extends SubManager {
         super(gameManager);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void init() {
         //do nothing
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing
@@ -98,6 +100,7 @@ public class CallbackManager extends SubManager {
 
 
     //-----CallbackIs
+
     @Getter
     @Setter
     private GLFWErrorCallbackI errorCallback = null;
@@ -259,25 +262,6 @@ public class CallbackManager extends SubManager {
     public GLFWDropCallbackI wrapDropCallback() {
         return (window, count, names) -> CallbackManager.this.getDropCallback().invoke(window, count, names);
     }
-
-//    @AsFinalField
-//    private GLFWErrorCallback _GLFWErrorCallback;
-//    @AsFinalField
-//    private GLFWKeyCallback _GLFWKeyCallback;
-//    @AsFinalField
-//    private GLFWCharCallback _GLFWCharCallback;
-//    @AsFinalField
-//    private GLFWMouseButtonCallback _GLFWMouseButtonCallback;
-//    @AsFinalField
-//    private GLFWScrollCallback _GLFWScrollCallback;
-//    @AsFinalField
-//    private GLFWJoystickCallback _GLFWJoystickCallback;
-//    @AsFinalField
-//    private GLFWWindowCloseCallback _GLFWWindowCloseCallback;
-//    @AsFinalField
-//    private GLFWWindowSizeCallback _GLFWWindowSizeCallback;
-//    @AsFinalField
-//    private GLFWDropCallback _GLFWDropCallback;
 
     public void setWrapperCallbacks(GameWindow gameWindow) {
         glfwSetErrorCallback(

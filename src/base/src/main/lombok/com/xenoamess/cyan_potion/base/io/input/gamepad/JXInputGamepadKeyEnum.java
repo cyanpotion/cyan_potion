@@ -30,10 +30,11 @@ import java.util.Arrays;
  * <p>JXInputGamepadKeyEnum class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  * @see JXInputGamepadDevice
  * @deprecated
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 @Deprecated
 public enum JXInputGamepadKeyEnum {
     JXINPUT_KEY_A(0),
@@ -59,7 +60,7 @@ public enum JXInputGamepadKeyEnum {
      * Constant <code>values</code>
      */
     public final int value;
-    private static final JXInputGamepadKeyEnum[] values = generateValues();
+    private static final JXInputGamepadKeyEnum[] VALUES = generateValues();
 
     JXInputGamepadKeyEnum(int value) {
         this.value = value;
@@ -71,7 +72,7 @@ public enum JXInputGamepadKeyEnum {
      * @return an array of {@link com.xenoamess.cyan_potion.base.io.input.gamepad.JXInputGamepadKeyEnum} objects.
      */
     public static JXInputGamepadKeyEnum[] getValues() {
-        return values;
+        return VALUES;
     }
 
     /**
@@ -79,6 +80,7 @@ public enum JXInputGamepadKeyEnum {
      *
      * @return a int.
      */
+    @SuppressWarnings("unused")
     public int getValue() {
         return value;
     }
@@ -103,6 +105,7 @@ public enum JXInputGamepadKeyEnum {
      * @param value a int.
      * @return a {@link java.lang.String} object.
      */
+    @SuppressWarnings("unused")
     public static String getStringByValue(int value) {
         return getByValue(value).name();
     }

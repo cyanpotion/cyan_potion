@@ -37,7 +37,7 @@ import org.joml.Vector3f;
  * .size.x logically.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -49,6 +49,7 @@ public class Circle extends AbstractShape {
      * @param centerPos centerPos
      * @param size      a {@link org.joml.Vector3f} object.
      */
+    @SuppressWarnings("unused")
     public Circle(AbstractEntity entity, Vector3f centerPos, Vector3f size) {
         super(entity, centerPos, size);
     }
@@ -58,6 +59,7 @@ public class Circle extends AbstractShape {
      *
      * @param circle circle
      */
+    @SuppressWarnings("unused")
     public Circle(Circle circle) {
         super(circle);
     }
@@ -79,6 +81,7 @@ public class Circle extends AbstractShape {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unused")
     public ShapeRelation relation(Circle target, boolean rough) {
         if (this.getCenterPos().z != target.getCenterPos().z) {
             return ShapeRelation.RELATION_NO_COLLIDE;

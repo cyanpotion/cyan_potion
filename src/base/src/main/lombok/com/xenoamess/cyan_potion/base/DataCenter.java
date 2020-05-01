@@ -39,7 +39,7 @@ import lombok.ToString;
  * <p>DataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -48,6 +48,7 @@ public class DataCenter extends SubManager {
     /**
      * Constant <code>MAIN_THREAD_NAME="main"</code>
      */
+    @SuppressWarnings("unused")
     public static final String MAIN_THREAD_NAME = "main";
     /**
      * Constant <code>MAIN_THREAD_ID=1</code>
@@ -123,11 +124,13 @@ public class DataCenter extends SubManager {
         super(gameManager);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void init() {
         //do nothing
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void update() {
         //do nothing

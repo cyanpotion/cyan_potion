@@ -48,7 +48,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  * <p>WalkingAnimation4Dirs class.</p>
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -92,6 +92,7 @@ public class WalkingAnimation4Dirs extends Animation {
         super(fps);
         this.setUnit(unit);
         String resourceFilePath = resourceInfo.getFileString();
+        //noinspection SwitchStatementWithTooFewBranches
         switch (resourceInfo.getType()) {
             case STRING_CHARACTER:
                 int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);

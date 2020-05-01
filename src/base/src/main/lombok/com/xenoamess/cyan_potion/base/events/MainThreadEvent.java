@@ -37,7 +37,7 @@ import java.util.Set;
  * then we solve the MainThreadEvent s.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface MainThreadEvent extends Event {
     class EmptyMainThreadEvent implements MainThreadEvent, EmptyEvent {
@@ -56,6 +56,7 @@ public interface MainThreadEvent extends Event {
      *
      * @see EmptyEvent
      */
+    @SuppressWarnings("unused")
     MainThreadEvent EMPTY = new MainThreadEvent.EmptyMainThreadEvent();
 
     /**

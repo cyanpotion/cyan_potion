@@ -33,7 +33,7 @@ package com.xenoamess.cyan_potion.base.areas;
  * you can see implementations of this class for more details.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 public interface AbstractArea {
     /**
@@ -41,6 +41,7 @@ public interface AbstractArea {
      *
      * @return true if mutable
      */
+    @SuppressWarnings("unused")
     boolean ifMutable();
 
     /**
@@ -274,6 +275,7 @@ public interface AbstractArea {
      *
      * @return SimpleImmutableArea built from this area.
      */
+    @SuppressWarnings("unused")
     default SimpleImmutableArea copyArea() {
         return new SimpleImmutableArea(this);
     }

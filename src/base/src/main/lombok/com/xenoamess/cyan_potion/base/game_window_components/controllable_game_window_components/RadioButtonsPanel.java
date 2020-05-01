@@ -50,7 +50,7 @@ import java.util.List;
  * {@link com.xenoamess.cyan_potion.base.game_window_components.Updater} first.
  *
  * @author XenoAmess
- * @version 0.162.1
+ * @version 0.162.2
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -89,6 +89,7 @@ public class RadioButtonsPanel extends Panel {
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
      */
+    @SuppressWarnings("unused")
     public RadioButton createNewRadioButton(String buttonText, Texture bindableSelected, Texture bindableDeselected) {
         RadioButton radioButton = new RadioButton(
                 this.getGameWindow(),
@@ -111,6 +112,7 @@ public class RadioButtonsPanel extends Panel {
      * @param bindableDeselected a {@link com.xenoamess.cyan_potion.base.render.Texture} object.
      * @return a {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton} object.
      */
+    @SuppressWarnings("unused")
     public <T extends RadioButton> T createNewRadioButton(
             Class<T> tClass,
             String buttonText,
@@ -146,6 +148,7 @@ public class RadioButtonsPanel extends Panel {
      *
      * @return a {@link java.util.List} object.
      */
+    @SuppressWarnings("unused")
     public List<RadioButton> getSelectedRadioButtons() {
         return this.getRadioButtonGroup().getSelectedRadioButtons();
     }
@@ -171,6 +174,7 @@ public class RadioButtonsPanel extends Panel {
      *                    object.
      * @return a boolean.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean removeRadioButton(RadioButton radioButton) {
         boolean result = this.removeContent(radioButton);
         radioButton.close();
@@ -180,6 +184,7 @@ public class RadioButtonsPanel extends Panel {
     /**
      * <p>removeAllRadioButtons.</p>
      */
+    @SuppressWarnings("unused")
     public void removeAllRadioButtons() {
         for (RadioButton radioButton : this.getRadioButtons()) {
             this.removeRadioButton(radioButton);
