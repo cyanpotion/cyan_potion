@@ -139,7 +139,7 @@ public class ResourceManager extends SubManager {
 
     /**
      * generate a File object from a fileObject object.
-     * I had discussed with vfs's guys and they told me they might add a function to do this.
+     * I had discussed with commons-vfs guys and they told me they might add a function to do this.
      * I might delete this then.
      * But this is useful for now.
      * You know sometimes we just need a function like this for something in Swing to work,

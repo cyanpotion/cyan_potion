@@ -552,12 +552,12 @@ public interface AbstractMutableArea extends AbstractArea {
     }
 
     /**
-     * <p>moveToCenterCentorOf.</p>
+     * <p>moveToCenterCenterOf.</p>
      *
      * @param abstractArea a {@link com.xenoamess.cyan_potion.base.areas.AbstractArea} object.
      */
     @SuppressWarnings("unused")
-    default void moveToCenterCentorOf(AbstractArea abstractArea) {
+    default void moveToCenterCenterOf(AbstractArea abstractArea) {
         this.setCenter(abstractArea);
     }
 

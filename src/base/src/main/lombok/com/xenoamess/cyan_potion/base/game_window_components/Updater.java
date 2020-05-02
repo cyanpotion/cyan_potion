@@ -77,7 +77,7 @@ public abstract class Updater<T> implements UpdaterInterface<T> {
      * false means something happens that this update is abort.
      * Usually when we implement a subclass of this,
      * if update returns false,
-     * then we shall consider whether should we also stop the subclass's updateer as well.
+     * then we shall consider whether should we also stop the subclass's updater as well.
      * @see #update(Object)
      */
     public abstract boolean thisUpdate(T t);

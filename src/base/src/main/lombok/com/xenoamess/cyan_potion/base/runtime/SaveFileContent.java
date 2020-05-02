@@ -78,7 +78,7 @@ class SaveFileContentDeserializer extends JsonDeserializer<SaveFileContent> {
      * {@inheritDoc}
      */
     @Override
-    public SaveFileContent deserialize(JsonParser jp, DeserializationContext ctxt)
+    public SaveFileContent deserialize(JsonParser jp, DeserializationContext deserializationContext)
             throws IOException {
         SaveFileContent result = new SaveFileContent();
 

@@ -467,7 +467,7 @@ public class SteamManager extends SubManager {
             Long id = Long.parseLong(input.substring("ugc unsubscribe ".length()), 16);
             getSteamUGC().unsubscribeItem(new SteamPublishedFileID(id));
         } else if (input.startsWith("ugc state ")) {
-            Long id = Long.parseLong(input.substring("ugc state ".length()), 16);
+            long id = Long.parseLong(input.substring("ugc state ".length()), 16);
             Collection<SteamUGC.ItemState> itemStates = getSteamUGC().getItemState(new SteamPublishedFileID(id));
             LOGGER.debug("UGC item states: " + itemStates.size());
             for (SteamUGC.ItemState itemState : itemStates) {

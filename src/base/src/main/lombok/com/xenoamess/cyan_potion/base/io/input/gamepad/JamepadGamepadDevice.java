@@ -72,7 +72,7 @@ public class JamepadGamepadDevice extends AbstractGamepadDevice {
     /**
      * {@inheritDoc}
      * <p>
-     * update of this will be performed in GasmepadInputManager.
+     * update of this will be performed in GamepadInputManager.
      *
      * @see GamepadInputManager#update
      */

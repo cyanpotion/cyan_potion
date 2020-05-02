@@ -96,7 +96,7 @@ public class DataCenter extends SubManager {
      * (using SDL, can run on multi-platforms.)
      * to deal with controller.
      * <p>
-     * At default it is set to false, meaing we just use Jamepad.
+     * At default it is set to false, meaning we just use Jamepad.
      */
     @Getter
     @Setter

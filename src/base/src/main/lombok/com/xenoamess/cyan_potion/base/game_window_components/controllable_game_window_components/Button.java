@@ -86,7 +86,7 @@ public class Button extends AbstractControllableGameWindowComponent {
      */
     @SuppressWarnings("unused")
     public static final UpdaterInterface<Button> DEFAULT_UPDATER_BUTTON =
-            UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+            UPDATER_BUILDER_BUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACT_CONTROLLABLE_GAME_WINDOW_COMPONENT);
 
 
     /**
