@@ -30,7 +30,7 @@ import lombok.Data;
  * <p>SimpleImmutablePoint class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 @Data
 public final class SimpleImmutablePoint implements AbstractImmutablePoint {

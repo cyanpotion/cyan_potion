@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.base.game_window_components;
  * <p>UpdaterInterface interface.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 public interface UpdaterInterface<T> {
     /**

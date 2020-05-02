@@ -45,7 +45,7 @@ import lombok.ToString;
  * Entity.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString

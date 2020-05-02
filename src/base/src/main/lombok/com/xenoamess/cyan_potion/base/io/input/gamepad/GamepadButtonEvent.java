@@ -43,7 +43,7 @@ import java.util.Set;
  * <p>GamepadButtonEvent class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 @Data
 public class GamepadButtonEvent implements Event {

@@ -43,7 +43,7 @@ import java.util.List;
  * <p>EventUnit class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

@@ -38,7 +38,7 @@ import static com.xenoamess.cyan_potion.base.setting_file.SettingFileParser_0_3_
  * <p>SettingFileParsers class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3-SNAPSHOT
  */
 @EqualsAndHashCode
 @ToString
