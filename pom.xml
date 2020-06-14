@@ -321,6 +321,20 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--test start-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--lwjgl start-->
         <!--
         notice that we will not include lwjgl-ovr
@@ -776,7 +790,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -808,27 +821,10 @@
             <version>${log4j.version}</version>
             <type>pom</type>
         </dependency>
-
         <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
             <version>${SDL_GameControllerDB_Util.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.lwjgl</groupId>
-                    <artifactId>lwjgl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.eclipse.collections</groupId>-->
