@@ -85,12 +85,12 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.10</commons-lang3.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <httpclient.version>4.5.12</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.11.0</jackson.version>
+        <jackson.version>2.11.1</jackson.version>
         <joml.version>1.9.25</joml.version>
         <log4j.version>2.13.3</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
