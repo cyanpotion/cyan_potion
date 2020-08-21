@@ -5,5 +5,4 @@ branches:
 clone_depth: 1
 build_script:
   - cmd: >-
-      mvnw.cmd package
-test: off
+      mvnw.cmd clean install site -U -Dmaven.javadoc.skip=false
