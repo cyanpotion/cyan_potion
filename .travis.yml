@@ -11,26 +11,14 @@ cache:
 install: true
 matrix:
   include:
-    - os: linux
-      jdk: openjdk8
-    - os: linux
-      jdk: openjdk9
-    - os: linux
-      jdk: openjdk10
-    - os: linux
-      jdk: openjdk11
-    - os: linux
-      jdk: openjdk12
-    - os: linux
-      jdk: openjdk13
-    - os: linux
-      jdk: openjdk14
-    - os: linux
-      jdk: openjdk-ea
+    - jdk: openjdk8
+    - jdk: openjdk11
+    - jdk: openjdk13
+    - jdk: openjdk15
+    - jdk: openjdk-ea
   allow_failures:
     #seems lombok-maven-plugin does not support JDK14 right now.
-    - jdk: openjdk14
-    - jdk: openjdk9
+    - jdk: openjdk15
     - jdk: openjdk-ea
 script:
   - "./mvnw clean install site -U -Dmaven.javadoc.skip=false"
