@@ -55,7 +55,7 @@ import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
  * every entity have a shape (if you want to use collide for it)
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode
 @ToString

@@ -43,7 +43,7 @@ import java.util.List;
  * <p>GameTilesetJson class.</p>
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @Data
 public class GameTilesetJson implements Serializable {

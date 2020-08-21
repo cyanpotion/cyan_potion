@@ -44,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>Abstract AbstractEntityScene class.</p>
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

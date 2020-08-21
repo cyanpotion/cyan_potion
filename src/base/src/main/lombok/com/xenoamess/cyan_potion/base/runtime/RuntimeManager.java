@@ -42,7 +42,7 @@ import java.util.List;
  * (invoking functions in SaveManager).
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>GrammarMap class.</p>
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 public class GrammarMap {
     @JsonIgnore

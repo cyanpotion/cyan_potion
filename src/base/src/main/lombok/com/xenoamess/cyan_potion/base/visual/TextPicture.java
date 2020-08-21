@@ -40,7 +40,7 @@ import org.joml.Vector4fc;
  * {@link com.xenoamess.cyan_potion.base.visual.AbstractPicture}.
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @SuppressWarnings("unused")
 @EqualsAndHashCode(callSuper = true)

@@ -75,7 +75,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString

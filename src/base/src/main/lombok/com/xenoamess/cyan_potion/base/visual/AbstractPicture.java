@@ -35,7 +35,7 @@ import org.joml.Vector4fc;
  * Abstract Picture
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode
 @ToString

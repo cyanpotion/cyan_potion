@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * <p>GameTile class.</p>
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode
 @ToString

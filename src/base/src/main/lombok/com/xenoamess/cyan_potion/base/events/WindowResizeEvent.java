@@ -37,7 +37,7 @@ import java.util.Set;
  * Not implemented yet.
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @Data
 public class WindowResizeEvent implements Event {

@@ -54,7 +54,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
  * <p>InputBox class.</p>
  *
  * @author XenoAmess
- * @version 0.162.3-SNAPSHOT
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
