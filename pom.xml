@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.162.3</version>
+    <version>0.162.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -127,6 +127,7 @@
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.18</animal-sniffer-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -1077,6 +1078,26 @@
                         <include>${project.basedir}/src/test/lombok</include>
                         <include>${project.basedir}/src/test/java</include>
                     </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <version>${animal-sniffer-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <signature>
+                        <groupId>org.codehaus.mojo.signature</groupId>
+                        <artifactId>java18</artifactId>
+                        <version>1.0</version>
+                    </signature>
                 </configuration>
             </plugin>
         </plugins>
