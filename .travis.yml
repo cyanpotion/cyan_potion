@@ -21,4 +21,4 @@ matrix:
     - jdk: openjdk15
     - jdk: openjdk-ea
 script:
-  - "./mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "./mvnw clean install -U -Dmaven.javadoc.skip=false"
