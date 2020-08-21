@@ -30,7 +30,7 @@ import lombok.Data;
  * <p>SimpleMutablePoint class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @Data
 public final class SimpleMutablePoint implements AbstractMutablePoint {

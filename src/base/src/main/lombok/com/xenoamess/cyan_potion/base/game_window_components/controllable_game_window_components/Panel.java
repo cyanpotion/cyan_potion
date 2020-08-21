@@ -44,7 +44,7 @@ import java.util.Vector;
  * <p>Panel class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -97,7 +97,7 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @SuppressWarnings("unused")
     public static final UpdaterInterface<Panel> DEFAULT_UPDATER_PANEL =
-            UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+            UPDATER_BUILDER_PANEL.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACT_CONTROLLABLE_GAME_WINDOW_COMPONENT);
 
 
     /**

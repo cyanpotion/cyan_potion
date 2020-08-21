@@ -34,7 +34,7 @@ import lombok.ToString;
  * <p>Abstract AbstractSettingFileParser class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode
 @ToString

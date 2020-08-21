@@ -14,6 +14,6 @@ Notice that I have only tested this (and the engine itself) on windows, so don't
 
 It is tested on Win10-x64/Win10-x86 with AdoptOpenJDK12.
 
-It should be able to run on some different environments but I just have no plan to test it.
+It should be able to run on some different environments, but I just have no plan to test it.
 
 Notice that the rpg_module has been started for not long time, it is far from completed.

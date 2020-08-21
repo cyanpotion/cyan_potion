@@ -59,7 +59,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 2. if the class is not a final class, then you should not override {@link #update()} / {@link #draw()} method.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
 @EqualsAndHashCode
@@ -99,16 +99,16 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
 
     @Getter
     @Setter
-    private UpdaterInterface updater = DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT;
+    private UpdaterInterface updater = DEFAULT_UPDATER_ABSTRACT_GAME_WINDOW_COMPONENT;
 
     @Getter
     @Setter
-    private DrawerInterface drawer = DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT;
+    private DrawerInterface drawer = DEFAULT_DRAWER_ABSTRACT_GAME_WINDOW_COMPONENT;
 
     /**
      * UpdaterBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final UpdaterBuilder<AbstractGameWindowComponent> UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT =
+    public static final UpdaterBuilder<AbstractGameWindowComponent> UPDATER_BUILDER_ABSTRACT_GAME_WINDOW_COMPONENT =
             new UpdaterBuilder<AbstractGameWindowComponent>() {
                 @Override
                 public UpdaterInterface<AbstractGameWindowComponent> build(UpdaterInterface<?
@@ -125,7 +125,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     /**
      * DrawerBuilder for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT =
+    public static final DrawerBuilder<AbstractGameWindowComponent> DRAWER_BUILDER_ABSTRACT_GAME_WINDOW_COMPONENT =
             new DrawerBuilder<AbstractGameWindowComponent>() {
                 @SuppressWarnings("unused")
                 @Override
@@ -144,14 +144,14 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     /**
      * default Updater for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACTGAMEWINDOWCOMPONENT =
-            UPDATER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+    public static final UpdaterInterface<AbstractGameWindowComponent> DEFAULT_UPDATER_ABSTRACT_GAME_WINDOW_COMPONENT =
+            UPDATER_BUILDER_ABSTRACT_GAME_WINDOW_COMPONENT.build(null);
 
     /**
      * default Drawer for {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
      */
-    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACTGAMEWINDOWCOMPONENT =
-            DRAWER_BUILDER_ABSTRACTGAMEWINDOWCOMPONENT.build(null);
+    public static final DrawerInterface<AbstractGameWindowComponent> DEFAULT_DRAWER_ABSTRACT_GAME_WINDOW_COMPONENT =
+            DRAWER_BUILDER_ABSTRACT_GAME_WINDOW_COMPONENT.build(null);
 
 
     /**
@@ -439,7 +439,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * <p>
      * I'm thinking about deleting this function
      * because I think this function be meaningless.
-     * I asked myself: why not call this.cover(this.getGameWindow()); direcly?
+     * I asked myself: why not call this.cover(this.getGameWindow()); directly?
      */
     public void enlargeAsFullWindow() {
         this.cover(this.getGameWindow());
@@ -450,7 +450,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * <p>
      * I'm thinking about deleting this function
      * because I think this function be meaningless.
-     * I asked myself: why not call this.setCenter(this.getGameWindow()); direcly?
+     * I asked myself: why not call this.setCenter(this.getGameWindow()); directly?
      *
      * @see #setCenter(AbstractArea)
      */

@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
@@ -53,9 +54,7 @@ class ResourceInfoSerializer extends JsonSerializer<ResourceInfo> {
     @Override
     public void serialize(ResourceInfo value, JsonGenerator jsonGenerator, SerializerProvider provider)
             throws IOException {
-        if (value.getValues() == null) {
-            return;
-        }
+        Objects.requireNonNull(value.getValues());
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(value.getResourceClass().getCanonicalName());
         jsonGenerator.writeString(value.getType());
@@ -78,7 +77,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public ResourceInfo deserialize(JsonParser jp, DeserializationContext ctxt)
+    public ResourceInfo deserialize(JsonParser jp, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         if (!node.isArray()) {
@@ -128,7 +127,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
  * So never thought T MUST be AbstractResource here.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode
 @JsonSerialize(using = ResourceInfoSerializer.class)

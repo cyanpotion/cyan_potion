@@ -57,7 +57,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * it will deselect the overdose RadioButton one by one according to the timeline.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  * @see RadioButtonGroup
  */
 @EqualsAndHashCode(callSuper = true)
@@ -106,8 +106,8 @@ public class RadioButton extends Button {
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     @SuppressWarnings("unused")
-    public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIOBUTTO =
-            UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<RadioButton> DEFAULT_UPDATER_RADIO_BUTTON =
+            UPDATER_BUILDER_RADIOBUTTON.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACT_CONTROLLABLE_GAME_WINDOW_COMPONENT);
 
 
     /**

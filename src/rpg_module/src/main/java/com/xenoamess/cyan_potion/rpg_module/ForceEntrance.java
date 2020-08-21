@@ -32,7 +32,7 @@ import java.util.Map;
  * <p>ForceEntrance class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 public class ForceEntrance {
     /**

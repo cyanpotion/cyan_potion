@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
+import com.xenoamess.cyan_potion.sdl_game_controller_db_util.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
 import com.xenoamess.cyan_potion.base.areas.SimpleImmutablePoint;
@@ -75,7 +75,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * I'm considering about rename it to GameWindowManager.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -241,7 +241,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
-        glfwUpdateGamepadMappings(SDL_GameControllerDB_Util.getSDL_GameControllerDB_ByteBuffer());
+        SDL_GameControllerDB_Util.glfwUpdateGamepadMappings();
     }
 
 

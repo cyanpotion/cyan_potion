@@ -39,7 +39,7 @@ import lombok.ToString;
  * <p>DataCenter class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -96,7 +96,7 @@ public class DataCenter extends SubManager {
      * (using SDL, can run on multi-platforms.)
      * to deal with controller.
      * <p>
-     * At default it is set to false, meaing we just use Jamepad.
+     * At default it is set to false, meaning we just use Jamepad.
      */
     @Getter
     @Setter

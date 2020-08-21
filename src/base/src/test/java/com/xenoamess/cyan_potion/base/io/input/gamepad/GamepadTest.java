@@ -27,7 +27,7 @@
 //package com.xenoamess.cyan_potion.base.io.input.gamepad;
 //
 //import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.xenoamess.cyan_potion.SDL_GameControllerDB_Util;
+//import com.xenoamess.cyan_potion.sdl_game_controller_db_util.SDL_GameControllerDB_Util;
 //import org.junit.jupiter.api.Test;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;

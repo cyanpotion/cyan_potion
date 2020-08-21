@@ -55,7 +55,7 @@ import java.util.List;
  * other files with number name, they are json file containing data.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  * @see SaveFileObjectStatus
  * @see SaveFileContent
  */
@@ -127,7 +127,7 @@ public class SaveFileObject {
      * {version:dataCenter.gameVersion,lastSaveTime:now,lastLoadTime:now,nowIndex:-1}
      * then load from path + "status".
      * then set path + "status"'s lastLoadTime be now
-     * (this step will not thange the loaded saveFileObjectStatus in memory, just change the file on disk.)
+     * (this step will not change the loaded saveFileObjectStatus in memory, just change the file on disk.)
      *
      * @param saveManager saveManager
      * @param path        path
@@ -168,7 +168,7 @@ public class SaveFileObject {
      */
     public synchronized List<RuntimeVariableStruct> load() {
         if (!this.exist()) {
-            LOGGER.error("cannot load SaveFileContent : index==-1 means savefile is empty : {}", getPath());
+            LOGGER.error("cannot load SaveFileContent : index==-1 means save file is empty : {}", getPath());
             return new ArrayList<>();
         }
         FileObject fileObject = ResourceManager.resolveFile(getPath() + getSaveFileObjectStatus().getNowIndex());

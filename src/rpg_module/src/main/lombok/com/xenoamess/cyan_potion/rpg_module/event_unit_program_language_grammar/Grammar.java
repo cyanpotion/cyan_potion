@@ -28,7 +28,7 @@ package com.xenoamess.cyan_potion.rpg_module.event_unit_program_language_grammar
  * <p>Grammar class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 public class Grammar {
     private Grammar() {
@@ -888,15 +888,15 @@ public class Grammar {
     public static final int G_REPLAY_BGM_0 = 244;
 
     /**
-     * Constant <code>G_PLAYBGS=245</code>
+     * Constant <code>G_PLAY_BGS=245</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYBGS = 245;
+    public static final int G_PLAY_BGS = 245;
     /**
-     * Constant <code>G_PLAYBGS_0=245</code>
+     * Constant <code>G_PLAY_BGS_0=245</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYBGS_0 = 245;
+    public static final int G_PLAY_BGS_0 = 245;
 
     /**
      * Constant <code>G_FADEOUT_BGS=246</code>
@@ -910,37 +910,37 @@ public class Grammar {
     public static final int G_FADEOUT_BGS_0 = 246;
 
     /**
-     * Constant <code>G_PLAYME=249</code>
+     * Constant <code>G_PLAY_ME=249</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYME = 249;
+    public static final int G_PLAY_ME = 249;
     /**
-     * Constant <code>G_PLAYME_0=249</code>
+     * Constant <code>G_PLAY_ME_0=249</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYME_0 = 249;
+    public static final int G_PLAY_ME_0 = 249;
 
     /**
-     * Constant <code>G_PLAYSE=250</code>
+     * Constant <code>G_PLAY_SE=250</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYSE = 250;
+    public static final int G_PLAY_SE = 250;
     /**
-     * Constant <code>G_PLAYSE_0=250</code>
+     * Constant <code>G_PLAY_SE_0=250</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_PLAYSE_0 = 250;
+    public static final int G_PLAY_SE_0 = 250;
 
     /**
-     * Constant <code>G_STOPSE=251</code>
+     * Constant <code>G_STOP_SE=251</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_STOPSE = 251;
+    public static final int G_STOP_SE = 251;
     /**
-     * Constant <code>G_STOPSE_0=251</code>
+     * Constant <code>G_STOP_SE_0=251</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_STOPSE_0 = 251;
+    public static final int G_STOP_SE_0 = 251;
 
     /**
      * Constant <code>G_PLAY_MOVIE=261</code>
@@ -1170,15 +1170,15 @@ public class Grammar {
     public static final int G_CHANGE_ACTOR_IMAGES_0 = 322;
 
     /**
-     * Constant <code>G_CHANGE_VEHILE_IMAGES=323</code>
+     * Constant <code>G_CHANGE_VEHICLE_IMAGES=323</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_CHANGE_VEHILE_IMAGES = 323;
+    public static final int G_CHANGE_VEHICLE_IMAGES = 323;
     /**
-     * Constant <code>G_CHANGE_VEHILE_IMAGES_0=323</code>
+     * Constant <code>G_CHANGE_VEHICLE_IMAGES_0=323</code>
      */
     @SuppressWarnings("unused")
-    public static final int G_CHANGE_VEHILE_IMAGES_0 = 323;
+    public static final int G_CHANGE_VEHICLE_IMAGES_0 = 323;
 
 
     //Part : System Settings end

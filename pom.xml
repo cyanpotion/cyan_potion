@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>cyan_potion</artifactId>
-    <version>0.162.2</version>
+    <version>0.162.3</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.
@@ -63,7 +63,7 @@
         <!--        </repository>-->
         <repository>
             <id>central</id>
-            <url>http://central.maven.org/maven2/</url>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
         <!--        <repository>-->
         <!--            <id>jitpack.io</id>-->
@@ -85,14 +85,14 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.10</commons-lang3.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <httpclient.version>4.5.12</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.11.0</jackson.version>
-        <joml.version>1.9.24</joml.version>
-        <log4j.version>2.13.2</log4j.version>
+        <jackson.version>2.11.2</jackson.version>
+        <joml.version>1.9.25</joml.version>
+        <log4j.version>2.13.3</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
@@ -100,24 +100,24 @@
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <lombok.version>1.18.12</lombok.version>
-        <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
+        <lombok-maven-plugin.version>1.18.12.0</lombok-maven-plugin.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.10.11</commonx.version>
+        <commonx.version>0.11.1</commonx.version>
         <multi_language.version>0.46.0</multi_language.version>
-        <x8l.version>2.2.2</x8l.version>
-        <SDL_GameControllerDB_Util.version>[1.1.0,)
+        <x8l.version>2.2.7</x8l.version>
+        <SDL_GameControllerDB_Util.version>[1.7.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.7.0-M1</junit-jupiter.version>
+        <junit-jupiter.version>5.7.0-RC1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0
         </maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
@@ -149,6 +149,14 @@
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>update</id>
+            <build>
+                <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
@@ -321,6 +329,20 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--test start-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--lwjgl start-->
         <!--
         notice that we will not include lwjgl-ovr
@@ -776,7 +798,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -808,27 +829,10 @@
             <version>${log4j.version}</version>
             <type>pom</type>
         </dependency>
-
         <dependency>
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>SDL_GameControllerDB_Util</artifactId>
             <version>${SDL_GameControllerDB_Util.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.lwjgl</groupId>
-                    <artifactId>lwjgl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.eclipse.collections</groupId>-->

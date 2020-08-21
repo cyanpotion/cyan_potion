@@ -66,7 +66,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  * <p>Font class.</p>
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -157,11 +157,11 @@ public class Font extends AbstractResource {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param resourJson      resour Json
+     * @param resourceJson      resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
-    public Font(ResourceManager resourceManager, ResourceInfo<Font> resourJson) {
-        super(resourceManager, resourJson);
+    public Font(ResourceManager resourceManager, ResourceInfo<Font> resourceJson) {
+        super(resourceManager, resourceJson);
     }
 
     /**
@@ -476,6 +476,10 @@ public class Font extends AbstractResource {
 
     private float maxCharHeight = Float.NaN;
 
+    @SuppressWarnings("SpellCheckingInspection")
+    static final String text =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     /**
      * <p>Getter for the field <code>maxCharHeight</code>.</p>
      *
@@ -495,8 +499,7 @@ public class Font extends AbstractResource {
             float x3 = Float.MIN_VALUE;
             //noinspection unused
             float y3 = Float.MIN_VALUE;
-            String text =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
             float minY = Float.MAX_VALUE;
             float maxY = Float.MIN_VALUE;
 

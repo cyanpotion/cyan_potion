@@ -35,10 +35,10 @@ import lombok.ToString;
 
 /**
  * MainThreadEventProcessor class is not a processor class for MainThreadEvent,
- * but a processor to make sure a normal(non-mainthread-only) event be handled in main thread.
+ * but a processor to make sure a normal(non-MainThreadOnly) event be handled in main thread.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 
 @EqualsAndHashCode

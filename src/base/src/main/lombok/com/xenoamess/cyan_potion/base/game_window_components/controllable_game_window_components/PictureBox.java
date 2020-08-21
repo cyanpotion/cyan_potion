@@ -43,7 +43,7 @@ import org.joml.Vector4fc;
  * It is used to replace Picture when sometimes we need a Component but Picture is not a Component.
  *
  * @author XenoAmess
- * @version 0.162.2
+ * @version 0.162.3
  */
 
 @EqualsAndHashCode(callSuper = true)
@@ -61,7 +61,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * UpdaterBuilder for
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
-    public static final UpdaterBuilder<PictureBox> UPDATER_BUILDER_PICTUREBOX = new UpdaterBuilder<PictureBox>() {
+    public static final UpdaterBuilder<PictureBox> UPDATER_BUILDER_PICTURE_BOX = new UpdaterBuilder<PictureBox>() {
         @Override
         public UpdaterInterface<PictureBox> build(UpdaterInterface<? super PictureBox> superUpdater) {
             return new Updater<PictureBox>(superUpdater) {
@@ -80,8 +80,8 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
      * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent}
      */
     @SuppressWarnings("unused")
-    public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTUREBOX =
-            UPDATER_BUILDER_PICTUREBOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACTCONTROLLABLEGAMEWINDOWCOMPONENT);
+    public static final UpdaterInterface<PictureBox> DEFAULT_UPDATER_PICTURE_BOX =
+            UPDATER_BUILDER_PICTURE_BOX.build(AbstractControllableGameWindowComponent.DEFAULT_UPDATER_ABSTRACT_CONTROLLABLE_GAME_WINDOW_COMPONENT);
 
 
     /**
@@ -118,7 +118,7 @@ public class PictureBox extends AbstractControllableGameWindowComponent implemen
             this.picture = new Picture(null);
         }
         this.setUpdater(
-                UPDATER_BUILDER_PICTUREBOX.build(super.getUpdater())
+                UPDATER_BUILDER_PICTURE_BOX.build(super.getUpdater())
         );
     }
 

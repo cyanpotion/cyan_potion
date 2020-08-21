@@ -40,7 +40,7 @@
 // * TODO This class is not stable yet. Will be removed or modified in future.
 // *
 // * @author XenoAmess
-// * @version 0.162.2
+// * @version 0.162.3
 // */
 //public class CyanPotionURLConnection extends URLConnection {
 //    private final String userDir;
