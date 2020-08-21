@@ -28,12 +28,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
-    <artifactId>cyan_potion</artifactId>
-    <version>0.162.3</version>
+    <artifactId>project</artifactId>
+    <version>0.163.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
-    <description>a 2d game engine.
-    </description>
+    <description>a 2d game engine.</description>
     <url>https://github.com/cyanpotion/cyan_potion</url>
     <licenses>
         <license>
@@ -41,6 +40,12 @@
             <url>${project.url}/blob/master/LICENSE</url>
         </license>
     </licenses>
+    <modules>
+        <module>src/base</module>
+        <module>src/coordinate</module>
+        <module>src/rpg_module</module>
+        <module>src/demo</module>
+    </modules>
     <developers>
         <developer>
             <name>XenoAmess</name>
@@ -127,6 +132,7 @@
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.19</animal-sniffer-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -1077,6 +1083,26 @@
                         <include>${project.basedir}/src/test/lombok</include>
                         <include>${project.basedir}/src/test/java</include>
                     </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <version>${animal-sniffer-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <signature>
+                        <groupId>org.codehaus.mojo.signature</groupId>
+                        <artifactId>java18</artifactId>
+                        <version>1.0</version>
+                    </signature>
                 </configuration>
             </plugin>
         </plugins>

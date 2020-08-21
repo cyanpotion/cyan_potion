@@ -28,11 +28,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>cyan_potion</artifactId>
+        <artifactId>project</artifactId>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <version>0.162.3</version>
+        <version>0.163.0</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>cyan_potion_rpg_module</artifactId>
+    <artifactId>rpg_module</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
@@ -43,13 +44,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>cyan_potion_base</artifactId>
+            <artifactId>base</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>cyan_potion_coordinate
-            </artifactId>
+            <artifactId>coordinate</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
