@@ -14,11 +14,9 @@ matrix:
     - jdk: openjdk8
     - jdk: openjdk11
     - jdk: openjdk13
-    - jdk: openjdk15
     - jdk: openjdk-ea
   allow_failures:
     #seems lombok-maven-plugin does not support JDK14 right now.
-    - jdk: openjdk15
     - jdk: openjdk-ea
 script:
-  - "./mvnw clean install site -U -Dmaven.javadoc.skip=false"
+  - "./mvnw clean install -U -Dmaven.javadoc.skip=false"
