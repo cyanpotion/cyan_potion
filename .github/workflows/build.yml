@@ -19,6 +19,7 @@ on: [ push ]
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
