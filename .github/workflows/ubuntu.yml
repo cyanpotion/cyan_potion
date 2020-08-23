@@ -42,4 +42,4 @@ jobs:
       - name: Build with mvnw
         run: |
           chmod 777 ./mvnw
-          ./mvnw install -Plwjgl-natives-linux-amd64
+          ./mvnw install
