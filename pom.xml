@@ -91,6 +91,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
+        <commons-compress.version>1.20</commons-compress.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <httpclient.version>4.5.12</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
@@ -325,6 +326,7 @@
 
     <dependencyManagement>
         <dependencies>
+
             <!--test start-->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -338,6 +340,9 @@
                 <version>${junit-jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!--test end-->
+
+            <!--annotation start-->
             <dependency>
                 <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
                 <groupId>net.jcip</groupId>
@@ -351,6 +356,8 @@
                 <version>${annotations.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <!--annotation end-->
+
             <dependency>
                 <groupId>org.lwjgl</groupId>
                 <artifactId>lwjgl-bom</artifactId>
@@ -377,6 +384,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
