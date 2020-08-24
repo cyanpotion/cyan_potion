@@ -1,1 +1,0 @@
-call mvn clean deploy -Pupdate -Dmaven.javadoc.skip=false -Possrh -Pauto_clean_delombok
