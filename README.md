@@ -1,7 +1,6 @@
 # cyan_potion
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build status](https://ci.appveyor.com/api/projects/status/ioydj3u0se4gxl7l/branch/master?svg=true)](https://ci.appveyor.com/project/XenoAmess/cyan-potion/branch/master)
 <!--
 [![Total Lines](https://tokei.rs/b1/github/cyanpotion/cyan_potion/)](https://github.com/XAMPPRocky/tokei).
 no, it is totally unusable.
