@@ -34,7 +34,6 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>demo</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>a demo of cyan_potion game engine.
@@ -42,19 +41,16 @@
     <url>https://github.com/cyanpotion/cyan_potion/tree/master/src/demo</url>
     <dependencies>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>base</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>coordinate</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>rpg_module</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>

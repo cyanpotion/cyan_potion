@@ -34,7 +34,6 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>coordinate</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>the coordinate part of cyan_potion game engine, including a
@@ -44,9 +43,8 @@
     </url>
     <dependencies>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>base</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>

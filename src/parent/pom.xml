@@ -319,6 +319,33 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--components start-->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>parent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>coordinate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>rpg_module</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--components end-->
 
             <!--test start-->
             <dependency>

@@ -34,7 +34,6 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>base</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>the low-level part of cyan_potion game engine.
