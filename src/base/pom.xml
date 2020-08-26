@@ -29,9 +29,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.xenoamess.cyan_potion</groupId>
-        <artifactId>project</artifactId>
-        <version>0.163.1</version>
-        <relativePath>../../pom.xml</relativePath>
+        <artifactId>parent</artifactId>
+        <version>0.164.1</version>
+        <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>base</artifactId>
     <version>${project.parent.version}</version>
