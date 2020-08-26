@@ -29,11 +29,25 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>project</artifactId>
-    <version>0.164.1-SNAPSHOT</version>
+    <version>0.164.1</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>a 2d game engine.</description>
     <url>https://github.com/cyanpotion/cyan_potion</url>
+    <developers>
+        <developer>
+            <name>XenoAmess</name>
+            <email>xenoamess@gmail.com</email>
+            <organization>XenoAmess</organization>
+            <url>https://github.com/xenoamess</url>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:${project.url}.git</connection>
+        <developerConnection>${project.scm.connection}</developerConnection>
+        <url>${project.url}</url>
+        <tag>${project.version}</tag>
+    </scm>
     <licenses>
         <license>
             <name>MIT</name>
