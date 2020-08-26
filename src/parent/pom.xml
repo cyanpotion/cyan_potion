@@ -48,6 +48,12 @@
         <url>${project.url}</url>
         <tag>${project.version}</tag>
     </scm>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>${project.url}/blob/master/LICENSE</url>
+        </license>
+    </licenses>
     <repositories>
         <!--        <repository>-->
         <!--            <id>com.xenoamess</id>-->
