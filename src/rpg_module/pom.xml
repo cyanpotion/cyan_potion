@@ -30,7 +30,7 @@
     <parent>
         <groupId>com.xenoamess.cyan_potion</groupId>
         <artifactId>parent</artifactId>
-        <version>0.164.2-SNAPSHOT</version>
+        <version>0.164.2</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>rpg_module</artifactId>
