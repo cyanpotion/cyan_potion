@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>parent</artifactId>
-    <version>0.164.2</version>
+    <version>0.164.3</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>parent of cyan_potion modules poms</description>

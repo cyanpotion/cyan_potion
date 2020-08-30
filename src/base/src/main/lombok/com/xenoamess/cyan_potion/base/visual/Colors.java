@@ -59,10 +59,10 @@ public class Colors {
      * <p>colorStringToColorVector4f.</p>
      *
      * @param colorString a {@link java.lang.String} object.
-     * @return a {@link org.joml.Vector4fc} object.
+     * @return a {@link org.joml.Vector4f} object.
      */
     @SuppressWarnings("unused")
-    public static Vector4fc colorStringToColorVector4f(String colorString) {
+    public static Vector4f colorStringToColorVector4f(String colorString) {
         String[] strings = colorString.split(",");
         return new Vector4f(
                 Float.parseFloat(strings[0]),
@@ -89,7 +89,7 @@ public class Colors {
      * @param colorAwt a {@link java.awt.Color} object.
      * @return a {@link org.joml.Vector4fc} object.
      */
-    public static Vector4fc colorAwtToColorVector4f(Color colorAwt) {
+    public static Vector4f colorAwtToColorVector4f(Color colorAwt) {
         return new Vector4f(
                 colorAwt.getRed() / 255F,
                 colorAwt.getGreen() / 255F,
