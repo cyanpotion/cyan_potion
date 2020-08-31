@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.NormalResource;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -59,9 +59,9 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      * if so, throw ResourceSizeLargerThanGlMaxTextureSizeException.
      * notice that this only work when STRICT==true.
      *
-     * @param resource a {@link com.xenoamess.cyan_potion.base.memory.AbstractResource} object.
+     * @param resource a {@link NormalResource} object.
      */
-    public static void check(AbstractResource resource) {
+    public static void check(NormalResource resource) {
 
         if (resource.getMemorySize() > resource.getResourceManager().getMaxTextureSize()) {
             ResourceSizeLargerThanGlMaxTextureSizeException exception =
@@ -80,7 +80,7 @@ public class ResourceSizeLargerThanGlMaxTextureSizeException extends RuntimeExce
      *
      * @param resource resource checked
      */
-    private ResourceSizeLargerThanGlMaxTextureSizeException(AbstractResource resource) {
+    private ResourceSizeLargerThanGlMaxTextureSizeException(NormalResource resource) {
         super("MAX_TEXTURE_SIZE is " + resource.getResourceManager().getMaxTextureSize() + " but need " + resource.getMemorySize() + ", resourceInfo:" + resource.getResourceInfo());
     }
 }

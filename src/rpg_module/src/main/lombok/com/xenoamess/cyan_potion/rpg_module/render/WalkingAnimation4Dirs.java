@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.rpg_module.render;
 
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
+import com.xenoamess.cyan_potion.base.memory.AbstractResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -52,7 +53,59 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class WalkingAnimation4Dirs extends Animation {
+public class WalkingAnimation4Dirs extends Animation implements AbstractResource {
+
+    // AbstractResource starts
+    @SuppressWarnings("rawtypes")
+    @Getter
+    private final ResourceInfo resourceInfo;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    private final ResourceManager resourceManager;
+
+    @EqualsAndHashCode.Exclude
+    @Getter
+    @Setter
+    private long lastUsedFrameIndex;
+
+    @Override
+    public boolean load() {
+        if (this.isInMemory()) {
+            return true;
+        }
+        final String resourceFilePath = resourceInfo.getFileString();
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (resourceInfo.getType()) {
+            case STRING_CHARACTER:
+                int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
+                List<Texture> walkingTextures =
+                        TextureUtils.getWalkingTextures(resourceManager,
+                                resourceFilePath).get(peopleIndex);
+                this.initPictures(this.buildPictures(walkingTextures));
+                break;
+            default:
+                throw new URITypeNotDefinedException(resourceInfo);
+        }
+        return true;
+    }
+
+    @Override
+    public void close() {
+        faceDirFrameMap.clear();
+    }
+
+    @Override
+    public boolean isInMemory() {
+        return !faceDirFrameMap.isEmpty();
+    }
+
+    @Override
+    public void setInMemory(boolean inMemory) {
+
+    }
+    // AbstractResource ends
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -62,7 +115,7 @@ public class WalkingAnimation4Dirs extends Animation {
 
     @Getter
     @Setter
-    private Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
+    private final Map<Integer, List<AbstractPictureInterface>> faceDirFrameMap = new ConcurrentHashMap<>();
 
     @Getter
     @Setter
@@ -87,23 +140,12 @@ public class WalkingAnimation4Dirs extends Animation {
      * @param resourceInfo    resourceInfo.
      * @param resourceManager resourceManager
      */
-    public WalkingAnimation4Dirs(int fps, Unit unit, ResourceInfo resourceInfo,
+    public WalkingAnimation4Dirs(int fps, Unit unit, ResourceInfo<WalkingAnimation4Dirs> resourceInfo,
                                  ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
-        String resourceFilePath = resourceInfo.getFileString();
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (resourceInfo.getType()) {
-            case STRING_CHARACTER:
-                int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
-                List<Texture> walkingTextures =
-                        TextureUtils.getWalkingTextures(resourceManager,
-                                resourceFilePath).get(peopleIndex);
-                this.initPictures(this.buildPictures(walkingTextures));
-                break;
-            default:
-                throw new URITypeNotDefinedException(resourceInfo);
-        }
+        this.resourceInfo = resourceInfo;
+        this.resourceManager = resourceManager;
     }
 
     private List<AbstractPictureInterface> buildPictures(List<Texture> textures) {
@@ -141,6 +183,8 @@ public class WalkingAnimation4Dirs extends Animation {
      */
     @Override
     public AbstractPictureInterface getCurrentPicture() {
+        this.load();
+        this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
         long currentTime = System.currentTimeMillis();
         float elapsedTime = currentTime - getLastTime();
 

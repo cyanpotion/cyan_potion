@@ -100,7 +100,6 @@ public class Animation extends AbstractPicture {
     public AbstractPictureInterface getCurrentPicture() {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - getLastTime();
-
         int texturePointer = getTexturePointer();
         int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
         texturePointer += textureAddNum;

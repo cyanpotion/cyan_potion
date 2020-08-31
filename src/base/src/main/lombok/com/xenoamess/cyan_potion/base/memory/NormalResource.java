@@ -46,10 +46,10 @@ import java.util.function.Predicate;
  */
 @EqualsAndHashCode
 @ToString
-public abstract class AbstractResource implements Closeable, Bindable {
+public abstract class NormalResource implements AbstractResource {
     @JsonIgnore
     private static final transient Logger LOGGER =
-            LoggerFactory.getLogger(AbstractResource.class);
+            LoggerFactory.getLogger(NormalResource.class);
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
@@ -100,7 +100,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * <p>createNewLoadTask.</p>
      */
     protected synchronized void createNewLoadTask() {
-        this.setLoadTask(new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf));
+        this.setLoadTask(new FutureTask<>(NormalResource.this::loadByLoadTaskOrSelf));
     }
 
     /**
@@ -113,15 +113,17 @@ public abstract class AbstractResource implements Closeable, Bindable {
     /**
      * !!!NOTICE!!!
      * <p>
-     * This class shall never build from this constructor directly.
+     * In normal cases, this class shall never build from this constructor directly.
      * You shall always use ResourceManager.fetchResource functions to get this instance.
+     *
+     * However if you want to make your own AbstractResource instance, you can do this.
      *
      * @param resourceManager resource Manager
      * @param resourceInfo    Resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     @SuppressWarnings("rawtypes")
-    public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+    public NormalResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
         this.resourceInfo = resourceInfo;
     }
@@ -247,8 +249,8 @@ public abstract class AbstractResource implements Closeable, Bindable {
      */
     @SuppressWarnings("unchecked")
     protected boolean forceLoad() {
-        Predicate<AbstractResource> loader =
-                (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(
+        Predicate<NormalResource> loader =
+                (Predicate<NormalResource>) this.getResourceManager().getResourceLoader(
                         this.getClass(),
                         this.getResourceInfo().getType()
                 );

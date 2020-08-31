@@ -30,7 +30,7 @@ import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.TextureStateDisorderException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.NormalResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.visual.Colors;
@@ -60,7 +60,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class Texture extends AbstractResource implements Bindable {
+public class Texture extends NormalResource implements Bindable {
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Texture.class);
