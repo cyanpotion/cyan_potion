@@ -345,13 +345,19 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public <T extends Event> EventProcessor<? super T> getProcessor(Class<T> eventClass) {
         Class<? super T> nowClass = eventClass;
-        while (nowClass != null && nowClass != Event.class && !this.getEventClassToProcessorMap().containsKey(nowClass)) {
+        while (true) {
+            if (nowClass == null) {
+                return null;
+            }
+            final EventProcessor res = this.getEventClassToProcessorMap().get(nowClass);
+            if (res != null) {
+                return res;
+            }
+            if (nowClass == Event.class) {
+                return null;
+            }
             nowClass = nowClass.getSuperclass();
         }
-        if (eventClass == null) {
-            return null;
-        }
-        return this.eventClassToProcessorMapGet(eventClass);
     }
 
 

@@ -182,6 +182,17 @@ public final class ResourceInfo<T extends AbstractResource> {
         this.toString = toStringLocal;
     }
 
+    public static <T extends AbstractResource> T fetchResource(
+            ResourceManager resourceManager,
+            Class<T> resourceClass,
+            String type,
+            String fileObjectString,
+            String... values
+    ) {
+        return new ResourceInfo<T>(resourceClass,type,fileObjectString,values)
+                .fetchResource(resourceManager);
+    }
+
     /**
      * shortcut of resourceManager.fetchResource(this);
      *
@@ -208,7 +219,6 @@ public final class ResourceInfo<T extends AbstractResource> {
             LOGGER.error("getResourceJson(String json) fails, {}", json, e);
         }
         return resourceInfo;
-
     }
 
     /**
