@@ -53,12 +53,10 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class WalkingAnimation4Dirs extends Animation implements AbstractResource {
+public class WalkingAnimation4Dirs extends Animation  {
 
-    // AbstractResource starts
-    @SuppressWarnings("rawtypes")
     @Getter
-    private final ResourceInfo resourceInfo;
+    private final ResourceInfo<WalkingAnimation4DirsResource> resourceInfo;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -70,42 +68,20 @@ public class WalkingAnimation4Dirs extends Animation implements AbstractResource
     @Setter
     private long lastUsedFrameIndex;
 
-    @Override
     public boolean load() {
-        if (this.isInMemory()) {
+        if (!this.faceDirFrameMap.isEmpty()) {
             return true;
         }
-        final String resourceFilePath = resourceInfo.getFileString();
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (resourceInfo.getType()) {
-            case STRING_CHARACTER:
-                int peopleIndex = Integer.parseInt(resourceInfo.getValues()[0]);
-                List<Texture> walkingTextures =
-                        TextureUtils.getWalkingTextures(resourceManager,
-                                resourceFilePath).get(peopleIndex);
-                this.initPictures(this.buildPictures(walkingTextures));
-                break;
-            default:
-                throw new URITypeNotDefinedException(resourceInfo);
-        }
+        WalkingAnimation4DirsResource walkingAnimation4DirsResource = this.resourceInfo.fetchResource(this.getResourceManager());
+        walkingAnimation4DirsResource.load();
+        this.initPictures(this.buildPictures(walkingAnimation4DirsResource.getWalkingTextures()));
         return true;
     }
 
-    @Override
     public void close() {
         faceDirFrameMap.clear();
     }
 
-    @Override
-    public boolean isInMemory() {
-        return !faceDirFrameMap.isEmpty();
-    }
-
-    @Override
-    public void setInMemory(boolean inMemory) {
-
-    }
-    // AbstractResource ends
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -140,12 +116,13 @@ public class WalkingAnimation4Dirs extends Animation implements AbstractResource
      * @param resourceInfo    resourceInfo.
      * @param resourceManager resourceManager
      */
-    public WalkingAnimation4Dirs(int fps, Unit unit, ResourceInfo<WalkingAnimation4Dirs> resourceInfo,
+    public WalkingAnimation4Dirs(int fps, Unit unit, ResourceInfo<WalkingAnimation4DirsResource> resourceInfo,
                                  ResourceManager resourceManager) {
         super(fps);
         this.setUnit(unit);
         this.resourceInfo = resourceInfo;
         this.resourceManager = resourceManager;
+
     }
 
     private List<AbstractPictureInterface> buildPictures(List<Texture> textures) {
