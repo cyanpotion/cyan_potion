@@ -64,6 +64,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     private long memorySize;
 
     @EqualsAndHashCode.Exclude
+    @Getter(value = AccessLevel.PROTECTED)
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
 
     @EqualsAndHashCode.Exclude
@@ -92,20 +93,21 @@ public abstract class AbstractResource implements Closeable, Bindable {
 //    }
 
     @Getter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
+    @Setter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
     private FutureTask<Boolean> loadTask;
 
     /**
      * <p>createNewLoadTask.</p>
      */
     protected synchronized void createNewLoadTask() {
-        loadTask = new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf);
+        this.setLoadTask(new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf));
     }
 
     /**
      * <p>destroyLoadTask.</p>
      */
     protected synchronized void destroyLoadTask() {
-        this.loadTask = null;
+        this.setLoadTask(null);
     }
 
     /**
@@ -141,7 +143,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * if this function did not start the loading, then false.
      */
     public synchronized boolean startLoad() {
-        if (this.inMemory.get()) {
+        if (this.getInMemory().get()) {
             return false;
         }
         if (this.getLoadTask() != null) {
@@ -267,7 +269,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return a boolean.
      */
     public boolean isInMemory() {
-        return inMemory.get();
+        return this.getInMemory().get();
     }
 
     /**
@@ -276,6 +278,6 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @param inMemory a boolean.
      */
     public void setInMemory(boolean inMemory) {
-        this.inMemory.set(inMemory);
+        this.getInMemory().set(inMemory);
     }
 }

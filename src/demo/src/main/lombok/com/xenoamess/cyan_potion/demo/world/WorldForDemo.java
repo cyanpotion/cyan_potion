@@ -108,7 +108,7 @@ public final class WorldForDemo extends World {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private final Texture iconTexture = new ResourceInfo<>(
+    private final Texture iconTexture = ResourceInfo.of(
             Texture.class,
             STRING_PICTURE,
             this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
@@ -116,7 +116,7 @@ public final class WorldForDemo extends World {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private final Texture pureColorTexture = new ResourceInfo<>(
+    private final Texture pureColorTexture = ResourceInfo.of(
             Texture.class,
             STRING_PURE_COLOR,
             "",

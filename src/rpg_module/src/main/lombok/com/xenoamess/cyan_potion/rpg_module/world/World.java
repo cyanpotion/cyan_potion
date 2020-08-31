@@ -188,8 +188,8 @@ public class World extends AbstractEntityScene {
                     RpgModuleDataCenter.TILE_SIZE,
                     RpgModuleDataCenter.TILE_SIZE,
                     Unit.DEFAULT_UNIT_LAYER,
-                    new ResourceInfo(
-                            WalkingAnimation4Dirs.class,
+                    ResourceInfo.of(
+                            (Class) WalkingAnimation4Dirs.class,
                             STRING_CHARACTER,
                             "resources/www/img/characters/r2c_male_test.png",
                             "0"

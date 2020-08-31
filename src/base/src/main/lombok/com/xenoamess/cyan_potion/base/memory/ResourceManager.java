@@ -487,9 +487,8 @@ public class ResourceManager extends SubManager {
      * @param values           a {@link java.lang.String} object.
      * @return resource
      */
-    public <T extends AbstractResource> T
-    fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
-        ResourceInfo<T> resourceInfo = new ResourceInfo<>(tClass, type, fileObjectString, values);
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+        ResourceInfo<T> resourceInfo = ResourceInfo.of(tClass, type, fileObjectString, values);
         return this.fetchResource(tClass, resourceInfo);
     }
 

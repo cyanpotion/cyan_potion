@@ -153,7 +153,7 @@ public class Colors {
      * @return a {@link com.xenoamess.cyan_potion.base.memory.ResourceInfo} object.
      */
     public static ResourceInfo<Texture> getPureColorTextureResourceInfo(String colorString) {
-        return new ResourceInfo<>(
+        return ResourceInfo.of(
                 Texture.class,
                 STRING_PURE_COLOR,
                 "",
