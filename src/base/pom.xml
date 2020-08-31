@@ -30,11 +30,10 @@
     <parent>
         <groupId>com.xenoamess.cyan_potion</groupId>
         <artifactId>parent</artifactId>
-        <version>0.164.1</version>
+        <version>0.165.0</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>base</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>the low-level part of cyan_potion game engine.

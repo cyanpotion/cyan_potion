@@ -360,7 +360,7 @@ public class ResourceManager extends SubManager {
      * @return resource
      */
     public <T extends AbstractResource> T getResource(Class<T> tClass,
-                                                      ResourceInfo<T> resourceInfo) {
+                                                    ResourceInfo<T> resourceInfo) {
         assert (tClass == resourceInfo.getResourceClass());
         ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
                 defaultResourcesURIMapGet(tClass);
@@ -393,7 +393,7 @@ public class ResourceManager extends SubManager {
      */
     @SuppressWarnings({"unused", "unchecked"})
     public <T extends AbstractResource> T getResource(Class<T> tClass,
-                                                      String resourceInfoJson) {
+                                                    String resourceInfoJson) {
         return this.getResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
     }
 
@@ -487,9 +487,8 @@ public class ResourceManager extends SubManager {
      * @param values           a {@link java.lang.String} object.
      * @return resource
      */
-    public <T extends AbstractResource> T
-    fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
-        ResourceInfo<T> resourceInfo = new ResourceInfo<>(tClass, type, fileObjectString, values);
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+        ResourceInfo<T> resourceInfo = ResourceInfo.of(tClass, type, fileObjectString, values);
         return this.fetchResource(tClass, resourceInfo);
     }
 
@@ -557,7 +556,7 @@ public class ResourceManager extends SubManager {
      *
      * @param resource resource
      */
-    public void load(AbstractResource resource) {
+    public void load(NormalResource resource) {
         if (resource.isInMemory()) {
             return;
         }
@@ -571,7 +570,7 @@ public class ResourceManager extends SubManager {
      *
      * @param resource resource
      */
-    public void close(AbstractResource resource) {
+    public void close(NormalResource resource) {
         if (!resource.isInMemory()) {
             return;
         }

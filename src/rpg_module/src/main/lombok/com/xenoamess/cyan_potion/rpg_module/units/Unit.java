@@ -33,6 +33,7 @@ import com.xenoamess.cyan_potion.coordinate.entity.AbstractDynamicEntity;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.HorizontalRectangle;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
+import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -154,7 +155,7 @@ public class Unit extends AbstractDynamicEntity {
             float centerPosX, float centerPosY,
             float width, float height,
             int layer,
-            ResourceInfo walkingAnimation4DirsResourceInfo,
+            ResourceInfo<WalkingAnimation4DirsResource> walkingAnimation4DirsResourceInfo,
             ResourceManager resourceManager) {
         this(scene,
                 centerPosX, centerPosY,
@@ -205,7 +206,7 @@ public class Unit extends AbstractDynamicEntity {
      * @param walkingAnimation4DirsResourceInfo walkingAnimation4DirsResourceInfo
      * @param resourceManager                   resourceManager
      */
-    public void loadWalkingAnimations(ResourceInfo walkingAnimation4DirsResourceInfo,
+    public void loadWalkingAnimations(ResourceInfo<WalkingAnimation4DirsResource> walkingAnimation4DirsResourceInfo,
                                       ResourceManager resourceManager) {
         this.setPicture(new WalkingAnimation4Dirs(4, this,
                 walkingAnimation4DirsResourceInfo, resourceManager));

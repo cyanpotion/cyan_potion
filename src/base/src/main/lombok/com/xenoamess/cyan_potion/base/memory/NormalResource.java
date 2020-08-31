@@ -46,10 +46,10 @@ import java.util.function.Predicate;
  */
 @EqualsAndHashCode
 @ToString
-public abstract class AbstractResource implements Closeable, Bindable {
+public abstract class NormalResource implements AbstractResource {
     @JsonIgnore
     private static final transient Logger LOGGER =
-            LoggerFactory.getLogger(AbstractResource.class);
+            LoggerFactory.getLogger(NormalResource.class);
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
@@ -64,6 +64,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
     private long memorySize;
 
     @EqualsAndHashCode.Exclude
+    @Getter(value = AccessLevel.PROTECTED)
     private final AtomicBoolean inMemory = new AtomicBoolean(false);
 
     @EqualsAndHashCode.Exclude
@@ -92,34 +93,37 @@ public abstract class AbstractResource implements Closeable, Bindable {
 //    }
 
     @Getter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
+    @Setter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
     private FutureTask<Boolean> loadTask;
 
     /**
      * <p>createNewLoadTask.</p>
      */
     protected synchronized void createNewLoadTask() {
-        loadTask = new FutureTask<>(AbstractResource.this::loadByLoadTaskOrSelf);
+        this.setLoadTask(new FutureTask<>(NormalResource.this::loadByLoadTaskOrSelf));
     }
 
     /**
      * <p>destroyLoadTask.</p>
      */
     protected synchronized void destroyLoadTask() {
-        this.loadTask = null;
+        this.setLoadTask(null);
     }
 
     /**
      * !!!NOTICE!!!
      * <p>
-     * This class shall never build from this constructor directly.
+     * In normal cases, this class shall never build from this constructor directly.
      * You shall always use ResourceManager.fetchResource functions to get this instance.
+     *
+     * However if you want to make your own AbstractResource instance, you can do this.
      *
      * @param resourceManager resource Manager
      * @param resourceInfo    Resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     @SuppressWarnings("rawtypes")
-    public AbstractResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
+    public NormalResource(ResourceManager resourceManager, ResourceInfo resourceInfo) {
         this.resourceManager = resourceManager;
         this.resourceInfo = resourceInfo;
     }
@@ -141,7 +145,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * if this function did not start the loading, then false.
      */
     public synchronized boolean startLoad() {
-        if (this.inMemory.get()) {
+        if (this.getInMemory().get()) {
             return false;
         }
         if (this.getLoadTask() != null) {
@@ -245,8 +249,8 @@ public abstract class AbstractResource implements Closeable, Bindable {
      */
     @SuppressWarnings("unchecked")
     protected boolean forceLoad() {
-        Predicate<AbstractResource> loader =
-                (Predicate<AbstractResource>) this.getResourceManager().getResourceLoader(
+        Predicate<NormalResource> loader =
+                (Predicate<NormalResource>) this.getResourceManager().getResourceLoader(
                         this.getClass(),
                         this.getResourceInfo().getType()
                 );
@@ -267,7 +271,7 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @return a boolean.
      */
     public boolean isInMemory() {
-        return inMemory.get();
+        return this.getInMemory().get();
     }
 
     /**
@@ -276,6 +280,6 @@ public abstract class AbstractResource implements Closeable, Bindable {
      * @param inMemory a boolean.
      */
     public void setInMemory(boolean inMemory) {
-        this.inMemory.set(inMemory);
+        this.getInMemory().set(inMemory);
     }
 }

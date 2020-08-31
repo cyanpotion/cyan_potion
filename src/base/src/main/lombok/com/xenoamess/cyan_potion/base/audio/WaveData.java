@@ -31,7 +31,7 @@ import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException;
 import com.xenoamess.cyan_potion.base.exceptions.UnexpectedBufferClassTypeException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.NormalResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import lombok.EqualsAndHashCode;
@@ -60,7 +60,7 @@ import static org.lwjgl.stb.STBVorbis.*;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class WaveData extends AbstractResource {
+public class WaveData extends NormalResource {
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(WaveData.class);

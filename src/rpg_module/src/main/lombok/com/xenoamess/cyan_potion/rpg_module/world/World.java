@@ -45,6 +45,7 @@ import com.xenoamess.cyan_potion.rpg_module.game_map.GameTile;
 import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
+import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
 import lombok.EqualsAndHashCode;
@@ -188,8 +189,8 @@ public class World extends AbstractEntityScene {
                     RpgModuleDataCenter.TILE_SIZE,
                     RpgModuleDataCenter.TILE_SIZE,
                     Unit.DEFAULT_UNIT_LAYER,
-                    new ResourceInfo(
-                            WalkingAnimation4Dirs.class,
+                    ResourceInfo.of(
+                            WalkingAnimation4DirsResource.class,
                             STRING_CHARACTER,
                             "resources/www/img/characters/r2c_male_test.png",
                             "0"

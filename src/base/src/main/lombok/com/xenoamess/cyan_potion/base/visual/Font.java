@@ -33,7 +33,7 @@ import com.xenoamess.commons.primitive.iterators.IntIterator;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.exceptions.ResourceSizeLargerThanGlMaxTextureSizeException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.memory.NormalResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
@@ -70,7 +70,7 @@ import static org.lwjgl.stb.STBTruetype.*;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class Font extends AbstractResource {
+public class Font extends NormalResource {
 
     @JsonIgnore
     private static final transient Logger LOGGER =

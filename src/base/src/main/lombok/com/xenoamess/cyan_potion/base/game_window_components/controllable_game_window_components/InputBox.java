@@ -750,9 +750,9 @@ public class InputBox extends AbstractControllableGameWindowComponent {
     }
 
     /**
-     * delete next line in this.contentString.
+     * delete all CRLF in this.contentString.
      */
-    public void deleteNextLine() {
+    private void deleteAllCRLF() {
         this.contentString = StringUtils.join(
                 this.contentString.split(
                         NEXT_LINE_STRING
@@ -767,8 +767,8 @@ public class InputBox extends AbstractControllableGameWindowComponent {
      */
     public void setContentString(String contentString) {
         this.contentString = contentString;
-        if (this.isAllowMultiLine()) {
-            this.deleteNextLine();
+        if (!this.isAllowMultiLine()) {
+            this.deleteAllCRLF();
         }
         this.applyContentStringLengthLimit();
         if (this.isUseAllowCharSet()) {

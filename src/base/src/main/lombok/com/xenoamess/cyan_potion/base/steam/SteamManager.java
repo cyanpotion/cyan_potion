@@ -587,7 +587,7 @@ public class SteamManager extends SubManager {
         } else {
             steamIDhandleString = "";
         }
-        return new ResourceInfo<>(
+        return ResourceInfo.of(
                 Texture.class,
                 STRING_STEAM_AVATAR,
                 "",

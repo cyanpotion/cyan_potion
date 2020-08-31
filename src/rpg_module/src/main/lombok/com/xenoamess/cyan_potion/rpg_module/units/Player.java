@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.coordinate.AbstractEntityScene;
 import com.xenoamess.cyan_potion.coordinate.physic.shapes.AbstractShape;
+import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource;
 
 /**
  * <p>Player class.</p>
@@ -111,7 +112,7 @@ public class Player extends Unit {
             float centerPosX, float centerPosY,
             float width, float height,
             int layer,
-            ResourceInfo walkingAnimation4DirsResourceInfo,
+            ResourceInfo<WalkingAnimation4DirsResource> walkingAnimation4DirsResourceInfo,
             ResourceManager resourceManager) {
         super(
                 scene,

@@ -1,7 +1,7 @@
 <settingFile settingFormatVersion=0.3.0>
     <commonSettings
         gameName=CyanPotionRpgModuleDemo
-        gameVersion=0.164.1
+        gameVersion=0.165.0
         titleTextID=0
         textFilePath=resources/text/text.x8l
         defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
@@ -28,6 +28,7 @@
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.visual.Font:PUT_FONT_LOADER_TTF_FILE>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.plugins.CodePlugins:PLUGIN_RPG_MODULE_TEXTURE_LOADERS>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.steam.SteamTextureUtils:PUT_TEXTURE_LOADER_STEAM_AVATAR>
+        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource:PUT_WALKING_ANIMATION_4_DIRS_RESOURCE_LOADERS>
     >
     <debug=1>>
     <keymap using>

@@ -82,7 +82,7 @@ public final class Logo extends AbstractGameWindowComponent {
         this.getGameWindow().getGameManager().getAudioManager().playWaveData(
                 this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                         WaveData.class,
-                        new ResourceInfo<>(
+                        ResourceInfo.of(
                                 WaveData.class,
                                 STRING_MUSIC,
                                 "resources/www/audio/se/logo.ogg"

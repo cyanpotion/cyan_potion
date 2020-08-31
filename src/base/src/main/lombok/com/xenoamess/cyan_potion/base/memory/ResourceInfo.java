@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.xenoamess.cyan_potion.base.DataCenter.getObjectMapper;
 
@@ -103,7 +104,7 @@ class ResourceInfoDeserializer extends JsonDeserializer<ResourceInfo> {
             resourceInfoValues[i - 3] = arrayNode.get(i).asText();
         }
 
-        return new ResourceInfo<>(
+        return ResourceInfo.of(
                 resourceInfoResourceClass,
                 resourceInfoType,
                 resourceInfoFileString,
@@ -137,6 +138,9 @@ public final class ResourceInfo<T extends AbstractResource> {
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(ResourceInfo.class);
 
+    private static final ConcurrentHashMap<String, ResourceInfo> STRING_TO_RESOURCE_INFO_MAP =
+            new ConcurrentHashMap<>();
+
     @Getter
     private final Class<T> resourceClass;
 
@@ -163,10 +167,10 @@ public final class ResourceInfo<T extends AbstractResource> {
      * @param fileObjectString a {@link java.lang.String} object.
      * @param values           a {@link java.lang.String} object.
      */
-    public ResourceInfo(Class<T> resourceClass,
-                        String type,
-                        String fileObjectString,
-                        String... values) {
+    private ResourceInfo(Class<T> resourceClass,
+                         String type,
+                         String fileObjectString,
+                         String... values) {
         this.resourceClass = resourceClass;
         this.type = type;
         this.fileString = fileObjectString;
@@ -180,6 +184,39 @@ public final class ResourceInfo<T extends AbstractResource> {
             LOGGER.error("toString() fails, {},{}", this.getResourceClass(), this.getValues(), e);
         }
         this.toString = toStringLocal;
+    }
+
+
+    public static <T extends AbstractResource> ResourceInfo<T> of(
+            Class<T> resourceClass,
+            String type,
+            String fileObjectString,
+            String... values
+    ) {
+        ResourceInfo<T> newResourceInfo = new ResourceInfo<T>(
+                resourceClass,
+                type,
+                fileObjectString,
+                values
+        );
+        ResourceInfo<T> res = STRING_TO_RESOURCE_INFO_MAP.get(newResourceInfo.toString);
+        if (res == null) {
+            STRING_TO_RESOURCE_INFO_MAP.put(newResourceInfo.toString, newResourceInfo);
+            return newResourceInfo;
+        } else {
+            return res;
+        }
+    }
+
+    public static <T extends AbstractResource> T fetchResource(
+            ResourceManager resourceManager,
+            Class<T> resourceClass,
+            String type,
+            String fileObjectString,
+            String... values
+    ) {
+        return new ResourceInfo<T>(resourceClass, type, fileObjectString, values)
+                .fetchResource(resourceManager);
     }
 
     /**
@@ -208,7 +245,6 @@ public final class ResourceInfo<T extends AbstractResource> {
             LOGGER.error("getResourceJson(String json) fails, {}", json, e);
         }
         return resourceInfo;
-
     }
 
     /**

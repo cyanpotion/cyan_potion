@@ -77,7 +77,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
     private final Texture saveStarTexture =
             this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                     Texture.class,
-                    new ResourceInfo<>(
+                    ResourceInfo.of(
                             Texture.class,
                             STRING_PICTURE,
                             "resources/www/img/pictures/saveStar.png"
