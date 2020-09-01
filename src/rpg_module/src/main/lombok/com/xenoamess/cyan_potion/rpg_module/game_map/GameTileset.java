@@ -169,7 +169,7 @@ public class GameTileset {
         List<GameTilesetJson> gameTilesetJsons =
                 GameTilesetJson.getGameTileSetJsons(
                         DataCenter.getObjectMapper(),
-                        ResourceManager.resolveFile(resourceManager.getGameManager().getDataCenter().getGameSettings().getDefaultFontResourceJsonString() + "www/data/Tilesets.json")
+                        ResourceManager.resolveFile(resourceManager.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath() + "www/data/Tilesets.json")
                 );
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {

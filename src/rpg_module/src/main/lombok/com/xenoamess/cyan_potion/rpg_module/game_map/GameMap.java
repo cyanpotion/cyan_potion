@@ -113,7 +113,14 @@ public class GameMap {
 
         for (int nowStartPos = 0; nowStartPos < this.getGameMapJson().data.size(); nowStartPos += ti) {
             for (int i = 0; i < ti; i++) {
-                this.getGameTiles().get(i).addBindable(getGameTileset().getGameTilesetTextureByID(gameMapJson.data.get(nowStartPos + i)));
+                this.getGameTiles()
+                        .get(i)
+                        .addBindable(
+                                getGameTileset()
+                                        .getGameTilesetTextureByID(
+                                                gameMapJson.data.get(nowStartPos + i)
+                                        )
+                        );
             }
         }
 
@@ -191,7 +198,12 @@ public class GameMap {
      * @return return
      */
     public GameTileset getGameTileset() {
-        return this.getWorld().getRpgModuleDataCenter().getGameTileset(this.getGameMapJson().tilesetId);
+        return this.getWorld()
+                .getRpgModuleDataCenter()
+                .getGameTileset(
+                        this.getGameMapJson()
+                        .tilesetId
+                );
     }
 
     /**
