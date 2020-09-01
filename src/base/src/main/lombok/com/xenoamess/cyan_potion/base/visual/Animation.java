@@ -24,12 +24,16 @@
 
 package com.xenoamess.cyan_potion.base.visual;
 
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import com.xenoamess.cyan_potion.base.math.FrameFloat;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.joml.Math;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +50,17 @@ public class Animation extends AbstractPicture {
 
     @Getter
     @Setter
-    private int texturePointer;
-
-    @Getter
-    @Setter
-    private long lastTime = System.currentTimeMillis();
+    private float texturePointer;
 
     @Getter
     @Setter
     private float fps;
 
     @Getter
+    @Setter
+    private FrameFloat fpsFrameFloat;
+
+    @Getter(AccessLevel.PROTECTED)
     private final List<AbstractPictureInterface> frames = new ArrayList<>();
 
 
@@ -77,7 +81,7 @@ public class Animation extends AbstractPicture {
     @SuppressWarnings("unused")
     @Override
     public void draw(GameWindow gameWindow) {
-        AbstractPictureInterface pictureInterface = this.getCurrentPicture();
+        AbstractPictureInterface pictureInterface = this.getCurrentPicture(gameWindow.getGameManager());
         pictureInterface.cover(this);
         pictureInterface.draw(gameWindow);
     }
@@ -87,7 +91,7 @@ public class Animation extends AbstractPicture {
      */
     @Override
     public void draw(AbstractScene scene) {
-        AbstractPictureInterface pictureInterface = this.getCurrentPicture();
+        AbstractPictureInterface pictureInterface = this.getCurrentPicture(scene.getGameManager());
         pictureInterface.cover(this);
         pictureInterface.draw(scene);
     }
@@ -97,16 +101,35 @@ public class Animation extends AbstractPicture {
      *
      * @return return
      */
-    public AbstractPictureInterface getCurrentPicture() {
-        long currentTime = System.currentTimeMillis();
-        long elapsedTime = currentTime - getLastTime();
-        int texturePointer = getTexturePointer();
-        int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
+    public AbstractPictureInterface getCurrentPicture(GameManager gameManager) {
+        if (this.getFpsFrameFloat() == null || this.getFpsFrameFloat().getGameManager() != gameManager) {
+            this.setFpsFrameFloat(new FrameFloat(gameManager, this.getFps()));
+        }
+        if (this.getFpsFrameFloat().getValueFor1Second() != this.getFps()) {
+            this.getFpsFrameFloat().setValueFor1Second(this.getFps());
+        }
+        float texturePointer = getTexturePointer();
+        float textureAddNum = this.getFpsFrameFloat().getValue();
         texturePointer += textureAddNum;
-        texturePointer %= getFrames().size();
+        texturePointer %= this.getFrameNum();
         setTexturePointer(texturePointer);
-        this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
+        final int index = getIndex();
+        return this.getFrame(index);
+    }
 
-        return getFrames().get(getTexturePointer());
+    public int getFrameNum() {
+        return this.getFrames().size();
+    }
+
+    public AbstractPictureInterface getFrame(int index) {
+        return this.getFrames().get(index);
+    }
+
+    public int getIndex() {
+        int tmpIndex = (int) Math.floor(getTexturePointer());
+        while (tmpIndex >= this.getFrameNum()) {
+            tmpIndex -= this.getFrameNum();
+        }
+        return tmpIndex;
     }
 }

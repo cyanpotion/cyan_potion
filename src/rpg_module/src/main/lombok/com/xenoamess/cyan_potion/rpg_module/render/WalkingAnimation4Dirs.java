@@ -24,8 +24,7 @@
 
 package com.xenoamess.cyan_potion.rpg_module.render;
 
-import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
-import com.xenoamess.cyan_potion.base.memory.AbstractResource;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -37,13 +36,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.joml.Math;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
 
 /**
  * <p>WalkingAnimation4Dirs class.</p>
@@ -53,7 +51,7 @@ import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CH
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class WalkingAnimation4Dirs extends Animation  {
+public class WalkingAnimation4Dirs extends Animation {
 
     @Getter
     private final ResourceInfo<WalkingAnimation4DirsResource> resourceInfo;
@@ -63,16 +61,12 @@ public class WalkingAnimation4Dirs extends Animation  {
     @Getter
     private final ResourceManager resourceManager;
 
-    @EqualsAndHashCode.Exclude
-    @Getter
-    @Setter
-    private long lastUsedFrameIndex;
-
     public boolean load() {
         if (!this.faceDirFrameMap.isEmpty()) {
             return true;
         }
-        WalkingAnimation4DirsResource walkingAnimation4DirsResource = this.resourceInfo.fetchResource(this.getResourceManager());
+        WalkingAnimation4DirsResource walkingAnimation4DirsResource =
+                this.resourceInfo.fetchResource(this.getResourceManager());
         walkingAnimation4DirsResource.load();
         this.initPictures(this.buildPictures(walkingAnimation4DirsResource.getWalkingTextures()));
         return true;
@@ -159,33 +153,37 @@ public class WalkingAnimation4Dirs extends Animation  {
      * {@inheritDoc}
      */
     @Override
-    public AbstractPictureInterface getCurrentPicture() {
+    public AbstractPictureInterface getCurrentPicture(GameManager gameManager) {
         this.load();
-        this.setLastUsedFrameIndex(this.getResourceManager().getGameManager().getNowFrameIndex());
-        long currentTime = System.currentTimeMillis();
-        float elapsedTime = currentTime - getLastTime();
+        return super.getCurrentPicture(gameManager);
+    }
 
-        int texturePointer = getTexturePointer();
-        int textureAddNum = (int) Math.floor(elapsedTime / 1000.0 * getFps());
-        texturePointer += textureAddNum;
-        texturePointer %= 4;
-        setTexturePointer(texturePointer);
-        this.setLastTime(getLastTime() + (long) (textureAddNum * 1000.0 / getFps()));
+    @Override
+    public int getFrameNum() {
+        return 4;
+    }
 
-        if (!getUnit().isMoving()) {
-            setTexturePointer(1);
-        }
-
-        int tmpTexturePointer = getTexturePointer();
-
-        if (getTexturePointer() == 3) {
-            tmpTexturePointer -= 2;
-        }
-
+    @Override
+    public AbstractPictureInterface getFrame(int index) {
         List<AbstractPictureInterface> list = getFaceDirFrameMap().get(getUnit().getFaceDir());
         if (list == null || list.isEmpty()) {
             list = getFaceDirFrameMap().get(this.getDrawFaceDir());
         }
-        return list.get(tmpTexturePointer);
+        return list.get(index);
+    }
+
+    public int getIndex() {
+        if (!getUnit().isMoving()) {
+            setTexturePointer(1);
+            return 1;
+        }
+        int tmpIndex = (int) Math.floor(getTexturePointer());
+        while (tmpIndex >= this.getFrameNum()) {
+            tmpIndex -= this.getFrameNum();
+        }
+        if (tmpIndex == 3) {
+            tmpIndex -= 2;
+        }
+        return tmpIndex;
     }
 }
