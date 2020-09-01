@@ -25,7 +25,7 @@
 package com.xenoamess.cyan_potion.base.audio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.io.FileObjectUtilsx;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
@@ -205,7 +205,7 @@ public class WaveData extends NormalResource {
      * @throws com.xenoamess.cyan_potion.base.exceptions.FailedToOpenOggVorbisFileException if any.     if any.
      */
     public void readVorbis(FileObject resourceFileObject) throws FailedToOpenOggVorbisFileException {
-        ByteBuffer vorbis = FileUtils.loadBuffer(resourceFileObject, true);
+        ByteBuffer vorbis = FileObjectUtilsx.loadBuffer(resourceFileObject, true);
         readVorbis(vorbis);
         MemoryUtil.memFree(vorbis);
     }

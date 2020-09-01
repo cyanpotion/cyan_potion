@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;

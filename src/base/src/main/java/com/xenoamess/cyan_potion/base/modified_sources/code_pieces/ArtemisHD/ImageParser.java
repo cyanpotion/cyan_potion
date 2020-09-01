@@ -43,7 +43,8 @@ XenoAmess 2018/01/29
 package com.xenoamess.cyan_potion.base.modified_sources.code_pieces.ArtemisHD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.io.FileObjectUtilsx;
+
 import org.apache.commons.vfs2.FileObject;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.system.MemoryStack;
@@ -103,7 +104,7 @@ public class ImageParser implements Closeable {
             IntBuffer comp = stack.mallocInt(1);
             IntBuffer w = stack.mallocInt(1);
             IntBuffer h = stack.mallocInt(1);
-            ByteBuffer byteBuffer = FileUtils.loadBuffer(fileObject, false);
+            ByteBuffer byteBuffer = FileObjectUtilsx.loadBuffer(fileObject, false);
             image = stbi_load_from_memory(byteBuffer, w, h, comp, 4);
             if (image == null) {
                 LOGGER.error("Could not load image resources : fileObject = {}", fileObject);

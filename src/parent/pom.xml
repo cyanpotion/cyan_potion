@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>parent</artifactId>
-    <version>0.166.0</version>
+    <version>0.167.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>parent of cyan_potion modules poms</description>
@@ -104,7 +104,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.11.2</commonx.version>
+        <commonx.version>0.12.0</commonx.version>
         <multi_language.version>0.47.1</multi_language.version>
         <x8l.version>2.3.2</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.7.0,)

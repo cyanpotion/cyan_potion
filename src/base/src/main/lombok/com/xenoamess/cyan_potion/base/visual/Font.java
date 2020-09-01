@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.io.FileObjectUtilsx;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.commons.primitive.iterators.IntIterator;
@@ -202,7 +202,7 @@ public class Font extends NormalResource {
      */
     public boolean loadBitmap(FileObject fileObject) {
         System.out.println(fileObject);
-        final ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
+        final ByteBuffer ttf = FileObjectUtilsx.loadBuffer(fileObject, true);
         if (ttf == null) {
             throw new IllegalArgumentException("ttf buffer load failed!:"+fileObject);
         }
