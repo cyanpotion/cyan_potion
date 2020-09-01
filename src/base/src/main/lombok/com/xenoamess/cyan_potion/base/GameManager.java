@@ -189,6 +189,10 @@ public class GameManager implements Closeable {
 
     @Getter
     @Setter
+    private long currentTimeMillis = 0;
+
+    @Getter
+    @Setter
     private boolean canRender = false;
 
     /**
@@ -601,10 +605,12 @@ public class GameManager implements Closeable {
         int drawFramesForFPS = 0;
 
         long time = System.currentTimeMillis();
+        this.setCurrentTimeMillis(time);
         double unprocessed = 0;
 
         while (this.isAlive()) {
             long time2 = System.currentTimeMillis();
+            this.setCurrentTimeMillis(time2);
             double passed = (time2 - time) / 1000.0;
             time = time2;
 
@@ -615,11 +621,13 @@ public class GameManager implements Closeable {
                 double eachFrameTime = 1.0 / this.getDataCenter().getGameSettings().getMaxFPS();
                 while (unprocessed >= eachFrameTime) {
                     unprocessed -= eachFrameTime;
+                    this.setCurrentTimeMillis(System.currentTimeMillis());
                     this.setTimeToLastUpdate(eachFrameTime);
                     setCanRender(true);
                     this.loopOnce();
                 }
             } else {
+                this.setCurrentTimeMillis(System.currentTimeMillis());
                 this.setTimeToLastUpdate(unprocessed);
                 unprocessed = 0;
                 setCanRender(true);
@@ -627,6 +635,7 @@ public class GameManager implements Closeable {
             }
 
             if (isCanRender()) {
+                this.setCurrentTimeMillis(System.currentTimeMillis());
                 draw();
 
                 {//draw frame FPS calculate.

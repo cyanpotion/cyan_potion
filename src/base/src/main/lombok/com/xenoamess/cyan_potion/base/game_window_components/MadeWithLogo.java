@@ -79,7 +79,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
         super(gameWindow);
         this.logoPicture.cover(this.getGameWindow());
         this.lifeTime = lifeTime;
-        this.dieTimeStamp = System.currentTimeMillis() + this.getLifeTime();
+        this.dieTimeStamp = getGameManager().getCurrentTimeMillis() + this.getLifeTime();
         this.getGameWindow().getGameManager().getAudioManager().playWaveData(
                 this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                         WaveData.class,
@@ -141,7 +141,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
      */
     @Override
     public boolean update() {
-        if (System.currentTimeMillis() > this.getDieTimeStamp()) {
+        if (getGameManager().getCurrentTimeMillis() > this.getDieTimeStamp()) {
             this.willClose.set(true);
         }
 
@@ -174,7 +174,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
             return false;
         }
 
-        long t = this.getLifeTime() - this.getDieTimeStamp() + System.currentTimeMillis();
+        long t = this.getLifeTime() - this.getDieTimeStamp() + getGameManager().getCurrentTimeMillis();
         float colorScale;
 
         if (t < STAY_TIME) {

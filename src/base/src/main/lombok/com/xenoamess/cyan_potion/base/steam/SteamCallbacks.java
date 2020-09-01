@@ -24,7 +24,27 @@
 
 package com.xenoamess.cyan_potion.base.steam;
 
-import com.codedisaster.steamworks.*;
+import com.codedisaster.steamworks.SteamAPICall;
+import com.codedisaster.steamworks.SteamAPIWarningMessageHook;
+import com.codedisaster.steamworks.SteamAuth;
+import com.codedisaster.steamworks.SteamException;
+import com.codedisaster.steamworks.SteamFriends;
+import com.codedisaster.steamworks.SteamFriendsCallback;
+import com.codedisaster.steamworks.SteamID;
+import com.codedisaster.steamworks.SteamLeaderboardEntriesHandle;
+import com.codedisaster.steamworks.SteamLeaderboardEntry;
+import com.codedisaster.steamworks.SteamLeaderboardHandle;
+import com.codedisaster.steamworks.SteamPublishedFileID;
+import com.codedisaster.steamworks.SteamRemoteStorage;
+import com.codedisaster.steamworks.SteamRemoteStorageCallback;
+import com.codedisaster.steamworks.SteamResult;
+import com.codedisaster.steamworks.SteamUGCCallback;
+import com.codedisaster.steamworks.SteamUGCDetails;
+import com.codedisaster.steamworks.SteamUGCHandle;
+import com.codedisaster.steamworks.SteamUGCQuery;
+import com.codedisaster.steamworks.SteamUserCallback;
+import com.codedisaster.steamworks.SteamUserStatsCallback;
+import com.codedisaster.steamworks.SteamUtilsCallback;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

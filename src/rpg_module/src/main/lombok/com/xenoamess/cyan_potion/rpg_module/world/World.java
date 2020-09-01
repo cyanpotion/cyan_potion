@@ -44,7 +44,6 @@ import com.xenoamess.cyan_potion.rpg_module.game_map.GameMap;
 import com.xenoamess.cyan_potion.rpg_module.game_map.GameTile;
 import com.xenoamess.cyan_potion.rpg_module.game_map.GameTileset;
 import com.xenoamess.cyan_potion.rpg_module.jsons.GameSystemJson;
-import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4Dirs;
 import com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource;
 import com.xenoamess.cyan_potion.rpg_module.units.Player;
 import com.xenoamess.cyan_potion.rpg_module.units.Unit;
@@ -312,6 +311,8 @@ public class World extends AbstractEntityScene {
     @SuppressWarnings("unused")
     public static final float CAMERA_LERP = 5F;
 
+    private FrameFloat lerpFloat;
+
     /**
      * {@inheritDoc}
      */
@@ -323,7 +324,9 @@ public class World extends AbstractEntityScene {
             dynamicEntity.update();
         }
 
-        final FrameFloat lerpFloat = new FrameFloat(this.getGameManager(), CAMERA_LERP);
+        if (lerpFloat == null) {
+            lerpFloat = new FrameFloat(this.getGameManager(), CAMERA_LERP);
+        }
         Vector2f vector2f = new Vector2f(
                 this.getCamera().getPosX(),
                 this.getCamera().getPosY()).lerp(new Vector2f(getPlayer().getCenterPosX(), getPlayer().getCenterPosY()),

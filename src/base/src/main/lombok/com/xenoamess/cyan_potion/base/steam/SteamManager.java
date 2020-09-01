@@ -24,7 +24,22 @@
 
 package com.xenoamess.cyan_potion.base.steam;
 
-import com.codedisaster.steamworks.*;
+import com.codedisaster.steamworks.SteamAPI;
+import com.codedisaster.steamworks.SteamApps;
+import com.codedisaster.steamworks.SteamException;
+import com.codedisaster.steamworks.SteamFriends;
+import com.codedisaster.steamworks.SteamID;
+import com.codedisaster.steamworks.SteamLeaderboardHandle;
+import com.codedisaster.steamworks.SteamPublishedFileID;
+import com.codedisaster.steamworks.SteamPublishedFileUpdateHandle;
+import com.codedisaster.steamworks.SteamRemoteStorage;
+import com.codedisaster.steamworks.SteamUGC;
+import com.codedisaster.steamworks.SteamUGCFileWriteStreamHandle;
+import com.codedisaster.steamworks.SteamUGCHandle;
+import com.codedisaster.steamworks.SteamUGCQuery;
+import com.codedisaster.steamworks.SteamUser;
+import com.codedisaster.steamworks.SteamUserStats;
+import com.codedisaster.steamworks.SteamUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
@@ -42,14 +57,23 @@ import org.apache.commons.vfs2.FileObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import static com.codedisaster.steamworks.SteamNativeHandle.getNativeHandle;
-import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.*;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_LARGE;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_MEDIUM;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_SMALL;
+import static com.xenoamess.cyan_potion.base.steam.SteamTextureUtils.STRING_STEAM_AVATAR;
 
 /**
  * This class learned a lot on com.codedisaster.steamworks.test.SteamClientAPITest

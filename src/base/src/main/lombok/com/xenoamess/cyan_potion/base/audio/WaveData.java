@@ -46,11 +46,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.nio.*;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 import java.util.function.Function;
 
-import static org.lwjgl.openal.AL10.*;
-import static org.lwjgl.stb.STBVorbis.*;
+import static org.lwjgl.openal.AL10.AL_FORMAT_MONO16;
+import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
+import static org.lwjgl.openal.AL10.alDeleteBuffers;
+import static org.lwjgl.openal.AL10.alGenBuffers;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_close;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_get_info;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_get_samples_short_interleaved;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_open_memory;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_stream_length_in_samples;
 
 /**
  * <p>WaveData class.</p>

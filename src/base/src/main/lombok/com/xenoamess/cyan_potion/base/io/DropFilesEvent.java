@@ -37,7 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.lwjgl.system.MemoryUtil.*;
+import static org.lwjgl.system.MemoryUtil.memByteBufferNT1;
+import static org.lwjgl.system.MemoryUtil.memPointerBuffer;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * <p>KeyboardEvent class.</p>

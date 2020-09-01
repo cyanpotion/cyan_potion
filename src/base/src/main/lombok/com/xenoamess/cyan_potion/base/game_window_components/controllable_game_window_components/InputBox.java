@@ -157,7 +157,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                     setNowSelectStartPos(clickIndex);
                     setNowSelectEndPos(clickIndex);
                     setNowInsertPos(clickIndex);
-                    InputBox.this.slashStartTime = System.currentTimeMillis();
+                    InputBox.this.slashStartTime = getGameManager().getCurrentTimeMillis();
                     return null;
                 })
         );
@@ -221,7 +221,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                                 if (!this.isInFocusNow()) {
                                     return keyboardEvent;
                                 }
-                                this.slashStartTime = System.currentTimeMillis();
+                                this.slashStartTime = getGameManager().getCurrentTimeMillis();
 
                                 if (keyboardEvent.getAction() == GLFW_PRESS || keyboardEvent.getAction() == GLFW_REPEAT) {
                                     Vector2f insertPos;
@@ -718,7 +718,7 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                 }
             }
 
-            if (ifDraw && (((System.currentTimeMillis() - this.slashStartTime) / this.getCursorShineTime()) % 2 == 0)) {
+            if (ifDraw && (((getGameManager().getCurrentTimeMillis() - this.slashStartTime) / this.getCursorShineTime()) % 2 == 0)) {
                 glColor4f(getCursorColor().x(), getCursorColor().y(),
                         getCursorColor().z(), getCursorColor().w());
                 glEnd();
