@@ -177,7 +177,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         initGlfwWindow();
         initOpengl();
 
-        this.setShader(new Shader("shader"));
+        this.setShader(new Shader(this.getGameManager(),"shader"));
 
         Model.COMMON_MODEL.init(
                 Model.getCommonVerticesFloatArray(),
@@ -320,8 +320,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         FileObject iconFileObject = ResourceManager.resolveFile(
                 this.getGameManager().getDataCenter().getGameSettings().getIconFilePath()
         );
-        iconFilePath = ResourceManager.toFile(iconFileObject).getAbsolutePath();
-        ImageParser.setWindowIcon(getWindow(), iconFilePath);
+        ImageParser.setWindowIcon(getWindow(), iconFileObject);
         // Make the window visible
     }
 

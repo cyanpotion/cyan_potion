@@ -77,15 +77,6 @@ public class Font extends NormalResource {
             LoggerFactory.getLogger(Font.class);
 
     /**
-     * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
-     * file.
-     *
-     * @see com.xenoamess.cyan_potion.base.GameManager
-     */
-    public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
-            "resources/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
-
-    /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
      * notice that open this shall create a lot of pictures onto your disk when loading your ttf.
      * Only open it when you are debugging a new ttf file.
@@ -210,7 +201,11 @@ public class Font extends NormalResource {
      * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
+        System.out.println(fileObject);
         final ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
+        if (ttf == null) {
+            throw new IllegalArgumentException("ttf buffer load failed!:"+fileObject);
+        }
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 

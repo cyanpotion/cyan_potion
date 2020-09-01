@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.render;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,7 +43,32 @@ import java.nio.FloatBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
+import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
+import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
+import static org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS;
+import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
+import static org.lwjgl.opengl.GL20.glAttachShader;
+import static org.lwjgl.opengl.GL20.glBindAttribLocation;
+import static org.lwjgl.opengl.GL20.glCompileShader;
+import static org.lwjgl.opengl.GL20.glCreateProgram;
+import static org.lwjgl.opengl.GL20.glCreateShader;
+import static org.lwjgl.opengl.GL20.glDeleteProgram;
+import static org.lwjgl.opengl.GL20.glDeleteShader;
+import static org.lwjgl.opengl.GL20.glDetachShader;
+import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
+import static org.lwjgl.opengl.GL20.glGetProgrami;
+import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
+import static org.lwjgl.opengl.GL20.glGetShaderi;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
+import static org.lwjgl.opengl.GL20.glLinkProgram;
+import static org.lwjgl.opengl.GL20.glShaderSource;
+import static org.lwjgl.opengl.GL20.glUniform1i;
+import static org.lwjgl.opengl.GL20.glUniform3f;
+import static org.lwjgl.opengl.GL20.glUniform4f;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
+import static org.lwjgl.opengl.GL20.glUseProgram;
+import static org.lwjgl.opengl.GL20.glValidateProgram;
 
 /**
  * <p>Shader class.</p>
@@ -61,6 +87,9 @@ public class Shader implements Closeable {
      * try to clear when reach CLEAR_TIME_MILLIS to last clear time.
      */
     public static final int CLEAR_TIME_MILLIS = 10000;
+
+    @Getter
+    private final GameManager gameManager;
 
     @Getter
     @Setter
@@ -89,14 +118,15 @@ public class Shader implements Closeable {
      *
      * @param filename filename
      */
-    public Shader(String filename) {
+    public Shader(GameManager gameManager, String filename) {
+        this.gameManager = gameManager;
+        final String shaderFolderPath = this.gameManager.getDataCenter().getGameSettings().getShaderFolderPath();
         setProgramObject(glCreateProgram());
 
         setVertexShaderObject(glCreateShader(GL_VERTEX_SHADER));
         glShaderSource(getVertexShaderObject(),
-                ResourceManager.loadString("resources/shaders/" + filename + ".vs"
+                ResourceManager.loadString(shaderFolderPath + filename + ".vs"
                 )
-
         );
         glCompileShader(getVertexShaderObject());
         if (glGetShaderi(getVertexShaderObject(), GL_COMPILE_STATUS) != 1) {
@@ -106,7 +136,7 @@ public class Shader implements Closeable {
 
         setFragmentShaderObject(glCreateShader(GL_FRAGMENT_SHADER));
         glShaderSource(getFragmentShaderObject(),
-                ResourceManager.loadString("resources/shaders/" + filename + ".fs")
+                ResourceManager.loadString(shaderFolderPath + filename + ".fs")
         );
         glCompileShader(getFragmentShaderObject());
         if (glGetShaderi(getFragmentShaderObject(), GL_COMPILE_STATUS) != 1) {

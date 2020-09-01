@@ -43,6 +43,8 @@ XenoAmess 2018/01/29
 package com.xenoamess.cyan_potion.base.modified_sources.code_pieces.ArtemisHD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xenoamess.commons.io.FileUtils;
+import org.apache.commons.vfs2.FileObject;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
@@ -54,7 +56,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.glfwSetWindowIcon;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
 
 /**
  * <p>ImageParser class.</p>
@@ -89,10 +91,10 @@ public class ImageParser implements Closeable {
     /**
      * <p>loadImage.</p>
      *
-     * @param path path
+     * @param fileObject fileObject
      * @return return
      */
-    public static ImageParser loadImage(String path) {
+    public static ImageParser loadImage(FileObject fileObject) {
         ByteBuffer image;
         int width;
         int height;
@@ -101,11 +103,10 @@ public class ImageParser implements Closeable {
             IntBuffer comp = stack.mallocInt(1);
             IntBuffer w = stack.mallocInt(1);
             IntBuffer h = stack.mallocInt(1);
-
-            image = stbi_load(path, w, h, comp, 4);
+            ByteBuffer byteBuffer = FileUtils.loadBuffer(fileObject, false);
+            image = stbi_load_from_memory(byteBuffer, w, h, comp, 4);
             if (image == null) {
-                LOGGER.error("Could not load image resources : path = {}",
-                        path);
+                LOGGER.error("Could not load image resources : fileObject = {}", fileObject);
             }
             width = w.get();
             height = h.get();
@@ -116,11 +117,11 @@ public class ImageParser implements Closeable {
     /**
      * <p>getGLFWImage.</p>
      *
-     * @param path path
+     * @param fileObject fileObject
      * @return return
      */
-    public static GLFWImage getGLFWImage(String path) {
-        ImageParser imageparser = loadImage(path);
+    public static GLFWImage getGLFWImage(FileObject fileObject) {
+        ImageParser imageparser = loadImage(fileObject);
         GLFWImage res = GLFWImage.malloc().set(imageparser.getWidth(),
                 imageparser.getHeight(), imageparser.getImage());
         imageparser.close();
@@ -130,12 +131,12 @@ public class ImageParser implements Closeable {
     /**
      * <p>setWindowIcon.</p>
      *
-     * @param window a long.
-     * @param path   a {@link java.lang.String} object.
+     * @param window     a long.
+     * @param fileObject fileObject
      */
-    public static void setWindowIcon(long window, String path) {
+    public static void setWindowIcon(long window, FileObject fileObject) {
         try (
-                GLFWImage gameWindowIcon = getGLFWImage(path);
+                GLFWImage gameWindowIcon = getGLFWImage(fileObject);
                 GLFWImage.Buffer gameWindowIconBuffer =
                         GLFWImage.malloc(1).put(0, gameWindowIcon)
         ) {

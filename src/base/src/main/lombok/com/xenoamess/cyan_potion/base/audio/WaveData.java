@@ -228,7 +228,7 @@ public class WaveData extends NormalResource {
             try {
                 this.readVorbis(resourceFileObject);
             } catch (FailedToOpenOggVorbisFileException ex) {
-                LOGGER.error("failed to open ogg vorbis file : {}", resourceInfo, ex);
+                LOGGER.error("failed to open ogg vorbis file : "+ resourceInfo, ex);
             }
         }
 

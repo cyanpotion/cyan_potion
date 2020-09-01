@@ -51,13 +51,13 @@ public class ForceEntrance {
         Map<String, String> argsMap = GameManager.generateArgsMap(args);
         switch (new Random().nextInt(3)) {
             case 0:
-                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.x8l");
+                argsMap.put("SettingFilePath", "settings/RpgModuleDemoSettings.x8l");
                 break;
             case 1:
-                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.json");
+                argsMap.put("SettingFilePath", "settings/RpgModuleDemoSettings.json");
                 break;
             case 2:
-                argsMap.put("SettingFilePath", "resources/settings/RpgModuleDemoSettings.xml");
+                argsMap.put("SettingFilePath", "settings/RpgModuleDemoSettings.xml");
                 break;
             default:
                 //shall never
@@ -74,7 +74,7 @@ public class ForceEntrance {
      */
     public static void generateJsonAndXml() {
         try {
-            final String basePath = "resources/settings/RpgModuleDemoSettings";
+            final String basePath = "settings/RpgModuleDemoSettings";
             X8lTree x8lTree = null;
             x8lTree = X8lTree.load(ResourceManager.resolveFile(basePath + ".x8l"));
             x8lTree.trimForce();

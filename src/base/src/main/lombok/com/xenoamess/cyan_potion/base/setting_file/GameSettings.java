@@ -89,10 +89,17 @@ public class GameSettings {
      */
     private String gameVersion;
 
+    private String defaultResourcesFolderPath;
+
     /**
      * path of text file
      */
     private String textFilePath;
+
+    /**
+     * path of text file
+     */
+    private String shaderFolderPath;
 
     /**
      * path of icon file

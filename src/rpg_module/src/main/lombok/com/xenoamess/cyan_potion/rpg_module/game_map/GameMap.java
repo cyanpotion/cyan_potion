@@ -81,20 +81,22 @@ public class GameMap {
     @Getter
     private final ArrayList<EventUnit> eventUnits = new ArrayList<>();
 
-    private static String gameMapInfoNameToGameMapJsonURI(String gameMapInfoName) {
-        return "resources/www/data/" + gameMapInfoName + ".json";
+    private static String gameMapInfoNameToGameMapJsonURI(World world, String gameMapInfoName) {
+        return world.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                + "www/data/" + gameMapInfoName + ".json";
     }
 
     private GameMap(World world, GameMapInfoJson gameMapInfoJson) {
         this.setWorld(world);
         this.setGameMapInfoJson(gameMapInfoJson);
 
-        String gameMapJsonURI = gameMapInfoNameToGameMapJsonURI(this.getGameMapInfoJson().getName());
+        String gameMapJsonURI = gameMapInfoNameToGameMapJsonURI(world, this.getGameMapInfoJson().getName());
         LOGGER.debug("GameMapJsonURI {}", gameMapJsonURI);
 
         int tmpId = this.getGameMapInfoJson().getId();
         this.setGameMapJson(GameMapJson.getGameMapJson(DataCenter.getObjectMapper(),
-                ResourceManager.resolveFile(gameMapInfoNameToGameMapJsonURI("Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
+                ResourceManager.resolveFile(gameMapInfoNameToGameMapJsonURI(world,
+                        "Map" + (tmpId > 99 ? "" : "0") + (tmpId > 9 ? "" :
                         "0") + tmpId))));
         initFromGameMapJson(this.getGameMapJson());
     }
@@ -147,7 +149,7 @@ public class GameMap {
     static List<GameMap> getGameMaps(World world) {
         List<GameMapInfoJson> gameMapInfoJsons =
                 getGameMapInfoJsons(DataCenter.getObjectMapper(),
-                        ResourceManager.resolveFile("resources/www/data/MapInfos.json"));
+                        ResourceManager.resolveFile(world.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath() + "www/data/MapInfos.json"));
 
         ArrayList<GameMap> gameMaps = new ArrayList<>();
         for (GameMapInfoJson au : gameMapInfoJsons) {

@@ -138,27 +138,6 @@ public class ResourceManager extends SubManager {
     }
 
     /**
-     * generate a File object from a fileObject object.
-     * I had discussed with commons-vfs guys and they told me they might add a function to do this.
-     * I might delete this then.
-     * But this is useful for now.
-     * You know sometimes we just need a function like this for something in Swing to work,
-     * for example JFileChooser.
-     *
-     * @param fileObject a {@link org.apache.commons.vfs2.FileObject} object.
-     * @return a {@link java.io.File} object.
-     */
-    public static File toFile(FileObject fileObject) {
-        File result = null;
-        try {
-            result = FileUtils.toFile(fileObject);
-        } catch (FileSystemException e) {
-            LOGGER.error("this FileObject cannot be transformed to a File", e);
-        }
-        return result;
-    }
-
-    /**
      * <p>Getter for the field <code>maxTextureSize</code>.</p>
      *
      * @return a long.
