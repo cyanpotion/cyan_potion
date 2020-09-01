@@ -26,8 +26,8 @@
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADERS>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.audio.WaveData:PUT_WAVEDATA_LOADER_MUSIC>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.visual.Font:PUT_FONT_LOADER_TTF_FILE>
-        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.plugins.CodePlugins:PLUGIN_RPG_MODULE_TEXTURE_LOADERS>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.steam.SteamTextureUtils:PUT_TEXTURE_LOADER_STEAM_AVATAR>
+        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.plugins.CodePlugins:PLUGIN_RPG_MODULE_TEXTURE_LOADERS>
         <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.rpg_module.render.WalkingAnimation4DirsResource:PUT_WALKING_ANIMATION_4_DIRS_RESOURCE_LOADERS>
     >
     <debug=1>>
