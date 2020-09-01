@@ -395,7 +395,7 @@ public class GameManager implements Closeable {
         String settingFilePath = getString(
                 this.getArgsMap(),
                 "SettingFilePath",
-                "resources/settings/DefaultSettings.x8l"
+                "settings/DefaultSettings.x8l"
         );
 
         LOGGER.debug("SettingsFilePath : {}", settingFilePath);

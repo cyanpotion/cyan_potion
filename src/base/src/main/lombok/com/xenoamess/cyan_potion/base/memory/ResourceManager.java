@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base.memory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.commons.io.FileUtils;
 import com.xenoamess.cyan_potion.base.DataCenter;
 import com.xenoamess.cyan_potion.base.GameManager;
 import com.xenoamess.cyan_potion.base.SubManager;
@@ -133,27 +132,6 @@ public class ResourceManager extends SubManager {
             result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             LOGGER.error("loadString(FileObject fileObject) fails: {}", fileObject, e);
-        }
-        return result;
-    }
-
-    /**
-     * generate a File object from a fileObject object.
-     * I had discussed with commons-vfs guys and they told me they might add a function to do this.
-     * I might delete this then.
-     * But this is useful for now.
-     * You know sometimes we just need a function like this for something in Swing to work,
-     * for example JFileChooser.
-     *
-     * @param fileObject a {@link org.apache.commons.vfs2.FileObject} object.
-     * @return a {@link java.io.File} object.
-     */
-    public static File toFile(FileObject fileObject) {
-        File result = null;
-        try {
-            result = FileUtils.toFile(fileObject);
-        } catch (FileSystemException e) {
-            LOGGER.error("this FileObject cannot be transformed to a File", e);
         }
         return result;
     }

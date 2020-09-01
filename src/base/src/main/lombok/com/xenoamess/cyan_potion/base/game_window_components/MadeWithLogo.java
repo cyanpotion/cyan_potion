@@ -53,11 +53,12 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 @ToString
 public final class MadeWithLogo extends AbstractGameWindowComponent {
     private final Texture logoTexture =
-            this.getGameWindow().getGameManager().getResourceManager().
+            this.getGameManager().getResourceManager().
                     fetchResource(
                             Texture.class,
                             STRING_PICTURE,
-                            "resources/www/img/pictures/madewith.png"
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                            +"www/img/pictures/madewith.png"
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
@@ -85,7 +86,8 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
                         WaveData.class,
                         ResourceInfo.of(
                                 WaveData.class, STRING_MUSIC,
-                                "resources/www/audio/se/madewith.ogg"
+                                this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                                +"www/audio/se/madewith.ogg"
                         )
                 )
         );

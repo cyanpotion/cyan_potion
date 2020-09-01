@@ -26,7 +26,7 @@ package com.xenoamess.cyan_potion.base.visual;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.as_final_field.AsFinalField;
-import com.xenoamess.commons.io.FileUtils;
+import com.xenoamess.commons.io.FileObjectUtilsx;
 import com.xenoamess.commons.main_thread_only.MainThreadOnly;
 import com.xenoamess.commons.primitive.collections.lists.array_lists.IntArrayList;
 import com.xenoamess.commons.primitive.iterators.IntIterator;
@@ -75,15 +75,6 @@ public class Font extends NormalResource {
     @JsonIgnore
     private static final transient Logger LOGGER =
             LoggerFactory.getLogger(Font.class);
-
-    /**
-     * the default DEFAULT_FONT_FILE_PATH if you does not set it from setting
-     * file.
-     *
-     * @see com.xenoamess.cyan_potion.base.GameManager
-     */
-    public static final String DEFAULT_DEFAULT_FONT_RESOURCE_URI =
-            "resources/www/fonts/SourceHanSans-Normal.ttc:ttfFile";
 
     /**
      * Constant <code>TEST_PRINT_FONT_BMP=false</code>
@@ -210,7 +201,11 @@ public class Font extends NormalResource {
      * @return a boolean.
      */
     public boolean loadBitmap(FileObject fileObject) {
-        final ByteBuffer ttf = FileUtils.loadBuffer(fileObject, true);
+        System.out.println(fileObject);
+        final ByteBuffer ttf = FileObjectUtilsx.loadBuffer(fileObject, true);
+        if (ttf == null) {
+            throw new IllegalArgumentException("ttf buffer load failed!:"+fileObject);
+        }
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
 

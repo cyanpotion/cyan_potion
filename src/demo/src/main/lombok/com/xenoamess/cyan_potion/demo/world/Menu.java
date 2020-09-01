@@ -66,7 +66,8 @@ public final class Menu extends AbstractGameWindowComponent {
                     fetchResource(
                             Texture.class,
                             STRING_PICTURE,
-                            "resources/www/img/pictures/menuBackGround.png"
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                                    +"www/img/pictures/menuBackGround.png"
                     );
     @Getter
     private final Picture menuBackGroundPicture = new Picture(menuBackGroundTexture);

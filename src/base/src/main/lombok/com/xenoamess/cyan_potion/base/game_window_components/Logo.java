@@ -56,7 +56,8 @@ public final class Logo extends AbstractGameWindowComponent {
                     fetchResource(
                             Texture.class,
                             STRING_PICTURE,
-                            "resources/www/img/pictures/logo.png"
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                            +"www/img/pictures/logo.png"
                     );
 
     private final Picture logoPicture;
@@ -85,7 +86,8 @@ public final class Logo extends AbstractGameWindowComponent {
                         ResourceInfo.of(
                                 WaveData.class,
                                 STRING_MUSIC,
-                                "resources/www/audio/se/logo.ogg"
+                                this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                                        +"www/audio/se/logo.ogg"
                         )
                 )
         );

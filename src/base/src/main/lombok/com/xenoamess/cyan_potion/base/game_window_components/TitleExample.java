@@ -63,7 +63,8 @@ public final class TitleExample extends AbstractGameWindowComponent {
                     fetchResource(
                             Texture.class,
                             STRING_PICTURE,
-                            "resources/www/img/pictures/saveSlot.png"
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                            +"www/img/pictures/saveSlot.png"
                     );
     @Getter
     private final Picture saveSlotPicture = new Picture(saveSlotTexture);
@@ -80,7 +81,8 @@ public final class TitleExample extends AbstractGameWindowComponent {
                     ResourceInfo.of(
                             Texture.class,
                             STRING_PICTURE,
-                            "resources/www/img/pictures/saveStar.png"
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                            +"www/img/pictures/saveStar.png"
                     )
             );
 
@@ -262,7 +264,8 @@ public final class TitleExample extends AbstractGameWindowComponent {
         Texture texture = this.getGameWindow().getGameManager().getResourceManager().fetchResource(
                 Texture.class,
                 STRING_PICTURE,
-                "resources/www/img/pictures/saveSlot.png"
+                this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                        +"www/img/pictures/saveSlot.png"
         );
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);

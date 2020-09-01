@@ -65,8 +65,9 @@ public class GameTileset {
     @Getter
     private final Map<Integer, Texture> idTextureMap = new ConcurrentHashMap<>();
 
-    private static String gameTilesetNameToGameTilesetJsonURI(String gameMapInfoName) {
-        return "resources/www/img/tilesets/" + gameMapInfoName + ".png";
+    private static String gameTilesetNameToGameTilesetJsonURI(ResourceManager resourceManager, String gameMapInfoName) {
+        return resourceManager.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                + "www/img/tilesets/" + gameMapInfoName + ".png";
     }
 
     private GameTileset(ResourceManager resourceManager,
@@ -83,11 +84,11 @@ public class GameTileset {
         {
             //A5
             ts = this.getGameTilesetJson().tilesetNames.get(5 - 1);
-            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
             LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
-                ts = gameTilesetNameToGameTilesetJsonURI(ts);
+                ts = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
                 textures = TextureUtils.getTilesetTexturesA5(resourceManager, ts);
                 ti = 1536;
                 for (Texture au : textures) {
@@ -101,11 +102,11 @@ public class GameTileset {
         {
             //B
             ts = this.getGameTilesetJson().tilesetNames.get(6 - 1);
-            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
             LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
-                ts = gameTilesetNameToGameTilesetJsonURI(ts);
+                ts = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
                 textures = TextureUtils.getTilesetTexturesB(resourceManager, ts);
                 ti = 0;
                 for (Texture au : textures) {
@@ -119,11 +120,11 @@ public class GameTileset {
         {
             //C
             ts = this.getGameTilesetJson().tilesetNames.get(7 - 1);
-            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
             LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
-                ts = gameTilesetNameToGameTilesetJsonURI(ts);
+                ts = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
                 textures = TextureUtils.getTilesetTexturesC(resourceManager, ts);
                 ti = 256;
                 for (Texture au : textures) {
@@ -137,11 +138,11 @@ public class GameTileset {
         {
             //A2
             ts = this.getGameTilesetJson().tilesetNames.get(2 - 1);
-            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(ts);
+            String gameTilesetJsonURI = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
             LOGGER.debug(gameTilesetJsonURI);
 
             if (!ts.isEmpty()) {
-                ts = gameTilesetNameToGameTilesetJsonURI(ts);
+                ts = gameTilesetNameToGameTilesetJsonURI(resourceManager, ts);
                 textures = TextureUtils.getTilesetTexturesA2(resourceManager, ts);
                 ti = 2816;
                 for (Texture au : textures) {
@@ -168,7 +169,7 @@ public class GameTileset {
         List<GameTilesetJson> gameTilesetJsons =
                 GameTilesetJson.getGameTileSetJsons(
                         DataCenter.getObjectMapper(),
-                        ResourceManager.resolveFile("resources/www/data/Tilesets.json")
+                        ResourceManager.resolveFile(resourceManager.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath() + "www/data/Tilesets.json")
                 );
         ArrayList<GameTileset> gameTilesets = new ArrayList<>();
         for (GameTilesetJson au : gameTilesetJsons) {

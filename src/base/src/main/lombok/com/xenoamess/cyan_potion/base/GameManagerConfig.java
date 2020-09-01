@@ -419,4 +419,18 @@ public class GameManagerConfig {
      * @see GameManager
      */
     public static final String STRING_STEAM_APPID = "steam_appid";
+
+    /**
+     * The text file's path
+     *
+     * @see GameManager
+     */
+    public static final String STRING_SHADER_FOLDER_PATH = "shaderFolderPath";
+
+    /**
+     * The text file's path
+     *
+     * @see GameManager
+     */
+    public static final String STRING_DEFAULT_RESOURCES_FOLDER_PATH = "defaultResourcesFolderPath";
 }

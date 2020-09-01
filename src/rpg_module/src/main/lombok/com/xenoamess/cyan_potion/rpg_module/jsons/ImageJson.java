@@ -64,7 +64,8 @@ public class ImageJson implements Serializable {
             return resourceManager.fetchResource(
                     Texture.class,
                     STRING_CHARACTER,
-                    "resources/www/img/characters/" + this.characterName + ".png",
+                    resourceManager.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                            + "www/img/characters/" + this.characterName + ".png",
                     Integer.toString(this.characterIndex),
                     Integer.toString(tmp)
             );

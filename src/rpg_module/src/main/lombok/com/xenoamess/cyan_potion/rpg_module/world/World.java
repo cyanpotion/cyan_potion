@@ -149,7 +149,14 @@ public class World extends AbstractEntityScene {
         {
             this.setRpgModuleDataCenter(new RpgModuleDataCenter(this));
 
-            this.getRpgModuleDataCenter().setGameSystemJson(GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(), ResourceManager.resolveFile("resources/www/data/System.json")));
+            this.getRpgModuleDataCenter().setGameSystemJson(
+                    GameSystemJson.getGameSystemJson(DataCenter.getObjectMapper(),
+                            ResourceManager.resolveFile(
+                                    this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                                    +"www/data/System.json"
+                            )
+                    )
+            );
             LOGGER.debug("GameSystemJson.INIT(this.gameManager)");
             GameTileset.init(this);
             LOGGER.debug("GameTileset.INIT(this.gameManager)");
@@ -191,7 +198,7 @@ public class World extends AbstractEntityScene {
                     ResourceInfo.of(
                             WalkingAnimation4DirsResource.class,
                             STRING_CHARACTER,
-                            "resources/www/img/characters/r2c_male_test.png",
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath() + "www/img/characters/r2c_male_test.png",
                             "0"
                     ),
                     this.getGameWindow().getGameManager().getResourceManager()));

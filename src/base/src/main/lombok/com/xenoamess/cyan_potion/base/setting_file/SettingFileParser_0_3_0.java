@@ -38,9 +38,35 @@ import lombok.ToString;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.system.Configuration;
 
-import java.awt.*;
+import java.awt.Toolkit;
 
-import static com.xenoamess.cyan_potion.base.GameManagerConfig.*;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_AUTO_SHOW_GAME_WINDOW_AFTER_INIT;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_DEFAULT_FONT_RESOURCE_URI;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_DEFAULT_RESOURCES_FOLDER_PATH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_FULL_SCREEN;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_NAME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_VERSION;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_GAME_WINDOW_CLASS_NAME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_ICON_FILE_PATH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_LANGUAGE;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_LOGIC_WINDOW_HEIGHT;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_LOGIC_WINDOW_WIDTH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_LOGO_CLASS_NAME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_MAX_FPS;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_NO_CONSOLE_THREAD;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_REAL_WINDOW_HEIGHT;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_REAL_WINDOW_WIDTH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_RUN_WITH_STEAM;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_SHADER_FOLDER_PATH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_STEAM_APPID;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_STEAM_RUN_CALL_BACKS_TIME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_TEXT_FILE_PATH;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_TITLE_CLASS_NAME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_TITLE_TEXT_ID;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.STRING_WORLD_CLASS_NAME;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getBoolean;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getInteger;
+import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
 
 /**
  * <p>SettingFIleParser_0_3_0 class.</p>
@@ -122,6 +148,8 @@ public class SettingFileParser_0_3_0 extends AbstractSettingFileParser {
             }
         }
 
+        gameSettings.setDefaultResourcesFolderPath(getString(gameSettings.getCommonSettings(),
+                STRING_DEFAULT_RESOURCES_FOLDER_PATH, "resources/"));
         gameSettings.setTitleTextID(getString(gameSettings.getCommonSettings(),
                 STRING_TITLE_TEXT_ID, ""));
         gameSettings.setGameName(getString(gameSettings.getCommonSettings(),
@@ -129,9 +157,11 @@ public class SettingFileParser_0_3_0 extends AbstractSettingFileParser {
         gameSettings.setGameVersion(getString(gameSettings.getCommonSettings(),
                 STRING_GAME_VERSION, "1.0"));
         gameSettings.setTextFilePath(getString(gameSettings.getCommonSettings(),
-                STRING_TEXT_FILE_PATH, "resources/text/text.x8l"));
+                STRING_TEXT_FILE_PATH, gameSettings.getDefaultResourcesFolderPath() + "text/text.x8l"));
+        gameSettings.setShaderFolderPath(getString(gameSettings.getCommonSettings(),
+                STRING_SHADER_FOLDER_PATH, gameSettings.getDefaultResourcesFolderPath() + "shaders/"));
         gameSettings.setIconFilePath(getString(gameSettings.getCommonSettings(),
-                STRING_ICON_FILE_PATH, "resources/www/icon/icon.png"));
+                STRING_ICON_FILE_PATH, gameSettings.getDefaultResourcesFolderPath() + "www/icon/icon.png"));
         gameSettings.setMaxFPS(getInteger(gameSettings.getCommonSettings(),
                 STRING_MAX_FPS, -1));
     }
@@ -188,7 +218,8 @@ public class SettingFileParser_0_3_0 extends AbstractSettingFileParser {
                 getString(
                         gameSettings.getCommonSettings(),
                         STRING_DEFAULT_FONT_RESOURCE_URI,
-                        Font.DEFAULT_DEFAULT_FONT_RESOURCE_URI
+                        gameSettings.getDefaultResourcesFolderPath()
+                                +"www/fonts/SourceHanSans-Normal.ttc:ttfFile"
                 )
         );
         gameSettings.setSettingLanguage(
