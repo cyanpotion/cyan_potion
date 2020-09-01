@@ -35,7 +35,10 @@ import org.lwjgl.openal.AL10;
 
 import java.io.Closeable;
 
-import static org.lwjgl.openal.AL10.*;
+import static org.lwjgl.openal.AL10.AL_FALSE;
+import static org.lwjgl.openal.AL10.AL_TRUE;
+import static org.lwjgl.openal.AL10.alSourcef;
+import static org.lwjgl.openal.AL10.alSourcei;
 
 /**
  * <p>Source class.</p>

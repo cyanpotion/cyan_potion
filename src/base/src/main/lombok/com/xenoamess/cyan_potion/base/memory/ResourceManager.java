@@ -359,8 +359,10 @@ public class ResourceManager extends SubManager {
      * @param resourceInfo resourceInfo
      * @return resource
      */
-    public <T extends AbstractResource> T getResource(Class<T> tClass,
-                                                    ResourceInfo<T> resourceInfo) {
+    public <T extends AbstractResource> T getResource(
+            Class<T> tClass,
+            ResourceInfo<T> resourceInfo
+    ) {
         assert (tClass == resourceInfo.getResourceClass());
         ConcurrentHashMap<ResourceInfo<T>, T> resourceURIMap =
                 defaultResourcesURIMapGet(tClass);
@@ -393,7 +395,7 @@ public class ResourceManager extends SubManager {
      */
     @SuppressWarnings({"unused", "unchecked"})
     public <T extends AbstractResource> T getResource(Class<T> tClass,
-                                                    String resourceInfoJson) {
+                                                      String resourceInfoJson) {
         return this.getResource(tClass, (ResourceInfo<T>) ResourceInfo.of(resourceInfoJson));
     }
 
@@ -487,7 +489,8 @@ public class ResourceManager extends SubManager {
      * @param values           a {@link java.lang.String} object.
      * @return resource
      */
-    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString, String... values) {
+    public <T extends AbstractResource> T fetchResource(Class<T> tClass, String type, String fileObjectString,
+                                                        String... values) {
         ResourceInfo<T> resourceInfo = ResourceInfo.of(tClass, type, fileObjectString, values);
         return this.fetchResource(tClass, resourceInfo);
     }

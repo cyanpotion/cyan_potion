@@ -26,12 +26,15 @@ package com.xenoamess.cyan_potion.base.memory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.cyan_potion.base.exceptions.URITypeNotDefinedException;
-import com.xenoamess.cyan_potion.base.render.Bindable;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Synchronized;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Closeable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -115,8 +118,6 @@ public abstract class NormalResource implements AbstractResource {
      * <p>
      * In normal cases, this class shall never build from this constructor directly.
      * You shall always use ResourceManager.fetchResource functions to get this instance.
-     *
-     * However if you want to make your own AbstractResource instance, you can do this.
      *
      * @param resourceManager resource Manager
      * @param resourceInfo    Resource Json
