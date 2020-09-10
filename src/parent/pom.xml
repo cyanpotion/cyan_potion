@@ -83,7 +83,7 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-lang3.version>3.11</commons-lang3.version>
-        <commons-io.version>2.7</commons-io.version>
+        <commons-io.version>2.8.0</commons-io.version>
         <commons-compress.version>1.20</commons-compress.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
         <httpclient.version>4.5.12</httpclient.version>
