@@ -126,7 +126,7 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
-        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
         <animal-sniffer-maven-plugin.version>1.19</animal-sniffer-maven-plugin.version>
     </properties>
 
