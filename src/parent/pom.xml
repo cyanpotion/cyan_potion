@@ -104,7 +104,7 @@
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.12.0</commonx.version>
+        <commonx.version>0.12.1</commonx.version>
         <multi_language.version>0.47.1</multi_language.version>
         <x8l.version>2.3.4</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.7.0,)
@@ -112,7 +112,7 @@
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.7.1</junit-jupiter.version>
+        <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
