@@ -172,6 +172,7 @@ public class WalkingAnimation4Dirs extends Animation {
         return list.get(index);
     }
 
+    @Override
     public int getIndex() {
         if (!getUnit().isMoving()) {
             setTexturePointer(1);

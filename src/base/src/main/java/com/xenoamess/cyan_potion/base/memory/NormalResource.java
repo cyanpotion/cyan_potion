@@ -163,6 +163,7 @@ public abstract class NormalResource implements AbstractResource {
      * @return after the function, if this Resource loaded correctly and is in memory, then true.
      * otherwise if cannot load correctly, then false.
      */
+    @Override
     @SuppressWarnings("UnusedReturnValue")
     public synchronized boolean load() {
         boolean result;
@@ -218,6 +219,7 @@ public abstract class NormalResource implements AbstractResource {
     /**
      * <p>reload.</p>
      */
+    @Override
     @SuppressWarnings("unused")
     public synchronized void reload() {
         this.close();
@@ -271,6 +273,7 @@ public abstract class NormalResource implements AbstractResource {
      *
      * @return a boolean.
      */
+    @Override
     public boolean isInMemory() {
         return this.getInMemory().get();
     }
@@ -280,6 +283,7 @@ public abstract class NormalResource implements AbstractResource {
      *
      * @param inMemory a boolean.
      */
+    @Override
     public void setInMemory(boolean inMemory) {
         this.getInMemory().set(inMemory);
     }

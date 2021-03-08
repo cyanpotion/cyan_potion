@@ -501,22 +501,76 @@ public class GameManager implements Closeable {
      */
     @Override
     public void close() {
-        if (Font.getDefaultFont() != null) {
+        try {
             Font.getDefaultFont().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
         }
+        try {
         this.getAudioManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
         this.getCallbackManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
         this.getConsoleTalkThreadManager().close();
-        this.getDataCenter().close();
-        this.getResourceManager().close();
-        this.getGameWindowComponentTree().close();
-        this.getGameWindow().close();
-        this.getGamepadInputManager().close();
-        this.getRuntimeManager().close();
-        this.getSaveManager().close();
-        this.getSteamManager().close();
-        this.setAlive(false);
-        this.getScheduledExecutorService().shutdown();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getDataCenter().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getResourceManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getGameWindowComponentTree().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getGameWindow().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getGamepadInputManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getRuntimeManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getSaveManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getSteamManager().close();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.setAlive(false);
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
+        try {
+            this.getScheduledExecutorService().shutdown();
+        }catch(Error error){
+            LOGGER.error("error when close",error);
+        }
     }
 
     /**

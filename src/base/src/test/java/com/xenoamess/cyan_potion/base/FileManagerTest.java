@@ -50,9 +50,6 @@ public class FileManagerTest {
 
         System.out.println(new File(url2.toURI()));
 
-        Assertions.assertThrows(
-                URISyntaxException.class,
-                () -> System.out.println(new File(url1.toURI()))
-        );
+        System.out.println(new File(url1.toURI()));
     }
 }
