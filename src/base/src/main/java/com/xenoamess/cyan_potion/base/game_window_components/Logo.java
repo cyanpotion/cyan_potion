@@ -40,7 +40,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.audio.WaveData.STRING_MUSIC;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
 
 /**
  * <p>Logo class.</p>
@@ -57,7 +59,7 @@ public final class Logo extends AbstractGameWindowComponent {
                             Texture.class,
                             STRING_PICTURE,
                             this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                            +"www/img/pictures/logo.png"
+                                    + "www/img/pictures/logo.png"
                     );
 
     private final Picture logoPicture;
@@ -87,7 +89,7 @@ public final class Logo extends AbstractGameWindowComponent {
                                 WaveData.class,
                                 STRING_MUSIC,
                                 this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                                        +"www/audio/se/logo.ogg"
+                                        + "www/audio/se/logo.ogg"
                         )
                 )
         );

@@ -28,7 +28,6 @@ import com.xenoamess.commons.version.Version;
 import com.xenoamess.commonx.java.lang.IllegalArgumentExceptionUtilsx;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.plugins.CodePluginPosition;
-import com.xenoamess.cyan_potion.base.visual.Font;
 import com.xenoamess.x8l.AbstractTreeNode;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.TextNode;
@@ -219,7 +218,7 @@ public class SettingFileParser_0_3_0 extends AbstractSettingFileParser {
                         gameSettings.getCommonSettings(),
                         STRING_DEFAULT_FONT_RESOURCE_URI,
                         gameSettings.getDefaultResourcesFolderPath()
-                                +"www/fonts/SourceHanSans-Normal.ttc:ttfFile"
+                                + "www/fonts/SourceHanSans-Normal.ttc:ttfFile"
                 )
         );
         gameSettings.setSettingLanguage(

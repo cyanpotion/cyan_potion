@@ -36,7 +36,11 @@ import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.RemoteCallEvent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

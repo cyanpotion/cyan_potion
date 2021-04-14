@@ -24,13 +24,29 @@
 
 package com.xenoamess.cyan_potion.base.render;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.system.MemoryStack;
 
 import java.io.Closeable;
 
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL20.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL20.GL_FLOAT;
+import static org.lwjgl.opengl.GL20.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL20.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL20.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL20.glBindBuffer;
+import static org.lwjgl.opengl.GL20.glBufferData;
+import static org.lwjgl.opengl.GL20.glDeleteBuffers;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glDrawElements;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 /**
  * <p>Model class.</p>
@@ -57,7 +73,7 @@ public class Model implements Closeable {
             // BOTTOM LEFT 3
     };
 
-    private static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1,};
+    private static final float[] COMMON_TEXTURE_FLOAT_ARRAY = new float[]{0, 0, 1, 0, 1, 1, 0, 1};
     private static final int[] COMMON_INDICES_INT_ARRAY = new int[]{0, 1, 2, 2, 3, 0};
     /**
      * Constant <code>COMMON_MODEL</code>

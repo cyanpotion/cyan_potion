@@ -37,7 +37,11 @@ import lombok.Getter;
 import lombok.ToString;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -114,7 +118,22 @@ public class GameWindowComponentTree extends SubManager {
      *
      * @param gameManager                 a {@link com.xenoamess.cyan_potion.base.GameManager} object.
      * @param abstractGameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *                      {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                                   object.
      */
     public GameWindowComponentTree(GameManager gameManager, AbstractGameWindowComponent abstractGameWindowComponent) {
         super(gameManager);

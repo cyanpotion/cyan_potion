@@ -29,7 +29,7 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
-import java.awt.*;
+import java.awt.Color;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 

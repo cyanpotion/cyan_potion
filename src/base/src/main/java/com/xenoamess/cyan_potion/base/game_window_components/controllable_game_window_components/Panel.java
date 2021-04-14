@@ -27,7 +27,11 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.EventsEvent;
-import com.xenoamess.cyan_potion.base.game_window_components.*;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTree;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import lombok.AccessLevel;
@@ -162,7 +166,14 @@ public class Panel extends AbstractControllableGameWindowComponent {
      * return this.contents.remove(gameWindowComponent);
      *
      * @param gameWindowComponent a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent} object.
+     *
+     *
+     *
+     *
+     *
+     *
+     *                      {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}
+     *                           object.
      * @return this.contents.remove(gameWindowComponent);
      * @see #contents
      * @see List#remove(Object)

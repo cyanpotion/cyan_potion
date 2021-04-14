@@ -54,7 +54,7 @@ public class PlayAudioEvent implements MainThreadEvent {
             LoggerFactory.getLogger(PlayAudioEvent.class);
 
     private static class EmptyPlayAudioEvent extends PlayAudioEvent implements EmptyEvent {
-        public EmptyPlayAudioEvent() {
+        EmptyPlayAudioEvent() {
             super(null, null, null, null);
         }
 

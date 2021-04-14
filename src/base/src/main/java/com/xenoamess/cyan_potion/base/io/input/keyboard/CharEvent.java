@@ -54,7 +54,7 @@ public class CharEvent implements Event {
             LoggerFactory.getLogger(CharEvent.class);
 
     private static class EmptyCharEvent extends CharEvent implements EmptyEvent {
-        public EmptyCharEvent() {
+        EmptyCharEvent() {
             super(0, 0);
         }
 

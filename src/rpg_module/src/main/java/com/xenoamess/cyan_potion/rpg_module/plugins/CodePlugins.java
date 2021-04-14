@@ -30,7 +30,11 @@ import com.xenoamess.cyan_potion.rpg_module.render.TextureUtils;
 
 import java.util.function.Function;
 
-import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.*;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_A2;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_A5;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_B;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_C;
+import static com.xenoamess.cyan_potion.rpg_module.render.TextureUtils.STRING_CHARACTER;
 
 /**
  * This Class's contents are used by reflection and don't delete it if you don't know about the plugin mechanism here.
