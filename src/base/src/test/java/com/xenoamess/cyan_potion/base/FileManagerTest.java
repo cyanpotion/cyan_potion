@@ -27,7 +27,6 @@ package com.xenoamess.cyan_potion.base;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -38,8 +37,6 @@ import java.net.URL;
 public class FileManagerTest {
     @Test
     public void test() throws MalformedURLException, FileSystemException, URISyntaxException {
-        System.out.println(org.apache.commons.httpclient.HttpClient.class);
-        System.out.println(org.apache.jackrabbit.webdav.client.methods.DavMethod.class);
         FileSystemManager fileSystemManager = ResourceManager.getFILE_SYSTEM_MANAGER();
 
         final URL url2 = new File("D:/1 1.txt").toURI().toURL();

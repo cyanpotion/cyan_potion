@@ -25,7 +25,6 @@
 package com.xenoamess.cyan_potion.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xenoamess.cyan_potion.sdl_game_controller_db_util.SDL_GameControllerDB_Util;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.areas.AbstractPoint;
 import com.xenoamess.cyan_potion.base.areas.SimpleImmutablePoint;
@@ -37,6 +36,7 @@ import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Shader;
 import com.xenoamess.cyan_potion.base.visual.DrawTextStruct;
 import com.xenoamess.cyan_potion.base.visual.Font;
+import com.xenoamess.cyan_potion.sdl_game_controller_db_util.SDL_GameControllerDB_Util;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,11 +61,47 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_ANY_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwFocusWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowAttrib;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.AMDDebugOutput.glDebugMessageCallbackAMD;
 import static org.lwjgl.opengl.ARBDebugOutput.glDebugMessageCallbackARB;
 import static org.lwjgl.opengl.GL.createCapabilities;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL11C.glEnable;
 import static org.lwjgl.opengl.GL43C.glDebugMessageCallback;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -81,8 +117,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @ToString
 public class GameWindow extends SubManager implements AbstractMutableArea {
     @JsonIgnore
-    private static final transient Logger LOGGER =
-            LoggerFactory.getLogger(GameWindow.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(GameWindow.class);
     private Callback debugMessageCallback;
 
     /**
@@ -177,7 +212,7 @@ public class GameWindow extends SubManager implements AbstractMutableArea {
         initGlfwWindow();
         initOpengl();
 
-        this.setShader(new Shader(this.getGameManager(),"shader"));
+        this.setShader(new Shader(this.getGameManager(), "shader"));
 
         Model.COMMON_MODEL.init(
                 Model.getCommonVerticesFloatArray(),

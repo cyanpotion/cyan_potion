@@ -27,7 +27,13 @@ package com.xenoamess.cyan_potion.base.game_window_components.controllable_game_
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
-import com.xenoamess.cyan_potion.base.game_window_components.*;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.Drawer;
+import com.xenoamess.cyan_potion.base.game_window_components.DrawerBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface;
+import com.xenoamess.cyan_potion.base.game_window_components.Updater;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
+import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import lombok.EqualsAndHashCode;

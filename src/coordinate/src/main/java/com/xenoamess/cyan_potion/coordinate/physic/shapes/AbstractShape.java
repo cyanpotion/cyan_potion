@@ -44,10 +44,17 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.*;
+import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.RELATION_COLLIDE;
+import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.RELATION_INNER;
+import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.RELATION_OUTER;
+import static com.xenoamess.cyan_potion.coordinate.physic.ShapeRelation.RELATION_UNDEFINED;
 
 /**
  * Shape is a shape of something.
@@ -207,10 +214,10 @@ public abstract class AbstractShape implements AbstractMutableArea {
     /**
      * <p>relation.</p>
      *
-     * @param shape: the other shape
-     * @param rough: if true, then only return RELATION_UNDEFINED = -1,
-     *               RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
-     *               if false, then can return all the 6 status.
+     * @param shape the other shape
+     * @param rough if true, then only return RELATION_UNDEFINED = -1,
+     *              RELATION_NO_COLLIDE = 0,or RELATION_COLLIDE = 1;
+     *              if false, then can return all the 6 status.
      * @return return the relationship between the two shapes.
      */
     public ShapeRelation relation(AbstractShape shape, boolean rough) {

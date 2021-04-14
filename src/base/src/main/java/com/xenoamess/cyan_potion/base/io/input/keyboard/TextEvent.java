@@ -50,7 +50,7 @@ public class TextEvent implements Event {
             LoggerFactory.getLogger(TextEvent.class);
 
     private static class EmptyTextEvent extends TextEvent implements EmptyEvent {
-        public EmptyTextEvent() {
+        EmptyTextEvent() {
             super(0, StringUtils.EMPTY);
         }
 

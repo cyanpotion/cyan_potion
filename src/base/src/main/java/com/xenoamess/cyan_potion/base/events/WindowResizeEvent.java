@@ -46,7 +46,7 @@ public class WindowResizeEvent implements Event {
             LoggerFactory.getLogger(WindowResizeEvent.class);
 
     private static class EmptyWindowResizeEvent extends WindowResizeEvent implements EmptyEvent {
-        public EmptyWindowResizeEvent() {
+        EmptyWindowResizeEvent() {
             super(0, 0, 0);
         }
 

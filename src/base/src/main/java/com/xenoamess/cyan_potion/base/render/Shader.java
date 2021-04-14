@@ -116,6 +116,7 @@ public class Shader implements Closeable {
     /**
      * <p>Constructor for Shader.</p>
      *
+     * @param gameManager gameManager
      * @param filename filename
      */
     public Shader(GameManager gameManager, String filename) {

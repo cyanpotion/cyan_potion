@@ -46,7 +46,9 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
 
 /**
  * <p>TitleExample class.</p>
@@ -64,7 +66,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
                             Texture.class,
                             STRING_PICTURE,
                             this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                            +"www/img/pictures/saveSlot.png"
+                                    + "www/img/pictures/saveSlot.png"
                     );
     @Getter
     private final Picture saveSlotPicture = new Picture(saveSlotTexture);
@@ -82,7 +84,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
                             Texture.class,
                             STRING_PICTURE,
                             this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                            +"www/img/pictures/saveStar.png"
+                                    + "www/img/pictures/saveStar.png"
                     )
             );
 
@@ -265,7 +267,7 @@ public final class TitleExample extends AbstractGameWindowComponent {
                 Texture.class,
                 STRING_PICTURE,
                 this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                        +"www/img/pictures/saveSlot.png"
+                        + "www/img/pictures/saveSlot.png"
         );
         Panel panel = new Panel(gameWindow, texture);
         panel.init(100, 100, 600, 600);
