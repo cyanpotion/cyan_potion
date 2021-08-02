@@ -502,7 +502,7 @@ public class Font extends NormalResource {
     private float maxCharHeight = Float.NaN;
 
     @SuppressWarnings("SpellCheckingInspection")
-    static final String text =
+    static final String ALL_CHARACTERS =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
@@ -528,7 +528,7 @@ public class Font extends NormalResource {
             float minY = Float.MAX_VALUE;
             float maxY = Float.MIN_VALUE;
 
-            for (char chr : text.toCharArray()) {
+            for (char chr : ALL_CHARACTERS.toCharArray()) {
                 glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(chr / EACH_CHAR_NUM));
                 stbtt_GetPackedQuad(getCharDatas().get(chr / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
                         chr % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);

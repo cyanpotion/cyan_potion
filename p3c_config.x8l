@@ -59,5 +59,6 @@
 
         <GameInputManager>LowerCamelCaseVariableNamingRule&AvoidUseDeprecationRule>
 
+        <Colors>ConstantFieldShouldBeUpperCaseRule>
     >
 >
