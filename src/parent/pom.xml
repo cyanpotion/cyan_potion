@@ -91,7 +91,7 @@
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
         <httpclient.version>4.5.13</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
-        <annotations.version>21.0.1</annotations.version>
+        <annotations.version>22.0.0</annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
         <jackson.version>2.12.4</jackson.version>
         <joml.version>1.10.1</joml.version>
