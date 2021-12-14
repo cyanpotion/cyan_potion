@@ -92,7 +92,7 @@
         <dom4j.version>2.1.1</dom4j.version>
         <jackson.version>2.12.2</jackson.version>
         <joml.version>1.10.0</joml.version>
-        <log4j.version>2.15.0</log4j.version>
+        <log4j.version>2.16.0</log4j.version>
         <lwjgl.version>3.2.3</lwjgl.version>
         <slf4j.version>1.7.30</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
