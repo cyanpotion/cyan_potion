@@ -133,7 +133,6 @@
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <animal-sniffer-maven-plugin.version>1.20
         </animal-sniffer-maven-plugin.version>
-        <jackson-annotations.version>2.13.0</jackson-annotations.version>
         <!--enforce-->
         <enforce.activate>true</enforce.activate>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
@@ -493,6 +492,11 @@
 
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
@@ -622,11 +626,6 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpcore</artifactId>
                 <version>${httpcore.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson-annotations.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
