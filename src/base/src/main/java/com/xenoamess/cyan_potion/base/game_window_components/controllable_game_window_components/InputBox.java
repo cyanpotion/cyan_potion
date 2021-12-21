@@ -45,8 +45,29 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DELETE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_V;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_REPEAT;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
 
@@ -627,9 +648,16 @@ public class InputBox extends AbstractControllableGameWindowComponent {
                         glBindTexture(GL_TEXTURE_2D,
                                 font.getFontTextures().getPrimitive(text.charAt(i2) / EACH_CHAR_NUM));
                         glBegin(GL_QUADS);
-                        stbtt_GetPackedQuad(font.getCharDatas().get(text.charAt(i2) / EACH_CHAR_NUM), Font.BITMAP_W
-                                , Font.BITMAP_H, text.charAt(i2) % EACH_CHAR_NUM,
-                                font.getXb(), font.getYb(), font.getQ(), false);
+                        stbtt_GetPackedQuad(
+                                font.getCharDatas().get(text.charAt(i2) / EACH_CHAR_NUM),
+                                Font.BITMAP_W,
+                                Font.BITMAP_H,
+                                text.charAt(i2) % EACH_CHAR_NUM,
+                                font.getXb(),
+                                font.getYb(),
+                                font.getQ(),
+                                false
+                        );
                         charWidthShould = font.getQ().x1() - font.getQ().x0();
                         charHeightShould = font.getQ().y1() - font.getQ().y0();
                         spaceLeftToCharShould = font.getQ().x0() - lastXShould;

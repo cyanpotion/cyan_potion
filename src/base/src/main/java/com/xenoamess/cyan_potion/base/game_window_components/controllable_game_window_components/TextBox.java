@@ -34,7 +34,13 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
 import static com.xenoamess.cyan_potion.base.visual.Font.EACH_CHAR_NUM;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
 
 

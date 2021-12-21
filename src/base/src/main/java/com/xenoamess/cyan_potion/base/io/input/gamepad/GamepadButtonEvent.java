@@ -52,7 +52,7 @@ public class GamepadButtonEvent implements Event {
             LoggerFactory.getLogger(GamepadButtonEvent.class);
 
     private static class EmptyGamepadButtonEvent extends GamepadButtonEvent implements EmptyEvent {
-        public EmptyGamepadButtonEvent() {
+        EmptyGamepadButtonEvent() {
             super(0, 0, 0, null);
         }
 

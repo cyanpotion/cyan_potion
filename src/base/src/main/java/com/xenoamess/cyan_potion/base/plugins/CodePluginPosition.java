@@ -51,6 +51,5 @@ public enum CodePluginPosition {
     rightAfterSolveEvents,
 
     rightBeforeUpdate,
-    rightAfterUpdate,
-    ;
+    rightAfterUpdate;
 }

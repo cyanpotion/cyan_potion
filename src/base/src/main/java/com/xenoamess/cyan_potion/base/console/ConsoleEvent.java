@@ -48,7 +48,7 @@ public class ConsoleEvent implements Event {
             LoggerFactory.getLogger(ConsoleEvent.class);
 
     private static class EmptyConsoleEvent extends ConsoleEvent implements EmptyEvent {
-        public EmptyConsoleEvent() {
+        EmptyConsoleEvent() {
             super("");
         }
 

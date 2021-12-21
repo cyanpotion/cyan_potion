@@ -58,7 +58,7 @@ public class DropFilesEvent implements Event {
     private final long names;
 
     private static class EmptyDropFilesEvent extends DropFilesEvent implements EmptyEvent {
-        public EmptyDropFilesEvent() {
+        EmptyDropFilesEvent() {
             super(0, 0, 0);
         }
 

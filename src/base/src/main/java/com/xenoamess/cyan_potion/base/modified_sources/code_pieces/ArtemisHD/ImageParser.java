@@ -44,7 +44,6 @@ package com.xenoamess.cyan_potion.base.modified_sources.code_pieces.ArtemisHD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xenoamess.commons.io.FileObjectUtilsx;
-
 import org.apache.commons.vfs2.FileObject;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.system.MemoryStack;

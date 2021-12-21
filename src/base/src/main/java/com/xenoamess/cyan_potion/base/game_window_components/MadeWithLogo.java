@@ -58,7 +58,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
                             Texture.class,
                             STRING_PICTURE,
                             this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                            +"www/img/pictures/madewith.png"
+                                    + "www/img/pictures/madewith.png"
                     );
 
     private final Picture logoPicture = new Picture(this.logoTexture);
@@ -87,7 +87,7 @@ public final class MadeWithLogo extends AbstractGameWindowComponent {
                         ResourceInfo.of(
                                 WaveData.class, STRING_MUSIC,
                                 this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
-                                +"www/audio/se/madewith.ogg"
+                                        + "www/audio/se/madewith.ogg"
                         )
                 )
         );

@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>parent</artifactId>
-    <version>0.167.1</version>
+    <version>0.167.2</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>parent of cyan_potion modules poms</description>
@@ -83,51 +83,63 @@
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-io.version>2.8.0</commons-io.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <commons-compress.version>1.21</commons-compress.version>
-        <commons-vfs2.version>2.7.0</commons-vfs2.version>
+        <commons-httpclient.version>3.1</commons-httpclient.version>
+        <commons-vfs2.version>2.9.0</commons-vfs2.version>
         <httpclient.version>4.5.13</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
-        <annotations.version>20.1.0</annotations.version>
+        <annotations.version>23.0.0</annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.12.2</jackson.version>
-        <joml.version>1.10.0</joml.version>
-        <log4j.version>2.16.0</log4j.version>
-        <lwjgl.version>3.2.3</lwjgl.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <jackson.version>2.13.1</jackson.version>
+        <joml.version>1.10.3</joml.version>
+        <log4j.version>2.17.0</log4j.version>
+        <lwjgl.version>3.3.0</lwjgl.version>
+        <slf4j.version>1.7.32</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
         <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
-        <lombok.version>1.18.18</lombok.version>
-        <lombok-maven-plugin.version>1.18.18.0</lombok-maven-plugin.version>
+        <lombok.version>1.18.22</lombok.version>
+        <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
+        <httpcore.version>4.4.15</httpcore.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
-        <commonx.version>0.12.1</commonx.version>
-        <multi_language.version>0.47.1</multi_language.version>
-        <x8l.version>2.3.4</x8l.version>
+        <commonx.version>0.13.1</commonx.version>
+        <multi_language.version>0.47.3</multi_language.version>
+        <x8l.version>2.3.8</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.7.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
-        <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-        <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
-        <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <animal-sniffer-maven-plugin.version>1.20</animal-sniffer-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.20
+        </animal-sniffer-maven-plugin.version>
+        <!--enforce-->
+        <enforce.activate>true</enforce.activate>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
+        <checkstyle.version>9.2</checkstyle.version>
+        <checkstyle.configdir>${project.basedir}/src/site/resources/checkstyle
+        </checkstyle.configdir>
     </properties>
 
     <profiles>
@@ -153,7 +165,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>update</id>
             <build>
@@ -179,6 +190,64 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>enforce</id>
+            <activation>
+                <property>
+                    <name>enforce.activate</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>${maven-enforcer-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <rules>
+                                <dependencyConvergence/>
+                                <banDuplicatePomDependencyVersions/>
+                            </rules>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>${checkstyle.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <configLocation>
+                                ${checkstyle.configdir}/checkstyle.xml
+                            </configLocation>
+                            <includeTestSourceDirectory>true
+                            </includeTestSourceDirectory>
+                            <enableRulesSummary>false</enableRulesSummary>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.puppycrawl.tools</groupId>
+                                <artifactId>checkstyle</artifactId>
+                                <version>${checkstyle.version}</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
@@ -312,13 +381,11 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit-jupiter.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit-jupiter.version}</version>
-                <scope>test</scope>
             </dependency>
             <!--test end-->
 
@@ -328,13 +395,11 @@
                 <groupId>net.jcip</groupId>
                 <artifactId>jcip-annotations</artifactId>
                 <version>${jcip-annotations.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>
                 <artifactId>annotations</artifactId>
                 <version>${annotations.version}</version>
-                <scope>provided</scope>
             </dependency>
             <!--annotation end-->
 
@@ -427,6 +492,11 @@
 
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
@@ -517,39 +587,6 @@
                 <artifactId>SDL_GameControllerDB_Util</artifactId>
                 <version>${SDL_GameControllerDB_Util.version}</version>
             </dependency>
-            <!--        <dependency>-->
-            <!--            <groupId>org.eclipse.collections</groupId>-->
-            <!--            <artifactId>eclipse-collections-api</artifactId>-->
-            <!--            <version>${eclipse-collections.version}</version>-->
-            <!--        </dependency>-->
-            <!--        <dependency>-->
-            <!--            <groupId>org.eclipse.collections</groupId>-->
-            <!--            <artifactId>eclipse-collections</artifactId>-->
-            <!--            <version>${eclipse-collections.version}</version>-->
-            <!--        </dependency>-->
-            <!--        <dependency>-->
-            <!--            <groupId>org.codehaus.mojo</groupId>-->
-            <!--            <artifactId>versions-maven-plugin</artifactId>-->
-            <!--            <version>${versions-maven-plugin.version}</version>-->
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>org.slf4j</groupId>-->
-            <!--                    <artifactId>slf4j-nop</artifactId>-->
-            <!--                </exclusion>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>org.slf4j</groupId>-->
-            <!--                    <artifactId>slf4j-jdk14</artifactId>-->
-            <!--                </exclusion>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>org.apache.logging.log4j</groupId>-->
-            <!--                    <artifactId>log4j-slf4j-impl</artifactId>-->
-            <!--                </exclusion>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>org.slf4j</groupId>-->
-            <!--                    <artifactId>slf4j-nop</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
-            <!--        </dependency>-->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
@@ -570,6 +607,26 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>${commons-httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -578,32 +635,27 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <!--licensed under https://creativecommons.org/licenses/by/2.5/-->
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>${jcip-annotations.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>${annotations.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 
@@ -787,9 +839,12 @@
                             <goal>delombok</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/java
+                            </sourceDirectory>
                             <addOutputDirectory>false</addOutputDirectory>
-                            <outputDirectory>${project.basedir}/target/delombok</outputDirectory>
+                            <outputDirectory>
+                                ${project.basedir}/target/delombok
+                            </outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -799,9 +854,12 @@
                             <goal>testDelombok</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/test/java
+                            </sourceDirectory>
                             <addOutputDirectory>false</addOutputDirectory>
-                            <outputDirectory>${project.basedir}/target/testDelombok</outputDirectory>
+                            <outputDirectory>
+                                ${project.basedir}/target/testDelombok
+                            </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

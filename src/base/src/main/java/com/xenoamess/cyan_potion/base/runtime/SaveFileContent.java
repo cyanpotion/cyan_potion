@@ -27,7 +27,11 @@ package com.xenoamess.cyan_potion.base.runtime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -155,7 +159,7 @@ class SaveFileContent {
     /**
      * <p>Constructor for SaveFileContent.</p>
      */
-    public SaveFileContent() {
+    SaveFileContent() {
         this.setSaveTime(System.currentTimeMillis());
     }
 

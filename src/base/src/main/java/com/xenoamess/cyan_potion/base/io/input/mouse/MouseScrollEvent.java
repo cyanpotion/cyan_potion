@@ -48,7 +48,7 @@ public class MouseScrollEvent implements Event {
             LoggerFactory.getLogger(MouseScrollEvent.class);
 
     private static class EmptyMouseScrollEvent extends MouseScrollEvent implements EmptyEvent {
-        public EmptyMouseScrollEvent() {
+        EmptyMouseScrollEvent() {
             super(0, 0, 0);
         }
 

@@ -36,12 +36,30 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.lwjgl.glfw.*;
+import org.lwjgl.glfw.GLFWCharCallbackI;
+import org.lwjgl.glfw.GLFWDropCallbackI;
+import org.lwjgl.glfw.GLFWErrorCallbackI;
+import org.lwjgl.glfw.GLFWJoystickCallbackI;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWKeyCallbackI;
+import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
+import org.lwjgl.glfw.GLFWScrollCallbackI;
+import org.lwjgl.glfw.GLFWWindowCloseCallback;
+import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
+import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
 import org.lwjgl.system.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwSetCharCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetDropCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetJoystickCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowCloseCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
 
 /**
  * <p>Callbacks class.</p>
@@ -123,8 +141,14 @@ public class CallbackManager extends SubManager {
     private GLFWMouseButtonCallbackI mouseButtonCallback =
             (long window, int button, int action, int mods) -> {
                 GameWindow gameWindow = getGameManager().getGameWindow();
-                Event event = new MouseButtonEvent(window, button, action
-                        , mods, gameWindow.getMousePosX(), gameWindow.getMousePosY());
+                Event event = new MouseButtonEvent(
+                        window,
+                        button,
+                        action,
+                        mods,
+                        gameWindow.getMousePosX(),
+                        gameWindow.getMousePosY()
+                );
                 getGameManager().eventListAdd(event);
             };
 

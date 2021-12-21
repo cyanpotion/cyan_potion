@@ -41,8 +41,16 @@ public interface AbstractResource extends Closeable, Bindable {
     @JsonIgnore
     Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
 
+    /**
+     * get resource info
+     * @return resource info
+     */
     ResourceInfo getResourceInfo();
 
+    /**
+     * get resource manager
+     * @return resource manager
+     */
     ResourceManager getResourceManager();
 
     /**
@@ -91,5 +99,10 @@ public interface AbstractResource extends Closeable, Bindable {
      */
     void setInMemory(boolean inMemory);
 
+    /**
+     * get last used frame index
+     *
+     * @return last used frame index
+     */
     long getLastUsedFrameIndex();
 }

@@ -37,7 +37,11 @@ import com.xenoamess.cyan_potion.base.memory.NormalResource;
 import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import com.xenoamess.cyan_potion.base.render.Shader;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Synchronized;
+import lombok.ToString;
 import org.apache.commons.vfs2.FileObject;
 import org.joml.Vector4fc;
 import org.lwjgl.stb.STBTTAlignedQuad;
@@ -58,9 +62,35 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 
 import static com.xenoamess.commons.as_final_field.AsFinalFieldUtils.asFinalFieldSet;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDeleteTextures;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 import static org.lwjgl.stb.STBImageWrite.stbi_write_bmp;
-import static org.lwjgl.stb.STBTruetype.*;
+import static org.lwjgl.stb.STBTruetype.stbtt_GetPackedQuad;
+import static org.lwjgl.stb.STBTruetype.stbtt_PackBegin;
+import static org.lwjgl.stb.STBTruetype.stbtt_PackEnd;
+import static org.lwjgl.stb.STBTruetype.stbtt_PackFontRange;
+import static org.lwjgl.stb.STBTruetype.stbtt_PackSetOversampling;
 
 /**
  * <p>Font class.</p>
@@ -148,7 +178,7 @@ public class Font extends NormalResource {
      * You shall always use ResourceManager.fetchResource functions to get this instance.
      *
      * @param resourceManager resource Manager
-     * @param resourceJson      resource Json
+     * @param resourceJson    resource Json
      * @see ResourceManager#fetchResource(Class, ResourceInfo)
      */
     public Font(ResourceManager resourceManager, ResourceInfo<Font> resourceJson) {
@@ -187,7 +217,7 @@ public class Font extends NormalResource {
         final ByteBuffer bitmapLocal;
         final STBTTPackedchar.Buffer charDataLocal;
 
-        public LoadBitmapPojo(int index, ByteBuffer bitmapLocal, STBTTPackedchar.Buffer charDataLocal) {
+        LoadBitmapPojo(int index, ByteBuffer bitmapLocal, STBTTPackedchar.Buffer charDataLocal) {
             this.index = index;
             this.bitmapLocal = bitmapLocal;
             this.charDataLocal = charDataLocal;
@@ -204,7 +234,7 @@ public class Font extends NormalResource {
         System.out.println(fileObject);
         final ByteBuffer ttf = FileObjectUtilsx.loadBuffer(fileObject, true);
         if (ttf == null) {
-            throw new IllegalArgumentException("ttf buffer load failed!:"+fileObject);
+            throw new IllegalArgumentException("ttf buffer load failed!:" + fileObject);
         }
         this.setMemorySize(1L * PIC_NUM * BITMAP_W * BITMAP_H);
         ResourceSizeLargerThanGlMaxTextureSizeException.check(this);
@@ -472,7 +502,7 @@ public class Font extends NormalResource {
     private float maxCharHeight = Float.NaN;
 
     @SuppressWarnings("SpellCheckingInspection")
-    static final String text =
+    static final String ALL_CHARACTERS =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
@@ -498,7 +528,7 @@ public class Font extends NormalResource {
             float minY = Float.MAX_VALUE;
             float maxY = Float.MIN_VALUE;
 
-            for (char chr : text.toCharArray()) {
+            for (char chr : ALL_CHARACTERS.toCharArray()) {
                 glBindTexture(GL_TEXTURE_2D, getFontTextures().getPrimitive(chr / EACH_CHAR_NUM));
                 stbtt_GetPackedQuad(getCharDatas().get(chr / EACH_CHAR_NUM), BITMAP_W, BITMAP_H,
                         chr % EACH_CHAR_NUM, getXb(), getYb(), getQ(), false);

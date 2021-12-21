@@ -118,7 +118,7 @@ public class KeyboardEvent implements Event {
             LoggerFactory.getLogger(KeyboardEvent.class);
 
     private static class EmptyKeyboardEvent extends KeyboardEvent implements EmptyEvent {
-        public EmptyKeyboardEvent() {
+        EmptyKeyboardEvent() {
             super(0, 0, 0, 0, 0);
         }
 
@@ -154,22 +154,22 @@ public class KeyboardEvent implements Event {
      * notice that this shall be checked for the bit you use sometimes, and
      * not always the whole value.
      * <p>
-     * #define 	GLFW_MOD_SHIFT   0x0001
+     * #define  GLFW_MOD_SHIFT    0x0001
      * If this bit is set one or more Shift keys were held down.
      * <p>
-     * #define 	GLFW_MOD_CONTROL   0x0002
+     * #define  GLFW_MOD_CONTROL   0x0002
      * If this bit is set one or more Control keys were held down.
      * <p>
-     * #define 	GLFW_MOD_ALT   0x0004
+     * #define  GLFW_MOD_ALT   0x0004
      * If this bit is set one or more Alt keys were held down.
      * <p>
-     * #define 	GLFW_MOD_SUPER   0x0008
+     * #define  GLFW_MOD_SUPER   0x0008
      * If this bit is set one or more Super keys were held down.
      * <p>
-     * #define 	GLFW_MOD_CAPS_LOCK   0x0010
+     * #define  GLFW_MOD_CAPS_LOCK   0x0010
      * If this bit is set the Caps Lock key is enabled.
      * <p>
-     * #define 	GLFW_MOD_NUM_LOCK   0x0020
+     * #define  GLFW_MOD_NUM_LOCK   0x0020
      * If this bit is set the Num Lock key is enabled.
      *
      * @see org.lwjgl.glfw.GLFW

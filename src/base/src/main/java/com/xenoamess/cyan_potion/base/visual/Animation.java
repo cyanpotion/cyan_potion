@@ -99,6 +99,7 @@ public class Animation extends AbstractPicture {
     /**
      * <p>getCurrentPicture.</p>
      *
+     * @param gameManager
      * @return return
      */
     public AbstractPictureInterface getCurrentPicture(GameManager gameManager) {

@@ -50,7 +50,11 @@ import com.xenoamess.multi_language.MultiLanguageStructure;
 import com.xenoamess.multi_language.MultiLanguageX8lFileUtil;
 import com.xenoamess.x8l.ContentNode;
 import com.xenoamess.x8l.X8lTree;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -61,7 +65,16 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -69,9 +82,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static com.xenoamess.cyan_potion.base.GameManagerConfig.getString;
-import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.*;
-
-//import com.xenoamess.cyan_potion.base.io.url.CyanPotionURLStreamHandlerFactory;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterAudioManagerInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterGameWindowInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterGamepadInputManagerInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterLogicFrame;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterResourceManagerCreate;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterSolveEvents;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightAfterUpdate;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeAudioManagerInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeGameWindowInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeGamepadInputManagerInit;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeLogicFrame;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeResourceManagerCreate;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeSolveEvents;
+import static com.xenoamess.cyan_potion.base.plugins.CodePluginPosition.rightBeforeUpdate;
 
 /**
  * <p>GameManager class.</p>
@@ -503,73 +527,73 @@ public class GameManager implements Closeable {
     public void close() {
         try {
             Font.getDefaultFont().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
-        this.getAudioManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+            this.getAudioManager().close();
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
-        this.getCallbackManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+            this.getCallbackManager().close();
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
-        this.getConsoleTalkThreadManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+            this.getConsoleTalkThreadManager().close();
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getDataCenter().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getResourceManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getGameWindowComponentTree().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getGameWindow().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getGamepadInputManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getRuntimeManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getSaveManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getSteamManager().close();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.setAlive(false);
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
         try {
             this.getScheduledExecutorService().shutdown();
-        }catch(Error error){
-            LOGGER.error("error when close",error);
+        } catch (Error error) {
+            LOGGER.error("error when close", error);
         }
     }
 

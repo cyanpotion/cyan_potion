@@ -170,7 +170,22 @@ public class RadioButtonsPanel extends Panel {
      * <p>removeRadioButton.</p>
      *
      * @param radioButton a
-     * {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *     {@link com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.RadioButton}
      *                    object.
      * @return a boolean.
      */

@@ -36,6 +36,5 @@ public enum ShapeRelation {
     RELATION_COLLIDE,
     RELATION_EQUAL,
     RELATION_INNER,
-    RELATION_OUTER,
-    ;
+    RELATION_OUTER;
 }
