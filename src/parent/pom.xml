@@ -143,6 +143,15 @@
 
     <profiles>
         <profile>
+            <id>maven.compiler.release</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>${java.version}</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
             <id>ossrh</id>
             <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
             <build>
@@ -677,9 +686,9 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>io.takari</groupId>
-                <artifactId>maven</artifactId>
-                <version>0.7.7</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-wrapper-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <goals>
