@@ -99,7 +99,6 @@
         <lwjgl.version>3.3.1</lwjgl.version>
         <slf4j.version>1.7.36</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
-        <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <lombok.version>1.18.22</lombok.version>
@@ -431,7 +430,7 @@
             <dependency>
                 <groupId>com.code-disaster.steamworks4j</groupId>
                 <artifactId>steamworks4j-server</artifactId>
-                <version>${steamworks4j-server.version}</version>
+                <version>${steamworks4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
