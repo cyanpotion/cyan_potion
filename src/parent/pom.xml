@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xenoamess.cyan_potion</groupId>
     <artifactId>parent</artifactId>
-    <version>0.167.2</version>
+    <version>0.167.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>parent of cyan_potion modules poms</description>
@@ -93,13 +93,12 @@
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <annotations.version>23.0.0</annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.13.1</jackson.version>
-        <joml.version>1.10.3</joml.version>
-        <log4j.version>2.17.1</log4j.version>
-        <lwjgl.version>3.3.0</lwjgl.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <jackson.version>2.13.2.20220328</jackson.version>
+        <joml.version>1.10.4</joml.version>
+        <log4j.version>2.17.2</log4j.version>
+        <lwjgl.version>3.3.1</lwjgl.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <steamworks4j.version>1.8.0</steamworks4j.version>
-        <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <lombok.version>1.18.22</lombok.version>
@@ -110,39 +109,47 @@
         <!--home made libraries versions-->
         <commonx.version>0.13.1</commonx.version>
         <multi_language.version>0.47.3</multi_language.version>
-        <x8l.version>2.3.8</x8l.version>
+        <x8l.version>2.3.9</x8l.version>
         <SDL_GameControllerDB_Util.version>[1.7.0,)
         </SDL_GameControllerDB_Util.version>
         <!---->
         <!---->
         <!--maven plugins versions-->
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M2</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
-        <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
-        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
+        <maven-project-info-reports-plugin.version>3.2.2</maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
-        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <animal-sniffer-maven-plugin.version>1.20
-        </animal-sniffer-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.21</animal-sniffer-maven-plugin.version>
         <!--enforce-->
         <enforce.activate>true</enforce.activate>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
-        <checkstyle.version>9.2</checkstyle.version>
+        <checkstyle.version>10.1</checkstyle.version>
         <checkstyle.configdir>${project.basedir}/src/site/resources/checkstyle
         </checkstyle.configdir>
     </properties>
 
     <profiles>
+        <profile>
+            <id>maven.compiler.release</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>${java.version}</maven.compiler.release>
+            </properties>
+        </profile>
         <profile>
             <id>ossrh</id>
             <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
@@ -423,7 +430,7 @@
             <dependency>
                 <groupId>com.code-disaster.steamworks4j</groupId>
                 <artifactId>steamworks4j-server</artifactId>
-                <version>${steamworks4j-server.version}</version>
+                <version>${steamworks4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -491,39 +498,11 @@
             </dependency>
 
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
                 <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-parameter-names</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jdk8</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.xenoamess</groupId>
@@ -678,9 +657,9 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>io.takari</groupId>
-                <artifactId>maven</artifactId>
-                <version>0.7.7</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-wrapper-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <goals>

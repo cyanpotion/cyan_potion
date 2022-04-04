@@ -1,7 +1,7 @@
 <com.alibaba.p3c.pmd.config version=0.0.1>
     <rule_config>
         <LowerCamelCaseVariableNamingRule>
-            <WHITE_LIST>
+            <WHITE_LIST [>
                 DAOImpl&
                 GLFW&
                 URL&
@@ -19,7 +19,7 @@
             >
         >
         <ClassNamingShouldBeCamelRule>
-            <CLASS_NAMING_WHITE_LIST>
+            <CLASS_NAMING_WHITE_LIST [>
                 Hbase&
                 HBase&
                 ID&
@@ -32,33 +32,33 @@
             >
         >
     >
-    <rule_blacklist>
+    <rule_blacklist [>
         PackageNamingRule&
         AbstractClassShouldStartWithAbstractNamingRule&
         ThreadPoolCreationRule&
         MethodTooLongRule&
     >
-    <class_blacklist>
+    <class_blacklist [>
         Console
     >
     <rule_class_pair_blacklist>
-        <JamepadGamepadKeyEnum>EnumConstantsMustHaveCommentRule>
-        <JXInputGamepadKeyEnum>EnumConstantsMustHaveCommentRule>
-        <KeyActionEnum>EnumConstantsMustHaveCommentRule>
-        <KeyboardKeyEnum>EnumConstantsMustHaveCommentRule>
-        <CodePluginPosition>EnumConstantsMustHaveCommentRule>
-        <ShapeRelation>EnumConstantsMustHaveCommentRule>
+        <JamepadGamepadKeyEnum [>EnumConstantsMustHaveCommentRule>
+        <JXInputGamepadKeyEnum [>EnumConstantsMustHaveCommentRule>
+        <KeyActionEnum [>EnumConstantsMustHaveCommentRule>
+        <KeyboardKeyEnum [>EnumConstantsMustHaveCommentRule>
+        <CodePluginPosition [>EnumConstantsMustHaveCommentRule>
+        <ShapeRelation [>EnumConstantsMustHaveCommentRule>
 
-        <WaveData>UndefineMagicConstantRule>
+        <WaveData [>UndefineMagicConstantRule>
 
-        <FileUtils>AvoidUseDeprecationRule>
+        <FileUtils [>AvoidUseDeprecationRule>
 
-        <Font>AvoidUseDeprecationRule>
-        <Keymap>AvoidUseDeprecationRule>
-        <WorldForDemo>AvoidUseDeprecationRule>
+        <Font [>AvoidUseDeprecationRule>
+        <Keymap [>AvoidUseDeprecationRule>
+        <WorldForDemo [>AvoidUseDeprecationRule>
 
-        <GameInputManager>LowerCamelCaseVariableNamingRule&AvoidUseDeprecationRule>
+        <GameInputManager [>LowerCamelCaseVariableNamingRule&AvoidUseDeprecationRule>
 
-        <Colors>ConstantFieldShouldBeUpperCaseRule>
+        <Colors [>ConstantFieldShouldBeUpperCaseRule>
     >
 >
