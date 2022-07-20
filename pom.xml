@@ -62,7 +62,7 @@
         <module>src/demo</module>
     </modules>
     <properties>
-        <maven-deploy-plugin.version>3.0.0-M2</maven-deploy-plugin.version>
+        <maven-deploy-plugin.version>3.0.0</maven-deploy-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
     </properties>
     <profiles>
