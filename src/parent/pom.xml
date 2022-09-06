@@ -94,7 +94,7 @@
         <annotations.version>23.0.0</annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
         <jackson.version>2.13.3</jackson.version>
-        <joml.version>1.10.4</joml.version>
+        <joml.version>1.10.5</joml.version>
         <log4j.version>2.18.0</log4j.version>
         <lwjgl.version>3.3.1</lwjgl.version>
         <slf4j.version>1.7.36</slf4j.version>
@@ -122,7 +122,7 @@
         <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-project-info-reports-plugin.version>3.4.0</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.4.1</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
@@ -130,11 +130,11 @@
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
         <versions-maven-plugin.version>2.11.0</versions-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <animal-sniffer-maven-plugin.version>1.21</animal-sniffer-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.22</animal-sniffer-maven-plugin.version>
         <!--enforce-->
         <enforce.activate>true</enforce.activate>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
+        <checkstyle.plugin.version>3.2.0</checkstyle.plugin.version>
         <checkstyle.version>10.3.3</checkstyle.version>
         <checkstyle.configdir>${project.basedir}/src/site/resources/checkstyle
         </checkstyle.configdir>
