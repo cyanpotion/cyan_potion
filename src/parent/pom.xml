@@ -82,7 +82,7 @@
         <!---->
         <!--libraries versions-->
         <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
         <commons-logging.version>1.2</commons-logging.version>
         <commons-io.version>2.13.0</commons-io.version>
         <commons-codec.version>1.16.0</commons-codec.version>
