@@ -98,7 +98,7 @@
         <log4j.version>2.22.1</log4j.version>
         <lwjgl.version>3.3.3</lwjgl.version>
         <slf4j.version>2.0.10</slf4j.version>
-        <steamworks4j.version>1.8.0</steamworks4j.version>
+        <steamworks4j.version>1.9.0</steamworks4j.version>
         <JXInput.version>1.0.1</JXInput.version>
         <Jamepad.version>1.3.2</Jamepad.version>
         <lombok.version>1.18.30</lombok.version>
