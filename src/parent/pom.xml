@@ -93,7 +93,7 @@
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <annotations.version>24.1.0</annotations.version>
         <dom4j.version>2.1.1</dom4j.version>
-        <jackson.version>2.18.0</jackson.version>
+        <jackson.version>2.18.1</jackson.version>
         <joml.version>1.10.8</joml.version>
         <log4j.version>2.24.1</log4j.version>
         <lwjgl.version>3.3.4</lwjgl.version>
