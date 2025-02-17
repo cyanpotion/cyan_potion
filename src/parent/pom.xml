@@ -88,7 +88,7 @@
         <commons-codec.version>1.18.0</commons-codec.version>
         <commons-compress.version>1.27.1</commons-compress.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
-        <commons-vfs2.version>2.9.0</commons-vfs2.version>
+        <commons-vfs2.version>2.10.0</commons-vfs2.version>
         <httpclient.version>4.5.14</httpclient.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <annotations.version>26.0.2</annotations.version>
