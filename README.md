@@ -1,21 +1,13 @@
 # cyan_potion
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.xenoamess.cyan_potion/cyan_potion)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cyanpotion/cyan_potion)
 <!--
 [![Total Lines](https://tokei.rs/b1/github/cyanpotion/cyan_potion/)](https://github.com/XAMPPRocky/tokei).
 no, it is totally unusable.
 resources/www/data/Map001.json has 60K lines itself.
 and have no way to exclude it.
 -->
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_base&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_base)
-cyan_potion_base
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_coordinate&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_coordinate)
-cyan_potion_coordinate
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cyan_potion_rpg_module&metric=alert_status)](https://sonarcloud.io/dashboard?id=cyan_potion_rpg_module)
-cyan_potion_rpg_module
 
 A lightweight 2d game engine in java.
 
