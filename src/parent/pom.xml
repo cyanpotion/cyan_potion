@@ -128,7 +128,7 @@
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
-        <versions-maven-plugin.version>2.20.1</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
         <animal-sniffer-maven-plugin.version>1.26</animal-sniffer-maven-plugin.version>
         <!--enforce-->
