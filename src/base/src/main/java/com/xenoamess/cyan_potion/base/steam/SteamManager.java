@@ -30,6 +30,7 @@ import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamFriends;
 import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamLeaderboardHandle;
+import com.codedisaster.steamworks.SteamLibraryLoader;
 import com.codedisaster.steamworks.SteamPublishedFileID;
 import com.codedisaster.steamworks.SteamPublishedFileUpdateHandle;
 import com.codedisaster.steamworks.SteamRemoteStorage;
@@ -159,7 +160,7 @@ public class SteamManager extends SubManager {
             this.renewSteam_appid();
             try {
                 LOGGER.debug("[steam]Load native libraries ...");
-                SteamAPI.loadLibraries();
+                SteamAPI.loadLibraries(SteamLibraryLoader.Default);
                 if (!SteamAPI.init()) {
                     try (StringWriter stringWriter = new StringWriter();
                          WriterOutputStream writerOutputStream = new WriterOutputStream(
@@ -394,7 +395,9 @@ public class SteamManager extends SubManager {
                 }
             }
         } else if ("stats request".equals(input)) {
-            getSteamUserStats().requestCurrentStats();
+            // requestCurrentStats() is removed in steamworks4j 1.10.0
+            // Stats are now automatically requested during initialization
+            LOGGER.debug("Stats request is now automatic in steamworks4j 1.10.0+");
         } else if ("stats store".equals(input)) {
             getSteamUserStats().storeStats();
         } else if (input.startsWith("achievement set ")) {
