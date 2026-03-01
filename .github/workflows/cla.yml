@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "CLA Assistant"
-        if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
+        if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA' || github.event.comment.body == '我已阅读 CLA 文档并同意签署 CLA') || github.event_name == 'pull_request_target'
         uses: contributor-assistant/github-action@v2.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,5 +33,18 @@ jobs:
 
             By signing the CLA, you grant the project owner the right to relicense your contributions under different terms (including proprietary licenses).
 
-            To sign, please comment with: **I have read the CLA Document and I hereby sign the CLA**
-          custom-allsigned-prcomment: 'All contributors have signed the CLA ✅'
+            **To sign, please comment with:**
+            - English: `I have read the CLA Document and I hereby sign the CLA`
+            - 中文: `我已阅读 CLA 文档并同意签署 CLA`
+
+            ---
+
+            感谢您的贡献！在接受您的合并请求之前，请阅读并签署我们的[贡献者授权协议 (CLA)](https://github.com/xenoamess-s-civilization/xenoamess-s-civilization/blob/master/CLA.md)。
+
+            签署 CLA 即表示您授予项目所有者以不同条款（包括专有许可）再许可您贡献的权利。
+
+            **请使用以下任一方式签署：**
+            - English: `I have read the CLA Document and I hereby sign the CLA`
+            - 中文: `我已阅读 CLA 文档并同意签署 CLA`
+          custom-allsigned-prcomment: |
+            All contributors have signed the CLA ✅ / 所有贡献者已签署 CLA ✅
