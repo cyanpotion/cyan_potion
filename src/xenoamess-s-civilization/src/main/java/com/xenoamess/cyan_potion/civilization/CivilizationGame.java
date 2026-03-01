@@ -33,6 +33,6 @@ public class CivilizationGame {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        LOGGER.info("Welcome to XenoAmess's Civilization!");
+        log.info("Welcome to XenoAmess's Civilization!");
     }
 }

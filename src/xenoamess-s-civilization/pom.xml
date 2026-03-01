@@ -43,10 +43,6 @@
             <groupId>com.xenoamess.cyan_potion</groupId>
             <artifactId>coordinate</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.xenoamess.cyan_potion</groupId>
-            <artifactId>rpg_module</artifactId>
-        </dependency>
         
         <dependency>
             <groupId>org.projectlombok</groupId>
