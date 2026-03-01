@@ -59,6 +59,7 @@
         <module>src/base</module>
         <module>src/coordinate</module>
         <module>src/rpg_module</module>
+        <module>src/xenoamess-s-civilization</module>
         <module>src/demo</module>
     </modules>
     <properties>
