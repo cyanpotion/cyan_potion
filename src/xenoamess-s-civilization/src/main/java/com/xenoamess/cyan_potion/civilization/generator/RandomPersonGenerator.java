@@ -20,13 +20,13 @@ import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.PersonBuilder;
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
+import com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * Random person generator for creating NPCs and random characters.
@@ -175,12 +175,12 @@ public class RandomPersonGenerator {
     }
 
     /**
-     * Generates a unique ID.
+     * Generates a unique ID using PersonIdGenerator.
      *
      * @return unique identifier
      */
     private String generateId() {
-        return UUID.randomUUID().toString().substring(0, 8);
+        return PersonIdGenerator.getInstance().generateId();
     }
 
     /**

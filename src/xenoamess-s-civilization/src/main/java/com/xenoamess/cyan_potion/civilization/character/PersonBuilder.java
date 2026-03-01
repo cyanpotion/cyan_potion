@@ -26,12 +26,12 @@ import java.time.LocalDate;
  * @version 0.167.3-SNAPSHOT
  */
 public class PersonBuilder {
-    
+
     // Required fields
     protected final String id;
     protected final String name;
     protected final Gender gender;
-    
+
     // Optional fields with default values
     protected double healthDecreasing = 1.0;
     protected double initialHealth = -1; // Will use gender base health if not set
@@ -44,7 +44,8 @@ public class PersonBuilder {
     protected Person father;
     protected Person mother;
     protected LocalDate lastDecisionDate;
-    
+    protected LineageType lineageType;
+
     /**
      * Creates a new PersonBuilder with required fields.
      *
@@ -57,7 +58,7 @@ public class PersonBuilder {
         this.name = name;
         this.gender = gender;
     }
-    
+
     /**
      * Sets the health decreasing rate.
      *
@@ -68,7 +69,7 @@ public class PersonBuilder {
         this.healthDecreasing = healthDecreasing;
         return this;
     }
-    
+
     /**
      * Sets the initial health.
      *
@@ -79,7 +80,7 @@ public class PersonBuilder {
         this.initialHealth = initialHealth;
         return this;
     }
-    
+
     /**
      * Sets the constitution.
      *
@@ -90,7 +91,7 @@ public class PersonBuilder {
         this.constitution = constitution;
         return this;
     }
-    
+
     /**
      * Sets the base intelligence.
      *
@@ -101,7 +102,7 @@ public class PersonBuilder {
         this.baseIntelligence = baseIntelligence;
         return this;
     }
-    
+
     /**
      * Sets the knowledge multiplier.
      *
@@ -112,7 +113,7 @@ public class PersonBuilder {
         this.knowledge = knowledge;
         return this;
     }
-    
+
     /**
      * Sets the base eloquence.
      *
@@ -123,7 +124,7 @@ public class PersonBuilder {
         this.baseEloquence = baseEloquence;
         return this;
     }
-    
+
     /**
      * Sets the natural appearance.
      *
@@ -134,7 +135,7 @@ public class PersonBuilder {
         this.naturalAppearance = naturalAppearance;
         return this;
     }
-    
+
     /**
      * Sets the appearance adjustment.
      *
@@ -145,7 +146,7 @@ public class PersonBuilder {
         this.appearanceAdjustment = appearanceAdjustment;
         return this;
     }
-    
+
     /**
      * Sets the father.
      *
@@ -156,7 +157,7 @@ public class PersonBuilder {
         this.father = father;
         return this;
     }
-    
+
     /**
      * Sets the mother.
      *
@@ -167,7 +168,7 @@ public class PersonBuilder {
         this.mother = mother;
         return this;
     }
-    
+
     /**
      * Sets both parents.
      *
@@ -180,7 +181,7 @@ public class PersonBuilder {
         this.mother = mother;
         return this;
     }
-    
+
     /**
      * Sets the last decision date.
      *
@@ -191,7 +192,18 @@ public class PersonBuilder {
         this.lastDecisionDate = lastDecisionDate;
         return this;
     }
-    
+
+    /**
+     * Sets the lineage type.
+     *
+     * @param lineageType the lineage type (PATRILINEAL or MATRILINEAL)
+     * @return this builder
+     */
+    public PersonBuilder lineageType(LineageType lineageType) {
+        this.lineageType = lineageType;
+        return this;
+    }
+
     /**
      * Builds the Person instance.
      *
