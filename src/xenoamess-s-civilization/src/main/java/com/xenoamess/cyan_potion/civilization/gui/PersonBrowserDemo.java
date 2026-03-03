@@ -24,6 +24,7 @@ import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.civilization.GameDateManager;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import lombok.EqualsAndHashCode;
@@ -76,6 +77,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Getter
     private final Button clearFilterButton;
 
+    @Getter
+    private final GameDateManager dateManager;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -125,6 +129,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             generatePersons();
             return null;
         });
+
+        // Initialize date manager
+        this.dateManager = new GameDateManager();
 
         this.filterMaleButton = new Button(gameWindow, null, "仅男性");
         this.filterMaleButton.registerOnMouseButtonLeftDownCallback(event -> {
@@ -190,6 +197,17 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     public boolean update() {
         if (!show) return true;
 
+        // Update game date (1 day per second)
+        int daysAdvanced = dateManager.update();
+        if (daysAdvanced > 0) {
+            // Update all persons' current date and health
+            List<Person> persons = listComponent.getPersons();
+            for (Person person : persons) {
+                person.advanceDate(daysAdvanced);
+            }
+            log.debug("Advanced {} days for {} persons", daysAdvanced, persons.size());
+        }
+
         // Layout buttons at top
         float buttonY = 30;
         float buttonX = 50;
@@ -241,6 +259,33 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             0,
             new Vector4f(1.0f, 0.9f, 0.6f, 1.0f),
             "人物浏览器 - 宗族与人物管理系统"
+        );
+
+        // Draw date at bottom left
+        this.getGameWindow().drawTextLeftTop(
+            null,
+            20,
+            this.getGameWindow().getHeight() - 50,
+            18,
+            0,
+            new Vector4f(1.0f, 0.9f, 0.6f, 1.0f),
+            "日期: " + dateManager.getFormattedDate()
+        );
+
+        // Draw person count at bottom right
+        int aliveCount = (int) listComponent.getPersons().stream()
+            .filter(Person::isAlive).count();
+        String countText = String.format("存活: %d/%d", aliveCount, listComponent.getPersons().size());
+        // Calculate position for right-aligned text
+        float countTextWidth = countText.length() * 12; // Approximate width
+        this.getGameWindow().drawTextLeftTop(
+            null,
+            this.getGameWindow().getWidth() - 20 - countTextWidth,
+            this.getGameWindow().getHeight() - 50,
+            18,
+            0,
+            new Vector4f(0.8f, 0.8f, 0.8f, 1.0f),
+            countText
         );
 
         // Draw help text

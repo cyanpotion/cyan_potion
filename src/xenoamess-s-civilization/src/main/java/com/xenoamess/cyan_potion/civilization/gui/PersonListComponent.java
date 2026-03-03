@@ -352,6 +352,15 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     }
 
     /**
+     * Gets all persons (unfiltered).
+     *
+     * @return list of all persons
+     */
+    public List<Person> getPersons() {
+        return new ArrayList<>(allPersons);
+    }
+
+    /**
      * Sets the list of persons to display.
      *
      * @param persons list of persons
