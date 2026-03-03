@@ -66,10 +66,10 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         super(gameWindow);
         this.person = person;
 
-        // Create textures
-        this.normalTexture = createTexture("0.15,0.15,0.15,1.0");
-        this.hoverTexture = createTexture("0.25,0.25,0.35,1.0");
-        this.selectedTexture = createTexture("0.2,0.3,0.4,1.0");
+        // Create textures - brighter backgrounds for better contrast
+        this.normalTexture = createTexture("0.25,0.25,0.28,1.0");
+        this.hoverTexture = createTexture("0.35,0.35,0.45,1.0");
+        this.selectedTexture = createTexture("0.3,0.4,0.5,1.0");
 
         this.backgroundPicture.setBindable(normalTexture);
 

@@ -437,6 +437,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 return null;
             });
             listItems.add(item);
+            
+            // Add to component tree immediately if this component is already in a tree
+            if (this.getGameWindowComponentTreeNode() != null) {
+                item.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+            }
         }
     }
 
@@ -489,6 +494,40 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         setFilter(p -> true);
         searchBox.setContentString("");
         performSearch();
+    }
+
+    @Override
+    public com.xenoamess.cyan_potion.base.events.Event process(com.xenoamess.cyan_potion.base.events.Event event) {
+        if (event == null) {
+            return null;
+        }
+
+        // Process with parent first (handles our own registered processors)
+        event = super.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Pass event to searchBox if it's focused
+        if (searchBox != null && searchBox.isInFocusNow()) {
+            event = searchBox.process(event);
+            if (event == null) {
+                return null;
+            }
+        }
+
+        // Pass event to visible list items (in reverse order for proper z-index handling)
+        for (int i = listItems.size() - 1; i >= 0; i--) {
+            PersonListItem item = listItems.get(i);
+            if (isItemVisible(item)) {
+                event = item.process(event);
+                if (event == null) {
+                    return null;
+                }
+            }
+        }
+
+        return event;
     }
 
     @Override
