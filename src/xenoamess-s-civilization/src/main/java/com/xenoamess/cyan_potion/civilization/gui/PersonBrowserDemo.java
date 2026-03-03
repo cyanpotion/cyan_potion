@@ -41,7 +41,8 @@ import java.util.List;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
 /**
- * Demo world showcasing the PersonListComponent and PersonDetailComponent.
+ * Demo world showcasing the PersonListComponent and PersonDetailComponent
+ * wrapped in DraggableWindowComponent.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
@@ -56,6 +57,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     @Getter
     private final PersonDetailComponent detailComponent;
+
+    @Getter
+    private final DraggableWindowComponent listWindow;
+
+    @Getter
+    private final DraggableWindowComponent detailWindow;
 
     @Getter
     private final Button generateButton;
@@ -95,14 +102,22 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
         // Create person list component
         this.listComponent = new PersonListComponent(gameWindow);
-        this.listComponent.setLeftTopPos(50, 80);
-        this.listComponent.setSize(500, 600);
         this.listComponent.setOnPersonSelected(this::onPersonSelected);
 
         // Create detail component
         this.detailComponent = new PersonDetailComponent(gameWindow);
-        this.detailComponent.setLeftTopPos(580, 80);
-        this.detailComponent.setSize(550, 600);
+        this.detailComponent.setOnClose(v -> hideDetailWindow());
+
+        // Wrap components in draggable windows
+        this.listWindow = new DraggableWindowComponent(gameWindow, "人物列表", listComponent);
+        this.listWindow.setLeftTopPos(50, 80);
+        this.listWindow.setSize(500, 600);
+        this.listWindow.setVisible(true);
+
+        this.detailWindow = new DraggableWindowComponent(gameWindow, "人物详情", detailComponent);
+        this.detailWindow.setLeftTopPos(580, 80);
+        this.detailWindow.setSize(550, 600);
+        this.detailWindow.setVisible(false); // Hidden by default
 
         // Control buttons
         this.generateButton = new Button(gameWindow, null, "生成100人");
@@ -140,8 +155,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
                 if (event.getKeyTranslated(this.getGameWindow().getGameManager().getKeymap()).getKey()
                         == Keymap.XENOAMESS_KEY_ESCAPE
                     && event.getAction() == GLFW.GLFW_PRESS) {
-                    if (detailComponent.isVisible()) {
-                        detailComponent.hide();
+                    if (detailWindow.isVisible()) {
+                        hideDetailWindow();
                     } else {
                         this.show = !this.show;
                     }
@@ -150,6 +165,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
                 return event;
             }
         );
+    }
+
+    private void hideDetailWindow() {
+        detailWindow.setVisible(false);
+        detailWindow.getContentAs(PersonDetailComponent.class).hide();
     }
 
     private void generatePersons() {
@@ -161,6 +181,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     private void onPersonSelected(Person person) {
         detailComponent.show(person);
+        detailWindow.setVisible(true);
+        // Bring detail window to front by re-adding it (if we had a list)
+        log.debug("Showing person in detail window: {}", person.getName());
     }
 
     @Override
@@ -194,8 +217,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         filterMaleButton.update();
         filterFemaleButton.update();
         clearFilterButton.update();
-        listComponent.update();
-        detailComponent.update();
+        
+        // Update draggable windows
+        listWindow.update();
+        detailWindow.update();
+        
         return true;
     }
 
@@ -225,16 +251,18 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             14,
             0,
             new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
-            "操作: 点击人物查看详情 | 搜索框输入关键词筛选 | ESC关闭详情/切换显示"
+            "操作: 点击人物查看详情 | 搜索框输入关键词筛选 | ESC关闭详情/切换显示 | 拖拽标题栏移动窗口"
         );
 
-        // Draw components
+        // Draw buttons
         generateButton.draw();
         filterMaleButton.draw();
         filterFemaleButton.draw();
         clearFilterButton.draw();
-        listComponent.draw();
-        detailComponent.draw();
+        
+        // Draw draggable windows (list window first, then detail)
+        listWindow.draw();
+        detailWindow.draw();
 
         return true;
     }
@@ -249,8 +277,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         event = filterMaleButton.process(event);
         event = filterFemaleButton.process(event);
         event = clearFilterButton.process(event);
-        event = detailComponent.process(event);
-        event = listComponent.process(event);
+        
+        // Process draggable windows (detail first to handle on-top)
+        event = detailWindow.process(event);
+        event = listWindow.process(event);
 
         return super.process(event);
     }
@@ -258,8 +288,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-//        listComponent.addToGameWindowComponentTree(node);
-//        detailComponent.addToGameWindowComponentTree(node);
+//        listWindow.addToGameWindowComponentTree(node);
+//        detailWindow.addToGameWindowComponentTree(node);
 //        generateButton.addToGameWindowComponentTree(node);
 //        filterMaleButton.addToGameWindowComponentTree(node);
 //        filterFemaleButton.addToGameWindowComponentTree(node);
