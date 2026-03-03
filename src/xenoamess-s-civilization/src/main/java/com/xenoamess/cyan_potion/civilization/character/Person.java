@@ -319,7 +319,7 @@ public class Person {
     public java.util.List<Clan> getAllClans() {
         return clanMemberships.stream()
             .map(ClanMembership::getClan)
-            .toList();
+            .collect(java.util.stream.Collectors.toList());
     }
 
     /**

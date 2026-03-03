@@ -126,21 +126,6 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Search input box
         this.searchBox = new InputBox(gameWindow);
         this.searchBox.setContentString("");
-        this.searchBox.registerOnContentChangeCallback(() -> {
-            performSearch();
-            return null;
-        });
-
-        // Add clear button
-        Button clearButton = new Button(gameWindow, null, "×");
-        clearButton.registerOnMouseLeftClickCallback(event -> {
-            searchBox.setContentString("");
-            performSearch();
-            return null;
-        });
-
-        this.searchPanel.getContents().add(searchBox);
-        this.searchPanel.getContents().add(clearButton);
 
         // List panel for person items
         this.listPanel = new Panel(gameWindow);
@@ -165,7 +150,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             MouseScrollEvent.class,
             (MouseScrollEvent event) -> {
                 float maxScroll = Math.max(0, filteredPersons.size() * itemHeight - getHeight() + searchPanelHeight);
-                scrollOffset = Math.max(0, Math.min(maxScroll, scrollOffset - event.getYoffset() * itemHeight * 0.5f));
+                scrollOffset = Math.max(0, Math.min(maxScroll, scrollOffset - (float)event.getYoffset() * itemHeight * 0.5f));
                 updateListPositions();
                 return null;
             }
@@ -203,7 +188,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     }
 
     @Override
-    public void update() {
+    public boolean update() {
         super.update();
 
         // Update search panel layout
@@ -230,6 +215,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         for (PersonListItem item : listItems) {
             item.update();
         }
+        return true;
     }
 
     @Override
@@ -251,8 +237,9 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 searchBox.getCenterPosX(),
                 searchBox.getCenterPosY(),
                 16,
-                "搜索人物...",
-                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f)
+                0,
+                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
+                "搜索人物..."
             );
         }
 
@@ -277,28 +264,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         float viewHeight = getHeight() - searchPanelHeight;
 
         if (contentHeight > viewHeight) {
-            float scrollbarWidth = 8;
-            float scrollbarHeight = viewHeight * (viewHeight / contentHeight);
-            float maxScroll = contentHeight - viewHeight;
-            float scrollbarY = listPanel.getLeftTopPosY() + (scrollOffset / maxScroll) * (viewHeight - scrollbarHeight);
-
-            // Draw scrollbar track
-            this.getGameWindow().drawRect(
-                getLeftTopPosX() + getWidth() - scrollbarWidth,
-                listPanel.getLeftTopPosY(),
-                scrollbarWidth,
-                viewHeight,
-                new Vector4f(0.3f, 0.3f, 0.3f, 0.5f)
-            );
-
-            // Draw scrollbar thumb
-            this.getGameWindow().drawRect(
-                getLeftTopPosX() + getWidth() - scrollbarWidth,
-                scrollbarY,
-                scrollbarWidth,
-                scrollbarHeight,
-                new Vector4f(0.6f, 0.6f, 0.6f, 0.8f)
-            );
+            // Scrollbar drawing is disabled as drawRect is not available in GameWindow
+            // float scrollbarWidth = 8;
+            // float scrollbarHeight = viewHeight * (viewHeight / contentHeight);
+            // float maxScroll = contentHeight - viewHeight;
+            // float scrollbarY = listPanel.getLeftTopPosY() + (scrollOffset / maxScroll) * (viewHeight - scrollbarHeight);
         }
     }
 
@@ -396,7 +366,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         for (int i = 0; i < filteredPersons.size(); i++) {
             Person person = filteredPersons.get(i);
             PersonListItem item = new PersonListItem(this.getGameWindow(), person);
-            item.registerOnMouseLeftClickCallback(event -> {
+            item.registerOnMouseButtonLeftDownCallback(event -> {
                 selectPerson(person);
                 return null;
             });

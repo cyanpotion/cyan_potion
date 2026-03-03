@@ -105,25 +105,25 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
         // Control buttons
         this.generateButton = new Button(gameWindow, null, "生成100人");
-        this.generateButton.registerOnMouseLeftClickCallback(event -> {
+        this.generateButton.registerOnMouseButtonLeftDownCallback(event -> {
             generatePersons();
             return null;
         });
 
         this.filterMaleButton = new Button(gameWindow, null, "仅男性");
-        this.filterMaleButton.registerOnMouseLeftClickCallback(event -> {
+        this.filterMaleButton.registerOnMouseButtonLeftDownCallback(event -> {
             listComponent.filterByGender(com.xenoamess.cyan_potion.civilization.character.Gender.MALE);
             return null;
         });
 
         this.filterFemaleButton = new Button(gameWindow, null, "仅女性");
-        this.filterFemaleButton.registerOnMouseLeftClickCallback(event -> {
+        this.filterFemaleButton.registerOnMouseButtonLeftDownCallback(event -> {
             listComponent.filterByGender(com.xenoamess.cyan_potion.civilization.character.Gender.FEMALE);
             return null;
         });
 
         this.clearFilterButton = new Button(gameWindow, null, "清除筛选");
-        this.clearFilterButton.registerOnMouseLeftClickCallback(event -> {
+        this.clearFilterButton.registerOnMouseButtonLeftDownCallback(event -> {
             listComponent.clearFilters();
             return null;
         });
@@ -132,7 +132,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         generatePersons();
     }
 
-    private void initProcessors() {
+    protected void initProcessors() {
         this.registerProcessor(
             KeyboardEvent.class,
             (KeyboardEvent event) -> {
@@ -163,8 +163,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     }
 
     @Override
-    public void update() {
-        if (!show) return;
+    public boolean update() {
+        if (!show) return true;
 
         // Layout buttons at top
         float buttonY = 30;
@@ -195,6 +195,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         clearFilterButton.update();
         listComponent.update();
         detailComponent.update();
+        return true;
     }
 
     @Override
@@ -210,8 +211,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             this.getGameWindow().getWidth() / 2f,
             40,
             28,
-            "人物浏览器 - 宗族与人物管理系统",
-            new Vector4f(1.0f, 0.9f, 0.6f, 1.0f)
+            0,
+            new Vector4f(1.0f, 0.9f, 0.6f, 1.0f),
+            "人物浏览器 - 宗族与人物管理系统"
         );
 
         // Draw help text
@@ -220,8 +222,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             this.getGameWindow().getWidth() / 2f,
             this.getGameWindow().getHeight() - 20,
             14,
-            "操作: 点击人物查看详情 | 搜索框输入关键词筛选 | ESC关闭详情/切换显示",
-            new Vector4f(0.5f, 0.5f, 0.5f, 1.0f)
+            0,
+            new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
+            "操作: 点击人物查看详情 | 搜索框输入关键词筛选 | ESC关闭详情/切换显示"
         );
 
         // Draw components
@@ -261,12 +264,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         clearFilterButton.addToGameWindowComponentTree(node);
     }
 
-    @Override
     public boolean isVisible() {
         return show;
     }
 
-    @Override
     public void setVisible(boolean visible) {
         this.show = visible;
     }

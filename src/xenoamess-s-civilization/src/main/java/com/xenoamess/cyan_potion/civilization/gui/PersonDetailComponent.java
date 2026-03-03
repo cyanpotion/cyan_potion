@@ -103,7 +103,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
         // Close button
         this.closeButton = new Button(gameWindow, null, "×关闭");
-        this.closeButton.registerOnMouseLeftClickCallback(event -> {
+        this.closeButton.registerOnMouseButtonLeftDownCallback(event -> {
             hide();
             return null;
         });
@@ -111,7 +111,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         initProcessors();
     }
 
-    private void initProcessors() {
+    protected void initProcessors() {
         // Close on ESC
         this.registerProcessor(
             KeyboardEvent.class,
@@ -190,8 +190,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             centerX,
             centerY,
             24,
-            genderSymbol,
-            new Vector4f(1, 1, 1, 1)
+            0,
+            new Vector4f(1, 1, 1, 1),
+            genderSymbol
         );
 
         // Name
@@ -200,8 +201,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             x + 150,
             y + 30,
             32,
-            person.getName(),
-            COLOR_TITLE
+            0,
+            COLOR_TITLE,
+            person.getName()
         );
 
         // Status
@@ -212,8 +214,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             x + width - 50,
             y + 30,
             18,
-            status,
-            statusColor
+            0,
+            statusColor,
+            status
         );
     }
 
@@ -231,8 +234,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             x + width / 2,
             y,
             20,
-            "【 属性 】",
-            COLOR_HIGHLIGHT
+            0,
+            COLOR_HIGHLIGHT,
+            "【 属性 】"
         );
         y += 35;
 
@@ -279,8 +283,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             x + width / 2,
             y,
             20,
-            "【 宗族 】",
-            COLOR_HIGHLIGHT
+            0,
+            COLOR_HIGHLIGHT,
+            "【 宗族 】"
         );
         y += 35;
 
@@ -290,8 +295,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
                 x + width / 2,
                 y,
                 16,
-                "无宗族",
-                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f)
+                0,
+                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
+                "无宗族"
             );
         } else {
             int i = 0;
@@ -314,8 +320,8 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             x + width / 2,
             y,
             20,
-            "【 父母 】",
-            COLOR_HIGHLIGHT
+            COLOR_HIGHLIGHT,
+            "【 父母 】"
         );
         y += 35;
 
@@ -340,37 +346,36 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     }
 
     private void drawLabelValue(float x, float y, String label, String value, Vector4f valueColor) {
-        this.getGameWindow().drawTextCenter(null, x + 40, y, 16, label, COLOR_LABEL);
-        this.getGameWindow().drawTextCenter(null, x + 120, y, 16, value, valueColor);
+        this.getGameWindow().drawTextCenter(null, x + 40, y, 16, COLOR_LABEL, label);
+        this.getGameWindow().drawTextCenter(null, x + 120, y, 16, valueColor, value);
     }
 
     private void drawLabelValueSmall(float x, float y, String label, String value) {
-        this.getGameWindow().drawTextCenter(null, x + 35, y, 14, label, COLOR_LABEL);
-        this.getGameWindow().drawTextCenter(null, x + 90, y, 14, value, COLOR_VALUE);
+        this.getGameWindow().drawTextCenter(null, x + 35, y, 14, COLOR_LABEL, label);
+        this.getGameWindow().drawTextCenter(null, x + 90, y, 14, COLOR_VALUE, value);
     }
 
     private void drawLabel(float x, float y, String text, Vector4f color) {
-        this.getGameWindow().drawTextCenter(null, x + 60, y, 16, text, color);
+        this.getGameWindow().drawTextCenter(null, x + 60, y, 16, color, text);
     }
 
     private void drawSeparator(float x, float y, float width) {
-        this.getGameWindow().drawRect(x, y, width, 1, new Vector4f(0.3f, 0.3f, 0.4f, 0.5f));
+        // drawRect not available in GameWindow
+        // this.getGameWindow().drawRect(x, y, width, 1, new Vector4f(0.3f, 0.3f, 0.4f, 0.5f));
     }
 
     private void drawCircle(float centerX, float centerY, float radius, Vector4f color) {
-        int segments = 32;
-        for (int i = 0; i < segments; i++) {
-            float angle1 = (float) (2 * Math.PI * i / segments);
-            float angle2 = (float) (2 * Math.PI * (i + 1) / segments);
-
-            float x1 = centerX + (float) Math.cos(angle1) * radius;
-            float y1 = centerY + (float) Math.sin(angle1) * radius;
-            float x2 = centerX + (float) Math.cos(angle2) * radius;
-            float y2 = centerY + (float) Math.sin(angle2) * radius;
-
-            // Draw filled circle using small quads
-            this.getGameWindow().drawRect(x1, y1, 2, 2, color);
-        }
+        // drawRect not available for circle drawing
+        // int segments = 32;
+        // for (int i = 0; i < segments; i++) {
+        //     float angle1 = (float) (2 * Math.PI * i / segments);
+        //     float angle2 = (float) (2 * Math.PI * (i + 1) / segments);
+        //     float x1 = centerX + (float) Math.cos(angle1) * radius;
+        //     float y1 = centerY + (float) Math.sin(angle1) * radius;
+        //     float x2 = centerX + (float) Math.cos(angle2) * radius;
+        //     float y2 = centerY + (float) Math.sin(angle2) * radius;
+        //     this.getGameWindow().drawRect(x1, y1, 2, 2, color);
+        // }
     }
 
     /**
@@ -405,9 +410,10 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     }
 
     @Override
-    public void update() {
+    public boolean update() {
         super.update();
         closeButton.update();
+        return true;
     }
 
     @Override

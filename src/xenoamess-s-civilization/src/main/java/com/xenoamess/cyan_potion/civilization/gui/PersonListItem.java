@@ -85,7 +85,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         );
     }
 
-    private void initProcessors() {
+    protected void initProcessors() {
         // Hover effect
         this.registerOnMouseEnterAreaCallback(event -> {
             hovered = true;
@@ -124,11 +124,11 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         float y = getLeftTopPosY();
         float height = getHeight();
 
-        // Gender indicator (colored bar)
-        Vector4f genderColor = person.getGender() == Gender.MALE
-            ? new Vector4f(0.3f, 0.5f, 0.8f, 1.0f)
-            : new Vector4f(0.9f, 0.4f, 0.6f, 1.0f);
-        this.getGameWindow().drawRect(x, y + 5, 4, height - 10, genderColor);
+        // Gender indicator (colored bar) - drawRect not available
+        // Vector4f genderColor = person.getGender() == Gender.MALE
+        //     ? new Vector4f(0.3f, 0.5f, 0.8f, 1.0f)
+        //     : new Vector4f(0.9f, 0.4f, 0.6f, 1.0f);
+        // this.getGameWindow().drawRect(x, y + 5, 4, height - 10, genderColor);
         x += 10;
 
         // Name
@@ -141,8 +141,8 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             x + 60,
             y + height / 2,
             18,
-            name,
-            new Vector4f(1, 1, 1, 1)
+            new Vector4f(1, 1, 1, 1),
+            name
         );
         x += 120;
 
@@ -154,8 +154,8 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             x + 50,
             y + height / 2,
             14,
-            clanText,
-            new Vector4f(0.8f, 0.7f, 0.5f, 1.0f)
+            new Vector4f(0.8f, 0.7f, 0.5f, 1.0f),
+            clanText
         );
         x += 100;
 
@@ -170,17 +170,18 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             x + 100,
             y + height / 2,
             14,
-            stats,
-            new Vector4f(0.7f, 0.7f, 0.7f, 1.0f)
+            new Vector4f(0.7f, 0.7f, 0.7f, 1.0f),
+            stats
         );
 
         return true;
     }
 
     @Override
-    public void update() {
+    public boolean update() {
         super.update();
         backgroundPicture.cover(this);
+        return true;
     }
 
     /**
