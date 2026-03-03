@@ -53,7 +53,8 @@ class PersonBuilderTest {
     void testBuilderWithAllFields() {
         Person father = Person.builder("f1", "Father", Gender.MALE).build();
         Person mother = Person.builder("m1", "Mother", Gender.FEMALE).build();
-        LocalDate date = LocalDate.of(2026, 1, 1);
+        // Use a future date to ensure no health decay is applied
+        LocalDate date = LocalDate.now().plusYears(1);
         
         Person person = Person.builder("p3", "Test", Gender.MALE)
             .healthDecreasing(2.5)

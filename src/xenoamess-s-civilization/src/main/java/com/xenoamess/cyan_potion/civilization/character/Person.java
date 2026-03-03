@@ -229,7 +229,7 @@ public class Person {
         long daysPassed = ChronoUnit.DAYS.between(lastDecisionDate, currentDate);
         if (daysPassed > 0) {
             double healthLoss = (daysPassed / 365.0) * healthDecreasing;
-            health = Math.max(0, initialHealth - healthLoss);
+            health = Math.max(0, health - healthLoss);
             log.debug("Person {} initial health set to {} (lost {} over {} days)",
                 id, health, healthLoss, daysPassed);
         }
