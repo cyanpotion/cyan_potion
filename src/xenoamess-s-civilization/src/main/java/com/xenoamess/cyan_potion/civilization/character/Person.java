@@ -202,7 +202,7 @@ public class Person {
             ? builder.lastDecisionDate
             : LocalDate.now();
 
-        this.currentDate = this.lastDecisionDate;
+        this.currentDate = LocalDate.now();
 
         this.birthDate = builder.birthDate != null
             ? builder.birthDate
@@ -212,6 +212,27 @@ public class Person {
 
         // Initialize clan memberships based on inheritance
         this.clanMemberships.addAll(inheritClans());
+
+        // Apply initial health decay based on time passed since last decision
+        initializeHealth();
+    }
+
+    /**
+     * Initializes health based on time passed since last decision date.
+     * This applies health decay for the period between lastDecisionDate and currentDate.
+     */
+    private void initializeHealth() {
+        if (lastDecisionDate == null || currentDate == null) {
+            return;
+        }
+
+        long daysPassed = ChronoUnit.DAYS.between(lastDecisionDate, currentDate);
+        if (daysPassed > 0) {
+            double healthLoss = (daysPassed / 365.0) * healthDecreasing;
+            health = Math.max(0, initialHealth - healthLoss);
+            log.debug("Person {} initial health set to {} (lost {} over {} days)",
+                id, health, healthLoss, daysPassed);
+        }
     }
 
     /**

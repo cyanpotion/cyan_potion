@@ -118,10 +118,20 @@ public class RandomPersonGenerator {
         Gender gender = randomGender();
         String name = generateName(gender);
 
+        // Random age: 15-60 years old
+        int age = 15 + RANDOM.nextInt(46);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthDate = currentDate.minusYears(age).minusDays(RANDOM.nextInt(365));
+
+        // Calculate a past decision date to simulate health decay over time
+        // Set last decision date to birth date + random offset to create health decay
+        LocalDate lastDecisionDate = birthDate.plusYears(RANDOM.nextInt(age));
+
         PersonBuilder builder = Person.builder(id, name, gender)
             .father(father)
             .mother(mother)
-            .lastDecisionDate(LocalDate.now());
+            .birthDate(birthDate)
+            .lastDecisionDate(lastDecisionDate);
 
         // Randomize base attributes with some variance
         builder.constitution(PersonAttributeUtil.randomConstitution());
