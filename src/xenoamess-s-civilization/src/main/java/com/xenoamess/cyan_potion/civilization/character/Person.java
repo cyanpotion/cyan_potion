@@ -206,7 +206,7 @@ public class Person {
 
         this.birthDate = builder.birthDate != null
             ? builder.birthDate
-            : this.currentDate.minusYears(18); // Default: 18 years old
+            : this.currentDate.minusYears(15 + (int) (Math.random() * 46)); // Default: random age between 15-60
 
         this.lineageType = builder.lineageType != null ? builder.lineageType : determineLineageType();
 
