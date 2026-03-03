@@ -242,7 +242,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     @Nullable
     @Override
-    public Event process(@NotNull Event event) {
+    public Event process(@Nullable Event event) {
         if (!show) return event;
 
         // Process events in order

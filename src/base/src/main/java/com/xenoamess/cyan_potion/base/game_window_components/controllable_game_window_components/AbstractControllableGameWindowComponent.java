@@ -744,7 +744,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     @Nullable
     @Override
-    public Event process(@NotNull Event event) {
+    public Event process(@Nullable Event event) {
         if (!this.isActive()) {
             return event;
         }

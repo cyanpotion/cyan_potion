@@ -218,7 +218,10 @@ public class Panel extends AbstractControllableGameWindowComponent {
      */
     @Nullable
     @Override
-    public Event process(@NotNull Event event) {
+    public Event process(@Nullable Event event) {
+        if (event == null) {
+            return null;
+        }
         synchronized (this) {
             Set<Event> res = this.getSubGameWindowComponentTree().process(event);
             if (!res.isEmpty()) {

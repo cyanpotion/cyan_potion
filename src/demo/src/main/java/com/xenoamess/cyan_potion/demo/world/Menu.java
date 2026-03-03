@@ -129,7 +129,7 @@ public final class Menu extends AbstractGameWindowComponent {
      */
     @Nullable
     @Override
-    public Event process(@NotNull Event event) {
+    public Event process(@Nullable Event event) {
         if (!isShow()) {
             return event;
         }

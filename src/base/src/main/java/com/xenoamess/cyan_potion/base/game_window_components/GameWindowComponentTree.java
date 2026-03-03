@@ -35,6 +35,8 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -235,8 +237,12 @@ public class GameWindowComponentTree extends SubManager {
      * @param event event
      * @return return
      */
-    public Set<Event> process(Event event) {
+    @NotNull
+    public Set<Event> process(@Nullable Event event) {
         Set<Event> res = new HashSet<>();
+        if (event == null) {
+            return res;
+        }
         this.getRoot().process(res, event);
         return res;
     }

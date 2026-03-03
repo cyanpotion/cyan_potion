@@ -384,7 +384,10 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @see Event#apply(GameManager)
      */
     @Nullable
-    public <T extends Event> Event process(@NotNull T event) {
+    public <T extends Event> Event process(@Nullable T event) {
+        if (event == null) {
+            return null;
+        }
         synchronized (this) {
             EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
             if (processor != null) {
