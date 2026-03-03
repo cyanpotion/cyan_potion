@@ -123,9 +123,9 @@ public class RandomPersonGenerator {
         LocalDate currentDate = LocalDate.now();
         LocalDate birthDate = currentDate.minusYears(age).minusDays(RANDOM.nextInt(365));
 
-        // Calculate a past decision date to simulate health decay over time
-        // Set last decision date to birth date + random offset to create health decay
-        LocalDate lastDecisionDate = birthDate.plusYears(RANDOM.nextInt(age));
+        // Set last decision date to birth date so health decay is calculated
+        // from birth to current date based on the person's full age
+        LocalDate lastDecisionDate = birthDate;
 
         PersonBuilder builder = Person.builder(id, name, gender)
             .father(father)
