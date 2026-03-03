@@ -316,6 +316,8 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Draw list panel with clipping
         listPanel.draw();
 
+        updateListPositions();
+
         // Draw person items
         for (PersonListItem item : listItems) {
             if (isItemVisible(item)) {
