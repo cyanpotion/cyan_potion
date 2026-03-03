@@ -86,6 +86,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Getter
     private final Button pauseButton;
 
+    @Getter
+    private final Button dashboardButton;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -177,6 +180,14 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         this.pauseButton.registerOnMouseButtonLeftDownCallback(event -> {
             boolean paused = dateManager.togglePause();
             updatePauseButtonText();
+            return null;
+        });
+
+        // Dashboard button at bottom center to reopen list window
+        this.dashboardButton = new Button(gameWindow, null, "📋 打开人物列表");
+        this.dashboardButton.registerOnMouseButtonLeftDownCallback(event -> {
+            listWindow.setVisible(true);
+            log.debug("Reopened person list window from dashboard");
             return null;
         });
 
@@ -281,6 +292,17 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         speedButton.setLeftTopPos(rightButtonX - speedButtonWidth, rightButtonY);
         speedButton.setSize(speedButtonWidth, buttonHeight);
 
+        // Layout dashboard button at bottom center (only show when list window is closed)
+        float dashboardButtonWidth = 160;
+        float dashboardButtonHeight = 40;
+        float dashboardY = this.getGameWindow().getHeight() - 100;
+        dashboardButton.setLeftTopPos(
+            (this.getGameWindow().getWidth() - dashboardButtonWidth) / 2,
+            dashboardY
+        );
+        dashboardButton.setSize(dashboardButtonWidth, dashboardButtonHeight);
+        dashboardButton.setVisible(!listWindow.isVisible());
+
         // Update components
         generateButton.update();
         filterMaleButton.update();
@@ -288,6 +310,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         clearFilterButton.update();
         speedButton.update();
         pauseButton.update();
+        dashboardButton.update();
         
         // Update draggable windows
         listWindow.update();
@@ -359,6 +382,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         clearFilterButton.draw();
         speedButton.draw();
         pauseButton.draw();
+        dashboardButton.draw();
         
         // Draw draggable windows (list window first, then detail)
         listWindow.draw();
@@ -379,6 +403,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         event = clearFilterButton.process(event);
         event = speedButton.process(event);
         event = pauseButton.process(event);
+        event = dashboardButton.process(event);
         
         // Process draggable windows (detail first to handle on-top)
         event = detailWindow.process(event);
