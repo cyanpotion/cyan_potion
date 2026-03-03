@@ -162,7 +162,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         this.speedButton.registerOnMouseButtonLeftDownCallback(event -> {
             int currentLevel = dateManager.getSpeedLevel();
             int newLevel;
-            if (currentLevel >= 5) {
+            if (currentLevel >= GameDateManager.MAX_SPEED_LEVEL) {
                 newLevel = 1;
                 dateManager.setSpeedLevel(1);
             } else {

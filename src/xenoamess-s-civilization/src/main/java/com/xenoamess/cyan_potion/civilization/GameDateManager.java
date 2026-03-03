@@ -37,8 +37,8 @@ public class GameDateManager {
     private static final long BASE_DAY_MILLIS = 1000; // Level 1: 1 day = 1 second
 
     // Speed multipliers for each level (1.5x progression)
-    private static final double[] SPEED_MULTIPLIERS = {1.0, 1.5, 2.25, 3.375};
-    private static final int MAX_SPEED_LEVEL = 5;
+    private static final double[] SPEED_MULTIPLIERS = {1, 2, 5, 10, 20, 50};
+    public static final int MAX_SPEED_LEVEL = SPEED_MULTIPLIERS.length + 1;
     private static final int MIN_SPEED_LEVEL = 1;
 
     @Getter
@@ -177,7 +177,7 @@ public class GameDateManager {
             return "暂停";
         }
         if (speedLevel == MAX_SPEED_LEVEL) {
-            return "5档(极限)";
+            return MAX_SPEED_LEVEL + "档(极限)";
         }
         return speedLevel + "档(" + String.format("%.2fx", SPEED_MULTIPLIERS[speedLevel - 1]) + ")";
     }
