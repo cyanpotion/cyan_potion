@@ -419,6 +419,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-        closeButton.addToGameWindowComponentTree(node);
+//        closeButton.addToGameWindowComponentTree(node);
     }
 }

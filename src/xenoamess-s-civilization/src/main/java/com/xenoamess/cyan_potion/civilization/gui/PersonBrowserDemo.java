@@ -103,7 +103,6 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         this.detailComponent = new PersonDetailComponent(gameWindow);
         this.detailComponent.setLeftTopPos(580, 80);
         this.detailComponent.setSize(550, 600);
-        this.detailComponent.setOnClose(v -> detailComponent.hide());
 
         // Control buttons
         this.generateButton = new Button(gameWindow, null, "生成100人");
@@ -259,12 +258,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-        listComponent.addToGameWindowComponentTree(node);
-        detailComponent.addToGameWindowComponentTree(node);
-        generateButton.addToGameWindowComponentTree(node);
-        filterMaleButton.addToGameWindowComponentTree(node);
-        filterFemaleButton.addToGameWindowComponentTree(node);
-        clearFilterButton.addToGameWindowComponentTree(node);
+//        listComponent.addToGameWindowComponentTree(node);
+//        detailComponent.addToGameWindowComponentTree(node);
+//        generateButton.addToGameWindowComponentTree(node);
+//        filterMaleButton.addToGameWindowComponentTree(node);
+//        filterFemaleButton.addToGameWindowComponentTree(node);
+//        clearFilterButton.addToGameWindowComponentTree(node);
     }
 
     public boolean isVisible() {

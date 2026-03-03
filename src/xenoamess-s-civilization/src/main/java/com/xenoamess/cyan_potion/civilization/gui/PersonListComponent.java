@@ -307,6 +307,8 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
                 "搜索人物..."
             );
+        } else {
+            searchBox.draw();
         }
 
         // Draw list panel with clipping
@@ -437,11 +439,6 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 return null;
             });
             listItems.add(item);
-            
-            // Add to component tree immediately if this component is already in a tree
-            if (this.getGameWindowComponentTreeNode() != null) {
-                item.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-            }
         }
     }
 
@@ -533,11 +530,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-        searchPanel.addToGameWindowComponentTree(node);
-        searchBox.addToGameWindowComponentTree(node);
-        listPanel.addToGameWindowComponentTree(node);
-        for (PersonListItem item : listItems) {
-            item.addToGameWindowComponentTree(node);
-        }
+//        searchPanel.addToGameWindowComponentTree(node);
+//        searchBox.addToGameWindowComponentTree(node);
+//        listPanel.addToGameWindowComponentTree(node);
+//        for (PersonListItem item : listItems) {
+//            item.addToGameWindowComponentTree(node);
+//        }
     }
 }
