@@ -22,6 +22,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_w
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
@@ -156,10 +157,26 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             }
         );
 
-        // Handle keyboard navigation
+        // Handle keyboard navigation and search input
         this.registerProcessor(
             KeyboardEvent.class,
             (KeyboardEvent event) -> {
+                // First, try to pass to search box if it's focused or if we're typing
+                if (searchBox != null) {
+                    // Check if search box should handle this event
+                    if (isSearchBoxFocused() || isTypingEvent(event)) {
+                        // Pass event to search box and check if it was consumed
+                        var result = searchBox.process(event);
+                        if (result == null) {
+                            // Search box consumed the event, refresh search
+                            if (event.getAction() == GLFW.GLFW_PRESS || event.getAction() == GLFW.GLFW_REPEAT) {
+                                performSearch();
+                            }
+                            return null;
+                        }
+                    }
+                }
+
                 if (event.getAction() == GLFW.GLFW_PRESS) {
                     switch (event.getKey()) {
                         case GLFW.GLFW_KEY_UP:
@@ -185,6 +202,55 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 return event;
             }
         );
+
+        // Handle mouse click on search box to focus it
+        this.registerProcessor(
+            MouseButtonEvent.class,
+            (MouseButtonEvent event) -> {
+                if (event.getAction() == GLFW.GLFW_PRESS && event.getKey() == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                    float mouseX = this.getGameWindow().getMousePosX();
+                    float mouseY = this.getGameWindow().getMousePosY();
+                    if (isPointInSearchBox(mouseX, mouseY)) {
+                        searchBox.setInFocusNow(true);
+                        searchBox.setWillStillInFocus(true);
+                        return null;
+                    } else {
+                        searchBox.setInFocusNow(false);
+                        searchBox.setWillStillInFocus(false);
+                    }
+                }
+                return event;
+            }
+        );
+    }
+
+    private boolean isSearchBoxFocused() {
+        return searchBox != null && searchBox.isInFocusNow();
+    }
+
+    private boolean isTypingEvent(KeyboardEvent event) {
+        // Check if it's a printable character or editing key
+        if (event.getAction() != GLFW.GLFW_PRESS && event.getAction() != GLFW.GLFW_REPEAT) {
+            return false;
+        }
+        int key = event.getKey();
+        // Allow printable characters, backspace, delete, arrows, home, end
+        return (key >= GLFW.GLFW_KEY_SPACE && key <= GLFW.GLFW_KEY_GRAVE_ACCENT) ||
+               key == GLFW.GLFW_KEY_BACKSPACE ||
+               key == GLFW.GLFW_KEY_DELETE ||
+               key == GLFW.GLFW_KEY_LEFT ||
+               key == GLFW.GLFW_KEY_RIGHT ||
+               key == GLFW.GLFW_KEY_HOME ||
+               key == GLFW.GLFW_KEY_END ||
+               key == GLFW.GLFW_KEY_ENTER ||
+               key == GLFW.GLFW_KEY_TAB;
+    }
+
+    private boolean isPointInSearchBox(float x, float y) {
+        return x >= searchBox.getLeftTopPosX() &&
+               x <= searchBox.getLeftTopPosX() + searchBox.getWidth() &&
+               y >= searchBox.getLeftTopPosY() &&
+               y <= searchBox.getLeftTopPosY() + searchBox.getHeight();
     }
 
     @Override
@@ -429,6 +495,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
         searchPanel.addToGameWindowComponentTree(node);
+        searchBox.addToGameWindowComponentTree(node);
         listPanel.addToGameWindowComponentTree(node);
         for (PersonListItem item : listItems) {
             item.addToGameWindowComponentTree(node);

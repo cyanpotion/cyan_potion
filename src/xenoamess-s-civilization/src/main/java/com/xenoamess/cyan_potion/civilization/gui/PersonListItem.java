@@ -131,7 +131,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         // this.getGameWindow().drawRect(x, y + 5, 4, height - 10, genderColor);
         x += 10;
 
-        // Name
+        // Name - bright white for better visibility
         String name = person.getName();
         if (name.length() > 8) {
             name = name.substring(0, 7) + "...";
@@ -141,7 +141,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             x + 60,
             y + height / 2,
             18,
-            new Vector4f(1, 1, 1, 1),
+            new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
             name
         );
         x += 120;
