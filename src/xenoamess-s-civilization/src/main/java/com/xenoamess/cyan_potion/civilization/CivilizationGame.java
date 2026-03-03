@@ -16,7 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization;
 
-import lombok.extern.slf4j.Slf4j;
+import com.xenoamess.cyan_potion.base.GameManager;
+
+import java.util.Map;
 
 /**
  * XenoAmess's Civilization module entry point.
@@ -24,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
  */
-@Slf4j
 public class CivilizationGame {
 
     /**
@@ -33,6 +34,9 @@ public class CivilizationGame {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        log.info("Welcome to XenoAmess's Civilization!");
+        Map<String, String> argsMap = GameManager.generateArgsMap(args);
+        argsMap.put("SettingFilePath", "settings/CivilizationSettings.x8l");
+        GameManager gameManager = new GameManager(argsMap);
+        gameManager.startup();
     }
 }

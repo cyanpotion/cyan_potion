@@ -1,0 +1,40 @@
+<settingFile settingFormatVersion=0.3.0>
+    <commonSettings
+        gameName=XenoAmessCivilization
+        gameVersion=0.167.3-SNAPSHOT
+        titleTextID=0
+        defaultFontResourceURI=["com.xenoamess.cyan_potion.base.visual.Font","ttfFile","resources/www/fonts/SourceHanSans-Normal.ttc"]
+        language=chinese
+        gameWindowClassName=com.xenoamess.cyan_potion.base.GameWindow
+        titleClassName=com.xenoamess.cyan_potion.civilization.gui.PersonBrowserDemo
+        maxFPS=60
+    >>
+    <views
+        logicWindowWidth=1280
+        logicWindowHeight=720
+        realWindowWidth=1280
+        realWindowHeight=720
+        scale=1.0
+        fullScreen=0
+        gameWindowResizable=1
+    >>
+    <specialSettings>>
+    <codePlugins [>
+        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.render.Texture:PUT_TEXTURE_LOADERS>
+        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.audio.WaveData:PUT_WAVEDATA_LOADER_MUSIC>
+        <rightAfterResourceManagerCreate>SimpleFunctionObject:com.xenoamess.cyan_potion.base.visual.Font:PUT_FONT_LOADER_TTF_FILE>
+    >
+    <debug=1>>
+    <keymap using>
+        <GLFW_KEY_ESCAPE>XENOAMESS_KEY_ESCAPE>
+        <GLFW_KEY_ENTER>XENOAMESS_KEY_ENTER>
+        <GLFW_KEY_SPACE>XENOAMESS_KEY_SPACE>
+        <GLFW_KEY_UP>XENOAMESS_KEY_UP>
+        <GLFW_KEY_LEFT>XENOAMESS_KEY_LEFT>
+        <GLFW_KEY_DOWN>XENOAMESS_KEY_DOWN>
+        <GLFW_KEY_RIGHT>XENOAMESS_KEY_RIGHT>
+        <GLFW_MOUSE_BUTTON_LEFT>XENOAMESS_MOUSE_BUTTON_LEFT>
+        <GLFW_MOUSE_BUTTON_RIGHT>XENOAMESS_MOUSE_BUTTON_RIGHT>
+    >
+    <<comment>
+>
