@@ -80,6 +80,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Getter
     private final GameDateManager dateManager;
 
+    @Getter
+    private final Button speedButton;
+
+    @Getter
+    private final Button pauseButton;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -151,8 +157,39 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             return null;
         });
 
+        // Speed control button (top right)
+        this.speedButton = new Button(gameWindow, null, "速度: 1档");
+        this.speedButton.registerOnMouseButtonLeftDownCallback(event -> {
+            int currentLevel = dateManager.getSpeedLevel();
+            int newLevel;
+            if (currentLevel >= 5) {
+                newLevel = 1;
+                dateManager.setSpeedLevel(1);
+            } else {
+                newLevel = dateManager.increaseSpeed();
+            }
+            updateSpeedButtonText();
+            return null;
+        });
+
+        // Pause/Resume button (right of speed button)
+        this.pauseButton = new Button(gameWindow, null, "暂停");
+        this.pauseButton.registerOnMouseButtonLeftDownCallback(event -> {
+            boolean paused = dateManager.togglePause();
+            updatePauseButtonText();
+            return null;
+        });
+
         initProcessors();
         generatePersons();
+    }
+
+    private void updateSpeedButtonText() {
+        speedButton.setButtonText("速度: " + dateManager.getSpeedDescription());
+    }
+
+    private void updatePauseButtonText() {
+        pauseButton.setButtonText(dateManager.isPaused() ? "启动" : "暂停");
     }
 
     protected void initProcessors() {
@@ -230,11 +267,27 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         clearFilterButton.setLeftTopPos(buttonX, buttonY);
         clearFilterButton.setSize(buttonWidth, buttonHeight);
 
+        // Layout speed and pause buttons at top right
+        float rightButtonY = 30;
+        float rightButtonX = this.getGameWindow().getWidth() - 50;
+        float speedButtonWidth = 140;
+        float pauseButtonWidth = 80;
+        float rightButtonGap = 10;
+
+        pauseButton.setLeftTopPos(rightButtonX - pauseButtonWidth, rightButtonY);
+        pauseButton.setSize(pauseButtonWidth, buttonHeight);
+        rightButtonX -= pauseButtonWidth + rightButtonGap;
+
+        speedButton.setLeftTopPos(rightButtonX - speedButtonWidth, rightButtonY);
+        speedButton.setSize(speedButtonWidth, buttonHeight);
+
         // Update components
         generateButton.update();
         filterMaleButton.update();
         filterFemaleButton.update();
         clearFilterButton.update();
+        speedButton.update();
+        pauseButton.update();
         
         // Update draggable windows
         listWindow.update();
@@ -304,6 +357,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         filterMaleButton.draw();
         filterFemaleButton.draw();
         clearFilterButton.draw();
+        speedButton.draw();
+        pauseButton.draw();
         
         // Draw draggable windows (list window first, then detail)
         listWindow.draw();
@@ -322,6 +377,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         event = filterMaleButton.process(event);
         event = filterFemaleButton.process(event);
         event = clearFilterButton.process(event);
+        event = speedButton.process(event);
+        event = pauseButton.process(event);
         
         // Process draggable windows (detail first to handle on-top)
         event = detailWindow.process(event);
