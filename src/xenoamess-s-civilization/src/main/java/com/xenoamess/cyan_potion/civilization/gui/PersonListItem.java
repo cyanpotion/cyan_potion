@@ -129,6 +129,19 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         //     ? new Vector4f(0.3f, 0.5f, 0.8f, 1.0f)
         //     : new Vector4f(0.9f, 0.4f, 0.6f, 1.0f);
         // this.getGameWindow().drawRect(x, y + 5, 4, height - 10, genderColor);
+
+        // Skull icon for dead persons
+        if (!person.isAlive()) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                x + 10,
+                y + height / 2,
+                20,
+                new Vector4f(0.6f, 0.6f, 0.6f, 1.0f),
+                "☠"
+            );
+            x += 25; // Extra space for skull
+        }
         x += 10;
 
         // Name - bright white for better visibility
