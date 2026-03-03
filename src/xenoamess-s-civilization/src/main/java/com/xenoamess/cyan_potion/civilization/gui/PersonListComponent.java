@@ -424,6 +424,16 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             return true;
         }
 
+        // Search by age (exact match for integer age)
+        try {
+            int searchAge = Integer.parseInt(query);
+            if (person.getAge() == searchAge) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            // Not a valid integer, skip age search
+        }
+
         return false;
     }
 

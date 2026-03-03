@@ -176,14 +176,15 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         x += 100;
 
         // Key stats (single line)
-        String stats = String.format("健:%.0f 体:%.0f 智:%.0f",
+        String stats = String.format("年龄:%d 健:%.0f 体:%.0f 智:%.0f",
+            person.getAge(),
             person.getHealth(),
             person.getConstitution(),
             person.getIntelligence()
         );
         this.getGameWindow().drawTextCenter(
             null,
-            x + 100,
+            x + 110,
             y + height / 2,
             14,
             new Vector4f(0.7f, 0.7f, 0.7f, 1.0f),
