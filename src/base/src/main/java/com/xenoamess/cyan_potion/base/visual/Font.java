@@ -99,7 +99,7 @@ import static org.lwjgl.stb.STBTruetype.stbtt_PackSetOversampling;
  * @version 0.162.3
  */
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(exclude = "maxCharHeight")
 public class Font extends NormalResource {
 
     @JsonIgnore
