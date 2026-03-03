@@ -266,33 +266,56 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return;
         }
 
+        // Build tooltip text based on alive/dead status
         String birthDateText = "出生: " + person.getBirthDate().toString();
+        String deathDateText = null;
+        if (!person.isAlive() && person.getDeathDate() != null) {
+            deathDateText = "死亡: " + person.getDeathDate().toString();
+        }
 
         // Draw tooltip background
         float tooltipWidth = 140;
-        float tooltipHeight = 25;
+        float tooltipHeight = deathDateText != null ? 45 : 25;
         float tooltipX = x - tooltipWidth / 2;
         float tooltipY = y;
 
-        // Simple tooltip background using text with background color
+        // Draw birth date
         this.getGameWindow().drawTextCenter(
             null,
             x,
-            tooltipY + tooltipHeight / 2 + 2,
+            tooltipY + 12,
             14,
             new Vector4f(0.2f, 0.2f, 0.25f, 0.95f),
             birthDateText
         );
-
-        // Draw border text for better visibility
         this.getGameWindow().drawTextCenter(
             null,
             x,
-            tooltipY + tooltipHeight / 2,
+            tooltipY + 10,
             14,
             new Vector4f(0.9f, 0.9f, 0.7f, 1.0f),
             birthDateText
         );
+
+        // Draw death date if applicable
+        if (deathDateText != null) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                x,
+                tooltipY + 34,
+                14,
+                new Vector4f(0.2f, 0.2f, 0.25f, 0.95f),
+                deathDateText
+            );
+            this.getGameWindow().drawTextCenter(
+                null,
+                x,
+                tooltipY + 32,
+                14,
+                new Vector4f(0.9f, 0.6f, 0.6f, 1.0f),
+                deathDateText
+            );
+        }
     }
 
     private void drawAttributesSection(float x, float y, float width) {

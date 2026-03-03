@@ -149,6 +149,12 @@ public class Person {
     @Getter
     private LocalDate currentDate;
 
+    /**
+     * Death date of the person (null if alive).
+     */
+    @Getter
+    private LocalDate deathDate;
+
     // ==================== Decision Tracking ====================
 
     /**
@@ -454,12 +460,22 @@ public class Person {
     // ==================== Health Management ====================
 
     /**
-     * Gets the age of the person based on birth date and current date.
+     * Gets the age of the person based on birth date and current/death date.
+     * For dead persons, returns age at death.
+     * For alive persons, returns current age.
      *
      * @return age in years
      */
     public int getAge() {
-        if (birthDate == null || currentDate == null) {
+        if (birthDate == null) {
+            return 0;
+        }
+        // If dead, return age at death
+        if (deathDate != null) {
+            return (int) ChronoUnit.YEARS.between(birthDate, deathDate);
+        }
+        // If alive, return current age
+        if (currentDate == null) {
             return 0;
         }
         return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
@@ -467,8 +483,9 @@ public class Person {
 
     /**
      * Advances the current date by the specified number of days.
-     * This updates both currentDate and recalculates age (via birthDate),
-     * and applies health decay based on time passed.
+     * Updates currentDate for both alive and dead persons.
+     * For alive persons: applies health decay and checks for death.
+     * For dead persons: only updates currentDate without any processing.
      *
      * @param days number of days to advance
      */
@@ -481,26 +498,62 @@ public class Person {
             return;
         }
 
-        LocalDate oldDate = this.currentDate;
+        // Common part: update currentDate for both alive and dead
         LocalDate newDate = this.currentDate.plusDays(days);
         this.currentDate = newDate;
 
+        // If already dead, skip all further processing
+        if (!isAlive()) {
+            // Just update lastDecisionDate to keep consistency
+            this.lastDecisionDate = newDate;
+            return;
+        }
+
+        // Alive-specific part: apply health decay
+        applyHealthDecayAndCheckDeath(days);
+
+        // Update lastDecisionDate
+        this.lastDecisionDate = newDate;
+    }
+
+    /**
+     * Applies health decay and checks for death.
+     * Only called for alive persons.
+     *
+     * @param days number of days passed
+     */
+    private void applyHealthDecayAndCheckDeath(int days) {
         // Apply health decay based on days passed
         // Formula: health -= (days / 365) * healthDecreasing
         double healthLoss = (days / 365.0) * healthDecreasing;
         double oldHealth = this.health;
         this.health = Math.max(0, this.health - healthLoss);
 
-        // Also update lastDecisionDate to keep consistency
-        this.lastDecisionDate = newDate;
+        log.debug("Person {} health decay: {} -> {} (loss: {})",
+            id, oldHealth, this.health, healthLoss);
 
-        log.debug("Person {} date advanced by {} days to {}, age is now {}, health: {} -> {} (loss: {})",
-            id, days, newDate, getAge(), oldHealth, this.health, healthLoss);
-
-        // Log death if health reaches 0
+        // Check for death
         if (oldHealth > 0 && this.health <= 0) {
-            log.info("Person {} ({}) has died at age {} due to health decay", id, name, getAge());
+            this.deathDate = this.currentDate;
+            log.info("Person {} ({}) has died at age {} on {}", 
+                id, name, getAgeAtDeath(), this.deathDate.toString());
         }
+    }
+
+    /**
+     * Gets the age at which the person died.
+     * Returns current age if still alive.
+     *
+     * @return age at death or current age
+     */
+    public int getAgeAtDeath() {
+        if (deathDate == null) {
+            return getAge();
+        }
+        if (birthDate == null) {
+            return 0;
+        }
+        return (int) ChronoUnit.YEARS.between(birthDate, deathDate);
     }
 
     /**
