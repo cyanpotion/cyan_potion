@@ -467,7 +467,8 @@ public class Person {
 
     /**
      * Advances the current date by the specified number of days.
-     * This updates both currentDate and recalculates age (via birthDate).
+     * This updates both currentDate and recalculates age (via birthDate),
+     * and applies health decay based on time passed.
      *
      * @param days number of days to advance
      */
@@ -476,12 +477,30 @@ public class Person {
             log.warn("Cannot advance date by negative days: {}", days);
             return;
         }
+        if (days == 0) {
+            return;
+        }
+
+        LocalDate oldDate = this.currentDate;
         LocalDate newDate = this.currentDate.plusDays(days);
         this.currentDate = newDate;
+
+        // Apply health decay based on days passed
+        // Formula: health -= (days / 365) * healthDecreasing
+        double healthLoss = (days / 365.0) * healthDecreasing;
+        double oldHealth = this.health;
+        this.health = Math.max(0, this.health - healthLoss);
+
         // Also update lastDecisionDate to keep consistency
         this.lastDecisionDate = newDate;
-        log.debug("Person {} date advanced by {} days to {}, age is now {}",
-            id, days, newDate, getAge());
+
+        log.debug("Person {} date advanced by {} days to {}, age is now {}, health: {} -> {} (loss: {})",
+            id, days, newDate, getAge(), oldHealth, this.health, healthLoss);
+
+        // Log death if health reaches 0
+        if (oldHealth > 0 && this.health <= 0) {
+            log.info("Person {} ({}) has died at age {} due to health decay", id, name, getAge());
+        }
     }
 
     /**
