@@ -146,6 +146,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
      * Initialize input processors.
      */
     protected void initProcessors() {
+        super.initProcessors();
         // Handle scroll events
         this.registerProcessor(
             MouseScrollEvent.class,

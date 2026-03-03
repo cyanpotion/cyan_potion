@@ -112,6 +112,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     }
 
     protected void initProcessors() {
+        super.initProcessors();
         // Close on ESC
         this.registerProcessor(
             KeyboardEvent.class,

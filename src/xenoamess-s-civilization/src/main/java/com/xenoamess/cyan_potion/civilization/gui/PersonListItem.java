@@ -17,7 +17,12 @@
 package com.xenoamess.cyan_potion.civilization.gui;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
+import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
+import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.character.Clan;
@@ -27,6 +32,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.joml.Vector4f;
+import org.lwjgl.glfw.GLFW;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
@@ -86,6 +92,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
     }
 
     protected void initProcessors() {
+        super.initProcessors();
         // Hover effect
         this.registerOnMouseEnterAreaCallback(event -> {
             hovered = true;
@@ -98,6 +105,15 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             updateBackground();
             return null;
         });
+        this.registerOnMouseButtonLeftDownCallback(
+                new EventProcessor<MouseButtonEvent>(){
+                    @Override
+                    public Event apply(MouseButtonEvent event) {
+                        PersonListItem.this.selected = true;
+                        return null;
+                    }
+                }
+        );
     }
 
     private void updateBackground() {
@@ -207,4 +223,5 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
             person.getConstitution()
         );
     }
+
 }
