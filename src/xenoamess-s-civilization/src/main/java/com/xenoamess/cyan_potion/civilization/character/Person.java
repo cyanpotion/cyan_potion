@@ -228,6 +228,7 @@ public class Person {
     /**
      * Initializes health based on time passed since last decision date.
      * This applies health decay for the period between lastDecisionDate and currentDate.
+     * If health drops to 0 or below, marks the person as dead with deathDate set.
      */
     private void initializeHealth() {
         if (lastDecisionDate == null || currentDate == null) {
@@ -237,9 +238,18 @@ public class Person {
         long daysPassed = ChronoUnit.DAYS.between(lastDecisionDate, currentDate);
         if (daysPassed > 0) {
             double healthLoss = (daysPassed / 365.0) * healthDecreasing;
-            health = Math.max(0, health - healthLoss);
-            log.debug("Person {} initial health set to {} (lost {} over {} days)",
-                id, health, healthLoss, daysPassed);
+            double oldHealth = this.health;
+            this.health = Math.max(0, this.health - healthLoss);
+
+            // If health dropped to 0 or below, mark as dead
+            if (oldHealth > 0 && this.health <= 0) {
+                this.deathDate = this.currentDate;
+                log.info("Person {} ({}) generated as dead (health: {} -> {}, age: {})",
+                    id, name, oldHealth, this.health, getAge());
+            } else {
+                log.debug("Person {} initial health set to {} (lost {} over {} days)",
+                    id, health, healthLoss, daysPassed);
+            }
         }
     }
 
