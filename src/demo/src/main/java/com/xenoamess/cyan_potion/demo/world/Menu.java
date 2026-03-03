@@ -35,6 +35,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -125,8 +127,9 @@ public final class Menu extends AbstractGameWindowComponent {
     /**
      * {@inheritDoc}
      */
+    @Nullable
     @Override
-    public Event process(Event event) {
+    public Event process(@NotNull Event event) {
         if (!isShow()) {
             return event;
         }

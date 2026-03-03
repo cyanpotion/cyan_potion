@@ -38,6 +38,8 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
@@ -214,8 +216,9 @@ public class Panel extends AbstractControllableGameWindowComponent {
     /**
      * {@inheritDoc}
      */
+    @Nullable
     @Override
-    public Event process(Event event) {
+    public Event process(@NotNull Event event) {
         synchronized (this) {
             Set<Event> res = this.getSubGameWindowComponentTree().process(event);
             if (!res.isEmpty()) {

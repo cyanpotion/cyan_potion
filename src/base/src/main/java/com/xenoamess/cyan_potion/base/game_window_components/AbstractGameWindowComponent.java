@@ -41,6 +41,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -381,7 +383,8 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      * @return the new Event that generated during the processing of the old event.
      * @see Event#apply(GameManager)
      */
-    public <T extends Event> Event process(T event) {
+    @Nullable
+    public <T extends Event> Event process(@NotNull T event) {
         synchronized (this) {
             EventProcessor<? super T> processor = this.getProcessor((Class<T>) event.getClass());
             if (processor != null) {

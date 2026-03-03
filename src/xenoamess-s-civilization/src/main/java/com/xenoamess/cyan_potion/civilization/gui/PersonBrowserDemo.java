@@ -31,6 +31,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -238,8 +240,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         return true;
     }
 
+    @Nullable
     @Override
-    public Event process(Event event) {
+    public Event process(@NotNull Event event) {
         if (!show) return event;
 
         // Process events in order
