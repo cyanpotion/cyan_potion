@@ -140,7 +140,10 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
         });
 
         this.registerOnMouseButtonLeftUpCallback(event -> {
-            isDragging = false;
+            if (isDragging) {
+                isDragging = false;
+                log.debug("Stopped dragging window: {}", title);
+            }
             return null;
         });
 
@@ -186,6 +189,17 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
     @Override
     public boolean update() {
         super.update();
+
+        // Safety check: if we're dragging but left button is not pressing anymore, stop dragging
+        // This handles the case where mouse up event was missed (e.g., released outside window)
+        if (isDragging) {
+            long windowHandle = getGameWindow().getWindow();
+            int buttonState = GLFW.glfwGetMouseButton(windowHandle, GLFW.GLFW_MOUSE_BUTTON_LEFT);
+            if (buttonState == GLFW.GLFW_RELEASE) {
+                isDragging = false;
+                log.debug("Drag ended (button no longer pressed): {}", title);
+            }
+        }
 
         // Update content component position and size
         if (contentComponent != null) {

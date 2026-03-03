@@ -51,7 +51,8 @@ class RandomPersonGeneratorTest {
         assertNotNull(person.getGender());
 
         // Verify basic attributes are set
-        assertTrue(person.getHealth() > 0);
+        // Health can be 0 for very old persons with high decay rate
+        assertTrue(person.getHealth() >= 0);
         assertTrue(person.getConstitution() >= 4.0 && person.getConstitution() <= 10.0);
         assertTrue(person.getIntelligence() >= 4.0);
         assertTrue(person.getEloquence() >= 4.0 && person.getEloquence() <= 10.0);
