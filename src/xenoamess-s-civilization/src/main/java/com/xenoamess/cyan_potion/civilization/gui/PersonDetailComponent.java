@@ -70,6 +70,13 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Setter
     private boolean show = false;
 
+    // Age hover tooltip state
+    private boolean ageHovered = false;
+    private float ageTextX = 0;
+    private float ageTextY = 0;
+    private float ageTextWidth = 0;
+    private float ageTextHeight = 20;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -226,6 +233,66 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         drawLabelValue(x + width / 2, y, "世系:", person.getLineageType().getChineseName());
 
         drawLabelValue(x, y + 25, "健康衰减:", String.format("%.2f/年", person.getHealthDecreasing()));
+
+        // Age with hover tooltip for birth date
+        String ageText = String.valueOf(person.getAge());
+        float ageLabelX = x + width / 2;
+        float ageValueX = ageLabelX + 80;
+        this.getGameWindow().drawTextCenter(null, ageLabelX + 40, y + 25, 16, COLOR_LABEL, "年龄:");
+        this.getGameWindow().drawTextCenter(null, ageValueX, y + 25, 16, COLOR_VALUE, ageText);
+
+        // Track age text position for hover detection
+        ageTextX = ageValueX - 20;
+        ageTextY = y + 15;
+        ageTextWidth = 40;
+
+        // Check hover and draw tooltip
+        updateAgeHoverState();
+        if (ageHovered) {
+            drawAgeTooltip(ageValueX, y + 35);
+        }
+    }
+
+    private void updateAgeHoverState() {
+        float mouseX = this.getGameWindow().getMousePosX();
+        float mouseY = this.getGameWindow().getMousePosY();
+
+        ageHovered = mouseX >= ageTextX && mouseX <= ageTextX + ageTextWidth &&
+                     mouseY >= ageTextY && mouseY <= ageTextY + ageTextHeight;
+    }
+
+    private void drawAgeTooltip(float x, float y) {
+        if (person.getBirthDate() == null) {
+            return;
+        }
+
+        String birthDateText = "出生: " + person.getBirthDate().toString();
+
+        // Draw tooltip background
+        float tooltipWidth = 140;
+        float tooltipHeight = 25;
+        float tooltipX = x - tooltipWidth / 2;
+        float tooltipY = y;
+
+        // Simple tooltip background using text with background color
+        this.getGameWindow().drawTextCenter(
+            null,
+            x,
+            tooltipY + tooltipHeight / 2 + 2,
+            14,
+            new Vector4f(0.2f, 0.2f, 0.25f, 0.95f),
+            birthDateText
+        );
+
+        // Draw border text for better visibility
+        this.getGameWindow().drawTextCenter(
+            null,
+            x,
+            tooltipY + tooltipHeight / 2,
+            14,
+            new Vector4f(0.9f, 0.9f, 0.7f, 1.0f),
+            birthDateText
+        );
     }
 
     private void drawAttributesSection(float x, float y, float width) {
