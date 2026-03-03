@@ -18,6 +18,7 @@ package com.xenoamess.cyan_potion.civilization.gui;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
@@ -70,6 +71,15 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
     @Getter
     private final Panel searchPanel;
+
+    @Getter
+    private final Button settingsButton;
+
+    @Getter
+    private final DraggableWindowComponent filterWindow;
+
+    @Getter
+    private final FilterSettingsComponent filterSettings;
 
     @Getter
     @Setter
@@ -129,6 +139,24 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         this.searchBox = new InputBox(gameWindow);
         this.searchBox.setContentString("");
 
+        // Settings button
+        this.settingsButton = new Button(gameWindow, null, "⚙");
+        this.settingsButton.registerOnMouseButtonLeftDownCallback(event -> {
+            toggleFilterWindow();
+            return null;
+        });
+
+        // Filter settings component
+        this.filterSettings = new FilterSettingsComponent(gameWindow);
+        this.filterSettings.setOnApply(this::applyFilterSettings);
+        this.filterSettings.setOnClear(this::clearFilterSettings);
+
+        // Filter settings window (draggable)
+        this.filterWindow = new DraggableWindowComponent(gameWindow, "筛选设置", filterSettings);
+        this.filterWindow.setLeftTopPos(600, 100);
+        this.filterWindow.setSize(250, 200);
+        this.filterWindow.setVisible(false);
+
         // List panel for person items
         this.listPanel = new Panel(gameWindow);
         this.listPanel.getBackgroundPicture().setBindable(
@@ -141,6 +169,40 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         );
 
         initProcessors();
+    }
+
+    private void toggleFilterWindow() {
+        filterWindow.setVisible(!filterWindow.isVisible());
+        if (filterWindow.isVisible()) {
+            filterSettings.setVisible(true);
+        }
+    }
+
+    private void applyFilterSettings(FilterSettingsComponent settings) {
+        // Build filter predicate based on settings
+        java.util.function.Predicate<Person> newFilter = p -> true;
+
+        // Gender filter
+        if (settings.getGenderFilter() != null) {
+            newFilter = newFilter.and(p -> p.getGender() == settings.getGenderFilter());
+        }
+
+        // Alive filter
+        if (settings.getAliveFilter() != null) {
+            newFilter = newFilter.and(p -> p.isAlive() == settings.getAliveFilter());
+        }
+
+        // Apply the filter
+        setFilter(newFilter);
+        performSearch();
+
+        log.info("Applied filters - Gender: {}, Alive: {}",
+            settings.getGenderFilter(), settings.getAliveFilter());
+    }
+
+    private void clearFilterSettings(FilterSettingsComponent settings) {
+        clearFilters();
+        log.info("Cleared all filters");
     }
 
     /**
@@ -261,14 +323,26 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         // Update search panel layout
         float searchPadding = 5;
+        float settingsButtonSize = 30;
         searchPanel.setLeftTopPos(this.getLeftTopPosX(), this.getLeftTopPosY());
         searchPanel.setSize(this.getWidth(), searchPanelHeight);
 
-        searchBox.setLeftTopPos(
+        // Settings button at left of search box
+        settingsButton.setLeftTopPos(
             searchPanel.getLeftTopPosX() + searchPadding,
             searchPanel.getLeftTopPosY() + searchPadding
         );
-        searchBox.setSize(searchPanel.getWidth() - searchPadding * 2 - 30, searchPanelHeight - searchPadding * 2);
+        settingsButton.setSize(settingsButtonSize, searchPanelHeight - searchPadding * 2);
+
+        // Search box to the right of settings button
+        searchBox.setLeftTopPos(
+            searchPanel.getLeftTopPosX() + searchPadding + settingsButtonSize + 5,
+            searchPanel.getLeftTopPosY() + searchPadding
+        );
+        searchBox.setSize(
+            searchPanel.getWidth() - searchPadding * 2 - settingsButtonSize - 5,
+            searchPanelHeight - searchPadding * 2
+        );
 
         // Update list panel layout
         listPanel.setLeftTopPos(
@@ -279,6 +353,12 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         searchPanel.update();
         listPanel.update();
+        settingsButton.update();
+
+        // Update filter window if visible
+        if (filterWindow.isVisible()) {
+            filterWindow.update();
+        }
 
         for (PersonListItem item : listItems) {
             item.update();
@@ -297,6 +377,9 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         // Draw search panel
         searchPanel.draw();
+
+        // Draw settings button
+        settingsButton.draw();
 
         // Draw search label
         if (searchBox.getContentString().isEmpty()) {
@@ -327,6 +410,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         // Draw scrollbar if needed
         drawScrollbar();
+
+        // Draw filter window if visible
+        if (filterWindow.isVisible()) {
+            filterWindow.draw();
+        }
 
         return true;
     }
@@ -549,6 +637,20 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         // Process with parent first (handles our own registered processors)
         event = super.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Process filter window first if visible (on top)
+        if (filterWindow.isVisible()) {
+            event = filterWindow.process(event);
+            if (event == null) {
+                return null;
+            }
+        }
+
+        // Process settings button
+        event = settingsButton.process(event);
         if (event == null) {
             return null;
         }
