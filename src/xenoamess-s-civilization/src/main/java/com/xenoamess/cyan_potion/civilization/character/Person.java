@@ -132,6 +132,21 @@ public class Person {
     @Getter
     private final Person mother;
 
+    // ==================== Date Tracking ====================
+
+    /**
+     * Birth date of the person.
+     */
+    @Getter
+    private final LocalDate birthDate;
+
+    /**
+     * Current date in the simulation.
+     * Used to calculate age.
+     */
+    @Getter
+    private LocalDate currentDate;
+
     // ==================== Decision Tracking ====================
 
     /**
@@ -186,6 +201,12 @@ public class Person {
         this.lastDecisionDate = builder.lastDecisionDate != null
             ? builder.lastDecisionDate
             : LocalDate.now();
+
+        this.currentDate = this.lastDecisionDate;
+
+        this.birthDate = builder.birthDate != null
+            ? builder.birthDate
+            : this.currentDate.minusYears(18); // Default: 18 years old
 
         this.lineageType = builder.lineageType != null ? builder.lineageType : determineLineageType();
 
@@ -410,6 +431,37 @@ public class Person {
     // ==================== Health Management ====================
 
     /**
+     * Gets the age of the person based on birth date and current date.
+     *
+     * @return age in years
+     */
+    public int getAge() {
+        if (birthDate == null || currentDate == null) {
+            return 0;
+        }
+        return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
+    }
+
+    /**
+     * Advances the current date by the specified number of days.
+     * This updates both currentDate and recalculates age (via birthDate).
+     *
+     * @param days number of days to advance
+     */
+    public void advanceDate(int days) {
+        if (days < 0) {
+            log.warn("Cannot advance date by negative days: {}", days);
+            return;
+        }
+        LocalDate newDate = this.currentDate.plusDays(days);
+        this.currentDate = newDate;
+        // Also update lastDecisionDate to keep consistency
+        this.lastDecisionDate = newDate;
+        log.debug("Person {} date advanced by {} days to {}, age is now {}",
+            id, days, newDate, getAge());
+    }
+
+    /**
      * Updates health based on time passed since last decision.
      * Formula: health -= (days / 365) * healthDecreasing
      *
@@ -477,10 +529,10 @@ public class Person {
     @Override
     public String toString() {
         return String.format(
-            "Person{id='%s', name='%s', gender=%s, health=%.2f, constitution=%.2f, " +
+            "Person{id='%s', name='%s', gender=%s, birthDate=%s, age=%d, health=%.2f, constitution=%.2f, " +
             "intelligence=%.2f, eloquence=%.2f, appearance=%.2f, strength=%.2f, " +
             "charm=%.2f, management=%.2f}",
-            id, name, gender, health, constitution, getIntelligence(),
+            id, name, gender, birthDate, getAge(), health, constitution, getIntelligence(),
             getEloquence(), getAppearance(), getStrength(), getCharm(), getManagement()
         );
     }

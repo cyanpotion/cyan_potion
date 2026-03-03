@@ -45,6 +45,7 @@ public class PersonBuilder {
     protected Person mother;
     protected LocalDate lastDecisionDate;
     protected LineageType lineageType;
+    protected LocalDate birthDate;
 
     /**
      * Creates a new PersonBuilder with required fields.
@@ -201,6 +202,17 @@ public class PersonBuilder {
      */
     public PersonBuilder lineageType(LineageType lineageType) {
         this.lineageType = lineageType;
+        return this;
+    }
+
+    /**
+     * Sets the birth date.
+     *
+     * @param birthDate the birth date
+     * @return this builder
+     */
+    public PersonBuilder birthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
         return this;
     }
 
