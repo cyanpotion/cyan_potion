@@ -31,6 +31,7 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -47,6 +48,10 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 public class PersonListItem extends AbstractControllableGameWindowComponent {
 
     @Getter
+    @EqualsAndHashCode.Exclude
+    private final PersonListComponent personListComponent;
+
+    @Getter
     private final Person person;
 
     @Getter
@@ -56,20 +61,18 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
     private final Texture hoverTexture;
     private final Texture selectedTexture;
 
-    @Getter
-    private boolean selected = false;
-
-    @Getter
-    private boolean hovered = false;
-
     /**
      * Creates a new PersonListItem.
      *
-     * @param gameWindow the game window
+     * @param personListComponent personListComponent
      * @param person the person to display
      */
-    public PersonListItem(GameWindow gameWindow, Person person) {
-        super(gameWindow);
+    public PersonListItem(
+            @NotNull PersonListComponent personListComponent,
+            @NotNull Person person
+    ) {
+        super(personListComponent.getGameWindow());
+        this.personListComponent = personListComponent;
         this.person = person;
 
         // Create textures - brighter backgrounds for better contrast
@@ -93,33 +96,12 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
 
     protected void initProcessors() {
         super.initProcessors();
-        // Hover effect
-        this.registerOnMouseEnterAreaCallback(event -> {
-            hovered = true;
-            updateBackground();
-            return null;
-        });
-
-        this.registerOnMouseLeaveAreaCallback(event -> {
-            hovered = false;
-            updateBackground();
-            return null;
-        });
-        this.registerOnMouseButtonLeftDownCallback(
-                new EventProcessor<MouseButtonEvent>(){
-                    @Override
-                    public Event apply(MouseButtonEvent event) {
-                        PersonListItem.this.selected = true;
-                        return null;
-                    }
-                }
-        );
     }
 
     private void updateBackground() {
-        if (selected) {
+        if (this.isSelected()) {
             backgroundPicture.setBindable(selectedTexture);
-        } else if (hovered) {
+        } else if (this.isHovered()) {
             backgroundPicture.setBindable(hoverTexture);
         } else {
             backgroundPicture.setBindable(normalTexture);
@@ -134,6 +116,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
 
         // Draw background
         backgroundPicture.cover(this);
+        backgroundPicture.draw(this.getGameWindow());
 
         float padding = 5;
         float x = getLeftTopPosX() + padding;
@@ -198,17 +181,16 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
     public boolean update() {
         super.update();
         backgroundPicture.cover(this);
+        updateBackground();
         return true;
     }
 
-    /**
-     * Sets selected state.
-     *
-     * @param selected whether this item is selected
-     */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-        updateBackground();
+    public boolean isSelected() {
+        return this.personListComponent.getSelectedPersonListItem().get() == this;
+    }
+
+    public boolean isHovered() {
+        return this.personListComponent.getHoveredPersonListItem().get() == this;
     }
 
     /**

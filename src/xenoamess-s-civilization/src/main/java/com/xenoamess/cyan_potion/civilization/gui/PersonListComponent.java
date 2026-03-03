@@ -18,7 +18,6 @@ package com.xenoamess.cyan_potion.civilization.gui;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.InputBox;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
@@ -33,11 +32,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -437,6 +438,15 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         return false;
     }
 
+    @NotNull
+    @Getter
+    private final AtomicReference<PersonListItem> selectedPersonListItem = new AtomicReference<>();
+
+
+    @NotNull
+    @Getter
+    private final AtomicReference<PersonListItem> hoveredPersonListItem = new AtomicReference<>();
+
     private void rebuildListItems() {
         // Clear existing items
         listItems.clear();
@@ -444,11 +454,23 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Create new items for filtered persons
         for (int i = 0; i < filteredPersons.size(); i++) {
             Person person = filteredPersons.get(i);
-            PersonListItem item = new PersonListItem(this.getGameWindow(), person);
+            PersonListItem item = new PersonListItem(this, person);
             item.registerOnMouseButtonLeftDownCallback(event -> {
                 selectPerson(person);
+                PersonListComponent.this.selectedPersonListItem.set(item);
                 return null;
             });
+            // Hover effect
+            item.registerOnMouseEnterAreaCallback(event -> {
+                PersonListComponent.this.hoveredPersonListItem.set(item);
+                return null;
+            });
+
+            item.registerOnMouseLeaveAreaCallback(event -> {
+                PersonListComponent.this.hoveredPersonListItem.compareAndSet(item, null);
+                return null;
+            });
+
             listItems.add(item);
         }
     }
