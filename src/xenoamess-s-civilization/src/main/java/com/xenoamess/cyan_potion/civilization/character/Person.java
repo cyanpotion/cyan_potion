@@ -18,6 +18,7 @@ package com.xenoamess.cyan_potion.civilization.character;
 
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
 import com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import java.time.temporal.ChronoUnit;
  * @version 0.167.3-SNAPSHOT
  */
 @Slf4j
+@Data
 public class Person {
 
     // ==================== Basic Info ====================
@@ -547,14 +549,4 @@ public class Person {
         return new PersonBuilder(id, name, gender);
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-            "Person{id='%s', name='%s', gender=%s, birthDate=%s, age=%d, health=%.2f, constitution=%.2f, " +
-            "intelligence=%.2f, eloquence=%.2f, appearance=%.2f, strength=%.2f, " +
-            "charm=%.2f, management=%.2f}",
-            id, name, gender, birthDate, getAge(), health, constitution, getIntelligence(),
-            getEloquence(), getAppearance(), getStrength(), getCharm(), getManagement()
-        );
-    }
 }

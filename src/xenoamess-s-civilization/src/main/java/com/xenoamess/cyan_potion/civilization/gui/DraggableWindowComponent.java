@@ -219,6 +219,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
 
     @Override
     public boolean draw() {
+        super.draw();
         if (!isVisible()) {
             return false;
         }
@@ -312,18 +313,18 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
             }
         }
 
-        // Process with parent (handles dragging)
-        event = super.process(event);
-        if (event == null) {
-            return null;
-        }
-
         // Pass event to content component
         if (contentComponent != null && contentComponent.isVisible()) {
             event = contentComponent.process(event);
             if (event == null) {
                 return null;
             }
+        }
+
+        // Process with parent (handles dragging)
+        event = super.process(event);
+        if (event == null) {
+            return null;
         }
 
         return event;

@@ -49,6 +49,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
 
     @Getter
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private final PersonListComponent personListComponent;
 
     @Getter

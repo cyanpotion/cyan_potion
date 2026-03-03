@@ -440,11 +440,15 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
     @NotNull
     @Getter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private final AtomicReference<PersonListItem> selectedPersonListItem = new AtomicReference<>();
 
 
     @NotNull
     @Getter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private final AtomicReference<PersonListItem> hoveredPersonListItem = new AtomicReference<>();
 
     private void rebuildListItems() {
