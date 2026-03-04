@@ -498,11 +498,6 @@ public class SteamCallbacks {
         public void onGameRichPresenceJoinRequested(SteamID steamIDFriend, String connect) {
             //do nothing
         }
-
-        @Override
-        public void onGameServerChangeRequested(String server, String password) {
-            //do nothing
-        }
     };
 
     @Getter
