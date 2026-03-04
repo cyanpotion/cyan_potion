@@ -875,6 +875,8 @@
                     </includes>
                 </configuration>
             </plugin>
+            <!-- Disabled animal-sniffer as project now uses JDK 17 -->
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -895,6 +897,7 @@
                     </signature>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
     <reporting>
