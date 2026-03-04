@@ -75,7 +75,7 @@
         </project.build.sourceEncoding>
         <project.reporting.outputEncoding>${maven.compiler.encoding}
         </project.reporting.outputEncoding>
-        <java.version>8</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!---->
