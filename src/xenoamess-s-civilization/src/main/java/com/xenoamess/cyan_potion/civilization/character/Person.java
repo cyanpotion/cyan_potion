@@ -216,7 +216,9 @@ public class Person {
             ? builder.lastDecisionDate
             : LocalDate.now();
 
-        this.currentDate = LocalDate.now();
+        this.currentDate = builder.currentDate != null
+            ? builder.currentDate
+            : LocalDate.now();
 
         this.birthDate = builder.birthDate != null
             ? builder.birthDate

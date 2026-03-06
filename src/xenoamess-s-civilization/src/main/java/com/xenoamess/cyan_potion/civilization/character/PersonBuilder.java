@@ -46,6 +46,7 @@ public class PersonBuilder {
     protected LocalDate lastDecisionDate;
     protected LineageType lineageType;
     protected LocalDate birthDate;
+    protected LocalDate currentDate;
 
     /**
      * Creates a new PersonBuilder with required fields.
@@ -213,6 +214,17 @@ public class PersonBuilder {
      */
     public PersonBuilder birthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+        return this;
+    }
+
+    /**
+     * Sets the current date.
+     *
+     * @param currentDate the current date
+     * @return this builder
+     */
+    public PersonBuilder currentDate(LocalDate currentDate) {
+        this.currentDate = currentDate;
         return this;
     }
 

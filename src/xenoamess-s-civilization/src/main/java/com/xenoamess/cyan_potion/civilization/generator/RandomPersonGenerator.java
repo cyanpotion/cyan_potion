@@ -98,30 +98,40 @@ public class RandomPersonGenerator {
     }
 
     /**
-     * Generates a random person.
+     * Generates a random person using the current system date.
      *
      * @return a randomly generated person
      */
     public Person generate() {
-        return generate(null, null);
+        return generate(LocalDate.now());
     }
 
     /**
-     * Generates a random person with specified parents.
+     * Generates a random person using the specified current date as reference.
      *
+     * @param referenceDate the reference date for calculating birth date
+     * @return a randomly generated person
+     */
+    public Person generate(LocalDate referenceDate) {
+        return generate(referenceDate, null, null);
+    }
+
+    /**
+     * Generates a random person with specified parents using the specified current date as reference.
+     *
+     * @param referenceDate the reference date for calculating birth date
      * @param father the father (can be null)
      * @param mother the mother (can be null)
      * @return a randomly generated person
      */
-    public Person generate(Person father, Person mother) {
+    public Person generate(LocalDate referenceDate, Person father, Person mother) {
         String id = generateId();
         Gender gender = randomGender();
         String name = generateName(gender);
 
         // Random age: 15-60 years old
         int age = 15 + RANDOM.nextInt(46);
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = currentDate.minusYears(age).minusDays(RANDOM.nextInt(365));
+        LocalDate birthDate = referenceDate.minusYears(age).minusDays(RANDOM.nextInt(365));
 
         // Set last decision date to birth date so health decay is calculated
         // from birth to current date based on the person's full age
@@ -131,6 +141,7 @@ public class RandomPersonGenerator {
             .father(father)
             .mother(mother)
             .birthDate(birthDate)
+            .currentDate(referenceDate)
             .lastDecisionDate(lastDecisionDate);
 
         // Randomize base attributes with some variance
@@ -156,17 +167,39 @@ public class RandomPersonGenerator {
     }
 
     /**
-     * Generates multiple random persons.
+     * Generates a random person with specified parents.
+     *
+     * @param father the father (can be null)
+     * @param mother the mother (can be null)
+     * @return a randomly generated person
+     */
+    public Person generate(Person father, Person mother) {
+        return generate(LocalDate.now(), father, mother);
+    }
+
+    /**
+     * Generates multiple random persons using the specified reference date.
+     *
+     * @param count number of persons to generate
+     * @param referenceDate the reference date for calculating birth dates
+     * @return list of generated persons
+     */
+    public List<Person> generateMultiple(int count, LocalDate referenceDate) {
+        List<Person> persons = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            persons.add(generate(referenceDate));
+        }
+        return persons;
+    }
+
+    /**
+     * Generates multiple random persons using the current system date.
      *
      * @param count number of persons to generate
      * @return list of generated persons
      */
     public List<Person> generateMultiple(int count) {
-        List<Person> persons = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            persons.add(generate());
-        }
-        return persons;
+        return generateMultiple(count, LocalDate.now());
     }
 
     /**

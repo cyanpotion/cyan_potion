@@ -229,9 +229,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     private void generatePersons() {
         RandomPersonGenerator generator = new RandomPersonGenerator();
-        List<Person> persons = generator.generateMultiple(100);
+        List<Person> persons = generator.generateMultiple(100, dateManager.getCurrentDate());
         listComponent.setPersons(persons);
-        log.info("Generated {} persons", persons.size());
+        log.info("Generated {} persons at game date {}", persons.size(), dateManager.getFormattedDate());
     }
 
     private void onPersonSelected(Person person) {
@@ -253,7 +253,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             for (Person person : persons) {
                 person.advanceDate(daysAdvanced);
             }
-            log.debug("Advanced {} days for {} persons", daysAdvanced, persons.size());
+            log.debug("Advanced {} days for {} persons, game date: {}", 
+                daysAdvanced, persons.size(), dateManager.getFormattedDate());
         }
 
         // Layout buttons at top
