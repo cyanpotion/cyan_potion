@@ -22,6 +22,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_w
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Panel;
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.character.Clan;
@@ -80,6 +81,15 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
+    // Skull icon for dead persons (same as PersonListItem)
+    private final Bindable deadmanMarkTexture;
+
+    // Skull hover tooltip state
+    private boolean skullHovered = false;
+    private float skullX = 0;
+    private float skullY = 0;
+    private float skullSize = 24;
+
     // Colors
     private static final Vector4f COLOR_TITLE = new Vector4f(1.0f, 0.9f, 0.6f, 1.0f);
     private static final Vector4f COLOR_LABEL = new Vector4f(0.7f, 0.7f, 0.7f, 1.0f);
@@ -104,6 +114,14 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             "0.1,0.1,0.12,0.98"
         );
         this.backgroundPicture.setBindable(backgroundTexture);
+
+        // Skull texture for dead persons
+        this.deadmanMarkTexture = this.getResourceManager().fetchResource(
+            Texture.class,
+            "picture",
+            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                + "www/img/icon/skull_icon.png"
+        );
 
         // Content panel
         this.contentPanel = new Panel(gameWindow);
@@ -152,9 +170,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         drawHeader(x, y, width);
         y += 70;
 
-        // ID and basic info
+        // Basic info (ID removed)
         drawBasicInfo(x, y, width);
-        y += 80;
+        y += 60;
 
         // Separator line
         drawSeparator(x, y, width);
@@ -175,6 +193,14 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Parents info
         drawParentsInfo(x, y, width);
         y += 60;
+
+        // Draw skull tooltip if hovered (for dead persons)
+        if (!person.isAlive()) {
+            updateSkullHoverState();
+            if (skullHovered) {
+                drawSkullTooltip();
+            }
+        }
 
         // Close button at bottom
         closeButton.setLeftTopPos(getLeftTopPosX() + getWidth() - 100, getLeftTopPosY() + getHeight() - 50);
@@ -214,42 +240,58 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             person.getName()
         );
 
-        // Status
-        String status = person.isAlive() ? "存活" : "已死亡";
-        Vector4f statusColor = person.isAlive() ? new Vector4f(0.4f, 0.9f, 0.4f, 1.0f) : new Vector4f(0.7f, 0.7f, 0.7f, 0.5f);
-        this.getGameWindow().drawTextCenter(
-            null,
-            x + width - 50,
-            y + 30,
-            18,
-            0,
-            statusColor,
-            status
-        );
+        // Status - show skull for dead persons, "存活" text for alive
+        float statusX = x + width - 50;
+        float statusY = y + 30;
+        if (person.isAlive()) {
+            Vector4f statusColor = new Vector4f(0.4f, 0.9f, 0.4f, 1.0f);
+            this.getGameWindow().drawTextCenter(
+                null,
+                statusX,
+                statusY,
+                18,
+                0,
+                statusColor,
+                "存活"
+            );
+        } else {
+            // Draw skull icon for dead persons
+            skullX = statusX - skullSize / 2;
+            skullY = statusY - skullSize / 2;
+            this.getGameWindow().drawBindableRelativeCenter(
+                deadmanMarkTexture,
+                statusX,
+                statusY,
+                skullSize,
+                skullSize
+            );
+        }
     }
 
     private void drawBasicInfo(float x, float y, float width) {
-        drawLabelValue(x, y, "ID:", person.getId());
-        drawLabelValue(x + width / 2, y, "世系:", person.getLineageType().getChineseName());
+        // Lineage type (removed ID display)
+        drawLabelValue(x, y, "世系:", person.getLineageType().getChineseName());
 
-        drawLabelValue(x, y + 25, "健康衰减:", String.format("%.2f/年", person.getHealthDecreasing()));
+        // Health decreasing
+        drawLabelValue(x + width / 2, y, "健康衰减:", String.format("%.2f/年", person.getHealthDecreasing()));
+        y += 25;
 
         // Age with hover tooltip for birth date
         String ageText = String.valueOf(person.getAge());
-        float ageLabelX = x + width / 2;
+        float ageLabelX = x;
         float ageValueX = ageLabelX + 80;
-        this.getGameWindow().drawTextCenter(null, ageLabelX + 40, y + 25, 16, COLOR_LABEL, "年龄:");
-        this.getGameWindow().drawTextCenter(null, ageValueX, y + 25, 16, COLOR_VALUE, ageText);
+        this.getGameWindow().drawTextCenter(null, ageLabelX + 40, y, 16, COLOR_LABEL, "年龄:");
+        this.getGameWindow().drawTextCenter(null, ageValueX, y, 16, COLOR_VALUE, ageText);
 
         // Track age text position for hover detection
         ageTextX = ageValueX - 20;
-        ageTextY = y + 15;
+        ageTextY = y - 10;
         ageTextWidth = 40;
 
         // Check hover and draw tooltip
         updateAgeHoverState();
         if (ageHovered) {
-            drawAgeTooltip(ageValueX, y + 35);
+            drawAgeTooltip(ageValueX, y + 10);
         }
     }
 
@@ -314,6 +356,49 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
                 14,
                 new Vector4f(0.9f, 0.6f, 0.6f, 1.0f),
                 deathDateText
+            );
+        }
+    }
+
+    private void updateSkullHoverState() {
+        float mouseX = this.getGameWindow().getMousePosX();
+        float mouseY = this.getGameWindow().getMousePosY();
+
+        skullHovered = mouseX >= skullX && mouseX <= skullX + skullSize &&
+                     mouseY >= skullY && mouseY <= skullY + skullSize;
+    }
+
+    private void drawSkullTooltip() {
+        if (person.getDeathDate() == null) {
+            return;
+        }
+
+        // Build tooltip text
+        String deathDateText = "死亡: " + person.getDeathDate().toString();
+        String deathCauseText = person.getDeathCause() != null ? "原因: " + person.getDeathCause() : null;
+
+        float tooltipX = skullX + skullSize / 2;
+        float tooltipY = skullY + skullSize + 5;
+
+        // Draw death date
+        this.getGameWindow().drawTextCenter(
+            null,
+            tooltipX,
+            tooltipY,
+            14,
+            new Vector4f(0.9f, 0.6f, 0.6f, 1.0f),
+            deathDateText
+        );
+
+        // Draw death cause if available
+        if (deathCauseText != null) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                tooltipX,
+                tooltipY + 18,
+                14,
+                new Vector4f(0.9f, 0.7f, 0.6f, 1.0f),
+                deathCauseText
             );
         }
     }
