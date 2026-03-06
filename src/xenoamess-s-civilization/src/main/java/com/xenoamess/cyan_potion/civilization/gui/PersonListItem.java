@@ -254,7 +254,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
 
         // Build tooltip text
         String deathDateText = "死亡: " + person.getDeathDate().toString();
-        String deathCauseText = person.getDeathCause() != null ? "原因: " + person.getDeathCause() : null;
+        String deathCauseText = person.getDeathCause() != null ? "死因: " + person.getDeathCause() : null;
 
         float tooltipX = skullX + skullSize / 2;
         float tooltipY = skullY + skullSize + 5;
@@ -273,8 +273,8 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         if (deathCauseText != null) {
             this.getGameWindow().drawTextCenter(
                 null,
-                tooltipX,
-                tooltipY + 15,
+                tooltipX + 100,
+                tooltipY,
                 12,
                 new Vector4f(0.9f, 0.7f, 0.6f, 1.0f),
                 deathCauseText
