@@ -155,6 +155,12 @@ public class Person {
     @Getter
     private LocalDate deathDate;
 
+    /**
+     * Death cause of the person (null if alive or unknown).
+     */
+    @Getter
+    private String deathCause;
+
     // ==================== Decision Tracking ====================
 
     /**
@@ -244,8 +250,9 @@ public class Person {
             // If health dropped to 0 or below, mark as dead
             if (oldHealth > 0 && this.health <= 0) {
                 this.deathDate = this.currentDate;
-                log.info("Person {} ({}) generated as dead (health: {} -> {}, age: {})",
-                    id, name, oldHealth, this.health, getAge());
+                this.deathCause = "自然衰老";
+                log.info("Person {} ({}) generated as dead (health: {} -> {}, age: {}, cause: {})",
+                    id, name, oldHealth, this.health, getAge(), this.deathCause);
             } else {
                 log.debug("Person {} initial health set to {} (lost {} over {} days)",
                     id, health, healthLoss, daysPassed);
@@ -545,8 +552,9 @@ public class Person {
         // Check for death
         if (oldHealth > 0 && this.health <= 0) {
             this.deathDate = this.currentDate;
-            log.info("Person {} ({}) has died at age {} on {}", 
-                id, name, getAgeAtDeath(), this.deathDate.toString());
+            this.deathCause = "自然衰老";
+            log.info("Person {} ({}) has died at age {} on {} (cause: {})",
+                id, name, getAgeAtDeath(), this.deathDate.toString(), this.deathCause);
         }
     }
 
