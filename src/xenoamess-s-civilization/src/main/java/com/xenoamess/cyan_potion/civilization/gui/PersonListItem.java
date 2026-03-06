@@ -141,6 +141,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         //     : new Vector4f(0.9f, 0.4f, 0.6f, 1.0f);
         // this.getGameWindow().drawRect(x, y + 5, 4, height - 10, genderColor);
 
+        x += 10;
         // Skull icon for dead persons
         if (!person.isAlive()) {
             this.getGameWindow().drawBindableRelativeCenter(
@@ -150,9 +151,8 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
                     20,
                     20
             );
-            x += 25; // Extra space for skull
         }
-        x += 10;
+        x += 20; // Extra space for skull
 
         // Name - bright white for better visibility
         String name = person.getName();

@@ -100,7 +100,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
             Texture.class,
             STRING_PURE_COLOR,
             "",
-            "0.25,0.25,0.3,1.0"
+            "0.28,0.18,0.08,1.0"
         );
         this.closeButtonTexture = this.getResourceManager().fetchResource(
             Texture.class,
@@ -247,6 +247,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
         titleBarPicture.setLeftTopPos(x, y);
         titleBarPicture.setSize(width, titleBarHeight);
         titleBarPicture.cover(this);
+        titleBarPicture.draw(this.getGameWindow());
 
         // Draw title text
         this.getGameWindow().drawTextCenter(
