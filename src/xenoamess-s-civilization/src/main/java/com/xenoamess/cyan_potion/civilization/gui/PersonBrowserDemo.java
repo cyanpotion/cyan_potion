@@ -27,6 +27,7 @@ import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.GameDateManager;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
+import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -89,6 +90,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Getter
     private final Button dashboardButton;
 
+    private final PersonLifecycleService lifecycleService;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -103,6 +106,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
      */
     public PersonBrowserDemo(GameWindow gameWindow) {
         super(gameWindow);
+
+        // Initialize lifecycle service
+        this.lifecycleService = new PersonLifecycleService();
 
         // Full screen background
         this.backgroundTexture = this.getResourceManager().fetchResource(
@@ -251,7 +257,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             // Update all persons' current date and health
             List<Person> persons = listComponent.getPersons();
             for (Person person : persons) {
-                person.advanceDate(daysAdvanced);
+                lifecycleService.advanceDate(person, daysAdvanced);
             }
             log.debug("Advanced {} days for {} persons, game date: {}", 
                 daysAdvanced, persons.size(), dateManager.getFormattedDate());

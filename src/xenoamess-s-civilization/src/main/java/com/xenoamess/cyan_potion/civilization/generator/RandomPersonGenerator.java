@@ -19,6 +19,7 @@ package com.xenoamess.cyan_potion.civilization.generator;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.PersonBuilder;
+import com.xenoamess.cyan_potion.civilization.service.PersonConstructionService;
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
 import com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -81,6 +82,8 @@ public class RandomPersonGenerator {
 
     private final boolean useWesternNames;
 
+    private final PersonConstructionService constructionService;
+
     /**
      * Creates a generator with Chinese names (default).
      */
@@ -95,6 +98,7 @@ public class RandomPersonGenerator {
      */
     public RandomPersonGenerator(boolean useWesternNames) {
         this.useWesternNames = useWesternNames;
+        this.constructionService = new PersonConstructionService();
     }
 
     /**
@@ -137,33 +141,33 @@ public class RandomPersonGenerator {
         // from birth to current date based on the person's full age
         LocalDate lastDecisionDate = birthDate;
 
-        PersonBuilder builder = Person.builder(id, name, gender)
-            .father(father)
-            .mother(mother)
-            .birthDate(birthDate)
-            .currentDate(referenceDate)
-            .lastDecisionDate(lastDecisionDate);
+        PersonBuilder builder = constructionService.builder(id, name, gender)
+            .setFather(father)
+            .setMother(mother)
+            .setBirthDate(birthDate)
+            .setCurrentDate(referenceDate)
+            .setLastDecisionDate(lastDecisionDate);
 
         // Randomize base attributes with some variance
-        builder.constitution(PersonAttributeUtil.randomConstitution());
-        builder.baseIntelligence(PersonAttributeUtil.randomIntelligence());
-        builder.baseEloquence(PersonAttributeUtil.randomEloquence());
+        builder.setConstitution(PersonAttributeUtil.randomConstitution());
+        builder.setBaseIntelligence(PersonAttributeUtil.randomIntelligence());
+        builder.setBaseEloquence(PersonAttributeUtil.randomEloquence());
 
         // Random health decreasing rate (0.5 to 2.0)
-        builder.healthDecreasing(0.5 + RANDOM.nextDouble() * 1.5);
+        builder.setHealthDecreasing(0.5 + RANDOM.nextDouble() * 1.5);
 
         // Random knowledge (0.5 to 3.0)
-        builder.knowledge(0.5 + RANDOM.nextDouble() * 2.5);
+        builder.setKnowledge(0.5 + RANDOM.nextDouble() * 2.5);
 
         // Random appearance adjustment (0.5 to 1.5)
-        builder.appearanceAdjustment(0.5 + RANDOM.nextDouble());
+        builder.setAppearanceAdjustment(0.5 + RANDOM.nextDouble());
 
         // If no parents, set random natural appearance
         if (father == null || mother == null) {
-            builder.naturalAppearance(PersonAttributeUtil.randomAppearance());
+            builder.setNaturalAppearance(PersonAttributeUtil.randomAppearance());
         }
 
-        return builder.build();
+        return constructionService.construct(builder);
     }
 
     /**
