@@ -16,7 +16,11 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import com.xenoamess.cyan_potion.civilization.service.PersonConstructionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,9 +32,21 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PersonClanTest {
 
+    private PersonConstructionService constructionService;
+    private LocalDate currentDate;
+
+    @BeforeEach
+    void setUp() {
+        constructionService = new PersonConstructionService();
+        currentDate = LocalDate.of(2026, 1, 1);
+    }
+
     // Helper method to create a person with a clan
     private Person createPersonWithClan(String name, Gender gender, Clan clan) {
-        Person person = Person.builder(name, gender).build();
+        Person person = constructionService.construct(
+            constructionService.builder(name, gender)
+                .setCurrentDate(currentDate)
+        );
         if (clan != null) {
             person.getClanMemberships().add(ClanMembership.primary(clan));
         }
@@ -39,7 +55,10 @@ class PersonClanTest {
 
     @Test
     void testNoParentsNoClan() {
-        Person person = Person.builder("孤儿", Gender.MALE).build();
+        Person person = constructionService.construct(
+            constructionService.builder("孤儿", Gender.MALE)
+                .setCurrentDate(currentDate)
+        );
 
         assertFalse(person.hasClan());
         assertNull(person.getPrimaryClan());
@@ -49,12 +68,21 @@ class PersonClanTest {
 
     @Test
     void testBothParentsNoClan() {
-        Person father = Person.builder("父亲", Gender.MALE).build();
-        Person mother = Person.builder("母亲", Gender.FEMALE).build();
+        Person father = constructionService.construct(
+            constructionService.builder("父亲", Gender.MALE)
+                .setCurrentDate(currentDate)
+        );
+        Person mother = constructionService.construct(
+            constructionService.builder("母亲", Gender.FEMALE)
+                .setCurrentDate(currentDate)
+        );
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setCurrentDate(currentDate)
+        );
 
         assertFalse(child.hasClan());
         assertNull(child.getPrimaryClan());
@@ -64,11 +92,17 @@ class PersonClanTest {
     void testOnlyFatherHasClan() {
         Clan liClan = new Clan("C001", "李");
         Person father = createPersonWithClan("李父", Gender.MALE, liClan);
-        Person mother = Person.builder("母亲", Gender.FEMALE).build();
+        Person mother = constructionService.construct(
+            constructionService.builder("母亲", Gender.FEMALE)
+                .setCurrentDate(currentDate)
+        );
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.hasClan());
         assertEquals(liClan, child.getPrimaryClan());
@@ -78,12 +112,18 @@ class PersonClanTest {
     @Test
     void testOnlyMotherHasClan() {
         Clan wangClan = new Clan("C002", "王");
-        Person father = Person.builder("父亲", Gender.MALE).build();
+        Person father = constructionService.construct(
+            constructionService.builder("父亲", Gender.MALE)
+                .setCurrentDate(currentDate)
+        );
         Person mother = createPersonWithClan("王母", Gender.FEMALE, wangClan);
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.hasClan());
         assertEquals(wangClan, child.getPrimaryClan());
@@ -96,9 +136,12 @@ class PersonClanTest {
         Person father = createPersonWithClan("李父", Gender.MALE, liClan);
         Person mother = createPersonWithClan("李母", Gender.FEMALE, liClan);
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.hasClan());
         assertEquals(liClan, child.getPrimaryClan());
@@ -113,10 +156,13 @@ class PersonClanTest {
         Person father = createPersonWithClan("李父", Gender.MALE, liClan);
         Person mother = createPersonWithClan("王母", Gender.FEMALE, wangClan);
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .lineageType(LineageType.PATRILINEAL)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setLineageType(LineageType.PATRILINEAL)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.hasClan());
         assertEquals(LineageType.PATRILINEAL, child.getLineageType());
@@ -132,10 +178,13 @@ class PersonClanTest {
         Person father = createPersonWithClan("李父", Gender.MALE, liClan);
         Person mother = createPersonWithClan("王母", Gender.FEMALE, wangClan);
 
-        Person child = Person.builder("孩子", Gender.FEMALE)
-            .parents(father, mother)
-            .lineageType(LineageType.MATRILINEAL)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.FEMALE)
+                .setFather(father)
+                .setMother(mother)
+                .setLineageType(LineageType.MATRILINEAL)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.hasClan());
         assertEquals(LineageType.MATRILINEAL, child.getLineageType());
@@ -152,10 +201,13 @@ class PersonClanTest {
         Person father = createPersonWithClan("李父", Gender.MALE, liClan);
         Person mother = createPersonWithClan("王母", Gender.FEMALE, wangClan);
 
-        Person child = Person.builder("孩子", Gender.MALE)
-            .parents(father, mother)
-            .lineageType(LineageType.PATRILINEAL)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setLineageType(LineageType.PATRILINEAL)
+                .setCurrentDate(currentDate)
+        );
 
         assertTrue(child.belongsToClan(liClan));
         assertTrue(child.belongsToClan(wangClan));
@@ -175,9 +227,12 @@ class PersonClanTest {
 
         // Generate many children to see distribution
         for (int i = 0; i < 100; i++) {
-            Person child = Person.builder("孩子" + i, Gender.MALE)
-                .parents(father, mother)
-                .build();
+            Person child = constructionService.construct(
+                constructionService.builder("孩子" + i, Gender.MALE)
+                    .setFather(father)
+                    .setMother(mother)
+                    .setCurrentDate(currentDate)
+            );
 
             if (child.getLineageType() == LineageType.PATRILINEAL) {
                 patrilinealCount++;
@@ -201,10 +256,13 @@ class PersonClanTest {
         Person grandmother = createPersonWithClan("王祖母", Gender.FEMALE, wangClan);
 
         // Parents
-        Person father = Person.builder("李父", Gender.MALE)
-            .parents(grandfather, grandmother)
-            .lineageType(LineageType.PATRILINEAL)
-            .build();
+        Person father = constructionService.construct(
+            constructionService.builder("李父", Gender.MALE)
+                .setFather(grandfather)
+                .setMother(grandmother)
+                .setLineageType(LineageType.PATRILINEAL)
+                .setCurrentDate(currentDate)
+        );
 
         // Father should have Li (primary) and Wang (secondary)
         assertEquals(liClan, father.getPrimaryClan());
@@ -215,10 +273,13 @@ class PersonClanTest {
         Person mother = createPersonWithClan("张母", Gender.FEMALE, zhangClan);
 
         // Child
-        Person child = Person.builder("李孩子", Gender.MALE)
-            .parents(father, mother)
-            .lineageType(LineageType.PATRILINEAL)
-            .build();
+        Person child = constructionService.construct(
+            constructionService.builder("李孩子", Gender.MALE)
+                .setFather(father)
+                .setMother(mother)
+                .setLineageType(LineageType.PATRILINEAL)
+                .setCurrentDate(currentDate)
+        );
 
         // Child inherits father's primary clan (Li) and mother's clan (Zhang)
         assertEquals(liClan, child.getPrimaryClan());

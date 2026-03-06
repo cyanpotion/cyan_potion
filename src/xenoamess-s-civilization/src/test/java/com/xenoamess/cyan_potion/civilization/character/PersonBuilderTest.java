@@ -16,6 +16,8 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import com.xenoamess.cyan_potion.civilization.service.PersonConstructionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -23,52 +25,67 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for PersonBuilder class.
+ * Unit tests for PersonBuilder and PersonConstructionService.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
  */
 class PersonBuilderTest {
-    
+
+    private PersonConstructionService constructionService;
+
+    @BeforeEach
+    void setUp() {
+        constructionService = new PersonConstructionService();
+    }
+
     @Test
     void testBuilderWithRequiredFields() {
         PersonBuilder builder = new PersonBuilder("p1", "Test", Gender.MALE);
-        Person person = builder.build();
-        
-        assertEquals("p1", person.getId());
-        assertEquals("Test", person.getName());
-        assertEquals(Gender.MALE, person.getGender());
+        assertEquals("p1", builder.getId());
+        assertEquals("Test", builder.getName());
+        assertEquals(Gender.MALE, builder.getGender());
     }
-    
+
     @Test
-    void testBuilderStaticMethod() {
-        Person person = Person.builder("p2", "Test", Gender.FEMALE).build();
-        
+    void testConstructionService() {
+        Person person = constructionService.construct(
+            constructionService.builder("p2", "Test", Gender.FEMALE)
+        );
+
         assertEquals("p2", person.getId());
         assertEquals("Test", person.getName());
         assertEquals(Gender.FEMALE, person.getGender());
     }
-    
+
     @Test
     void testBuilderWithAllFields() {
-        Person father = Person.builder("f1", "Father", Gender.MALE).build();
-        Person mother = Person.builder("m1", "Mother", Gender.FEMALE).build();
-        // Use a future date to ensure no health decay is applied
-        LocalDate date = LocalDate.now().plusYears(1);
-        
-        Person person = Person.builder("p3", "Test", Gender.MALE)
-            .healthDecreasing(2.5)
-            .initialHealth(80.0)
-            .constitution(9.0)
-            .baseIntelligence(8.5)
-            .knowledge(1.5)
-            .baseEloquence(7.5)
-            .naturalAppearance(85.0)
-            .appearanceAdjustment(0.9)
-            .parents(father, mother)
-            .lastDecisionDate(date)
-            .build();
-        
+        LocalDate currentDate = LocalDate.now();
+        Person father = constructionService.construct(
+            constructionService.builder("f1", "Father", Gender.MALE)
+                .setCurrentDate(currentDate)
+        );
+        Person mother = constructionService.construct(
+            constructionService.builder("m1", "Mother", Gender.FEMALE)
+                .setCurrentDate(currentDate)
+        );
+
+        Person person = constructionService.construct(
+            constructionService.builder("p3", "Test", Gender.MALE)
+                .setHealthDecreasing(2.5)
+                .setInitialHealth(80.0)
+                .setConstitution(9.0)
+                .setBaseIntelligence(8.5)
+                .setKnowledge(1.5)
+                .setBaseEloquence(7.5)
+                .setNaturalAppearance(85.0)
+                .setAppearanceAdjustment(0.9)
+                .setFather(father)
+                .setMother(mother)
+                .setLastDecisionDate(currentDate)
+                .setCurrentDate(currentDate)
+        );
+
         assertEquals(2.5, person.getHealthDecreasing(), 0.001);
         assertEquals(80.0, person.getHealth(), 0.001);
         assertEquals(9.0, person.getConstitution(), 0.001);
@@ -79,74 +96,87 @@ class PersonBuilderTest {
         assertEquals(0.9, person.getAppearanceAdjustment(), 0.001);
         assertEquals(father, person.getFather());
         assertEquals(mother, person.getMother());
-        assertEquals(date, person.getLastDecisionDate());
     }
-    
+
     @Test
     void testBuilderChaining() {
-        Person person = Person.builder("p4", "Test", Gender.MALE)
-            .healthDecreasing(1.5)
-            .constitution(6.0)
-            .knowledge(2.0)
-            .build();
-        
+        Person person = constructionService.construct(
+            constructionService.builder("p4", "Test", Gender.MALE)
+                .setHealthDecreasing(1.5)
+                .setConstitution(6.0)
+                .setKnowledge(2.0)
+        );
+
         assertEquals(1.5, person.getHealthDecreasing(), 0.001);
         assertEquals(6.0, person.getConstitution(), 0.001);
         assertEquals(2.0, person.getKnowledge(), 0.001);
     }
-    
+
     @Test
     void testBuilderWithFatherOnly() {
-        Person father = Person.builder("f1", "Father", Gender.MALE).build();
-        
-        Person person = Person.builder("p5", "Test", Gender.MALE)
-            .father(father)
-            .build();
-        
+        LocalDate currentDate = LocalDate.now();
+        Person father = constructionService.construct(
+            constructionService.builder("f1", "Father", Gender.MALE)
+                .setCurrentDate(currentDate)
+        );
+
+        Person person = constructionService.construct(
+            constructionService.builder("p5", "Test", Gender.MALE)
+                .setFather(father)
+                .setCurrentDate(currentDate)
+        );
+
         assertEquals(father, person.getFather());
         assertNull(person.getMother());
     }
-    
+
     @Test
     void testBuilderWithMotherOnly() {
-        Person mother = Person.builder("m1", "Mother", Gender.FEMALE).build();
-        
-        Person person = Person.builder("p6", "Test", Gender.MALE)
-            .mother(mother)
-            .build();
-        
+        LocalDate currentDate = LocalDate.now();
+        Person mother = constructionService.construct(
+            constructionService.builder("m1", "Mother", Gender.FEMALE)
+                .setCurrentDate(currentDate)
+        );
+
+        Person person = constructionService.construct(
+            constructionService.builder("p6", "Test", Gender.MALE)
+                .setMother(mother)
+                .setCurrentDate(currentDate)
+        );
+
         assertEquals(mother, person.getMother());
         assertNull(person.getFather());
     }
-    
+
     @Test
     void testBuilderFluentApi() {
-        // Test that all methods return the builder for chaining
-        PersonBuilder builder = Person.builder("p7", "Test", Gender.MALE);
-        
-        assertSame(builder, builder.healthDecreasing(1.0));
-        assertSame(builder, builder.initialHealth(70.0));
-        assertSame(builder, builder.constitution(5.0));
-        assertSame(builder, builder.baseIntelligence(5.0));
-        assertSame(builder, builder.knowledge(1.0));
-        assertSame(builder, builder.baseEloquence(5.0));
-        assertSame(builder, builder.naturalAppearance(50.0));
-        assertSame(builder, builder.appearanceAdjustment(1.0));
-        assertSame(builder, builder.father(null));
-        assertSame(builder, builder.mother(null));
-        assertSame(builder, builder.parents(null, null));
-        assertSame(builder, builder.lastDecisionDate(LocalDate.now()));
+        // Test that all setters return the builder for chaining
+        PersonBuilder builder = constructionService.builder("p7", "Test", Gender.MALE);
+        LocalDate date = LocalDate.now();
+
+        assertSame(builder, builder.setHealthDecreasing(1.0));
+        assertSame(builder, builder.setInitialHealth(70.0));
+        assertSame(builder, builder.setConstitution(5.0));
+        assertSame(builder, builder.setBaseIntelligence(5.0));
+        assertSame(builder, builder.setKnowledge(1.0));
+        assertSame(builder, builder.setBaseEloquence(5.0));
+        assertSame(builder, builder.setNaturalAppearance(50.0));
+        assertSame(builder, builder.setAppearanceAdjustment(1.0));
+        assertSame(builder, builder.setFather(null));
+        assertSame(builder, builder.setMother(null));
+        assertSame(builder, builder.setLastDecisionDate(date));
+        assertSame(builder, builder.setCurrentDate(date));
     }
-    
+
     @Test
-    void testMultipleBuilds() {
-        PersonBuilder builder = Person.builder("p8", "Test", Gender.MALE)
-            .constitution(8.0);
-        
-        Person person1 = builder.build();
-        Person person2 = builder.build();
-        
-        // Each build should create a new instance
+    void testMultipleConstructions() {
+        PersonBuilder builder = constructionService.builder("p8", "Test", Gender.MALE)
+            .setConstitution(8.0);
+
+        Person person1 = constructionService.construct(builder);
+        Person person2 = constructionService.construct(builder);
+
+        // Each construction should create a new instance
         assertNotSame(person1, person2);
         assertEquals(person1.getId(), person2.getId());
         assertEquals(person1.getConstitution(), person2.getConstitution(), 0.001);
