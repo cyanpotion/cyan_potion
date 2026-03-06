@@ -23,6 +23,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_w
 import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
 import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
+import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.character.Clan;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
+import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PICTURE;
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
 /**
@@ -46,6 +48,15 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class PersonListItem extends AbstractControllableGameWindowComponent {
+
+    private final Texture deadmanMarkTexture =
+            this.getGameManager().getResourceManager().
+                    fetchResource(
+                            Texture.class,
+                            STRING_PICTURE,
+                            this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                                    + "www/img/icon/skull_icon.png"
+                    );
 
     @Getter
     @EqualsAndHashCode.Exclude
@@ -132,13 +143,12 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
 
         // Skull icon for dead persons
         if (!person.isAlive()) {
-            this.getGameWindow().drawTextCenter(
-                null,
-                x + 10,
-                y + height / 2,
-                20,
-                new Vector4f(0.6f, 0.6f, 0.6f, 1.0f),
-                "☠"
+            this.getGameWindow().drawBindableRelativeCenter(
+                    deadmanMarkTexture,
+                    x + 10,
+                    y + height / 2,
+                    20,
+                    20
             );
             x += 25; // Extra space for skull
         }
