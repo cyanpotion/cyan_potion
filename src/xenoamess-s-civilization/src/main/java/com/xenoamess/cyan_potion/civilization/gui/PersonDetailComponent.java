@@ -39,6 +39,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
@@ -64,8 +65,30 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private final Button closeButton;
 
     @Getter
+    private final Button prevButton;
+
+    @Getter
+    private final Button nextButton;
+
+    @Getter
     @Setter
     private Consumer<Void> onClose;
+
+    @Getter
+    @Setter
+    private Supplier<Boolean> canNavigatePrevious;
+
+    @Getter
+    @Setter
+    private Supplier<Boolean> canNavigateNext;
+
+    @Getter
+    @Setter
+    private Consumer<Void> onNavigatePrevious;
+
+    @Getter
+    @Setter
+    private Consumer<Void> onNavigateNext;
 
     @Getter
     @Setter
@@ -130,6 +153,24 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         this.closeButton = new Button(gameWindow, null, "×关闭");
         this.closeButton.registerOnMouseButtonLeftDownCallback(event -> {
             hide();
+            return null;
+        });
+
+        // Previous button (arrow left)
+        this.prevButton = new Button(gameWindow, null, "◀ 上一个");
+        this.prevButton.registerOnMouseButtonLeftDownCallback(event -> {
+            if (onNavigatePrevious != null) {
+                onNavigatePrevious.accept(null);
+            }
+            return null;
+        });
+
+        // Next button (arrow right)
+        this.nextButton = new Button(gameWindow, null, "下一个 ▶");
+        this.nextButton.registerOnMouseButtonLeftDownCallback(event -> {
+            if (onNavigateNext != null) {
+                onNavigateNext.accept(null);
+            }
             return null;
         });
 
@@ -206,6 +247,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         closeButton.setLeftTopPos(getLeftTopPosX() + getWidth() - 100, getLeftTopPosY() + getHeight() - 50);
         closeButton.setSize(80, 35);
         closeButton.draw();
+
+        // Navigation buttons at bottom left
+        drawNavigationButtons();
 
         return true;
     }
@@ -554,6 +598,46 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // }
     }
 
+    private void drawNavigationButtons() {
+        float buttonY = getLeftTopPosY() + getHeight() - 50;
+        float buttonHeight = 35;
+        float buttonGap = 10;
+
+        // Check if navigation is possible
+        boolean canGoPrev = canNavigatePrevious != null && canNavigatePrevious.get();
+        boolean canGoNext = canNavigateNext != null && canNavigateNext.get();
+
+        // Previous button
+        float prevButtonWidth = 80;
+        prevButton.setLeftTopPos(getLeftTopPosX() + 20, buttonY);
+        prevButton.setSize(prevButtonWidth, buttonHeight);
+        prevButton.setVisible(canGoPrev);
+        if (canGoPrev) {
+            prevButton.draw();
+        }
+
+        // Next button
+        float nextButtonWidth = 80;
+        nextButton.setLeftTopPos(getLeftTopPosX() + 20 + prevButtonWidth + buttonGap, buttonY);
+        nextButton.setSize(nextButtonWidth, buttonHeight);
+        nextButton.setVisible(canGoNext);
+        if (canGoNext) {
+            nextButton.draw();
+        }
+
+        // Browse history indicator
+        if (canGoPrev || canGoNext) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                getLeftTopPosX() + 130,
+                buttonY - 15,
+                12,
+                new Vector4f(0.6f, 0.6f, 0.6f, 1.0f),
+                "浏览记录"
+            );
+        }
+    }
+
     /**
      * Shows the detail view for a person.
      *
@@ -589,7 +673,44 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     public boolean update() {
         super.update();
         closeButton.update();
+        prevButton.update();
+        nextButton.update();
         return true;
+    }
+
+    @Override
+    public com.xenoamess.cyan_potion.base.events.Event process(com.xenoamess.cyan_potion.base.events.Event event) {
+        if (event == null) {
+            return null;
+        }
+
+        // Process with parent first
+        event = super.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Process close button
+        event = closeButton.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Process navigation buttons if visible
+        if (prevButton.isVisible()) {
+            event = prevButton.process(event);
+            if (event == null) {
+                return null;
+            }
+        }
+        if (nextButton.isVisible()) {
+            event = nextButton.process(event);
+            if (event == null) {
+                return null;
+            }
+        }
+
+        return event;
     }
 
     @Override

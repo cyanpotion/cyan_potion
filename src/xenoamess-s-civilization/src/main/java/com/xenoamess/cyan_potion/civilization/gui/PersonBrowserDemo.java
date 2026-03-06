@@ -39,6 +39,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
@@ -92,6 +93,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     private final PersonLifecycleService lifecycleService;
 
+    private final PersonBrowseHistory browseHistory;
+
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
@@ -110,6 +113,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         // Initialize lifecycle service
         this.lifecycleService = new PersonLifecycleService();
 
+        // Initialize browse history
+        this.browseHistory = new PersonBrowseHistory();
+
         // Full screen background
         this.backgroundTexture = this.getResourceManager().fetchResource(
             Texture.class,
@@ -126,6 +132,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         // Create detail component
         this.detailComponent = new PersonDetailComponent(gameWindow);
         this.detailComponent.setOnClose(v -> hideDetailWindow());
+
+        // Set up navigation callbacks
+        this.detailComponent.setCanNavigatePrevious(() -> browseHistory.hasPrevious());
+        this.detailComponent.setCanNavigateNext(() -> browseHistory.hasNext());
+        this.detailComponent.setOnNavigatePrevious(v -> navigateToPreviousPerson());
+        this.detailComponent.setOnNavigateNext(v -> navigateToNextPerson());
 
         // Wrap components in draggable windows
         this.listWindow = new DraggableWindowComponent(gameWindow, "人物列表", listComponent);
@@ -241,10 +253,26 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     }
 
     private void onPersonSelected(Person person) {
+        // Record in browse history
+        browseHistory.recordView(person);
+
         detailComponent.show(person);
         detailWindow.setVisible(true);
         // Bring detail window to front by re-adding it (if we had a list)
         log.debug("Showing person in detail window: {}", person.getName());
+    }
+
+    private void navigateToPreviousPerson() {
+        Person previous = browseHistory.navigateToPrevious();
+        if (previous != null) {
+            detailComponent.show(previous);
+            log.debug("Navigated to previous person: {}", previous.getName());
+        }
+    }
+
+    private void navigateToNextPerson() {
+        // Forward navigation not supported yet
+        log.debug("Navigate next not supported");
     }
 
     @Override
