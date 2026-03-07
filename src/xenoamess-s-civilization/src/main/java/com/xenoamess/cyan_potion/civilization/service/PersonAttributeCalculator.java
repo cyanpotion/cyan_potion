@@ -140,4 +140,69 @@ public class PersonAttributeCalculator {
         return (int) ChronoUnit.YEARS.between(person.getBirthDate(), person.getDeathDate());
     }
 
+    /**
+     * Calculates the power level (能级分) of a person.
+     * Based on multiple attributes with different weights:
+     * - Health: 15%
+     * - Constitution: 10%
+     * - Intelligence: 15%
+     * - Eloquence: 10%
+     * - Appearance: 10%
+     * - Strength: 10%
+     * - Charm: 10%
+     * - Management: 10%
+     * - Money: 5%
+     * - Prestige: 5%
+     *
+     * Each attribute is normalized to 0-100 scale before weighting.
+     *
+     * @param person the person
+     * @return power level score (0-100)
+     */
+    public double calculatePowerLevel(Person person) {
+        // Normalize each attribute to 0-100 scale
+        double normalizedHealth = Math.min(100, person.getHealth());
+        double normalizedConstitution = normalizeToHundred(person.getConstitution(), 0, 20);
+        double normalizedIntelligence = normalizeToHundred(person.getIntelligence(), 0, 30);
+        double normalizedEloquence = normalizeToHundred(person.getEloquence(), 0, 20);
+        double normalizedAppearance = Math.min(100, person.getAppearance());
+        double normalizedStrength = normalizeToHundred(person.getStrength(), 0, 20);
+        double normalizedCharm = normalizeToHundred(person.getCharm(), 0, 50);
+        double normalizedManagement = normalizeToHundred(person.getManagement(), 0, 25);
+        double normalizedMoney = normalizeToHundred(person.getMoney(), 0, 20);
+        double normalizedPrestige = Math.min(100, person.getPrestige());
+
+        // Calculate weighted sum
+        double powerLevel =
+            normalizedHealth * 0.15 +
+            normalizedConstitution * 0.10 +
+            normalizedIntelligence * 0.15 +
+            normalizedEloquence * 0.10 +
+            normalizedAppearance * 0.10 +
+            normalizedStrength * 0.10 +
+            normalizedCharm * 0.10 +
+            normalizedManagement * 0.10 +
+            normalizedMoney * 0.05 +
+            normalizedPrestige * 0.05;
+
+        // Round to one decimal place
+        return Math.round(powerLevel * 10.0) / 10.0;
+    }
+
+    /**
+     * Normalizes a value to 0-100 scale.
+     *
+     * @param value the value to normalize
+     * @param min the minimum possible value
+     * @param max the maximum possible value
+     * @return normalized value (0-100)
+     */
+    private double normalizeToHundred(double value, double min, double max) {
+        if (max <= min) {
+            return 50.0;
+        }
+        double normalized = (value - min) / (max - min) * 100.0;
+        return Math.max(0, Math.min(100, normalized));
+    }
+
 }

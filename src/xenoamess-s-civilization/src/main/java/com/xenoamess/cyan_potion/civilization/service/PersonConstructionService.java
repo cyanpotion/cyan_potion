@@ -96,6 +96,12 @@ public class PersonConstructionService {
             : appearanceCalculator.calculateNaturalAppearance(
                 builder.getFather(), builder.getMother(), builder.getGender()));
 
+        // Wealth & Prestige
+        person.setMoney(builder.getMoney());
+        person.setPrestige(builder.getPrestige());
+        person.setPowerLevel(0.0);
+        person.setLastPowerLevelUpdateDate(null);
+
         // Dates
         LocalDate currentDateValue = builder.getCurrentDate() != null
             ? builder.getCurrentDate()

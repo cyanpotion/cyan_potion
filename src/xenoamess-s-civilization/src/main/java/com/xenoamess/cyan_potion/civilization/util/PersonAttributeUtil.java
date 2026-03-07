@@ -42,6 +42,18 @@ public final class PersonAttributeUtil {
     private static final double MIN_APPEARANCE = 0.0;
     private static final double MAX_APPEARANCE = 100.0;
     
+    // Wealth range: 0-20 (normal distribution, mean=10, std=5)
+    private static final double WEALTH_MEAN = 10.0;
+    private static final double WEALTH_STD = 5.0;
+    private static final double MIN_WEALTH = 0.0;
+    private static final double MAX_WEALTH = 20.0;
+    
+    // Prestige range: 0-100 (normal distribution, mean=50, std=20)
+    private static final double PRESTIGE_MEAN = 50.0;
+    private static final double PRESTIGE_STD = 20.0;
+    private static final double MIN_PRESTIGE = 0.0;
+    private static final double MAX_PRESTIGE = 100.0;
+    
     private PersonAttributeUtil() {
         // Utility class, prevent instantiation
     }
@@ -113,6 +125,48 @@ public final class PersonAttributeUtil {
         return Math.min(MAX_APPEARANCE, Math.max(MIN_APPEARANCE, result));
     }
     
+    /**
+     * Generates a random wealth value using normal distribution.
+     * Range: 0-20, mean=10, std=5
+     *
+     * @return random wealth value
+     */
+    public static double randomWealth() {
+        return randomNormal(MIN_WEALTH, MAX_WEALTH, WEALTH_MEAN, WEALTH_STD);
+    }
+
+    /**
+     * Generates a random prestige value using normal distribution.
+     * Range: 0-100, mean=50, std=20
+     *
+     * @return random prestige value
+     */
+    public static double randomPrestige() {
+        return randomNormal(MIN_PRESTIGE, MAX_PRESTIGE, PRESTIGE_MEAN, PRESTIGE_STD);
+    }
+
+    /**
+     * Generates a random value using normal distribution within specified range.
+     * Uses Box-Muller transform for normal distribution.
+     *
+     * @param min minimum value (inclusive)
+     * @param max maximum value (inclusive)
+     * @param mean mean of the distribution
+     * @param std standard deviation
+     * @return random value following normal distribution, clamped to [min, max]
+     */
+    private static double randomNormal(double min, double max, double mean, double std) {
+        // Box-Muller transform for normal distribution
+        double u1 = RANDOM.nextDouble();
+        double u2 = RANDOM.nextDouble();
+        double z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+
+        double value = mean + z0 * std;
+        // Clamp to range and round to one decimal place
+        value = Math.max(min, Math.min(max, value));
+        return Math.round(value * 10.0) / 10.0;
+    }
+
     /**
      * Gets the shared Random instance.
      * Can be used for seeding in tests.

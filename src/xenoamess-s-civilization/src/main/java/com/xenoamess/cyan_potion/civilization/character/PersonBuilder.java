@@ -47,6 +47,8 @@ public class PersonBuilder {
     private double baseEloquence = -1;
     private double naturalAppearance = -1;
     private double appearanceAdjustment = 1.0;
+    private double money = 0.0;
+    private double prestige = 0.0;
     private Person father;
     private Person mother;
     private LocalDate lastDecisionDate;

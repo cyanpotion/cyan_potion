@@ -38,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -299,6 +300,24 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         }
     }
 
+    /**
+     * Updates power levels for all persons on the 1st of each month.
+     *
+     * @param persons list of persons to update
+     */
+    private void updatePowerLevels(List<Person> persons) {
+        LocalDate currentDate = dateManager.getCurrentDate();
+        int updatedCount = 0;
+        for (Person person : persons) {
+            if (person.isAlive()) {
+                person.updatePowerLevel(currentDate);
+                updatedCount++;
+            }
+        }
+        log.info("Updated power levels for {} persons on {}", updatedCount,
+            GameDateManager.formatDate(currentDate));
+    }
+
     @Override
     public boolean update() {
         if (!show) {
@@ -313,8 +332,13 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             for (Person person : persons) {
                 lifecycleService.advanceDate(person, daysAdvanced);
             }
-            log.debug("Advanced {} days for {} persons, game date: {}", 
+            log.debug("Advanced {} days for {} persons, game date: {}",
                 daysAdvanced, persons.size(), dateManager.getFormattedDate());
+
+            // Update power levels on the 1st of each month
+            if (dateManager.getDay() == 1) {
+                updatePowerLevels(persons);
+            }
         }
 
         // Layout buttons at top
@@ -372,11 +396,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         speedButton.update();
         pauseButton.update();
         dashboardButton.update();
-        
+
         // Update draggable windows
         listWindow.update();
         detailWindow.update();
-        
+
         return true;
     }
 
@@ -446,7 +470,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         speedButton.draw();
         pauseButton.draw();
         dashboardButton.draw();
-        
+
         // Draw draggable windows (list window first, then detail)
         listWindow.draw();
         detailWindow.draw();
@@ -469,7 +493,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         event = speedButton.process(event);
         event = pauseButton.process(event);
         event = dashboardButton.process(event);
-        
+
         // Process draggable windows (detail first to handle on-top)
         event = detailWindow.process(event);
         event = listWindow.process(event);

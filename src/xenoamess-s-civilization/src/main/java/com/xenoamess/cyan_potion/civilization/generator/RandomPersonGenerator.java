@@ -162,6 +162,12 @@ public class RandomPersonGenerator {
         // Random appearance adjustment (0.5 to 1.5)
         builder.setAppearanceAdjustment(0.5 + RANDOM.nextDouble());
 
+        // Random wealth using normal distribution (0-20)
+        builder.setMoney(PersonAttributeUtil.randomWealth());
+
+        // Random prestige using normal distribution (0-100)
+        builder.setPrestige(PersonAttributeUtil.randomPrestige());
+
         // If no parents, set random natural appearance
         if (father == null || mother == null) {
             builder.setNaturalAppearance(PersonAttributeUtil.randomAppearance());

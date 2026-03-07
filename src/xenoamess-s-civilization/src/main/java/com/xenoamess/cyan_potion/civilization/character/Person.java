@@ -136,6 +136,26 @@ public class Person {
     @Setter
     private LocalDate lastDecisionDate;
 
+    // ==================== Wealth & Prestige ====================
+
+    @Getter
+    @Setter
+    private double money;
+
+    @Getter
+    @Setter
+    private double prestige;
+
+    // ==================== Calculated Score ====================
+
+    @Getter
+    @Setter
+    private double powerLevel;
+
+    @Getter
+    @Setter
+    private LocalDate lastPowerLevelUpdateDate;
+
     // ==================== Simple State Queries ====================
 
     /**
@@ -395,6 +415,27 @@ public class Person {
      */
     public double getManagement() {
         return getAttributeCalculator().getManagement(this);
+    }
+
+    /**
+     * Gets the power level (能级分).
+     * Delegates to PersonAttributeCalculator.
+     */
+    public double getPowerLevel() {
+        return getAttributeCalculator().calculatePowerLevel(this);
+    }
+
+    /**
+     * Recalculates and updates the power level.
+     * Should be called monthly on the 1st day.
+     *
+     * @param currentDate the current game date
+     * @return the updated power level
+     */
+    public double updatePowerLevel(LocalDate currentDate) {
+        this.powerLevel = getPowerLevel();
+        this.lastPowerLevelUpdateDate = currentDate;
+        return this.powerLevel;
     }
 
     /**
