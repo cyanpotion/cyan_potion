@@ -51,7 +51,7 @@ public class PowerLevelRankService {
      * @return number of persons whose ranks were updated
      */
     public int calculateRanks(List<Person> persons, LocalDate currentDate) {
-        // Filter alive persons only
+        // Filter alive persons only - dead persons keep their last rank for display
         List<Person> alivePersons = persons.stream()
             .filter(Person::isAlive)
             .collect(Collectors.toList());
