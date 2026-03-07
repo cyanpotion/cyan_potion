@@ -25,7 +25,10 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.GameDateManager;
+import com.xenoamess.cyan_potion.civilization.character.Gender;
+import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.decision.*;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
@@ -40,14 +43,16 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
 /**
  * Demo world showcasing the PersonListComponent and PersonDetailComponent
  * wrapped in DraggableWindowComponent.
+ * Implements DecisionContext for decision execution.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
@@ -55,7 +60,7 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @Slf4j
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class PersonBrowserDemo extends AbstractGameWindowComponent {
+public class PersonBrowserDemo extends AbstractGameWindowComponent implements DecisionContext {
 
     @Getter
     private final PersonListComponent listComponent;
@@ -97,7 +102,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     private final PowerLevelRankService powerLevelRankService;
 
+    private final DecisionExecutor decisionExecutor;
+
     private final PersonBrowseHistory browseHistory;
+
+    private final List<PendingPlayerEvent> pendingPlayerEvents = new ArrayList<>();
 
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
@@ -119,6 +128,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
         // Initialize power level rank service
         this.powerLevelRankService = new PowerLevelRankService();
+
+        // Initialize decision executor with this as context
+        this.decisionExecutor = new DecisionExecutor(this);
+
+        // Register decisions
+        registerDecisions();
 
         // Initialize browse history
         this.browseHistory = new PersonBrowseHistory();
@@ -213,6 +228,14 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
         initProcessors();
         generatePersons();
+    }
+
+    /**
+     * Registers all available decisions.
+     */
+    private void registerDecisions() {
+        decisionExecutor.registerDecision(new PatriarchalMarriageDecision());
+        // Add more decisions here as they are implemented
     }
 
     @NotNull
@@ -328,6 +351,85 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         log.info("Calculated power level ranks for {} persons", rankedCount);
     }
 
+    // ==================== DecisionContext Implementation ====================
+
+    @Override
+    public LocalDate getCurrentDate() {
+        return dateManager.getCurrentDate();
+    }
+
+    @Override
+    public List<Person> getAllAlivePersons() {
+        return listComponent.getPersons().stream()
+            .filter(Person::isAlive)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Person> getEligibleFemales() {
+        return listComponent.getPersons().stream()
+            .filter(Person::isAlive)
+            .filter(p -> p.getGender() == Gender.FEMALE)
+            .filter(p -> !p.isMarried())
+            .filter(p -> p.getAge() >= 16)
+            .filter(p -> p.getFertility() > 0)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Person> getEligibleMales() {
+        return listComponent.getPersons().stream()
+            .filter(Person::isAlive)
+            .filter(p -> p.getGender() == Gender.MALE)
+            .filter(p -> !p.isMarried())
+            .filter(p -> p.getAge() >= 16)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isPlayerControlled(Person person) {
+        // TODO: Implement player control check when player character system is added
+        // For now, all NPCs are AI-controlled
+        return false;
+    }
+
+    @Override
+    public void addPendingPlayerEvent(PendingPlayerEvent event) {
+        pendingPlayerEvents.add(event);
+        log.info("Added pending player event: {} (total pending: {})",
+            event.getDescription(), pendingPlayerEvents.size());
+    }
+
+    @Override
+    public boolean executeMarriage(Person dominant, Person subordinate) {
+        try {
+            String marriageId = java.util.UUID.randomUUID().toString();
+            java.util.List<Person> subordinates = java.util.List.of(subordinate);
+            Marriage marriage = new Marriage(marriageId, dominant, subordinates, getCurrentDate(), null);
+
+            dominant.addMarriage(marriage);
+            subordinate.addMarriage(marriage);
+
+            log.info("Marriage executed: {} (dominant) married {} (subordinate) on {}",
+                dominant.getName(), subordinate.getName(), getCurrentDate());
+            return true;
+        } catch (Exception e) {
+            log.error("Failed to execute marriage: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Gets pending player events.
+     *
+     * @return list of pending events
+     */
+    public List<PendingPlayerEvent> getPendingPlayerEvents() {
+        return new ArrayList<>(pendingPlayerEvents);
+    }
+
+    // ==================== End DecisionContext Implementation ====================
+
     @Override
     public boolean update() {
         if (!show) {
@@ -345,9 +447,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
             log.debug("Advanced {} days for {} persons, game date: {}",
                 daysAdvanced, persons.size(), dateManager.getFormattedDate());
 
-            // Update power levels on the 1st of each month
+            // Update power levels and execute decisions on the 1st of each month
             if (dateManager.getDay() == 1) {
                 updatePowerLevels(persons);
+                decisionExecutor.executeDecisionsForAll(getCurrentDate());
             }
         }
 
