@@ -62,10 +62,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     private final PersonDetailComponent detailComponent;
 
     @Getter
-    private final DraggableWindowComponent listWindow;
+    private volatile DraggableWindowComponent listWindow;
 
     @Getter
-    private final DraggableWindowComponent detailWindow;
+    private volatile DraggableWindowComponent detailWindow;
 
     @Getter
     private final Button generateButton;
@@ -139,16 +139,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         this.detailComponent.setOnNavigatePrevious(v -> navigateToPreviousPerson());
         this.detailComponent.setOnNavigateNext(v -> navigateToNextPerson());
 
-        // Wrap components in draggable windows
-        this.listWindow = new DraggableWindowComponent(gameWindow, "人物列表", listComponent);
-        this.listWindow.setLeftTopPos(50, 80);
-        this.listWindow.setSize(500, 600);
-        this.listWindow.setVisible(true);
+        this.listWindow = newListWindow();
 
-        this.detailWindow = new DraggableWindowComponent(gameWindow, "人物详情", detailComponent);
-        this.detailWindow.setLeftTopPos(580, 80);
-        this.detailWindow.setSize(550, 600);
-        this.detailWindow.setVisible(false); // Hidden by default
+        this.detailWindow = newDetailWindow();
 
         // Control buttons
         this.generateButton = new Button(gameWindow, null, "生成100人");
@@ -202,9 +195,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         });
 
         // Dashboard button at bottom center to reopen list window
-        this.dashboardButton = new Button(gameWindow, null, "📋 打开人物列表");
+        this.dashboardButton = new Button(gameWindow, null, "打开人物列表");
         this.dashboardButton.registerOnMouseButtonLeftDownCallback(event -> {
-            listWindow.setVisible(true);
+            DraggableWindowComponent listWindow = newListWindow();
+            listWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+            this.listWindow = listWindow;
             log.debug("Reopened person list window from dashboard");
             return null;
         });
@@ -212,6 +207,26 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         initProcessors();
         generatePersons();
     }
+
+    @NotNull
+    private DraggableWindowComponent newListWindow() {
+        // Wrap components in draggable windows
+        DraggableWindowComponent listWindow = new DraggableWindowComponent(this.getGameWindow(), "人物列表", listComponent);
+        listWindow.setLeftTopPos(50, 80);
+        listWindow.setSize(500, 600);
+        listWindow.setVisible(true);
+        return listWindow;
+    }
+
+    @NotNull
+    private DraggableWindowComponent newDetailWindow() {
+        DraggableWindowComponent detailWindow = new DraggableWindowComponent(this.getGameWindow(), "人物详情", detailComponent);
+        detailWindow.setLeftTopPos(580, 80);
+        detailWindow.setSize(550, 600);
+        detailWindow.setVisible(false); // Hidden by default
+        return detailWindow;
+    }
+
 
     private void updateSpeedButtonText() {
         speedButton.setButtonText("速度: " + dateManager.getSpeedDescription());
@@ -221,6 +236,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         pauseButton.setButtonText(dateManager.isPaused() ? "启动" : "暂停");
     }
 
+    @Override
     protected void initProcessors() {
         this.registerProcessor(
             KeyboardEvent.class,
@@ -257,6 +273,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         browseHistory.recordView(person);
 
         detailComponent.show(person);
+        if (!detailWindow.isAlive()){
+            DraggableWindowComponent detailWindow = newDetailWindow();
+            detailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+            this.detailWindow = detailWindow;
+        }
         detailWindow.setVisible(true);
         // Bring detail window to front by re-adding it (if we had a list)
         log.debug("Showing person in detail window: {}", person.getName());
@@ -280,7 +301,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     @Override
     public boolean update() {
-        if (!show) return true;
+        if (!show) {
+            return true;
+        }
 
         // Update game date (1 day per second)
         int daysAdvanced = dateManager.update();
@@ -359,7 +382,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     @Override
     public boolean draw() {
-        if (!show) return false;
+        if (!show) {
+            return false;
+        }
 
         // Draw full screen background
         backgroundPicture.cover(this.getGameWindow());
@@ -432,7 +457,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Nullable
     @Override
     public Event process(@Nullable Event event) {
-        if (!show) return event;
+        if (!show) {
+            return event;
+        }
 
         // Process events in order
         event = generateButton.process(event);

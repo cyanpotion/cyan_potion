@@ -320,6 +320,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
             onClose.accept(null);
         }
         log.debug("Closed window: {}", title);
+        super.close();
     }
 
     /**
