@@ -483,6 +483,39 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Row 6 - Appearance breakdown
         drawLabelValueSmall(x, y, "容貌:", String.format("%.1f (×%.2f)",
             person.getAppearance(), person.getAppearanceAdjustment()));
+        y += 22;
+
+        // Row 7 - Wealth
+        drawLabelValueSmall(x, y, "金钱:", String.format("%.1f", person.getMoney()));
+        y += 22;
+
+        // Row 8 - Prestige
+        drawLabelValueSmall(x, y, "威望:", String.format("%.1f", person.getPrestige()));
+        y += 22;
+
+        // Row 9 - Power Level (highlighted)
+        Vector4f powerLevelColor = getPowerLevelColor(person.getPowerLevel());
+        drawLabelValueSmall(x, y, "能级分:", String.format("%.1f", person.getPowerLevel()), powerLevelColor);
+    }
+
+    /**
+     * Gets color based on power level.
+     *
+     * @param powerLevel the power level
+     * @return color vector
+     */
+    private Vector4f getPowerLevelColor(double powerLevel) {
+        if (powerLevel >= 80) {
+            return new Vector4f(1.0f, 0.5f, 0.0f, 1.0f); // Orange-Red for high
+        } else if (powerLevel >= 60) {
+            return new Vector4f(1.0f, 0.8f, 0.0f, 1.0f); // Gold for good
+        } else if (powerLevel >= 40) {
+            return new Vector4f(0.8f, 0.9f, 0.2f, 1.0f); // Yellow-green for average
+        } else if (powerLevel >= 20) {
+            return new Vector4f(0.6f, 0.8f, 1.0f, 1.0f); // Light blue for below average
+        } else {
+            return new Vector4f(0.7f, 0.7f, 0.7f, 1.0f); // Gray for low
+        }
     }
 
     private void drawClanInfo(float x, float y, float width) {
@@ -562,6 +595,11 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private void drawLabelValueSmall(float x, float y, String label, String value) {
         this.getGameWindow().drawTextCenter(null, x + 35, y, 14, COLOR_LABEL, label);
         this.getGameWindow().drawTextCenter(null, x + 90, y, 14, COLOR_VALUE, value);
+    }
+
+    private void drawLabelValueSmall(float x, float y, String label, String value, Vector4f valueColor) {
+        this.getGameWindow().drawTextCenter(null, x + 35, y, 14, COLOR_LABEL, label);
+        this.getGameWindow().drawTextCenter(null, x + 90, y, 14, valueColor, value);
     }
 
     private void drawLabel(float x, float y, String text, Vector4f color) {

@@ -213,11 +213,11 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
         );
         x += 50;
 
-        // Health and other stats (shortened)
-        String stats = String.format("健:%.0f 体:%.0f 智:%.0f",
-            person.getHealth(),
-            person.getConstitution(),
-            person.getIntelligence()
+        // Power level, money and prestige (more valuable info)
+        String stats = String.format("能:%.0f 钱:%.0f 威:%.0f",
+            person.getPowerLevel(),
+            person.getMoney(),
+            person.getPrestige()
         );
         this.getGameWindow().drawTextCenter(
             null,
