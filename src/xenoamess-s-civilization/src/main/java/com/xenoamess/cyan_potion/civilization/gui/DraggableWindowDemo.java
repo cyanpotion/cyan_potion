@@ -121,10 +121,12 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
         window.setVisible(true);
         
         window.setOnClose(v -> {
+            // todo 检查这里的组件树绑定
             windows.remove(window);
             log.info("Closed window: {}", title);
         });
 
+        // todo 检查这里的组件树绑定
         windows.add(window);
         log.info("Created new window: {}", title);
     }
@@ -138,6 +140,7 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
                     && event.getAction() == GLFW.GLFW_PRESS) {
                     // Close the top-most window
                     if (!windows.isEmpty()) {
+                        // todo 检查这里的组件树绑定
                         DraggableWindowComponent lastWindow = windows.get(windows.size() - 1);
                         lastWindow.close();
                     }
@@ -155,12 +158,7 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
         addWindowButton.setSize(120, 35);
         addWindowButton.update();
 
-        // Update all windows
-        for (DraggableWindowComponent window : windows) {
-            window.update();
-        }
-
-        return true;
+        return super.update();
     }
 
     @Override
@@ -182,10 +180,7 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
             "拖拽标题栏移动窗口 | 点击×关闭 | ESC关闭最上层窗口"
         );
 
-        // Draw windows (in order, so first is bottom)
-        for (DraggableWindowComponent window : windows) {
-            window.draw();
-        }
+        super.draw();
 
         return true;
     }
@@ -198,23 +193,15 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
             return null;
         }
 
-        // Process windows in reverse order (top-most first)
-        for (int i = windows.size() - 1; i >= 0; i--) {
-            event = windows.get(i).process(event);
-            if (event == null) {
-                return null;
-            }
-        }
-
-        return event;
+        return super.process(event);
     }
 
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-        addWindowButton.addToGameWindowComponentTree(node);
+        addWindowButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         for (DraggableWindowComponent window : windows) {
-            // Windows manage their own content
+            window.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         }
     }
 }

@@ -62,9 +62,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private final Panel contentPanel;
 
     @Getter
-    private final Button closeButton;
-
-    @Getter
     private final Button prevButton;
 
     @Getter
@@ -149,13 +146,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Content panel
         this.contentPanel = new Panel(gameWindow);
 
-        // Close button
-        this.closeButton = new Button(gameWindow, null, "×关闭");
-        this.closeButton.registerOnMouseButtonLeftDownCallback(event -> {
-            hide();
-            return null;
-        });
-
         // Previous button (arrow left)
         this.prevButton = new Button(gameWindow, null, "◀ 上一个");
         this.prevButton.registerOnMouseButtonLeftDownCallback(event -> {
@@ -165,6 +155,8 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return null;
         });
 
+        prevButton.setActive(true);
+
         // Next button (arrow right)
         this.nextButton = new Button(gameWindow, null, "下一个 ▶");
         this.nextButton.registerOnMouseButtonLeftDownCallback(event -> {
@@ -173,6 +165,8 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             }
             return null;
         });
+
+        nextButton.setActive(true);
 
         initProcessors();
     }
@@ -243,15 +237,10 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             }
         }
 
-        // Close button at bottom
-        closeButton.setLeftTopPos(getLeftTopPosX() + getWidth() - 100, getLeftTopPosY() + getHeight() - 50);
-        closeButton.setSize(80, 35);
-        closeButton.draw();
-
         // Navigation buttons at bottom left
         drawNavigationButtons();
 
-        return true;
+        return super.draw();
     }
 
     private void drawHeader(float x, float y, float width) {
@@ -612,18 +601,12 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         prevButton.setLeftTopPos(getLeftTopPosX() + 20, buttonY);
         prevButton.setSize(prevButtonWidth, buttonHeight);
         prevButton.setVisible(canGoPrev);
-        if (canGoPrev) {
-            prevButton.draw();
-        }
 
         // Next button
         float nextButtonWidth = 80;
         nextButton.setLeftTopPos(getLeftTopPosX() + 20 + prevButtonWidth + buttonGap, buttonY);
         nextButton.setSize(nextButtonWidth, buttonHeight);
         nextButton.setVisible(canGoNext);
-        if (canGoNext) {
-            nextButton.draw();
-        }
 
         // Browse history indicator
         if (canGoPrev || canGoNext) {
@@ -672,9 +655,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Override
     public boolean update() {
         super.update();
-        closeButton.update();
-        prevButton.update();
-        nextButton.update();
         return true;
     }
 
@@ -690,32 +670,13 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return null;
         }
 
-        // Process close button
-        event = closeButton.process(event);
-        if (event == null) {
-            return null;
-        }
-
-        // Process navigation buttons if visible
-        if (prevButton.isVisible()) {
-            event = prevButton.process(event);
-            if (event == null) {
-                return null;
-            }
-        }
-        if (nextButton.isVisible()) {
-            event = nextButton.process(event);
-            if (event == null) {
-                return null;
-            }
-        }
-
         return event;
     }
 
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-//        closeButton.addToGameWindowComponentTree(node);
+        this.prevButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.nextButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 }

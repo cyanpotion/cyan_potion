@@ -211,15 +211,13 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
                 getWidth(),
                 getHeight() - titleBarHeight
             );
-            contentComponent.update();
         }
 
-        return true;
+        return super.update();
     }
 
     @Override
     public boolean draw() {
-        super.draw();
         if (!isVisible()) {
             return false;
         }
@@ -230,12 +228,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
         // Draw content area background
         drawContentBackground();
 
-        // Draw content component
-        if (contentComponent != null) {
-            contentComponent.draw();
-        }
-
-        return true;
+        return super.draw();
     }
 
     private void drawTitleBar() {
@@ -314,21 +307,8 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
             }
         }
 
-        // Pass event to content component
-        if (contentComponent != null && contentComponent.isVisible()) {
-            event = contentComponent.process(event);
-            if (event == null) {
-                return null;
-            }
-        }
-
         // Process with parent (handles dragging)
-        event = super.process(event);
-        if (event == null) {
-            return null;
-        }
-
-        return event;
+        return super.process(event);
     }
 
     /**
@@ -364,4 +344,11 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
     public <T extends AbstractControllableGameWindowComponent> T getContentAs(Class<T> clazz) {
         return clazz.cast(contentComponent);
     }
+
+    @Override
+    public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
+        super.addToGameWindowComponentTree(node);
+        contentComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+    }
+
 }

@@ -450,7 +450,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
-//        listWindow.addToGameWindowComponentTree(node);
+        listWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        detailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
 //        detailWindow.addToGameWindowComponentTree(node);
 //        generateButton.addToGameWindowComponentTree(node);
 //        filterMaleButton.addToGameWindowComponentTree(node);
