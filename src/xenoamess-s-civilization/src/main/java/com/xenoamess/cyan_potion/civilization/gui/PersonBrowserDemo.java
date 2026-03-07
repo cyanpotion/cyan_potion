@@ -271,8 +271,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
     }
 
     private void navigateToNextPerson() {
-        // Forward navigation not supported yet
-        log.debug("Navigate next not supported");
+        Person next = browseHistory.navigateToNext();
+        if (next != null) {
+            detailComponent.show(next);
+            log.debug("Navigated to next person: {}", next.getName());
+        }
     }
 
     @Override

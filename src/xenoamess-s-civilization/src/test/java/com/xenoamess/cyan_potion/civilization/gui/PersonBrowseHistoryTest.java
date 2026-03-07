@@ -60,6 +60,7 @@ class PersonBrowseHistoryTest {
         assertEquals(person1, history.getCurrentPerson());
         assertEquals(1, history.getTotalCount());
         assertFalse(history.hasPrevious());
+        assertFalse(history.hasNext());
 
         // Record second view
         history.recordView(person2);
@@ -67,6 +68,7 @@ class PersonBrowseHistoryTest {
         assertEquals(2, history.getTotalCount());
         assertTrue(history.hasPrevious());
         assertEquals(person1, history.getPrevious());
+        assertFalse(history.hasNext());
     }
 
     @Test
@@ -95,21 +97,90 @@ class PersonBrowseHistoryTest {
 
         assertEquals(person3, history.getCurrentPerson());
         assertEquals(3, history.getTotalCount());
+        assertFalse(history.hasNext());
 
         // Navigate to previous
         Person previous = history.navigateToPrevious();
         assertEquals(person2, previous);
         assertEquals(person2, history.getCurrentPerson());
-        assertEquals(2, history.getTotalCount());
+        assertEquals(3, history.getTotalCount()); // Total stays same
+        assertTrue(history.hasNext()); // Now can go forward
+        assertEquals(person3, history.getNext());
 
         // Navigate again
         previous = history.navigateToPrevious();
         assertEquals(person1, previous);
         assertEquals(person1, history.getCurrentPerson());
-        assertEquals(1, history.getTotalCount());
+        assertFalse(history.hasPrevious());
+        assertTrue(history.hasNext());
 
         // No more previous
         assertNull(history.navigateToPrevious());
+    }
+
+    @Test
+    void testNavigateToNext() {
+        PersonBrowseHistory history = new PersonBrowseHistory();
+        Person person1 = createTestPerson("P-001", "张三");
+        Person person2 = createTestPerson("P-002", "李四");
+        Person person3 = createTestPerson("P-003", "王五");
+
+        history.recordView(person1);
+        history.recordView(person2);
+        history.recordView(person3);
+
+        // Go back twice
+        history.navigateToPrevious(); // to person2
+        history.navigateToPrevious(); // to person1
+
+        assertEquals(person1, history.getCurrentPerson());
+        assertFalse(history.hasPrevious());
+        assertTrue(history.hasNext());
+        assertEquals(person2, history.getNext());
+
+        // Navigate forward
+        Person next = history.navigateToNext();
+        assertEquals(person2, next);
+        assertEquals(person2, history.getCurrentPerson());
+        assertTrue(history.hasPrevious());
+        assertTrue(history.hasNext());
+        assertEquals(person3, history.getNext());
+
+        // Navigate forward again
+        next = history.navigateToNext();
+        assertEquals(person3, next);
+        assertEquals(person3, history.getCurrentPerson());
+        assertTrue(history.hasPrevious());
+        assertFalse(history.hasNext()); // At the end
+
+        // No more next
+        assertNull(history.navigateToNext());
+    }
+
+    @Test
+    void testNewViewClearsForwardStack() {
+        PersonBrowseHistory history = new PersonBrowseHistory();
+        Person person1 = createTestPerson("P-001", "张三");
+        Person person2 = createTestPerson("P-002", "李四");
+        Person person3 = createTestPerson("P-003", "王五");
+        Person person4 = createTestPerson("P-004", "赵六");
+
+        // Navigate: person1 -> person2 -> person3
+        history.recordView(person1);
+        history.recordView(person2);
+        history.recordView(person3);
+
+        // Go back to person2
+        history.navigateToPrevious();
+        assertEquals(person2, history.getCurrentPerson());
+        assertTrue(history.hasNext()); // Can go forward to person3
+
+        // Record new view - this should clear forward stack
+        history.recordView(person4);
+        assertEquals(person4, history.getCurrentPerson());
+        assertFalse(history.hasNext()); // Forward stack cleared
+        assertTrue(history.hasPrevious());
+        assertEquals(person2, history.getPrevious()); // person2 is still in back stack
     }
 
     @Test
@@ -120,12 +191,15 @@ class PersonBrowseHistoryTest {
 
         history.recordView(person1);
         history.recordView(person2);
+        history.navigateToPrevious();
         assertEquals(2, history.getTotalCount());
+        assertTrue(history.hasNext());
 
         history.clear();
         assertEquals(0, history.getTotalCount());
         assertNull(history.getCurrentPerson());
         assertFalse(history.hasPrevious());
+        assertFalse(history.hasNext());
     }
 
     @Test
@@ -138,25 +212,10 @@ class PersonBrowseHistoryTest {
             history.recordView(person);
         }
 
-        // Should be capped at 100
-        assertEquals(100, history.getTotalCount());
-    }
-
-    @Test
-    void testGetPersonAt() {
-        PersonBrowseHistory history = new PersonBrowseHistory();
-        Person person1 = createTestPerson("P-001", "张三");
-        Person person2 = createTestPerson("P-002", "李四");
-
-        history.recordView(person1);
-        history.recordView(person2);
-
-        // Get at index 0 should return person1 (oldest in history, not current)
-        assertEquals(person1, history.getPersonAt(0));
-
-        // Out of bounds
-        assertNull(history.getPersonAt(-1));
-        assertNull(history.getPersonAt(100));
+        // Back stack capped at 100, plus current person = 101 total max
+        assertEquals(101, history.getTotalCount());
+        assertEquals(100, history.getBackStackSize());
+        assertEquals(0, history.getForwardStackSize());
     }
 
     @Test
@@ -172,5 +231,37 @@ class PersonBrowseHistoryTest {
 
         history.recordView(person2);
         assertEquals(2, history.getCurrentPosition());
+
+        // Go back
+        history.navigateToPrevious();
+        assertEquals(1, history.getCurrentPosition());
+
+        // Go forward
+        history.navigateToNext();
+        assertEquals(2, history.getCurrentPosition());
+    }
+
+    @Test
+    void testGetPreviousAndNext() {
+        PersonBrowseHistory history = new PersonBrowseHistory();
+        Person person1 = createTestPerson("P-001", "张三");
+        Person person2 = createTestPerson("P-002", "李四");
+
+        // Empty history
+        assertNull(history.getPrevious());
+        assertNull(history.getNext());
+
+        history.recordView(person1);
+        assertNull(history.getPrevious());
+        assertNull(history.getNext());
+
+        history.recordView(person2);
+        assertEquals(person1, history.getPrevious());
+        assertNull(history.getNext());
+
+        // Go back and check next
+        history.navigateToPrevious();
+        assertNull(history.getPrevious());
+        assertEquals(person2, history.getNext());
     }
 }

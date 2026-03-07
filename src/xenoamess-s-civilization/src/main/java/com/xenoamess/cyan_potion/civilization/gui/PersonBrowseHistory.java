@@ -26,11 +26,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Iterator;
 
 /**
- * Manages browse history for person detail view.
- * Keeps track of up to 100 recently viewed persons.
+ * Manages browse history for person detail view using dual-stack (back + forward).
+ * Supports browser-style navigation: back, forward, and record new view.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
@@ -42,8 +41,11 @@ public class PersonBrowseHistory {
 
     private static final int MAX_HISTORY_SIZE = 100;
 
-    @Getter
-    private final Deque<Person> history = new ArrayDeque<>();
+    /** Back stack: persons that can be navigated to via "previous" */
+    private final Deque<Person> backStack = new ArrayDeque<>();
+
+    /** Forward stack: persons that can be navigated to via "next" */
+    private final Deque<Person> forwardStack = new ArrayDeque<>();
 
     @Getter
     private Person currentPerson = null;
@@ -51,7 +53,7 @@ public class PersonBrowseHistory {
     /**
      * Records a person view in history.
      * If the person is already the current one, does nothing.
-     * Otherwise, adds to history and truncates to max size.
+     * Clears forward stack when navigating to a new person.
      *
      * @param person the person being viewed
      */
@@ -63,23 +65,27 @@ public class PersonBrowseHistory {
             return;
         }
 
-        // Remove if already exists in history to avoid duplicates
-        history.removeIf(p -> p.getId().equals(personId));
+        // Clear forward stack when navigating to a new person
+        // (this is browser behavior: new navigation invalidates forward history)
+        if (!forwardStack.isEmpty()) {
+            forwardStack.clear();
+            log.debug("Forward stack cleared due to new navigation");
+        }
 
-        // Add current person to history before changing (if exists)
+        // Move current person to back stack (if exists)
         if (currentPerson != null) {
-            history.addFirst(currentPerson);
+            backStack.push(currentPerson);
+            // Truncate back stack if exceeds max size
+            while (backStack.size() > MAX_HISTORY_SIZE) {
+                backStack.removeLast();
+            }
         }
 
         // Update current person
         currentPerson = person;
 
-        // Truncate history to max size (keep total at MAX_HISTORY_SIZE)
-        while (history.size() >= MAX_HISTORY_SIZE) {
-            history.removeLast();
-        }
-
-        log.debug("Recorded view for person: {}, history size: {}", person.getName(), getTotalCount());
+        log.debug("Recorded view for person: {}, backStack size: {}, forwardStack size: {}",
+                person.getName(), backStack.size(), forwardStack.size());
     }
 
     /**
@@ -89,47 +95,67 @@ public class PersonBrowseHistory {
      */
     @Nullable
     public Person getPrevious() {
-        if (history.isEmpty()) {
-            return null;
-        }
-        return history.peekFirst();
+        return backStack.peek();
+    }
+
+    /**
+     * Gets the next person in history.
+     *
+     * @return the next person, or null if none
+     */
+    @Nullable
+    public Person getNext() {
+        return forwardStack.peek();
     }
 
     /**
      * Navigates to the previous person in history.
+     * Moves current to forward stack, pops from back stack.
      *
      * @return the previous person, or null if none
      */
     @Nullable
     public Person navigateToPrevious() {
-        if (history.isEmpty()) {
+        if (backStack.isEmpty()) {
             return null;
         }
 
-        // Move current to a temporary position (will be added back if we go forward)
-        Person previousCurrent = currentPerson;
+        // Move current to forward stack
+        if (currentPerson != null) {
+            forwardStack.push(currentPerson);
+        }
 
-        // Get previous person from history
-        Person previous = history.pollFirst();
-        currentPerson = previous;
+        // Pop from back stack to current
+        currentPerson = backStack.pop();
 
-        // Add the old current to the front if we want to support forward navigation
-        // Actually, we need a different approach - use a cursor/index
-        log.debug("Navigated to previous: {}", previous != null ? previous.getName() : "null");
-        return previous;
+        log.debug("Navigated to previous: {}, backStack: {}, forwardStack: {}",
+                currentPerson.getName(), backStack.size(), forwardStack.size());
+        return currentPerson;
     }
 
     /**
-     * Gets the next person in history.
-     * Note: This requires tracking a forward stack, which we don't currently support.
-     * For now, this returns null.
+     * Navigates to the next person in history.
+     * Moves current to back stack, pops from forward stack.
      *
-     * @return always null in current implementation
+     * @return the next person, or null if none
      */
     @Nullable
-    public Person getNext() {
-        // Forward navigation not supported in basic implementation
-        return null;
+    public Person navigateToNext() {
+        if (forwardStack.isEmpty()) {
+            return null;
+        }
+
+        // Move current to back stack
+        if (currentPerson != null) {
+            backStack.push(currentPerson);
+        }
+
+        // Pop from forward stack to current
+        currentPerson = forwardStack.pop();
+
+        log.debug("Navigated to next: {}, backStack: {}, forwardStack: {}",
+                currentPerson.getName(), backStack.size(), forwardStack.size());
+        return currentPerson;
     }
 
     /**
@@ -138,29 +164,29 @@ public class PersonBrowseHistory {
      * @return true if previous exists
      */
     public boolean hasPrevious() {
-        return !history.isEmpty();
+        return !backStack.isEmpty();
     }
 
     /**
      * Checks if there is a next person to navigate to.
      *
-     * @return always false in current implementation
+     * @return true if next exists
      */
     public boolean hasNext() {
-        return false;
+        return !forwardStack.isEmpty();
     }
 
     /**
-     * Gets the total count of persons in history (including current).
+     * Gets the total count of persons in history (back + current + forward).
      *
      * @return total count
      */
     public int getTotalCount() {
-        return history.size() + (currentPerson != null ? 1 : 0);
+        return backStack.size() + (currentPerson != null ? 1 : 0) + forwardStack.size();
     }
 
     /**
-     * Gets the current position in history (1-based).
+     * Gets the current position in history (1-based index in back stack order).
      * Returns 0 if no person is currently being viewed.
      *
      * @return current position, or 0 if no current person
@@ -169,39 +195,34 @@ public class PersonBrowseHistory {
         if (currentPerson == null) {
             return 0;
         }
-        return history.size() + 1;
+        return backStack.size() + 1;
     }
 
     /**
      * Clears all history.
      */
     public void clear() {
-        history.clear();
+        backStack.clear();
+        forwardStack.clear();
         currentPerson = null;
         log.debug("Browse history cleared");
     }
 
     /**
-     * Gets a person at the specified index in history (0-based, 0 is oldest).
+     * Gets the back stack size.
      *
-     * @param index the index
-     * @return the person at that index, or null if out of bounds
+     * @return back stack size
      */
-    @Nullable
-    public Person getPersonAt(int index) {
-        if (index < 0 || index >= history.size()) {
-            return null;
-        }
+    public int getBackStackSize() {
+        return backStack.size();
+    }
 
-        Iterator<Person> it = history.descendingIterator();
-        int i = 0;
-        while (it.hasNext()) {
-            Person p = it.next();
-            if (i == index) {
-                return p;
-            }
-            i++;
-        }
-        return null;
+    /**
+     * Gets the forward stack size.
+     *
+     * @return forward stack size
+     */
+    public int getForwardStackSize() {
+        return forwardStack.size();
     }
 }
