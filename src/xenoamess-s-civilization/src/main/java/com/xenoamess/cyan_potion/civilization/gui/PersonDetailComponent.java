@@ -69,6 +69,11 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private final Button nextButton;
 
     @Getter
+    private final Button marriageInfoButton;
+
+    private DraggableWindowComponent marriageInfoWindow;
+
+    @Getter
     @Setter
     private Consumer<Void> onClose;
 
@@ -169,7 +174,62 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
         nextButton.setActive(true);
 
+        // Marriage info button
+        this.marriageInfoButton = new Button(gameWindow, null, "婚姻详情");
+        this.marriageInfoButton.registerOnMouseButtonLeftDownCallback(event -> {
+            openMarriageInfoWindow();
+            return null;
+        });
+
         initProcessors();
+    }
+
+    /**
+     * Opens the marriage info window popup.
+     */
+    private void openMarriageInfoWindow() {
+        if (person == null) {
+            return;
+        }
+
+        // Close existing window if any
+        if (marriageInfoWindow != null && marriageInfoWindow.isAlive()) {
+            marriageInfoWindow.close();
+        }
+
+        // Create new marriage info window
+        MarriageInfoWindow infoWindow = new MarriageInfoWindow(getGameWindow(), person);
+        infoWindow.setLeftTopPos(
+            getLeftTopPosX() + 50,
+            getLeftTopPosY() + 50
+        );
+        infoWindow.setSize(450, 400);
+        infoWindow.setVisible(true);
+
+        // Setup close button
+        infoWindow.getCloseButton().registerOnMouseButtonLeftDownCallback(event -> {
+            if (marriageInfoWindow != null) {
+                marriageInfoWindow.close();
+                marriageInfoWindow = null;
+            }
+            return null;
+        });
+
+        // Wrap in draggable window
+        marriageInfoWindow = new DraggableWindowComponent(getGameWindow(), "婚姻详情", infoWindow);
+        marriageInfoWindow.setLeftTopPos(
+            getLeftTopPosX() + 50,
+            getLeftTopPosY() + 50
+        );
+        marriageInfoWindow.setSize(450, 400);
+        marriageInfoWindow.setVisible(true);
+
+        // Add to component tree if we have one
+        if (this.getGameWindowComponentTreeNode() != null) {
+            marriageInfoWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        }
+
+        log.debug("Opened marriage info window for: {}", person.getName());
     }
 
     protected void initProcessors() {
@@ -240,6 +300,14 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
         // Navigation buttons at bottom left
         drawNavigationButtons();
+
+        // Draw marriage info button
+        marriageInfoButton.draw();
+
+        // Draw marriage info window if visible
+        if (marriageInfoWindow != null && marriageInfoWindow.isVisible()) {
+            marriageInfoWindow.draw();
+        }
 
         return super.draw();
     }
@@ -674,6 +742,16 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
                 "浏览记录"
             );
         }
+
+        // Marriage info button - positioned at bottom right
+        float marriageButtonWidth = 100;
+        marriageInfoButton.setLeftTopPos(
+            getLeftTopPosX() + getWidth() - marriageButtonWidth - 20,
+            buttonY
+        );
+        marriageInfoButton.setSize(marriageButtonWidth, buttonHeight);
+        marriageInfoButton.setVisible(true);
+        marriageInfoButton.update();
     }
 
     /**
@@ -719,13 +797,33 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return null;
         }
 
-        // Process with parent first
-        event = super.process(event);
+        // Process marriage info window first if it exists and is visible
+        if (marriageInfoWindow != null && marriageInfoWindow.isVisible()) {
+            event = marriageInfoWindow.process(event);
+            if (event == null) {
+                return null;
+            }
+        }
+
+        // Process marriage info button
+        event = marriageInfoButton.process(event);
         if (event == null) {
             return null;
         }
 
-        return event;
+        // Process navigation buttons
+        event = prevButton.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        event = nextButton.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Process with parent
+        return super.process(event);
     }
 
     @Override
@@ -733,5 +831,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         super.addToGameWindowComponentTree(node);
         this.prevButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.nextButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.marriageInfoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        if (marriageInfoWindow != null) {
+            marriageInfoWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        }
     }
 }
