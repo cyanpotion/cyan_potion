@@ -30,6 +30,7 @@ import com.xenoamess.cyan_potion.civilization.character.ClanMembership;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.LineageType;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -272,6 +273,22 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             COLOR_TITLE,
             person.getName()
         );
+
+        // Power Level Rank display (right of name)
+        int rank = person.getPowerLevelRank();
+        if (rank >= 1 && rank <= 5) {
+            String rankText = "[" + PowerLevelRankService.getRankDisplayText(rank) + "]";
+            float[] rankColor = PowerLevelRankService.getRankColor(rank);
+            this.getGameWindow().drawTextCenter(
+                null,
+                x + width - 150,
+                y + 30,
+                20,
+                0,
+                new Vector4f(rankColor[0], rankColor[1], rankColor[2], 1.0f),
+                rankText
+            );
+        }
 
         // Status - show skull for dead persons, "存活" text for alive
         float statusX = x + width - 50;

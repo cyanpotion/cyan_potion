@@ -154,6 +154,10 @@ public class Person {
 
     @Getter
     @Setter
+    private int powerLevelRank;
+
+    @Getter
+    @Setter
     private LocalDate lastPowerLevelUpdateDate;
 
     // ==================== Simple State Queries ====================

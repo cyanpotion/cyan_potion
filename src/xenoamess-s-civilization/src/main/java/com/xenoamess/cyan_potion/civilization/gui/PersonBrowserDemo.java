@@ -28,6 +28,7 @@ import com.xenoamess.cyan_potion.civilization.GameDateManager;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
+import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -94,6 +95,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
     private final PersonLifecycleService lifecycleService;
 
+    private final PowerLevelRankService powerLevelRankService;
+
     private final PersonBrowseHistory browseHistory;
 
     private final Texture backgroundTexture;
@@ -113,6 +116,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
 
         // Initialize lifecycle service
         this.lifecycleService = new PersonLifecycleService();
+
+        // Initialize power level rank service
+        this.powerLevelRankService = new PowerLevelRankService();
 
         // Initialize browse history
         this.browseHistory = new PersonBrowseHistory();
@@ -316,6 +322,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent {
         }
         log.info("Updated power levels for {} persons on {}", updatedCount,
             GameDateManager.formatDate(currentDate));
+
+        // Calculate power level ranks based on updated power levels
+        int rankedCount = powerLevelRankService.calculateRanks(persons, currentDate);
+        log.info("Calculated power level ranks for {} persons", rankedCount);
     }
 
     @Override
