@@ -16,6 +16,7 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
@@ -197,6 +198,50 @@ public class PersonAttributeCalculator {
      * @param max the maximum possible value
      * @return normalized value (0-100)
      */
+    /**
+     * Calculates the fertility (生育能力) of a person.
+     *
+     * Male: Linear with constitution and health
+     * Formula: (constitution * 0.5 + health * 0.5) * 10, max 100
+     *
+     * Female: Linear with constitution and health, plus age factor
+     * - Base: (constitution * 0.5 + health * 0.5) * 10
+     * - Age 0-35: no penalty
+     * - Age 35-55: linear decrease from 100% to 0%
+     * - Age 55+: 0 fertility
+     *
+     * @param person the person
+     * @return fertility value (0-100)
+     */
+    public double getFertility(Person person) {
+        // Base fertility from constitution and health (0-100 scale)
+        double baseFertility = (person.getConstitution() * 0.5 + person.getHealth() * 0.5) * 10;
+        baseFertility = Math.min(100, Math.max(0, baseFertility));
+
+        if (person.getGender() == Gender.MALE) {
+            // Male: simple linear based on constitution and health
+            return Math.round(baseFertility * 10.0) / 10.0;
+        } else {
+            // Female: also affected by age
+            int age = getAge(person);
+
+            if (age >= 55) {
+                return 0.0;
+            } else if (age <= 35) {
+                // No age penalty
+                return Math.round(baseFertility * 10.0) / 10.0;
+            } else {
+                // Age 36-54: linear decrease from 100% to 0%
+                // At age 35: multiplier = 1.0
+                // At age 55: multiplier = 0.0
+                double ageMultiplier = (55.0 - age) / 20.0;
+                ageMultiplier = Math.max(0, Math.min(1, ageMultiplier));
+                double fertility = baseFertility * ageMultiplier;
+                return Math.round(fertility * 10.0) / 10.0;
+            }
+        }
+    }
+
     private double normalizeToHundred(double value, double min, double max) {
         if (max <= min) {
             return 50.0;

@@ -422,6 +422,14 @@ public class Person {
     }
 
     /**
+     * Gets the fertility (生育能力) attribute.
+     * Delegates to PersonAttributeCalculator.
+     */
+    public double getFertility() {
+        return getAttributeCalculator().getFertility(this);
+    }
+
+    /**
      * Gets the power level (能级分).
      * Delegates to PersonAttributeCalculator.
      */
