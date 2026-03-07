@@ -99,6 +99,11 @@ public class Person {
     @Setter
     private LineageType lineageType;
 
+    // ==================== Marriages ====================
+
+    @Getter
+    private final List<Marriage> marriages = new ArrayList<>();
+
     // ==================== Parent References ====================
 
     @Getter
@@ -184,6 +189,151 @@ public class Person {
     public boolean belongsToClan(Clan clan) {
         return clanMemberships.stream()
             .anyMatch(m -> m.getClan().equals(clan));
+    }
+
+    // ==================== Marriage Queries ====================
+
+    /**
+     * Gets all marriages where this person is the dominant person.
+     *
+     * @return list of marriages as dominant
+     */
+    public List<Marriage> getMarriagesAsDominant() {
+        return marriages.stream()
+            .filter(m -> m.getDominantPerson().equals(this))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all marriages where this person is a subordinate person.
+     *
+     * @return list of marriages as subordinate
+     */
+    public List<Marriage> getMarriagesAsSubordinate() {
+        return marriages.stream()
+            .filter(m -> m.containsSubordinate(this))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all active marriages.
+     *
+     * @return list of active marriages
+     */
+    public List<Marriage> getActiveMarriages() {
+        return marriages.stream()
+            .filter(Marriage::isActive)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all ended marriages.
+     *
+     * @return list of ended marriages
+     */
+    public List<Marriage> getEndedMarriages() {
+        return marriages.stream()
+            .filter(m -> !m.isActive())
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the role of this person in a specific marriage.
+     *
+     * @param marriage the marriage to check
+     * @return the role (DOMINANT, SUBORDINATE, or NONE)
+     */
+    public Marriage.MarriageRole getRoleInMarriage(Marriage marriage) {
+        if (marriage == null) {
+            return Marriage.MarriageRole.NONE;
+        }
+        return marriage.getRoleOf(this);
+    }
+
+    /**
+     * Checks if this person is married (has any active marriage).
+     *
+     * @return true if married
+     */
+    public boolean isMarried() {
+        return marriages.stream().anyMatch(Marriage::isActive);
+    }
+
+    /**
+     * Checks if this person is married in a specific marriage.
+     *
+     * @param marriage the marriage to check
+     * @return true if involved in the marriage and it's active
+     */
+    public boolean isMarriedIn(Marriage marriage) {
+        return marriage != null && marriage.involvesPerson(this) && marriage.isActive();
+    }
+
+    /**
+     * Adds a marriage to this person.
+     *
+     * @param marriage the marriage to add
+     * @return true if added successfully
+     */
+    public boolean addMarriage(Marriage marriage) {
+        if (marriage == null) {
+            throw new IllegalArgumentException("Marriage cannot be null");
+        }
+        if (!marriage.involvesPerson(this)) {
+            throw new IllegalArgumentException("This person is not involved in the marriage");
+        }
+        if (marriages.contains(marriage)) {
+            return false;
+        }
+        return marriages.add(marriage);
+    }
+
+    /**
+     * Removes a marriage from this person.
+     *
+     * @param marriage the marriage to remove
+     * @return true if removed successfully
+     */
+    public boolean removeMarriage(Marriage marriage) {
+        return marriages.remove(marriage);
+    }
+
+    /**
+     * Gets all dominant persons from all marriages (as subordinate).
+     *
+     * @return list of dominant persons
+     */
+    public List<Person> getDominantSpouses() {
+        return marriages.stream()
+            .filter(m -> m.containsSubordinate(this))
+            .map(Marriage::getDominantPerson)
+            .distinct()
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all subordinate persons from all marriages (as dominant).
+     *
+     * @return list of subordinate persons
+     */
+    public List<Person> getSubordinateSpouses() {
+        return marriages.stream()
+            .filter(m -> m.getDominantPerson().equals(this))
+            .flatMap(m -> m.getSubordinatePersons().stream())
+            .distinct()
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all persons married to this person (both dominant and subordinate).
+     *
+     * @return list of all spouses
+     */
+    public List<Person> getAllSpouses() {
+        List<Person> spouses = new ArrayList<>();
+        spouses.addAll(getDominantSpouses());
+        spouses.addAll(getSubordinateSpouses());
+        return spouses.stream().distinct().collect(Collectors.toList());
     }
 
     // ==================== Derived Attribute Delegates ====================
