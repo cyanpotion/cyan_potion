@@ -64,7 +64,8 @@ public class PersonConstructionService {
 
         // Basic info
         person.setId(builder.getId());
-        person.setName(builder.getName());
+        person.setSurname(builder.getSurname());
+        person.setGivenName(builder.getGivenName());
         person.setGender(builder.getGender());
         person.setFather(builder.getFather());
         person.setMother(builder.getMother());

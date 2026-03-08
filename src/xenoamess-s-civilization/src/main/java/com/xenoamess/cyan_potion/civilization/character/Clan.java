@@ -38,6 +38,12 @@ public class Clan {
     @Getter
     private final String description;
 
+    @Getter
+    private final String surname;
+
+    @Getter
+    private final SurnamePosition surnamePosition;
+
     /**
      * Creates a new clan.
      *
@@ -45,7 +51,7 @@ public class Clan {
      * @param name clan name (typically surname)
      */
     public Clan(String id, String name) {
-        this(id, name, null);
+        this(id, name, null, name, SurnamePosition.PREFIX);
     }
 
     /**
@@ -56,15 +62,33 @@ public class Clan {
      * @param description optional description
      */
     public Clan(String id, String name, String description) {
+        this(id, name, description, name, SurnamePosition.PREFIX);
+    }
+
+    /**
+     * Creates a new clan with full parameters.
+     *
+     * @param id unique clan identifier
+     * @param name clan name
+     * @param description optional description
+     * @param surname the family surname
+     * @param surnamePosition whether surname appears before or after given name
+     */
+    public Clan(String id, String name, String description, String surname, SurnamePosition surnamePosition) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("Clan ID cannot be null or empty");
         }
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Clan name cannot be null or empty");
         }
+        if (surname == null || surname.isEmpty()) {
+            throw new IllegalArgumentException("Surname cannot be null or empty");
+        }
         this.id = id;
         this.name = name;
         this.description = description;
+        this.surname = surname;
+        this.surnamePosition = surnamePosition != null ? surnamePosition : SurnamePosition.PREFIX;
     }
 
     @Override
@@ -82,6 +106,14 @@ public class Clan {
 
     @Override
     public String toString() {
-        return "Clan{" + "id='" + id + '\'' + ", name='" + name + '\'' + '}';
+        return "Clan{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", surname='" + surname + '\'' + ", surnamePosition=" + surnamePosition + '}';
+    }
+
+    /**
+     * Enum representing the position of surname in a full name.
+     */
+    public enum SurnamePosition {
+        PREFIX,   // Surname appears before given name (e.g., Chinese: 张三)
+        SUFFIX    // Surname appears after given name (e.g., Western: John Smith)
     }
 }

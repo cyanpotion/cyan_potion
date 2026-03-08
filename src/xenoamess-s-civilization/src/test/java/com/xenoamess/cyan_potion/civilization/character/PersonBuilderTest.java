@@ -43,7 +43,7 @@ class PersonBuilderTest {
     void testBuilderWithRequiredFields() {
         PersonBuilder builder = new PersonBuilder("p1", "Test", Gender.MALE);
         assertEquals("p1", builder.getId());
-        assertEquals("Test", builder.getName());
+        assertEquals("Test", builder.getGivenName());
         assertEquals(Gender.MALE, builder.getGender());
     }
 

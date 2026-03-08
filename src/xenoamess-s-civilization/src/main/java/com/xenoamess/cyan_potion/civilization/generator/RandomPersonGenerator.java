@@ -131,7 +131,10 @@ public class RandomPersonGenerator {
     public Person generate(LocalDate referenceDate, Person father, Person mother) {
         String id = generateId();
         Gender gender = randomGender();
-        String name = generateName(gender);
+
+        // Generate surname and given name separately
+        String surname = generateSurname();
+        String givenName = generateGivenName(gender);
 
         // Random age: 15-60 years old
         int age = 15 + RANDOM.nextInt(46);
@@ -141,7 +144,7 @@ public class RandomPersonGenerator {
         // from birth to current date based on the person's full age
         LocalDate lastDecisionDate = birthDate;
 
-        PersonBuilder builder = constructionService.builder(id, name, gender)
+        PersonBuilder builder = new PersonBuilder(id, surname, givenName, gender)
             .setFather(father)
             .setMother(mother)
             .setBirthDate(birthDate)
@@ -243,6 +246,59 @@ public class RandomPersonGenerator {
      */
     private Gender randomGender() {
         return RANDOM.nextBoolean() ? Gender.MALE : Gender.FEMALE;
+    }
+
+    /**
+     * Generates a random surname (family name).
+     *
+     * @return generated surname
+     */
+    private String generateSurname() {
+        if (useWesternNames) {
+            return WESTERN_FAMILY_NAMES[RANDOM.nextInt(WESTERN_FAMILY_NAMES.length)];
+        } else {
+            return FAMILY_NAMES[RANDOM.nextInt(FAMILY_NAMES.length)];
+        }
+    }
+
+    /**
+     * Generates a random given name based on gender.
+     *
+     * @param gender the gender
+     * @return generated given name
+     */
+    private String generateGivenName(Gender gender) {
+        if (useWesternNames) {
+            String givenName = gender == Gender.MALE
+                ? WESTERN_MALE_NAMES[RANDOM.nextInt(WESTERN_MALE_NAMES.length)]
+                : WESTERN_FEMALE_NAMES[RANDOM.nextInt(WESTERN_FEMALE_NAMES.length)];
+
+            // 30% chance of middle initial for western names
+            if (RANDOM.nextDouble() < 0.3) {
+                char middleInitial = (char) ('A' + RANDOM.nextInt(26));
+                givenName = givenName + " " + middleInitial + ".";
+            }
+            return givenName;
+        } else {
+            // Chinese style given name
+            String givenName;
+
+            // 50% chance of single character name, 50% double
+            if (RANDOM.nextBoolean()) {
+                givenName = gender == Gender.MALE
+                    ? MALE_GIVEN_NAMES[RANDOM.nextInt(MALE_GIVEN_NAMES.length)]
+                    : FEMALE_GIVEN_NAMES[RANDOM.nextInt(FEMALE_GIVEN_NAMES.length)];
+            } else {
+                String name1 = gender == Gender.MALE
+                    ? MALE_GIVEN_NAMES[RANDOM.nextInt(MALE_GIVEN_NAMES.length)]
+                    : FEMALE_GIVEN_NAMES[RANDOM.nextInt(FEMALE_GIVEN_NAMES.length)];
+                String name2 = gender == Gender.MALE
+                    ? MALE_GIVEN_NAMES[RANDOM.nextInt(MALE_GIVEN_NAMES.length)]
+                    : FEMALE_GIVEN_NAMES[RANDOM.nextInt(FEMALE_GIVEN_NAMES.length)];
+                givenName = name1 + name2;
+            }
+            return givenName;
+        }
     }
 
     /**

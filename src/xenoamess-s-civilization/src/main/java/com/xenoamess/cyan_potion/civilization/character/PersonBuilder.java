@@ -35,7 +35,8 @@ public class PersonBuilder {
 
     // Required fields
     private String id;
-    private String name;
+    private String surname;
+    private String givenName;
     private Gender gender;
 
     // Optional fields with default values
@@ -59,12 +60,12 @@ public class PersonBuilder {
     /**
      * Creates a new PersonBuilder with auto-generated ID.
      *
-     * @param name person name
+     * @param fullName person full name (for backward compatibility, will be stored as givenName)
      * @param gender person gender
      */
-    public PersonBuilder(String name, Gender gender) {
+    public PersonBuilder(String fullName, Gender gender) {
         this.id = com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator.getInstance().generateId();
-        this.name = name;
+        this.givenName = fullName;
         this.gender = gender;
     }
 
@@ -72,13 +73,40 @@ public class PersonBuilder {
      * Creates a new PersonBuilder with specified ID.
      *
      * @param id person id
-     * @param name person name
+     * @param fullName person full name (for backward compatibility, will be stored as givenName)
      * @param gender person gender
      */
-    public PersonBuilder(String id, String name, Gender gender) {
+    public PersonBuilder(String id, String fullName, Gender gender) {
         this.id = id;
-        this.name = name;
+        this.givenName = fullName;
         this.gender = gender;
+    }
+
+    /**
+     * Creates a new PersonBuilder with surname and givenName.
+     *
+     * @param id person id
+     * @param surname family surname
+     * @param givenName given name
+     * @param gender person gender
+     */
+    public PersonBuilder(String id, String surname, String givenName, Gender gender) {
+        this.id = id;
+        this.surname = surname;
+        this.givenName = givenName;
+        this.gender = gender;
+    }
+
+    /**
+     * Sets the full name by parsing it (for backward compatibility).
+     * This is a convenience method that sets givenName.
+     *
+     * @param fullName the full name
+     * @return this builder
+     */
+    public PersonBuilder setName(String fullName) {
+        this.givenName = fullName;
+        return this;
     }
 
 }

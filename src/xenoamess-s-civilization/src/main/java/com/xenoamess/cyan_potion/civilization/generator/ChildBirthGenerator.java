@@ -84,10 +84,14 @@ public class ChildBirthGenerator {
         // Determine the dominant person (主体/强势方)
         Person dominantPerson = marriage.getDominantPerson();
 
+        // Get the dominant clan and surname
+        Clan dominantClan = dominantPerson.getPrimaryClan();
+        String surname = dominantClan != null ? dominantClan.getSurname() : extractSurname(dominantPerson.getName());
+
         // Generate child attributes
         String id = PersonIdGenerator.getInstance().generateId();
         Gender gender = randomGender();
-        String name = generateName(dominantPerson, gender);
+        String givenName = generateGivenName(gender);
 
         // Inherit attributes from parents with random variation
         double constitution = inheritAttribute(father.getConstitution(), mother.getConstitution());
@@ -101,8 +105,8 @@ public class ChildBirthGenerator {
         // Newborns start with full health
         double initialHealth = constitution * 10;
 
-        // Create builder with parents
-        PersonBuilder builder = constructionService.builder(id, name, gender)
+        // Create builder with surname and givenName
+        PersonBuilder builder = new PersonBuilder(id, surname, givenName, gender)
             .setFather(father)
             .setMother(mother)
             .setBirthDate(currentDate)
@@ -120,9 +124,8 @@ public class ChildBirthGenerator {
         // Construct the person first
         Person child = constructionService.construct(builder);
 
-        // Add clan membership from dominant person
-        Clan dominantClan = dominantPerson.getPrimaryClan();
-        if (dominantClan != null) {
+        // Add clan membership from dominant person if not already inherited
+        if (dominantClan != null && !child.belongsToClan(dominantClan)) {
             child.getClanMemberships().add(ClanMembership.primary(dominantClan));
         }
 

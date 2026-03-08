@@ -177,8 +177,11 @@ class RandomPersonGeneratorTest {
 
         assertNotNull(person.getName());
         assertFalse(person.getName().isEmpty());
-        // Western names have spaces
-        assertTrue(person.getName().contains(" "));
+        // Western names: surname and givenName should both be non-empty
+        assertNotNull(person.getSurname());
+        assertNotNull(person.getGivenName());
+        assertFalse(person.getSurname().isEmpty());
+        assertFalse(person.getGivenName().isEmpty());
     }
 
     @Test

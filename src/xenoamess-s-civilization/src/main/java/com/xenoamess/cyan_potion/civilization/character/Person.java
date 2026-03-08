@@ -48,13 +48,28 @@ public class Person {
 
     @Getter
     @Setter
-    private String name;
+    private String surname;
+
+    @Getter
+    @Setter
+    private String givenName;
 
     @Getter
     @Setter
     private Gender gender;
 
-    // ==================== Basic Attributes ====================
+    /**
+     * Sets the full name by storing it as givenName.
+     * This is a convenience method for backward compatibility.
+     * For full control, use setSurname() and setGivenName() separately.
+     *
+     * @param fullName the full name
+     */
+    public void setName(String fullName) {
+        // For backward compatibility, store as givenName
+        // Caller should use setSurname() and setGivenName() for full control
+        this.givenName = fullName;
+    }
 
     @Getter
     @Setter
@@ -168,6 +183,31 @@ public class Person {
     private LocalDate lastPowerLevelUpdateDate;
 
     // ==================== Simple State Queries ====================
+
+    /**
+     * Gets the full name based on primary clan's surname position.
+     * If surname is before given name:  surname + givenName
+     * If surname is after given name:   givenName + surname
+     *
+     * @return the full name
+     */
+    public String getName() {
+        if (surname == null || surname.isEmpty()) {
+            return givenName != null ? givenName : "";
+        }
+        if (givenName == null || givenName.isEmpty()) {
+            return surname;
+        }
+
+        Clan primaryClan = getPrimaryClan();
+        if (primaryClan != null && primaryClan.getSurnamePosition() == Clan.SurnamePosition.SUFFIX) {
+            // Western style: givenName + " " + surname
+            return givenName + " " + surname;
+        } else {
+            // Chinese style: surname + givenName
+            return surname + givenName;
+        }
+    }
 
     /**
      * Simple state check - no business logic.
