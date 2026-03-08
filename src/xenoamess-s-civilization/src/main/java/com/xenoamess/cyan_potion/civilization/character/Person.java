@@ -226,6 +226,9 @@ public class Person {
      * Simple state check - no business logic.
      */
     public boolean isAlive() {
+        if (this.getDeathDate() != null) {
+            return false;
+        }
         return health > 0;
     }
 
