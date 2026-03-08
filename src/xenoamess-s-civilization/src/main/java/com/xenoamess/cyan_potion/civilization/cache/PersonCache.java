@@ -55,7 +55,7 @@ public class PersonCache {
     }
 
     public static Stream<Person> getAllAliveAndDeadPersonStream() {
-        return PersonCache.ALL_PERSON_CACHE.values().stream();
+        return PersonCache.ALL_PERSON_CACHE.values().parallelStream();
     }
 
     public static Collection<Person> getAllAlivePersonWithSomeDeadPersonCollection() {
@@ -63,11 +63,11 @@ public class PersonCache {
     }
 
     public static Stream<Person> getAllAlivePersonWithSomeDeadPersonStream() {
-        return PersonCache.LIKELY_ALIVE_PERSON_CACHE.values().stream();
+        return PersonCache.LIKELY_ALIVE_PERSON_CACHE.values().parallelStream();
     }
 
     public static Stream<Person> getAllAlivePersonStream() {
-        return PersonCache.LIKELY_ALIVE_PERSON_CACHE.values().stream().filter(
+        return PersonCache.LIKELY_ALIVE_PERSON_CACHE.values().parallelStream().filter(
                 new Predicate<Person>() {
                     @Override
                     public boolean test(Person person) {
