@@ -792,7 +792,7 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      * @return a boolean.
      */
     public boolean isVisible() {
-        return visible.get();
+        return this.isAlive() && visible.get();
     }
 
     /**
