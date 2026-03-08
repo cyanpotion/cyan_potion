@@ -50,14 +50,14 @@ public interface DecisionContext {
      *
      * @return list of eligible females
      */
-    List<Person> getEligibleFemales();
+    Stream<Person> getEligibleFemales();
 
     /**
      * Gets all eligible male candidates for marriage.
      *
      * @return list of eligible males
      */
-    List<Person> getEligibleMales();
+    Stream<Person> getEligibleMales();
 
     /**
      * Checks if a person is controlled by a player.

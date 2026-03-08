@@ -84,7 +84,7 @@ public class PatriarchalMarriageDecision implements Decision {
     @Override
     public DecisionResult execute(Person person, DecisionContext context) {
         // Find all eligible females
-        List<Person> eligibleFemales = context.getEligibleFemales().stream()
+        List<Person> eligibleFemales = context.getEligibleFemales()
             .filter(female -> canAcceptMarriage(female))
             .sorted(Comparator.comparingDouble(Person::getPowerLevel).reversed()) // Highest power level first
             .collect(Collectors.toList());

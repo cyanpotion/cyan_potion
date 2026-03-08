@@ -374,22 +374,20 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
     }
 
     @Override
-    public List<Person> getEligibleFemales() {
+    public Stream<Person> getEligibleFemales() {
         return PersonCache.getAllAlivePersonStream()
             .filter(p -> p.getGender() == Gender.FEMALE)
             .filter(p -> !p.isMarried())
             .filter(p -> p.getAge() >= 16)
-            .filter(p -> p.getFertility() > 0)
-            .collect(Collectors.toList());
+            .filter(p -> p.getFertility() > 0);
     }
 
     @Override
-    public List<Person> getEligibleMales() {
+    public Stream<Person> getEligibleMales() {
         return PersonCache.getAllAlivePersonStream()
             .filter(p -> p.getGender() == Gender.MALE)
             .filter(p -> !p.isMarried())
-            .filter(p -> p.getAge() >= 16)
-            .collect(Collectors.toList());
+            .filter(p -> p.getAge() >= 16);
     }
 
     @Override
