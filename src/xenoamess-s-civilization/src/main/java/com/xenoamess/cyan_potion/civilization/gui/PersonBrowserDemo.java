@@ -499,6 +499,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Record date before update for monthly tracking
         LocalDate dateBefore = dateManager.getCurrentDate();
 
+        long startTimestamp = System.currentTimeMillis();
         // Update game date (1 day per second)
         int daysAdvanced = dateManager.update();
         if (daysAdvanced > 0) {
@@ -535,6 +536,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
                 decisionExecutor.executeDecisionsForAll(getCurrentDate());
                 lastMonthlyUpdate = ymAfter;
             }
+        }
+        long endTimestamp = System.currentTimeMillis();
+        if (endTimestamp - startTimestamp > 100 && dateManager.getLegalSpeedLevel() > 4) {
+            // 如果对这些时间的计算超过100毫秒
+            dateManager.decreaseSpeed();
+            updateSpeedButtonText();
         }
 
         // Layout buttons at top

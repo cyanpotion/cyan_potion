@@ -64,10 +64,6 @@ public class GameDateManager {
     @Setter
     private boolean paused = false;
 
-    @Getter
-    @Setter
-    private boolean unlimitedMode = false;
-
     private long lastUpdateTime;
     private long accumulatedDays;
     private double accumulatedPartialDays;
