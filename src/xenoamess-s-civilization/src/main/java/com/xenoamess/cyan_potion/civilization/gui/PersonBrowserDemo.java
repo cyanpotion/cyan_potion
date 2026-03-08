@@ -149,20 +149,6 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         );
         this.backgroundPicture.setBindable(backgroundTexture);
 
-        // Create person list component
-        this.listComponent = new PersonListComponent(gameWindow);
-        this.listComponent.setOnPersonSelected(this::onPersonSelected);
-
-        // Create detail component
-        this.detailComponent = new PersonDetailComponent(gameWindow);
-        this.detailComponent.setOnClose(v -> hideDetailWindow());
-
-        // Set up navigation callbacks
-        this.detailComponent.setCanNavigatePrevious(() -> browseHistory.hasPrevious());
-        this.detailComponent.setCanNavigateNext(() -> browseHistory.hasNext());
-        this.detailComponent.setOnNavigatePrevious(v -> navigateToPreviousPerson());
-        this.detailComponent.setOnNavigateNext(v -> navigateToNextPerson());
-
         this.listWindow = newListWindow();
 
         this.detailWindow = newDetailWindow();
@@ -257,7 +243,16 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     @NotNull
     private DraggableWindowComponent newDetailWindow() {
+        // Create detail component
         PersonDetailComponent detailComponent = new PersonDetailComponent(this.getGameWindow());
+        detailComponent.setOnClose(v -> hideDetailWindow());
+
+        // Set up navigation callbacks
+        detailComponent.setCanNavigatePrevious(() -> browseHistory.hasPrevious());
+        detailComponent.setCanNavigateNext(() -> browseHistory.hasNext());
+        detailComponent.setOnNavigatePrevious(v -> navigateToPreviousPerson());
+        detailComponent.setOnNavigateNext(v -> navigateToNextPerson());
+
         DraggableWindowComponent detailWindow = new DraggableWindowComponent(this.getGameWindow(), "人物详情", detailComponent);
         detailWindow.setLeftTopPos(580, 80);
         detailWindow.setSize(550, 600);

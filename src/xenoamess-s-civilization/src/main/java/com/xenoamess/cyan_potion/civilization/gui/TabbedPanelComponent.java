@@ -26,7 +26,9 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -43,10 +45,10 @@ import java.util.function.Supplier;
 public class TabbedPanelComponent extends AbstractControllableGameWindowComponent {
 
     @Getter
-    private final List<Button> tabButtons = new ArrayList<>();
+    private final ConcurrentLinkedDeque<Button> tabButtons = new ConcurrentLinkedDeque<>();
 
     @Getter
-    private final List<AbstractControllableGameWindowComponent> tabContents = new ArrayList<>();
+    private final ConcurrentLinkedDeque<AbstractControllableGameWindowComponent> tabContents = new ConcurrentLinkedDeque<>();
 
     @Getter
     @Setter
@@ -102,6 +104,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         initProcessors();
     }
 
+    @Override
     protected void initProcessors() {
         super.initProcessors();
     }
@@ -175,7 +178,18 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return null;
         }
-        return tabButtons.get(index).getButtonText();
+        Iterator<Button> iterator = tabButtons.iterator();
+        Button resultButton = null;
+        for (int i = 0; i <= index; i++) {
+            if (!iterator.hasNext()) {
+                return null;
+            }
+            resultButton = iterator.next();
+        }
+        if (resultButton == null) {
+            return null;
+        }
+        return resultButton.getButtonText();
     }
 
     /**
@@ -188,7 +202,18 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return;
         }
-        tabButtons.get(index).setButtonText(title);
+        Iterator<Button> iterator = tabButtons.iterator();
+        Button resultButton = null;
+        for (int i = 0; i <= index; i++) {
+            if (!iterator.hasNext()) {
+                return;
+            }
+            resultButton = iterator.next();
+        }
+        if (resultButton == null) {
+            return;
+        }
+        resultButton.setButtonText(title);
     }
 
     /**
@@ -201,18 +226,29 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabContents.size()) {
             return null;
         }
-        return tabContents.get(index);
+        Iterator<AbstractControllableGameWindowComponent> iterator = tabContents.iterator();
+        AbstractControllableGameWindowComponent result = null;
+        for (int i = 0; i <= index; i++) {
+            if (!iterator.hasNext()) {
+                return null;
+            }
+            result = iterator.next();
+        }
+        if (result == null) {
+            return null;
+        }
+        return result;
     }
 
     @Override
     public boolean update() {
-        for (int i = 0; i < tabContents.size(); i++) {
+        Iterator<AbstractControllableGameWindowComponent> iterator = tabContents.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            AbstractControllableGameWindowComponent content = iterator.next();
             if (currentTab == i) {
-                AbstractControllableGameWindowComponent content = tabContents.get(i);
                 content.setActive(true);
                 content.setVisible(true);
             } else {
-                AbstractControllableGameWindowComponent content = tabContents.get(i);
                 content.setActive(false);
                 content.setVisible(false);
             }
@@ -234,14 +270,15 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
     private void drawTabButtons() {
         float tabY = getLeftTopPosY() + tabBarPaddingTop;
 
-        for (int i = 0; i < tabButtons.size(); i++) {
-            Button button = tabButtons.get(i);
+        int i = 0;
+        for (Button button: tabButtons) {
             float tabX = getLeftTopPosX() + tabBarPaddingLeft + i * (tabButtonWidth + tabButtonGap);
 
             button.setLeftTopPos(tabX, tabY);
             button.setSize(tabButtonWidth, tabButtonHeight);
             button.update();
             button.ifVisibleThenDraw();
+            i++;
         }
     }
 
@@ -250,7 +287,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
             return;
         }
 
-        AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
+        AbstractControllableGameWindowComponent content = getTabContent(currentTab);
         if (content == null) {
             return;
         }
@@ -310,7 +347,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
             }
         }
         tabContents.clear();
-        for (Button tabButton: tabButtons) {
+        for (Button tabButton : tabButtons) {
             tabButton.close();
         }
         tabButtons.clear();
