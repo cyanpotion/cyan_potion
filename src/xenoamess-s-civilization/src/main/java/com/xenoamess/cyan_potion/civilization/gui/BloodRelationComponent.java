@@ -156,8 +156,14 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
         }
     }
 
+    private static final Vector4f COLOR_DEAD = new Vector4f(0.5f, 0.5f, 0.5f, 1.0f);
+
     private void createPersonButton(Person targetPerson) {
         Button button = new Button(getGameWindow(), null, getPersonDisplayName(targetPerson));
+        // 死者名字置灰
+        if (!targetPerson.isAlive()) {
+            button.setTextColor(COLOR_DEAD);
+        }
         button.registerOnMouseButtonLeftDownCallback(event -> {
             if (onPersonClick != null) {
                 onPersonClick.accept(targetPerson);
@@ -169,6 +175,10 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
     private String getPersonDisplayName(Person p) {
         String name = p.getName();
+        // 死者标记骷髅头
+        if (!p.isAlive()) {
+            name = "\u2620" + name;  // ☠ 骷髅头
+        }
         Clan clan = p.getPrimaryClan();
         if (clan != null) {
             name += "[" + clan.getName() + "]";
