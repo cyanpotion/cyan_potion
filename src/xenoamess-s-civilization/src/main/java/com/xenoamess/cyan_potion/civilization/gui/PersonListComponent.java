@@ -192,6 +192,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             newFilter = newFilter.and(p -> p.isAlive() == settings.getAliveFilter());
         }
 
+        // Marriage filter
+        if (settings.getMarriageFilter() != null) {
+            newFilter = newFilter.and(p -> p.isMarried() == settings.getMarriageFilter());
+        }
+
         // Apply the filter
         setFilter(newFilter);
         performSearch();
