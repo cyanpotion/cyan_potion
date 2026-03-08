@@ -31,6 +31,7 @@ import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.decision.*;
 import com.xenoamess.cyan_potion.civilization.decision.decision.PatriarchalMarriageDecision;
+import com.xenoamess.cyan_potion.civilization.decision.decision.PregnancyDecision;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
@@ -225,6 +226,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
      * Registers all available decisions.
      */
     private void registerDecisions() {
+        decisionExecutor.registerDecision(new PregnancyDecision());
         decisionExecutor.registerDecision(new PatriarchalMarriageDecision());
         // Add more decisions here as they are implemented
     }
