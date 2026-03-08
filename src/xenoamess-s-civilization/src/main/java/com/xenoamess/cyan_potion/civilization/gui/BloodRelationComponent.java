@@ -405,8 +405,9 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             return buttonIndex;
         }
 
-        // Draw siblings in a grid (2 columns)
-        float colWidth = width / 2;
+        // Draw siblings in a grid (8 columns)
+        int columns = 8;
+        float colWidth = width / columns;
         int col = 0;
 
         for (Person sibling : siblings) {
@@ -415,29 +416,29 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             // Find the button for this sibling
             PersonButton pb = findButtonForPerson(sibling);
             if (pb != null) {
-                float buttonWidth = 120;
-                float buttonHeight = 24;
+                float buttonWidth = colWidth - 20;
+                float buttonHeight = 20;
                 pb.button.setLeftTopPos(itemX + colWidth / 2 - buttonWidth / 2, y - 10);
                 pb.button.setSize(buttonWidth, buttonHeight);
                 pb.button.ifVisibleThenDraw();
 
-                // Gender indicator
+                // Gender indicator (smaller, positioned outside button)
                 Vector4f genderColor = sibling.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    itemX + colWidth / 2 + 65,
+                    itemX + colWidth / 2 + buttonWidth / 2 + 8,
                     y,
-                    12,
+                    10,
                     genderColor,
                     sibling.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
             }
 
             col++;
-            if (col >= 2) {
+            if (col >= columns) {
                 col = 0;
-                y += 30;
+                y += 26;
             }
         }
 
@@ -481,8 +482,9 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
         );
         y += 25;
 
-        // Draw children in a grid (2 columns)
-        float colWidth = width / 2;
+        // Draw children in a grid (8 columns)
+        int columns = 8;
+        float colWidth = width / columns;
         int col = 0;
 
         for (Person child : children) {
@@ -491,29 +493,29 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             // Find the button for this child
             PersonButton pb = findButtonForPerson(child);
             if (pb != null) {
-                float buttonWidth = 120;
-                float buttonHeight = 24;
+                float buttonWidth = colWidth - 20;
+                float buttonHeight = 20;
                 pb.button.setLeftTopPos(itemX + colWidth / 2 - buttonWidth / 2, y - 10);
                 pb.button.setSize(buttonWidth, buttonHeight);
                 pb.button.ifVisibleThenDraw();
 
-                // Gender indicator
+                // Gender indicator (smaller, positioned outside button)
                 Vector4f genderColor = child.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    itemX + colWidth / 2 + 65,
+                    itemX + colWidth / 2 + buttonWidth / 2 + 8,
                     y,
-                    12,
+                    10,
                     genderColor,
                     child.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
             }
 
             col++;
-            if (col >= 2) {
+            if (col >= columns) {
                 col = 0;
-                y += 30;
+                y += 26;
             }
         }
     }
