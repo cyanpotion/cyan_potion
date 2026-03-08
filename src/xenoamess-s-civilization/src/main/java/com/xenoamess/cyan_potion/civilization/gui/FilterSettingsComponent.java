@@ -66,12 +66,19 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
     @Setter
     private Double minHealthFilter = null;
 
+    @Getter
+    @Setter
+    private Boolean marriageFilter = null; // null = all, true = married, false = unmarried
+
     // UI Components
     @Getter
     private final Button genderDropdownButton;
 
     @Getter
     private final Button aliveDropdownButton;
+
+    @Getter
+    private final Button marriageDropdownButton;
 
     @Getter
     private final Button applyButton;
@@ -92,9 +99,11 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
     // Dropdown options
     private static final String[] GENDER_OPTIONS = {"全部", "男", "女"};
     private static final String[] ALIVE_OPTIONS = {"全部", "存活", "死亡"};
+    private static final String[] MARRIAGE_OPTIONS = {"全部", "已婚", "未婚"};
 
     private int genderIndex = 0;
     private int aliveIndex = 0;
+    private int marriageIndex = 0;
 
     /**
      * Creates a new FilterSettingsComponent.
@@ -124,6 +133,13 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         this.aliveDropdownButton = new Button(gameWindow, null, "状态: 全部");
         this.aliveDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
             cycleAliveOption();
+            return null;
+        });
+
+        // Marriage filter dropdown
+        this.marriageDropdownButton = new Button(gameWindow, null, "婚姻: 全部");
+        this.marriageDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
+            cycleMarriageOption();
             return null;
         });
 
@@ -187,16 +203,39 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         }
     }
 
+    private void cycleMarriageOption() {
+        marriageIndex = (marriageIndex + 1) % MARRIAGE_OPTIONS.length;
+        updateMarriageFilter();
+    }
+
+    private void updateMarriageFilter() {
+        marriageDropdownButton.setButtonText("婚姻: " + MARRIAGE_OPTIONS[marriageIndex]);
+        switch (marriageIndex) {
+            case 0:
+                marriageFilter = null;
+                break;
+            case 1:
+                marriageFilter = true;
+                break;
+            case 2:
+                marriageFilter = false;
+                break;
+        }
+    }
+
     private void resetFilters() {
         genderIndex = 0;
         aliveIndex = 0;
+        marriageIndex = 0;
         genderFilter = null;
         aliveFilter = null;
+        marriageFilter = null;
         minAgeFilter = null;
         maxAgeFilter = null;
         minHealthFilter = null;
         genderDropdownButton.setButtonText("性别: 全部");
         aliveDropdownButton.setButtonText("状态: 全部");
+        marriageDropdownButton.setButtonText("婚姻: 全部");
     }
 
     @Override
@@ -217,6 +256,10 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         aliveDropdownButton.setLeftTopPos(this.getLeftTopPosX() + padding, startY);
         aliveDropdownButton.setSize(buttonWidth, buttonHeight);
+        startY += buttonHeight + buttonGap;
+
+        marriageDropdownButton.setLeftTopPos(this.getLeftTopPosX() + padding, startY);
+        marriageDropdownButton.setSize(buttonWidth, buttonHeight);
         startY += buttonHeight + buttonGap * 2;
 
         // Action buttons
@@ -230,6 +273,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         // Update all buttons
         genderDropdownButton.update();
         aliveDropdownButton.update();
+        marriageDropdownButton.update();
         applyButton.update();
         clearButton.update();
 
@@ -258,6 +302,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         // Draw buttons
         genderDropdownButton.draw();
         aliveDropdownButton.draw();
+        marriageDropdownButton.draw();
         applyButton.draw();
         clearButton.draw();
 
@@ -280,6 +325,9 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         if (event == null) return null;
 
         event = aliveDropdownButton.process(event);
+        if (event == null) return null;
+
+        event = marriageDropdownButton.process(event);
         if (event == null) return null;
 
         event = applyButton.process(event);
