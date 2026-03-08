@@ -25,6 +25,7 @@ import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.GameDateManager;
+import com.xenoamess.cyan_potion.civilization.cache.PersonCache;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
@@ -44,6 +45,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,10 +65,10 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 public class PersonBrowserDemo extends AbstractGameWindowComponent implements DecisionContext {
 
     @Getter
-    private final PersonListComponent listComponent;
+    private volatile PersonListComponent listComponent;
 
     @Getter
-    private final PersonDetailComponent detailComponent;
+    private volatile PersonDetailComponent detailComponent;
 
     @Getter
     private volatile DraggableWindowComponent listWindow;
@@ -240,20 +242,28 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     @NotNull
     private DraggableWindowComponent newListWindow() {
+        PersonListComponent listComponent = new PersonListComponent(this.getGameWindow());
+        listComponent.setOnPersonSelected(this::onPersonSelected);
+        listComponent.performSearch();
         // Wrap components in draggable windows
         DraggableWindowComponent listWindow = new DraggableWindowComponent(this.getGameWindow(), "人物列表", listComponent);
         listWindow.setLeftTopPos(50, 80);
         listWindow.setSize(500, 600);
         listWindow.setVisible(true);
+        this.listComponent = listComponent;
+        this.listWindow = listWindow;
         return listWindow;
     }
 
     @NotNull
     private DraggableWindowComponent newDetailWindow() {
+        PersonDetailComponent detailComponent = new PersonDetailComponent(this.getGameWindow());
         DraggableWindowComponent detailWindow = new DraggableWindowComponent(this.getGameWindow(), "人物详情", detailComponent);
         detailWindow.setLeftTopPos(580, 80);
         detailWindow.setSize(550, 600);
         detailWindow.setVisible(false); // Hidden by default
+        this.detailWindow = detailWindow;
+        this.detailComponent = detailComponent;
         return detailWindow;
     }
 
@@ -294,7 +304,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
     private void generatePersons() {
         RandomPersonGenerator generator = new RandomPersonGenerator();
         List<Person> persons = generator.generateMultiple(100, dateManager.getCurrentDate());
-        listComponent.setPersons(persons);
+        for (Person person : persons) {
+            PersonCache.PERSON_CACHE.put(person.getId(), person);
+        }
+        listComponent.performSearch();
         log.info("Generated {} persons at game date {}", persons.size(), dateManager.getFormattedDate());
     }
 
@@ -334,7 +347,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
      *
      * @param persons list of persons to update
      */
-    private void updatePowerLevels(List<Person> persons) {
+    private void updatePowerLevels(Collection<Person> persons) {
         LocalDate currentDate = dateManager.getCurrentDate();
         int updatedCount = 0;
         for (Person person : persons) {
@@ -439,17 +452,15 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Update game date (1 day per second)
         int daysAdvanced = dateManager.update();
         if (daysAdvanced > 0) {
-            // Update all persons' current date and health
-            List<Person> persons = listComponent.getPersons();
-            for (Person person : persons) {
+            for (Person person : PersonCache.PERSON_CACHE.values()) {
                 lifecycleService.advanceDate(person, daysAdvanced);
             }
             log.debug("Advanced {} days for {} persons, game date: {}",
-                daysAdvanced, persons.size(), dateManager.getFormattedDate());
+                daysAdvanced, PersonCache.PERSON_CACHE.size(), dateManager.getFormattedDate());
 
             // Update power levels and execute decisions on the 1st of each month
             if (dateManager.getDay() == 1) {
-                updatePowerLevels(persons);
+                updatePowerLevels(PersonCache.PERSON_CACHE.values());
                 decisionExecutor.executeDecisionsForAll(getCurrentDate());
             }
         }

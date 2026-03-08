@@ -26,6 +26,7 @@ import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.civilization.cache.PersonCache;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.EqualsAndHashCode;
@@ -38,6 +39,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -57,11 +59,12 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @ToString
 public class PersonListComponent extends AbstractControllableGameWindowComponent {
 
-    @Getter
-    private final List<Person> allPersons = new ArrayList<>();
+    public Collection<Person> getAllPersons() {
+        return PersonCache.PERSON_CACHE.values();
+    }
 
     @Getter
-    private final List<Person> filteredPersons = new ArrayList<>();
+    private final Collection<Person> filteredPersons = new ArrayList<>();
 
     @Getter
     private final Panel listPanel;
@@ -444,50 +447,19 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
      *
      * @return list of all persons
      */
-    public List<Person> getPersons() {
-        return new ArrayList<>(allPersons);
-    }
-
-    /**
-     * Sets the list of persons to display.
-     *
-     * @param persons list of persons
-     */
-    public void setPersons(List<Person> persons) {
-        this.allPersons.clear();
-        this.allPersons.addAll(persons);
-        performSearch();
-    }
-
-    /**
-     * Adds a person to the list.
-     *
-     * @param person person to add
-     */
-    public void addPerson(Person person) {
-        this.allPersons.add(person);
-        performSearch();
-    }
-
-    /**
-     * Removes a person from the list.
-     *
-     * @param person person to remove
-     */
-    public void removePerson(Person person) {
-        this.allPersons.remove(person);
-        performSearch();
+    public Collection<Person> getPersons() {
+        return getAllPersons();
     }
 
     /**
      * Performs search/filter based on search box content.
      */
-    private void performSearch() {
+    public void performSearch() {
         String query = searchBox.getContentString().toLowerCase().trim();
 
         filteredPersons.clear();
         filteredPersons.addAll(
-            allPersons.stream()
+                getAllPersons().stream()
                 .filter(filter)
                 .filter(p -> matchesSearch(p, query))
                 .collect(Collectors.toList())
@@ -555,8 +527,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         listItems.clear();
 
         // Create new items for filtered persons
-        for (int i = 0; i < filteredPersons.size(); i++) {
-            Person person = filteredPersons.get(i);
+        for (Person person: filteredPersons) {
             PersonListItem item = new PersonListItem(this, person);
             item.registerOnMouseButtonLeftDownCallback(event -> {
                 selectPerson(person);

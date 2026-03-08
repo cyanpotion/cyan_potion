@@ -20,6 +20,7 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class PowerLevelRankService {
      * @param currentDate current game date
      * @return number of persons whose ranks were updated
      */
-    public int calculateRanks(List<Person> persons, LocalDate currentDate) {
+    public int calculateRanks(Collection<Person> persons, LocalDate currentDate) {
         // Filter alive persons only - dead persons keep their last rank for display
         List<Person> alivePersons = persons.stream()
             .filter(Person::isAlive)
@@ -72,7 +73,9 @@ public class PowerLevelRankService {
 
         // Assign ranks using tiered distribution
         for (int rank = 1; rank <= MAX_RANK; rank++) {
-            if (remainingCount <= 0) break;
+            if (remainingCount <= 0) {
+                break;
+            }
 
             int countForThisRank;
             if (rank == MAX_RANK) {

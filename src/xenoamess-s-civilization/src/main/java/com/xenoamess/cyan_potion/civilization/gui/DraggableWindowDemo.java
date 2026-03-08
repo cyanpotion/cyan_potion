@@ -100,8 +100,8 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
         // Generate some random persons
         RandomPersonGenerator generator = new RandomPersonGenerator();
         List<Person> persons = generator.generateMultiple(20);
-        listComponent.setPersons(persons);
-        
+        listComponent.performSearch();
+
         // Setup selection callback
         listComponent.setOnPersonSelected(person -> {
             log.info("Selected person in {}: {}", title, person.getName());
