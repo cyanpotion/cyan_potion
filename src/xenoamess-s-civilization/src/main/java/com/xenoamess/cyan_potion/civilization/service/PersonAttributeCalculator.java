@@ -165,14 +165,14 @@ public class PersonAttributeCalculator {
     public double calculatePowerLevel(Person person) {
         // Normalize each attribute to 0-100 scale
         double normalizedHealth = Math.min(100, person.getHealth());
-        double normalizedConstitution = normalizeToHundred(person.getConstitution(), 0, 20);
-        double normalizedIntelligence = normalizeToHundred(person.getIntelligence(), 0, 30);
-        double normalizedEloquence = normalizeToHundred(person.getEloquence(), 0, 20);
+        double normalizedConstitution = fastNormalize(person.getConstitution(), 0, 20, 5.0);      // 100/20 = 5
+        double normalizedIntelligence = fastNormalize(person.getIntelligence(), 0, 30, 3.3333333333333335); // 100/30
+        double normalizedEloquence = fastNormalize(person.getEloquence(), 0, 20, 5.0);         // 100/20 = 5
         double normalizedAppearance = Math.min(100, person.getAppearance());
-        double normalizedStrength = normalizeToHundred(person.getStrength(), 0, 20);
-        double normalizedCharm = normalizeToHundred(person.getCharm(), 0, 50);
-        double normalizedManagement = normalizeToHundred(person.getManagement(), 0, 25);
-        double normalizedMoney = normalizeToHundred(person.getMoney(), 0, 20);
+        double normalizedStrength = fastNormalize(person.getStrength(), 0, 20, 5.0);           // 100/20 = 5
+        double normalizedCharm = fastNormalize(person.getCharm(), 0, 50, 2.0);                 // 100/50 = 2
+        double normalizedManagement = fastNormalize(person.getManagement(), 0, 25, 4.0);       // 100/25 = 4
+        double normalizedMoney = fastNormalize(person.getMoney(), 0, 20, 5.0);                 // 100/20 = 5
         double normalizedPrestige = Math.min(100, person.getPrestige());
 
         // Calculate weighted sum
@@ -193,13 +193,13 @@ public class PersonAttributeCalculator {
     }
 
     /**
-     * Normalizes a value to 0-100 scale.
-     *
-     * @param value the value to normalize
-     * @param min the minimum possible value
-     * @param max the maximum possible value
-     * @return normalized value (0-100)
+     * Fast normalize using pre-calculated scale factor.
+     * Formula: (value - min) * scaleFactor, then clamp to 0-100
      */
+    private static double fastNormalize(double value, double min, double max, double scaleFactor) {
+        double normalized = (value - min) * scaleFactor;
+        return normalized < 0 ? 0 : (normalized > 100 ? 100 : normalized);
+    }
     /**
      * Calculates the fertility (生育能力) of a person.
      *
@@ -242,14 +242,6 @@ public class PersonAttributeCalculator {
                 return Math.round(fertility * 10.0) / 10.0;
             }
         }
-    }
-
-    private double normalizeToHundred(double value, double min, double max) {
-        if (max <= min) {
-            return 50.0;
-        }
-        double normalized = (value - min) / (max - min) * 100.0;
-        return Math.max(0, Math.min(100, normalized));
     }
 
 }
