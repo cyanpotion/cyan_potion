@@ -112,12 +112,11 @@ public class PersonAttributeCalculator {
         if (person.getBirthDate() == null) {
             return 0;
         }
-        LocalDate endDate;
+        // If dead, return age at death
         if (person.getDeathDate() != null) {
-            endDate = person.getDeathDate();
-        } else {
-            endDate = person.getCurrentDate();
+            return person.getDeathAge();
         }
+        LocalDate endDate = person.getCurrentDate();
         if (endDate == null) {
             return 0;
         }

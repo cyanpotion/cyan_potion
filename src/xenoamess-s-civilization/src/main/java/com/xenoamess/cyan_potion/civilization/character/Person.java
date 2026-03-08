@@ -21,6 +21,7 @@ import com.xenoamess.cyan_potion.civilization.character.trait.Trait;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -149,6 +150,18 @@ public class Person {
     @Getter
     @Setter
     private LocalDate deathDate;
+
+    private int deathAge = -1;
+
+    public int getDeathAge() {
+        if (this.deathAge < 0) {
+            LocalDate deathDate = this.getDeathDate();
+            if (deathDate != null) {
+                return deathAge = (int) ChronoUnit.YEARS.between(this.getBirthDate(), deathDate);
+            }
+        }
+        return this.deathAge;
+    }
 
     @Getter
     @Setter
