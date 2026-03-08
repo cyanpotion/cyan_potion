@@ -359,7 +359,7 @@ public class Person {
      * @return true if married
      */
     public boolean isMarried() {
-        return marriages.stream().anyMatch(Marriage::isActive);
+        return marriages.parallelStream().anyMatch(Marriage::isActive);
     }
 
     /**
@@ -422,7 +422,7 @@ public class Person {
     public List<Person> getSubordinateSpouses() {
         return marriages.stream()
             .filter(m -> m.getDominantPerson().equals(this))
-            .flatMap(m -> m.getSubordinatePersons().stream())
+            .flatMap(m -> m.getSubordinatePersonStream())
             .distinct()
             .collect(Collectors.toList());
     }

@@ -59,7 +59,7 @@ class MarriageTest {
 
         assertEquals(dominant, marriage.getDominantPerson());
         assertEquals(1, marriage.getSubordinatePersons().size());
-        assertEquals(subordinate, marriage.getSubordinatePersons().get(0));
+        assertEquals(subordinate, marriage.getSubordinatePersonStream().findFirst().get());
     }
 
     @Test
@@ -205,7 +205,7 @@ class MarriageTest {
         Person subordinate = createPerson("p2", "李四", Gender.FEMALE);
         Marriage marriage = new Marriage("m1", dominant, subordinate, LocalDate.now());
 
-        List<Person> subordinates = marriage.getSubordinatePersons();
+        List<Person> subordinates = marriage.getSubordinatePersonStream().toList();
         assertThrows(UnsupportedOperationException.class, () -> subordinates.add(createPerson("p3", "王五", Gender.FEMALE)));
     }
 

@@ -16,7 +16,6 @@
  */
 package com.xenoamess.cyan_potion.civilization.gui;
 
-import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
 import com.xenoamess.cyan_potion.base.render.Texture;
@@ -32,7 +31,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector4f;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -147,9 +145,14 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         for (Marriage marriage : marriages) {
             // Add buttons for all subordinate persons if current person is dominant
             if (marriage.getDominantPerson().equals(person)) {
-                for (Person subordinate : marriage.getSubordinatePersons()) {
-                    createPersonButton(subordinate);
-                }
+                marriage.getSubordinatePersonStream().forEach(
+                        new Consumer<Person>() {
+                            @Override
+                            public void accept(Person person) {
+                                createPersonButton(person);
+                            }
+                        }
+                );
             } else {
                 // Current person is subordinate, add button for dominant
                 createPersonButton(marriage.getDominantPerson());
@@ -323,7 +326,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         // Draw persons with clickable buttons
         if (marriage.getDominantPerson().equals(person)) {
             // Current person is dominant, show all subordinates as clickable buttons
-            List<Person> subordinates = marriage.getSubordinatePersons();
+            Collection<Person> subordinates = marriage.getSubordinatePersons();
             if (subordinates.isEmpty()) {
                 this.getGameWindow().drawTextCenter(
                     null,

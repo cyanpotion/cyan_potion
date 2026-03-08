@@ -19,10 +19,11 @@ package com.xenoamess.cyan_potion.civilization.character;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.Stream;
 
 /**
  * Marriage (婚姻关系) represents a marriage relationship.
@@ -43,7 +44,8 @@ public class Marriage {
     @Getter
     private final Person dominantPerson;
 
-    private final List<Person> subordinatePersons = new ArrayList<>();
+    @Getter
+    private final Collection<Person> subordinatePersons = new ConcurrentLinkedDeque<>();
 
     @Getter
     private final LocalDate startDate;
@@ -100,8 +102,8 @@ public class Marriage {
      *
      * @return unmodifiable list of subordinate persons
      */
-    public List<Person> getSubordinatePersons() {
-        return Collections.unmodifiableList(subordinatePersons);
+    public Stream<Person> getSubordinatePersonStream() {
+        return subordinatePersons.parallelStream();
     }
 
     /**
@@ -175,7 +177,7 @@ public class Marriage {
             return false;
         }
         // If all subordinate persons are dead, marriage ends
-        boolean anySubordinateAlive = subordinatePersons.stream().anyMatch(Person::isAlive);
+        boolean anySubordinateAlive = subordinatePersons.parallelStream().anyMatch(Person::isAlive);
         return anySubordinateAlive;
     }
 
