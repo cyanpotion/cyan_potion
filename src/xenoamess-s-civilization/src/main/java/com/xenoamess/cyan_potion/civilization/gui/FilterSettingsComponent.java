@@ -52,7 +52,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
     @Getter
     @Setter
-    private Boolean aliveFilter = null; // null = all, true = alive only, false = dead only
+    private Boolean aliveFilter = true; // null = all, true = alive only, false = dead only
 
     @Getter
     @Setter
@@ -102,7 +102,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
     private static final String[] MARRIAGE_OPTIONS = {"全部", "已婚", "未婚"};
 
     private int genderIndex = 0;
-    private int aliveIndex = 0;
+    private int aliveIndex = 1;
     private int marriageIndex = 0;
 
     /**
@@ -132,7 +132,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         });
 
         // Alive filter dropdown
-        this.aliveDropdownButton = new Button(gameWindow, null, "状态: 全部");
+        this.aliveDropdownButton = new Button(gameWindow, null, "状态: 存活");
         this.aliveDropdownButton.setVisible(this.isVisible());
         this.aliveDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
             cycleAliveOption();
