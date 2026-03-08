@@ -21,7 +21,6 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Service for calculating person attributes.
@@ -113,15 +112,24 @@ public class PersonAttributeCalculator {
         if (person.getBirthDate() == null) {
             return 0;
         }
-        // If dead, return age at death
+        LocalDate endDate;
         if (person.getDeathDate() != null) {
-            return (int) ChronoUnit.YEARS.between(person.getBirthDate(), person.getDeathDate());
+            endDate = person.getDeathDate();
+        } else {
+            endDate = person.getCurrentDate();
         }
-        // If alive, return current age
-        if (person.getCurrentDate() == null) {
+        if (endDate == null) {
             return 0;
         }
-        return (int) ChronoUnit.YEARS.between(person.getBirthDate(), person.getCurrentDate());
+        // Fast calculation using year difference (no ChronoUnit overhead)
+        int age = endDate.getYear() - person.getBirthDate().getYear();
+        // Adjust if birthday hasn't occurred this year
+        if (endDate.getMonthValue() < person.getBirthDate().getMonthValue() ||
+            (endDate.getMonthValue() == person.getBirthDate().getMonthValue() &&
+             endDate.getDayOfMonth() < person.getBirthDate().getDayOfMonth())) {
+            age--;
+        }
+        return Math.max(0, age);
     }
 
     /**
@@ -138,7 +146,15 @@ public class PersonAttributeCalculator {
         if (person.getBirthDate() == null) {
             return 0;
         }
-        return (int) ChronoUnit.YEARS.between(person.getBirthDate(), person.getDeathDate());
+        // Fast calculation using year difference
+        int age = person.getDeathDate().getYear() - person.getBirthDate().getYear();
+        // Adjust if birthday hadn't occurred in death year
+        if (person.getDeathDate().getMonthValue() < person.getBirthDate().getMonthValue() ||
+            (person.getDeathDate().getMonthValue() == person.getBirthDate().getMonthValue() &&
+             person.getDeathDate().getDayOfMonth() < person.getBirthDate().getDayOfMonth())) {
+            age--;
+        }
+        return Math.max(0, age);
     }
 
     /**
