@@ -145,6 +145,11 @@ public class ChildBirthGenerator {
                 return marriage;
             }
         }
+        for (Marriage marriage : person1.getMarriages()) {
+            if (marriage.involvesPerson(person2)) {
+                return marriage;
+            }
+        }
         return null;
     }
 
