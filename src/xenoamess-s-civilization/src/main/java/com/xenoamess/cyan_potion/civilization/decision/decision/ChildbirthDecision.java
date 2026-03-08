@@ -21,7 +21,7 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait;
 import com.xenoamess.cyan_potion.civilization.decision.Decision;
 import com.xenoamess.cyan_potion.civilization.decision.DecisionContext;
-import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
+import com.xenoamess.cyan_potion.civilization.generator.ChildBirthGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -168,11 +168,12 @@ public class ChildbirthDecision implements Decision {
      * @param context the decision context
      * @return DecisionResult.SUCCESS
      */
-    private DecisionResult handleSuccessfulBirth(Person mother, Person father, 
+    private DecisionResult handleSuccessfulBirth(Person mother, Person father,
                                                   PregnancyTrait pregnancy, DecisionContext context) {
-        // Generate the child
-        RandomPersonGenerator generator = new RandomPersonGenerator();
-        Person child = generator.generate(context.getCurrentDate(), father, mother);
+        // Generate the child using ChildBirthGenerator
+        // This ensures child inherits surname and clan from dominant parent
+        ChildBirthGenerator generator = new ChildBirthGenerator();
+        Person child = generator.generate(father, mother, context.getCurrentDate());
 
         // Mark pregnancy as delivered
         pregnancy.deliver(child, context.getCurrentDate());
@@ -246,8 +247,8 @@ public class ChildbirthDecision implements Decision {
                 return DecisionResult.SUCCESS;
             } else if (complicationRoll < 0.10) {
                 // Child lives, mother dies
-                RandomPersonGenerator generator = new RandomPersonGenerator();
-                Person child = generator.generate(context.getCurrentDate(), father, mother);
+                ChildBirthGenerator generator = new ChildBirthGenerator();
+                Person child = generator.generate(father, mother, context.getCurrentDate());
                 
                 pregnancy.setDelivered(true);
                 mother.removeTraitByType(PregnancyTrait.TYPE);
