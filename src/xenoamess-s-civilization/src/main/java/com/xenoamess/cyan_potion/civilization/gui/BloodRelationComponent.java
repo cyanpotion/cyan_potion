@@ -84,6 +84,8 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
     private static final Vector4f COLOR_FEMALE = new Vector4f(1.0f, 0.5f, 0.7f, 1.0f);
     private static final Vector4f COLOR_LINK = new Vector4f(0.4f, 0.8f, 1.0f, 1.0f);
 
+    private final Texture deadmanMarkTexture;
+
     /**
      * Helper class to store person button info.
      */
@@ -119,6 +121,14 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
         // Create person buttons
         createPersonButtons();
+
+        // Skull texture for dead persons
+        this.deadmanMarkTexture = this.getResourceManager().fetchResource(
+                Texture.class,
+                "picture",
+                this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                        + "www/img/icon/skull_icon.png"
+        );
     }
 
     /**
@@ -175,10 +185,6 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
     private String getPersonDisplayName(Person p) {
         String name = p.getName();
-        // 死者标记骷髅头
-        if (!p.isAlive()) {
-            name = "\u2620" + name;  // ☠ 骷髅头
-        }
         Clan clan = p.getPrimaryClan();
         if (clan != null) {
             name += "[" + clan.getName() + "]";
@@ -325,7 +331,7 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             if (pb != null) {
                 float buttonWidth = 120;
                 float buttonHeight = 24;
-                pb.button.setLeftTopPos(x + colWidth / 2 - buttonWidth / 2 + 20, y - 10);
+                pb.button.setLeftTopPos(x + colWidth / 2 - buttonWidth / 2 + 20 + 10, y - 10);
                 pb.button.setSize(buttonWidth, buttonHeight);
                 pb.button.ifVisibleThenDraw();
 
@@ -334,12 +340,21 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    x + colWidth / 2 + 80,
+                    x + colWidth / 2 + 80 - buttonWidth + 10,
                     y,
                     12,
                     genderColor,
                     pb.person.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
+                if (!pb.person.isAlive()) {
+                    this.getGameWindow().drawBindableRelativeCenter(
+                            deadmanMarkTexture,
+                            x + colWidth / 2 + 80 - buttonWidth + 10 + 12,
+                            y,
+                            12,
+                            12
+                    );
+                }
             }
         } else {
             this.getGameWindow().drawTextCenter(
@@ -367,7 +382,7 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             if (pb != null) {
                 float buttonWidth = 120;
                 float buttonHeight = 24;
-                pb.button.setLeftTopPos(x + colWidth + colWidth / 2 - buttonWidth / 2 + 20, y - 10);
+                pb.button.setLeftTopPos(x + colWidth + colWidth / 2 - buttonWidth / 2 + 20 + 10, y - 10);
                 pb.button.setSize(buttonWidth, buttonHeight);
                 pb.button.ifVisibleThenDraw();
 
@@ -376,12 +391,21 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    x + colWidth + colWidth / 2 + 80,
+                    x + colWidth + colWidth / 2 + 80 - buttonWidth + 10,
                     y,
                     12,
                     genderColor,
                     pb.person.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
+                if (!pb.person.isAlive()) {
+                    this.getGameWindow().drawBindableRelativeCenter(
+                            deadmanMarkTexture,
+                            x + colWidth + colWidth / 2 + 80 - buttonWidth + 10 + 12,
+                            y,
+                            12,
+                            12
+                    );
+                }
             }
         } else {
             this.getGameWindow().drawTextCenter(
@@ -445,12 +469,21 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    itemX + colWidth / 2 + buttonWidth / 2 + 8,
+                    itemX + colWidth / 2 + buttonWidth / 2 + 8 - buttonWidth - buttonWidth / 2,
                     y,
                     10,
                     genderColor,
                     sibling.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
+                if (!sibling.isAlive()) {
+                    this.getGameWindow().drawBindableRelativeCenter(
+                            deadmanMarkTexture,
+                            itemX + colWidth / 2 + buttonWidth / 2 + 8 - buttonWidth - buttonWidth / 2 + 12,
+                            y,
+                            10,
+                            10
+                    );
+                }
             }
 
             col++;
@@ -522,12 +555,21 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
                     ? COLOR_MALE : COLOR_FEMALE;
                 this.getGameWindow().drawTextCenter(
                     null,
-                    itemX + colWidth / 2 + buttonWidth / 2 + 8,
+                    itemX + colWidth / 2 + buttonWidth / 2 + 8 - buttonWidth - buttonWidth / 2,
                     y,
                     10,
                     genderColor,
                     child.getGender() == com.xenoamess.cyan_potion.civilization.character.Gender.MALE ? "♂" : "♀"
                 );
+                if (!child.isAlive()) {
+                    this.getGameWindow().drawBindableRelativeCenter(
+                            deadmanMarkTexture,
+                            itemX + colWidth / 2 + buttonWidth / 2 + 8 - buttonWidth - buttonWidth / 2 + 12,
+                            y,
+                            10,
+                            10
+                    );
+                }
             }
 
             col++;
