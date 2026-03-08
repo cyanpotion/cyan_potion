@@ -41,6 +41,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -68,6 +69,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 0.162.3
  * @see com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent
  */
+@Slf4j
 @EqualsAndHashCode
 @ToString
 public abstract class AbstractGameWindowComponent implements Closeable, AbstractMutableArea {
@@ -405,6 +407,10 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentTreeNode);
+        if (this.getGameWindowComponentTreeNode() != null) {
+            log.warn("a gameWindowComponentTreeNode cannot be bind to multiple GameWindowComponentTreeNodes. if you intend to do so, please call this.setGameWindowComponentTreeNode(null) first");
+            return;
+        }
         gameWindowComponentTreeNode.newNode(this);
     }
 
