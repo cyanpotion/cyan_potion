@@ -23,6 +23,7 @@ import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.util.IterableUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
@@ -56,7 +58,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
     private Consumer<Person> onPersonClick;
 
     // Buttons for clickable person names (one per subordinate in each marriage)
-    private final List<PersonButton> personButtons = new ArrayList<>();
+    private final ConcurrentLinkedDeque<PersonButton> personButtons = new ConcurrentLinkedDeque<>();
 
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
@@ -316,7 +318,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
             } else {
                 for (Person subordinate : subordinates) {
                     if (buttonIndex < personButtons.size()) {
-                        PersonButton pb = personButtons.get(buttonIndex);
+                        PersonButton pb = IterableUtil.getElementAtIndexOrNull(personButtons, buttonIndex);
                         // Position the button
                         float buttonWidth = 100;
                         float buttonHeight = 20;
@@ -333,7 +335,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
             // Current person is subordinate, show dominant as clickable button
             Person dominant = marriage.getDominantPerson();
             if (buttonIndex < personButtons.size()) {
-                PersonButton pb = personButtons.get(buttonIndex);
+                PersonButton pb = IterableUtil.getElementAtIndexOrNull(personButtons, buttonIndex);
                 float buttonWidth = 100;
                 float buttonHeight = 20;
                 pb.button.setLeftTopPos(x + width / 2 - buttonWidth / 2, y - 8);
@@ -396,4 +398,13 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         personButtons.clear();
         super.close();
     }
+
+    @Override
+    public void setVisible(boolean visible) {
+        for (PersonButton pb : personButtons) {
+            pb.button.setVisible(visible);
+        }
+        super.setVisible(visible);
+    }
+
 }

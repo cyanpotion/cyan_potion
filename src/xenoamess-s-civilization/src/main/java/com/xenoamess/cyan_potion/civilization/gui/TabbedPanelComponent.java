@@ -19,18 +19,16 @@ package com.xenoamess.cyan_potion.civilization.gui;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
+import com.xenoamess.cyan_potion.civilization.util.IterableUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * A generic tabbed panel component with tab buttons at the top
@@ -178,14 +176,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return null;
         }
-        Iterator<Button> iterator = tabButtons.iterator();
-        Button resultButton = null;
-        for (int i = 0; i <= index; i++) {
-            if (!iterator.hasNext()) {
-                return null;
-            }
-            resultButton = iterator.next();
-        }
+        Button resultButton = IterableUtil.getElementAtIndexOrNull(tabButtons, index);
         if (resultButton == null) {
             return null;
         }
@@ -202,15 +193,9 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return;
         }
-        Iterator<Button> iterator = tabButtons.iterator();
-        Button resultButton = null;
-        for (int i = 0; i <= index; i++) {
-            if (!iterator.hasNext()) {
-                return;
-            }
-            resultButton = iterator.next();
-        }
+        Button resultButton = IterableUtil.getElementAtIndexOrNull(tabButtons, index);
         if (resultButton == null) {
+            log.error("Invalid tab index: {}, max: {}", index, tabButtons.size() - 1);
             return;
         }
         resultButton.setButtonText(title);
@@ -226,18 +211,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabContents.size()) {
             return null;
         }
-        Iterator<AbstractControllableGameWindowComponent> iterator = tabContents.iterator();
-        AbstractControllableGameWindowComponent result = null;
-        for (int i = 0; i <= index; i++) {
-            if (!iterator.hasNext()) {
-                return null;
-            }
-            result = iterator.next();
-        }
-        if (result == null) {
-            return null;
-        }
-        return result;
+        return IterableUtil.getElementAtIndexOrNull(tabContents, index);
     }
 
     @Override
