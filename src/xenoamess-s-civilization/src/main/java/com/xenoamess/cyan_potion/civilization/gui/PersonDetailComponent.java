@@ -71,7 +71,18 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Getter
     private final Button marriageInfoButton;
 
-    private DraggableWindowComponent marriageInfoWindow;
+    // Tab buttons for switching between basic info and marriage info
+    @Getter
+    private final Button basicInfoTabButton;
+
+    @Getter
+    private final Button marriageTabButton;
+
+    // Marriage info component (embedded tab page instead of popup window)
+    private MarriageInfoComponent marriageInfoComponent;
+
+    // Current tab: 0 = basic info, 1 = marriage info
+    private int currentTab = 0;
 
     @Getter
     @Setter
@@ -174,62 +185,27 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
         nextButton.setActive(true);
 
-        // Marriage info button
+        // Marriage info button (legacy, will be replaced by tab)
         this.marriageInfoButton = new Button(gameWindow, null, "婚姻详情");
         this.marriageInfoButton.registerOnMouseButtonLeftDownCallback(event -> {
-            openMarriageInfoWindow();
+            currentTab = 1;
+            return null;
+        });
+
+        // Tab buttons for switching views
+        this.basicInfoTabButton = new Button(gameWindow, null, "基本信息");
+        this.basicInfoTabButton.registerOnMouseButtonLeftDownCallback(event -> {
+            currentTab = 0;
+            return null;
+        });
+
+        this.marriageTabButton = new Button(gameWindow, null, "婚姻详情");
+        this.marriageTabButton.registerOnMouseButtonLeftDownCallback(event -> {
+            currentTab = 1;
             return null;
         });
 
         initProcessors();
-    }
-
-    /**
-     * Opens the marriage info window popup.
-     */
-    private void openMarriageInfoWindow() {
-        if (person == null) {
-            return;
-        }
-
-        // Close existing window if any
-        if (marriageInfoWindow != null && marriageInfoWindow.isAlive()) {
-            marriageInfoWindow.close();
-        }
-
-        // Create new marriage info window
-        MarriageInfoWindow infoWindow = new MarriageInfoWindow(getGameWindow(), person);
-        infoWindow.setLeftTopPos(
-            getLeftTopPosX() + 50,
-            getLeftTopPosY() + 50
-        );
-        infoWindow.setSize(450, 400);
-        infoWindow.setVisible(true);
-
-        // Setup close button
-        infoWindow.getCloseButton().registerOnMouseButtonLeftDownCallback(event -> {
-            if (marriageInfoWindow != null) {
-                marriageInfoWindow.close();
-                marriageInfoWindow = null;
-            }
-            return null;
-        });
-
-        // Wrap in draggable window
-        marriageInfoWindow = new DraggableWindowComponent(getGameWindow(), "婚姻详情", infoWindow);
-        marriageInfoWindow.setLeftTopPos(
-            getLeftTopPosX() + 50,
-            getLeftTopPosY() + 50
-        );
-        marriageInfoWindow.setSize(450, 400);
-        marriageInfoWindow.setVisible(true);
-
-        // Add to component tree if we have one
-        if (this.getGameWindowComponentTreeNode() != null) {
-            marriageInfoWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        }
-
-        log.debug("Opened marriage info window for: {}", person.getName());
     }
 
     protected void initProcessors() {
@@ -262,6 +238,47 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         float y = getLeftTopPosY() + 20;
         float width = getWidth() - 40;
 
+        // Draw tab buttons at top
+        drawTabButtons();
+
+        // Draw content based on current tab
+        if (currentTab == 0) {
+            drawBasicInfoTab(x, y + 40, width, getHeight() - 80);
+        } else {
+            drawMarriageTab(x, y + 40, width, getHeight() - 80);
+        }
+
+        // Draw skull tooltip if hovered (for dead persons)
+        if (!person.isAlive()) {
+            updateSkullHoverState();
+            if (skullHovered) {
+                drawSkullTooltip();
+            }
+        }
+
+        return super.draw();
+    }
+
+    private void drawTabButtons() {
+        float tabY = getLeftTopPosY() + 15;
+        float tabWidth = 100;
+        float tabHeight = 30;
+        float tabGap = 5;
+
+        // Basic info tab
+        basicInfoTabButton.setLeftTopPos(getLeftTopPosX() + 20, tabY);
+        basicInfoTabButton.setSize(tabWidth, tabHeight);
+        basicInfoTabButton.update();
+        basicInfoTabButton.draw();
+
+        // Marriage tab
+        marriageTabButton.setLeftTopPos(getLeftTopPosX() + 20 + tabWidth + tabGap, tabY);
+        marriageTabButton.setSize(tabWidth, tabHeight);
+        marriageTabButton.update();
+        marriageTabButton.draw();
+    }
+
+    private void drawBasicInfoTab(float x, float y, float width, float height) {
         // Header section with name and gender
         drawHeader(x, y, width);
         y += 70;
@@ -290,26 +307,47 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         drawParentsInfo(x, y, width);
         y += 60;
 
-        // Draw skull tooltip if hovered (for dead persons)
-        if (!person.isAlive()) {
-            updateSkullHoverState();
-            if (skullHovered) {
-                drawSkullTooltip();
-            }
-        }
-
         // Navigation buttons at bottom left
         drawNavigationButtons();
+    }
 
-        // Draw marriage info button
-        marriageInfoButton.draw();
-
-        // Draw marriage info window if visible
-        if (marriageInfoWindow != null && marriageInfoWindow.isVisible()) {
-            marriageInfoWindow.draw();
+    private void drawMarriageTab(float x, float y, float width, float height) {
+        // Ensure marriage info component exists
+        if (marriageInfoComponent == null || !marriageInfoComponent.isAlive()) {
+            createMarriageInfoComponent();
         }
 
-        return super.draw();
+        // Update and draw the marriage info component
+        marriageInfoComponent.setLeftTopPos(x, y);
+        marriageInfoComponent.setSize(width, height);
+        marriageInfoComponent.update();
+        marriageInfoComponent.draw();
+    }
+
+    private void createMarriageInfoComponent() {
+        if (person == null) {
+            return;
+        }
+
+        // Clean up old component if exists
+        if (marriageInfoComponent != null) {
+            marriageInfoComponent.close();
+        }
+
+        // Create new marriage info component
+        marriageInfoComponent = new MarriageInfoComponent(getGameWindow(), person);
+        marriageInfoComponent.setOnPersonClick(targetPerson -> {
+            // When a person is clicked in marriage tab, show that person
+            show(targetPerson);
+            return;
+        });
+
+        // Add to component tree if we have one
+        if (this.getGameWindowComponentTreeNode() != null) {
+            marriageInfoComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        }
+
+        log.debug("Created marriage info component for: {}", person.getName());
     }
 
     private void drawHeader(float x, float y, float width) {
@@ -711,6 +749,14 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     }
 
     private void drawNavigationButtons() {
+        // Only show navigation buttons in basic info tab
+        if (currentTab != 0) {
+            prevButton.setVisible(false);
+            nextButton.setVisible(false);
+            marriageInfoButton.setVisible(false);
+            return;
+        }
+
         float buttonY = getLeftTopPosY() + getHeight() - 50;
         float buttonHeight = 35;
         float buttonGap = 10;
@@ -762,6 +808,13 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     public void show(Person person) {
         this.person = person;
         this.show = true;
+
+        // Recreate marriage info component for new person
+        if (marriageInfoComponent != null) {
+            marriageInfoComponent.close();
+            marriageInfoComponent = null;
+        }
+
         log.debug("Showing details for: {}", person.getName());
     }
 
@@ -770,6 +823,11 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
      */
     public void hide() {
         this.show = false;
+        // Close marriage info component
+        if (marriageInfoComponent != null) {
+            marriageInfoComponent.close();
+            marriageInfoComponent = null;
+        }
         if (onClose != null) {
             onClose.accept(null);
         }
@@ -797,29 +855,41 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return null;
         }
 
-        // Process marriage info window first if it exists and is visible
-        if (marriageInfoWindow != null && marriageInfoWindow.isVisible()) {
-            event = marriageInfoWindow.process(event);
+        // Process tab buttons first
+        event = basicInfoTabButton.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        event = marriageTabButton.process(event);
+        if (event == null) {
+            return null;
+        }
+
+        // Process marriage info component if in marriage tab
+        if (currentTab == 1 && marriageInfoComponent != null && marriageInfoComponent.isVisible()) {
+            event = marriageInfoComponent.process(event);
             if (event == null) {
                 return null;
             }
         }
 
-        // Process marriage info button
-        event = marriageInfoButton.process(event);
-        if (event == null) {
-            return null;
-        }
+        // Process navigation buttons (only in basic info tab)
+        if (currentTab == 0) {
+            event = marriageInfoButton.process(event);
+            if (event == null) {
+                return null;
+            }
 
-        // Process navigation buttons
-        event = prevButton.process(event);
-        if (event == null) {
-            return null;
-        }
+            event = prevButton.process(event);
+            if (event == null) {
+                return null;
+            }
 
-        event = nextButton.process(event);
-        if (event == null) {
-            return null;
+            event = nextButton.process(event);
+            if (event == null) {
+                return null;
+            }
         }
 
         // Process with parent
@@ -832,8 +902,10 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         this.prevButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.nextButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.marriageInfoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        if (marriageInfoWindow != null) {
-            marriageInfoWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.basicInfoTabButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        this.marriageTabButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        if (marriageInfoComponent != null) {
+            marriageInfoComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         }
     }
 }
