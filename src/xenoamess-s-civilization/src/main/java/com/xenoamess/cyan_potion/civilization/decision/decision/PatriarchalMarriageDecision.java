@@ -14,10 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.xenoamess.cyan_potion.civilization.decision;
+package com.xenoamess.cyan_potion.civilization.decision.decision;
 
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.decision.Decision;
+import com.xenoamess.cyan_potion.civilization.decision.DecisionContext;
+import com.xenoamess.cyan_potion.civilization.decision.PendingPlayerEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;

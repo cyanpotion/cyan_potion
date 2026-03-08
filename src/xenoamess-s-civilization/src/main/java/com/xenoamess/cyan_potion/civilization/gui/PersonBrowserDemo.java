@@ -30,6 +30,7 @@ import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.decision.*;
+import com.xenoamess.cyan_potion.civilization.decision.decision.PatriarchalMarriageDecision;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
