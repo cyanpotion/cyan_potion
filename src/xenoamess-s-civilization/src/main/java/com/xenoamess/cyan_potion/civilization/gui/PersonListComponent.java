@@ -176,9 +176,6 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
     private void toggleFilterWindow() {
         filterWindow.setVisible(!filterWindow.isVisible());
-        if (filterWindow.isVisible()) {
-            filterSettings.setVisible(true);
-        }
     }
 
     private void applyFilterSettings(FilterSettingsComponent settings) {
@@ -358,15 +355,10 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         listPanel.update();
         settingsButton.update();
 
-        // Update filter window if visible
-        if (filterWindow.isVisible()) {
-            filterWindow.update();
-        }
-
         for (PersonListItem item : listItems) {
             item.update();
         }
-        return true;
+        return super.update();
     }
 
     @Override
@@ -414,12 +406,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Draw scrollbar if needed
         drawScrollbar();
 
-        // Draw filter window if visible
-        if (filterWindow.isVisible()) {
-            filterWindow.ifVisibleThenDraw();
-        }
-
-        return true;
+        return super.ifVisibleThenDraw();
     }
 
     private void drawScrollbar() {
@@ -606,20 +593,6 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             return null;
         }
 
-        // Process with parent first (handles our own registered processors)
-        event = super.process(event);
-        if (event == null) {
-            return null;
-        }
-
-        // Process filter window first if visible (on top)
-        if (filterWindow.isVisible()) {
-            event = filterWindow.process(event);
-            if (event == null) {
-                return null;
-            }
-        }
-
         // Process settings button
         event = settingsButton.process(event);
         if (event == null) {
@@ -644,13 +617,13 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 }
             }
         }
-
-        return event;
+        return super.process(event);
     }
 
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
+        this.filterWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
 //        searchPanel.addToGameWindowComponentTree(node);
 //        searchBox.addToGameWindowComponentTree(node);
 //        listPanel.addToGameWindowComponentTree(node);
