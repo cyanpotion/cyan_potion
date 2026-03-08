@@ -29,6 +29,7 @@ import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.cache.PersonCache;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.util.IterableUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,9 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -68,7 +71,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
      * 代表【这个】过滤组件处理的过滤后的人员。默认全部。
      */
     @Getter
-    private final Collection<Person> filteredPersons = new ArrayList<>();
+    private final Collection<Person> filteredPersons = new ConcurrentLinkedDeque<>();
 
     @Getter
     private final Panel listPanel;
@@ -97,7 +100,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     private Predicate<Person> filter = p -> true;
 
     @Getter
-    private final List<PersonListItem> listItems = new ArrayList<>();
+    private final ConcurrentLinkedDeque<PersonListItem> listItems = new ConcurrentLinkedDeque<>();
 
     @Getter
     @Setter
@@ -217,6 +220,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     /**
      * Initialize input processors.
      */
+    @Override
     protected void initProcessors() {
         super.initProcessors();
         // Handle scroll events
@@ -545,11 +549,12 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     private void updateListPositions() {
         float startY = listPanel.getLeftTopPosY() - scrollOffset;
 
-        for (int i = 0; i < listItems.size(); i++) {
-            PersonListItem item = listItems.get(i);
+        int i = 0;
+        for (PersonListItem item : listItems) {
             float y = startY + i * itemHeight;
             item.setLeftTopPos(listPanel.getLeftTopPosX(), y);
             item.setSize(listPanel.getWidth() - 8, itemHeight); // -8 for scrollbar
+            i++;
         }
     }
 
@@ -614,8 +619,9 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         }
 
         // Pass event to visible list items (in reverse order for proper z-index handling)
-        for (int i = listItems.size() - 1; i >= 0; i--) {
-            PersonListItem item = listItems.get(i);
+        Iterator<PersonListItem> iterator = listItems.descendingIterator();
+        while (iterator.hasNext()) {
+            PersonListItem item = iterator.next();
             if (isItemVisible(item)) {
                 event = item.process(event);
                 if (event == null) {
