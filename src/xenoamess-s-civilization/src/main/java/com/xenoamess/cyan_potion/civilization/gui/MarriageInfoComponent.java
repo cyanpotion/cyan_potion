@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
@@ -128,7 +129,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
             return;
         }
 
-        List<Marriage> marriages = person.getMarriages();
+        Collection<Marriage> marriages = person.getMarriages();
         for (Marriage marriage : marriages) {
             // Add buttons for all subordinate persons if current person is dominant
             if (marriage.getDominantPerson().equals(person)) {
@@ -192,7 +193,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         y += 45;
 
         // Marriage status summary
-        List<Marriage> marriages = person.getMarriages();
+        Collection<Marriage> marriages = person.getMarriages();
         int activeCount = (int) marriages.stream().filter(Marriage::isActive).count();
         int endedCount = marriages.size() - activeCount;
 

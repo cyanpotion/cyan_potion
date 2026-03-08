@@ -24,10 +24,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
 /**
@@ -115,7 +116,7 @@ public class Person {
     // ==================== Clan Memberships ====================
 
     @Getter
-    private final List<ClanMembership> clanMemberships = new ArrayList<>();
+    private final Collection<ClanMembership> clanMemberships = new ConcurrentLinkedDeque<>();
 
     @Getter
     @Setter
@@ -124,7 +125,7 @@ public class Person {
     // ==================== Marriages ====================
 
     @Getter
-    private final List<Marriage> marriages = new ArrayList<>();
+    private final Collection<Marriage> marriages = new ConcurrentLinkedDeque<>();
 
     // ==================== Parent References ====================
 
@@ -139,7 +140,7 @@ public class Person {
     // ==================== Traits ====================
 
     @Getter
-    private final List<Trait> traits = new ArrayList<>();
+    private final Collection<Trait> traits = new ConcurrentLinkedDeque<>();
 
     // ==================== Date Tracking ====================
 
