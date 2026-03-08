@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Executor for managing and running decisions for all persons.
@@ -61,13 +62,11 @@ public class DecisionExecutor {
      * @param currentDate the current game date
      */
     public void executeDecisionsForAll(LocalDate currentDate) {
-        List<Person> alivePersons = context.getAllAlivePersons();
-        log.info("Executing decisions for {} alive persons on {}",
-            alivePersons.size(), currentDate);
-
-        for (Person person : alivePersons) {
-            executeDecisionsForPerson(person);
-        }
+        Stream<Person> alivePersons = context.getAllAlivePersons();
+        log.info("Executing decisions for alive persons on {}", currentDate);
+        alivePersons.forEach(
+                this::executeDecisionsForPerson
+        );
     }
 
     /**

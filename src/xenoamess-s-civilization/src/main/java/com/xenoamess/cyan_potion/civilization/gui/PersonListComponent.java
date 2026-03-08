@@ -46,8 +46,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
-
 /**
  * A scrollable list component for displaying and filtering persons.
  *
@@ -59,10 +57,16 @@ import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 @ToString
 public class PersonListComponent extends AbstractControllableGameWindowComponent {
 
+    /**
+     * 代表【这个】过滤组件处理的【所有】人员。默认全部。
+     */
     public Collection<Person> getAllPersons() {
-        return PersonCache.PERSON_CACHE.values();
+        return PersonCache.getAllAliveAndDeadPersonCollection();
     }
 
+    /**
+     * 代表【这个】过滤组件处理的过滤后的人员。默认全部。
+     */
     @Getter
     private final Collection<Person> filteredPersons = new ArrayList<>();
 
@@ -121,7 +125,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Create background texture
         this.backgroundTexture = this.getResourceManager().fetchResource(
             Texture.class,
-            STRING_PURE_COLOR,
+            Texture.STRING_PURE_COLOR,
             "",
             "0.15,0.15,0.15,0.9"
         );
@@ -132,7 +136,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         this.searchPanel.getBackgroundPicture().setBindable(
             this.getResourceManager().fetchResource(
                 Texture.class,
-                STRING_PURE_COLOR,
+                Texture.STRING_PURE_COLOR,
                 "",
                 "0.2,0.2,0.2,1.0"
             )
@@ -165,7 +169,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         this.listPanel.getBackgroundPicture().setBindable(
             this.getResourceManager().fetchResource(
                 Texture.class,
-                STRING_PURE_COLOR,
+                Texture.STRING_PURE_COLOR,
                 "",
                 "0.12,0.12,0.12,0.95"
             )
@@ -363,7 +367,12 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         for (PersonListItem item : listItems) {
             item.update();
         }
+        updateCaches();
         return super.update();
+    }
+
+    private void updateCaches() {
+        PersonCache.update();
     }
 
     @Override
@@ -435,15 +444,6 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     }
 
     /**
-     * Gets all persons (unfiltered).
-     *
-     * @return list of all persons
-     */
-    public Collection<Person> getPersons() {
-        return getAllPersons();
-    }
-
-    /**
      * Performs search/filter based on search box content.
      */
     public void performSearch() {
@@ -451,10 +451,11 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         filteredPersons.clear();
         filteredPersons.addAll(
-                getAllPersons().stream()
+                getAllPersons()
+                .stream()
                 .filter(filter)
                 .filter(p -> matchesSearch(p, query))
-                .collect(Collectors.toList())
+                .toList()
         );
 
         rebuildListItems();

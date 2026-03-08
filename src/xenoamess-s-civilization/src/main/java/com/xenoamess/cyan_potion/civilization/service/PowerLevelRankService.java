@@ -16,6 +16,7 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import com.xenoamess.cyan_potion.civilization.cache.PersonCache;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,25 +48,19 @@ public class PowerLevelRankService {
      * Calculates power level ranks for all alive persons.
      * Should be called on the 1st of each month.
      *
-     * @param persons list of all persons
      * @param currentDate current game date
      * @return number of persons whose ranks were updated
      */
-    public int calculateRanks(Collection<Person> persons, LocalDate currentDate) {
-        // Filter alive persons only - dead persons keep their last rank for display
-        List<Person> alivePersons = persons.stream()
-            .filter(Person::isAlive)
-            .collect(Collectors.toList());
+    public int calculateRanks(LocalDate currentDate) {
+        // Sort by power level (ascending - lowest first)
+        List<Person> sortedPersons =  PersonCache.getAllAlivePersonStream()
+            .sorted(Comparator.comparingDouble(Person::getPowerLevel))
+            .toList();
 
-        if (alivePersons.isEmpty()) {
+        if (sortedPersons.isEmpty()) {
             log.debug("No alive persons to calculate ranks for");
             return 0;
         }
-
-        // Sort by power level (ascending - lowest first)
-        List<Person> sortedPersons = alivePersons.stream()
-            .sorted(Comparator.comparingDouble(Person::getPowerLevel))
-            .collect(Collectors.toList());
 
         int totalCount = sortedPersons.size();
         int remainingCount = totalCount;

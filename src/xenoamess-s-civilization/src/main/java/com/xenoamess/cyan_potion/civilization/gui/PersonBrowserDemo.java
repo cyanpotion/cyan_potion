@@ -48,7 +48,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.xenoamess.cyan_potion.base.render.Texture.STRING_PURE_COLOR;
 
@@ -298,13 +300,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
     }
 
     private void generatePersons() {
-        RandomPersonGenerator generator = new RandomPersonGenerator();
-        List<Person> persons = generator.generateMultiple(100, dateManager.getCurrentDate());
-        for (Person person : persons) {
-            PersonCache.PERSON_CACHE.put(person.getId(), person);
-        }
+        PersonCache.generatePersons(this.dateManager);
         listComponent.performSearch();
-        log.info("Generated {} persons at game date {}", persons.size(), dateManager.getFormattedDate());
     }
 
     private void onPersonSelected(Person person) {
@@ -340,23 +337,23 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     /**
      * Updates power levels for all persons on the 1st of each month.
-     *
-     * @param persons list of persons to update
      */
-    private void updatePowerLevels(Collection<Person> persons) {
+    private void updatePowerLevels() {
         LocalDate currentDate = dateManager.getCurrentDate();
-        int updatedCount = 0;
-        for (Person person : persons) {
+        AtomicInteger updatedCount = new AtomicInteger(0);
+        PersonCache.getAllAlivePersonStream().forEach(person -> {
             if (person.isAlive()) {
                 person.updatePowerLevel(currentDate);
-                updatedCount++;
+                updatedCount.incrementAndGet();
             }
-        }
+        });
         log.info("Updated power levels for {} persons on {}", updatedCount,
             GameDateManager.formatDate(currentDate));
 
         // Calculate power level ranks based on updated power levels
-        int rankedCount = powerLevelRankService.calculateRanks(persons, currentDate);
+        int rankedCount = powerLevelRankService.calculateRanks(
+                currentDate
+        );
         log.info("Calculated power level ranks for {} persons", rankedCount);
     }
 
@@ -368,16 +365,13 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
     }
 
     @Override
-    public List<Person> getAllAlivePersons() {
-        return listComponent.getPersons().stream()
-            .filter(Person::isAlive)
-            .collect(Collectors.toList());
+    public Stream<Person> getAllAlivePersons() {
+        return PersonCache.getAllAlivePersonStream();
     }
 
     @Override
     public List<Person> getEligibleFemales() {
-        return listComponent.getPersons().stream()
-            .filter(Person::isAlive)
+        return PersonCache.getAllAlivePersonStream()
             .filter(p -> p.getGender() == Gender.FEMALE)
             .filter(p -> !p.isMarried())
             .filter(p -> p.getAge() >= 16)
@@ -387,8 +381,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     @Override
     public List<Person> getEligibleMales() {
-        return listComponent.getPersons().stream()
-            .filter(Person::isAlive)
+        return PersonCache.getAllAlivePersonStream()
             .filter(p -> p.getGender() == Gender.MALE)
             .filter(p -> !p.isMarried())
             .filter(p -> p.getAge() >= 16)
@@ -454,11 +447,13 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Update game date (1 day per second)
         int daysAdvanced = dateManager.update();
         if (daysAdvanced > 0) {
-            for (Person person : PersonCache.PERSON_CACHE.values()) {
+            AtomicInteger updatedCount = new AtomicInteger(0);
+            PersonCache.getAllAlivePersonStream().forEach(person -> {
                 lifecycleService.advanceDate(person, daysAdvanced);
-            }
+                updatedCount.incrementAndGet();
+            });
             log.debug("Advanced {} days for {} persons, game date: {}",
-                daysAdvanced, PersonCache.PERSON_CACHE.size(), dateManager.getFormattedDate());
+                daysAdvanced, updatedCount.get(), dateManager.getFormattedDate());
 
             // Handle monthly updates (supports multi-month jumps)
             LocalDate dateAfter = dateManager.getCurrentDate();
@@ -473,7 +468,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
             java.time.YearMonth current = lastMonthlyUpdate.plusMonths(1);
             while (!current.isAfter(ymAfter)) {
                 log.info("Executing monthly update for {}/{} (fast-forward)", current.getYear(), current.getMonthValue());
-                updatePowerLevels(PersonCache.PERSON_CACHE.values());
+                updatePowerLevels();
                 decisionExecutor.executeDecisionsForAll(getCurrentDate());
                 lastMonthlyUpdate = current;
                 current = current.plusMonths(1);
@@ -481,7 +476,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
             // Also check if we're exactly on the 1st (normal flow)
             if (dateManager.getDay() == 1 && !lastMonthlyUpdate.equals(ymAfter)) {
-                updatePowerLevels(PersonCache.PERSON_CACHE.values());
+                updatePowerLevels();
                 decisionExecutor.executeDecisionsForAll(getCurrentDate());
                 lastMonthlyUpdate = ymAfter;
             }
@@ -582,9 +577,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         );
 
         // Draw person count at bottom right
-        int aliveCount = (int) listComponent.getPersons().stream()
-            .filter(Person::isAlive).count();
-        String countText = String.format("存活: %d/%d", aliveCount, listComponent.getPersons().size());
+        String countText = String.format("存活: %d/%d", (int) PersonCache.getAllAlivePersonStream().count(), (int) PersonCache.getAllAliveAndDeadPersonStream().count());
         // Calculate position for right-aligned text
         float countTextWidth = countText.length() * 12; // Approximate width
         this.getGameWindow().drawTextLeftTop(

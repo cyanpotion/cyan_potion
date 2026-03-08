@@ -20,6 +20,7 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Context for decision execution.
@@ -42,7 +43,7 @@ public interface DecisionContext {
      *
      * @return list of all alive persons
      */
-    List<Person> getAllAlivePersons();
+    Stream<Person> getAllAlivePersons();
 
     /**
      * Gets all eligible female candidates for marriage.
