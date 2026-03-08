@@ -68,9 +68,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Getter
     private final Button nextButton;
 
-    @Getter
-    private final Button marriageInfoButton;
-
     // Tab buttons for switching between basic info and marriage info
     @Getter
     private final Button basicInfoTabButton;
@@ -184,13 +181,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         });
 
         nextButton.setActive(true);
-
-        // Marriage info button (legacy, will be replaced by tab)
-        this.marriageInfoButton = new Button(gameWindow, null, "婚姻详情");
-        this.marriageInfoButton.registerOnMouseButtonLeftDownCallback(event -> {
-            currentTab = 1;
-            return null;
-        });
 
         // Tab buttons for switching views
         this.basicInfoTabButton = new Button(gameWindow, null, "基本信息");
@@ -753,7 +743,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         if (currentTab != 0) {
             prevButton.setVisible(false);
             nextButton.setVisible(false);
-            marriageInfoButton.setVisible(false);
             return;
         }
 
@@ -788,16 +777,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
                 "浏览记录"
             );
         }
-
-        // Marriage info button - positioned at bottom right
-        float marriageButtonWidth = 100;
-        marriageInfoButton.setLeftTopPos(
-            getLeftTopPosX() + getWidth() - marriageButtonWidth - 20,
-            buttonY
-        );
-        marriageInfoButton.setSize(marriageButtonWidth, buttonHeight);
-        marriageInfoButton.setVisible(true);
-        marriageInfoButton.update();
     }
 
     /**
@@ -876,11 +855,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
         // Process navigation buttons (only in basic info tab)
         if (currentTab == 0) {
-            event = marriageInfoButton.process(event);
-            if (event == null) {
-                return null;
-            }
-
             event = prevButton.process(event);
             if (event == null) {
                 return null;
@@ -901,7 +875,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         super.addToGameWindowComponentTree(node);
         this.prevButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.nextButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        this.marriageInfoButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.basicInfoTabButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         this.marriageTabButton.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         if (marriageInfoComponent != null) {
