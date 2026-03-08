@@ -18,6 +18,7 @@ package com.xenoamess.cyan_potion.civilization.service;
 
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.util.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -108,7 +109,7 @@ public class PersonAttributeCalculator {
      * @param person the person
      * @return age in years
      */
-    public int getAge(Person person) {
+    public int calculateAge(Person person) {
         if (person.getBirthDate() == null) {
             return 0;
         }
@@ -120,15 +121,8 @@ public class PersonAttributeCalculator {
         if (endDate == null) {
             return 0;
         }
-        // Fast calculation using year difference (no ChronoUnit overhead)
-        int age = endDate.getYear() - person.getBirthDate().getYear();
-        // Adjust if birthday hasn't occurred this year
-        if (endDate.getMonthValue() < person.getBirthDate().getMonthValue() ||
-            (endDate.getMonthValue() == person.getBirthDate().getMonthValue() &&
-             endDate.getDayOfMonth() < person.getBirthDate().getDayOfMonth())) {
-            age--;
-        }
-        return Math.max(0, age);
+        LocalDate startDate = person.getBirthDate();
+        return TimeUtil.calculateAge(startDate, endDate);
     }
 
     /**
@@ -140,20 +134,13 @@ public class PersonAttributeCalculator {
      */
     public int getAgeAtDeath(Person person) {
         if (person.getDeathDate() == null) {
-            return getAge(person);
+            return calculateAge(person);
         }
         if (person.getBirthDate() == null) {
             return 0;
         }
         // Fast calculation using year difference
-        int age = person.getDeathDate().getYear() - person.getBirthDate().getYear();
-        // Adjust if birthday hadn't occurred in death year
-        if (person.getDeathDate().getMonthValue() < person.getBirthDate().getMonthValue() ||
-            (person.getDeathDate().getMonthValue() == person.getBirthDate().getMonthValue() &&
-             person.getDeathDate().getDayOfMonth() < person.getBirthDate().getDayOfMonth())) {
-            age--;
-        }
-        return Math.max(0, age);
+        return TimeUtil.calculateAge(person.getBirthDate(), person.getDeathDate());
     }
 
     /**
@@ -238,7 +225,7 @@ public class PersonAttributeCalculator {
             return Math.round(baseFertility * 10.0) / 10.0;
         } else {
             // Female: also affected by age
-            int age = getAge(person);
+            int age = calculateAge(person);
 
             if (age >= 55) {
                 return 0.0;

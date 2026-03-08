@@ -156,7 +156,7 @@ public class PersonLifecycleService {
                 person.setDeathCause("自然衰老");
                 log.info("Person {} ({}) generated as dead (health: {} -> {}, age: {}, cause: {})",
                     person.getId(), person.getName(), oldHealth, person.getHealth(),
-                    attributeCalculator.getAge(person), person.getDeathCause());
+                    attributeCalculator.calculateAge(person), person.getDeathCause());
             } else {
                 log.debug("Person {} initial health set to {} (lost {} over {} days)",
                     person.getId(), person.getHealth(), healthLoss, daysPassed);
