@@ -69,6 +69,12 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
     private static final Vector4f COLOR_LINK = new Vector4f(0.4f, 0.8f, 1.0f, 1.0f);
     private static final Vector4f COLOR_LINK_HOVER = new Vector4f(0.6f, 0.9f, 1.0f, 1.0f);
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Getter
+    @Setter
+    private PersonDetailComponent personDetailComponent;
+
     /**
      * Helper class to store person button info.
      */
@@ -85,11 +91,12 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
     /**
      * Creates a new MarriageInfoComponent.
      *
-     * @param gameWindow the game window
+     * @param personDetailComponent personDetailComponent
      * @param person the person to display marriage info for
      */
-    public MarriageInfoComponent(GameWindow gameWindow, Person person) {
-        super(gameWindow);
+    public MarriageInfoComponent(PersonDetailComponent personDetailComponent, Person person) {
+        super(personDetailComponent.getGameWindow());
+        this.personDetailComponent = personDetailComponent;
         this.person = person;
 
         // Background
@@ -138,6 +145,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         button.registerOnMouseButtonLeftDownCallback(event -> {
             if (onPersonClick != null) {
                 onPersonClick.accept(targetPerson);
+                personDetailComponent.getTabbedPanel().setCurrentTab(0);
             }
             return null;
         });
@@ -277,9 +285,9 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         // Role label
         String roleLabel;
         if (marriage.getDominantPerson().equals(person)) {
-            roleLabel = "对象列表 (主体/强势方):";
+            roleLabel = "强婚 对象";
         } else {
-            roleLabel = "对象 (客体/弱势方):";
+            roleLabel = "弱婚 对象";
         }
         this.getGameWindow().drawTextCenter(
             null,

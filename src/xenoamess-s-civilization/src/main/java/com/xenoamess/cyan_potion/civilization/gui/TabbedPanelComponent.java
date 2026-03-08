@@ -50,7 +50,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
 
     @Getter
     @Setter
-    private int currentTab = 0;
+    private volatile int currentTab = 0;
 
     @Getter
     @Setter

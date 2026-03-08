@@ -184,7 +184,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         tabbedPanel.addTab("基本信息", basicInfoComponent);
 
         // Create marriage info component
-        marriageInfoComponent = new MarriageInfoComponent(getGameWindow(), person);
+        marriageInfoComponent = new MarriageInfoComponent(this, person);
         marriageInfoComponent.setOnPersonClick(targetPerson -> {
             show(targetPerson);
             return;
