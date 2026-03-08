@@ -82,4 +82,21 @@ public interface DecisionContext {
      * @return true if marriage was successful
      */
     boolean executeMarriage(Person dominant, Person subordinate);
+
+    /**
+     * Adds a newborn child to the world.
+     *
+     * @param child the newborn child to add
+     * @return true if successfully added
+     */
+    boolean addNewborn(Person child);
+
+    /**
+     * Marks a person as dead with the specified cause.
+     *
+     * @param person the person to mark as dead
+     * @param cause the cause of death
+     * @return true if successfully marked
+     */
+    boolean markAsDead(Person person, String cause);
 }

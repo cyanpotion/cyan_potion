@@ -30,6 +30,7 @@ import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.decision.*;
+import com.xenoamess.cyan_potion.civilization.decision.decision.ChildbirthDecision;
 import com.xenoamess.cyan_potion.civilization.decision.decision.MiscarriageDecision;
 import com.xenoamess.cyan_potion.civilization.decision.decision.PatriarchalMarriageDecision;
 import com.xenoamess.cyan_potion.civilization.decision.decision.PregnancyDecision;
@@ -227,6 +228,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
      * Registers all available decisions.
      */
     private void registerDecisions() {
+        decisionExecutor.registerDecision(new ChildbirthDecision());
         decisionExecutor.registerDecision(new MiscarriageDecision());
         decisionExecutor.registerDecision(new PregnancyDecision());
         decisionExecutor.registerDecision(new PatriarchalMarriageDecision());
@@ -421,6 +423,43 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
             return true;
         } catch (Exception e) {
             log.error("Failed to execute marriage: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addNewborn(Person child) {
+        try {
+            if (child == null || child.getId() == null) {
+                log.error("Cannot add null child or child with null ID");
+                return false;
+            }
+
+            // Add to caches
+            PersonCache.LIKELY_ALIVE_PERSON_CACHE.put(child.getId(), child);
+            PersonCache.ALL_PERSON_CACHE.put(child.getId(), child);
+
+            log.info("Newborn added: {} (ID: {}) born on {}",
+                child.getName(), child.getId(), getCurrentDate());
+            return true;
+        } catch (Exception e) {
+            log.error("Failed to add newborn: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean markAsDead(Person person, String cause) {
+        try {
+            if (person == null) {
+                log.error("Cannot mark null person as dead");
+                return false;
+            }
+
+            lifecycleService.markAsDead(person, cause);
+            return true;
+        } catch (Exception e) {
+            log.error("Failed to mark person as dead: {}", e.getMessage());
             return false;
         }
     }
