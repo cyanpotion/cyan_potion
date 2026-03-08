@@ -24,9 +24,12 @@ import com.xenoamess.cyan_potion.civilization.decision.PendingPlayerEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Decision for patriarchal marriage.
@@ -84,75 +87,80 @@ public class PatriarchalMarriageDecision implements Decision {
     @Override
     public DecisionResult execute(Person person, DecisionContext context) {
         // Find all eligible females
-        List<Person> eligibleFemales = context.getEligibleFemales()
+        Stream<Person> eligibleFemales = context.getEligibleFemales()
             .filter(female -> canAcceptMarriage(female))
-            .sorted(Comparator.comparingDouble(Person::getPowerLevel).reversed()) // Highest power level first
-            .collect(Collectors.toList());
-
-        if (eligibleFemales.isEmpty()) {
-            return DecisionResult.SKIPPED;
-        }
-
+            .sorted(Comparator.comparingInt(Person::getPowerLevelRank).reversed()); // Highest power level first;
+        double maleScore = person.calculatePowerLevel();
         // Try to propose to each female in order of power level
-        for (Person female : eligibleFemales) {
-            double maleScore = person.getPowerLevel();
-            double femaleScore = female.getPowerLevel();
-
-            // Check if female would accept based on score
-            if (!wouldAcceptProposal(maleScore, femaleScore)) {
-                log.debug("Male {} (score {}) rejected by female {} (score {}) - score too low",
-                    person.getName(), maleScore, female.getName(), femaleScore);
-                continue;
-            }
-
-            // Check if female is player-controlled
-            if (context.isPlayerControlled(female)) {
-                // Create pending event for player decision
-                String eventId = UUID.randomUUID().toString();
-                String description = String.format(
-                    "%s (能级分: %.1f) 向你求婚。你的能级分: %.1f",
-                    person.getName(), maleScore, femaleScore
-                );
-
-                PendingPlayerEvent event = new PendingPlayerEvent(
-                    eventId,
-                    PendingPlayerEvent.EventType.MARRIAGE_PROPOSAL,
-                    person,
-                    female,
-                    context.getCurrentDate(),
-                    description,
-                    // On accept
-                    e -> {
-                        boolean success = context.executeMarriage(person, female);
-                        if (success) {
-                            log.info("Player accepted marriage proposal from {} to {}",
-                                person.getName(), female.getName());
+        final AtomicReference<DecisionResult> resultReference = new AtomicReference<>(null);
+        eligibleFemales.anyMatch(
+                new Predicate<Person>() {
+                    @Override
+                    public boolean test(Person female) {
+                        if (resultReference.get() != null) {
+                            return false;
                         }
-                    },
-                    // On reject
-                    e -> {
-                        log.info("Player rejected marriage proposal from {} to {}",
-                            person.getName(), female.getName());
+                        double femaleScore = female.calculatePowerLevel();
+                        // Check if female would accept based on score
+                        if (!wouldAcceptProposal(maleScore, femaleScore)) {
+                            log.debug("Male {} (score {}) rejected by female {} (score {}) - score too low",
+                                    person.getName(), maleScore, female.getName(), femaleScore);
+                            return false;
+                        }
+
+                        // Check if female is player-controlled
+                        if (context.isPlayerControlled(female)) {
+                            // Create pending event for player decision
+                            String eventId = UUID.randomUUID().toString();
+                            String description = String.format(
+                                    "%s (能级分: %.1f) 向你求婚。你的能级分: %.1f",
+                                    person.getName(), maleScore, femaleScore
+                            );
+
+                            PendingPlayerEvent event = new PendingPlayerEvent(
+                                    eventId,
+                                    PendingPlayerEvent.EventType.MARRIAGE_PROPOSAL,
+                                    person,
+                                    female,
+                                    context.getCurrentDate(),
+                                    description,
+                                    // On accept
+                                    e -> {
+                                        boolean success = context.executeMarriage(person, female);
+                                        if (success) {
+                                            log.info("Player accepted marriage proposal from {} to {}",
+                                                    person.getName(), female.getName());
+                                        }
+                                    },
+                                    // On reject
+                                    e -> {
+                                        log.info("Player rejected marriage proposal from {} to {}",
+                                                person.getName(), female.getName());
+                                    }
+                            );
+
+                            context.addPendingPlayerEvent(event);
+                            log.info("Created pending marriage proposal from {} to player-controlled {}",
+                                    person.getName(), female.getName());
+
+                            resultReference.set(DecisionResult.PENDING_PLAYER);
+                            return true;
+                        } else {
+                            // AI female auto-accepts if conditions are met
+                            boolean success = context.executeMarriage(person, female);
+                            if (success) {
+                                log.info("Patriarchal marriage: {} (score: {}) married {} (score: {})",
+                                        person.getName(), maleScore, female.getName(), femaleScore);
+                                resultReference.set(DecisionResult.SUCCESS);
+                                return true;
+                            }
+                        }
+                        return false;
                     }
-                );
-
-                context.addPendingPlayerEvent(event);
-                log.info("Created pending marriage proposal from {} to player-controlled {}",
-                    person.getName(), female.getName());
-
-                return DecisionResult.PENDING_PLAYER;
-            } else {
-                // AI female auto-accepts if conditions are met
-                boolean success = context.executeMarriage(person, female);
-                if (success) {
-                    log.info("Patriarchal marriage: {} (score: {}) married {} (score: {})",
-                        person.getName(), maleScore, female.getName(), femaleScore);
-                    return DecisionResult.SUCCESS;
                 }
-            }
-        }
-
-        return DecisionResult.FAILED;
+        );
+        DecisionResult result = resultReference.get();
+        return result == null ? DecisionResult.SKIPPED : result;
     }
 
     /**
