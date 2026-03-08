@@ -39,12 +39,43 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+/**
+ * Sort order for person list.
+ */
+enum SortOrder {
+    NONE, ASC, DESC
+}
+
+/**
+ * Sort field for person list.
+ */
+enum SortField {
+    NAME("姓名"),
+    CLAN("宗族"),
+    AGE("年龄"),
+    POWER("能力"),
+    MONEY("金钱"),
+    PRESTIGE("威望");
+
+    private final String displayName;
+
+    SortField(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+}
 
 /**
  * A scrollable list component for displaying and filtering persons.
@@ -117,6 +148,20 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     @Getter
     @Setter
     private float searchPanelHeight = 50;
+
+    // Sort panel
+    @Getter
+    private final Panel sortPanel;
+    @Getter
+    private final java.util.Map<SortField, Button> sortButtons = new java.util.HashMap<>();
+    @Getter
+    private final java.util.Map<SortField, SortOrder> sortOrders = new java.util.HashMap<>();
+    private float sortPanelHeight = 30;
+
+    // Status panel (count display)
+    @Getter
+    private final Panel statusPanel;
+    private float statusPanelHeight = 25;
 
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
@@ -208,11 +253,138 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             )
         );
 
+        // Sort panel
+        this.sortPanel = new Panel(gameWindow);
+        this.sortPanel.getBackgroundPicture().setBindable(
+            this.getResourceManager().fetchResource(
+                Texture.class,
+                Texture.STRING_PURE_COLOR,
+                "",
+                "0.18,0.18,0.18,1.0"
+            )
+        );
+
+        // Initialize sort buttons
+        for (SortField field : SortField.values()) {
+            sortOrders.put(field, SortOrder.NONE);
+            Button sortButton = new Button(gameWindow, null, field.getDisplayName());
+            final SortField currentField = field;
+            sortButton.registerOnMouseButtonLeftDownCallback(event -> {
+                toggleSort(currentField);
+                return null;
+            });
+            sortButtons.put(field, sortButton);
+        }
+
+        // Status panel for count display
+        this.statusPanel = new Panel(gameWindow);
+        this.statusPanel.getBackgroundPicture().setBindable(
+            this.getResourceManager().fetchResource(
+                Texture.class,
+                Texture.STRING_PURE_COLOR,
+                "",
+                "0.15,0.15,0.15,1.0"
+            )
+        );
+
         initProcessors();
     }
 
     private void toggleFilterWindow() {
         filterWindow.setVisible(!filterWindow.isVisible());
+    }
+
+    private void toggleSort(SortField field) {
+        // Cycle: NONE -> ASC -> DESC -> NONE
+        SortOrder currentOrder = sortOrders.get(field);
+        SortOrder newOrder;
+        switch (currentOrder) {
+            case NONE:
+                newOrder = SortOrder.ASC;
+                break;
+            case ASC:
+                newOrder = SortOrder.DESC;
+                break;
+            case DESC:
+            default:
+                newOrder = SortOrder.NONE;
+                break;
+        }
+
+        // Reset other sorts when selecting a new one (if switching to ASC/DESC)
+        if (newOrder != SortOrder.NONE) {
+            for (SortField f : SortField.values()) {
+                if (f != field) {
+                    sortOrders.put(f, SortOrder.NONE);
+                }
+            }
+        }
+
+        sortOrders.put(field, newOrder);
+        updateSortButtonLabels();
+        performSearch();
+    }
+
+    private void updateSortButtonLabels() {
+        for (SortField field : SortField.values()) {
+            SortOrder order = sortOrders.get(field);
+            Button button = sortButtons.get(field);
+            String baseLabel = field.getDisplayName();
+            switch (order) {
+                case ASC:
+                    button.setButtonText(baseLabel + " ↑");
+                    break;
+                case DESC:
+                    button.setButtonText(baseLabel + " ↓");
+                    break;
+                case NONE:
+                default:
+                    button.setButtonText(baseLabel);
+                    break;
+            }
+        }
+    }
+
+    private Comparator<Person> buildComparator() {
+        for (SortField field : SortField.values()) {
+            SortOrder order = sortOrders.get(field);
+            if (order == SortOrder.NONE) {
+                continue;
+            }
+
+            Comparator<Person> comparator;
+            switch (field) {
+                case NAME:
+                    comparator = Comparator.comparing(Person::getName, String.CASE_INSENSITIVE_ORDER);
+                    break;
+                case CLAN:
+                    comparator = Comparator.comparing(
+                        p -> p.getPrimaryClan() != null ? p.getPrimaryClan().getName() : "",
+                        String.CASE_INSENSITIVE_ORDER
+                    );
+                    break;
+                case AGE:
+                    comparator = Comparator.comparingInt(Person::getAge);
+                    break;
+                case POWER:
+                    comparator = Comparator.comparingDouble(Person::calculatePowerLevel);
+                    break;
+                case MONEY:
+                    comparator = Comparator.comparingDouble(Person::getMoney);
+                    break;
+                case PRESTIGE:
+                    comparator = Comparator.comparingDouble(Person::getPrestige);
+                    break;
+                default:
+                    continue;
+            }
+
+            if (order == SortOrder.DESC) {
+                comparator = comparator.reversed();
+            }
+            return comparator;
+        }
+        return null;
     }
 
     private void applyFilterSettings(FilterSettingsComponent settings) {
@@ -257,7 +429,8 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         this.registerProcessor(
             MouseScrollEvent.class,
             (MouseScrollEvent event) -> {
-                float maxScroll = Math.max(0, filteredPersons.size() * itemHeight - getHeight() + searchPanelHeight);
+                float viewHeight = getHeight() - searchPanelHeight - sortPanelHeight - statusPanelHeight;
+                float maxScroll = Math.max(0, filteredPersons.size() * itemHeight - viewHeight);
                 scrollOffset = Math.max(0, Math.min(maxScroll, scrollOffset - (float)event.getYoffset() * itemHeight * 0.5f));
                 updateListPositions();
                 return null;
@@ -285,13 +458,14 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 }
 
                 if (event.getAction() == GLFW.GLFW_PRESS) {
+                    float viewHeight = getHeight() - searchPanelHeight - sortPanelHeight - statusPanelHeight;
                     switch (event.getKey()) {
                         case GLFW.GLFW_KEY_UP:
                             scrollOffset = Math.max(0, scrollOffset - itemHeight);
                             updateListPositions();
                             return null;
                         case GLFW.GLFW_KEY_DOWN:
-                            float maxScroll = Math.max(0, filteredPersons.size() * itemHeight - getHeight() + searchPanelHeight);
+                            float maxScroll = Math.max(0, filteredPersons.size() * itemHeight - viewHeight);
                             scrollOffset = Math.min(maxScroll, scrollOffset + itemHeight);
                             updateListPositions();
                             return null;
@@ -301,7 +475,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                             return null;
                         case GLFW.GLFW_KEY_END:
                             float totalHeight = filteredPersons.size() * itemHeight;
-                            scrollOffset = Math.max(0, totalHeight - getHeight() + searchPanelHeight);
+                            scrollOffset = Math.max(0, totalHeight - viewHeight);
                             updateListPositions();
                             return null;
                     }
@@ -390,13 +564,47 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Update list panel layout
         listPanel.setLeftTopPos(
             this.getLeftTopPosX(),
+            this.getLeftTopPosY() + searchPanelHeight + sortPanelHeight
+        );
+        listPanel.setSize(this.getWidth(), this.getHeight() - searchPanelHeight - sortPanelHeight - statusPanelHeight);
+
+        // Update sort panel layout
+        sortPanel.setLeftTopPos(
+            this.getLeftTopPosX(),
             this.getLeftTopPosY() + searchPanelHeight
         );
-        listPanel.setSize(this.getWidth(), this.getHeight() - searchPanelHeight);
+        sortPanel.setSize(this.getWidth(), sortPanelHeight);
+
+        // Update sort button positions
+        float sortButtonPadding = 2;
+        float sortButtonWidth = (this.getWidth() - sortButtonPadding * (SortField.values().length + 1)) / SortField.values().length;
+        int i = 0;
+        for (SortField field : SortField.values()) {
+            Button button = sortButtons.get(field);
+            button.setLeftTopPos(
+                sortPanel.getLeftTopPosX() + sortButtonPadding + i * (sortButtonWidth + sortButtonPadding),
+                sortPanel.getLeftTopPosY() + sortButtonPadding
+            );
+            button.setSize(sortButtonWidth, sortPanelHeight - sortButtonPadding * 2);
+            i++;
+        }
+
+        // Update status panel layout
+        statusPanel.setLeftTopPos(
+            this.getLeftTopPosX(),
+            this.getLeftTopPosY() + this.getHeight() - statusPanelHeight
+        );
+        statusPanel.setSize(this.getWidth(), statusPanelHeight);
 
         searchPanel.update();
+        sortPanel.update();
+        statusPanel.update();
         listPanel.update();
         settingsButton.update();
+
+        for (Button sortButton : sortButtons.values()) {
+            sortButton.update();
+        }
 
         for (PersonListItem item : listItems) {
             item.update();
@@ -439,6 +647,12 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             searchBox.ifVisibleThenDraw();
         }
 
+        // Draw sort panel and buttons
+        sortPanel.ifVisibleThenDraw();
+        for (Button sortButton : sortButtons.values()) {
+            sortButton.ifVisibleThenDraw();
+        }
+
         // Draw list panel with clipping
         listPanel.ifVisibleThenDraw();
 
@@ -454,12 +668,24 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Draw scrollbar if needed
         drawScrollbar();
 
+        // Draw status panel with count
+        statusPanel.ifVisibleThenDraw();
+        String countText = String.format("共 %d 人", filteredPersons.size());
+        this.getGameWindow().drawTextCenter(
+            null,
+            statusPanel.getCenterPosX(),
+            statusPanel.getCenterPosY(),
+            12,
+            new Vector4f(0.7f, 0.7f, 0.7f, 1.0f),
+            countText
+        );
+
         return super.ifVisibleThenDraw();
     }
 
     private void drawScrollbar() {
         float contentHeight = filteredPersons.size() * itemHeight;
-        float viewHeight = getHeight() - searchPanelHeight;
+        float viewHeight = getHeight() - searchPanelHeight - sortPanelHeight - statusPanelHeight;
 
         if (contentHeight <= viewHeight) {
             return; // 不需要滚动条
@@ -510,12 +736,17 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             baseStream = this.getAllPersonStream();
         }
 
-        filteredPersons.addAll(
-                baseStream
-                        .filter(filter)
-                        .filter(p -> matchesSearch(p, query))
-                        .toList()
-        );
+        Stream<Person> stream = baseStream
+                .filter(filter)
+                .filter(p -> matchesSearch(p, query));
+
+        // Apply sorting if active
+        Comparator<Person> comparator = buildComparator();
+        if (comparator != null) {
+            stream = stream.sorted(comparator);
+        }
+
+        filteredPersons.addAll(stream.toList());
 
         rebuildListItems();
         scrollOffset = 0;
@@ -663,6 +894,14 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         event = settingsButton.process(event);
         if (event == null) {
             return null;
+        }
+
+        // Process sort buttons
+        for (Button sortButton : sortButtons.values()) {
+            event = sortButton.process(event);
+            if (event == null) {
+                return null;
+            }
         }
 
         // Pass event to searchBox if it's focused
