@@ -17,6 +17,7 @@
 package com.xenoamess.cyan_potion.civilization;
 
 import com.xenoamess.cyan_potion.base.GameManager;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import java.util.Map;
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
  */
+@Slf4j
 public class CivilizationGame {
 
     /**
