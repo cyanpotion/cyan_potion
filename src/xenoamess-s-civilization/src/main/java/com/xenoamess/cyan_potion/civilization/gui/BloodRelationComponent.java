@@ -187,7 +187,7 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
     }
 
     /**
-     * Gets all siblings (persons with at least one common parent).
+     * Gets all siblings (persons with at least one common parent), sorted by age descending.
      */
     private List<Person> getSiblings() {
         List<Person> siblings = new ArrayList<>();
@@ -210,6 +210,9 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
             }
         }
 
+        // Sort by age descending (oldest first)
+        siblings.sort((a, b) -> Integer.compare(b.getAge(), a.getAge()));
+
         return siblings;
     }
 
@@ -229,10 +232,13 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
     }
 
     /**
-     * Gets all children of this person.
+     * Gets all children of this person, sorted by age descending.
      */
     private List<Person> getChildren() {
-        return getChildrenOf(person);
+        List<Person> children = getChildrenOf(person);
+        // Sort by age descending (oldest first)
+        children.sort((a, b) -> Integer.compare(b.getAge(), a.getAge()));
+        return children;
     }
 
     @Override
