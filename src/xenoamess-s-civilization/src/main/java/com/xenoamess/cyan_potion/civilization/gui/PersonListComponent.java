@@ -164,7 +164,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         // Filter settings window (draggable)
         this.filterWindow = new DraggableWindowComponent(gameWindow, "筛选设置", filterSettings);
         this.filterWindow.setLeftTopPos(600, 100);
-        this.filterWindow.setSize(250, 200);
+        this.filterWindow.setSize(250, 260);
         this.filterWindow.setVisible(false);
 
         // List panel for person items
