@@ -144,7 +144,7 @@ public class Person {
      * Automatically maintained when using addChild/removeChild methods.
      */
     @Getter
-    private final List<Person> children = new ArrayList<>();
+    private final Collection<Person> children = new ConcurrentLinkedDeque<>();
 
     // ==================== Traits ====================
 
