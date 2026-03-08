@@ -408,10 +408,7 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     public void addToGameWindowComponentTree(GameWindowComponentTreeNode gameWindowComponentTreeNode) {
         IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(gameWindowComponentTreeNode);
         if (this.getGameWindowComponentTreeNode() != null) {
-            log.warn("a gameWindowComponentTreeNode cannot be bind to multiple GameWindowComponentTreeNodes. if you intend to do so, we suggest call this.getGameWindowComponentTreeNode().setAlive(false);this.setGameWindowComponentTreeNode(null) first");
-            this.getGameWindowComponentTreeNode().setAlive(false);
-            this.setGameWindowComponentTreeNode(null);
-            gameWindowComponentTreeNode.newNode(this);
+            log.warn("a gameWindowComponentTreeNode cannot be bind to multiple GameWindowComponentTreeNodes. if you intend to do so, please call this.setGameWindowComponentTreeNode(null) first");
             return;
         }
         gameWindowComponentTreeNode.newNode(this);
