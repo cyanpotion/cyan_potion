@@ -21,6 +21,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Manages the game date system.
@@ -37,16 +38,27 @@ public class GameDateManager {
     private static final long BASE_DAY_MILLIS = 1000; // Level 1: 1 day = 1 second
 
     // Speed multipliers for each level (1.5x progression)
-    private static final double[] SPEED_MULTIPLIERS = {1, 2, 5, 10, 20, 50};
-    public static final int MAX_SPEED_LEVEL = SPEED_MULTIPLIERS.length + 1;
+    // the last element is not be set to use, but to prevent potential failure.
+    private static final double[] SPEED_MULTIPLIERS = {1, 2, 5, 10, 20, 50, 100};
+    public static final int MAX_SPEED_LEVEL = SPEED_MULTIPLIERS.length;
     private static final int MIN_SPEED_LEVEL = 1;
+
+    public double getSpeedMultiplier() {
+        return SPEED_MULTIPLIERS[getLegalSpeedLevel() - 1];
+    }
+
+    @Getter
+    private final AtomicInteger speedLevel = new AtomicInteger(1);
+
+    public int getLegalSpeedLevel() {
+        int result = speedLevel.get();
+        result = Math.min(result, MAX_SPEED_LEVEL);
+        result = Math.max(result, MIN_SPEED_LEVEL);
+        return result;
+    }
 
     @Getter
     private LocalDate currentDate;
-
-    @Getter
-    @Setter
-    private int speedLevel = 1;
 
     @Getter
     @Setter
@@ -84,8 +96,10 @@ public class GameDateManager {
             return 0;
         }
 
+        int speed = getLegalSpeedLevel();
+
         // Level 5: Unlimited speed - advance as fast as possible
-        if (speedLevel == MAX_SPEED_LEVEL) {
+        if (speed == MAX_SPEED_LEVEL) {
             return advanceUnlimited();
         }
 
@@ -93,7 +107,7 @@ public class GameDateManager {
         long currentTime = System.currentTimeMillis();
         long elapsedMillis = currentTime - lastUpdateTime;
 
-        double multiplier = SPEED_MULTIPLIERS[speedLevel - 1];
+        double multiplier = getSpeedMultiplier();
         long effectiveDayMillis = (long) (BASE_DAY_MILLIS / multiplier);
 
         if (elapsedMillis < effectiveDayMillis) {
@@ -106,7 +120,7 @@ public class GameDateManager {
             accumulatedDays += daysToAdd;
             currentDate = START_DATE.plusDays(accumulatedDays);
             log.debug("Game date advanced by {} days to {} (speed level {})", 
-                daysToAdd, formatDate(currentDate), speedLevel);
+                daysToAdd, formatDate(currentDate), getLegalSpeedLevel());
             return (int) daysToAdd;
         }
 
@@ -135,11 +149,15 @@ public class GameDateManager {
      * @return new speed level
      */
     public int increaseSpeed() {
-        if (speedLevel < MAX_SPEED_LEVEL) {
-            speedLevel++;
-            log.info("Speed increased to level {}", speedLevel);
+        // 这里故意speedLevel.get()而不是getLegalSpeedLevel()， 是异常防止处理
+        int speed = speedLevel.get();
+        if (speed < MAX_SPEED_LEVEL) {
+            speedLevel.compareAndSet(speed, speed + 1);
+            log.info("Speed increased to level {}", speed + 1);
+        } else {
+            speedLevel.compareAndSet(speed, 1);
         }
-        return speedLevel;
+        return getLegalSpeedLevel();
     }
 
     /**
@@ -148,11 +166,15 @@ public class GameDateManager {
      * @return new speed level
      */
     public int decreaseSpeed() {
-        if (speedLevel > MIN_SPEED_LEVEL) {
-            speedLevel--;
-            log.info("Speed decreased to level {}", speedLevel);
+        // 这里故意speedLevel.get()而不是getLegalSpeedLevel()， 是异常防止处理
+        int speed = speedLevel.get();
+        if (speed > MIN_SPEED_LEVEL) {
+            speedLevel.compareAndSet(speed, speed - 1);
+            log.info("Speed decreased to level {}", speed - 1);
+        } else {
+            speedLevel.compareAndSet(speed, MAX_SPEED_LEVEL);
         }
-        return speedLevel;
+        return getLegalSpeedLevel();
     }
 
     /**
@@ -162,7 +184,7 @@ public class GameDateManager {
      */
     public void setSpeedLevel(int level) {
         if (level >= MIN_SPEED_LEVEL && level <= MAX_SPEED_LEVEL) {
-            this.speedLevel = level;
+            this.speedLevel.set(level);
             log.info("Speed set to level {}", speedLevel);
         }
     }
@@ -176,10 +198,11 @@ public class GameDateManager {
         if (paused) {
             return "暂停";
         }
-        if (speedLevel == MAX_SPEED_LEVEL) {
+        int speed = this.getLegalSpeedLevel();
+        if (speed == MAX_SPEED_LEVEL) {
             return MAX_SPEED_LEVEL + "档(极限)";
         }
-        return speedLevel + "档(" + String.format("%.2fx", SPEED_MULTIPLIERS[speedLevel - 1]) + ")";
+        return speed + "档(" + String.format("%.2fx", getSpeedMultiplier()) + ")";
     }
 
     /**
@@ -191,10 +214,11 @@ public class GameDateManager {
         if (paused) {
             return 0;
         }
-        if (speedLevel == MAX_SPEED_LEVEL) {
+        int speed = this.getLegalSpeedLevel();
+        if (speed == MAX_SPEED_LEVEL) {
             return 1800; // Approximate for display purposes
         }
-        return SPEED_MULTIPLIERS[speedLevel - 1];
+        return getSpeedMultiplier();
     }
 
     /**

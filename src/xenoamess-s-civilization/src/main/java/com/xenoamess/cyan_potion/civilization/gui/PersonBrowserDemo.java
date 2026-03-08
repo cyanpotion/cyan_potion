@@ -190,14 +190,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Speed control button (top right)
         this.speedButton = new Button(gameWindow, null, "速度: 1档");
         this.speedButton.registerOnMouseButtonLeftDownCallback(event -> {
-            int currentLevel = dateManager.getSpeedLevel();
-            int newLevel;
-            if (currentLevel >= GameDateManager.MAX_SPEED_LEVEL) {
-                newLevel = 1;
-                dateManager.setSpeedLevel(1);
-            } else {
-                newLevel = dateManager.increaseSpeed();
-            }
+            dateManager.increaseSpeed();
+            updateSpeedButtonText();
+            return null;
+        });
+        this.speedButton.registerOnMouseButtonRightDownCallback(event -> {
+            dateManager.decreaseSpeed();
             updateSpeedButtonText();
             return null;
         });
