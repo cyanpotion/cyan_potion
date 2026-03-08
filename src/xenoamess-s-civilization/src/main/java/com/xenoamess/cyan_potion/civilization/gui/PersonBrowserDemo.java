@@ -408,20 +408,36 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     @Override
     public boolean executeMarriage(Person dominant, Person subordinate) {
-        try {
-            String marriageId = java.util.UUID.randomUUID().toString();
-            java.util.List<Person> subordinates = java.util.List.of(subordinate);
-            Marriage marriage = new Marriage(marriageId, dominant, subordinates, getCurrentDate(), null);
-
-            dominant.addMarriage(marriage);
-            subordinate.addMarriage(marriage);
-
-            log.info("Marriage executed: {} (dominant) married {} (subordinate) on {}",
-                dominant.getName(), subordinate.getName(), getCurrentDate());
-            return true;
-        } catch (Exception e) {
-            log.error("Failed to execute marriage: {}", e.getMessage());
+        if (!dominant.getMarriages().isEmpty()) {
             return false;
+        }
+        synchronized (dominant.getMarriages()) {
+            if (!dominant.getMarriages().isEmpty()) {
+                return false;
+            }
+            if (!subordinate.getMarriages().isEmpty()) {
+                return false;
+            }
+            synchronized (subordinate.getMarriages()) {
+                if (!subordinate.getMarriages().isEmpty()) {
+                    return false;
+                }
+                try {
+                    String marriageId = java.util.UUID.randomUUID().toString();
+                    java.util.List<Person> subordinates = java.util.List.of(subordinate);
+                    Marriage marriage = new Marriage(marriageId, dominant, subordinates, getCurrentDate(), null);
+
+                    dominant.addMarriage(marriage);
+                    subordinate.addMarriage(marriage);
+
+                    log.info("Marriage executed: {} (dominant) married {} (subordinate) on {}",
+                            dominant.getName(), subordinate.getName(), getCurrentDate());
+                    return true;
+                } catch (Exception e) {
+                    log.error("Failed to execute marriage: {}", e.getMessage());
+                    return false;
+                }
+            }
         }
     }
 
