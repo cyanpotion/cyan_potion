@@ -117,6 +117,12 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
 
+    // Scrollbar
+    private final Picture scrollbarTrackPicture = new Picture();
+    private final Picture scrollbarThumbPicture = new Picture();
+    private final Texture scrollbarTrackTexture;
+    private final Texture scrollbarThumbTexture;
+
     /**
      * Creates a new PersonListComponent.
      *
@@ -133,6 +139,23 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
             "0.15,0.15,0.15,0.9"
         );
         this.backgroundPicture.setBindable(backgroundTexture);
+
+        // Create scrollbar textures
+        this.scrollbarTrackTexture = this.getResourceManager().fetchResource(
+            Texture.class,
+            Texture.STRING_PURE_COLOR,
+            "",
+            "0.2,0.2,0.2,0.5"
+        );
+        this.scrollbarTrackPicture.setBindable(scrollbarTrackTexture);
+
+        this.scrollbarThumbTexture = this.getResourceManager().fetchResource(
+            Texture.class,
+            Texture.STRING_PURE_COLOR,
+            "",
+            "0.6,0.6,0.6,0.8"
+        );
+        this.scrollbarThumbPicture.setBindable(scrollbarThumbTexture);
 
         // Search panel at top
         this.searchPanel = new Panel(gameWindow);
@@ -431,13 +454,30 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         float contentHeight = filteredPersons.size() * itemHeight;
         float viewHeight = getHeight() - searchPanelHeight;
 
-        if (contentHeight > viewHeight) {
-            // Scrollbar drawing is disabled as drawRect is not available in GameWindow
-            // float scrollbarWidth = 8;
-            // float scrollbarHeight = viewHeight * (viewHeight / contentHeight);
-            // float maxScroll = contentHeight - viewHeight;
-            // float scrollbarY = listPanel.getLeftTopPosY() + (scrollOffset / maxScroll) * (viewHeight - scrollbarHeight);
+        if (contentHeight <= viewHeight) {
+            return; // 不需要滚动条
         }
+
+        float scrollbarWidth = 8;
+        float scrollbarX = getLeftTopPosX() + getWidth() - scrollbarWidth - 2;
+        float scrollbarY = listPanel.getLeftTopPosY();
+
+        // 绘制滚动条轨道
+        scrollbarTrackPicture.setLeftTopPos(scrollbarX, scrollbarY);
+        scrollbarTrackPicture.setSize(scrollbarWidth, viewHeight);
+        scrollbarTrackPicture.draw(getGameWindow());
+
+        // 计算滑块大小和位置
+        float scrollRatio = viewHeight / contentHeight;
+        float thumbHeight = Math.max(20, viewHeight * scrollRatio);
+        float maxScroll = contentHeight - viewHeight;
+        float scrollProgress = scrollOffset / maxScroll;
+        float thumbY = scrollbarY + scrollProgress * (viewHeight - thumbHeight);
+
+        // 绘制滑块
+        scrollbarThumbPicture.setLeftTopPos(scrollbarX, thumbY);
+        scrollbarThumbPicture.setSize(scrollbarWidth, thumbHeight);
+        scrollbarThumbPicture.draw(getGameWindow());
     }
 
     private boolean isItemVisible(PersonListItem item) {
