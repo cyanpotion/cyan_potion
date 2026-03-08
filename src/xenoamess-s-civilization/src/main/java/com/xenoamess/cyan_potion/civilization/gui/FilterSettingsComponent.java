@@ -112,6 +112,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
      */
     public FilterSettingsComponent(GameWindow gameWindow) {
         super(gameWindow);
+        this.setVisible(false);
 
         // Background
         Texture bgTexture = this.getResourceManager().fetchResource(
@@ -124,8 +125,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         // Gender filter dropdown
         this.genderDropdownButton = new Button(gameWindow, null, "性别: 全部");
-        this.genderDropdownButton.setActive(true);
-        this.genderDropdownButton.setVisible(true);
+        this.genderDropdownButton.setVisible(this.isVisible());
         this.genderDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
             cycleGenderOption();
             return null;
@@ -133,8 +133,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         // Alive filter dropdown
         this.aliveDropdownButton = new Button(gameWindow, null, "状态: 全部");
-        this.aliveDropdownButton.setActive(true);
-        this.aliveDropdownButton.setVisible(true);
+        this.aliveDropdownButton.setVisible(this.isVisible());
         this.aliveDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
             cycleAliveOption();
             return null;
@@ -142,8 +141,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         // Marriage filter dropdown
         this.marriageDropdownButton = new Button(gameWindow, null, "婚姻: 全部");
-        this.marriageDropdownButton.setActive(true);
-        this.marriageDropdownButton.setVisible(true);
+        this.marriageDropdownButton.setVisible(this.isVisible());
         this.marriageDropdownButton.registerOnMouseButtonLeftDownCallback(event -> {
             cycleMarriageOption();
             return null;
@@ -151,8 +149,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         // Apply button
         this.applyButton = new Button(gameWindow, null, "应用筛选");
-        this.applyButton.setActive(true);
-        this.applyButton.setVisible(true);
+        this.applyButton.setVisible(this.isVisible());
         this.applyButton.registerOnMouseButtonLeftDownCallback(event -> {
             if (onApply != null) {
                 onApply.accept(this);
@@ -162,8 +159,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
 
         // Clear button
         this.clearButton = new Button(gameWindow, null, "清除筛选");
-        this.clearButton.setActive(true);
-        this.clearButton.setVisible(true);
+        this.clearButton.setVisible(this.isVisible());
         this.clearButton.registerOnMouseButtonLeftDownCallback(event -> {
             resetFilters();
             if (onClear != null) {
