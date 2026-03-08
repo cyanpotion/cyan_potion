@@ -207,7 +207,7 @@ public class PregnancyDecision implements Decision {
         long livingChildrenCount = person.getChildren().stream()
                 .filter(Person::isAlive)
                 .count();
-        return livingChildrenCount >= 2 * powerLevel;
+        return livingChildrenCount >= 2 * powerLevel - 1;
     }
 
     /**
