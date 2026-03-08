@@ -21,10 +21,8 @@ import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service for calculating and managing power level ranks.

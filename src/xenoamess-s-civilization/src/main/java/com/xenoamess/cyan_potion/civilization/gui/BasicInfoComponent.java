@@ -18,9 +18,6 @@ package com.xenoamess.cyan_potion.civilization.gui;
 
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
-import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
-import com.xenoamess.cyan_potion.base.io.input.key.Keymap;
-import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardEvent;
 import com.xenoamess.cyan_potion.base.render.Bindable;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.civilization.character.Clan;
@@ -36,11 +33,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * Component for displaying basic person information.
@@ -104,6 +99,7 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
         initProcessors();
     }
 
+    @Override
     protected void initProcessors() {
         super.initProcessors();
     }

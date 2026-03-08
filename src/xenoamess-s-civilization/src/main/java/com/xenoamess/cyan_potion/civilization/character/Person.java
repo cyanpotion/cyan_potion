@@ -512,7 +512,7 @@ public class Person {
      * Gets the power level (能级分).
      * Delegates to PersonAttributeCalculator.
      */
-    public double getPowerLevel() {
+    public double calculatePowerLevel() {
         return getAttributeCalculator().calculatePowerLevel(this);
     }
 
@@ -524,7 +524,7 @@ public class Person {
      * @return the updated power level
      */
     public double updatePowerLevel(LocalDate currentDate) {
-        this.powerLevel = getPowerLevel();
+        this.powerLevel = calculatePowerLevel();
         this.lastPowerLevelUpdateDate = currentDate;
         return this.powerLevel;
     }
