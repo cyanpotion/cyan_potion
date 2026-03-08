@@ -101,6 +101,23 @@ public class PregnancyDecision implements Decision {
             return false;
         }
 
+        // Check child limit restriction based on power level
+        // A person with power level x can have at most 2*x living children
+        // If both parents are restricted, pregnancy is not allowed
+        // If at least one parent is not restricted, pregnancy is allowed
+        if (isRestrictedByChildLimit(person)) {
+            // Female is restricted, check if any living spouse is not restricted
+            List<Person> livingSpouses = person.getAllSpouses().stream()
+                    .filter(Person::isAlive)
+                    .toList();
+            boolean hasUnrestrictedSpouse = livingSpouses.stream()
+                    .anyMatch(spouse -> !isRestrictedByChildLimit(spouse));
+            if (!hasUnrestrictedSpouse) {
+                // Both female and all spouses are restricted
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -117,9 +134,25 @@ public class PregnancyDecision implements Decision {
             return DecisionResult.SKIPPED;
         }
 
+        // Filter spouses based on restriction
+        // If female is restricted, only consider unrestricted spouses as potential fathers
+        List<Person> potentialFathers;
+        if (isRestrictedByChildLimit(person)) {
+            potentialFathers = livingSpouses.stream()
+                    .filter(spouse -> !isRestrictedByChildLimit(spouse))
+                    .toList();
+            if (potentialFathers.isEmpty()) {
+                // This should not happen due to canExecute check, but just in case
+                return DecisionResult.SKIPPED;
+            }
+        } else {
+            // Female is not restricted, all living spouses are potential fathers
+            potentialFathers = livingSpouses;
+        }
+
         // Calculate fertility values
         double femaleFertility = person.getFertility();
-        double totalSpouseFertility = livingSpouses.stream()
+        double totalSpouseFertility = potentialFathers.stream()
                 .mapToDouble(Person::getFertility)
                 .sum();
 
@@ -142,8 +175,8 @@ public class PregnancyDecision implements Decision {
 
         if (roll * roll < successProbability2) {
             // Success - create pregnancy
-            // Select father randomly from living spouses, weighted by fertility
-            Person father = selectFather(livingSpouses);
+            // Select father randomly from potential fathers, weighted by fertility
+            Person father = selectFather(potentialFathers);
 
             String traitId = UUID.randomUUID().toString();
             PregnancyTrait pregnancyTrait = new PregnancyTrait(traitId, person, father, currentDate);
@@ -159,6 +192,22 @@ public class PregnancyDecision implements Decision {
                     person.getName(), successProbability2, roll);
             return DecisionResult.FAILED;
         }
+    }
+
+    /**
+     * Checks if a person is restricted from having more children based on power level.
+     * A person with power level x can have at most 2*x living children.
+     * If living children count >= 2 * powerLevel, the person is restricted.
+     *
+     * @param person the person to check
+     * @return true if restricted (cannot have more children)
+     */
+    private boolean isRestrictedByChildLimit(Person person) {
+        double powerLevel = person.getPowerLevel();
+        long livingChildrenCount = person.getChildren().stream()
+                .filter(Person::isAlive)
+                .count();
+        return livingChildrenCount >= 2 * powerLevel;
     }
 
     /**
