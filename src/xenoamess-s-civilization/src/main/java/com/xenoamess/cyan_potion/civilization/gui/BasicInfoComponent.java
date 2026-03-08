@@ -147,11 +147,7 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
         drawClanInfo(x, y, width);
         y += 80;
 
-        // Parents info
-        drawParentsInfo(x, y, width);
-
         // Traits section
-        y += 80;
         drawTraitsSection(x, y, width);
 
         // Draw skull tooltip if hovered (for dead persons)
@@ -514,34 +510,6 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
                 i++;
             }
         }
-    }
-
-    private void drawParentsInfo(float x, float y, float width) {
-        Person person = getPerson();
-        if (person == null) {
-            return;
-        }
-
-        // Section title
-        this.getGameWindow().drawTextCenter(
-            null,
-            x + width / 2,
-            y,
-            20,
-            COLOR_HIGHLIGHT,
-            "【 父母 】"
-        );
-        y += 35;
-
-        String fatherInfo = person.getFather() != null
-            ? person.getFather().getName() + getClanSuffix(person.getFather())
-            : "未知";
-        String motherInfo = person.getMother() != null
-            ? person.getMother().getName() + getClanSuffix(person.getMother())
-            : "未知";
-
-        drawLabelValue(x, y, "父亲:", fatherInfo);
-        drawLabelValue(x + width / 2, y, "母亲:", motherInfo);
     }
 
     private String getClanSuffix(Person p) {

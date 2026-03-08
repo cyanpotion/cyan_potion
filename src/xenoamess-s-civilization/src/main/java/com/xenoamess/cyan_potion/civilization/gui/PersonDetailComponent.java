@@ -76,6 +76,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
     // Tab content components
     private MarriageInfoComponent marriageInfoComponent;
+    private BloodRelationComponent bloodRelationComponent;
 
     @Getter
     @Setter
@@ -190,6 +191,14 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return;
         });
         tabbedPanel.addTab("婚姻详情", marriageInfoComponent);
+
+        // Create blood relation component
+        bloodRelationComponent = new BloodRelationComponent(this, person);
+        bloodRelationComponent.setOnPersonClick(targetPerson -> {
+            show(targetPerson);
+            return;
+        });
+        tabbedPanel.addTab("血亲", bloodRelationComponent);
 
         // Add tabbed panel to component tree
         if (this.getGameWindowComponentTreeNode() != null) {
@@ -348,6 +357,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         nextButton.close();
         if (tabbedPanel != null) {
             tabbedPanel.close();
+        }
+        if (bloodRelationComponent != null) {
+            bloodRelationComponent.close();
         }
         super.close();
     }
