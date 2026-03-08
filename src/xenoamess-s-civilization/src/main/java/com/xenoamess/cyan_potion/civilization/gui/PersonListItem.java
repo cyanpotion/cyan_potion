@@ -127,7 +127,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!isVisible()) {
             return false;
         }

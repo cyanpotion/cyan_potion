@@ -576,17 +576,17 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         );
 
         // Draw buttons
-        generateButton.draw();
-        filterMaleButton.draw();
-        filterFemaleButton.draw();
-        clearFilterButton.draw();
-        speedButton.draw();
-        pauseButton.draw();
-        dashboardButton.draw();
+        generateButton.ifVisibleThenDraw();
+        filterMaleButton.ifVisibleThenDraw();
+        filterFemaleButton.ifVisibleThenDraw();
+        clearFilterButton.ifVisibleThenDraw();
+        speedButton.ifVisibleThenDraw();
+        pauseButton.ifVisibleThenDraw();
+        dashboardButton.ifVisibleThenDraw();
 
         // Draw draggable windows (list window first, then detail)
-        listWindow.draw();
-        detailWindow.draw();
+        listWindow.ifVisibleThenDraw();
+        detailWindow.ifVisibleThenDraw();
 
         return true;
     }

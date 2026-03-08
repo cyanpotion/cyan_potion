@@ -157,7 +157,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!isVisible()) {
             return false;
         }
@@ -228,7 +228,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
             }
         }
 
-        return super.draw();
+        return super.ifVisibleThenDraw();
     }
 
     /**
@@ -315,7 +315,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
                         pb.button.setLeftTopPos(x + width / 2 - buttonWidth / 2, y - 8);
                         pb.button.setSize(buttonWidth, buttonHeight);
                         // Draw the button
-                        pb.button.draw();
+                        pb.button.ifVisibleThenDraw();
                         buttonIndex++;
                     }
                     y += 22;
@@ -330,7 +330,7 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
                 float buttonHeight = 20;
                 pb.button.setLeftTopPos(x + width / 2 - buttonWidth / 2, y - 8);
                 pb.button.setSize(buttonWidth, buttonHeight);
-                pb.button.draw();
+                pb.button.ifVisibleThenDraw();
                 buttonIndex++;
             }
             y += 22;

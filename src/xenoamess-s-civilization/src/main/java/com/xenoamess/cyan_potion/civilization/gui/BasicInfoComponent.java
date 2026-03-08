@@ -111,7 +111,7 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         Person person = getPerson();
         if (person == null) {
             return false;
@@ -154,7 +154,7 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
             }
         }
 
-        return super.draw();
+        return super.ifVisibleThenDraw();
     }
 
     private Person getPerson() {

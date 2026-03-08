@@ -281,7 +281,7 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!isVisible()) {
             return false;
         }
@@ -300,11 +300,11 @@ public class FilterSettingsComponent extends AbstractControllableGameWindowCompo
         );
 
         // Draw buttons
-        genderDropdownButton.draw();
-        aliveDropdownButton.draw();
-        marriageDropdownButton.draw();
-        applyButton.draw();
-        clearButton.draw();
+        genderDropdownButton.ifVisibleThenDraw();
+        aliveDropdownButton.ifVisibleThenDraw();
+        marriageDropdownButton.ifVisibleThenDraw();
+        applyButton.ifVisibleThenDraw();
+        clearButton.ifVisibleThenDraw();
 
         return true;
     }

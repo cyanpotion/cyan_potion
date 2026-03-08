@@ -167,7 +167,7 @@ public class DraggableWindowDemo extends AbstractGameWindowComponent {
         backgroundPicture.cover(this);
 
         // Draw button
-        addWindowButton.draw();
+        addWindowButton.ifVisibleThenDraw();
 
         // Draw instruction text
         this.getGameWindow().drawTextCenter(

@@ -208,11 +208,11 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
     public boolean update() {
         for (int i = 0; i < tabContents.size(); i++) {
             if (currentTab == i) {
-                AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
+                AbstractControllableGameWindowComponent content = tabContents.get(i);
                 content.setActive(true);
                 content.setVisible(true);
             } else {
-                AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
+                AbstractControllableGameWindowComponent content = tabContents.get(i);
                 content.setActive(false);
                 content.setVisible(false);
             }
@@ -221,14 +221,14 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         // Draw tab buttons
         drawTabButtons();
 
         // Draw current tab content
         drawCurrentTabContent();
 
-        return super.draw();
+        return super.ifVisibleThenDraw();
     }
 
     private void drawTabButtons() {
@@ -241,7 +241,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
             button.setLeftTopPos(tabX, tabY);
             button.setSize(tabButtonWidth, tabButtonHeight);
             button.update();
-            button.draw();
+            button.ifVisibleThenDraw();
         }
     }
 

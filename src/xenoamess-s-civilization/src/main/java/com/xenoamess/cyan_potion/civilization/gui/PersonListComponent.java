@@ -367,7 +367,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!isVisible()) {
             return false;
         }
@@ -376,10 +376,10 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         backgroundPicture.cover(this);
 
         // Draw search panel
-        searchPanel.draw();
+        searchPanel.ifVisibleThenDraw();
 
         // Draw settings button
-        settingsButton.draw();
+        settingsButton.ifVisibleThenDraw();
 
         // Draw search label
         if (searchBox.getContentString().isEmpty()) {
@@ -393,18 +393,18 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
                 "搜索人物..."
             );
         } else {
-            searchBox.draw();
+            searchBox.ifVisibleThenDraw();
         }
 
         // Draw list panel with clipping
-        listPanel.draw();
+        listPanel.ifVisibleThenDraw();
 
         updateListPositions();
 
         // Draw person items
         for (PersonListItem item : listItems) {
             if (isItemVisible(item)) {
-                item.draw();
+                item.ifVisibleThenDraw();
             }
         }
 
@@ -413,7 +413,7 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
 
         // Draw filter window if visible
         if (filterWindow.isVisible()) {
-            filterWindow.draw();
+            filterWindow.ifVisibleThenDraw();
         }
 
         return true;

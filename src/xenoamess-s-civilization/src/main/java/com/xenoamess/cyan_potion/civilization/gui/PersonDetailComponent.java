@@ -198,7 +198,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!show || person == null) {
             return false;
         }
@@ -213,7 +213,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Draw navigation buttons at bottom
         drawNavigationButtons();
 
-        return super.draw();
+        return super.ifVisibleThenDraw();
     }
 
     private void drawNavigationButtons() {

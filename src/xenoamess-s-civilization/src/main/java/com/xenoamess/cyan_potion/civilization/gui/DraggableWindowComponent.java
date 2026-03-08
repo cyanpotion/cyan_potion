@@ -217,7 +217,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
     }
 
     @Override
-    public boolean draw() {
+    public boolean ifVisibleThenDraw() {
         if (!isVisible()) {
             return false;
         }
@@ -228,7 +228,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
         // Draw content area background
         drawContentBackground();
 
-        return super.draw();
+        return super.ifVisibleThenDraw();
     }
 
     private void drawTitleBar() {
