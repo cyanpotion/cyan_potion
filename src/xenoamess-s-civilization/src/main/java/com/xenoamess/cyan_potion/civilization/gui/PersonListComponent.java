@@ -62,7 +62,7 @@ enum SortField {
     NAME("姓名"),
     CLAN("宗族"),
     AGE("年龄"),
-    POWER("能力"),
+    POWER("能级"),
     MONEY("金钱"),
     PRESTIGE("威望");
 
