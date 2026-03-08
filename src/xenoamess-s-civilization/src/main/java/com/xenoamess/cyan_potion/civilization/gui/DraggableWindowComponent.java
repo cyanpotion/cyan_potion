@@ -59,7 +59,7 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
 
     @Getter
     @Setter
-    private Consumer<Void> onClose;
+    private Consumer<Void> onCloseButtonClicked = unused -> DraggableWindowComponent.this.close();
 
     @Getter
     @Setter
@@ -301,7 +301,9 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
                 float mouseY = getGameWindow().getMousePosY();
                 
                 if (isPointInCloseButton(mouseX, mouseY)) {
-                    close();
+                    if (this.onCloseButtonClicked != null) {
+                        this.onCloseButtonClicked.accept(null);
+                    }
                     return null;
                 }
             }
@@ -314,11 +316,9 @@ public class DraggableWindowComponent extends AbstractControllableGameWindowComp
     /**
      * Closes the window.
      */
+    @Override
     public void close() {
         setVisible(false);
-        if (onClose != null) {
-            onClose.accept(null);
-        }
         log.debug("Closed window: {}", title);
         super.close();
     }

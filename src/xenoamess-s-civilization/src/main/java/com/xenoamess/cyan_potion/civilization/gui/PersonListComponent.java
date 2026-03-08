@@ -193,6 +193,9 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         this.filterWindow.setLeftTopPos(600, 100);
         this.filterWindow.setSize(250, 260);
         this.filterWindow.setVisible(false);
+        this.filterWindow.setOnCloseButtonClicked(
+                unused -> PersonListComponent.this.toggleFilterWindow()
+        );
 
         // List panel for person items
         this.listPanel = new Panel(gameWindow);
