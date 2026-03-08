@@ -21,6 +21,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_w
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.Button;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Marriage;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.util.IterableUtil;
@@ -71,6 +72,11 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
     private static final Vector4f COLOR_ENDED = new Vector4f(0.9f, 0.4f, 0.4f, 1.0f);
     private static final Vector4f COLOR_LINK = new Vector4f(0.4f, 0.8f, 1.0f, 1.0f);
     private static final Vector4f COLOR_LINK_HOVER = new Vector4f(0.6f, 0.9f, 1.0f, 1.0f);
+    private static final Vector4f COLOR_MALE = new Vector4f(0.4f, 0.6f, 1.0f, 1.0f);
+    private static final Vector4f COLOR_FEMALE = new Vector4f(1.0f, 0.5f, 0.7f, 1.0f);
+    private static final Vector4f COLOR_DEAD = new Vector4f(0.5f, 0.5f, 0.5f, 1.0f);
+
+    private final Texture deadmanMarkTexture;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -111,6 +117,14 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
         );
         this.backgroundPicture.setBindable(backgroundTexture);
 
+        // Skull texture for dead persons
+        this.deadmanMarkTexture = this.getResourceManager().fetchResource(
+                Texture.class,
+                "picture",
+                this.getGameManager().getDataCenter().getGameSettings().getDefaultResourcesFolderPath()
+                        + "www/img/icon/skull_icon.png"
+        );
+
         // Create person buttons for all marriages
         createPersonButtons();
     }
@@ -145,6 +159,10 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
 
     private void createPersonButton(Person targetPerson) {
         Button button = new Button(getGameWindow(), null, targetPerson.getName());
+        // 死者名字置灰
+        if (!targetPerson.isAlive()) {
+            button.setTextColor(COLOR_DEAD);
+        }
         button.registerOnMouseButtonLeftDownCallback(event -> {
             if (onPersonClick != null) {
                 onPersonClick.accept(targetPerson);
@@ -323,10 +341,35 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
                         // Position the button
                         float buttonWidth = 100;
                         float buttonHeight = 20;
-                        pb.button.setLeftTopPos(x + width / 2 - buttonWidth / 2, y - 8);
+                        float buttonX = x + width / 2 - buttonWidth / 2;
+                        pb.button.setLeftTopPos(buttonX, y - 8);
                         pb.button.setSize(buttonWidth, buttonHeight);
                         // Draw the button
                         pb.button.ifVisibleThenDraw();
+
+                        // Gender indicator
+                        Vector4f genderColor = subordinate.getGender() == Gender.MALE
+                            ? COLOR_MALE : COLOR_FEMALE;
+                        this.getGameWindow().drawTextCenter(
+                            null,
+                            buttonX - 12,
+                            y,
+                            12,
+                            genderColor,
+                            subordinate.getGender() == Gender.MALE ? "♂" : "♀"
+                        );
+
+                        // Deadman mark
+                        if (!subordinate.isAlive()) {
+                            this.getGameWindow().drawBindableRelativeCenter(
+                                    deadmanMarkTexture,
+                                    buttonX - 12 + 12,
+                                    y,
+                                    12,
+                                    12
+                            );
+                        }
+
                         buttonIndex++;
                     }
                     y += 22;
@@ -339,9 +382,34 @@ public class MarriageInfoComponent extends AbstractControllableGameWindowCompone
                 PersonButton pb = IterableUtil.getElementAtIndexOrNull(personButtons, buttonIndex);
                 float buttonWidth = 100;
                 float buttonHeight = 20;
-                pb.button.setLeftTopPos(x + width / 2 - buttonWidth / 2, y - 8);
+                float buttonX = x + width / 2 - buttonWidth / 2;
+                pb.button.setLeftTopPos(buttonX, y - 8);
                 pb.button.setSize(buttonWidth, buttonHeight);
                 pb.button.ifVisibleThenDraw();
+
+                // Gender indicator
+                Vector4f genderColor = dominant.getGender() == Gender.MALE
+                    ? COLOR_MALE : COLOR_FEMALE;
+                this.getGameWindow().drawTextCenter(
+                    null,
+                    buttonX - 12,
+                    y,
+                    12,
+                    genderColor,
+                    dominant.getGender() == Gender.MALE ? "♂" : "♀"
+                );
+
+                // Deadman mark
+                if (!dominant.isAlive()) {
+                    this.getGameWindow().drawBindableRelativeCenter(
+                            deadmanMarkTexture,
+                            buttonX - 12 + 12,
+                            y,
+                            12,
+                            12
+                    );
+                }
+
                 buttonIndex++;
             }
             y += 22;
