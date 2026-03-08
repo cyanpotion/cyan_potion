@@ -270,7 +270,9 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
         // Section 2: Siblings
         buttonIndex = drawSiblingsSection(x, y, width, buttonIndex);
-        y += Math.max(80, getSiblings().size() * 25 + 40);
+        int siblingCount = getSiblings().size();
+        int siblingRows = (siblingCount + 7) / 8; // 8 columns per row
+        y += Math.max(80, siblingRows * 26 + 40);
 
         // Section 3: Children
         drawChildrenSection(x, y, width, buttonIndex);
