@@ -41,11 +41,15 @@ import java.util.stream.Collectors;
 @Data
 public class Person {
 
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
+    }
+
     // ==================== Basic Info ====================
 
     @Getter
-    @Setter
-    private String id;
+    private final String id;
 
     @Getter
     @Setter

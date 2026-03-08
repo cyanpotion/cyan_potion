@@ -210,8 +210,7 @@ class MarriageTest {
     }
 
     private Person createPerson(String id, String name, Gender gender) {
-        Person person = new Person();
-        person.setId(id);
+        Person person = new Person(id);
         person.setName(name);
         person.setGender(gender);
         return person;

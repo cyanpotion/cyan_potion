@@ -60,10 +60,9 @@ public class PersonConstructionService {
      * @return fully initialized Person
      */
     public Person construct(PersonBuilder builder) {
-        Person person = new Person();
+        Person person = new Person(builder.getId());
 
         // Basic info
-        person.setId(builder.getId());
         person.setSurname(builder.getSurname());
         person.setGivenName(builder.getGivenName());
         person.setGender(builder.getGender());
