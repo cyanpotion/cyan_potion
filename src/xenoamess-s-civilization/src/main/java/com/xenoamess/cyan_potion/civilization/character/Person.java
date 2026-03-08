@@ -22,6 +22,8 @@ import com.xenoamess.cyan_potion.civilization.util.TimeUtil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -581,6 +583,17 @@ public class Person {
      */
     public int getChildrenCount() {
         return children.size();
+    }
+
+    /**
+     * Gets all children of a parent from the person cache.
+     */
+    @NotNull
+    public static Collection<Person> getChildrenOf(@Nullable Person parent) {
+        if (parent == null) {
+            return List.of();
+        }
+        return parent.getChildren();
     }
 
     /**

@@ -30,9 +30,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
@@ -200,7 +203,7 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
         // Collect all persons from father's side
         if (person.getFather() != null) {
-            for (Person child : getChildrenOf(person.getFather())) {
+            for (Person child : Person.getChildrenOf(person.getFather())) {
                 if (!child.equals(person) && !siblings.contains(child)) {
                     siblings.add(child);
                 }
@@ -209,7 +212,7 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
 
         // Collect all persons from mother's side
         if (person.getMother() != null) {
-            for (Person child : getChildrenOf(person.getMother())) {
+            for (Person child : Person.getChildrenOf(person.getMother())) {
                 if (!child.equals(person) && !siblings.contains(child)) {
                     siblings.add(child);
                 }
@@ -223,28 +226,14 @@ public class BloodRelationComponent extends AbstractControllableGameWindowCompon
     }
 
     /**
-     * Gets all children of a parent from the person cache.
-     */
-    private List<Person> getChildrenOf(Person parent) {
-        List<Person> children = new ArrayList<>();
-        for (Person p : PersonCache.getAllAliveAndDeadPersonCollection()) {
-            if (p.getFather() != null && p.getFather().equals(parent)) {
-                children.add(p);
-            } else if (p.getMother() != null && p.getMother().equals(parent)) {
-                children.add(p);
-            }
-        }
-        return children;
-    }
-
-    /**
      * Gets all children of this person, sorted by age descending.
      */
     private List<Person> getChildren() {
-        List<Person> children = getChildrenOf(person);
+        Collection<Person> children = Person.getChildrenOf(person);
+        ArrayList<Person> result = new ArrayList<>(children);
         // Sort by age descending (oldest first)
-        children.sort((a, b) -> Integer.compare(b.getAge(), a.getAge()));
-        return children;
+        result.sort((a, b) -> Integer.compare(b.getAge(), a.getAge()));
+        return result;
     }
 
     @Override
