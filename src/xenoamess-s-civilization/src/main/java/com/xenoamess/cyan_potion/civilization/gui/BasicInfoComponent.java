@@ -49,6 +49,8 @@ import java.util.function.Supplier;
 @ToString
 public class BasicInfoComponent extends AbstractControllableGameWindowComponent {
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Getter
     @Setter
     private PersonDetailComponent parentDetail;

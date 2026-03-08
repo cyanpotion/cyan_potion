@@ -68,6 +68,8 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Getter
     private final Button nextButton;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     // Tabbed panel for switching between different views
     @Getter
     private final TabbedPanelComponent tabbedPanel;

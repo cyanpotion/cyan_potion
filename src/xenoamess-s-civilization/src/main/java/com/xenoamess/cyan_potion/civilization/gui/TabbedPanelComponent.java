@@ -175,7 +175,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return null;
         }
-        return tabButtons.get(index).getText();
+        return tabButtons.get(index).getButtonText();
     }
 
     /**
@@ -188,7 +188,7 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
         if (index < 0 || index >= tabButtons.size()) {
             return;
         }
-        tabButtons.get(index).setText(title);
+        tabButtons.get(index).setButtonText(title);
     }
 
     /**
