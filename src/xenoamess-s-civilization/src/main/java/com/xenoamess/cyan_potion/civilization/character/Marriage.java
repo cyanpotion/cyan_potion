@@ -143,6 +143,8 @@ public class Marriage {
         return subordinatePersons.contains(person);
     }
 
+    private transient volatile boolean ended = false;
+
     /**
      * Checks if the marriage is still active.
      * Marriage is inactive if:
@@ -153,6 +155,17 @@ public class Marriage {
      * @return true if the marriage is still active
      */
     public boolean isActive() {
+        if (ended) {
+            return false;
+        }
+        boolean result = isActiveInternal();
+        if (!result) {
+            ended = true;
+        }
+        return result;
+    }
+
+    private boolean isActiveInternal() {
         // If already ended by date, not active
         if (endDate != null) {
             return false;
@@ -162,8 +175,7 @@ public class Marriage {
             return false;
         }
         // If all subordinate persons are dead, marriage ends
-        boolean anySubordinateAlive = subordinatePersons.stream()
-            .anyMatch(Person::isAlive);
+        boolean anySubordinateAlive = subordinatePersons.stream().anyMatch(Person::isAlive);
         return anySubordinateAlive;
     }
 
