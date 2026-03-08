@@ -17,6 +17,7 @@
 package com.xenoamess.cyan_potion.civilization.character;
 
 import com.xenoamess.cyan_potion.civilization.service.PersonAttributeCalculator;
+import com.xenoamess.cyan_potion.civilization.character.trait.Trait;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -113,6 +115,11 @@ public class Person {
     @Getter
     @Setter
     private Person mother;
+
+    // ==================== Traits ====================
+
+    @Getter
+    private final List<Trait> traits = new ArrayList<>();
 
     // ==================== Date Tracking ====================
 
@@ -464,6 +471,113 @@ public class Person {
      */
     public int getAgeAtDeath() {
         return getAttributeCalculator().getAgeAtDeath(this);
+    }
+
+    // ==================== Trait Management ====================
+
+    /**
+     * 添加特质
+     */
+    public void addTrait(Trait trait) {
+        if (trait == null) {
+            return;
+        }
+        // 移除同类型的旧trait（如果存在）
+        traits.removeIf(t -> t.getType().equals(trait.getType()));
+        traits.add(trait);
+    }
+
+    /**
+     * 移除特质
+     */
+    public boolean removeTrait(String traitId) {
+        return traits.removeIf(t -> t.getId().equals(traitId));
+    }
+
+    /**
+     * 根据类型移除特质
+     */
+    public boolean removeTraitByType(String type) {
+        return traits.removeIf(t -> t.getType().equals(type));
+    }
+
+    /**
+     * 获取指定类型的特质
+     */
+    public Optional<Trait> getTraitByType(String type) {
+        return traits.stream()
+                .filter(t -> t.getType().equals(type))
+                .findFirst();
+    }
+
+    /**
+     * 判断是否拥有指定类型的特质
+     */
+    public boolean hasTrait(String type) {
+        return getTraitByType(type).isPresent();
+    }
+
+    /**
+     * 获取所有未过期的特质
+     */
+    public List<Trait> getActiveTraits(LocalDate currentDate) {
+        return traits.stream()
+                .filter(t -> !t.isExpired(currentDate))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取所有在死亡时会清除的特质
+     */
+    public List<Trait> getClearedOnDeathTraits() {
+        return traits.stream()
+                .filter(Trait::isClearedOnDeath)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取所有在死亡后会保留的特质
+     */
+    public List<Trait> getPersistentTraits() {
+        return traits.stream()
+                .filter(t -> !t.isClearedOnDeath())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 清理过期特质
+     */
+    public void cleanupExpiredTraits(LocalDate currentDate) {
+        traits.removeIf(t -> t.isExpired(currentDate));
+    }
+
+    /**
+     * 人物死亡时的处理
+     * - 清除会在死亡时清除的特质
+     * - 保留其他特质
+     */
+    public void onDeath() {
+        // 通知所有特质人物已死亡
+        traits.forEach(Trait::onDeath);
+        // 清除在死亡时会清除的特质
+        traits.removeIf(Trait::isClearedOnDeath);
+    }
+
+    /**
+     * 每日更新特质
+     */
+    public void updateTraitsDaily(LocalDate currentDate) {
+        // 先清理过期特质
+        cleanupExpiredTraits(currentDate);
+        // 更新剩余特质
+        traits.forEach(t -> t.onDailyUpdate(currentDate));
+    }
+
+    /**
+     * 判断是否怀孕
+     */
+    public boolean isPregnant() {
+        return hasTrait(com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait.TYPE);
     }
 
 }

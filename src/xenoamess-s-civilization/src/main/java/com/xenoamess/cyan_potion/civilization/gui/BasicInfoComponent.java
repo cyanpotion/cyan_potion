@@ -27,6 +27,8 @@ import com.xenoamess.cyan_potion.civilization.character.Clan;
 import com.xenoamess.cyan_potion.civilization.character.ClanMembership;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
+import com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait;
+import com.xenoamess.cyan_potion.civilization.character.trait.Trait;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,6 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -145,6 +149,10 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
 
         // Parents info
         drawParentsInfo(x, y, width);
+
+        // Traits section
+        y += 80;
+        drawTraitsSection(x, y, width);
 
         // Draw skull tooltip if hovered (for dead persons)
         if (!person.isAlive()) {
@@ -566,5 +574,174 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
 
     private void drawCircle(float centerX, float centerY, float radius, Vector4f color) {
         // Circle drawing placeholder - implementation depends on available rendering methods
+    }
+
+    // ==================== Traits Section ====================
+
+    private void drawTraitsSection(float x, float y, float width) {
+        Person person = getPerson();
+        if (person == null) {
+            return;
+        }
+
+        // Section title
+        this.getGameWindow().drawTextCenter(
+            null,
+            x + width / 2,
+            y,
+            20,
+            COLOR_HIGHLIGHT,
+            "【 特质与状态 】"
+        );
+        y += 35;
+
+        // Get current date - use parent's current date or today
+        LocalDate currentDate = person.getCurrentDate() != null 
+            ? person.getCurrentDate() 
+            : LocalDate.now();
+
+        // Get active traits
+        List<Trait> activeTraits = person.getActiveTraits(currentDate);
+
+        if (activeTraits.isEmpty()) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                x + width / 2,
+                y,
+                14,
+                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
+                "暂无特质"
+            );
+            return;
+        }
+
+        // Draw traits in a grid layout
+        int traitsPerRow = 2;
+        float traitWidth = (width - 20) / traitsPerRow;
+        float traitHeight = 60;
+        float spacingX = 10;
+        float spacingY = 10;
+
+        int index = 0;
+        for (Trait trait : activeTraits) {
+            int row = index / traitsPerRow;
+            int col = index % traitsPerRow;
+            float traitX = x + col * (traitWidth + spacingX);
+            float traitY = y + row * (traitHeight + spacingY);
+
+            drawTraitCard(traitX, traitY, traitWidth, traitHeight, trait);
+            index++;
+        }
+    }
+
+    private void drawTraitCard(float x, float y, float width, float height, Trait trait) {
+        // Determine trait color based on type
+        Vector4f bgColor = getTraitBackgroundColor(trait);
+        Vector4f borderColor = getTraitBorderColor(trait);
+
+        // Draw background rectangle (placeholder - would need actual drawing method)
+        // drawRect(x, y, width, height, bgColor);
+
+        // Draw trait icon and name
+        String icon = getTraitIcon(trait);
+        float textX = x + width / 2;
+        float textY = y + 15;
+
+        // Icon
+        this.getGameWindow().drawTextCenter(
+            null,
+            x + 20,
+            textY,
+            18,
+            new Vector4f(1, 1, 1, 1),
+            icon
+        );
+
+        // Name
+        Vector4f nameColor = trait.isClearedOnDeath() 
+            ? new Vector4f(1.0f, 0.8f, 0.4f, 1.0f)  // 临时特质 - 金色
+            : new Vector4f(0.6f, 0.8f, 1.0f, 1.0f); // 永久特质 - 蓝色
+        this.getGameWindow().drawTextCenter(
+            null,
+            textX + 10,
+            textY,
+            14,
+            nameColor,
+            trait.getName()
+        );
+
+        // Description (or specific details for certain traits)
+        String desc = getTraitDisplayDescription(trait);
+        this.getGameWindow().drawTextCenter(
+            null,
+            textX,
+            textY + 22,
+            12,
+            new Vector4f(0.7f, 0.7f, 0.7f, 1.0f),
+            desc
+        );
+
+        // Expiration indicator
+        if (trait.getExpiresAt() != null) {
+            String expiresText = "到期: " + trait.getExpiresAt().toString();
+            this.getGameWindow().drawTextCenter(
+                null,
+                textX,
+                textY + 38,
+                10,
+                new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
+                expiresText
+            );
+        }
+
+        // Cleared on death indicator
+        if (trait.isClearedOnDeath()) {
+            this.getGameWindow().drawTextCenter(
+                null,
+                x + width - 15,
+                y + 10,
+                10,
+                new Vector4f(0.8f, 0.4f, 0.4f, 1.0f),
+                "✝"
+            );
+        }
+    }
+
+    private String getTraitIcon(Trait trait) {
+        return switch (trait.getType()) {
+            case "PREGNANCY" -> "🤰";
+            default -> "✨";
+        };
+    }
+
+    private Vector4f getTraitBackgroundColor(Trait trait) {
+        return switch (trait.getType()) {
+            case "PREGNANCY" -> new Vector4f(0.3f, 0.1f, 0.2f, 0.8f);
+            default -> new Vector4f(0.15f, 0.15f, 0.2f, 0.8f);
+        };
+    }
+
+    private Vector4f getTraitBorderColor(Trait trait) {
+        return switch (trait.getType()) {
+            case "PREGNANCY" -> new Vector4f(0.9f, 0.3f, 0.5f, 1.0f);
+            default -> new Vector4f(0.5f, 0.5f, 0.6f, 1.0f);
+        };
+    }
+
+    private String getTraitDisplayDescription(Trait trait) {
+        // Handle pregnancy trait specially
+        if (trait instanceof PregnancyTrait pregnancyTrait) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(pregnancyTrait.getStageDisplayName());
+            if (pregnancyTrait.getFather() != null) {
+                sb.append(" 父亲:").append(pregnancyTrait.getFather().getName());
+            }
+            long daysUntil = pregnancyTrait.getDaysUntilDue();
+            if (daysUntil > 0) {
+                sb.append(" 还剩").append(daysUntil).append("天");
+            }
+            return sb.toString();
+        }
+        return trait.getDescription();
     }
 }
