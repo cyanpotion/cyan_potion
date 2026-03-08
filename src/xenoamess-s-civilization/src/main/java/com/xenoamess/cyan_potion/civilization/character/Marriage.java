@@ -145,11 +145,26 @@ public class Marriage {
 
     /**
      * Checks if the marriage is still active.
+     * Marriage is inactive if:
+     * - It has ended (endDate != null), OR
+     * - The dominant person is dead, OR
+     * - All subordinate persons are dead
      *
-     * @return true if the marriage has not ended
+     * @return true if the marriage is still active
      */
     public boolean isActive() {
-        return endDate == null;
+        // If already ended by date, not active
+        if (endDate != null) {
+            return false;
+        }
+        // If dominant person is dead, marriage ends
+        if (!dominantPerson.isAlive()) {
+            return false;
+        }
+        // If all subordinate persons are dead, marriage ends
+        boolean anySubordinateAlive = subordinatePersons.stream()
+            .anyMatch(Person::isAlive);
+        return anySubordinateAlive;
     }
 
     /**
