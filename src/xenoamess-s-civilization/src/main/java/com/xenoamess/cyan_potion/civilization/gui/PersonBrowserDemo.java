@@ -310,12 +310,12 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Record in browse history
         browseHistory.recordView(person);
 
-        detailComponent.show(person);
         if (!detailWindow.isAlive()){
             DraggableWindowComponent detailWindow = newDetailWindow();
             detailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
             this.detailWindow = detailWindow;
         }
+        detailComponent.show(person);
         detailWindow.setVisible(true);
         // Bring detail window to front by re-adding it (if we had a list)
         log.debug("Showing person in detail window: {}", person.getName());
