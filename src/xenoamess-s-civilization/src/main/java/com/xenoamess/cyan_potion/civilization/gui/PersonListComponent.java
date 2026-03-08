@@ -29,7 +29,6 @@ import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.cache.PersonCache;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
-import com.xenoamess.cyan_potion.civilization.util.IterableUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,15 +38,13 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A scrollable list component for displaying and filtering persons.
@@ -63,8 +60,15 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
     /**
      * 代表【这个】过滤组件处理的【所有】人员。默认全部。
      */
-    public Collection<Person> getAllPersons() {
-        return PersonCache.getAllAliveAndDeadPersonCollection();
+    public Stream<Person> getAllPersonStream() {
+        return PersonCache.getAllAliveAndDeadPersonStream();
+    }
+
+    /**
+     * 代表【这个】过滤组件处理的【所有活着的】人员。默认全部。
+     */
+    public Stream<Person> getAllAlivePersonStream() {
+        return PersonCache.getAllAlivePersonStream();
     }
 
     /**
@@ -494,12 +498,20 @@ public class PersonListComponent extends AbstractControllableGameWindowComponent
         String query = searchBox.getContentString().toLowerCase().trim();
 
         filteredPersons.clear();
+
+        Stream<Person> baseStream;
+        // Alive filter
+        if (Boolean.TRUE.equals(this.filterSettings.getAliveFilter())) {
+            baseStream = this.getAllAlivePersonStream();
+        } else {
+            baseStream = this.getAllPersonStream();
+        }
+
         filteredPersons.addAll(
-                getAllPersons()
-                .stream()
-                .filter(filter)
-                .filter(p -> matchesSearch(p, query))
-                .toList()
+                baseStream
+                        .filter(filter)
+                        .filter(p -> matchesSearch(p, query))
+                        .toList()
         );
 
         rebuildListItems();
