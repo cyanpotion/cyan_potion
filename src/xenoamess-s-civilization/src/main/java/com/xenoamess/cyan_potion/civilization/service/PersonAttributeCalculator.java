@@ -217,12 +217,12 @@ public class PersonAttributeCalculator {
      */
     public double getFertility(Person person) {
         // Base fertility from constitution and health (0-100 scale)
-        double baseFertility = (person.getConstitution() * 0.5 + person.getHealth() * 0.5) * 10;
+        double baseFertility = Math.sqrt(person.getConstitution() * person.getHealth());
         baseFertility = Math.min(100, Math.max(0, baseFertility));
 
         if (person.getGender() == Gender.MALE) {
             // Male: simple linear based on constitution and health
-            return Math.round(baseFertility * 10.0) / 10.0;
+            return baseFertility;
         } else {
             // Female: also affected by age
             int age = calculateAge(person);
@@ -231,7 +231,7 @@ public class PersonAttributeCalculator {
                 return 0.0;
             } else if (age <= 35) {
                 // No age penalty
-                return Math.round(baseFertility * 10.0) / 10.0;
+                return baseFertility;
             } else {
                 // Age 36-54: linear decrease from 100% to 0%
                 // At age 35: multiplier = 1.0
@@ -239,7 +239,7 @@ public class PersonAttributeCalculator {
                 double ageMultiplier = (55.0 - age) / 20.0;
                 ageMultiplier = Math.max(0, Math.min(1, ageMultiplier));
                 double fertility = baseFertility * ageMultiplier;
-                return Math.round(fertility * 10.0) / 10.0;
+                return fertility;
             }
         }
     }

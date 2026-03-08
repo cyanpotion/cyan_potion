@@ -125,21 +125,22 @@ public class PregnancyDecision implements Decision {
 
         // Calculate success probability
         // probability = femaleFertility / (femaleFertility + totalSpouseFertility)
-        double successProbability;
+        // successProbability2 = successProbability的平方 纯粹为了计算加速
+        double successProbability2;
         if (femaleFertility + totalSpouseFertility <= 0) {
-            successProbability = 0;
+            successProbability2 = 0;
         } else {
             // TODO 这里需要有一个绝育补丁 现在太tm能生了
-            successProbability = femaleFertility / (femaleFertility + totalSpouseFertility);
+            successProbability2 = femaleFertility * totalSpouseFertility / 10000;
         }
 
         // Roll for pregnancy
         double roll = ThreadLocalRandom.current().nextDouble();
 
-        log.debug("Pregnancy check for {}: fertility={}, spouseFertilitySum={}, probability={}, roll={}",
-                person.getName(), femaleFertility, totalSpouseFertility, successProbability, roll);
+        log.debug("Pregnancy check for {}: fertility={}, spouseFertilitySum={}, successProbability2={}, roll={}",
+                person.getName(), femaleFertility, totalSpouseFertility, successProbability2, roll);
 
-        if (roll < successProbability) {
+        if (roll * roll < successProbability2) {
             // Success - create pregnancy
             // Select father randomly from living spouses, weighted by fertility
             Person father = selectFather(livingSpouses);
@@ -148,14 +149,14 @@ public class PregnancyDecision implements Decision {
             PregnancyTrait pregnancyTrait = new PregnancyTrait(traitId, person, father, currentDate);
             person.addTrait(pregnancyTrait);
 
-            log.info("Pregnancy success: {} is now pregnant, father: {} (probability was {:.2%})",
-                    person.getName(), father != null ? father.getName() : "未知", successProbability);
+            log.info("Pregnancy success: {} is now pregnant, father: {} (successProbability2 was {:.2%})",
+                    person.getName(), father != null ? father.getName() : "未知", successProbability2);
 
             return DecisionResult.SUCCESS;
         } else {
             // Failed - nothing happens
-            log.debug("Pregnancy failed for {} (probability was {:.2%}, roll was {:.2%})",
-                    person.getName(), successProbability, roll);
+            log.debug("Pregnancy failed for {} (successProbability2 was {:.2%}, roll was {:.2%})",
+                    person.getName(), successProbability2, roll);
             return DecisionResult.FAILED;
         }
     }
