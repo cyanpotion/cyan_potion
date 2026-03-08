@@ -92,8 +92,8 @@ public class PersonLifecycleService {
         double newHealth = Math.max(0, person.getHealth() - healthLoss);
         person.setHealth(newHealth);
 
-        log.debug("Person {} health decay: {} -> {} (loss: {})",
-            person.getId(), oldHealth, person.getHealth(), healthLoss);
+//        log.debug("Person {} health decay: {} -> {} (loss: {})",
+//            person.getId(), oldHealth, person.getHealth(), healthLoss);
 
         // Check for death
         if (oldHealth > 0 && person.getHealth() <= 0) {
