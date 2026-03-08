@@ -439,11 +439,17 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     // ==================== End DecisionContext Implementation ====================
 
+    // Track last monthly update to handle multi-month jumps
+    private java.time.YearMonth lastMonthlyUpdate = null;
+
     @Override
     public boolean update() {
         if (!show) {
             return true;
         }
+
+        // Record date before update for monthly tracking
+        LocalDate dateBefore = dateManager.getCurrentDate();
 
         // Update game date (1 day per second)
         int daysAdvanced = dateManager.update();
@@ -454,10 +460,30 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
             log.debug("Advanced {} days for {} persons, game date: {}",
                 daysAdvanced, PersonCache.PERSON_CACHE.size(), dateManager.getFormattedDate());
 
-            // Update power levels and execute decisions on the 1st of each month
-            if (dateManager.getDay() == 1) {
+            // Handle monthly updates (supports multi-month jumps)
+            LocalDate dateAfter = dateManager.getCurrentDate();
+            java.time.YearMonth ymBefore = java.time.YearMonth.from(dateBefore);
+            java.time.YearMonth ymAfter = java.time.YearMonth.from(dateAfter);
+
+            if (lastMonthlyUpdate == null) {
+                lastMonthlyUpdate = ymBefore;
+            }
+
+            // Execute monthly updates for all skipped months
+            java.time.YearMonth current = lastMonthlyUpdate.plusMonths(1);
+            while (!current.isAfter(ymAfter)) {
+                log.info("Executing monthly update for {}/{} (fast-forward)", current.getYear(), current.getMonthValue());
                 updatePowerLevels(PersonCache.PERSON_CACHE.values());
                 decisionExecutor.executeDecisionsForAll(getCurrentDate());
+                lastMonthlyUpdate = current;
+                current = current.plusMonths(1);
+            }
+
+            // Also check if we're exactly on the 1st (normal flow)
+            if (dateManager.getDay() == 1 && !lastMonthlyUpdate.equals(ymAfter)) {
+                updatePowerLevels(PersonCache.PERSON_CACHE.values());
+                decisionExecutor.executeDecisionsForAll(getCurrentDate());
+                lastMonthlyUpdate = ymAfter;
             }
         }
 
