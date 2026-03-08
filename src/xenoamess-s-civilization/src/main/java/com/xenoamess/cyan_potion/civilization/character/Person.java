@@ -137,6 +137,15 @@ public class Person {
     @Setter
     private Person mother;
 
+    // ==================== Children References ====================
+
+    /**
+     * List of children (bidirectional relationship with parents).
+     * Automatically maintained when using addChild/removeChild methods.
+     */
+    @Getter
+    private final List<Person> children = new ArrayList<>();
+
     // ==================== Traits ====================
 
     @Getter
@@ -532,6 +541,83 @@ public class Person {
      */
     public int getAgeAtDeath() {
         return getAttributeCalculator().getAgeAtDeath(this);
+    }
+
+    /**
+     * Gets all sons (male children).
+     *
+     * @return list of male children
+     */
+    public List<Person> getSons() {
+        return children.stream()
+            .filter(c -> c.getGender() == Gender.MALE)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all daughters (female children).
+     *
+     * @return list of female children
+     */
+    public List<Person> getDaughters() {
+        return children.stream()
+            .filter(c -> c.getGender() == Gender.FEMALE)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if this person has any children.
+     *
+     * @return true if has at least one child
+     */
+    public boolean hasChildren() {
+        return !children.isEmpty();
+    }
+
+    /**
+     * Gets the number of children.
+     *
+     * @return children count
+     */
+    public int getChildrenCount() {
+        return children.size();
+    }
+
+    /**
+     * Adds a child to this person.
+     * Also updates the child's parent reference if this person is the father or mother.
+     *
+     * @param child the child to add
+     * @return true if added successfully
+     */
+    public boolean addChild(Person child) {
+        if (child == null) {
+            return false;
+        }
+        if (!children.contains(child)) {
+            children.add(child);
+            // Update child's parent reference
+            if (this.getGender() == Gender.MALE && child.getFather() != this) {
+                child.setFather(this);
+            } else if (this.getGender() == Gender.FEMALE && child.getMother() != this) {
+                child.setMother(this);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes a child from this person.
+     *
+     * @param child the child to remove
+     * @return true if removed successfully
+     */
+    public boolean removeChild(Person child) {
+        if (child == null) {
+            return false;
+        }
+        return children.remove(child);
     }
 
     // ==================== Trait Management ====================
