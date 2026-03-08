@@ -104,6 +104,12 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
         super.initProcessors();
     }
 
+
+    @Override
+    public void close() {
+        super.close();
+    }
+
     @Override
     public boolean draw() {
         Person person = getPerson();

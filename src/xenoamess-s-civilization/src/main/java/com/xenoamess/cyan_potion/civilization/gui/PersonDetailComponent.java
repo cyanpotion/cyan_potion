@@ -75,7 +75,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     private final TabbedPanelComponent tabbedPanel;
 
     // Tab content components
-    private BasicInfoComponent basicInfoComponent;
     private MarriageInfoComponent marriageInfoComponent;
 
     @Getter
@@ -178,10 +177,10 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
      */
     private void initTabContents() {
         // Clear existing tabs
-        tabbedPanel.close();
+        tabbedPanel.clear();
 
         // Create basic info component
-        basicInfoComponent = new BasicInfoComponent(getGameWindow(), this);
+        BasicInfoComponent basicInfoComponent = new BasicInfoComponent(getGameWindow(), this);
         tabbedPanel.addTab("基本信息", basicInfoComponent);
 
         // Create marriage info component
@@ -210,8 +209,6 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Update and draw tabbed panel
         tabbedPanel.setLeftTopPos(getLeftTopPosX(), getLeftTopPosY());
         tabbedPanel.setSize(getWidth(), getHeight());
-        tabbedPanel.update();
-        tabbedPanel.draw();
 
         // Draw navigation buttons at bottom
         drawNavigationButtons();
@@ -223,8 +220,15 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         // Only show navigation buttons in basic info tab (tab 0)
         if (tabbedPanel.getCurrentTab() != 0) {
             prevButton.setVisible(false);
+            prevButton.setActive(false);
             nextButton.setVisible(false);
+            nextButton.setActive(false);
             return;
+        } else {
+            prevButton.setVisible(true);
+            prevButton.setActive(true);
+            nextButton.setVisible(true);
+            nextButton.setActive(true);
         }
 
         float buttonY = getLeftTopPosY() + getHeight() - 50;
@@ -301,8 +305,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
     @Override
     public boolean update() {
-        super.update();
-        return true;
+        return super.update();
     }
 
     @Override
@@ -311,24 +314,18 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
             return null;
         }
 
-        // Process tabbed panel first
-        event = tabbedPanel.process(event);
-        if (event == null) {
-            return null;
-        }
-
-        // Process navigation buttons (only in basic info tab)
-        if (tabbedPanel.getCurrentTab() == 0) {
-            event = prevButton.process(event);
-            if (event == null) {
-                return null;
-            }
-
-            event = nextButton.process(event);
-            if (event == null) {
-                return null;
-            }
-        }
+//        // Process navigation buttons (only in basic info tab)
+//        if (tabbedPanel.getCurrentTab() == 0) {
+//            event = prevButton.process(event);
+//            if (event == null) {
+//                return null;
+//            }
+//
+//            event = nextButton.process(event);
+//            if (event == null) {
+//                return null;
+//            }
+//        }
 
         // Process with parent
         return super.process(event);
@@ -346,6 +343,8 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
 
     @Override
     public void close() {
+        prevButton.close();
+        nextButton.close();
         if (tabbedPanel != null) {
             tabbedPanel.close();
         }

@@ -1,16 +1,16 @@
 /**
  * Copyright (C) 2020 XenoAmess
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -205,6 +205,22 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
     }
 
     @Override
+    public boolean update() {
+        for (int i = 0; i < tabContents.size(); i++) {
+            if (currentTab == i) {
+                AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
+                content.setActive(true);
+                content.setVisible(true);
+            } else {
+                AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
+                content.setActive(false);
+                content.setVisible(false);
+            }
+        }
+        return super.update();
+    }
+
+    @Override
     public boolean draw() {
         // Draw tab buttons
         drawTabButtons();
@@ -246,8 +262,6 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
 
         content.setLeftTopPos(contentX, contentY);
         content.setSize(contentWidth, contentHeight);
-        content.update();
-        content.draw();
     }
 
     @Override
@@ -261,17 +275,6 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
             event = tabButton.process(event);
             if (event == null) {
                 return null;
-            }
-        }
-
-        // Process current tab content
-        if (currentTab >= 0 && currentTab < tabContents.size()) {
-            AbstractControllableGameWindowComponent content = tabContents.get(currentTab);
-            if (content != null) {
-                event = content.process(event);
-                if (event == null) {
-                    return null;
-                }
             }
         }
 
@@ -295,6 +298,11 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
 
     @Override
     public void close() {
+        this.clear();
+        super.close();
+    }
+
+    public void clear() {
         // Close all tab contents
         for (AbstractControllableGameWindowComponent content : tabContents) {
             if (content != null) {
@@ -302,8 +310,10 @@ public class TabbedPanelComponent extends AbstractControllableGameWindowComponen
             }
         }
         tabContents.clear();
+        for (Button tabButton: tabButtons) {
+            tabButton.close();
+        }
         tabButtons.clear();
-
-        super.close();
     }
+
 }
