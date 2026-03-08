@@ -1,16 +1,16 @@
 /**
  * Copyright (C) 2020 XenoAmess
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -110,8 +110,8 @@ public class PregnancyDecision implements Decision {
 
         // Get all living spouses
         List<Person> livingSpouses = person.getAllSpouses().stream()
-            .filter(Person::isAlive)
-            .toList();
+                .filter(Person::isAlive)
+                .toList();
 
         if (livingSpouses.isEmpty()) {
             return DecisionResult.SKIPPED;
@@ -120,8 +120,8 @@ public class PregnancyDecision implements Decision {
         // Calculate fertility values
         double femaleFertility = person.getFertility();
         double totalSpouseFertility = livingSpouses.stream()
-            .mapToDouble(Person::getFertility)
-            .sum();
+                .mapToDouble(Person::getFertility)
+                .sum();
 
         // Calculate success probability
         // probability = femaleFertility / (femaleFertility + totalSpouseFertility)
@@ -129,6 +129,7 @@ public class PregnancyDecision implements Decision {
         if (femaleFertility + totalSpouseFertility <= 0) {
             successProbability = 0;
         } else {
+            // TODO 这里需要有一个绝育补丁 现在太tm能生了
             successProbability = femaleFertility / (femaleFertility + totalSpouseFertility);
         }
 
@@ -136,7 +137,7 @@ public class PregnancyDecision implements Decision {
         double roll = ThreadLocalRandom.current().nextDouble();
 
         log.debug("Pregnancy check for {}: fertility={}, spouseFertilitySum={}, probability={}, roll={}",
-            person.getName(), femaleFertility, totalSpouseFertility, successProbability, roll);
+                person.getName(), femaleFertility, totalSpouseFertility, successProbability, roll);
 
         if (roll < successProbability) {
             // Success - create pregnancy
@@ -148,13 +149,13 @@ public class PregnancyDecision implements Decision {
             person.addTrait(pregnancyTrait);
 
             log.info("Pregnancy success: {} is now pregnant, father: {} (probability was {:.2%})",
-                person.getName(), father != null ? father.getName() : "未知", successProbability);
+                    person.getName(), father != null ? father.getName() : "未知", successProbability);
 
             return DecisionResult.SUCCESS;
         } else {
             // Failed - nothing happens
             log.debug("Pregnancy failed for {} (probability was {:.2%}, roll was {:.2%})",
-                person.getName(), successProbability, roll);
+                    person.getName(), successProbability, roll);
             return DecisionResult.FAILED;
         }
     }
@@ -175,8 +176,8 @@ public class PregnancyDecision implements Decision {
 
         // Weighted random selection by fertility
         double totalFertility = spouses.stream()
-            .mapToDouble(Person::getFertility)
-            .sum();
+                .mapToDouble(Person::getFertility)
+                .sum();
 
         if (totalFertility <= 0) {
             // If no fertility, select randomly
