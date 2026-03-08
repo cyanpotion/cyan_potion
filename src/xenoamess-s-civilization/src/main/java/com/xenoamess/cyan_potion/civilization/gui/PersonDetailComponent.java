@@ -301,6 +301,7 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     @Override
     public void setVisible(boolean visible) {
         this.show = visible;
+        super.setVisible(visible);
     }
 
     @Override

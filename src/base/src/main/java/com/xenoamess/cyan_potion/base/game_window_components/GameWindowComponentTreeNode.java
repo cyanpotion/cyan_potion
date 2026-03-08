@@ -25,6 +25,7 @@
 package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -323,5 +324,19 @@ public class GameWindowComponentTreeNode implements Closeable {
     public void setAlive(boolean alive) {
         this.alive.set(alive);
     }
+
+    public void setVisible(boolean visible) {
+        if (this.getGameWindowComponent() instanceof AbstractControllableGameWindowComponent) {
+            if (((AbstractControllableGameWindowComponent) this.getGameWindowComponent()).isVisible() != visible) {
+                ((AbstractControllableGameWindowComponent) this.getGameWindowComponent()).setVisible(visible);
+            }
+        }
+        for (GameWindowComponentTreeNode gameWindowComponentTreeNode : this.children) {
+            if (gameWindowComponentTreeNode != null) {
+                gameWindowComponentTreeNode.setVisible(visible);
+            }
+        }
+    }
+
 }
 

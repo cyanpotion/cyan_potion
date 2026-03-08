@@ -31,6 +31,7 @@ import com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowC
 import com.xenoamess.cyan_potion.base.game_window_components.Drawer;
 import com.xenoamess.cyan_potion.base.game_window_components.DrawerBuilder;
 import com.xenoamess.cyan_potion.base.game_window_components.DrawerInterface;
+import com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode;
 import com.xenoamess.cyan_potion.base.game_window_components.Updater;
 import com.xenoamess.cyan_potion.base.game_window_components.UpdaterBuilder;
 import com.xenoamess.cyan_potion.base.game_window_components.UpdaterInterface;
@@ -802,7 +803,14 @@ public abstract class AbstractControllableGameWindowComponent extends AbstractGa
      */
     @SuppressWarnings("unused")
     public void setVisible(boolean visible) {
+        if (!this.isAlive()) {
+            return;
+        }
         this.visible.set(visible);
+        GameWindowComponentTreeNode node = this.getGameWindowComponentTreeNode();
+        if (node != null) {
+            node.setVisible(visible);
+        }
     }
 
 
