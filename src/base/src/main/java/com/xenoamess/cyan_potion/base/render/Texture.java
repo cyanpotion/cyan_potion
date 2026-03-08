@@ -44,8 +44,14 @@ import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+
 import javax.imageio.ImageIO;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,6 +126,11 @@ public class Texture extends NormalResource implements Bindable {
     public static final String STRING_PURE_COLOR = "pure_color";
 
     /**
+     * Constant <code>STRING_SVG="svg"</code>
+     */
+    public static final String STRING_SVG = "svg";
+
+    /**
      * !!!NOTICE!!!
      * This function is used by reflection and don't delete it if you don't know about the plugin mechanism here.
      */
@@ -135,6 +146,11 @@ public class Texture extends NormalResource implements Bindable {
                 Texture.class,
                 STRING_PURE_COLOR,
                 Texture::loadAsPureColorTexture
+        );
+        resourceManager.putResourceLoader(
+                Texture.class,
+                STRING_SVG,
+                Texture::loadAsSvgTexture
         );
         return null;
     };
@@ -312,6 +328,99 @@ public class Texture extends NormalResource implements Bindable {
         texture.bake(width, height, byteBuffer);
         MemoryUtil.memFree(byteBuffer);
         return true;
+    }
+
+    /**
+     * <p>loadAsSvgTexture.</p>
+     *
+     * <p>Loads an SVG file and rasterizes it to an OpenGL texture.</p>
+     *
+     * <p>The resource info values can optionally specify the target width and height:
+     * <ul>
+     *   <li>values[0] = target width (optional, defaults to 256)</li>
+     *   <li>values[1] = target height (optional, defaults to 256)</li>
+     * </ul>
+     *
+     * @param texture texture
+     * @return if load succeeded
+     */
+    @MainThreadOnly
+    public static boolean loadAsSvgTexture(Texture texture) {
+        IllegalArgumentExceptionUtilsx.isAnyNullInParamsThenThrowIllegalArgumentException(texture);
+        if (!DataCenter.ifMainThread()) {
+            return false;
+        }
+
+        ResourceInfo<Texture> resourceInfo = texture.getResourceInfo();
+        assert (resourceInfo.getType().equals(STRING_SVG));
+
+        // Parse optional target dimensions from resource info
+        String[] values = resourceInfo.getValues();
+        int targetWidth = 256;
+        int targetHeight = 256;
+        if (values != null && values.length >= 2) {
+            try {
+                targetWidth = Integer.parseInt(values[0]);
+                targetHeight = Integer.parseInt(values[1]);
+            } catch (NumberFormatException e) {
+                LOGGER.warn("Invalid SVG texture dimensions specified, using defaults: {}x{}",
+                        targetWidth, targetHeight);
+            }
+        }
+
+        try (InputStream inputStream = resourceInfo.getFileObject().getContent().getInputStream()) {
+            // Create a transcoder that outputs a BufferedImage
+            BufferedImageTranscoder transcoder = new BufferedImageTranscoder(targetWidth, targetHeight);
+            TranscoderInput input = new TranscoderInput(inputStream);
+            transcoder.transcode(input, null);
+
+            BufferedImage bufferedImage = transcoder.getBufferedImage();
+            if (bufferedImage == null) {
+                LOGGER.error("Failed to transcode SVG to BufferedImage: {}", resourceInfo);
+                return false;
+            }
+
+            final int entireWidth = bufferedImage.getWidth();
+            final int entireHeight = bufferedImage.getHeight();
+            final int[] pixelsRaw = bufferedImage.getRGB(0, 0, entireWidth,
+                    entireHeight, null, 0, entireWidth);
+            texture.bake(entireWidth, entireHeight, entireWidth, entireHeight, 0, 0,
+                    pixelsRaw);
+
+            return true;
+        } catch (IOException | TranscoderException e) {
+            LOGGER.error("Texture.loadAsSvgTexture fails: {}", resourceInfo, e);
+            return false;
+        }
+    }
+
+    /**
+     * Custom Batik transcoder that outputs a BufferedImage with specified dimensions.
+     */
+    private static class BufferedImageTranscoder extends ImageTranscoder {
+        private final int targetWidth;
+        private final int targetHeight;
+        private BufferedImage bufferedImage;
+
+        BufferedImageTranscoder(int targetWidth, int targetHeight) {
+            this.targetWidth = targetWidth;
+            this.targetHeight = targetHeight;
+        }
+
+        @Override
+        public BufferedImage createImage(int width, int height) {
+            // Create image with the target dimensions (not the SVG's native size)
+            return new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        }
+
+        @Override
+        public void writeImage(BufferedImage img, TranscoderOutput output) {
+            this.bufferedImage = img;
+        }
+
+        BufferedImage getBufferedImage() {
+            return bufferedImage;
+        }
     }
 
     /**
