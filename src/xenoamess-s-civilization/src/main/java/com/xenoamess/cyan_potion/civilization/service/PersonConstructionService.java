@@ -69,6 +69,14 @@ public class PersonConstructionService {
         person.setFather(builder.getFather());
         person.setMother(builder.getMother());
 
+        // Register as child of parents (bidirectional relationship)
+        if (builder.getFather() != null) {
+            builder.getFather().addChild(person);
+        }
+        if (builder.getMother() != null) {
+            builder.getMother().addChild(person);
+        }
+
         // Health
         person.setHealthDecreasing(builder.getHealthDecreasing());
         person.setInitialHealth(builder.getGender().getBaseHealth());
