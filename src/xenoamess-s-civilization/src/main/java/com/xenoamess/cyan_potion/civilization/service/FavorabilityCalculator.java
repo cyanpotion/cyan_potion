@@ -28,6 +28,8 @@ import java.util.Random;
  * The calculation is based on attribute similarity between the two persons,
  * with results normally distributed between -50 and 50.
  *
+ * Now supports bidirectional favorability - A's opinion of B can differ from B's opinion of A.
+ *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
  */
@@ -51,22 +53,62 @@ public class FavorabilityCalculator {
     private static final double BASE_RANDOMNESS = 0.20;
 
     /**
-     * Calculates initial favorability between two persons.
+     * Result class for bidirectional favorability calculation.
+     */
+    public static class BidirectionalFavorability {
+        public final double person1ToPerson2;
+        public final double person2ToPerson1;
+
+        public BidirectionalFavorability(double person1ToPerson2, double person2ToPerson1) {
+            this.person1ToPerson2 = person1ToPerson2;
+            this.person2ToPerson1 = person2ToPerson1;
+        }
+    }
+
+    /**
+     * Calculates bidirectional initial favorability between two persons.
+     * Each person's opinion of the other is calculated independently,
+     * allowing scenarios like "A likes B but B dislikes A".
+     *
      * The result is normally distributed around -50 to 50 based on attribute similarity.
      *
      * @param person1 First person
      * @param person2 Second person
-     * @return Initial favorability value (can be outside [-50, 50] due to randomness)
+     * @return BidirectionalFavorability containing both directions of favorability
      */
-    public double calculateInitialFavorability(Person person1, Person person2) {
+    public BidirectionalFavorability calculateInitialFavorability(Person person1, Person person2) {
         if (person1 == null || person2 == null) {
             throw new IllegalArgumentException("Persons cannot be null");
         }
         if (person1.getId().equals(person2.getId())) {
-            return 100; // Self-relationship is always perfect
+            return new BidirectionalFavorability(100.0, 100.0); // Self-relationship is always perfect
         }
 
-        double similarity = calculateAttributeSimilarity(person1, person2);
+        // Calculate favorability from person1's perspective (how person1 sees person2)
+        double person1ToPerson2 = calculateOneDirectionFavorability(person1, person2);
+
+        // Calculate favorability from person2's perspective (how person2 sees person1)
+        // Note: Each person has different weights/perspectives, so we calculate independently
+        double person2ToPerson1 = calculateOneDirectionFavorability(person2, person1);
+
+        log.debug("Calculated bidirectional favorability between {} and {}: {} -> {} = {:.2f}, {} -> {} = {:.2f}",
+            person1.getName(), person2.getName(),
+            person1.getName(), person2.getName(), person1ToPerson2,
+            person2.getName(), person1.getName(), person2ToPerson1);
+
+        return new BidirectionalFavorability(person1ToPerson2, person2ToPerson1);
+    }
+
+    /**
+     * Calculates favorability from one person's perspective toward another.
+     * This represents how 'fromPerson' views 'toPerson'.
+     *
+     * @param fromPerson the person whose perspective we're calculating
+     * @param toPerson the person being evaluated
+     * @return favorability value
+     */
+    private double calculateOneDirectionFavorability(Person fromPerson, Person toPerson) {
+        double similarity = calculateAttributeSimilarity(fromPerson, toPerson);
 
         // Convert similarity (0-1) to favorability range (-50 to 50)
         // Similarity = 1.0 -> favorability = 50
@@ -74,20 +116,15 @@ public class FavorabilityCalculator {
         double baseFavorability = (similarity * 100) - 50;
 
         // Add Gaussian noise for natural distribution
+        // Each direction gets independent noise to allow differences
         double noise = generateGaussianNoise();
         double finalFavorability = baseFavorability + (noise * 20); // Noise has std dev of 20
-
-        log.debug("Calculated favorability between {} and {}: similarity={}, base={}, final={}",
-            person1.getName(), person2.getName(),
-            String.format("%.2f", similarity),
-            String.format("%.2f", baseFavorability),
-            String.format("%.2f", finalFavorability));
 
         return finalFavorability;
     }
 
     /**
-     * Creates a new Relationship with calculated initial favorability.
+     * Creates a new Relationship with calculated initial bidirectional favorability.
      *
      * @param person1 First person
      * @param person2 Second person
@@ -95,8 +132,8 @@ public class FavorabilityCalculator {
      * @return New Relationship instance
      */
     public Relationship createRelationship(Person person1, Person person2, LocalDate establishedDate) {
-        double favorability = calculateInitialFavorability(person1, person2);
-        return new Relationship(person1, person2, favorability, establishedDate);
+        BidirectionalFavorability fav = calculateInitialFavorability(person1, person2);
+        return new Relationship(person1, person2, fav.person1ToPerson2, fav.person2ToPerson1, establishedDate);
     }
 
     /**

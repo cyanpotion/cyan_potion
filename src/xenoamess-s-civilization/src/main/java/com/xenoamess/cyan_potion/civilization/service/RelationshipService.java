@@ -34,6 +34,8 @@ import java.util.stream.Stream;
  * Service for managing relationships between persons.
  * Provides centralized storage and operations for all relationships.
  *
+ * Now supports bidirectional favorability - each person has their own opinion of the other.
+ *
  * This is a singleton service that maintains a cache of all relationships.
  *
  * @author XenoAmess
@@ -86,7 +88,7 @@ public class RelationshipService {
 
     /**
      * Gets or creates a relationship between two persons.
-     * If the relationship doesn't exist, creates one with calculated initial favorability.
+     * If the relationship doesn't exist, creates one with calculated initial bidirectional favorability.
      *
      * @param person1 First person
      * @param person2 Second person
@@ -137,69 +139,88 @@ public class RelationshipService {
     }
 
     /**
-     * Gets the favorability value between two persons.
+     * Gets the favorability value from one person to another.
      * If relationship doesn't exist, creates one.
      *
-     * @param person1 First person
-     * @param person2 Second person
+     * @param from Person whose feeling we're getting
+     * @param to Person who is the target
      * @param currentDate Current game date
-     * @return Favorability value (raw, not clamped)
+     * @return Favorability value from 'from' to 'to' (raw, not clamped)
      */
-    public double getFavorability(Person person1, Person person2, LocalDate currentDate) {
-        Relationship relationship = getOrCreateRelationship(person1, person2, currentDate);
-        return relationship.getFavorability();
+    public double getFavorability(Person from, Person to, LocalDate currentDate) {
+        Relationship relationship = getOrCreateRelationship(from, to, currentDate);
+        return relationship.getFavorabilityFrom(from.getId());
     }
 
     /**
-     * Gets the effective favorability between two persons (clamped to [-100, 100]).
+     * Gets the favorability value between two persons (bidirectional).
+     * Returns the favorability from person1 to person2.
+     * If relationship doesn't exist, creates one.
      *
-     * @param person1 First person
-     * @param person2 Second person
+     * @param person1 First person (source of the feeling)
+     * @param person2 Second person (target of the feeling)
+     * @param currentDate Current game date
+     * @return Favorability value from person1 to person2 (raw, not clamped)
+     */
+    public double getFavorabilityFromTo(Person person1, Person person2, LocalDate currentDate) {
+        Relationship relationship = getOrCreateRelationship(person1, person2, currentDate);
+        return relationship.getFavorability(person1.getId(), person2.getId());
+    }
+
+    /**
+     * Gets the effective favorability from one person to another (clamped to [-100, 100]).
+     *
+     * @param from Person whose feeling we're getting
+     * @param to Person who is the target
      * @param currentDate Current game date
      * @return Effective favorability in range [-100, 100]
      */
-    public double getEffectiveFavorability(Person person1, Person person2, LocalDate currentDate) {
+    public double getEffectiveFavorability(Person from, Person to, LocalDate currentDate) {
         return FavorabilityCalculator.getEffectiveFavorability(
-            getFavorability(person1, person2, currentDate)
+            getFavorability(from, to, currentDate)
         );
     }
 
     /**
-     * Modifies the favorability between two persons.
+     * Modifies the favorability from one person to another.
      * Creates the relationship if it doesn't exist.
      *
-     * @param person1 First person
-     * @param person2 Second person
+     * @param from Person whose feeling is being modified
+     * @param to Person who is the target
      * @param delta The change amount (positive or negative)
      * @param currentDate Current game date
      * @return The updated Relationship
      */
-    public Relationship modifyFavorability(Person person1, Person person2, double delta, LocalDate currentDate) {
-        Relationship relationship = getOrCreateRelationship(person1, person2, currentDate);
-        relationship.modifyFavorability(delta, currentDate);
-        log.debug("Modified favorability between {} and {} by {}. New value: {}",
-            person1.getName(), person2.getName(),
+    public Relationship modifyFavorability(Person from, Person to, double delta, LocalDate currentDate) {
+        Relationship relationship = getOrCreateRelationship(from, to, currentDate);
+        relationship.modifyFavorability(from.getId(), delta, currentDate);
+        log.debug("Modified favorability from {} to {} by {}. New value: {}",
+            from.getName(), to.getName(),
             String.format("%+.2f", delta),
-            String.format("%.2f", relationship.getFavorability()));
+            String.format("%.2f", relationship.getFavorabilityFrom(from.getId())));
         return relationship;
     }
 
     /**
-     * Sets the favorability between two persons to a specific value.
+     * Sets the favorability from one person to another to a specific value.
      * Creates the relationship if it doesn't exist.
      *
-     * @param person1 First person
-     * @param person2 Second person
+     * @param from Person whose feeling is being set
+     * @param to Person who is the target
      * @param favorability The new favorability value
      * @param currentDate Current game date
      * @return The updated Relationship
      */
-    public Relationship setFavorability(Person person1, Person person2, double favorability, LocalDate currentDate) {
-        Relationship relationship = getOrCreateRelationship(person1, person2, currentDate);
-        relationship.setFavorability(favorability);
+    public Relationship setFavorability(Person from, Person to, double favorability, LocalDate currentDate) {
+        Relationship relationship = getOrCreateRelationship(from, to, currentDate);
+        if (from.getId().equals(relationship.getPersonId1())) {
+            relationship.setPerson1ToPerson2Favorability(favorability);
+        } else {
+            relationship.setPerson2ToPerson1Favorability(favorability);
+        }
         relationship.setLastUpdateDate(currentDate);
-        log.debug("Set favorability between {} and {} to {}",
-            person1.getName(), person2.getName(),
+        log.debug("Set favorability from {} to {} to {}",
+            from.getName(), to.getName(),
             String.format("%.2f", favorability));
         return relationship;
     }
@@ -241,66 +262,156 @@ public class RelationshipService {
     }
 
     /**
+     * Gets all positive relationships (favorability > 0) from a person.
+     *
+     * @param personId The person ID
+     * @return List of positive relationships from this person
+     */
+    public List<Relationship> getPositiveRelationshipsFrom(String personId) {
+        return getRelationshipStreamForPerson(personId)
+            .filter(r -> r.isPositiveFrom(personId))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all negative relationships (favorability < 0) from a person.
+     *
+     * @param personId The person ID
+     * @return List of negative relationships from this person
+     */
+    public List<Relationship> getNegativeRelationshipsFrom(String personId) {
+        return getRelationshipStreamForPerson(personId)
+            .filter(r -> r.isNegativeFrom(personId))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all positive relationships toward a person.
+     *
+     * @param personId The person ID
+     * @return List of positive relationships toward this person
+     */
+    public List<Relationship> getPositiveRelationshipsTo(String personId) {
+        return getRelationshipStreamForPerson(personId)
+            .filter(r -> r.getEffectiveFavorabilityTo(personId) > 0)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all negative relationships toward a person.
+     *
+     * @param personId The person ID
+     * @return List of negative relationships toward this person
+     */
+    public List<Relationship> getNegativeRelationshipsTo(String personId) {
+        return getRelationshipStreamForPerson(personId)
+            .filter(r -> r.getEffectiveFavorabilityTo(personId) < 0)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all relationships sorted by favorability from a person (descending).
+     *
+     * @param personId The person ID
+     * @return List of relationships sorted by favorability from this person
+     */
+    public List<Relationship> getRelationshipsSortedByFavorabilityFrom(String personId) {
+        return getRelationshipStreamForPerson(personId)
+            .sorted((r1, r2) -> Double.compare(
+                r2.getEffectiveFavorabilityFrom(personId),
+                r1.getEffectiveFavorabilityFrom(personId)))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the top N relationships by favorability from a person.
+     *
+     * @param personId The person ID
+     * @param n Number of relationships to return
+     * @return List of top N relationships
+     */
+    public List<Relationship> getTopRelationshipsFrom(String personId, int n) {
+        return getRelationshipsSortedByFavorabilityFrom(personId).stream()
+            .limit(n)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the worst N relationships by favorability from a person.
+     *
+     * @param personId The person ID
+     * @param n Number of relationships to return
+     * @return List of worst N relationships
+     */
+    public List<Relationship> getWorstRelationshipsFrom(String personId, int n) {
+        return getRelationshipStreamForPerson(personId)
+            .sorted((r1, r2) -> Double.compare(
+                r1.getEffectiveFavorabilityFrom(personId),
+                r2.getEffectiveFavorabilityFrom(personId)))
+            .limit(n)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Deprecated: Use getPositiveRelationshipsFrom instead.
      * Gets all positive relationships (favorability > 0) for a person.
      *
      * @param personId The person ID
      * @return List of positive relationships
      */
+    @Deprecated
     public List<Relationship> getPositiveRelationships(String personId) {
-        return getRelationshipStreamForPerson(personId)
-            .filter(Relationship::isPositive)
-            .collect(Collectors.toList());
+        return getPositiveRelationshipsFrom(personId);
     }
 
     /**
+     * Deprecated: Use getNegativeRelationshipsFrom instead.
      * Gets all negative relationships (favorability < 0) for a person.
      *
      * @param personId The person ID
      * @return List of negative relationships
      */
+    @Deprecated
     public List<Relationship> getNegativeRelationships(String personId) {
-        return getRelationshipStreamForPerson(personId)
-            .filter(Relationship::isNegative)
-            .collect(Collectors.toList());
+        return getNegativeRelationshipsFrom(personId);
     }
 
     /**
+     * Deprecated: Use getRelationshipsSortedByFavorabilityFrom instead.
      * Gets all relationships sorted by favorability (descending).
      *
      * @param personId The person ID
      * @return List of relationships sorted by favorability
      */
+    @Deprecated
     public List<Relationship> getRelationshipsSortedByFavorability(String personId) {
-        return getRelationshipStreamForPerson(personId)
-            .sorted((r1, r2) -> Double.compare(r2.getEffectiveFavorability(), r1.getEffectiveFavorability()))
-            .collect(Collectors.toList());
+        return getRelationshipsSortedByFavorabilityFrom(personId);
     }
 
     /**
+     * Deprecated: Use getTopRelationshipsFrom instead.
      * Gets the top N relationships by favorability for a person.
      *
      * @param personId The person ID
      * @param n Number of relationships to return
      * @return List of top N relationships
      */
+    @Deprecated
     public List<Relationship> getTopRelationships(String personId, int n) {
-        return getRelationshipsSortedByFavorability(personId).stream()
-            .limit(n)
-            .collect(Collectors.toList());
+        return getTopRelationshipsFrom(personId, n);
     }
 
     /**
+     * Deprecated: Use getWorstRelationshipsFrom instead.
      * Gets the worst N relationships by favorability for a person.
      *
      * @param personId The person ID
      * @param n Number of relationships to return
      * @return List of worst N relationships
      */
+    @Deprecated
     public List<Relationship> getWorstRelationships(String personId, int n) {
-        return getRelationshipStreamForPerson(personId)
-            .sorted((r1, r2) -> Double.compare(r1.getEffectiveFavorability(), r2.getEffectiveFavorability()))
-            .limit(n)
-            .collect(Collectors.toList());
+        return getWorstRelationshipsFrom(personId, n);
     }
 
     /**

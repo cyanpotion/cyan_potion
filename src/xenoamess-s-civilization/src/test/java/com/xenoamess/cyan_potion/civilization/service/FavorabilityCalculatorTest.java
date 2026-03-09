@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for FavorabilityCalculator.
+ * Unit tests for FavorabilityCalculator with bidirectional favorability.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
@@ -55,9 +55,34 @@ class FavorabilityCalculatorTest {
         FavorabilityCalculator calculator = new FavorabilityCalculator();
         Person person = createTestPerson("p1", "张三", Gender.MALE);
 
-        double favorability = calculator.calculateInitialFavorability(person, person);
+        FavorabilityCalculator.BidirectionalFavorability fav = calculator.calculateInitialFavorability(person, person);
 
-        assertEquals(100.0, favorability, 0.001);
+        // Self-relationship is perfect in both directions
+        assertEquals(100.0, fav.person1ToPerson2, 0.001);
+        assertEquals(100.0, fav.person2ToPerson1, 0.001);
+    }
+
+    @Test
+    void testBidirectionalFavorabilityCanDiffer() {
+        FavorabilityCalculator calculator = new FavorabilityCalculator();
+
+        // Run multiple times to account for randomness
+        boolean foundDifference = false;
+        for (int i = 0; i < 50 && !foundDifference; i++) {
+            Person person1 = createTestPerson("p1_" + i, "张三" + i, Gender.MALE);
+            Person person2 = createTestPerson("p2_" + i, "李四" + i, Gender.FEMALE);
+
+            FavorabilityCalculator.BidirectionalFavorability fav = calculator.calculateInitialFavorability(person1, person2);
+
+            // Due to independent randomness, values should usually differ
+            if (Math.abs(fav.person1ToPerson2 - fav.person2ToPerson1) > 0.1) {
+                foundDifference = true;
+            }
+        }
+
+        // It's extremely unlikely that all 50 iterations produce identical values
+        // due to independent Gaussian noise in each direction
+        assertTrue(foundDifference, "Bidirectional favorability should usually differ due to independent randomness");
     }
 
     @Test
@@ -65,7 +90,8 @@ class FavorabilityCalculatorTest {
         FavorabilityCalculator calculator = new FavorabilityCalculator();
 
         // Run multiple times to account for randomness
-        double sum = 0;
+        double sumP1ToP2 = 0;
+        double sumP2ToP1 = 0;
         int count = 100;
 
         for (int i = 0; i < count; i++) {
@@ -76,45 +102,62 @@ class FavorabilityCalculatorTest {
             person2.setConstitution(person1.getConstitution());
             person2.setBaseIntelligence(person1.getBaseIntelligence());
 
-            double favorability = calculator.calculateInitialFavorability(person1, person2);
-            sum += favorability;
+            FavorabilityCalculator.BidirectionalFavorability fav = calculator.calculateInitialFavorability(person1, person2);
+            sumP1ToP2 += fav.person1ToPerson2;
+            sumP2ToP1 += fav.person2ToPerson1;
         }
 
-        double average = sum / count;
-        // Average should be roughly around 0 (normal distribution centered at -50 to 50)
+        double averageP1ToP2 = sumP1ToP2 / count;
+        double averageP2ToP1 = sumP2ToP1 / count;
+
+        // Both averages should be roughly around 0 (normal distribution centered at -50 to 50)
         // With some tolerance for randomness
-        assertTrue(average > -70 && average < 70,
-            "Average favorability should be in reasonable range, got: " + average);
+        assertTrue(averageP1ToP2 > -70 && averageP1ToP2 < 70,
+            "Average favorability p1->p2 should be in reasonable range, got: " + averageP1ToP2);
+        assertTrue(averageP2ToP1 > -70 && averageP2ToP1 < 70,
+            "Average favorability p2->p1 should be in reasonable range, got: " + averageP2ToP1);
     }
 
     @Test
     void testSimilarPersonsHaveHigherFavorability() {
         FavorabilityCalculator calculator = new FavorabilityCalculator();
 
-        Person basePerson = createTestPerson("p1", "张三", Gender.MALE);
+        // Run multiple times to account for randomness
+        int similarHigherCount = 0;
+        int totalRuns = 20;
 
-        // Create a very similar person
-        Person similarPerson = createTestPerson("p2", "李四", Gender.MALE);
-        similarPerson.setConstitution(basePerson.getConstitution());
-        similarPerson.setBaseIntelligence(basePerson.getBaseIntelligence());
-        similarPerson.setBaseEloquence(basePerson.getBaseEloquence());
-        similarPerson.setNaturalAppearance(basePerson.getNaturalAppearance());
-        similarPerson.setBirthDate(basePerson.getBirthDate());
+        for (int i = 0; i < totalRuns; i++) {
+            Person basePerson = createTestPerson("p1_" + i, "张三" + i, Gender.MALE);
 
-        // Create a very different person
-        Person differentPerson = createTestPerson("p3", "王五", Gender.FEMALE);
-        differentPerson.setConstitution(20.0); // Very different
-        differentPerson.setBaseIntelligence(1.0);
-        differentPerson.setBaseEloquence(1.0);
-        differentPerson.setNaturalAppearance(1.0);
-        differentPerson.setBirthDate(LocalDate.of(1960, 1, 1)); // 30 years older
+            // Create a very similar person
+            Person similarPerson = createTestPerson("p2_" + i, "李四" + i, Gender.MALE);
+            similarPerson.setConstitution(basePerson.getConstitution());
+            similarPerson.setBaseIntelligence(basePerson.getBaseIntelligence());
+            similarPerson.setBaseEloquence(basePerson.getBaseEloquence());
+            similarPerson.setNaturalAppearance(basePerson.getNaturalAppearance());
+            similarPerson.setBirthDate(basePerson.getBirthDate());
 
-        double similarFavorability = calculator.calculateInitialFavorability(basePerson, similarPerson);
-        double differentFavorability = calculator.calculateInitialFavorability(basePerson, differentPerson);
+            // Create a very different person
+            Person differentPerson = createTestPerson("p3_" + i, "王五" + i, Gender.FEMALE);
+            differentPerson.setConstitution(20.0); // Very different
+            differentPerson.setBaseIntelligence(1.0);
+            differentPerson.setBaseEloquence(1.0);
+            differentPerson.setNaturalAppearance(1.0);
+            differentPerson.setBirthDate(LocalDate.of(1960, 1, 1)); // 30 years older
 
-        // Similar persons should generally have higher favorability
-        assertTrue(similarFavorability > differentFavorability,
-            "Similar persons should have higher favorability: " + similarFavorability + " vs " + differentFavorability);
+            FavorabilityCalculator.BidirectionalFavorability similarFav = calculator.calculateInitialFavorability(basePerson, similarPerson);
+            FavorabilityCalculator.BidirectionalFavorability differentFav = calculator.calculateInitialFavorability(basePerson, differentPerson);
+
+            if (similarFav.person1ToPerson2 > differentFav.person1ToPerson2) {
+                similarHigherCount++;
+            }
+        }
+
+        // Similar persons should have higher favorability in majority of cases
+        // (accounting for randomness - we expect at least 70% success rate)
+        assertTrue(similarHigherCount >= totalRuns * 0.7,
+            "Similar persons should generally have higher favorability, but only " +
+            similarHigherCount + "/" + totalRuns + " runs showed this pattern");
     }
 
     @Test
@@ -129,6 +172,10 @@ class FavorabilityCalculatorTest {
         assertTrue(relationship.involvesPerson("p1"));
         assertTrue(relationship.involvesPerson("p2"));
         assertEquals(TEST_DATE, relationship.getEstablishedDate());
+
+        // Bidirectional favorabilities should be set
+        assertNotNull(relationship.getPerson1ToPerson2Favorability());
+        assertNotNull(relationship.getPerson2ToPerson1Favorability());
     }
 
     @Test

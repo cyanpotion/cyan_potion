@@ -29,7 +29,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for RelationshipService.
+ * Unit tests for RelationshipService with bidirectional favorability.
  *
  * @author XenoAmess
  * @version 0.167.3-SNAPSHOT
@@ -115,10 +115,17 @@ class RelationshipServiceTest {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
 
-        double favorability = relationshipService.getFavorability(person1, person2, TEST_DATE);
+        // Set specific bidirectional favorabilities
+        relationshipService.setFavorability(person1, person2, 80.0, TEST_DATE);
+        relationshipService.setFavorability(person2, person1, -10.0, TEST_DATE);
 
-        // Should create relationship and return favorability
-        assertNotNull(favorability);
+        // Get favorability from p1 to p2
+        double favorabilityP1ToP2 = relationshipService.getFavorability(person1, person2, TEST_DATE);
+        assertEquals(80.0, favorabilityP1ToP2, 0.001);
+
+        // Get favorability from p2 to p1
+        double favorabilityP2ToP1 = relationshipService.getFavorability(person2, person1, TEST_DATE);
+        assertEquals(-10.0, favorabilityP2ToP1, 0.001);
     }
 
     @Test
@@ -127,9 +134,13 @@ class RelationshipServiceTest {
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
 
         relationshipService.setFavorability(person1, person2, 150.0, TEST_DATE);
+        relationshipService.setFavorability(person2, person1, -150.0, TEST_DATE);
 
-        double effective = relationshipService.getEffectiveFavorability(person1, person2, TEST_DATE);
-        assertEquals(100.0, effective, 0.001);
+        double effectiveP1ToP2 = relationshipService.getEffectiveFavorability(person1, person2, TEST_DATE);
+        double effectiveP2ToP1 = relationshipService.getEffectiveFavorability(person2, person1, TEST_DATE);
+
+        assertEquals(100.0, effectiveP1ToP2, 0.001);
+        assertEquals(-100.0, effectiveP2ToP1, 0.001);
     }
 
     @Test
@@ -137,10 +148,33 @@ class RelationshipServiceTest {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
 
+        // Set initial bidirectional favorabilities
         relationshipService.setFavorability(person1, person2, 50.0, TEST_DATE);
+        relationshipService.setFavorability(person2, person1, 30.0, TEST_DATE);
+
+        // Modify only p1's favorability toward p2
         Relationship modified = relationshipService.modifyFavorability(person1, person2, 20.0, TEST_DATE);
 
-        assertEquals(70.0, modified.getFavorability(), 0.001);
+        assertEquals(70.0, modified.getFavorabilityFrom("p1"), 0.001);
+        assertEquals(30.0, modified.getFavorabilityFrom("p2"), 0.001); // Unchanged
+    }
+
+    @Test
+    void testModifyFavorabilityBidirectional() {
+        Person person1 = createTestPerson("p1", "张三", Gender.MALE);
+        Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
+
+        // Set initial bidirectional favorabilities
+        relationshipService.setFavorability(person1, person2, 50.0, TEST_DATE);
+        relationshipService.setFavorability(person2, person1, 30.0, TEST_DATE);
+
+        // Modify both directions
+        relationshipService.modifyFavorability(person1, person2, -10.0, TEST_DATE);
+        relationshipService.modifyFavorability(person2, person1, 15.0, TEST_DATE);
+
+        Relationship relationship = relationshipService.getRelationship(person1, person2);
+        assertEquals(40.0, relationship.getFavorabilityFrom("p1"), 0.001);
+        assertEquals(45.0, relationship.getFavorabilityFrom("p2"), 0.001);
     }
 
     @Test
@@ -148,9 +182,13 @@ class RelationshipServiceTest {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
 
-        Relationship relationship = relationshipService.setFavorability(person1, person2, 80.0, TEST_DATE);
+        // Set bidirectional favorabilities
+        relationshipService.setFavorability(person1, person2, 80.0, TEST_DATE);
+        relationshipService.setFavorability(person2, person1, -10.0, TEST_DATE);
 
-        assertEquals(80.0, relationship.getFavorability(), 0.001);
+        Relationship relationship = relationshipService.getRelationship(person1, person2);
+        assertEquals(80.0, relationship.getFavorabilityFrom("p1"), 0.001);
+        assertEquals(-10.0, relationship.getFavorabilityFrom("p2"), 0.001);
     }
 
     @Test
@@ -167,23 +205,43 @@ class RelationshipServiceTest {
     }
 
     @Test
-    void testGetPositiveNegativeRelationships() {
+    void testGetPositiveNegativeRelationshipsFrom() {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
         Person person3 = createTestPerson("p3", "王五", Gender.MALE);
 
+        // Set asymmetric relationships: p1 likes p2 but dislikes p3
         relationshipService.setFavorability(person1, person2, 50.0, TEST_DATE);
         relationshipService.setFavorability(person1, person3, -50.0, TEST_DATE);
 
-        List<Relationship> positive = relationshipService.getPositiveRelationships("p1");
-        List<Relationship> negative = relationshipService.getNegativeRelationships("p1");
+        // From p1's perspective
+        List<Relationship> positiveFrom = relationshipService.getPositiveRelationshipsFrom("p1");
+        List<Relationship> negativeFrom = relationshipService.getNegativeRelationshipsFrom("p1");
 
-        assertEquals(1, positive.size());
-        assertEquals(1, negative.size());
+        assertEquals(1, positiveFrom.size());
+        assertEquals(1, negativeFrom.size());
     }
 
     @Test
-    void testGetRelationshipsSortedByFavorability() {
+    void testGetPositiveNegativeRelationshipsTo() {
+        Person person1 = createTestPerson("p1", "张三", Gender.MALE);
+        Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
+        Person person3 = createTestPerson("p3", "王五", Gender.MALE);
+
+        // p2 likes p1, p3 dislikes p1
+        relationshipService.setFavorability(person2, person1, 50.0, TEST_DATE);
+        relationshipService.setFavorability(person3, person1, -50.0, TEST_DATE);
+
+        // Toward p1
+        List<Relationship> positiveTo = relationshipService.getPositiveRelationshipsTo("p1");
+        List<Relationship> negativeTo = relationshipService.getNegativeRelationshipsTo("p1");
+
+        assertEquals(1, positiveTo.size());
+        assertEquals(1, negativeTo.size());
+    }
+
+    @Test
+    void testGetRelationshipsSortedByFavorabilityFrom() {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
         Person person3 = createTestPerson("p3", "王五", Gender.MALE);
@@ -191,14 +249,14 @@ class RelationshipServiceTest {
         relationshipService.setFavorability(person1, person2, 30.0, TEST_DATE);
         relationshipService.setFavorability(person1, person3, 60.0, TEST_DATE);
 
-        List<Relationship> sorted = relationshipService.getRelationshipsSortedByFavorability("p1");
+        List<Relationship> sorted = relationshipService.getRelationshipsSortedByFavorabilityFrom("p1");
 
         assertEquals(2, sorted.size());
-        assertTrue(sorted.get(0).getEffectiveFavorability() > sorted.get(1).getEffectiveFavorability());
+        assertTrue(sorted.get(0).getEffectiveFavorabilityFrom("p1") > sorted.get(1).getEffectiveFavorabilityFrom("p1"));
     }
 
     @Test
-    void testGetTopWorstRelationships() {
+    void testGetTopWorstRelationshipsFrom() {
         Person person1 = createTestPerson("p1", "张三", Gender.MALE);
         Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
         Person person3 = createTestPerson("p3", "王五", Gender.MALE);
@@ -208,14 +266,14 @@ class RelationshipServiceTest {
         relationshipService.setFavorability(person1, person3, -80.0, TEST_DATE);
         relationshipService.setFavorability(person1, person4, 0.0, TEST_DATE);
 
-        List<Relationship> top = relationshipService.getTopRelationships("p1", 1);
-        List<Relationship> worst = relationshipService.getWorstRelationships("p1", 1);
+        List<Relationship> top = relationshipService.getTopRelationshipsFrom("p1", 1);
+        List<Relationship> worst = relationshipService.getWorstRelationshipsFrom("p1", 1);
 
         assertEquals(1, top.size());
-        assertEquals(80.0, top.get(0).getEffectiveFavorability(), 0.001);
+        assertEquals(80.0, top.get(0).getEffectiveFavorabilityFrom("p1"), 0.001);
 
         assertEquals(1, worst.size());
-        assertEquals(-80.0, worst.get(0).getEffectiveFavorability(), 0.001);
+        assertEquals(-80.0, worst.get(0).getEffectiveFavorabilityFrom("p1"), 0.001);
     }
 
     @Test
@@ -258,5 +316,53 @@ class RelationshipServiceTest {
         assertNull(relationshipService.getRelationship(null, person));
         assertNull(relationshipService.getRelationship(person, null));
         assertTrue(relationshipService.getRelationshipsForPerson((Person) null).isEmpty());
+    }
+
+    @Test
+    void testSimpScenario() {
+        // The famous "simp" scenario: Alice really likes Bob but Bob is annoyed by Alice
+        Person alice = createTestPerson("alice", "Alice", Gender.FEMALE);
+        Person bob = createTestPerson("bob", "Bob", Gender.MALE);
+
+        // Alice likes Bob (80), but Bob is annoyed by Alice (-10)
+        relationshipService.setFavorability(alice, bob, 80.0, TEST_DATE);
+        relationshipService.setFavorability(bob, alice, -10.0, TEST_DATE);
+
+        // Verify Alice's feelings toward Bob
+        assertEquals(80.0, relationshipService.getFavorability(alice, bob, TEST_DATE), 0.001);
+        assertEquals(Relationship.RelationshipLevel.DEVOTED,
+            relationshipService.getRelationship(alice, bob).getRelationshipLevelFrom("alice"));
+
+        // Verify Bob's feelings toward Alice
+        assertEquals(-10.0, relationshipService.getFavorability(bob, alice, TEST_DATE), 0.001);
+        assertEquals(Relationship.RelationshipLevel.INDIFFERENT,
+            relationshipService.getRelationship(alice, bob).getRelationshipLevelFrom("bob"));
+
+        // Verify the asymmetry using service methods
+        assertTrue(relationshipService.getEffectiveFavorability(alice, bob, TEST_DATE) > 0);
+        assertTrue(relationshipService.getEffectiveFavorability(bob, alice, TEST_DATE) < 0);
+    }
+
+    @Test
+    void testDeprecatedMethodsStillWork() {
+        Person person1 = createTestPerson("p1", "张三", Gender.MALE);
+        Person person2 = createTestPerson("p2", "李四", Gender.FEMALE);
+        Person person3 = createTestPerson("p3", "王五", Gender.MALE);
+
+        relationshipService.setFavorability(person1, person2, 50.0, TEST_DATE);
+        relationshipService.setFavorability(person1, person3, -50.0, TEST_DATE);
+
+        // Test deprecated methods
+        List<Relationship> positive = relationshipService.getPositiveRelationships("p1");
+        List<Relationship> negative = relationshipService.getNegativeRelationships("p1");
+        List<Relationship> sorted = relationshipService.getRelationshipsSortedByFavorability("p1");
+        List<Relationship> top = relationshipService.getTopRelationships("p1", 1);
+        List<Relationship> worst = relationshipService.getWorstRelationships("p1", 1);
+
+        assertEquals(1, positive.size());
+        assertEquals(1, negative.size());
+        assertEquals(2, sorted.size());
+        assertEquals(1, top.size());
+        assertEquals(1, worst.size());
     }
 }

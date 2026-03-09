@@ -26,7 +26,8 @@ import java.time.LocalDate;
 
 /**
  * Represents the relationship (favorability) between two persons.
- * Each relationship is bidirectional - both persons share the same favorability value.
+ * Each relationship is now bidirectional - both persons have their own favorability toward each other.
+ * This allows scenarios like "A likes B a lot but B dislikes A" (the "simp" scenario).
  *
  * The raw favorability value can exceed 100 or go below -100,
  * but the effective value is always clamped to [-100, 100].
@@ -54,12 +55,22 @@ public class Relationship {
     private final String personId2;
 
     /**
-     * Raw favorability value. Can exceed 100 or go below -100.
- * Positive values indicate good relationship, negative values indicate bad relationship.
+     * Favorability from person1 to person2.
+     * Raw value can exceed 100 or go below -100.
+     * Positive values indicate good relationship, negative values indicate bad relationship.
      */
     @Getter
     @Setter
-    private double favorability;
+    private double person1ToPerson2Favorability;
+
+    /**
+     * Favorability from person2 to person1.
+     * Raw value can exceed 100 or go below -100.
+     * Positive values indicate good relationship, negative values indicate bad relationship.
+     */
+    @Getter
+    @Setter
+    private double person2ToPerson1Favorability;
 
     /**
      * The date when this relationship was established.
@@ -79,77 +90,182 @@ public class Relationship {
      *
      * @param person1 First person
      * @param person2 Second person
-     * @param favorability Initial favorability value
+     * @param person1ToPerson2Favorability Initial favorability from person1 to person2
+     * @param person2ToPerson1Favorability Initial favorability from person2 to person1
      * @param establishedDate Date when the relationship is established
      */
-    public Relationship(Person person1, Person person2, double favorability, LocalDate establishedDate) {
+    public Relationship(Person person1, Person person2,
+                        double person1ToPerson2Favorability, double person2ToPerson1Favorability,
+                        LocalDate establishedDate) {
         // Ensure consistent ordering of person IDs
         if (person1.getId().compareTo(person2.getId()) <= 0) {
             this.personId1 = person1.getId();
             this.personId2 = person2.getId();
+            this.person1ToPerson2Favorability = person1ToPerson2Favorability;
+            this.person2ToPerson1Favorability = person2ToPerson1Favorability;
         } else {
             this.personId1 = person2.getId();
             this.personId2 = person1.getId();
+            // Swap the favorabilities to match the reordered person IDs
+            this.person1ToPerson2Favorability = person2ToPerson1Favorability;
+            this.person2ToPerson1Favorability = person1ToPerson2Favorability;
         }
         this.id = this.personId1 + "#" + this.personId2;
-        this.favorability = favorability;
         this.establishedDate = establishedDate;
         this.lastUpdateDate = establishedDate;
     }
 
     /**
-     * Gets the effective favorability value, clamped to [-100, 100].
+     * Gets the favorability from one person to another.
      *
+     * @param fromPersonId the person who has the feeling
+     * @param toPersonId the person who is the target of the feeling
+     * @return the favorability value, or 0 if person IDs are invalid
+     */
+    public double getFavorability(String fromPersonId, String toPersonId) {
+        if (fromPersonId.equals(personId1) && toPersonId.equals(personId2)) {
+            return person1ToPerson2Favorability;
+        } else if (fromPersonId.equals(personId2) && toPersonId.equals(personId1)) {
+            return person2ToPerson1Favorability;
+        }
+        throw new IllegalArgumentException("Invalid person IDs for this relationship: " + fromPersonId + " -> " + toPersonId);
+    }
+
+    /**
+     * Gets the favorability from the specified person to the other person.
+     *
+     * @param fromPersonId the person who has the feeling
+     * @return the favorability value from this person to the other
+     */
+    public double getFavorabilityFrom(String fromPersonId) {
+        if (fromPersonId.equals(personId1)) {
+            return person1ToPerson2Favorability;
+        } else if (fromPersonId.equals(personId2)) {
+            return person2ToPerson1Favorability;
+        }
+        throw new IllegalArgumentException("Person " + fromPersonId + " is not part of this relationship");
+    }
+
+    /**
+     * Gets the favorability toward the specified person from the other person.
+     *
+     * @param toPersonId the person who is the target of the feeling
+     * @return the favorability value toward this person
+     */
+    public double getFavorabilityTo(String toPersonId) {
+        if (toPersonId.equals(personId1)) {
+            return person2ToPerson1Favorability;
+        } else if (toPersonId.equals(personId2)) {
+            return person1ToPerson2Favorability;
+        }
+        throw new IllegalArgumentException("Person " + toPersonId + " is not part of this relationship");
+    }
+
+    /**
+     * Gets the effective favorability value from one person to another, clamped to [-100, 100].
+     *
+     * @param fromPersonId the person who has the feeling
+     * @param toPersonId the person who is the target of the feeling
      * @return effective favorability in range [-100, 100]
      */
-    public double getEffectiveFavorability() {
-        return Math.max(-100, Math.min(100, favorability));
+    public double getEffectiveFavorability(String fromPersonId, String toPersonId) {
+        return Math.max(-100, Math.min(100, getFavorability(fromPersonId, toPersonId)));
     }
 
     /**
-     * Checks if the relationship is positive (effective favorability > 0).
+     * Gets the effective favorability from the specified person to the other.
      *
+     * @param fromPersonId the person who has the feeling
+     * @return effective favorability in range [-100, 100]
+     */
+    public double getEffectiveFavorabilityFrom(String fromPersonId) {
+        return Math.max(-100, Math.min(100, getFavorabilityFrom(fromPersonId)));
+    }
+
+    /**
+     * Gets the effective favorability toward the specified person.
+     *
+     * @param toPersonId the person who is the target of the feeling
+     * @return effective favorability in range [-100, 100]
+     */
+    public double getEffectiveFavorabilityTo(String toPersonId) {
+        return Math.max(-100, Math.min(100, getFavorabilityTo(toPersonId)));
+    }
+
+    /**
+     * Checks if the relationship from one person to another is positive.
+     *
+     * @param fromPersonId the person who has the feeling
      * @return true if positive relationship
      */
-    public boolean isPositive() {
-        return getEffectiveFavorability() > 0;
+    public boolean isPositiveFrom(String fromPersonId) {
+        return getEffectiveFavorabilityFrom(fromPersonId) > 0;
     }
 
     /**
-     * Checks if the relationship is negative (effective favorability < 0).
+     * Checks if the relationship from one person to another is negative.
      *
+     * @param fromPersonId the person who has the feeling
      * @return true if negative relationship
      */
-    public boolean isNegative() {
-        return getEffectiveFavorability() < 0;
+    public boolean isNegativeFrom(String fromPersonId) {
+        return getEffectiveFavorabilityFrom(fromPersonId) < 0;
     }
 
     /**
-     * Checks if the relationship is neutral (effective favorability == 0).
+     * Checks if the relationship from one person to another is neutral.
      *
+     * @param fromPersonId the person who has the feeling
      * @return true if neutral relationship
      */
-    public boolean isNeutral() {
-        return getEffectiveFavorability() == 0;
+    public boolean isNeutralFrom(String fromPersonId) {
+        return getEffectiveFavorabilityFrom(fromPersonId) == 0;
     }
 
     /**
-     * Gets the relationship level category based on effective favorability.
+     * Gets the relationship level category from one person to another.
      *
+     * @param fromPersonId the person who has the feeling
      * @return RelationshipLevel enum value
      */
-    public RelationshipLevel getRelationshipLevel() {
-        return RelationshipLevel.fromFavorability(getEffectiveFavorability());
+    public RelationshipLevel getRelationshipLevelFrom(String fromPersonId) {
+        return RelationshipLevel.fromFavorability(getEffectiveFavorabilityFrom(fromPersonId));
     }
 
     /**
-     * Modifies the favorability by a delta value.
+     * Modifies the favorability from one person to another by a delta value.
      *
+     * @param fromPersonId the person whose feeling is being modified
      * @param delta the change amount (positive or negative)
      * @param updateDate the date of this update
      */
-    public void modifyFavorability(double delta, LocalDate updateDate) {
-        this.favorability += delta;
+    public void modifyFavorability(String fromPersonId, double delta, LocalDate updateDate) {
+        if (fromPersonId.equals(personId1)) {
+            this.person1ToPerson2Favorability += delta;
+        } else if (fromPersonId.equals(personId2)) {
+            this.person2ToPerson1Favorability += delta;
+        } else {
+            throw new IllegalArgumentException("Person " + fromPersonId + " is not part of this relationship");
+        }
+        this.lastUpdateDate = updateDate;
+    }
+
+    /**
+     * Modifies the favorability from one specific person to another.
+     *
+     * @param fromPersonId the person whose feeling is being modified
+     * @param toPersonId the person who is the target
+     * @param delta the change amount (positive or negative)
+     * @param updateDate the date of this update
+     */
+    public void modifyFavorability(String fromPersonId, String toPersonId, double delta, LocalDate updateDate) {
+        if (fromPersonId.equals(personId1) && toPersonId.equals(personId2)) {
+            this.person1ToPerson2Favorability += delta;
+        } else if (fromPersonId.equals(personId2) && toPersonId.equals(personId1)) {
+            this.person2ToPerson1Favorability += delta;
+        } else {
+            throw new IllegalArgumentException("Invalid person IDs for this relationship: " + fromPersonId + " -> " + toPersonId);
+        }
         this.lastUpdateDate = updateDate;
     }
 
@@ -189,6 +305,17 @@ public class Relationship {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Relationship{" +
+            "id='" + id + '\'' +
+            ", person1ToPerson2Favorability=" + person1ToPerson2Favorability +
+            ", person2ToPerson1Favorability=" + person2ToPerson1Favorability +
+            ", establishedDate=" + establishedDate +
+            ", lastUpdateDate=" + lastUpdateDate +
+            '}';
     }
 
     /**
