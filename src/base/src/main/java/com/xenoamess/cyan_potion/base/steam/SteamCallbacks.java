@@ -104,10 +104,8 @@ public class SteamCallbacks {
             //do nothing
         }
 
-        @Override
-        public void onEncryptedAppTicket(SteamResult result) {
-            //do nothing
-        }
+        // Note: onEncryptedAppTicket was removed in steamworks4j 1.9.0+
+        // The SteamUserCallback interface now uses default methods
     };
 
     @Getter
@@ -499,10 +497,8 @@ public class SteamCallbacks {
             //do nothing
         }
 
-        @Override
-        public void onGameServerChangeRequested(String server, String password) {
-            //do nothing
-        }
+        // Note: onGameServerChangeRequested was removed in steamworks4j 1.9.0+
+        // The SteamFriendsCallback interface now uses default methods
     };
 
     @Getter

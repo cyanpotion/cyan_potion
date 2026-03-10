@@ -30,6 +30,7 @@ import com.codedisaster.steamworks.SteamException;
 import com.codedisaster.steamworks.SteamFriends;
 import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamLeaderboardHandle;
+import com.codedisaster.steamworks.SteamLibraryLoader;
 import com.codedisaster.steamworks.SteamPublishedFileID;
 import com.codedisaster.steamworks.SteamPublishedFileUpdateHandle;
 import com.codedisaster.steamworks.SteamRemoteStorage;
@@ -159,7 +160,18 @@ public class SteamManager extends SubManager {
             this.renewSteam_appid();
             try {
                 LOGGER.debug("[steam]Load native libraries ...");
-                SteamAPI.loadLibraries();
+                SteamAPI.loadLibraries(new SteamLibraryLoader() {
+                    @Override
+                    public boolean load(String libraryName) {
+                        try {
+                            org.lwjgl.system.Library.loadSystem(libraryName);
+                            return true;
+                        } catch (UnsatisfiedLinkError e) {
+                            LOGGER.warn("[steam]Failed to load library: " + libraryName, e);
+                            return false;
+                        }
+                    }
+                });
                 if (!SteamAPI.init()) {
                     try (StringWriter stringWriter = new StringWriter();
                          WriterOutputStream writerOutputStream = new WriterOutputStream(
