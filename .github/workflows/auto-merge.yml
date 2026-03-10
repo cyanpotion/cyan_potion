@@ -19,7 +19,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Check if auto-merge applicable (minor or patch only)
+      - name: Check if auto-merge applicable (minor or medium only)
         id: check
         run: |
           if [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-patch" ]] || \
