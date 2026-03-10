@@ -94,7 +94,6 @@ public class PersonBrowseHistory {
      * @return the previous person, or null if none
      */
     @Nullable
-    @Nullable
     public Person getPrevious() {
         return backStack.peek();
     }
@@ -104,7 +103,6 @@ public class PersonBrowseHistory {
      *
      * @return the next person, or null if none
      */
-    @Nullable
     @Nullable
     public Person getNext() {
         return forwardStack.peek();
@@ -116,7 +114,6 @@ public class PersonBrowseHistory {
      *
      * @return the previous person, or null if none
      */
-    @Nullable
     @Nullable
     public Person navigateToPrevious() {
         if (backStack.isEmpty()) {
@@ -142,7 +139,6 @@ public class PersonBrowseHistory {
      *
      * @return the next person, or null if none
      */
-    @Nullable
     @Nullable
     public Person navigateToNext() {
         if (forwardStack.isEmpty()) {
