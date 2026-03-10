@@ -99,9 +99,6 @@ public class RelationshipService {
         if (person1 == null || person2 == null) {
             throw new IllegalArgumentException("Persons cannot be null");
         }
-        if (person1.getId().equals(person2.getId())) {
-            throw new IllegalArgumentException("Cannot create relationship with oneself");
-        }
 
         String relationshipId = createRelationshipId(person1.getId(), person2.getId());
 
