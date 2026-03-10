@@ -104,7 +104,7 @@
         <lombok.version>1.18.36</lombok.version>
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
         <httpcore.version>4.4.16</httpcore.version>
-        <batik.version>1.18</batik.version>
+        <batik.version>1.19</batik.version>
         <!---->
         <!---->
         <!--home made libraries versions-->
