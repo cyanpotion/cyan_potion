@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.Relationship;
+import com.xenoamess.cyan_potion.civilization.service.BeliefFavorabilityModifier;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -40,6 +41,16 @@ import java.util.Random;
 public class FavorabilityCalculator {
 
     private static final Random RANDOM = new Random();
+
+    private final BeliefFavorabilityModifier beliefModifier;
+
+    public FavorabilityCalculator() {
+        this.beliefModifier = new BeliefFavorabilityModifier();
+    }
+
+    public FavorabilityCalculator(BeliefFavorabilityModifier beliefModifier) {
+        this.beliefModifier = beliefModifier;
+    }
 
     // Weights for different attributes in similarity calculation
     private static final double WEIGHT_GENDER = 0.05;           // Same gender has slight effect
@@ -121,7 +132,11 @@ public class FavorabilityCalculator {
         // Add Gaussian noise for natural distribution
         // Each direction gets independent noise to allow differences
         double noise = generateGaussianNoise();
-        double finalFavorability = baseFavorability + (noise * 20); // Noise has std dev of 20
+        double noisyFavorability = baseFavorability + (noise * 20); // Noise has std dev of 20
+
+        // Apply belief modifier
+        double beliefImpact = beliefModifier.calculateModifier(fromPerson, toPerson);
+        double finalFavorability = noisyFavorability + beliefImpact;
 
         return finalFavorability;
     }

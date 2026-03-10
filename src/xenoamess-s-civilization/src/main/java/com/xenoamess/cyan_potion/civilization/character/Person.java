@@ -19,6 +19,7 @@ package com.xenoamess.cyan_potion.civilization.character;
 import com.xenoamess.cyan_potion.civilization.service.PersonAttributeCalculator;
 import com.xenoamess.cyan_potion.civilization.character.trait.Trait;
 import com.xenoamess.cyan_potion.civilization.util.TimeUtil;
+import com.xenoamess.cyan_potion.civilization.belief.PersonBelief;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -152,6 +153,11 @@ public class Person {
 
     @Getter
     private final Collection<Trait> traits = new ConcurrentLinkedDeque<>();
+
+    // ==================== Beliefs ====================
+
+    @Getter
+    private final Collection<PersonBelief> beliefs = new ConcurrentLinkedDeque<>();
 
     // ==================== Date Tracking ====================
 
@@ -738,6 +744,181 @@ public class Person {
      */
     public boolean isPregnant() {
         return hasTrait(com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait.TYPE);
+    }
+
+    // ==================== Belief Management ====================
+
+    /**
+     * 添加信念
+     *
+     * @param belief 个人信念
+     * @return true if added successfully
+     */
+    public boolean addBelief(@NotNull PersonBelief belief) {
+        if (belief == null) {
+            return false;
+        }
+        if (!belief.getPersonId().equals(this.getId())) {
+            throw new IllegalArgumentException("Belief personId does not match");
+        }
+        // 检查是否已有相同信念
+        boolean hasSameBelief = beliefs.stream()
+                .anyMatch(b -> b.getBeliefId().equals(belief.getBeliefId()) && b.isActive());
+        if (hasSameBelief) {
+            return false;
+        }
+        return beliefs.add(belief);
+    }
+
+    /**
+     * 移除信念（标记为放弃）
+     *
+     * @param beliefId 信念ID
+     * @param date 放弃日期
+     * @return true if abandoned
+     */
+    public boolean removeBelief(@NotNull String beliefId, @NotNull LocalDate date) {
+        Optional<PersonBelief> target = beliefs.stream()
+                .filter(b -> b.getBeliefId().equals(beliefId) && b.isActive())
+                .findFirst();
+        target.ifPresent(b -> b.abandon(date));
+        return target.isPresent();
+    }
+
+    /**
+     * 获取指定信念ID的个人信念
+     *
+     * @param beliefId 信念ID
+     * @return Optional of PersonBelief
+     */
+    @NotNull
+    public Optional<PersonBelief> getBeliefById(@NotNull String beliefId) {
+        return beliefs.stream()
+                .filter(b -> b.getBeliefId().equals(beliefId))
+                .findFirst();
+    }
+
+    /**
+     * 获取所有活跃信念
+     *
+     * @return 活跃信念列表
+     */
+    @NotNull
+    public List<PersonBelief> getActiveBeliefs() {
+        return beliefs.stream()
+                .filter(PersonBelief::isActive)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 判断是否持有指定信念
+     *
+     * @param beliefId 信念ID
+     * @return true if has the belief
+     */
+    public boolean hasBelief(@NotNull String beliefId) {
+        return beliefs.stream()
+                .anyMatch(b -> b.getBeliefId().equals(beliefId) && b.isActive());
+    }
+
+    /**
+     * 获取主要信念（虔诚度最高的活跃信念）
+     *
+     * @return Optional of PersonBelief
+     */
+    @NotNull
+    public Optional<PersonBelief> getPrimaryBelief() {
+        return beliefs.stream()
+                .filter(PersonBelief::isActive)
+                .max(java.util.Comparator.comparingDouble(PersonBelief::getEffectiveDevotion));
+    }
+
+    /**
+     * 获取最大信念槽位数
+     * 基于智识属性，线性关系
+     *
+     * @return 最大槽位数
+     */
+    public int getMaxBeliefSlots() {
+        double intelligence = getIntelligence();
+        // 基础槽位1个，每20点智识增加1个槽位
+        int slots = 1 + (int) (intelligence / 20.0);
+        // 限制在1-5之间
+        return Math.max(1, Math.min(5, slots));
+    }
+
+    /**
+     * 获取当前已使用的槽位数
+     *
+     * @return 已使用槽位数
+     */
+    public int getUsedBeliefSlots() {
+        return (int) beliefs.stream()
+                .filter(PersonBelief::isActive)
+                .count();
+    }
+
+    /**
+     * 获取剩余槽位数
+     *
+     * @return 剩余槽位数
+     */
+    public int getRemainingBeliefSlots() {
+        return Math.max(0, getMaxBeliefSlots() - getUsedBeliefSlots());
+    }
+
+    /**
+     * 检查是否可以接受新信念
+     *
+     * @return true if can accept new belief
+     */
+    public boolean canAcceptNewBelief() {
+        return getRemainingBeliefSlots() > 0;
+    }
+
+    /**
+     * 检查是否为虔诚信徒（至少有一个虔诚度>=70的信念）
+     *
+     * @return true if devout
+     */
+    public boolean isDevout() {
+        return beliefs.stream()
+                .anyMatch(PersonBelief::isDevout);
+    }
+
+    /**
+     * 检查是否为狂热信徒（至少有一个狂热信念）
+     *
+     * @return true if fanatical
+     */
+    public boolean isFanatical() {
+        return beliefs.stream()
+                .anyMatch(PersonBelief::isFanatical);
+    }
+
+    /**
+     * 获取所有虔诚信念
+     *
+     * @return 虔诚信念列表
+     */
+    @NotNull
+    public List<PersonBelief> getDevoutBeliefs() {
+        return beliefs.stream()
+                .filter(PersonBelief::isDevout)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 更新信念（每日调用）
+     *
+     * @param currentDate 当前日期
+     */
+    public void updateBeliefsDaily(@NotNull LocalDate currentDate) {
+        // 信念的日常更新逻辑
+        beliefs.forEach(b -> {
+            // 可以在这里添加信念衰减或增长逻辑
+            // 例如：随机微小变化、基于事件的变化等
+        });
     }
 
 }

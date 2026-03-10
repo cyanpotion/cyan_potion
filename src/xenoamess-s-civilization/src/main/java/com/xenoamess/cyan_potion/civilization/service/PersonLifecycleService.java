@@ -19,11 +19,13 @@ package com.xenoamess.cyan_potion.civilization.service;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.xenoamess.cyan_potion.civilization.belief.PersonBelief;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 /**
  * Service for managing person lifecycle.
@@ -36,13 +38,22 @@ import java.time.temporal.ChronoUnit;
 public class PersonLifecycleService {
 
     private final PersonAttributeCalculator attributeCalculator;
+    private final BeliefInheritanceService beliefInheritanceService;
 
     public PersonLifecycleService() {
         this.attributeCalculator = new PersonAttributeCalculator();
+        this.beliefInheritanceService = new BeliefInheritanceService();
     }
 
     public PersonLifecycleService(PersonAttributeCalculator attributeCalculator) {
         this.attributeCalculator = attributeCalculator;
+        this.beliefInheritanceService = new BeliefInheritanceService(attributeCalculator);
+    }
+
+    public PersonLifecycleService(PersonAttributeCalculator attributeCalculator, 
+                                  BeliefInheritanceService beliefInheritanceService) {
+        this.attributeCalculator = attributeCalculator;
+        this.beliefInheritanceService = beliefInheritanceService;
     }
 
     /**
@@ -208,6 +219,66 @@ public class PersonLifecycleService {
             attributeCalculator.getAgeAtDeath(person),
             person.getDeathDate().toString(),
             person.getDeathCause());
+    }
+
+    // ==================== Belief Inheritance ====================
+
+    /**
+     * 为新生儿继承信念
+     * 从父母双方继承信念，优先从强势方获取
+     *
+     * @param child 新生儿
+     * @param father 父亲
+     * @param mother 母亲
+     * @param dominantParent 强势方父母
+     * @param currentDate 当前日期
+     */
+    public void inheritBeliefsForChild(@NotNull Person child, 
+                                       @Nullable Person father, 
+                                       @Nullable Person mother,
+                                       @NotNull Person dominantParent,
+                                       @NotNull LocalDate currentDate) {
+        List<PersonBelief> inheritedBeliefs = beliefInheritanceService.inheritBeliefs(
+                child, father, mother, dominantParent, currentDate);
+        
+        // 将继承的信念添加到孩子身上
+        for (PersonBelief belief : inheritedBeliefs) {
+            child.addBelief(belief);
+        }
+
+        log.info("Child {} inherited {} beliefs from parents", 
+                child.getName(), inheritedBeliefs.size());
+    }
+
+    /**
+     * 为新生儿继承信念（简化版，自动确定强势方）
+     *
+     * @param child 新生儿
+     * @param father 父亲
+     * @param mother 母亲
+     * @param currentDate 当前日期
+     */
+    public void inheritBeliefsForChild(@NotNull Person child,
+                                       @Nullable Person father,
+                                       @Nullable Person mother,
+                                       @NotNull LocalDate currentDate) {
+        // 默认父亲为强势方（可根据实际情况调整）
+        Person dominantParent = father != null ? father : mother;
+        if (dominantParent == null) {
+            log.warn("Cannot inherit beliefs for child {}: no parents provided", child.getName());
+            return;
+        }
+        inheritBeliefsForChild(child, father, mother, dominantParent, currentDate);
+    }
+
+    /**
+     * 更新人物的信念（每日调用）
+     *
+     * @param person 人物
+     * @param currentDate 当前日期
+     */
+    public void updateBeliefsDaily(@NotNull Person person, @NotNull LocalDate currentDate) {
+        person.updateBeliefsDaily(currentDate);
     }
 
 }
