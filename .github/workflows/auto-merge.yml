@@ -1,14 +1,56 @@
-name: auto-merge
+name: Dependabot auto-merge
 
 on:
   pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
-  auto-merge:
+  dependabot:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - uses: actions/checkout@v6
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+      - name: Dependabot metadata
+        id: meta
+        uses: dependabot/fetch-metadata@v2
         with:
-          target: minor
-          github-token: ${{ secrets.mytoken }}
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Check if auto-merge applicable (minor or patch only)
+        id: check
+        run: |
+          if [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-patch" ]] || \
+             [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-minor" ]]; then
+            echo "should_merge=true" >> $GITHUB_OUTPUT
+            echo "Update type: ${{ steps.meta.outputs.update-type }} - eligible for auto-merge"
+          else
+            echo "should_merge=false" >> $GITHUB_OUTPUT
+            echo "Update type: ${{ steps.meta.outputs.update-type }} - not eligible for auto-merge (major updates require manual review)"
+          fi
+
+      - name: Wait for CI checks to pass
+        if: steps.check.outputs.should_merge == 'true'
+        uses: lewagon/wait-on-check-action@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          check-name: 'build'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success,skipped
+
+      - name: Approve dependabot PR
+        if: steps.check.outputs.should_merge == 'true'
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge with rebase
+        if: steps.check.outputs.should_merge == 'true'
+        run: gh pr merge --auto --rebase "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
