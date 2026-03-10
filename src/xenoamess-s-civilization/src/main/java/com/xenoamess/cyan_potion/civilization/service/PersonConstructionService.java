@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.*;
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
 import com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator;

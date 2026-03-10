@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.util;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Random;
 
 /**
@@ -26,7 +29,8 @@ import java.util.Random;
  * @version 0.167.3-SNAPSHOT
  */
 public final class PersonAttributeUtil {
-    
+
+    @NotNull
     private static final Random RANDOM = new Random();
     
     // Attribute ranges
@@ -173,6 +177,7 @@ public final class PersonAttributeUtil {
      *
      * @return the Random instance
      */
+    @NotNull
     public static Random getRandom() {
         return RANDOM;
     }

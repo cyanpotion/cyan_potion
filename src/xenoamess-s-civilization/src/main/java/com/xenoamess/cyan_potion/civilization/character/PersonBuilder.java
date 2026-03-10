@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 

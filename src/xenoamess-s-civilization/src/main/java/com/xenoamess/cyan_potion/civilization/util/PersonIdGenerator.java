@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.util;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,15 +63,17 @@ public final class PersonIdGenerator {
      *
      * @return the singleton PersonIdGenerator
      */
+    @NotNull
     public static PersonIdGenerator getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Generates a new unique person ID.
      *
      * @return unique ID string
      */
+    @NotNull
     public String generateId() {
         lock.lock();
         try {
@@ -129,6 +134,7 @@ public final class PersonIdGenerator {
      * @return array of unique IDs
      * @throws IllegalArgumentException if count is negative or too large
      */
+    @NotNull
     public String[] generateIds(int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Count cannot be negative");
@@ -179,7 +185,7 @@ public final class PersonIdGenerator {
      * @param id the ID to validate
      * @return true if valid format
      */
-    public static boolean isValidIdFormat(String id) {
+    public static boolean isValidIdFormat(@Nullable String id) {
         if (id == null || id.isEmpty()) {
             return false;
         }

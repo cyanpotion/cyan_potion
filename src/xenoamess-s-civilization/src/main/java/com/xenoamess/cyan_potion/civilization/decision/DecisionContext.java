@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.decision;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Person;
 
 import java.time.LocalDate;
@@ -36,6 +39,7 @@ public interface DecisionContext {
      *
      * @return current date
      */
+    @NotNull
     LocalDate getCurrentDate();
 
     /**
@@ -43,6 +47,7 @@ public interface DecisionContext {
      *
      * @return list of all alive persons
      */
+    @NotNull
     Stream<Person> getAllAlivePersons();
 
     /**
@@ -50,6 +55,7 @@ public interface DecisionContext {
      *
      * @return list of eligible females
      */
+    @NotNull
     Stream<Person> getEligibleFemales();
 
     /**
@@ -57,6 +63,7 @@ public interface DecisionContext {
      *
      * @return list of eligible males
      */
+    @NotNull
     Stream<Person> getEligibleMales();
 
     /**
@@ -65,14 +72,14 @@ public interface DecisionContext {
      * @param person the person to check
      * @return true if player-controlled
      */
-    boolean isPlayerControlled(Person person);
+    boolean isPlayerControlled(@NotNull Person person);
 
     /**
      * Adds a pending event for player decision.
      *
      * @param event the pending event
      */
-    void addPendingPlayerEvent(PendingPlayerEvent event);
+    void addPendingPlayerEvent(@NotNull PendingPlayerEvent event);
 
     /**
      * Executes a marriage between two persons.
@@ -81,7 +88,7 @@ public interface DecisionContext {
      * @param subordinate the subordinate person (wife in patriarchal marriage)
      * @return true if marriage was successful
      */
-    boolean executeMarriage(Person dominant, Person subordinate);
+    boolean executeMarriage(@NotNull Person dominant, @NotNull Person subordinate);
 
     /**
      * Adds a newborn child to the world.
@@ -89,7 +96,7 @@ public interface DecisionContext {
      * @param child the newborn child to add
      * @return true if successfully added
      */
-    boolean addNewborn(Person child);
+    boolean addNewborn(@NotNull Person child);
 
     /**
      * Marks a person as dead with the specified cause.
@@ -98,5 +105,5 @@ public interface DecisionContext {
      * @param cause the cause of death
      * @return true if successfully marked
      */
-    boolean markAsDead(Person person, String cause);
+    boolean markAsDead(@NotNull Person person, @Nullable String cause);
 }

@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
@@ -38,7 +41,7 @@ public class AppearanceCalculator {
      * @param gender the child's gender
      * @return calculated natural appearance
      */
-    public double calculateNaturalAppearance(Person father, Person mother, Gender gender) {
+    public double calculateNaturalAppearance(@Nullable Person father, @Nullable Person mother, @NotNull Gender gender) {
         if (father == null || mother == null) {
             // No parents, use random
             return PersonAttributeUtil.randomAppearance();

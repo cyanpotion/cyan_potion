@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.decision.decision;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.decision.Decision;
@@ -65,7 +68,7 @@ public class PatriarchalMarriageDecision implements Decision {
     }
 
     @Override
-    public boolean canExecute(Person person, DecisionContext context) {
+    public boolean canExecute(@NotNull Person person, @NotNull DecisionContext context) {
         // Must be male
         if (person.getGender() != Gender.MALE) {
             return false;
@@ -85,7 +88,8 @@ public class PatriarchalMarriageDecision implements Decision {
     }
 
     @Override
-    public DecisionResult execute(Person person, DecisionContext context) {
+    @NotNull
+    public DecisionResult execute(@NotNull Person person, @NotNull DecisionContext context) {
         // Find all eligible females
         Stream<Person> eligibleFemales = context.getEligibleFemales()
             .filter(female -> canAcceptMarriage(female))

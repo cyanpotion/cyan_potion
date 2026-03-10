@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import lombok.Getter;
 
 import java.util.Objects;
@@ -41,7 +44,7 @@ public class ClanMembership {
      * @param clan the clan
      * @param primary true if this is the primary clan
      */
-    public ClanMembership(Clan clan, boolean primary) {
+    public ClanMembership(@NotNull Clan clan, boolean primary) {
         if (clan == null) {
             throw new IllegalArgumentException("Clan cannot be null");
         }
@@ -55,7 +58,8 @@ public class ClanMembership {
      * @param clan the clan
      * @return primary membership
      */
-    public static ClanMembership primary(Clan clan) {
+    @NotNull
+    public static ClanMembership primary(@NotNull Clan clan) {
         return new ClanMembership(clan, true);
     }
 
@@ -65,7 +69,8 @@ public class ClanMembership {
      * @param clan the clan
      * @return secondary membership
      */
-    public static ClanMembership secondary(Clan clan) {
+    @NotNull
+    public static ClanMembership secondary(@NotNull Clan clan) {
         return new ClanMembership(clan, false);
     }
 

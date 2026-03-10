@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.decision.decision;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait;
@@ -67,7 +70,7 @@ public class PregnancyDecision implements Decision {
     }
 
     @Override
-    public boolean canExecute(Person person, DecisionContext context) {
+    public boolean canExecute(@NotNull Person person, @NotNull DecisionContext context) {
         // Must be female
         if (person.getGender() != Gender.FEMALE) {
             return false;
@@ -122,7 +125,8 @@ public class PregnancyDecision implements Decision {
     }
 
     @Override
-    public DecisionResult execute(Person person, DecisionContext context) {
+    @NotNull
+    public DecisionResult execute(@NotNull Person person, @NotNull DecisionContext context) {
         LocalDate currentDate = context.getCurrentDate();
 
         // Get all living spouses

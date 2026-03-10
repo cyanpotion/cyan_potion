@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.decision;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Person;
 
 /**
@@ -32,6 +35,7 @@ public interface Decision {
      *
      * @return decision ID
      */
+    @NotNull
     String getDecisionId();
 
     /**
@@ -39,6 +43,7 @@ public interface Decision {
      *
      * @return display name
      */
+    @NotNull
     String getDisplayName();
 
     /**
@@ -56,7 +61,7 @@ public interface Decision {
      * @param context the decision context
      * @return true if conditions are met
      */
-    boolean canExecute(Person person, DecisionContext context);
+    boolean canExecute(@NotNull Person person, @NotNull DecisionContext context);
 
     /**
      * Executes the decision.
@@ -65,7 +70,8 @@ public interface Decision {
      * @param context the decision context
      * @return result of the execution
      */
-    DecisionResult execute(Person person, DecisionContext context);
+    @NotNull
+    DecisionResult execute(@NotNull Person person, @NotNull DecisionContext context);
 
     /**
      * Result of a decision execution.

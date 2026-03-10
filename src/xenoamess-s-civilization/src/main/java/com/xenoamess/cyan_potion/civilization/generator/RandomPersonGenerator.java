@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.generator;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.PersonBuilder;

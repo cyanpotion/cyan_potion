@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Clan;
 import com.xenoamess.cyan_potion.civilization.character.ClanMembership;
 import com.xenoamess.cyan_potion.civilization.character.LineageType;
@@ -41,6 +44,7 @@ public class ClanInheritanceService {
      *
      * @return determined lineage type
      */
+    @NotNull
     public LineageType determineLineageType() {
         return Math.random() < 0.95 ? LineageType.PATRILINEAL : LineageType.MATRILINEAL;
     }
@@ -53,7 +57,8 @@ public class ClanInheritanceService {
      * @param lineageType the lineage type
      * @return list of clan memberships
      */
-    public List<ClanMembership> inheritClans(Person father, Person mother, LineageType lineageType) {
+    @NotNull
+    public List<ClanMembership> inheritClans(@Nullable Person father, @Nullable Person mother, @NotNull LineageType lineageType) {
         List<ClanMembership> memberships = new ArrayList<>();
 
         Clan fatherClan = getPrimaryClanFromParent(father);

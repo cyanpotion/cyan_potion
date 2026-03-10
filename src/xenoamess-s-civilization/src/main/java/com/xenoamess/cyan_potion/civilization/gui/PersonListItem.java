@@ -295,6 +295,7 @@ public class PersonListItem extends AbstractControllableGameWindowComponent {
      *
      * @return display text
      */
+    @NotNull
     public String getDisplayText() {
         return String.format("%s [%s] 健康:%.1f 体质:%.1f",
             person.getName(),

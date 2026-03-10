@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -65,7 +68,7 @@ public class Marriage {
      * @param startDate the start date of the marriage
      * @param description optional description
      */
-    public Marriage(String id, Person dominantPerson, List<Person> subordinatePersons, LocalDate startDate, String description) {
+    public Marriage(@NotNull String id, @NotNull Person dominantPerson, @NotNull List<Person> subordinatePersons, @NotNull LocalDate startDate, @Nullable String description) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("Marriage ID cannot be null or empty");
         }
@@ -93,7 +96,7 @@ public class Marriage {
      * @param subordinatePerson the first subordinate person
      * @param startDate the start date of the marriage
      */
-    public Marriage(String id, Person dominantPerson, Person subordinatePerson, LocalDate startDate) {
+    public Marriage(@NotNull String id, @NotNull Person dominantPerson, @NotNull Person subordinatePerson, @NotNull LocalDate startDate) {
         this(id, dominantPerson, List.of(subordinatePerson), startDate, null);
     }
 

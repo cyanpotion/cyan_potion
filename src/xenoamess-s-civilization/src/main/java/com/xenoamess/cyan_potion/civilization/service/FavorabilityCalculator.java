@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.Relationship;
 import lombok.extern.slf4j.Slf4j;
@@ -76,7 +79,7 @@ public class FavorabilityCalculator {
      * @param person2 Second person
      * @return BidirectionalFavorability containing both directions of favorability
      */
-    public BidirectionalFavorability calculateInitialFavorability(Person person1, Person person2) {
+    public BidirectionalFavorability calculateInitialFavorability(@NotNull Person person1, @NotNull Person person2) {
         if (person1 == null || person2 == null) {
             throw new IllegalArgumentException("Persons cannot be null");
         }
@@ -131,7 +134,7 @@ public class FavorabilityCalculator {
      * @param establishedDate Date when relationship is established
      * @return New Relationship instance
      */
-    public Relationship createRelationship(Person person1, Person person2, LocalDate establishedDate) {
+    public Relationship createRelationship(@NotNull Person person1, @NotNull Person person2, @NotNull LocalDate establishedDate) {
         BidirectionalFavorability fav = calculateInitialFavorability(person1, person2);
         return new Relationship(person1, person2, fav.person1ToPerson2, fav.person2ToPerson1, establishedDate);
     }

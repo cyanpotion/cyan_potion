@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.character;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import lombok.Getter;
 
 import java.util.Objects;
@@ -50,7 +53,7 @@ public class Clan {
      * @param id unique clan identifier
      * @param name clan name (typically surname)
      */
-    public Clan(String id, String name) {
+    public Clan(@NotNull String id, @NotNull String name) {
         this(id, name, null, name, SurnamePosition.PREFIX);
     }
 
@@ -61,7 +64,7 @@ public class Clan {
      * @param name clan name (typically surname)
      * @param description optional description
      */
-    public Clan(String id, String name, String description) {
+    public Clan(@NotNull String id, @NotNull String name, @Nullable String description) {
         this(id, name, description, name, SurnamePosition.PREFIX);
     }
 
@@ -74,7 +77,7 @@ public class Clan {
      * @param surname the family surname
      * @param surnamePosition whether surname appears before or after given name
      */
-    public Clan(String id, String name, String description, String surname, SurnamePosition surnamePosition) {
+    public Clan(@NotNull String id, @NotNull String name, @Nullable String description, @NotNull String surname, @NotNull SurnamePosition surnamePosition) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("Clan ID cannot be null or empty");
         }

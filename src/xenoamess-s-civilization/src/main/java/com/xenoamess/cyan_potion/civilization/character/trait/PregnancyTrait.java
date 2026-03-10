@@ -16,6 +16,9 @@
  */
 package com.xenoamess.cyan_potion.civilization.character.trait;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

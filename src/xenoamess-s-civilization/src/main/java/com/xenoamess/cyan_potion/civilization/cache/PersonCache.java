@@ -1,5 +1,8 @@
 package com.xenoamess.cyan_potion.civilization.cache;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.xenoamess.cyan_potion.civilization.GameDateManager;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
@@ -34,7 +37,7 @@ public class PersonCache {
 
     public static final ConcurrentSkipListSet<String> NEW_DEAD_PERSON_ID_MARK = new ConcurrentSkipListSet<>();
 
-    public static void generatePersons(GameDateManager gameDateManager) {
+    public static void generatePersons(@NotNull GameDateManager gameDateManager) {
         RandomPersonGenerator generator = new RandomPersonGenerator();
         List<Person> persons = generator.generateMultiple(100, gameDateManager.getCurrentDate());
         for (Person person : persons) {
@@ -50,10 +53,12 @@ public class PersonCache {
         }
     }
 
+    @NotNull
     public static Collection<Person> getAllAliveAndDeadPersonCollection() {
         return PersonCache.ALL_PERSON_CACHE.values();
     }
 
+    @NotNull
     public static Stream<Person> getAllAliveAndDeadPersonStream() {
         return PersonCache.ALL_PERSON_CACHE.values().parallelStream();
     }
