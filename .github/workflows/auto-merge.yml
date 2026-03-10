@@ -7,12 +7,17 @@ on:
 permissions:
   pull-requests: write
   contents: write
+  checks: read
+  actions: read
 
 jobs:
   dependabot:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Dependabot metadata
         id: meta
         uses: dependabot/fetch-metadata@v2
@@ -36,7 +41,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          check-name: 'build'
+          check-regexp: 'build.*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
           allowed-conclusions: success,skipped
