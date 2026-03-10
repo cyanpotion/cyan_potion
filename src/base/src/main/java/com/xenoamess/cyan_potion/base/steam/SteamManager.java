@@ -161,10 +161,9 @@ public class SteamManager extends SubManager {
             try {
                 LOGGER.debug("[steam]Load native libraries ...");
                 SteamAPI.loadLibraries(new SteamLibraryLoader() {
-                    @Override
                     public boolean load(String libraryName) {
                         try {
-                            org.lwjgl.system.Library.loadSystem(libraryName);
+                            System.loadLibrary(libraryName);
                             return true;
                         } catch (UnsatisfiedLinkError e) {
                             LOGGER.warn("[steam]Failed to load library: " + libraryName, e);
@@ -406,7 +405,9 @@ public class SteamManager extends SubManager {
                 }
             }
         } else if ("stats request".equals(input)) {
-            getSteamUserStats().requestCurrentStats();
+            // requestCurrentStats() is removed in steamworks4j 1.9.0+
+            // Stats are now automatically requested during initialization
+            LOGGER.debug("Stats request is now automatic in steamworks4j 1.9.0+");
         } else if ("stats store".equals(input)) {
             getSteamUserStats().storeStats();
         } else if (input.startsWith("achievement set ")) {

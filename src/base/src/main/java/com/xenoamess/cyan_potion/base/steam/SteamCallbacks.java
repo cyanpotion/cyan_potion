@@ -450,11 +450,6 @@ public class SteamCallbacks {
     @Setter
     private SteamFriendsCallback steamFriendsCallback = new SteamFriendsCallback() {
         @Override
-        public void onSetPersonaNameResponse(boolean success, boolean localSuccess, SteamResult result) {
-            //do nothing
-        }
-
-        @Override
         public void onPersonaStateChange(SteamID steamID, SteamFriends.PersonaChange change) {
             //noinspection SwitchStatementWithTooFewBranches
             switch (change) {
@@ -471,34 +466,6 @@ public class SteamCallbacks {
                     break;
             }
         }
-
-        @Override
-        public void onGameOverlayActivated(boolean active) {
-            //do nothing
-        }
-
-        @Override
-        public void onGameLobbyJoinRequested(SteamID steamIDLobby, SteamID steamIDFriend) {
-//do nothing
-        }
-
-        @Override
-        public void onAvatarImageLoaded(SteamID steamID, int image, int width, int height) {
-            //do nothing
-        }
-
-        @Override
-        public void onFriendRichPresenceUpdate(SteamID steamIDFriend, int appID) {
-            //do nothing
-        }
-
-        @Override
-        public void onGameRichPresenceJoinRequested(SteamID steamIDFriend, String connect) {
-            //do nothing
-        }
-
-        // Note: onGameServerChangeRequested was removed in steamworks4j 1.9.0+
-        // The SteamFriendsCallback interface now uses default methods
     };
 
     @Getter
