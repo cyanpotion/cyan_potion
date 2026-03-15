@@ -51,6 +51,14 @@ public class Person {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return this.getId().equals(person.getId());
+    }
+
+    @Override
     public String toString() {
         return "Person{" +
                 "id='" + id + '\'' +

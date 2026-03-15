@@ -92,8 +92,15 @@ class RandomPersonGeneratorTest {
 
     @Test
     void testGenerateWithParents() {
-        Person father = generator.generate();
-        Person mother = generator.generate();
+        // Ensure correct genders for parent roles
+        Person father = null;
+        Person mother = null;
+        while (father == null || father.getGender() != Gender.MALE) {
+            father = generator.generate();
+        }
+        while (mother == null || mother.getGender() != Gender.FEMALE) {
+            mother = generator.generate();
+        }
 
         Person child = generator.generate(father, mother);
 
@@ -107,8 +114,15 @@ class RandomPersonGeneratorTest {
 
     @Test
     void testGenerateChild() {
-        Person father = generator.generate();
-        Person mother = generator.generate();
+        // Ensure correct genders for parent roles
+        Person father = null;
+        Person mother = null;
+        while (father == null || father.getGender() != Gender.MALE) {
+            father = generator.generate();
+        }
+        while (mother == null || mother.getGender() != Gender.FEMALE) {
+            mother = generator.generate();
+        }
 
         Person child = generator.generateChild(father, mother);
 
@@ -358,9 +372,15 @@ class RandomPersonGeneratorTest {
     void testFamilyGeneration() {
         System.out.println("\n\n===== FAMILY GENERATION TEST =====\n");
 
-        // Generate parents
-        Person father = generator.generate();
-        Person mother = generator.generate();
+        // Generate parents with correct genders
+        Person father = null;
+        Person mother = null;
+        while (father == null || father.getGender() != Gender.MALE) {
+            father = generator.generate();
+        }
+        while (mother == null || mother.getGender() != Gender.FEMALE) {
+            mother = generator.generate();
+        }
 
         System.out.println("FATHER:");
         RandomPersonGenerator.printPerson(father);

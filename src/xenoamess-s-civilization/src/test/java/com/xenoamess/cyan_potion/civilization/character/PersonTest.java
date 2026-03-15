@@ -263,8 +263,12 @@ class PersonTest {
         lifecycleService.markAsDead(person, "测试死亡");
         assertFalse(person.isAlive());
 
-        person.setHealth(0.001);
-        assertTrue(person.isAlive());
+        // Create a new person to test health boundary
+        Person person2 = constructionService.construct(
+            constructionService.builder("p16b", "Test2", Gender.MALE)
+        );
+        person2.setHealth(0.001);
+        assertTrue(person2.isAlive());
     }
 
     @Test

@@ -213,6 +213,9 @@ class MarriageTest {
         Person person = new Person(id);
         person.setName(name);
         person.setGender(gender);
+        person.setHealth(100.0);
+        person.setInitialHealth(100.0);
+        person.setConstitution(10.0);
         return person;
     }
 }
