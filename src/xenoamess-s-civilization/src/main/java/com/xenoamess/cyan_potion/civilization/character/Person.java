@@ -50,6 +50,21 @@ public class Person {
         return this.getId().hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id='" + id + '\'' +
+                ", name='" + getName() + '\'' +
+                ", gender=" + gender +
+                ", health=" + health +
+                ", alive=" + isAlive() +
+                ", birthDate=" + birthDate +
+                ", deathDate=" + deathDate +
+                ", childrenCount=" + children.size() +
+                ", marriagesCount=" + marriages.size() +
+                '}';
+    }
+
     // ==================== Basic Info ====================
 
     @Getter
