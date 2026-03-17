@@ -219,6 +219,7 @@ public class BeliefInfoComponent extends AbstractControllableGameWindowComponent
         );
         y += 35;
 
+        float yFinal = y;
         // Primary belief highlight
         person.getPrimaryBelief().ifPresent(primaryBelief -> {
             Belief belief = BeliefService.getInstance().getBelief(primaryBelief.getBeliefId()).orElse(null);
@@ -226,7 +227,7 @@ public class BeliefInfoComponent extends AbstractControllableGameWindowComponent
                 this.getGameWindow().drawTextCenter(
                     null,
                     x + width / 2,
-                    y,
+                    yFinal,
                     16,
                     new Vector4f(1.0f, 0.8f, 0.4f, 1.0f),
                     "主要信念: " + belief.getName()
@@ -299,7 +300,7 @@ public class BeliefInfoComponent extends AbstractControllableGameWindowComponent
                 );
 
                 // Draw devotion bar/info
-                float devotion = personBelief.getEffectiveDevotion();
+                float devotion = (float) personBelief.getEffectiveDevotion();
                 String devotionText = String.format("%.0f", devotion);
                 Vector4f devotionColor = getDevotionColor(devotion);
 
