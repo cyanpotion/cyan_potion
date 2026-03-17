@@ -34,6 +34,7 @@ import com.xenoamess.cyan_potion.civilization.decision.decision.ChildbirthDecisi
 import com.xenoamess.cyan_potion.civilization.decision.decision.MiscarriageDecision;
 import com.xenoamess.cyan_potion.civilization.decision.decision.PatriarchalMarriageDecision;
 import com.xenoamess.cyan_potion.civilization.decision.decision.PregnancyDecision;
+import com.xenoamess.cyan_potion.civilization.generator.BeliefDataGenerator;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
@@ -219,6 +220,8 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         });
 
         initProcessors();
+        // 初始化信念数据
+        new BeliefDataGenerator().generateAllBeliefs();
         generatePersons();
     }
 
