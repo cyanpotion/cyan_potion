@@ -80,6 +80,11 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
     // Tab content components
     private MarriageInfoComponent marriageInfoComponent;
     private BloodRelationComponent bloodRelationComponent;
+    private BeliefInfoComponent beliefInfoComponent;
+
+    // Belief detail window
+    @Getter
+    private DraggableWindowComponent beliefDetailWindow;
 
     @Getter
     @Setter
@@ -203,10 +208,105 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         });
         tabbedPanel.addTab("血亲", bloodRelationComponent);
 
+        // Create belief info component
+        beliefInfoComponent = new BeliefInfoComponent(this, person);
+        beliefInfoComponent.setOnBeliefClick(belief -> {
+            showBeliefDetail(belief);
+            return;
+        });
+        beliefInfoComponent.setOnPersonBeliefClick(personBelief -> {
+            showBeliefDetail(personBelief);
+            return;
+        });
+        tabbedPanel.addTab("信念", beliefInfoComponent);
+
         // Add tabbed panel to component tree
         if (this.getGameWindowComponentTreeNode() != null) {
             tabbedPanel.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         }
+    }
+
+    /**
+     * Shows the belief detail window for a belief.
+     *
+     * @param belief the belief to display
+     */
+    private void showBeliefDetail(com.xenoamess.cyan_potion.civilization.belief.Belief belief) {
+        // Close existing window if any
+        if (beliefDetailWindow != null && beliefDetailWindow.isAlive()) {
+            beliefDetailWindow.close();
+        }
+
+        // Create new belief detail component
+        BeliefDetailComponent detailComponent = new BeliefDetailComponent(getGameWindow());
+        detailComponent.show(belief);
+        detailComponent.setOnClose(unused -> {
+            // Window will be closed by DraggableWindowComponent
+            return;
+        });
+
+        // Create draggable window
+        beliefDetailWindow = new DraggableWindowComponent(
+            getGameWindow(),
+            belief.getName(),
+            detailComponent
+        );
+        beliefDetailWindow.setLeftTopPos(
+            getLeftTopPosX() + getWidth() + 20,
+            getLeftTopPosY()
+        );
+        beliefDetailWindow.setSize(450, 500);
+
+        // Add to component tree
+        if (this.getGameWindowComponentTreeNode() != null) {
+            beliefDetailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        }
+
+        log.debug("Opened belief detail window for: {}", belief.getName());
+    }
+
+    /**
+     * Shows the belief detail window for a person's belief.
+     *
+     * @param personBelief the person's belief to display
+     */
+    private void showBeliefDetail(com.xenoamess.cyan_potion.civilization.belief.PersonBelief personBelief) {
+        // Close existing window if any
+        if (beliefDetailWindow != null && beliefDetailWindow.isAlive()) {
+            beliefDetailWindow.close();
+        }
+
+        // Create new belief detail component
+        BeliefDetailComponent detailComponent = new BeliefDetailComponent(getGameWindow());
+        detailComponent.show(person, personBelief);
+        detailComponent.setOnClose(unused -> {
+            // Window will be closed by DraggableWindowComponent
+            return;
+        });
+
+        // Create draggable window
+        com.xenoamess.cyan_potion.civilization.belief.Belief belief =
+            com.xenoamess.cyan_potion.civilization.service.BeliefService.getInstance()
+                .getBelief(personBelief.getBeliefId()).orElse(null);
+        String windowTitle = belief != null ? belief.getName() : "信念详情";
+
+        beliefDetailWindow = new DraggableWindowComponent(
+            getGameWindow(),
+            windowTitle,
+            detailComponent
+        );
+        beliefDetailWindow.setLeftTopPos(
+            getLeftTopPosX() + getWidth() + 20,
+            getLeftTopPosY()
+        );
+        beliefDetailWindow.setSize(450, 500);
+
+        // Add to component tree
+        if (this.getGameWindowComponentTreeNode() != null) {
+            beliefDetailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
+        }
+
+        log.debug("Opened belief detail window for person's belief: {}", personBelief.getBeliefId());
     }
 
     @Override
@@ -300,6 +400,10 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         if (tabbedPanel != null) {
             tabbedPanel.close();
         }
+        // Close belief detail window if open
+        if (beliefDetailWindow != null && beliefDetailWindow.isAlive()) {
+            beliefDetailWindow.close();
+        }
         if (onClose != null) {
             onClose.accept(null);
         }
@@ -363,6 +467,9 @@ public class PersonDetailComponent extends AbstractControllableGameWindowCompone
         }
         if (bloodRelationComponent != null) {
             bloodRelationComponent.close();
+        }
+        if (beliefDetailWindow != null && beliefDetailWindow.isAlive()) {
+            beliefDetailWindow.close();
         }
         super.close();
     }
