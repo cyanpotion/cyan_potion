@@ -19,9 +19,12 @@ package com.xenoamess.cyan_potion.civilization.generator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.xenoamess.cyan_potion.civilization.belief.Belief;
+import com.xenoamess.cyan_potion.civilization.belief.PersonBelief;
 import com.xenoamess.cyan_potion.civilization.character.Gender;
 import com.xenoamess.cyan_potion.civilization.character.Person;
 import com.xenoamess.cyan_potion.civilization.character.PersonBuilder;
+import com.xenoamess.cyan_potion.civilization.service.BeliefService;
 import com.xenoamess.cyan_potion.civilization.service.PersonConstructionService;
 import com.xenoamess.cyan_potion.civilization.util.PersonAttributeUtil;
 import com.xenoamess.cyan_potion.civilization.util.PersonIdGenerator;
@@ -86,6 +89,7 @@ public class RandomPersonGenerator {
     private final boolean useWesternNames;
 
     private final PersonConstructionService constructionService;
+    private final BeliefService beliefService;
 
     /**
      * Creates a generator with Chinese names (default).
@@ -102,6 +106,7 @@ public class RandomPersonGenerator {
     public RandomPersonGenerator(boolean useWesternNames) {
         this.useWesternNames = useWesternNames;
         this.constructionService = new PersonConstructionService();
+        this.beliefService = BeliefService.getInstance();
     }
 
     /**
@@ -179,7 +184,63 @@ public class RandomPersonGenerator {
             builder.setNaturalAppearance(PersonAttributeUtil.randomAppearance());
         }
 
-        return constructionService.construct(builder);
+        Person person = constructionService.construct(builder);
+
+        // Add random beliefs to the person
+        addRandomBeliefs(person);
+
+        return person;
+    }
+
+    /**
+     * Adds random beliefs to a person.
+     * Each person gets at least 1 belief, up to max belief slots.
+     *
+     * @param person the person to add beliefs to
+     */
+    private void addRandomBeliefs(Person person) {
+        List<Belief> allBeliefs = new ArrayList<>(beliefService.getAllBeliefs());
+        if (allBeliefs.isEmpty()) {
+            log.warn("No beliefs available in BeliefService, skipping belief assignment for {}", person.getName());
+            return;
+        }
+
+        int maxSlots = person.getMaxBeliefSlots();
+        // Random number of beliefs: at least 1, at most maxSlots or available beliefs
+        int beliefCount = 1 + RANDOM.nextInt(Math.min(maxSlots, allBeliefs.size()));
+
+        // Shuffle beliefs and pick random ones
+        List<Belief> shuffledBeliefs = new ArrayList<>(allBeliefs);
+        java.util.Collections.shuffle(shuffledBeliefs, RANDOM);
+
+        LocalDate currentDate = person.getCurrentDate();
+        boolean firstBelief = true;
+
+        for (int i = 0; i < beliefCount && i < shuffledBeliefs.size(); i++) {
+            Belief belief = shuffledBeliefs.get(i);
+
+            // Create PersonBelief with random devotion (30-90) and intensity (50-100)
+            double devotion = 30 + RANDOM.nextDouble() * 60;
+            double intensity = 50 + RANDOM.nextDouble() * 50;
+
+            PersonBelief personBelief = PersonBelief.builder()
+                    .id(PersonBelief.generateId())
+                    .beliefId(belief.getId())
+                    .personId(person.getId())
+                    .devotion(devotion)
+                    .intensity(intensity)
+                    .primary(firstBelief) // First belief is primary
+                    .acquiredAt(currentDate)
+                    .build();
+
+            person.addBelief(personBelief);
+            firstBelief = false;
+
+            log.debug("Added belief {} to person {} (devotion: {:.1f})",
+                    belief.getName(), person.getName(), devotion);
+        }
+
+        log.info("Added {} beliefs to person {}", beliefCount, person.getName());
     }
 
     /**
