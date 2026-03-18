@@ -25,6 +25,7 @@ import com.xenoamess.cyan_potion.civilization.character.trait.PregnancyTrait;
 import com.xenoamess.cyan_potion.civilization.decision.Decision;
 import com.xenoamess.cyan_potion.civilization.decision.DecisionContext;
 import com.xenoamess.cyan_potion.civilization.generator.ChildBirthGenerator;
+import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -52,6 +53,16 @@ public class ChildbirthDecision implements Decision {
 
     // Base successful childbirth probability (85%)
     private static final double BASE_SUCCESS_RATE = 0.85;
+
+    private final PersonLifecycleService lifecycleService;
+
+    public ChildbirthDecision() {
+        this.lifecycleService = new PersonLifecycleService();
+    }
+
+    public ChildbirthDecision(PersonLifecycleService lifecycleService) {
+        this.lifecycleService = lifecycleService;
+    }
     // Threshold for "low health" (below 30% of initial health)
     private static final double LOW_HEALTH_THRESHOLD = 0.30;
     // Priority of this decision (higher than marriage's 100)
@@ -179,6 +190,9 @@ public class ChildbirthDecision implements Decision {
         ChildBirthGenerator generator = new ChildBirthGenerator();
         Person child = generator.generate(father, mother, context.getCurrentDate());
 
+        // Inherit beliefs from parents
+        lifecycleService.inheritBeliefsForChild(child, father, mother, context.getCurrentDate());
+
         // Mark pregnancy as delivered
         pregnancy.deliver(child, context.getCurrentDate());
 
@@ -253,7 +267,10 @@ public class ChildbirthDecision implements Decision {
                 // Child lives, mother dies
                 ChildBirthGenerator generator = new ChildBirthGenerator();
                 Person child = generator.generate(father, mother, context.getCurrentDate());
-                
+
+                // Inherit beliefs from parents
+                lifecycleService.inheritBeliefsForChild(child, father, mother, context.getCurrentDate());
+
                 pregnancy.setDelivered(true);
                 mother.removeTraitByType(PregnancyTrait.TYPE);
                 context.markAsDead(mother, "难产死亡");
