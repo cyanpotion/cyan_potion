@@ -99,91 +99,91 @@ public class BeliefDataGenerator {
     // ==================== 宗教信仰 ====================
 
     private void generateReligiousBeliefs() {
-        createBelief("天道教", "信奉天道自然，追求天人合一", Belief.BeliefType.RELIGION, 3);
+        createBelief("天道教", "信奉天道自然，追求天人合一", Belief.BeliefType.RELIGION, 4);
         createBelief("光明圣教", "崇拜光明神，主张净化世间邪恶", Belief.BeliefType.RELIGION, 4);
-        createBelief("暗影密教", "信仰暗影之力，认为黑暗孕育新生", Belief.BeliefType.RELIGION, 3);
-        createBelief("大地母神教", "崇拜大地女神，重视农业与生育", Belief.BeliefType.RELIGION, 3);
-        createBelief("风暴神教", "信奉风暴之神，崇尚力量与勇气", Belief.BeliefType.RELIGION, 3);
-        createBelief("智慧神教", "崇拜智慧之神，追求知识与真理", Belief.BeliefType.RELIGION, 3);
-        createBelief("轮回教", "相信生死轮回，强调因果报应", Belief.BeliefType.RELIGION, 3);
-        createBelief("先祖崇拜", "敬拜先祖灵魂，寻求祖先庇佑", Belief.BeliefType.RELIGION, 2);
+        createBelief("暗影密教", "信仰暗影之力，认为黑暗孕育新生", Belief.BeliefType.RELIGION, 4);
+        createBelief("大地母神教", "崇拜大地女神，重视农业与生育", Belief.BeliefType.RELIGION, 4);
+        createBelief("风暴神教", "信奉风暴之神，崇尚力量与勇气", Belief.BeliefType.RELIGION, 4);
+        createBelief("智慧神教", "崇拜智慧之神，追求知识与真理", Belief.BeliefType.RELIGION, 4);
+        createBelief("轮回教", "相信生死轮回，强调因果报应", Belief.BeliefType.RELIGION, 4);
+        createBelief("先祖崇拜", "敬拜先祖灵魂，寻求祖先庇佑", Belief.BeliefType.RELIGION, 4);
     }
 
     // ==================== 文化信仰 ====================
 
     private void generateCulturalBeliefs() {
-        createBelief("华夏正统", "坚持华夏文化传统，重视礼仪与秩序", Belief.BeliefType.CULTURE, 3);
-        createBelief("蛮夷认同", "崇尚自由野性，打破传统束缚", Belief.BeliefType.CULTURE, 2);
-        createBelief("商业文明", "以商业贸易为核心价值，追求财富", Belief.BeliefType.CULTURE, 3);
-        createBelief("农耕文明", "重视农业生产，崇尚勤劳节俭", Belief.BeliefType.CULTURE, 2);
-        createBelief("游牧精神", "崇尚自由迁徙，逐水草而居", Belief.BeliefType.CULTURE, 2);
-        createBelief("海洋文明", "以海洋为家，勇于探索未知", Belief.BeliefType.CULTURE, 3);
-        createBelief("尚武精神", "崇尚武力与荣誉，以军功为荣", Belief.BeliefType.CULTURE, 3);
-        createBelief("文人雅士", "推崇文学艺术，追求精神修养", Belief.BeliefType.CULTURE, 3);
+        createBelief("华夏正统", "坚持华夏文化传统，重视礼仪与秩序", Belief.BeliefType.CULTURE, 4);
+        createBelief("蛮夷认同", "崇尚自由野性，打破传统束缚", Belief.BeliefType.CULTURE, 4);
+        createBelief("商业文明", "以商业贸易为核心价值，追求财富", Belief.BeliefType.CULTURE, 4);
+        createBelief("农耕文明", "重视农业生产，崇尚勤劳节俭", Belief.BeliefType.CULTURE, 4);
+        createBelief("游牧精神", "崇尚自由迁徙，逐水草而居", Belief.BeliefType.CULTURE, 4);
+        createBelief("海洋文明", "以海洋为家，勇于探索未知", Belief.BeliefType.CULTURE, 4);
+        createBelief("尚武精神", "崇尚武力与荣誉，以军功为荣", Belief.BeliefType.CULTURE, 4);
+        createBelief("文人雅士", "推崇文学艺术，追求精神修养", Belief.BeliefType.CULTURE, 4);
     }
 
     // ==================== 哲学信仰 ====================
 
     private void generatePhilosophicalBeliefs() {
         createBelief("儒家思想", "仁者爱人，修身齐家治国平天下", Belief.BeliefType.PHILOSOPHY, 4);
-        createBelief("道家思想", "道法自然，无为而治", Belief.BeliefType.PHILOSOPHY, 3);
-        createBelief("法家思想", "以法治国，赏罚分明", Belief.BeliefType.PHILOSOPHY, 3);
-        createBelief("墨家思想", "兼爱非攻，节用尚贤", Belief.BeliefType.PHILOSOPHY, 3);
-        createBelief("利己主义", "人人为己，追求个人利益最大化", Belief.BeliefType.PHILOSOPHY, 2);
-        createBelief("功利主义", "追求最大多数人的最大幸福", Belief.BeliefType.PHILOSOPHY, 3);
-        createBelief("存在主义", "存在先于本质，自我创造意义", Belief.BeliefType.PHILOSOPHY, 2);
-        createBelief("斯多葛主义", "顺应自然，控制能控制的，接受不能控制的", Belief.BeliefType.PHILOSOPHY, 2);
+        createBelief("道家思想", "道法自然，无为而治", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("法家思想", "以法治国，赏罚分明", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("墨家思想", "兼爱非攻，节用尚贤", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("利己主义", "人人为己，追求个人利益最大化", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("功利主义", "追求最大多数人的最大幸福", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("存在主义", "存在先于本质，自我创造意义", Belief.BeliefType.PHILOSOPHY, 4);
+        createBelief("斯多葛主义", "顺应自然，控制能控制的，接受不能控制的", Belief.BeliefType.PHILOSOPHY, 4);
     }
 
     // ==================== 传统信仰 ====================
 
     private void generateTraditionalBeliefs() {
-        createBelief("父权传统", "男性为家庭和社会的主导", Belief.BeliefType.TRADITION, 2);
-        createBelief("母系传统", "女性为家族传承的核心", Belief.BeliefType.TRADITION, 2);
-        createBelief("长幼有序", "尊重长者，晚辈服从长辈", Belief.BeliefType.TRADITION, 2);
-        createBelief("宗族观念", "重视家族血脉，维护宗族利益", Belief.BeliefType.TRADITION, 3);
-        createBelief("忠君思想", "忠于君主，服从统治", Belief.BeliefType.TRADITION, 2);
-        createBelief("江湖义气", "重视兄弟情谊，有恩必报有仇必复", Belief.BeliefType.TRADITION, 2);
-        createBelief("门第观念", "重视出身门第，门当户对", Belief.BeliefType.TRADITION, 2);
-        createBelief("贞节观念", "重视婚姻忠诚，反对通奸", Belief.BeliefType.TRADITION, 2);
+        createBelief("父权传统", "男性为家庭和社会的主导", Belief.BeliefType.TRADITION, 4);
+        createBelief("母系传统", "女性为家族传承的核心", Belief.BeliefType.TRADITION, 4);
+        createBelief("长幼有序", "尊重长者，晚辈服从长辈", Belief.BeliefType.TRADITION, 4);
+        createBelief("宗族观念", "重视家族血脉，维护宗族利益", Belief.BeliefType.TRADITION, 4);
+        createBelief("忠君思想", "忠于君主，服从统治", Belief.BeliefType.TRADITION, 4);
+        createBelief("江湖义气", "重视兄弟情谊，有恩必报有仇必复", Belief.BeliefType.TRADITION, 4);
+        createBelief("门第观念", "重视出身门第，门当户对", Belief.BeliefType.TRADITION, 4);
+        createBelief("贞节观念", "重视婚姻忠诚，反对通奸", Belief.BeliefType.TRADITION, 4);
     }
 
     // ==================== 政治信仰 ====================
 
     private void generatePoliticalBeliefs() {
-        createBelief("专制主义", "权力集中于君主一人，乾纲独断", Belief.BeliefType.POLITICS, 2);
-        createBelief("共和思想", "权力属于人民，选举产生统治者", Belief.BeliefType.POLITICS, 3);
-        createBelief("贵族统治", "由贵族精英治理国家", Belief.BeliefType.POLITICS, 2);
-        createBelief("平民政治", "重视平民权益，反对贵族特权", Belief.BeliefType.POLITICS, 2);
-        createBelief("扩张主义", "国家应当不断扩张领土", Belief.BeliefType.POLITICS, 2);
-        createBelief("孤立主义", "国家应当专注于内政，避免对外干涉", Belief.BeliefType.POLITICS, 2);
+        createBelief("专制主义", "权力集中于君主一人，乾纲独断", Belief.BeliefType.POLITICS, 4);
+        createBelief("共和思想", "权力属于人民，选举产生统治者", Belief.BeliefType.POLITICS, 4);
+        createBelief("贵族统治", "由贵族精英治理国家", Belief.BeliefType.POLITICS, 4);
+        createBelief("平民政治", "重视平民权益，反对贵族特权", Belief.BeliefType.POLITICS, 4);
+        createBelief("扩张主义", "国家应当不断扩张领土", Belief.BeliefType.POLITICS, 4);
+        createBelief("孤立主义", "国家应当专注于内政，避免对外干涉", Belief.BeliefType.POLITICS, 4);
     }
 
     // ==================== 科学信仰 ====================
 
     private void generateScientificBeliefs() {
-        createBelief("理性主义", "相信理性与逻辑是认识世界的唯一途径", Belief.BeliefType.SCIENCE, 3);
-        createBelief("经验主义", "强调观察与实验，重视实证", Belief.BeliefType.SCIENCE, 3);
-        createBelief("自然主义", "一切现象都有自然规律可循", Belief.BeliefType.SCIENCE, 2);
-        createBelief("神秘主义", "相信超自然力量的存在", Belief.BeliefType.SCIENCE, 2);
+        createBelief("理性主义", "相信理性与逻辑是认识世界的唯一途径", Belief.BeliefType.SCIENCE, 4);
+        createBelief("经验主义", "强调观察与实验，重视实证", Belief.BeliefType.SCIENCE, 4);
+        createBelief("自然主义", "一切现象都有自然规律可循", Belief.BeliefType.SCIENCE, 4);
+        createBelief("神秘主义", "相信超自然力量的存在", Belief.BeliefType.SCIENCE, 4);
     }
 
     // ==================== 艺术信仰 ====================
 
     private void generateArtisticBeliefs() {
-        createBelief("古典美学", "追求和谐、比例与对称之美", Belief.BeliefType.ART, 2);
-        createBelief("浪漫主义", "强调情感、想象与个人表达", Belief.BeliefType.ART, 2);
-        createBelief("现实主义", "艺术应当反映真实生活", Belief.BeliefType.ART, 2);
-        createBelief("唯美主义", "艺术只为艺术本身，无关道德", Belief.BeliefType.ART, 2);
+        createBelief("古典美学", "追求和谐、比例与对称之美", Belief.BeliefType.ART, 4);
+        createBelief("浪漫主义", "强调情感、想象与个人表达", Belief.BeliefType.ART, 4);
+        createBelief("现实主义", "艺术应当反映真实生活", Belief.BeliefType.ART, 4);
+        createBelief("唯美主义", "艺术只为艺术本身，无关道德", Belief.BeliefType.ART, 4);
     }
 
     // ==================== 习俗信仰 ====================
 
     private void generateCustomBeliefs() {
-        createBelief("饮食有节", "讲究饮食节制，注重养生", Belief.BeliefType.CUSTOM, 2);
-        createBelief("酒文化", "以酒待客，借酒抒情", Belief.BeliefType.CUSTOM, 1);
-        createBelief("茶道精神", "品茶悟道，以茶会友", Belief.BeliefType.CUSTOM, 2);
-        createBelief("节俭主义", "反对奢侈浪费，崇尚节俭", Belief.BeliefType.CUSTOM, 2);
+        createBelief("饮食有节", "讲究饮食节制，注重养生", Belief.BeliefType.CUSTOM, 4);
+        createBelief("酒文化", "以酒待客，借酒抒情", Belief.BeliefType.CUSTOM, 4);
+        createBelief("茶道精神", "品茶悟道，以茶会友", Belief.BeliefType.CUSTOM, 4);
+        createBelief("节俭主义", "反对奢侈浪费，崇尚节俭", Belief.BeliefType.CUSTOM, 4);
     }
 
     private void createBelief(String name, String description, Belief.BeliefType type, int tenetCount) {
