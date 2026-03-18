@@ -247,7 +247,7 @@ public class BeliefInfoComponent extends AbstractControllableGameWindowComponent
                 "暂无信念"
             );
         } else {
-            this.getGameWindow().drawTextCenter(
+            this.getGameWindow().drawTextLeftTop(
                 null,
                 x,
                 y,

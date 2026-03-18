@@ -251,7 +251,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
     private void drawDescription(float x, float y, float width) {
         this.getGameWindow().drawTextCenter(
             null,
-            x,
+            x + width / 2,
             y,
             14,
             COLOR_LABEL,
@@ -280,7 +280,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
 
             this.getGameWindow().drawTextCenter(
                 null,
-                x + 10,
+                x + 10 + width / 2,
                 currentY,
                 14,
                 COLOR_VALUE,
@@ -293,7 +293,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
     private void drawTenets(float x, float y, float width) {
         this.getGameWindow().drawTextCenter(
             null,
-            x,
+            x + width / 2,
             y,
             16,
             COLOR_LABEL,
@@ -307,7 +307,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
             if (tenetY > getLeftTopPosY() + getHeight() - 100) {
                 this.getGameWindow().drawTextCenter(
                     null,
-                    x + 20,
+                    x + 20 + width / 2,
                     tenetY,
                     12,
                     new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
@@ -328,7 +328,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
 
             this.getGameWindow().drawTextCenter(
                 null,
-                x + 20,
+                x + 20  + width / 2,
                 tenetY,
                 13,
                 COLOR_TENET,
@@ -343,7 +343,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
     private void drawConflicts(float x, float y, float width) {
         this.getGameWindow().drawTextCenter(
             null,
-            x,
+            x + width / 2,
             y,
             16,
             COLOR_LABEL,
@@ -366,7 +366,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
 
                 this.getGameWindow().drawTextCenter(
                     null,
-                    x + 20,
+                    x + 20 + width / 2,
                     conflictY,
                     13,
                     COLOR_CONFLICT,
@@ -383,7 +383,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
 
         this.getGameWindow().drawTextCenter(
             null,
-            x,
+            x + width / 2,
             infoY,
             16,
             COLOR_LABEL,
@@ -396,7 +396,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
         String devotionText = String.format("虔诚度: %.1f", personBelief.getEffectiveDevotion());
         this.getGameWindow().drawTextCenter(
             null,
-            x + 80,
+            x - 80 + width / 2,
             infoY,
             14,
             devotionColor,
@@ -407,7 +407,7 @@ public class BeliefDetailComponent extends AbstractControllableGameWindowCompone
         String intensityText = String.format("强度: %.1f", personBelief.getEffectiveIntensity());
         this.getGameWindow().drawTextCenter(
             null,
-            x + 200,
+            x + 80 + width / 2,
             infoY,
             14,
             COLOR_VALUE,
