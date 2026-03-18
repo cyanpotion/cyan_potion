@@ -73,7 +73,7 @@ public class BeliefDataGenerator {
     }
 
     private String nextTenetId() {
-        return "tenet_" + System.currentTimeMillis() + "_" + idCounter;
+        return "tenet_" + System.currentTimeMillis() + "_" + (++idCounter);
     }
 
     /**
