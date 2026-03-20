@@ -605,9 +605,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         // Layout dashboard button at bottom center (only show when list window is closed)
         float dashboardButtonWidth = 160;
         float dashboardButtonHeight = 40;
-        float dashboardY = this.getGameWindow().getHeight() - 100;
-        dashboardButton.setLeftTopPos(
-            (this.getGameWindow().getWidth() - dashboardButtonWidth) / 2,
+        float dashboardY = this.getGameWindow().getHeight() - 45;
+        dashboardButton.setCenterPos(
+            this.getGameWindow().getWidth() / 2,
             dashboardY
         );
         dashboardButton.setSize(dashboardButtonWidth, dashboardButtonHeight);
@@ -623,12 +623,14 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         dashboardButton.update();
 
         // Update map component at bottom
-        float mapMargin = 20;
-        float mapHeight = 280;
-        float mapY = this.getGameWindow().getHeight() - mapHeight - mapMargin - 30;
-        mapComponent.setLeftTopPos(mapMargin, mapY);
-        mapComponent.setSize(this.getGameWindow().getWidth() - mapMargin * 2, mapHeight);
-        mapComponent.update();
+        float mapHorizontalMargin = 20;
+        float mapTopMargin = 100;
+        float mapBottomMargin = 120;
+        mapComponent.setLeftTopPos(mapHorizontalMargin, mapTopMargin);
+        mapComponent.setSize(
+                this.getGameWindow().getWidth() - mapHorizontalMargin * 2,
+                this.getGameWindow().getHeight() -mapTopMargin- mapBottomMargin
+        );
 
         // Update draggable windows
         listWindow.update();
@@ -741,9 +743,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
     @Override
     public void addToGameWindowComponentTree(com.xenoamess.cyan_potion.base.game_window_components.GameWindowComponentTreeNode node) {
         super.addToGameWindowComponentTree(node);
+        mapComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         listWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         detailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-        mapComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
     public boolean isVisible() {
