@@ -273,6 +273,17 @@ public class BasicInfoComponent extends AbstractControllableGameWindowComponent 
         if (ageHovered) {
             drawAgeTooltip(ageValueX, y + 10);
         }
+        y += 25;
+
+        // Location (City)
+        String locationText = "未知";
+        Vector4f locationColor = new Vector4f(0.5f, 0.5f, 0.5f, 1.0f);
+        if (person.getCity() != null) {
+            locationText = person.getCity().getName();
+            locationColor = new Vector4f(0.6f, 0.8f, 1.0f, 1.0f);
+        }
+        this.getGameWindow().drawTextCenter(null, x + 40, y, 16, COLOR_LABEL, "所处地点:");
+        this.getGameWindow().drawTextCenter(null, x + 120, y, 16, locationColor, locationText);
     }
 
     private void updateAgeHoverState() {
