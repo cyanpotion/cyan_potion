@@ -19,8 +19,10 @@ package com.xenoamess.cyan_potion.civilization.gui;
 import com.xenoamess.cyan_potion.base.GameWindow;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
+import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.PictureBox;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseButtonEvent;
 import com.xenoamess.cyan_potion.base.io.input.mouse.MouseScrollEvent;
+import com.xenoamess.cyan_potion.base.render.Model;
 import com.xenoamess.cyan_potion.base.render.Texture;
 import com.xenoamess.cyan_potion.base.visual.Picture;
 import com.xenoamess.cyan_potion.civilization.map.City;
@@ -34,6 +36,15 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
+
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 /**
  * A rectangular map component that displays cities, roads, and settlements.
@@ -385,13 +396,13 @@ public class MapComponent extends AbstractControllableGameWindowComponent {
         float h = getHeight();
 
         // Top border
-        getGameWindow().drawPicture(roadTexture, x, y, w, borderThickness, 0, null);
+        getGameWindow().drawBindableRelativeLeftTop(roadTexture, x, y, w, borderThickness);
         // Bottom border
-        getGameWindow().drawPicture(roadTexture, x, y + h - borderThickness, w, borderThickness, 0, null);
+        getGameWindow().drawBindableRelativeLeftTop(roadTexture, x, y + h - borderThickness, w, borderThickness);
         // Left border
-        getGameWindow().drawPicture(roadTexture, x, y, borderThickness, h, 0, null);
+        getGameWindow().drawBindableRelativeLeftTop(roadTexture, x, y, borderThickness, h);
         // Right border
-        getGameWindow().drawPicture(roadTexture, x + w - borderThickness, y, borderThickness, h, 0, null);
+        getGameWindow().drawBindableRelativeLeftTop(roadTexture, x + w - borderThickness, y, borderThickness, h);
     }
 
     private void drawRoads() {
@@ -428,23 +439,16 @@ public class MapComponent extends AbstractControllableGameWindowComponent {
         float length = (float) Math.sqrt(dx * dx + dy * dy);
         if (length < 0.001f) return;
 
-        float angle = (float) Math.atan2(dy, dx);
-        float perpX = -dy / length * thickness / 2;
-        float perpY = dx / length * thickness / 2;
+        // 设置线条颜色为红色
+        glColor3f(color.x, color.y, color.z);
+        // 设置线条宽度
+        glLineWidth(thickness);
+        // 开始绘制线段
+        glBegin(GL_LINES);
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+        glEnd();
 
-        // Draw using a rectangle approximation
-        float centerX = (x1 + x2) / 2;
-        float centerY = (y1 + y2) / 2;
-
-        getGameWindow().drawPicture(
-            roadTexture,
-            centerX - length / 2,
-            centerY - thickness / 2,
-            length,
-            thickness,
-            (float) Math.toDegrees(angle),
-            color
-        );
     }
 
     private void drawCities() {
@@ -460,20 +464,18 @@ public class MapComponent extends AbstractControllableGameWindowComponent {
 
         // Draw selection highlight
         if (city == selectedCity) {
-            getGameWindow().drawPicture(
+            getGameWindow().drawBindableRelativeLeftTop(
                 selectedCityTexture,
                 x - size - 2,
                 y - size - 2,
                 size * 2 + 4,
-                size * 2 + 4,
-                0,
-                null
+                size * 2 + 4
             );
         }
 
         // Draw city circle
         Texture texture = getCityTexture(city);
-        getGameWindow().drawPicture(texture, x - size, y - size, size * 2, size * 2, 0, null);
+        getGameWindow().drawBindableRelativeLeftTop(texture, x - size, y - size, size * 2, size * 2);
 
         // Draw city name
         Vector4f nameColor = (city == hoveredCity) ? COLOR_CITY_NAME_HOVER : COLOR_CITY_NAME;
