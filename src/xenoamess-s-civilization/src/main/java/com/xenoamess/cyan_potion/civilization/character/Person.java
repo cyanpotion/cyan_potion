@@ -135,6 +135,29 @@ public class Person {
     @Setter
     private double naturalAppearance;
 
+    // ==================== Location ====================
+
+    /**
+     * ID of the city this person resides in.
+     * Person must be in exactly one city at any time.
+     */
+    @Getter
+    @Setter
+    private String cityId;
+
+    /**
+     * Gets the city this person resides in.
+     *
+     * @return the city, or null if not assigned to any city
+     */
+    @Nullable
+    public com.xenoamess.cyan_potion.civilization.map.City getCity() {
+        if (cityId == null) {
+            return null;
+        }
+        return com.xenoamess.cyan_potion.civilization.map.CityCache.getCity(cityId);
+    }
+
     @Getter
     @Setter
     private double appearanceAdjustment = 1.0;

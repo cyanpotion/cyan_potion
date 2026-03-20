@@ -38,6 +38,8 @@ import com.xenoamess.cyan_potion.civilization.generator.BeliefDataGenerator;
 import com.xenoamess.cyan_potion.civilization.generator.RandomPersonGenerator;
 import com.xenoamess.cyan_potion.civilization.service.PersonLifecycleService;
 import com.xenoamess.cyan_potion.civilization.service.PowerLevelRankService;
+import com.xenoamess.cyan_potion.civilization.map.WorldMapGenerator;
+import com.xenoamess.cyan_potion.civilization.map.CityCache;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -119,6 +121,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     private final Texture backgroundTexture;
     private final Picture backgroundPicture = new Picture();
+
+    // Map component at the bottom
+    @Getter
+    private volatile MapComponent mapComponent;
 
     @Getter
     @Setter
@@ -219,6 +225,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
             return null;
         });
 
+        // Initialize map component
+        this.mapComponent = new MapComponent(gameWindow);
+        this.mapComponent.setVisible(true);
+
         initProcessors();
         // 初始化信念数据
         new BeliefDataGenerator().generateAllBeliefs();
@@ -308,6 +318,15 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
 
     private void generatePersons() {
         PersonCache.generatePersons(this.dateManager);
+
+        // Generate world map with cities
+        WorldMapGenerator mapGenerator = new WorldMapGenerator();
+        mapGenerator.generateMap(12); // Generate 12 cities
+
+        // Assign all persons to cities
+        java.util.List<Person> allPersons = PersonCache.getAllAliveAndDeadPersonStream().toList();
+        mapGenerator.assignPersonsToCities(allPersons);
+
         listComponent.performSearch();
     }
 
@@ -603,6 +622,14 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         pauseButton.update();
         dashboardButton.update();
 
+        // Update map component at bottom
+        float mapMargin = 20;
+        float mapHeight = 280;
+        float mapY = this.getGameWindow().getHeight() - mapHeight - mapMargin - 30;
+        mapComponent.setLeftTopPos(mapMargin, mapY);
+        mapComponent.setSize(this.getGameWindow().getWidth() - mapMargin * 2, mapHeight);
+        mapComponent.update();
+
         // Update draggable windows
         listWindow.update();
         detailWindow.update();
@@ -655,11 +682,11 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
             countText
         );
 
-        // Draw help text
+        // Draw help text (moved up to accommodate map)
         this.getGameWindow().drawTextCenter(
             null,
             this.getGameWindow().getWidth() / 2f,
-            this.getGameWindow().getHeight() - 20,
+            this.getGameWindow().getHeight() - 320,
             14,
             0,
             new Vector4f(0.5f, 0.5f, 0.5f, 1.0f),
@@ -675,7 +702,10 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         pauseButton.draw();
         dashboardButton.draw();
 
-        // Draw draggable windows (list window first, then detail)
+        // Draw map at the bottom
+        mapComponent.draw();
+
+        // Draw draggable windows (list window first, then detail) on top of map
         listWindow.draw();
         detailWindow.draw();
 
@@ -698,6 +728,9 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         event = pauseButton.process(event);
         event = dashboardButton.process(event);
 
+        // Process map (before windows, so windows take priority)
+        event = mapComponent.process(event);
+
         // Process draggable windows (detail first to handle on-top)
         event = detailWindow.process(event);
         event = listWindow.process(event);
@@ -710,11 +743,7 @@ public class PersonBrowserDemo extends AbstractGameWindowComponent implements De
         super.addToGameWindowComponentTree(node);
         listWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
         detailWindow.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
-//        detailWindow.addToGameWindowComponentTree(node);
-//        generateButton.addToGameWindowComponentTree(node);
-//        filterMaleButton.addToGameWindowComponentTree(node);
-//        filterFemaleButton.addToGameWindowComponentTree(node);
-//        clearFilterButton.addToGameWindowComponentTree(node);
+        mapComponent.addToGameWindowComponentTree(this.getGameWindowComponentTreeNode());
     }
 
     public boolean isVisible() {
