@@ -182,15 +182,36 @@ public class MapComponent extends AbstractControllableGameWindowComponent {
                     float mouseX = getGameWindow().getMousePosX();
                     float mouseY = getGameWindow().getMousePosY();
 
-                    // Convert mouse to map coordinates before zoom
-                    float mapXBefore = screenToMapX(mouseX);
-                    float mapYBefore = screenToMapY(mouseY);
+                    // Get map dimensions before and after zoom
+                    float oldMapW = getMapWidth() * zoom;
+                    float oldMapH = getMapHeight() * zoom;
+                    float newMapW = getMapWidth() * newZoom;
+                    float newMapH = getMapHeight() * newZoom;
 
+                    // Calculate the center offset (how much the map is centered in the component)
+                    float centerOffsetX = (getWidth() - oldMapW) / 2 + getLeftTopPosX();
+                    float centerOffsetY = (getHeight() - oldMapH) / 2 + getLeftTopPosY();
+
+                    // Calculate mouse position relative to the map's origin (before zoom)
+                    float relX = mouseX - centerOffsetX - offsetX;
+                    float relY = mouseY - centerOffsetY - offsetY;
+
+                    // Calculate the ratios (where in the map the mouse is, 0-1)
+                    float ratioX = relX / oldMapW;
+                    float ratioY = relY / oldMapH;
+
+                    // Apply new zoom
                     zoom = newZoom;
 
-                    // Adjust offset to keep mouse position stable
-                    offsetX = mouseX - mapXBefore * getMapWidth() * zoom;
-                    offsetY = mouseY - mapYBefore * getMapHeight() * zoom;
+                    // Calculate new center offset with new zoom
+                    float newCenterOffsetX = (getWidth() - newMapW) / 2 + getLeftTopPosX();
+                    float newCenterOffsetY = (getHeight() - newMapH) / 2 + getLeftTopPosY();
+
+                    // Adjust offset so the same point is under the mouse
+                    // mouseX = newCenterOffsetX + newOffsetX + ratioX * newMapW
+                    // newOffsetX = mouseX - newCenterOffsetX - ratioX * newMapW
+                    offsetX = mouseX - newCenterOffsetX - ratioX * newMapW;
+                    offsetY = mouseY - newCenterOffsetY - ratioY * newMapH;
 
                     clampOffset();
                 }
