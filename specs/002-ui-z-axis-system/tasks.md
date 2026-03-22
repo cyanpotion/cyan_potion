@@ -109,8 +109,8 @@ Based on existing project structure:
 ### Implementation for User Story 3
 
 - [X] T028 [US3] Verify default `coordinateSystemMode` is LEGACY_MODE in `AbstractGameWindowComponent` constructor
-- [ ] T029 [US3] Ensure LEGACY_MODE completely ignores Z coordinate for rendering
-- [ ] T030 [US3] Ensure LEGACY_MODE uses original event processing order
+- [X] T029 [US3] Ensure LEGACY_MODE completely ignores Z coordinate for rendering (uses childrenCopy())
+- [X] T030 [US3] Ensure LEGACY_MODE uses original event processing order (uses childrenCopy() + parallelStream)
 - [X] T031 [US3] Run full existing test suite to verify no regressions
 
 **Checkpoint**: All existing code works unchanged, backward compatibility confirmed
@@ -164,7 +164,7 @@ Based on existing project structure:
 
 - [X] T049 [P] 优化 `ZIndexSorter` - 脏标记机制实现
 - [X] T050 [P] 验证脏标记机制正确工作（markSortDirty在setZ和childrenAdd/Remove中调用）
-- [ ] T051 基准测试：对比LEGACY_MODE和Z_AXIS_MODE的帧率差异 (需要可视化测试)
+- [ ] T051 基准测试：对比LEGACY_MODE和Z_AXIS_MODE的帧率差异 (可选/需要可视化测试环境)
 
 ### 示例与文档
 
