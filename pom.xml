@@ -61,6 +61,8 @@
         <module>src/rpg_module</module>
         <module>src/xenoamess-s-civilization</module>
         <module>src/demo</module>
+        <!-- Optional 3D extension module -->
+         <module>src/engine-3d</module>
     </modules>
     <properties>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
