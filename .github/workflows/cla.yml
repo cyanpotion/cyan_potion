@@ -25,8 +25,6 @@ jobs:
           path-to-document: 'https://github.com/xenoamess-s-civilization/xenoamess-s-civilization/blob/master/CLA.md'
           branch: 'cla-signatures'
           allowlist: XenoAmess,bot*
-          remote-organization-name: xenoamess-s-civilization
-          remote-repository-name: cla-signatures
           custom-pr-sign-comment: 'I have read the CLA Document and I hereby sign the CLA'
           custom-notsigned-prcomment: |
             Thank you for your contribution! Please read and sign our [Contributor License Agreement (CLA)](https://github.com/xenoamess-s-civilization/xenoamess-s-civilization/blob/master/CLA.md) before we can accept your pull request.
