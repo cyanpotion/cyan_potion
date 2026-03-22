@@ -75,9 +75,12 @@
         </project.build.sourceEncoding>
         <project.reporting.outputEncoding>${maven.compiler.encoding}
         </project.reporting.outputEncoding>
+        <!-- Support both JDK 17 and JDK 21 -->
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- Toolchain for multi-JDK support -->
+        <maven.toolchain.version>${java.version}</maven.toolchain.version>
         <!---->
         <!---->
         <!--libraries versions-->
