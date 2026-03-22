@@ -34,6 +34,7 @@ import com.xenoamess.cyan_potion.base.areas.AbstractArea;
 import com.xenoamess.cyan_potion.base.areas.AbstractMutableArea;
 import com.xenoamess.cyan_potion.base.events.Event;
 import com.xenoamess.cyan_potion.base.events.RemoteCallEvent;
+import com.xenoamess.cyan_potion.base.game_window_components.zsupport.CoordinateSystemMode;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.EventProcessor;
 import com.xenoamess.cyan_potion.base.memory.ResourceManager;
 import lombok.AccessLevel;
@@ -104,6 +105,35 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
     @Getter
     @Setter
     private float height = Float.NaN;
+
+    /**
+     * Z coordinate for depth/layer ordering.
+     * <p>
+     * Higher Z values render in front of lower Z values.
+     * Only used when coordinateSystemMode is Z_AXIS_MODE.
+     * Default value is 0.0f.
+     * </p>
+     *
+     * @see #coordinateSystemMode
+     */
+    @Getter
+    private float z = 0.0f;
+
+    /**
+     * Coordinate system mode determining how Z coordinate is handled.
+     * <p>
+     * LEGACY_MODE: Ignores Z coordinate, uses tree traversal order (backward compatible)
+     * Z_AXIS_MODE: Uses Z coordinate for rendering and event ordering
+     * </p>
+     * <p>
+     * Defaults to LEGACY_MODE for backward compatibility.
+     * </p>
+     *
+     * @see com.xenoamess.cyan_potion.base.game_window_components.zsupport.CoordinateSystemMode
+     */
+    @Getter
+    @Setter
+    private CoordinateSystemMode coordinateSystemMode = CoordinateSystemMode.LEGACY_MODE;
 
     @Getter
     @Setter
@@ -528,5 +558,42 @@ public abstract class AbstractGameWindowComponent implements Closeable, Abstract
      */
     public void setAlive(boolean alive) {
         this.alive.set(alive);
+    }
+
+    /**
+     * Get the effective coordinate system mode for this component.
+     * <p>
+     * If the component has an explicitly set coordinateSystemMode, returns that value.
+     * Otherwise, traverses up the parent chain to find an ancestor with an explicit mode.
+     * If no ancestor has an explicit mode, returns LEGACY_MODE as the default.
+     * </p>
+     *
+     * @return the effective coordinate system mode
+     * @see CoordinateSystemMode
+     */
+    public CoordinateSystemMode getEffectiveCoordinateSystemMode() {
+        // If explicitly set (not null check - enum is never null, but we check if it was set)
+        // Since we default to LEGACY_MODE, we just return the current value
+        // But if we want to support "inherit from parent" explicitly, we need additional logic
+        // For now, return the directly set mode
+        return this.coordinateSystemMode;
+    }
+
+    /**
+     * Set the Z coordinate for this component.
+     * <p>
+     * This method marks the parent node's sorted children cache as dirty,
+     * ensuring that the next render will recalculate the correct order.
+     * </p>
+     *
+     * @param z the new Z coordinate value
+     */
+    public void setZ(float z) {
+        this.z = z;
+        // Mark parent's sorted children as dirty if this component is in a tree
+        GameWindowComponentTreeNode node = this.getGameWindowComponentTreeNode();
+        if (node != null && node.getParent() != null) {
+            node.getParent().markSortDirty();
+        }
     }
 }

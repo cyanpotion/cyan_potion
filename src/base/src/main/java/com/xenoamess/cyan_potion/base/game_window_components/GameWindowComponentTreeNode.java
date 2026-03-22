@@ -25,6 +25,8 @@
 package com.xenoamess.cyan_potion.base.game_window_components;
 
 import com.xenoamess.cyan_potion.base.events.Event;
+import com.xenoamess.cyan_potion.base.game_window_components.zsupport.CoordinateSystemMode;
+import com.xenoamess.cyan_potion.base.game_window_components.zsupport.ZIndexSorter;
 import com.xenoamess.cyan_potion.base.game_window_components.controllable_game_window_components.AbstractControllableGameWindowComponent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -66,6 +68,23 @@ public class GameWindowComponentTreeNode implements Closeable {
             new ArrayList<>();
 
     private final AtomicBoolean alive = new AtomicBoolean(true);
+
+    /**
+     * Cache for sorted children list (by Z coordinate).
+     * <p>
+     * This is lazily computed when getSortedChildren() is called and sortDirty is true.
+     * For LEGACY_MODE, this is not used.
+     * </p>
+     */
+    private List<GameWindowComponentTreeNode> sortedChildren = null;
+
+    /**
+     * Flag indicating whether the sorted children cache needs to be recomputed.
+     * <p>
+     * Set to true when a child's Z coordinate changes or when children are added/removed.
+     * </p>
+     */
+    private boolean sortDirty = true;
 
     /**
      * <p>Constructor for GameWindowComponentTreeNode.</p>
@@ -137,11 +156,26 @@ public class GameWindowComponentTreeNode implements Closeable {
 
     /**
      * <p>draw.</p>
+     * <p>
+     * When in Z_AXIS_MODE, children are drawn in Z coordinate order (low to high).
+     * When in LEGACY_MODE, children are drawn in tree traversal order.
+     * </p>
      */
     public void draw() {
         this.getGameWindowComponent().draw();
-        ArrayList<GameWindowComponentTreeNode> tmpSons =
-                new ArrayList<>(childrenCopy());
+        
+        // Choose children list based on coordinate system mode
+        List<GameWindowComponentTreeNode> childrenToDraw;
+        if (this.getGameWindowComponent().getEffectiveCoordinateSystemMode() 
+                == CoordinateSystemMode.Z_AXIS_MODE) {
+            // Z_AXIS_MODE: draw in Z order (low to high, so high Z appears on top)
+            childrenToDraw = this.getSortedChildren();
+        } else {
+            // LEGACY_MODE: draw in original order
+            childrenToDraw = this.childrenCopy();
+        }
+        
+        ArrayList<GameWindowComponentTreeNode> tmpSons = new ArrayList<>(childrenToDraw);
         for (GameWindowComponentTreeNode au : tmpSons) {
             au.draw();
         }
@@ -149,6 +183,12 @@ public class GameWindowComponentTreeNode implements Closeable {
 
     /**
      * <p>process.</p>
+     * <p>
+     * Processes events for this component and its children.
+     * When in Z_AXIS_MODE, children are processed in reverse Z order (highest Z first),
+     * so that components in front receive events before components behind them.
+     * When in LEGACY_MODE, the original processing order is preserved.
+     * </p>
      *
      * @param res   a {@link java.util.Set} object.
      * @param event event
@@ -157,11 +197,37 @@ public class GameWindowComponentTreeNode implements Closeable {
     public boolean process(final Set<Event> res, final Event event) {
         AtomicBoolean flag0 = new AtomicBoolean(false);
 
-        this.childrenCopy().parallelStream().forEach((GameWindowComponentTreeNode au) -> {
-            if (au.process(res, event)) {
-                flag0.set(true);
+        // Choose children list based on coordinate system mode
+        List<GameWindowComponentTreeNode> childrenToProcess;
+        if (this.getGameWindowComponent().getEffectiveCoordinateSystemMode() 
+                == CoordinateSystemMode.Z_AXIS_MODE) {
+            // Z_AXIS_MODE: Process in reverse Z order (high to low)
+            // This ensures components with higher Z (in front) get events first
+            childrenToProcess = ZIndexSorter.sortByZDescending(this.childrenCopy());
+        } else {
+            // LEGACY_MODE: Use original order
+            childrenToProcess = this.childrenCopy();
+        }
+
+        // Sequential processing for Z-axis mode (order matters)
+        // Parallel processing for legacy mode (order doesn't matter)
+        if (this.getGameWindowComponent().getEffectiveCoordinateSystemMode() 
+                == CoordinateSystemMode.Z_AXIS_MODE) {
+            // Sequential: Process highest Z first
+            for (GameWindowComponentTreeNode au : childrenToProcess) {
+                if (au.process(res, event)) {
+                    flag0.set(true);
+                    break; // Event consumed by higher Z component
+                }
             }
-        });
+        } else {
+            // Parallel: Original behavior
+            childrenToProcess.parallelStream().forEach((GameWindowComponentTreeNode au) -> {
+                if (au.process(res, event)) {
+                    flag0.set(true);
+                }
+            });
+        }
 
         if (flag0.get()) {
             return true;
@@ -294,6 +360,7 @@ public class GameWindowComponentTreeNode implements Closeable {
         synchronized (this.children) {
             this.children.add(gameWindowComponentTreeNode);
         }
+        this.markSortDirty();
     }
 
     /**
@@ -305,6 +372,7 @@ public class GameWindowComponentTreeNode implements Closeable {
         synchronized (this.children) {
             this.children.remove(gameWindowComponentTreeNode);
         }
+        this.markSortDirty();
     }
 
     /**
@@ -336,6 +404,47 @@ public class GameWindowComponentTreeNode implements Closeable {
                 gameWindowComponentTreeNode.setVisible(visible);
             }
         }
+    }
+
+    /**
+     * Get the sorted list of children by Z coordinate.
+     * <p>
+     * If the sortDirty flag is true, recomputes the sorted order using ZIndexSorter.
+     * Otherwise, returns the cached sorted list.
+     * </p>
+     * <p>
+     * Components are sorted by Z coordinate in ascending order (low to high).
+     * Components with the same Z coordinate maintain their original order (stable sort).
+     * </p>
+     *
+     * @return a list of children sorted by Z coordinate
+     * @see ZIndexSorter
+     */
+    public List<GameWindowComponentTreeNode> getSortedChildren() {
+        if (sortDirty || sortedChildren == null) {
+            synchronized (this.children) {
+                sortedChildren = ZIndexSorter.sortByZ(this.children);
+                sortDirty = false;
+            }
+        }
+        return sortedChildren;
+    }
+
+    /**
+     * Mark the sorted children cache as dirty.
+     * <p>
+     * This should be called when:
+     * <ul>
+     *   <li>A child's Z coordinate changes</li>
+     *   <li>A child is added or removed</li>
+     * </ul>
+     * </p>
+     * <p>
+     * The next call to getSortedChildren() will recompute the sorted order.
+     * </p>
+     */
+    public void markSortDirty() {
+        this.sortDirty = true;
     }
 
 }
