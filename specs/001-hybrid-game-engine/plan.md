@@ -113,104 +113,86 @@ specs/001-hybrid-game-engine/
 ### Source Code (repository root)
 
 ```text
-# Maven多模块结构
-pom.xml                         # 根POM，定义依赖版本
-├── engine/                     # 游戏引擎核心
+# Maven多模块结构 (现有项目结构)
+pom.xml                              # 根POM，聚合所有模块
+├── src/parent/                      # 父POM，统一定义依赖版本
+│   └── pom.xml
+│
+├── src/base/                        # 引擎基础模块 (cyan_potion base)
 │   ├── pom.xml
 │   └── src/
-│       ├── main/
-│       │   ├── java/
-│       │   │   └── com/xenoamess/cyan_potion/
-│       │   │       ├── core/           # 引擎核心
-│       │   │       │   ├── GameEngine.java
-│       │   │       │   ├── GameLoop.java
-│       │   │       │   └── GameWindow.java
-│       │   │       ├── graphics/       # 渲染系统
-│       │   │       │   ├── RenderSystem.java
-│       │   │       │   ├── Renderer2D.java
-│       │   │       │   ├── Renderer3D.java (接口)
-│       │   │       │   ├── SpriteBatch.java
-│       │   │       │   ├── Texture.java
-│       │   │       │   ├── Shader.java
-│       │   │       │   └── Camera.java
-│       │   │       ├── resource/       # 资源管理
-│       │   │       │   ├── ResourceManager.java
-│       │   │       │   ├── Resource.java
-│       │   │       │   ├── TextureLoader.java
-│       │   │       │   └── AudioLoader.java
-│       │   │       ├── input/          # 输入系统
-│       │   │       │   ├── InputManager.java
-│       │   │       │   ├── Keyboard.java
-│       │   │       │   ├── Mouse.java
-│       │   │       │   └── Gamepad.java
-│       │   │       ├── audio/          # 音频系统
-│       │   │       │   ├── AudioManager.java
-│       │   │       │   ├── Sound.java
-│       │   │       │   └── Music.java
-│       │   │       ├── scene/          # 场景管理
-│       │   │       │   ├── Scene.java
-│       │   │       │   ├── GameObject.java
-│       │   │       │   ├── Component.java
-│       │   │       │   └── Transform.java
-│       │   │       ├── ui/             # UI系统
-│       │   │       │   ├── UIManager.java
-│       │   │       │   ├── Widget.java
-│       │   │       │   ├── Label.java
-│       │   │       │   └── Button.java
-│       │   │       └── math/           # 数学工具
-│       │   │           └── ... (JOML包装)
-│       │   └── resources/
-│       │       └── shaders/            # 内置着色器
-│       └── test/
-│           └── java/
-│               └── com/xenoamess/cyan_potion/
-│                   ├── core/           # 核心测试
-│                   ├── graphics/       # 渲染测试
-│                   └── resource/       # 资源管理测试
+│       ├── main/java/com/xenoamess/cyan_potion/base/
+│       │   ├── areas/               # 区域/场景管理
+│       │   ├── audio/               # 音频系统 (OpenAL)
+│       │   ├── console/             # 控制台/调试
+│       │   ├── events/              # 事件系统
+│       │   ├── exceptions/          # 异常定义
+│       │   ├── game_window_components/  # 窗口组件
+│       │   ├── io/                  # 输入/输出、文件操作
+│       │   │   ├── input/           # 键盘、鼠标、手柄输入
+│       │   │   └── resource/        # 资源加载管理
+│       │   ├── math/                # 数学工具 (JOML包装)
+│       │   ├── memory/              # 内存管理
+│       │   ├── modified_sources/    # 第三方修改代码
+│       │   ├── plugins/             # 插件系统
+│       │   ├── render/              # 2D渲染系统
+│       │   ├── runtime/             # 运行时管理
+│       │   ├── setting_file/        # 配置文件
+│       │   ├── steam/               # Steam集成
+│       │   └── visual/              # 视觉效果
+│       ├── main/resources/          # 资源文件
+│       └── test/java/               # 单元测试
 │
-├── engine-3d/                  # 3D扩展模块（可选）
+├── src/coordinate/                  # 坐标/物理模块
+│   ├── pom.xml
+│   └── src/main/java/com/xenoamess/cyan_potion/coordinate/
+│       ├── entity/                  # 实体定义
+│       └── physic/                  # 物理系统
+│           ├── shapes/              # 碰撞形状
+│           └── shape_relation_judges/   # 碰撞检测
+│
+├── src/rpg_module/                  # RPG游戏模块
+│   ├── pom.xml
+│   └── src/main/java/com/xenoamess/cyan_potion/rpg_module/
+│       ├── event_unit/              # 事件单元
+│       ├── event_unit_program_language_grammar/  # 脚本语法
+│       ├── game_map/                # 游戏地图
+│       ├── jsons/                   # JSON数据定义
+│       ├── plugins/                 # RPG插件
+│       ├── render/                  # RPG渲染
+│       ├── units/                   # 游戏单位
+│       └── world/                   # 世界管理
+│
+├── src/xenoamess-s-civilization/    # 主游戏模块 (xenoamess's-civilization)
 │   ├── pom.xml
 │   └── src/
-│       └── main/java/
-│           └── com/xenoamess/cyan_potion/
-│               └── graphics3d/
-│                   ├── Renderer3DImpl.java
-│                   ├── Model.java
-│                   ├── Mesh.java
-│                   └── Material.java
+│       ├── main/java/               # 游戏逻辑
+│       ├── main/resources/          # 游戏资源
+│       └── test/java/               # 游戏测试
 │
-├── engine-groovy/              # Groovy脚本支持（非核心）
+└── src/demo/                        # 演示/示例模块
+    ├── pom.xml
+    └── src/
+        ├── main/java/               # 演示代码
+        └── test/java/               # 演示测试
+├── src/extension_groovy/              # Groovy脚本支持（非核心）
 │   ├── pom.xml
 │   └── src/
 │       └── main/groovy/
-│           └── com/xenoamess/cyan_potion/
+│           └── com/xenoamess/cyan_potion/extension_groovy
 │               └── script/
 │                   └── GroovyScriptEngine.java
-│
-└── demo-game/                  # 示例游戏
-    ├── pom.xml
-    └── src/
-        ├── main/
-        │   ├── java/
-        │   │   └── com/xenoamess/demo/
-        │   │       ├── DemoGame.java
-        │   │       ├── scenes/
-        │   │       │   └── MainScene.java
-        │   │       ├── entities/
-        │   │       │   └── Player.java
-        │   │       └── systems/
-        │   │           └── PlayerController.java
-        │   └── resources/
-        │       ├── textures/
-        │       ├── audio/
-        │       └── config/
-        └── test/
-            └── java/
-                └── com/xenoamess/demo/
-                    └── GameTest.java
 ```
 
-**Structure Decision**: 采用Maven多模块结构，engine为核心模块，engine-3d为可选3D扩展，engine-groovy为非核心脚本支持，demo-game为示例游戏。这种结构允许开发者按需依赖（纯2D游戏只需engine，需要3D时额外依赖engine-3d）。
+**Structure Decision**: 项目采用Maven多模块结构，基于已存在的cyan_potion引擎架构：
+- **src/parent**: 父POM，统一管理依赖版本（LWJGL3、Apache Commons等）
+- **src/base**: 引擎核心，包含渲染、音频、输入、事件等基础系统
+- **src/coordinate**: 坐标和物理系统，处理2D空间计算和碰撞检测
+- **src/rpg_module**: RPG游戏通用模块，提供RPG游戏常用功能
+- **src/xenoamess-s-civilization**: 具体游戏实现，依赖上述模块
+- **src/demo**: 示例和演示代码
+
+**3D扩展预留**: 如需添加3D支持，可新建 `src/engine-3d/` 模块，在 `src/base/render/` 基础上扩展3D渲染能力，保持2D模块不受影响。
 
 ---
 
