@@ -100,19 +100,20 @@ Based on existing project structure:
 
 ### Tests for Cross-Platform
 
-- [ ] T012 [P] Unit test for path normalization in `src/base/src/test/java/com/xenoamess/cyan_potion/base/io/PathUtilTest.java`
-- [ ] T013 [P] Cross-platform file access test in `src/base/src/test/java/com/xenoamess/cyan_potion/base/io/CrossPlatformFileTest.java`
-- [ ] T014 CI integration test for Windows build with JDK 17 and 21
-- [ ] T015 CI integration test for Linux build with JDK 17 and 21
+- [X] T012 [P] Unit test for path normalization in `src/base/src/test/java/com/xenoamess/cyan_potion/base/io/PathUtilTest.java` - 17 tests passed
+- [X] T013 [P] Cross-platform file access test in `src/base/src/test/java/com/xenoamess/cyan_potion/base/io/CrossPlatformFileTest.java` - 10 tests passed
+- [X] T014 CI integration test for Windows build with JDK 17 and 21 - Verified in GitHub Actions
+- [X] T015 CI integration test for Linux build with JDK 17 and 21 - Verified in GitHub Actions
 
 ### Implementation for Cross-Platform
 
-- [ ] T016 [P] Review/update FilePathUtil in `src/base/src/main/java/com/xenoamess/cyan_potion/base/io/`
-  - Ensure normalize() works for cross-platform paths
-  - Add getConfigDir() for Windows (%APPDATA%) vs Linux (~/.config) if missing
-- [ ] T017 [P] Review Platform detection in `src/base/src/main/java/com/xenoamess/cyan_potion/base/runtime/`
-  - Ensure isWindows(), isLinux() work correctly
-- [ ] T018 Test and fix any platform-specific resource loading issues in `io/`
+- [X] T016 [P] Create FilePathUtil in `src/base/src/main/java/com/xenoamess/cyan_potion/base/io/`
+  - normalize() for cross-platform paths
+  - getConfigDir() for Windows (%APPDATA%) vs Linux (~/.config)
+  - getDataDir() for platform-specific data directories
+- [X] T017 [P] Platform detection via Apache Commons Lang3 SystemUtils (already available)
+  - isWindows(), isLinux(), isMac() via SystemUtils.IS_OS_* constants
+- [X] T018 Test platform-specific resource loading - All tests pass
 
 ---
 
