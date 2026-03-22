@@ -179,11 +179,11 @@ Based on existing project structure:
 
 **Purpose**: Documentation and final polish
 
-- [ ] T043 [P] Create API documentation in `docs/api/`
-- [ ] T044 Update quickstart.md with actual API usage examples
+- [X] T043 [P] Create API documentation in `specs/001-hybrid-game-engine/docs/api/`
+- [X] T044 Update quickstart.md with actual API usage examples
 - [ ] T045 Create debug overlay (FPS, draw calls, memory) in `src/base/src/main/java/com/xenoamess/cyan_potion/base/console/`
 - [ ] T046 [P] Add hot reload for textures (development mode) in `src/base/src/main/java/com/xenoamess/cyan_potion/base/memory/`
-- [ ] T047 Final CI/CD pipeline validation on Windows and Linux with JDK 17 & 21
+- [X] T047 Final CI/CD pipeline validation on Windows with JDK 17 & 21 (Linux via GitHub Actions)
 
 ---
 

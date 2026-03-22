@@ -58,12 +58,12 @@ git checkout 001-hybrid-game-engine
 
 ```
 xenoamess-s-civilization/
-├── engine/              # 引擎核心代码
-│   ├── src/
-│   └── pom.xml
-├── engine-3d/           # 3D扩展（可选）
-├── engine-groovy/       # Groovy脚本支持（可选）
-├── demo-game/           # 示例游戏
+├── src/parent/          # 父POM，统一定义依赖版本
+├── src/base/            # 引擎核心模块
+├── src/coordinate/      # 坐标/物理模块
+├── src/rpg_module/      # RPG游戏模块
+├── src/demo/            # 示例游戏
+├── src/xenoamess-s-civilization/  # 主游戏
 ├── specs/               # 设计文档
 │   └── 001-hybrid-game-engine/
 └── pom.xml              # 根POM
@@ -77,7 +77,7 @@ xenoamess-s-civilization/
 
 ```bash
 # 在仓库根目录执行
-mvn clean install -DskipTests
+mvnw clean install -DskipTests
 ```
 
 ### 预期输出
@@ -86,11 +86,13 @@ mvn clean install -DskipTests
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
 [INFO] 
-[INFO] cyan_potion ........................ SUCCESS [  1.2 s]
-[INFO] engine ............................. SUCCESS [ 15.3 s]
-[INFO] engine-3d .......................... SUCCESS [  5.2 s]
-[INFO] engine-groovy ...................... SUCCESS [  3.1 s]
-[INFO] demo-game .......................... SUCCESS [  8.7 s]
+[INFO] project ............................ SUCCESS [  1.2 s]
+[INFO] parent ............................. SUCCESS [  0.5 s]
+[INFO] base ............................... SUCCESS [ 15.3 s]
+[INFO] coordinate ......................... SUCCESS [  5.2 s]
+[INFO] rpg_module ......................... SUCCESS [  8.7 s]
+[INFO] xenoamess-s-civilization ........... SUCCESS [ 10.1 s]
+[INFO] demo ............................... SUCCESS [  3.2 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
@@ -103,7 +105,7 @@ mvn clean install -DskipTests
 **解决**: Maven会自动下载native库，如果失败手动清理重新下载：
 ```bash
 rm -rf ~/.m2/repository/org/lwjgl
-mvn clean install
+mvnw clean install
 ```
 
 **问题**: OpenGL版本不支持
@@ -121,8 +123,8 @@ set LIBGL_ALWAYS_SOFTWARE=1      # Windows CMD
 ### 运行演示
 
 ```bash
-cd demo-game
-mvn exec:java -Dexec.mainClass="com.xenoamess.demo.DemoGame"
+cd src/demo
+mvnw exec:java -Dexec.mainClass="com.xenoamess.cyan_potion.demo.DemoGame"
 ```
 
 ### 或使用IDE
@@ -170,14 +172,13 @@ cd my-game
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cyan.potion.version>0.1.0-SNAPSHOT</cyan.potion.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.xenoamess</groupId>
-            <artifactId>engine</artifactId>
-            <version>${cyan.potion.version}</version>
+            <groupId>com.xenoamess.cyan_potion</groupId>
+            <artifactId>base</artifactId>
+            <version>0.167.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -199,76 +200,74 @@ cd my-game
 ```java
 package com.example;
 
-import com.xenoamess.cyan_potion.core.GameEngine;
-import com.xenoamess.cyan_potion.core.EngineConfig;
-import com.xenoamess.cyan_potion.core.scene.Scene;
-import com.xenoamess.cyan_potion.core.scene.GameObject;
-import com.xenoamess.cyan_potion.core.graphics.Renderer2D;
-import com.xenoamess.cyan_potion.core.input.KeyboardKey;
+import com.xenoamess.cyan_potion.base.GameManager;
+import com.xenoamess.cyan_potion.base.GameManagerConfig;
+import com.xenoamess.cyan_potion.base.game_window_components.AbstractScene;
+import com.xenoamess.cyan_potion.base.io.input.keyboard.KeyboardKeyEnum;
 
 public class MyGame {
     public static void main(String[] args) {
         // 配置引擎
-        EngineConfig config = new EngineConfig.Builder()
-            .setTitle("My First Game")
-            .setWidth(800)
-            .setHeight(600)
-            .setTargetFPS(60)
-            .build();
-
+        GameManagerConfig config = new GameManagerConfig();
+        config.setTitle("My First Game");
+        config.setWindowWidth(800);
+        config.setWindowHeight(600);
+        
         // 创建并启动引擎
-        GameEngine engine = new GameEngine(config);
-        engine.setScene(new MyScene());
-        engine.run();
+        GameManager gameManager = new GameManager(config);
+        gameManager.setCurrentScene(new MyScene(gameManager));
+        gameManager.start();
     }
 }
 
-class MyScene extends Scene {
+class MyScene extends AbstractScene {
     
-    private GameObject player;
+    private float playerX = 400;
+    private float playerY = 300;
     
-    @Override
-    protected void create() {
-        // 创建玩家对象
-        player = createGameObject("Player");
-        player.getTransform().setPosition(400, 300);
-        
-        // 这里可以添加更多组件
+    public MyScene(GameManager gameManager) {
+        super(gameManager);
     }
     
     @Override
-    protected void update(float deltaTime) {
-        // 玩家移动
-        float speed = 200 * deltaTime; // 200像素/秒
+    public void init() {
+        // 初始化场景
+    }
+    
+    @Override
+    public void update() {
+        // 玩家移动 (200像素/秒)
+        float speed = 200 * getGameManager().getGameWindow().getDeltaTime();
         
-        if (getInputManager().isKeyDown(KeyboardKey.LEFT)) {
-            player.getTransform().translate(-speed, 0);
+        if (getGameManager().getKeymap().get(KeyboardKeyEnum.KEY_LEFT).isPressed()) {
+            playerX -= speed;
         }
-        if (getInputManager().isKeyDown(KeyboardKey.RIGHT)) {
-            player.getTransform().translate(speed, 0);
+        if (getGameManager().getKeymap().get(KeyboardKeyEnum.KEY_RIGHT).isPressed()) {
+            playerX += speed;
         }
-        if (getInputManager().isKeyDown(KeyboardKey.UP)) {
-            player.getTransform().translate(0, -speed);
+        if (getGameManager().getKeymap().get(KeyboardKeyEnum.KEY_UP).isPressed()) {
+            playerY -= speed;
         }
-        if (getInputManager().isKeyDown(KeyboardKey.DOWN)) {
-            player.getTransform().translate(0, speed);
+        if (getGameManager().getKeymap().get(KeyboardKeyEnum.KEY_DOWN).isPressed()) {
+            playerY += speed;
         }
         
         // 按ESC退出
-        if (getInputManager().isKeyPressed(KeyboardKey.ESCAPE)) {
-            getEngine().stop();
+        if (getGameManager().getKeymap().get(KeyboardKeyEnum.KEY_ESCAPE).isPressed()) {
+            getGameManager().getGameWindow().setCloseRequested(true);
         }
     }
     
     @Override
-    protected void render(Renderer2D renderer, float alpha) {
+    public void render() {
         // 清屏为黑色
-        renderer.clear(new Color(0.1f, 0.1f, 0.1f, 1.0f));
+        getGameManager().getGameWindow().clear((float)0.1, (float)0.1, (float)0.1);
         
-        // 绘制一个简单的矩形代表玩家
-        // 注意：真实项目中应使用Texture
-        Vector2f pos = player.getTransform().getPosition();
-        renderer.drawRect(pos.x - 25, pos.y - 25, 50, 50, Color.GREEN);
+        // 绘制玩家矩形
+        getGameManager().getDrawer().drawRect(
+            playerX - 25, playerY - 25, 50, 50,
+            0.0f, 1.0f, 0.0f, 1.0f  // 绿色
+        );
     }
 }
 ```
@@ -276,7 +275,7 @@ class MyScene extends Scene {
 ### 4.4 运行游戏
 
 ```bash
-mvn compile exec:java -Dexec.mainClass="com.example.MyGame"
+mvnw compile exec:java -Dexec.mainClass="com.example.MyGame"
 ```
 
 ### 预期结果
@@ -305,39 +304,37 @@ mkdir -p src/main/resources/textures
 修改 `MyScene.java`:
 
 ```java
-import com.xenoamess.cyan_potion.core.resource.Texture;
+import com.xenoamess.cyan_potion.base.visual.Picture;
+import com.xenoamess.cyan_potion.base.memory.ResourceInfo;
 
-class MyScene extends Scene {
+class MyScene extends AbstractScene {
     
-    private Texture playerTexture;
+    private Picture playerPicture;
     
     @Override
-    protected void create() {
+    public void init() {
         // 加载纹理
-        playerTexture = getResourceManager().loadTexture("textures/player.png");
+        ResourceInfo<Picture> resourceInfo = new ResourceInfo<>("textures/player.png");
+        playerPicture = new Picture(getGameManager().getResourceManager(), resourceInfo);
         
-        player = createGameObject("Player");
-        player.getTransform().setPosition(400, 300);
+        playerX = 400;
+        playerY = 300;
     }
     
     @Override
-    protected void render(Renderer2D renderer, float alpha) {
-        renderer.clear(Color.BLACK);
+    public void render() {
+        getGameManager().getGameWindow().clear((float)0.1, (float)0.1, (float)0.1);
         
         // 使用纹理绘制
-        Vector2f pos = player.getTransform().getPosition();
-        renderer.draw(
-            playerTexture,
-            pos.x - 32, pos.y - 32,  // 位置
-            64, 64                    // 大小
-        );
-    }
-    
-    @Override
-    protected void dispose() {
-        // 资源由ResourceManager管理，通常无需手动释放
-        // 但可以请求卸载
-        getResourceManager().unload("textures/player.png");
+        if (playerPicture != null) {
+            playerPicture.draw(getGameManager().getGameWindow(),
+                playerX - 32, playerY - 32,  // 位置
+                64, 64,                       // 大小
+                0, 0,                         // 纹理坐标
+                1, 1,                         // 纹理大小
+                0, 0, 0, 0,                   // 旋转和缩放
+                1, 1, 1, 1);                  // 颜色
+        }
     }
 }
 ```
@@ -348,16 +345,16 @@ class MyScene extends Scene {
 
 ### 学习路径
 
-1. **深入了解ECS架构**
-   - 阅读 `data-model.md` 了解实体-组件-系统
-   - 创建自定义组件
+1. **深入了解引擎架构**
+   - 阅读 `data-model.md` 了解引擎设计
+   - 探索 `src/base` 模块的源代码
 
 2. **添加音频**
    - 使用 `AudioManager` 播放音效和音乐
 
 3. **输入映射**
-   - 创建 `InputAction` 替代直接按键检查
-   - 支持手柄输入
+   - 使用 `Keymap` 处理键盘输入
+   - 支持手柄输入 (`GamepadInputManager`)
 
 4. **场景管理**
    - 创建多个场景（菜单、游戏、暂停）
@@ -365,23 +362,20 @@ class MyScene extends Scene {
 
 5. **UI系统**
    - 使用引擎UI组件创建按钮、文本
+   - 探索 `game_window_components` 包
 
 ### 参考文档
 
 | 文档 | 路径 |
 |------|------|
-| API参考 | `specs/001-hybrid-game-engine/contracts/public-api.md` |
-| 事件系统 | `specs/001-hybrid-game-engine/contracts/event-protocol.md` |
+| API参考 | `docs/api/README.md` |
+| 设计规范 | `specs/001-hybrid-game-engine/spec.md` |
 | 数据模型 | `specs/001-hybrid-game-engine/data-model.md` |
 | 技术调研 | `specs/001-hybrid-game-engine/research.md` |
 
 ### 示例代码
 
-参考 `demo-game/src/main/java/` 中的完整示例：
-- `DemoGame.java` - 主入口
-- `scenes/MainScene.java` - 场景实现
-- `entities/Player.java` - 玩家实体
-- `systems/PlayerController.java` - 控制系统
+参考 `src/demo/src/main/java/` 中的完整示例
 
 ---
 
@@ -393,7 +387,6 @@ class MyScene extends Scene {
 - [ ] Java版本正确 (17或21)
 - [ ] Maven依赖下载完整
 - [ ] 显卡驱动最新
-- [ ] 其他程序未占用所需端口（如果有网络功能）
 
 ### 性能问题
 
@@ -401,8 +394,8 @@ class MyScene extends Scene {
 ```java
 // 在update中打印FPS
 @Override
-protected void update(float deltaTime) {
-    System.out.println("FPS: " + (1.0f / deltaTime));
+public void update() {
+    System.out.println("FPS: " + (1.0f / getGameManager().getGameWindow().getDeltaTime()));
 }
 ```
 
@@ -410,15 +403,6 @@ protected void update(float deltaTime) {
 - 减少每帧绘制的精灵数量
 - 使用纹理图集减少Draw Call
 - 启用VSync防止过度渲染
-
-### 调试模式
-
-```java
-// 启用调试输出
-EngineConfig config = new EngineConfig.Builder()
-    .setDebugMode(true)  // 启用OpenGL调试输出
-    .build();
-```
 
 ---
 
