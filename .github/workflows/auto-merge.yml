@@ -2,60 +2,47 @@ name: Dependabot auto-merge
 
 on:
   pull_request:
-    types: [opened, synchronize]
 
 permissions:
   pull-requests: write
   contents: write
-  checks: read
-  actions: read
 
 jobs:
   dependabot:
+    if: |
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      github.event.pull_request.user.login == 'app/dependabot'
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
       - name: Dependabot metadata
         id: meta
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Check if auto-merge applicable (minor or patch only)
+      - name: Check if auto-merge applicable
         id: check
         run: |
-          if [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-patch" ]] || \
-             [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-minor" ]]; then
-            echo "should_merge=true" >> $GITHUB_OUTPUT
-            echo "Update type: ${{ steps.meta.outputs.update-type }} - eligible for auto-merge"
+          TYPE="${{ steps.meta.outputs.update-type }}"
+          REF="${{ github.event.pull_request.head.ref }}"
+          if [[ "$TYPE" == "version-update:semver-patch" ]] || \
+             [[ "$TYPE" == "version-update:semver-minor" ]] || \
+             { [[ "$TYPE" == "version-update:semver-major" ]] && [[ "$REF" == dependabot/github_actions/* ]]; }; then
+            echo "should_merge=true" >> "$GITHUB_OUTPUT"
           else
-            echo "should_merge=false" >> $GITHUB_OUTPUT
-            echo "Update type: ${{ steps.meta.outputs.update-type }} - not eligible for auto-merge (major updates require manual review)"
+            echo "should_merge=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Wait for CI checks to pass
-        if: steps.check.outputs.should_merge == 'true'
-        uses: lewagon/wait-on-check-action@v1.8.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          check-regexp: 'build.*'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-          allowed-conclusions: success,skipped
 
       - name: Approve dependabot PR
         if: steps.check.outputs.should_merge == 'true'
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.MYTOKEN }}
 
-      - name: Enable auto-merge with rebase
+      - name: Enable auto-merge
         if: steps.check.outputs.should_merge == 'true'
         run: gh pr merge --auto --rebase "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.MYTOKEN }}
