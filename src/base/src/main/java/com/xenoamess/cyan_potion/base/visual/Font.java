@@ -151,9 +151,17 @@ public class Font extends NormalResource {
     @AsFinalField
     private static Font defaultFont;
 
-    @Getter(onMethod_ = {@Synchronized})
-    @Setter(onMethod_ = {@Synchronized})
     private static Font currentFont;
+
+    @Synchronized
+    public static Font getCurrentFont() {
+        return currentFont;
+    }
+
+    @Synchronized
+    public static void setCurrentFont(Font currentFont) {
+        Font.currentFont = currentFont;
+    }
 
     @Getter
     @Setter

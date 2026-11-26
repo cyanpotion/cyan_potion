@@ -60,7 +60,7 @@ public interface Event extends Function<GameManager, Set<Event>> {
      * {@inheritDoc}
      * <p>
      * apply means this Event invoke itself onto your GameManager.
-     * Usually we will just put it onto your {@link GameManager#getGameWindowComponentTree()},
+     * Usually we will just put it onto your {@code GameManager.getGameWindowComponentTree()},
      * And let the tree pass it to all
      * {@link com.xenoamess.cyan_potion.base.game_window_components.AbstractGameWindowComponent}, and let them
      * process it.

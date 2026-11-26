@@ -97,7 +97,7 @@ public class PlayAudioEvent implements MainThreadEvent {
      * an event that will be inserted into the eventList (by source)
      * when this WaveData is played over.
      *
-     * @see Source#getPlayOverEvent()
+     * @see Source#playOverEvent
      */
     private Event playOverEvent;
 
