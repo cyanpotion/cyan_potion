@@ -11,6 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest , windows-latest ]
         java: [ 17, 25 ]
@@ -29,7 +30,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
-      - name: Build with mvnw
-        run: |
-          chmod 777 ./mvnw
-          ./mvnw install
+      - name: Build with Maven
+        run: mvn --batch-mode --no-transfer-progress clean install
