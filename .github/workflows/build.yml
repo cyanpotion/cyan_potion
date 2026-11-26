@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest , windows-latest ]
-        java: [ 8, 11, 13 ]
+        java: [ 17, 25 ]
         experimental: [ false ]
 
     steps:
