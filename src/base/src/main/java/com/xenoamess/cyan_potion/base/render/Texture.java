@@ -214,7 +214,7 @@ public class Texture extends NormalResource implements Bindable {
      * @param entireHeight a int.
      * @param startWidth   a int.
      * @param startHeight  a int.
-     * @param pixelsRaw    an array of {@link int} objects.
+     * @param pixelsRaw    an array of {@code int} values.
      */
     @SuppressWarnings("unused")
     @MainThreadOnly
