@@ -103,9 +103,9 @@ public class Model implements Closeable {
     /**
      * <p>Constructor for Model.</p>
      *
-     * @param vertices  an array of {@link float} objects.
-     * @param texCoords an array of {@link float} objects.
-     * @param indices   an array of {@link int} objects.
+     * @param vertices  an array of {@code float} values.
+     * @param texCoords an array of {@code float} values.
+     * @param indices   an array of {@code int} values.
      */
     public Model(float[] vertices, float[] texCoords, int[] indices) {
         this.init(vertices, texCoords, indices);
@@ -114,9 +114,9 @@ public class Model implements Closeable {
     /**
      * <p>init.</p>
      *
-     * @param vertices  an array of {@link float} objects.
-     * @param texCoords an array of {@link float} objects.
-     * @param indices   an array of {@link int} objects.
+     * @param vertices  an array of {@code float} values.
+     * @param texCoords an array of {@code float} values.
+     * @param indices   an array of {@code int} values.
      */
     public void init(float[] vertices, float[] texCoords, int[] indices) {
         if (this.getDrawCount() == INITIALIZED_VALUE) {
@@ -180,7 +180,7 @@ public class Model implements Closeable {
     /**
      * <p>getCommonVerticesFloatArray.</p>
      *
-     * @return an array of {@link float} objects.
+     * @return an array of {@code float} values.
      */
     public static float[] getCommonVerticesFloatArray() {
         return COMMON_VERTICES_FLOAT_ARRAY.clone();
@@ -189,7 +189,7 @@ public class Model implements Closeable {
     /**
      * <p>getCommonTextureFloatArray.</p>
      *
-     * @return an array of {@link float} objects.
+     * @return an array of {@code float} values.
      */
     public static float[] getCommonTextureFloatArray() {
         return COMMON_TEXTURE_FLOAT_ARRAY.clone();
@@ -198,7 +198,7 @@ public class Model implements Closeable {
     /**
      * <p>getCommonIndicesIntArray.</p>
      *
-     * @return an array of {@link int} objects.
+     * @return an array of {@code int} values.
      */
     public static int[] getCommonIndicesIntArray() {
         return COMMON_INDICES_INT_ARRAY.clone();
