@@ -73,7 +73,7 @@ public abstract class Drawer<T> implements DrawerInterface<T> {
 
     /**
      * this drawer draw.
-     * this will invoke after {@link #getParentDrawer()} draw.
+     * this will invoke after {@code getParentDrawer()} draw.
      *
      * @param t the AbstractGameWindowComponent to draw
      * @return true means this draw runs to its end normally.

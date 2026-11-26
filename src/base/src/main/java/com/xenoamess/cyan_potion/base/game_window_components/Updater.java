@@ -70,7 +70,7 @@ public abstract class Updater<T> implements UpdaterInterface<T> {
 
     /**
      * this updater update.
-     * this will invoke after {@link #getParentUpdater()} update.
+     * this will invoke after {@code getParentUpdater()} update.
      *
      * @param t the AbstractGameWindowComponent to update
      * @return true means this update runs to its end normally.

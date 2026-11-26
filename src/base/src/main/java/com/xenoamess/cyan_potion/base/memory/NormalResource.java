@@ -95,9 +95,17 @@ public abstract class NormalResource implements AbstractResource {
 //        }
 //    }
 
-    @Getter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
-    @Setter(value = AccessLevel.PROTECTED, onMethod_ = {@Synchronized})
     private FutureTask<Boolean> loadTask;
+
+    @Synchronized
+    protected FutureTask<Boolean> getLoadTask() {
+        return loadTask;
+    }
+
+    @Synchronized
+    protected void setLoadTask(FutureTask<Boolean> loadTask) {
+        this.loadTask = loadTask;
+    }
 
     /**
      * <p>createNewLoadTask.</p>

@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author XenoAmess
  * @version 0.162.3
- * @see DataCenter#isUsingJXInput()
+ * @see DataCenter#usingJXInput
  * @deprecated
  */
 @SuppressWarnings("DeprecatedIsStillUsed")

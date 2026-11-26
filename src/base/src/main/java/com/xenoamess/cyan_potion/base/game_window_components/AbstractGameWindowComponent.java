@@ -56,7 +56,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * just implement AbstractControllableGameWindowComponent instead
  * <p>
  * if you want to override {@link #update()} / {@link #draw()} method,
- * Then you shall better go use {@link #setUpdater(UpdaterInterface)} / {@link #setDrawer(DrawerInterface)} instead.
+ * Then you shall better go use {@code setUpdater(UpdaterInterface)} / {@code setDrawer(DrawerInterface)} instead.
  * to make life easier, we follow such a principle here.
  * 1. if you override the  {@link #update()} / {@link #draw()} method directly in a class, then this class MUST be a
  * final class.
